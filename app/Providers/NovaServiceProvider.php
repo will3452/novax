@@ -6,6 +6,7 @@ use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
+use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -84,7 +85,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            new NovaSettings
+            new NovaSettings,
+            new BackupTool(),
         ];
     }
 

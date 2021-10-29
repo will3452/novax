@@ -24,7 +24,9 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "optimistdigital/nova-settings": "^3.2",
-        "spatie/laravel-permission": "^5.3"
+        "spatie/laravel-backup": "^6.16",
+        "spatie/laravel-permission": "^5.3",
+        "spatie/nova-backup-tool": "^4.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
