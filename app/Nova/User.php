@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\Text;
 
 class User extends Resource
 {
+    public static $group = 'access Control';
     /**
      * The model the resource corresponds to.
      *
@@ -43,8 +44,6 @@ class User extends Resource
     {
         return [
             ID::make()->sortable(),
-
-            Gravatar::make()->maxWidth(50),
 
             Text::make('Name')
                 ->sortable()

@@ -8,16 +8,23 @@
         {
             "type": "path",
             "url": "./repos"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/NovaPermissionsField"
         }
     ],
     "require": {
         "php": "^7.3|^8.0",
+        "coreproc/nova-permissions-field": "*",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.65",
+        "laravel/nova": "*",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "laravel/nova": "*"
+        "optimistdigital/nova-settings": "^3.2",
+        "spatie/laravel-permission": "^5.3"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

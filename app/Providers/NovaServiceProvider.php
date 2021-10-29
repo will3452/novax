@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Gate;
-use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Nova;
+use Laravel\Nova\Cards\Help;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Image;
+use Illuminate\Support\Facades\Gate;
+use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -17,6 +20,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+
+        NovaSettings::addSettingsFields([
+            Image::make('Logo'),
+            Text::make('Footer Text'),
+        ]);
     }
 
     /**
@@ -51,13 +59,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     /**
      * Get the cards that should be displayed on the default Nova dashboard.
      *
-     * @return array
+     * @return array`
      */
     protected function cards()
     {
-        return [
-            new Help,
-        ];
+        return [];
     }
 
     /**
@@ -77,7 +83,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function tools()
     {
-        return [];
+        return [
+            new NovaSettings
+        ];
     }
 
     /**
