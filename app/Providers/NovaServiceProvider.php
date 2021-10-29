@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
+use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -85,8 +86,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
+            new ProfileTool,
+            new BackupTool,
             new NovaSettings,
-            new BackupTool(),
         ];
     }
 
