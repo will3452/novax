@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Role;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -87,8 +88,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             new ProfileTool,
-            new BackupTool,
-            new NovaSettings,
+            (new BackupTool)->canSee(function($request){
+                return $request->user()->hasRole(Role::SUPERADMIN);
+            }),
+            (new NovaSettings)->canSee(function($request){
+                return $request->user()->hasRole(Role::SUPERADMIN);
+            }),
         ];
     }
 

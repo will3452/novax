@@ -1,0 +1,35 @@
+#virtualClass
+-name
+-description
+-code
+
+# modules
+- reference_number
+- description
+- code
+- subject_id
+- uploader_id
+
+#subject
+- reference_number
+- description
+- code
+
+#quiz
+- description
+- module_id
+
+#exam
+- description
+- module_id
+
+#questions
+- questionable_id
+- questinable_type
+- description
+- type [Enumerations, Multiple Choice]
+
+#answers
+- question_id
+- type [correct]
+- description
