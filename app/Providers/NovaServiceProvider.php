@@ -87,8 +87,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             new ProfileTool,
-            new BackupTool,
-            new NovaSettings,
+            (new BackupTool)->canSee(function ($request) {
+                return $request->user->hasRole(\App\Models\Role::SUPERADMIN);
+            }),
+            (new NovaSettings)->canSee(function ($request) {
+                return $request->user->hasRole(\App\Models\Role::SUPERADMIN);
+            }),
         ];
     }
 
