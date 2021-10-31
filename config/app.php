@@ -165,6 +165,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         \App\Providers\NovaServiceProvider::class,
+        \Example\MiamiIce\ThemeServiceProvider::class,
 
         /*
          * Package Service Providers...
