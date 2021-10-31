@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47f2790baa80be5071b6c573343238cd",
+    "content-hash": "7b0e8c126781c6c1d1d680ebee8206a1",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3986,6 +3986,63 @@
                 }
             ],
             "time": "2021-09-25T23:10:38+00:00"
+        },
+        {
+            "name": "richardkeep/nova-timenow",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/richardkeep/nova-timenow.git",
+                "reference": "e0a53dfc8c43d777f14af56645ad1585a0b072a2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/richardkeep/nova-timenow/zipball/e0a53dfc8c43d777f14af56645ad1585a0b072a2",
+                "reference": "e0a53dfc8c43d777f14af56645ad1585a0b072a2",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": "*",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Richardkeep\\NovaTimenow\\TimenowServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Richardkeep\\NovaTimenow\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Richard Keep",
+                    "email": "r.kipsang@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel Nova card to display the current time from different timezones in the world.",
+            "homepage": "https://github.com/richardkeep/nova-timenow",
+            "keywords": [
+                "card",
+                "datetime",
+                "laravel",
+                "nova",
+                "timezone"
+            ],
+            "support": {
+                "issues": "https://github.com/richardkeep/nova-timenow/issues",
+                "source": "https://github.com/richardkeep/nova-timenow/tree/1.0.1"
+            },
+            "time": "2021-04-06T07:33:53+00:00"
         },
         {
             "name": "runlinenl/nova-profile-tool",
