@@ -18,8 +18,8 @@
         }
     </style>
 </head>
-<body class="flex justify-center items-center">
-    <h1 class="font-bold uppercase tracker-2 text-2xl">
+<body class="flex justify-center items-center w-screen h-screen">
+    <h1 class="font-bold uppercase tracker-2 text-3xl text-gray-800">
         UNDER DEVELOPMENT
     </h1>
 </body>
