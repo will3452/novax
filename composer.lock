@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7b0e8c126781c6c1d1d680ebee8206a1",
+    "content-hash": "97c263f32ab1c8c6bff54caf93f88845",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1967,6 +1967,62 @@
                 "source": "https://github.com/laravel/ui/tree/v3.3.0"
             },
             "time": "2021-05-25T16:45:33+00:00"
+        },
+        {
+            "name": "laravelwebdev/responsive",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravelwebdev/responsive.git",
+                "reference": "8e14a0dff52b88bb911b2b220c1a10cd52f25a0a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravelwebdev/responsive/zipball/8e14a0dff52b88bb911b2b220c1a10cd52f25a0a",
+                "reference": "8e14a0dff52b88bb911b2b220c1a10cd52f25a0a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravelwebdev\\Responsive\\ThemeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravelwebdev\\Responsive\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Muhlis Abdi",
+                    "email": "muhlisabdi@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Responsive Laravel Nova  Theme based on 'A Responsive Laravel Nova theme'.",
+            "homepage": "https://github.com/laravelwebdev/responsive",
+            "keywords": [
+                "Laravel Nova Theme",
+                "Responsive Laravel Nova Theme",
+                "dark theme",
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/laravelwebdev/responsive/issues",
+                "source": "https://github.com/laravelwebdev/responsive/tree/v1.0.1"
+            },
+            "time": "2021-05-27T12:13:19+00:00"
         },
         {
             "name": "league/commonmark",
