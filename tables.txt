@@ -1,0 +1,18 @@
+-shops
+user_id
+description
+address
+contact_number
+contact_person
+logo
+lat
+lng
+status [open, closed]
+
+
+-services
+shop_id
+description
+cost
+remarks
+status [available, not available]

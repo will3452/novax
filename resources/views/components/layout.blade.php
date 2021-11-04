@@ -6,8 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{config('app.name', 'Nuwang')}}</title>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="//unpkg.com/alpinejs" defer></script>
 </head>
-<body>
+<body class="bg-blue-100">
+    <x-nav></x-nav>
     {{$slot}}
 </body>
 </html>
