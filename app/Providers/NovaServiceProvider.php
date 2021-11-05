@@ -125,7 +125,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                         ]
                         ]),
                         TopLevelResource::make([
-                            'label'=> 'Admin',
+                            'label'=> 'Access',
                             'icon'=>null,
                             'resources'=>[
                                 \App\Nova\Role::class,
