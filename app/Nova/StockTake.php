@@ -2,43 +2,35 @@
 
 namespace App\Nova;
 
+use App\Models\Location;
+use App\Models\StockTake as ModelsStockTake;
+use App\Nova\Filters\Saved\EndDate;
+use App\Nova\Filters\Saved\StartDate;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use App\Nova\Filters\EndDate;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
-use App\Nova\Filters\DateRange;
-use App\Nova\Filters\StartDate;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use App\Nova\Actions\PrintAssetRegisterReport;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
-class Asset extends Resource
+class StockTake extends Resource
 {
-    public static $group = "Record Management";
-
-    public static function label()
-    {
-        return 'Asset Register';
-    }
-
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Asset::class;
+    public static $model = \App\Models\StockTake::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public function title()
-    {
-        return "$this->description - $this->purchase_date";
-    }
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -47,6 +39,8 @@ class Asset extends Resource
      */
     public static $search = [
         'id',
+        'created_at',
+        'location',
     ];
 
     /**
@@ -58,36 +52,39 @@ class Asset extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Description')
-                ->rules(['required'])
+            Date::make('Saved At', 'created_at')
+                ->exceptOnForms()
                 ->sortable(),
-            Date::make('Purchase Date')
+
+            BelongsTo::make('Product', 'product', Product::class)
+                ->searchable()
+                ->rules(['required']),
+
+            Select::make('Location')
                 ->rules(['required'])
-                ->sortable(),
-            Number::make('Purchase Cost')
+                ->searchable()
+                ->options(function () {
+                    return Location::where('user_id', auth()->id())->pluck('name', 'name');
+                }),
+
+            Number::make('Initial Number Of Stocks')
                 ->rules(['required']),
-            Text::make('Location')
+
+            Number::make('Current Physical Count')
                 ->rules(['required']),
-            Text::make('Owner')
-                ->rules(['required']),
-            Text::make('Users')
-                ->rules(['required']),
-            Text::make('Serial Number / Bar Code', 'serial_number')
-                ->rules(['required']),
-            Text::make('Insurance Coverage')
-                ->rules(['required']),
-            Text::make('Current Value of Asset', 'current_value')
-                ->rules(['required']),
-            Text::make('Depreciation Method used')
-                ->rules(['required']),
-            Text::make("Manufacturer's Warranty", 'manufacturers_warranty')
-                ->rules(['required']),
-            Text::make('Maintenance Information')
-                ->rules(['required']),
-            Text::make('Life Expectancy')
-                ->rules(['required']),
-            Text::make('Estimated Resale Value')
-                ->rules(['required']),
+
+            Number::make('Difference', 'difference')->exceptOnForms(),
+
+            Select::make('Inventory Discrepancy')
+                ->options([
+                    ModelsStockTake::INVENTORY_DESCREPANCY_SHRINKAGE => ModelsStockTake::INVENTORY_DESCREPANCY_SHRINKAGE,
+                    ModelsStockTake::INVENTORY_DESCREPANCY_HUMAN_ERROR =>  ModelsStockTake::INVENTORY_DESCREPANCY_HUMAN_ERROR,
+                    ModelsStockTake::INVENTORY_DESCREPANCY_MISMANAGED_RETURNS => ModelsStockTake::INVENTORY_DESCREPANCY_MISMANAGED_RETURNS,
+                    ModelsStockTake::INVENTORY_DESCREPANCY_MISPLACED => ModelsStockTake::INVENTORY_DESCREPANCY_MISPLACED,
+                    ModelsStockTake::INVENTORY_DESCREPANCY_NONE => ModelsStockTake::INVENTORY_DESCREPANCY_NONE
+                ])
+                ->rules(['required'])
+
         ];
     }
 
@@ -136,8 +133,7 @@ class Asset extends Resource
     public function actions(Request $request)
     {
         return [
-            new PrintAssetRegisterReport,
-            new DownloadExcel(),
+            (new DownloadExcel),
         ];
     }
 }

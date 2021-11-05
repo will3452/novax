@@ -18,4 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('print-asset-register',[PrintController::class, 'printAssets']);
+Route::get('print-asset-register', [PrintController::class, 'printAssets']);
+Route::get('print-stocks-report', [PrintController::class, 'printStocks']);

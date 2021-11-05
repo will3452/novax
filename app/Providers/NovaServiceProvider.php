@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use DigitalCreative\CollapsibleResourceManager\Resources\Group;
+use DigitalCreative\CollapsibleResourceManager\CollapsibleResourceManager;
+use DigitalCreative\CollapsibleResourceManager\Resources\TopLevelResource;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -95,6 +98,41 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
+            new CollapsibleResourceManager([
+                'navigation' => [
+                    TopLevelResource::make([
+                        'label'=>'Records',
+                        'icon' => null,
+                        'resources'=>[
+                            \App\Nova\Asset::class,
+                            Group::make([
+                                'label'=>'Stock Reconciliation',
+                                'expanded'=>true,
+                                'resources'=>[
+                                    \App\Nova\Product::class,
+                                    \App\Nova\StockTake::class,
+                                    \App\Nova\StockReport::class,
+                                ]
+                            ]),
+                        ]
+                        ]),
+                    TopLevelResource::make([
+                        'label'=> 'Data',
+                        'icon'=>null,
+                        'resources'=>[
+                            \App\Nova\User::class,
+                            \App\Nova\Location::class,
+                        ]
+                        ]),
+                        TopLevelResource::make([
+                            'label'=> 'Admin',
+                            'icon'=>null,
+                            'resources'=>[
+                                \App\Nova\Role::class,
+                            ]
+                        ])
+                ]
+                ]),
             new ProfileTool,
             (new BackupTool)->canSee(function ($request) {
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN);
