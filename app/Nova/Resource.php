@@ -7,6 +7,7 @@ use Laravel\Nova\Resource as NovaResource;
 
 abstract class Resource extends NovaResource
 {
+    public static $perPageOptions = [5, 25, 50, 100, 200, 500];
     public static $showColumnBorders = true;
     public static $tableStyle = 'tight';
     /**
