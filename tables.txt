@@ -16,3 +16,10 @@ description
 cost
 remarks
 status [available, not available]
+
+-booking
+shop_id
+user_id
+date
+remarks
+status

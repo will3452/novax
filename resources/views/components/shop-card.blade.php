@@ -1,7 +1,7 @@
-@props(['logo'=>null, 'location'=>'--', 'shop'=>null])
-<a href="/shops/{{$shop->id}}"class="block p-3 flex-none w-1/2 h-60 cursor-pointer">
+@props(['logo'=>null, 'location'=>null, 'shop'=>null])
+<a href="/shops/{{$shop->id}}"class="block p-3 flex-none md:w-1/4 w-1/2 h-60 cursor-pointer ">
 
-    <div class=" h-full w-full shadow-md border border-blue-500 relative bg-white"
+    <div class=" h-full w-full shadow-md border border-blue-500 relative bg-white rounded-md overflow-hidden"
     style="
         background:url('/storage/{{$shop->clean_logo}}');
         background-position:center;
@@ -20,13 +20,15 @@
                 <div>
                     {{$shop ? \Str::limit($shop->description, 13): '---'}}
                 </div>
-                <div>
+                {{-- <div>
                     {{$shop ? ($shop->stars ?$shop->stars: 5 ): '---'}} stars
+                </div> --}}
+            </div>
+            @if ($location)
+                <div>
+                    {{$location}} km
                 </div>
-            </div>
-            <div>
-                {{$location}} KM
-            </div>
+            @endif
         </div>
     </div>
 </a>

@@ -1,8 +1,13 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\RegisterController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,4 +22,26 @@ use App\Http\Controllers\ShopController;
 
 Route::get('/', LandingController::class);
 
-Route::get('/shops/{shop}', [ShopController::class, 'show']);
+Route::get('/search', SearchController::class);
+
+
+
+Route::get('/location-not-found', function () {
+    return "location not found";
+});
+
+Route::middleware(['guest'])->group(function(){
+    Route::get('/register', [RegisterController::class, 'show']);
+    Route::post('/register', [RegisterController::class, 'store']);
+    Route::get('/login', [LoginController::class, 'show'])->name('login');
+    Route::post('/login', [LoginController::class, 'store']);
+});
+
+Route::middleware(['auth'])->group(function(){
+    Route::get('/shops/{shop}', [ShopController::class, 'show']);
+    Route::get('/logout', function(){
+        Auth::logout();
+        return redirect('/');
+    });
+    Route::post('/booking/{shop}', [BookingController::class, 'bookToday']);
+});
