@@ -54,7 +54,7 @@ class Asset extends Resource
     public static $search = [
         'id',
         'purchase_date',
-        'description'
+        'description',
     ];
 
     /**
