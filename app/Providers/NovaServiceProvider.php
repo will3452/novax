@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Nova\Metrics\NewUserPerDay;
+use App\Nova\Metrics\NumberOfTopics;
+use App\Nova\Metrics\QuizAttemptsPerDay;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -76,6 +78,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'Asia/Tokyo',
             ])->defaultTimezone('Africa/Manila'),
             (new NewUserPerDay()),
+            (new NumberOfTopics()),
+            (new QuizAttemptsPerDay()),
         ];
     }
 
