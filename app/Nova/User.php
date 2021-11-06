@@ -8,10 +8,16 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
 {
     public static $group = 'access Control';
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        return $query->where('id', '!=', auth()->id());
+    }
     /**
      * The model the resource corresponds to.
      *
