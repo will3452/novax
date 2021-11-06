@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiAuthenticationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+//private access
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/auth-test', function () {
+        return 'authentication test';
+    });
+    Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
 });
+
+Route::get('/public-test', function () {
+    return 'public test';
+});
+
+
+//user authentication
+Route::post('/register', [ApiAuthenticationController::class, 'register']);
+Route::post('/login', [ApiAuthenticationController::class, 'login']);
