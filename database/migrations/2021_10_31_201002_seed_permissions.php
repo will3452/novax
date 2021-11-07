@@ -28,6 +28,15 @@ class SeedPermissions extends Migration
     {
         $permissions = [
             'asset',
+            'account',
+            'product',
+            'accounting period',
+            'general journal',
+            'location',
+            'role',
+            'stock take',
+            'stock report',
+            'user'
         ];
 
 

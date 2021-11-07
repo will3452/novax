@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Role;
+use App\Models\AccountingPeriod;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class RolePolicy
+class AccountingPeriodPolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +18,19 @@ class RolePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole(Role::SUPERADMIN);
+        return $user->can('view accounting period list');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\AccountingPeriod  $accountingPeriod
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Role $role)
+    public function view(User $user, AccountingPeriod $accountingPeriod)
     {
-        return $user->hasRole(Role::SUPERADMIN);
+        return $user->can('view accounting period details');
     }
 
     /**
@@ -41,54 +41,54 @@ class RolePolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole(Role::SUPERADMIN);
+        return $user->can('create accounting period');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\AccountingPeriod  $accountingPeriod
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Role $role)
+    public function update(User $user, AccountingPeriod $accountingPeriod)
     {
-        return $user->hasRole(Role::SUPERADMIN);
+        return $user->can('update accounting period');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\AccountingPeriod  $accountingPeriod
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Role $role)
+    public function delete(User $user, AccountingPeriod $accountingPeriod)
     {
-        return $user->hasRole(Role::SUPERADMIN);
+        return $user->can('delete accounting period');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\AccountingPeriod  $accountingPeriod
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Role $role)
+    public function restore(User $user, AccountingPeriod $accountingPeriod)
     {
-        return $user->hasRole(Role::SUPERADMIN);
+        return $user->can('restore accounting period');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\AccountingPeriod  $accountingPeriod
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Role $role)
+    public function forceDelete(User $user, AccountingPeriod $accountingPeriod)
     {
-        return $user->hasRole(Role::SUPERADMIN);
+        return $user->can('force delete accounting period');
     }
 }

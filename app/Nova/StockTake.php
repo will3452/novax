@@ -3,9 +3,6 @@
 namespace App\Nova;
 
 use App\Models\Location;
-use App\Models\StockTake as ModelsStockTake;
-use App\Nova\Filters\Saved\EndDate;
-use App\Nova\Filters\Saved\StartDate;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
@@ -13,7 +10,11 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Filters\Saved\EndDate;
+use App\Nova\Filters\Saved\StartDate;
+use App\Nova\Actions\PrintStocksReport;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use App\Models\StockTake as ModelsStockTake;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class StockTake extends Resource
@@ -139,6 +140,7 @@ class StockTake extends Resource
     {
         return [
             (new DownloadExcel),
+            PrintStocksReport::make(),
         ];
     }
 }

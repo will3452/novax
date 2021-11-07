@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PrintController;
+use App\Http\Controllers\TAccountController;
 use App\Models\StockTake;
 use Illuminate\Support\Facades\Route;
 
@@ -21,9 +22,6 @@ Route::get('/', function () {
 
 Route::get('print-asset-register', [PrintController::class, 'printAssets']);
 Route::get('print-stocks-report', [PrintController::class, 'printStocks']);
-
-Route::get('/test', function () {
-    return StockTake::get()->groupBy(function ($stock) {
-        return $stock->created_at->format('Y-m-d');
-    });
-});
+Route::get('/t-accounts', [TAccountController::class, 'index']);
+Route::get('/trial-balance', [TAccountController::class, 'trialBalance']);
+Route::get('/general-grournal', [TAccountController::class, 'generalJournal']);

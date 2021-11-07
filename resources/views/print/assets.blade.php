@@ -1,6 +1,6 @@
 
 
-<x-print-layout title="STOCKS RECONCILIATION">
+<x-print-layout title="ASSETS REGISTER">
     <table class="w-full">
         <thead>
             <tr>

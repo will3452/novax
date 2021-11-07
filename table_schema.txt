@@ -9,6 +9,7 @@
 
 
 #stocks_takes
+-stock_report_id
 -product_id
 -inventory_discrepancy
 -user_id
@@ -20,3 +21,19 @@
 #locations
 -user_id
 -name
+
+
+#general journal
+-user_id
+-description
+-reference_number
+-debit
+-credit
+
+accounts
+-name
+-type
+-prefix (code)
+
+
+Accounting period

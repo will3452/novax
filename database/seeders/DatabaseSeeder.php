@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\TypeOfAccount;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,5 +23,19 @@ class DatabaseSeeder extends Seeder
             LocationSeeder::class,
             StockTakeSeeder::class,
         ]);
+
+        $typesOfAccounts = [
+            'ASSETS',
+            'LIABILITIES',
+            'CAPITAL',
+            'REVENUE',
+            'EXPENSES'
+        ];
+
+        foreach ($typesOfAccounts as $account) {
+            TypeOfAccount::create([
+                'name'=>$account
+            ]);
+        }
     }
 }

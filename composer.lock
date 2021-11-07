@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d1646a2f7ee4fe522d7af2f369112b0c",
+    "content-hash": "cd0b50f0fbd99c69d9caa88c7276782b",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3637,6 +3637,60 @@
             "time": "2020-10-15T08:29:30+00:00"
         },
         {
+            "name": "pdmfc/nova-info-card",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pdmfc/nova-info-card.git",
+                "reference": "d7620798551f9b932aad61f06315cf18c639d9df"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pdmfc/nova-info-card/zipball/d7620798551f9b932aad61f06315cf18c639d9df",
+                "reference": "d7620798551f9b932aad61f06315cf18c639d9df",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Pdmfc\\NovaCards\\InfoCardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pdmfc\\NovaCards\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "João Santos",
+                    "email": "joao.santos@pdmfc.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel Nova info card.",
+            "homepage": "https://github.com/pdmfc/nova-info-card",
+            "keywords": [
+                "laravel",
+                "nova",
+                "package"
+            ],
+            "support": {
+                "issues": "https://github.com/pdmfc/nova-info-card/issues",
+                "source": "https://github.com/pdmfc/nova-info-card/tree/v0.1.5"
+            },
+            "time": "2020-04-27T13:09:57+00:00"
+        },
+        {
             "name": "phpoffice/phpspreadsheet",
             "version": "1.19.0",
             "source": {
@@ -4693,51 +4747,6 @@
                 "source": "https://github.com/richardkeep/nova-timenow/tree/1.0.1"
             },
             "time": "2021-04-06T07:33:53+00:00"
-        },
-        {
-            "name": "rmsj/nova-hero-icon",
-            "version": "v1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/rmsj/nova-hero-icon.git",
-                "reference": "47cb772f78589cad448a83b215ccbeea973cad09"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/rmsj/nova-hero-icon/zipball/47cb772f78589cad448a83b215ccbeea973cad09",
-                "reference": "47cb772f78589cad448a83b215ccbeea973cad09",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "NovaHeroIcon\\ToolServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "NovaHeroIcon\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "A Laravel Nova resource tool.",
-            "keywords": [
-                "laravel",
-                "nova"
-            ],
-            "support": {
-                "issues": "https://github.com/rmsj/nova-hero-icon/issues",
-                "source": "https://github.com/rmsj/nova-hero-icon/tree/master"
-            },
-            "time": "2020-05-09T07:55:17+00:00"
         },
         {
             "name": "runlinenl/nova-profile-tool",

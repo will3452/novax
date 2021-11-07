@@ -67,10 +67,10 @@ class Role extends Resource
 
             NovaPermissionsField::make(__('Permissions'), 'prepared_permissions')
                 ->canSee(function () {
-                    /** @phpstan-ignore-next-line */
-                    if ($this->name === \App\Models\Role::SUPERADMIN) {
-                        return false;
-                    }
+                    // /** @phpstan-ignore-next-line */
+                    // if ($this->name === \App\Models\Role::SUPERADMIN) {
+                    //     return false;
+                    // }
                     return true;
                 })
                 ->hideFromIndex()

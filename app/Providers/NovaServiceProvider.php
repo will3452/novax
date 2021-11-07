@@ -13,7 +13,10 @@ use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use DigitalCreative\CollapsibleResourceManager\Resources\Group;
 use DigitalCreative\CollapsibleResourceManager\CollapsibleResourceManager;
+use DigitalCreative\CollapsibleResourceManager\Resources\ExternalLink;
+use DigitalCreative\CollapsibleResourceManager\Resources\NovaResource;
 use DigitalCreative\CollapsibleResourceManager\Resources\TopLevelResource;
+use Laravel\Nova\Fields\Date;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -29,6 +32,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
             Text::make('Footer Text'),
+            Text::make('Company Name'),
         ]);
     }
 
@@ -101,7 +105,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             new CollapsibleResourceManager([
                 'navigation' => [
                     TopLevelResource::make([
-                        'label'=>'Records',
+                        'label'=>'RECORDS',
                         'icon' => null,
                         'resources'=>[
                             \App\Nova\Asset::class,
@@ -115,13 +119,40 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                                 ]
                             ]),
                         ]
-                        ]),
+                        ])->canSee(function($request){
+                            return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+                        }),
                     TopLevelResource::make([
-                        'label'=> 'Data',
+                        'label'=>'ANALYSIS AND EVALUATION',
+                        'icon' => null,
+                        'resources'=>[
+                            \App\Nova\GeneralJournalRemark::class,
+                            ExternalLink::make([
+                                'label' => 'T Accounts',
+                                'badge' => null,
+                                'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>',
+                                'target' => '_blank',
+                                'url' => '/t-accounts',
+                            ]),
+                            ExternalLink::make([
+                                'label' => 'Trial balance',
+                                'badge' => null,
+                                'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>',
+                                'target' => '_blank',
+                                'url' => '/trial-balance',
+                            ])
+                        ]
+                    ])->canSee(function($request){
+                        return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+                    }),
+                    TopLevelResource::make([
+                        'label'=> 'Settings',
                         'icon'=>null,
                         'resources'=>[
                             \App\Nova\User::class,
                             \App\Nova\Location::class,
+                            \App\Nova\Account::class,
+                            \App\Nova\AccountingPeriod::class,
                         ]
                         ]),
                         TopLevelResource::make([
