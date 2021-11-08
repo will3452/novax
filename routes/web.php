@@ -17,9 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/nova/login');
 
 Route::get('print-asset-register', [PrintController::class, 'printAssets']);
 Route::get('print-stocks-report', [PrintController::class, 'printStocks']);
