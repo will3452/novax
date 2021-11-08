@@ -24,7 +24,7 @@ class TAccountController extends Controller
 
     public function trialBalance()
     {
-        $period = AccountingPeriod::where('is_default', 'true')->latest()->first();
+        $period = AccountingPeriod::where('is_default', true)->latest()->first();
         if ($period == null) {
             return 'please set accounting period';
         }
