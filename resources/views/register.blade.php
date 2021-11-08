@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="w-full md:w-1/2 shadow p-2 mx-auto mt-5 rounded">
+    <div class="w-full md:w-1/2 shadow p-4 mx-auto mt-5 rounded">
         <h1 class="font-bold text-xl uppercase">
             Register
         </h1>
