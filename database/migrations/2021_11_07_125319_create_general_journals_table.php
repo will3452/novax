@@ -15,7 +15,8 @@ class CreateGeneralJournalsTable extends Migration
     {
         Schema::create('general_journals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('general_journal_remark_id');
+            $table->foreignId('general_journal_remark_id')
+                ->onDelete('cascade');
             $table->foreignId('user_id');
             $table->string('account');
             $table->text('description')->nullable();
