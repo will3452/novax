@@ -1,6 +1,6 @@
 <dropdown-trigger class="h-9 flex items-center">
     <span class="text-90">
-        {{ $user->name ?? $user->email ?? __('Nova User') }}
+        {{$user->hasRole(\App\Models\Role::SUPERADMIN) ? '(Admin)' : '(Accountant)'}} {{ $user->name ?? $user->email ?? __('Nova User') }}
     </span>
 </dropdown-trigger>
 

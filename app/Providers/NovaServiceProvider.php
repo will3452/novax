@@ -30,9 +30,15 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         parent::boot();
 
         NovaSettings::addSettingsFields([
-            Image::make('Logo'),
-            Text::make('Footer Text'),
+            Image::make('Logo')->canSee(function ($request) {
+                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+            }),
+            Text::make('Footer Text')->canSee(function ($request) {
+                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+            }),
             Text::make('Company Name'),
+            Text::make('Address'),
+            Text::make('Owner'),
         ]);
     }
 
@@ -146,10 +152,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                         return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
                     }),
                     TopLevelResource::make([
-                        'label'=> 'Settings',
+                        'label'=> 'Data Setting',
                         'icon'=>null,
                         'resources'=>[
-                            \App\Nova\User::class,
+
                             \App\Nova\Location::class,
                             \App\Nova\Account::class,
                             \App\Nova\AccountingPeriod::class,
@@ -160,6 +166,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                             'icon'=>null,
                             'resources'=>[
                                 \App\Nova\Role::class,
+                                \App\Nova\User::class,
                             ]
                         ])
                 ]
@@ -168,9 +175,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             (new BackupTool)->canSee(function ($request) {
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN);
             }),
-            (new NovaSettings)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN);
-            }),
+            (new NovaSettings),
         ];
     }
 
