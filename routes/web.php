@@ -36,6 +36,8 @@ Route::post('/register', function () {
         'name'=>'required'
     ]);
 
+    $data['password'] = bcrypt($data['password']);
+
     User::create($data);
 
     return back()->withSuccess('Registered Successfully! You may now login.');

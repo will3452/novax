@@ -125,7 +125,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                                 ]
                             ]),
                         ]
-                        ])->canSee(function($request){
+                        ])->canSee(function ($request) {
                             return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
                         }),
                     TopLevelResource::make([
@@ -148,9 +148,36 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                                 'url' => '/trial-balance',
                             ])
                         ]
-                    ])->canSee(function($request){
+                    ])->canSee(function ($request) {
                         return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
                     }),
+                    TopLevelResource::make([
+                        'label'=> 'FINANCIAL STATEMENTS ',
+                        'icon'=>null,
+                        'resources'=>[
+                            ExternalLink::make([
+                                'label' => 'Income Statement',
+                                'badge' => null,
+                                'icon' => null,
+                                'target' => '_blank',
+                                'url' => '/incoming-statement',
+                            ]),
+                            ExternalLink::make([
+                                'label' => 'Owner’s Equity ',
+                                'badge' => null,
+                                'icon' => null,
+                                'target' => '_blank',
+                                'url' => '/trial-balance',
+                            ]),
+                            ExternalLink::make([
+                                'label' => 'Statement of Financial Position',
+                                'badge' => null,
+                                'icon' => null,
+                                'target' => '_blank',
+                                'url' => '/trial-balance',
+                            ]),
+                        ]
+                        ]),
                     TopLevelResource::make([
                         'label'=> 'Data Setting',
                         'icon'=>null,
@@ -168,7 +195,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                                 \App\Nova\Role::class,
                                 \App\Nova\User::class,
                             ]
-                        ])
+                            ]),
+
                 ]
                 ]),
             new ProfileTool,
