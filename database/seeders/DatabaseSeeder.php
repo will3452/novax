@@ -25,8 +25,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $typesOfAccounts = [
-            'ASSETS',
-            'LIABILITIES',
+            'ASSETS (current)',
+            'ASSETS (non current)',
+            'LIABILITIES (current)',
+            'LIABILITIES (non current)',
             'CAPITAL',
             'REVENUE',
             'EXPENSES'
