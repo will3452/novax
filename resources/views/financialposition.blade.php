@@ -21,7 +21,7 @@
                 {{nova_get_setting('company_name')}}
             </h1>
             <h2 class="text-xl font-bold">
-                Incoming Statement
+                Balance Sheet
             </h2>
             <h3 class="font-bold">
                 {{\Carbon\Carbon::parse($period->end)->format('M d, Y')}}
@@ -29,23 +29,80 @@
         </div>
     </div>
     <div class="w-full md:w-1/2 mx-auto">
-        <div class="flex">
+        <div class="">
             <table class="w-full">
                 <tr>
                     <th colspan="2">
                         Assets
                     </th>
                 </tr>
-                @foreach ($assets as $item)
+                <tr>
+                    <td>
+                        Current Assets
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                @foreach ($assetsCurrentGroups as $key=>$item)
                     <tr>
-                        <td>
-                            {{$item->account}}
+                        <td class="pl-2">
+                            {{$key}}
                         </td>
                         <td>
-                            {{$item->credit ?? $item->debit}}
+                            {{\App\Accounting::getTotal($item)}}
                         </td>
                     </tr>
                  @endforeach
+                 <tr>
+                     <td class="pl-4">
+                         Total Current Assets
+                     </td>
+                     <td class="font-bold">
+                         {{$assetsCurrentTotal}}
+                     </td>
+                 </tr>
+                 <th style="color:white">
+                     h
+                 </th>
+                 <tr>
+                    <td>
+                        Noncurrent Assets
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                @foreach ($assetsNonCurrentGroups as $key=>$item)
+                <tr>
+                    <td class="pl-2">
+                        {{$key}}
+                    </td>
+                    <td>
+                        {{\App\Accounting::getTotal($item)}}
+                    </td>
+                </tr>
+                 @endforeach
+                 <tr>
+                     <td class="pl-4">
+                         Total Nonurrent Assets
+                     </td>
+                     <td class="font-bold">
+                         {{$assetsNonCurrentTotal}}
+                     </td>
+                 </tr>
+
+                 <tr>
+                    <td class="font-bold">
+                        Total Asset
+                    </td>
+                    <td  style="width:70px;">
+                        <x-total>
+                            {{$assetsTotal}}
+                        </x-total>
+                    </td>
+
+                </tr>
 
             </table>
             <table class="w-full">
@@ -54,23 +111,65 @@
                         Liabilities and Capital
                     </th>
                 </tr>
-                @foreach ($liabilities as $item)
+                <tr>
+                    <td>
+                        Current Liabilities
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                @foreach ($liabilitiesCurrentGroups as $key=>$item)
                     <tr>
-                        <td>
-                            {{$item->account}}
+                        <td class="pl-2">
+                            {{$key}}
                         </td>
                         <td>
-                            {{$item->credit ?? $item->debit}}
+                            {{\App\Accounting::getTotal($item)}}
                         </td>
                     </tr>
                  @endforeach
+                 <tr>
+                    <td class="pl-4">
+                        Total Current Liabilities
+                    </td>
+                    <td class="font-bold">
+                        {{$liabilitiesCurrentTotal}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        NonCurrent Liabilities
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                @foreach ($liabilitiesNonCurrentGroups as $key=>$item)
+                    <tr>
+                        <td class="pl-2">
+                            {{$key}}
+                        </td>
+                        <td>
+                            {{\App\Accounting::getTotal($item)}}
+                        </td>
+                    </tr>
+                 @endforeach
+                 <tr>
+                    <td class="pl-4">
+                        Total NonCurrent Liabilities
+                    </td>
+                    <td class="font-bold">
+                        {{$liabilitiesNonCurrentTotal}}
+                    </td>
+                </tr>
                  <tr>
                      <td colspan="2"></td>
                  </tr>
                  <tr>
                     <td colspan="2"></td>
                 </tr>
-                 <tr class="">
+                <tr class="">
                     <td class="font-bold">
                         Owner's Equity
                     </td>
@@ -78,30 +177,15 @@
                         {{$ownerEquity}}
                     </td>
                  </tr>
-                <tr>
-
-                </tr>
-            </table>
-        </div>
-        <div class="flex">
-            <table class="w-1/2">
+                <th style="color:white">
+                    h
+                </th>
                 <tr>
                     <td class="font-bold">
-                        Total Asset
+                        Total Liabilities and Equity
                     </td>
-                    <td class="underline" style="width:70px;">
-                        {{$assetsTotal}}
-                    </td>
-
-                </tr>
-            </table>
-            <table class="w-1/2">
-                <tr>
-                    <td class="font-bold">
-                        Total Liabilities and Capital
-                    </td>
-                    <td class="underline" style="width:70px;">
-                        {{$liabilitiesTotal}}
+                    <td class="" style="width:70px;">
+                        <x-total>{{$liabilitiesTotal}}</x-total>
                     </td>
                 </tr>
             </table>

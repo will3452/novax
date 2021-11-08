@@ -56,10 +56,10 @@
                         Ref #
                     </th>
                     <th class="border p-1">
-                        Credits
+                        Debit
                     </th>
                     <th class="border p-1">
-                        Debits
+                        Credit
                     </th>
                 </tr>
             </thead>
@@ -75,7 +75,7 @@
                         {{++$line}}
                     </td>
                     <td class="text-center border">
-                        {{$item->created_at->format('Y-m-d')}}
+                        {{\App\Models\GeneralJournalRemark::find($item->general_journal_remark_id)->created_at->format('Y-m-d')}}
                     </td>
                     <td class="text-center border">
                         {{$item->account}}
@@ -124,12 +124,21 @@
                     <td class="text-center border">
                         Balance
                     </td>
-                    <td class="text-center border">
+                    @if (\App\Models\Account::getNormalBalance($item->account) == \App\Models\Account::NORMAL_BALANCE_DEBIT)
+                    <td class="text-center border font-bold">
                         {{$totalDebs - $totalCreds}}
                     </td>
-                    <td class="text-center border">
+                    <td class="text-center border font-bold">
 
                     </td>
+                    @else
+                    <td class="text-center border font-bold">
+
+                    </td>
+                    <td class="text-center border font-bold">
+                        {{$totalDebs - $totalCreds}}
+                    </td>
+                    @endif
                 </tr>
             </tbody>
         </table>

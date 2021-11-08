@@ -8,6 +8,11 @@
     <title>External</title>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <script src="//unpkg.com/alpinejs" defer></script>
+    <style>
+        * {
+            font-family: 'Times New Roman', Times, serif;
+        }
+    </style>
 </head>
 <body>
     <div class="bg-white mx-auto my-5">
@@ -46,23 +51,33 @@
                     <td class="border border-black px-2">
                         {{$key}}
                     </td>
+                    @php
+                        $value = \App\Accounting::getTotal($item);
+                    @endphp
+                    @if (\App\Models\Account::getNormalBalance($key) == \App\Models\Account::NORMAL_BALANCE_DEBIT)
+                        <td  class="border border-black px-2">
+                            {{$value}}
+                            @php
+                            $debit += $value;
+                        @endphp
+                        </td>
+                        <td  class="border border-black px-2">
+
+                        </td>
+                    @else
                     <td  class="border border-black px-2">
-                        @if ($item->sum('debit') != 0)
-                        {{$item->sum('debit')}}
-                        @endif
+
                     </td>
                     <td  class="border border-black px-2">
-                        @if ($item->sum('credit') != 0)
-                        {{$item->sum('credit')}}
-                        @endif
+                        {{$value}}
+                        @php
+                            $credit += $value;
+                        @endphp
                     </td>
+                    @endif
                 </tr>
-                @php
-                    $debit += $item->sum('debit');
-                    $credit += $item->sum('credit');
-                @endphp
                 @endforeach
-                <tr>
+                <tr class="font-bold">
                     <th class="border border-black px-2">
                         Total
                     </th>

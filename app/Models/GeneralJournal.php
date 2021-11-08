@@ -16,6 +16,16 @@ class GeneralJournal extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function remark()
+    {
+        $generalJournal = GeneralJournalRemark::find($this->general_journal_remark_id);
+
+        if (!$generalJournal) {
+            return '';
+        }
+        return $generalJournal->description;
+    }
+
     protected static function boot()
     {
         parent::boot();

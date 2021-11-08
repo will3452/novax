@@ -89,8 +89,8 @@
                         Net Income
                     @endif
                 </th>
-                <td class="text-left underline" style="width:200px;">
-                    {{$totalRevenues - $totalExpenses}}
+                <td class="text-left" style="width:200px;">
+                    <x-total>{{$totalRevenues - $totalExpenses}}</x-total>
                 </td>
             </tr>
         </table>

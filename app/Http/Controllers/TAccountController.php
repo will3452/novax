@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Accounting;
+use App\Models\Account;
 use App\Models\AccountingPeriod;
 use Illuminate\Http\Request;
 use App\Models\GeneralJournal;
@@ -24,23 +26,14 @@ class TAccountController extends Controller
 
     public function trialBalance()
     {
-        $period = AccountingPeriod::where('is_default', true)->latest()->first();
-        if ($period == null) {
-            return 'please set accounting period';
-        }
+        $period = Accounting::getAccountingPeriod();
 
-        $start_date = Carbon::parse($period->start)
-        ->toDateTimeString();
+        $start_date = Accounting::getStartDate();
 
-        $end_date = Carbon::parse($period->end)
-                ->toDateTimeString();
+        $end_date = Accounting::getStartDate();
 
+        $accounts =  Accounting::getTrialAccounts();
 
-        $accounts =  GeneralJournal::whereBetween('created_at', [
-            $period, $end_date
-          ])->get()->groupBy(function ($a) {
-              return $a->account;
-          });
         return view('trial_balance', compact('accounts', 'period'));
     }
 
@@ -52,12 +45,7 @@ class TAccountController extends Controller
         $end_date = Carbon::parse(request()->to)
                              ->toDateTimeString();
 
-        $records = GeneralJournal::whereBetween('created_at', [
-         $start_date, $end_date
-       ])->get()->groupBy(function ($q) {
-           return $q->created_at->format('Y-m-d');
-       });
-
+        $records = Accounting::getGeneralJournal($start_date, $end_date);
 
         return view('general_journal', compact('records'));
     }

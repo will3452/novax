@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Accounting;
 use App\Models\Account;
 use Illuminate\Http\Request;
 use App\Models\GeneralJournal;
@@ -12,28 +13,18 @@ class FinacialStatement extends Controller
 {
     public function incomingStatement()
     {
-        $period = AccountingPeriod::where('is_default', 'true')->latest()->first();
-        if ($period == null) {
-            return 'please set accounting period';
-        }
-        $start_date = Carbon::parse($period->start)
-        ->toDateTimeString();
+        $period = Accounting::getAccountingPeriod();
 
-        $end_date = Carbon::parse($period->end)
-                ->toDateTimeString();
+        $start_date = Accounting::getStartDate();
+
+        $end_date = Accounting::getEndDate();
 
         $accountsExp = Account::where('type', 'EXPENSES')->get()->pluck('name');
         $accountsRev = Account::where('type', 'REVENUE')->get()->pluck('name');
-        $revenues = GeneralJournal::whereIn('account', $accountsRev)
-        ->whereBetween('created_at', [
-            $start_date,$end_date
-        ])
-        ->get();
-        $expenses = GeneralJournal::whereIn('account', $accountsExp)
-        ->whereBetween('created_at', [
-            $start_date,$end_date
-        ])
-        ->get();
+
+        $revenues = Accounting::getAccounts($accountsRev);
+
+        $expenses = Accounting::getAccounts($accountsExp);
 
         $totalExpenses = 0;
         $totalRevenues = 0;
@@ -41,46 +32,32 @@ class FinacialStatement extends Controller
         foreach ($expenses as $item) {
             $totalExpenses += ($item->debit ?? $item->credit);
         }
+
         foreach ($revenues as $item) {
             $totalRevenues += ($item->debit ?? $item->credit);
         }
+
         return view('incoming_statement', compact('period', 'expenses', 'revenues', 'totalExpenses', 'totalRevenues'));
     }
 
     public function ownersEquity()
     {
-        $period = AccountingPeriod::where('is_default', 'true')->latest()->first();
-        if ($period == null) {
-            return 'please set accounting period';
-        }
-        $start_date = Carbon::parse($period->start)
-        ->toDateTimeString();
+        $period = Accounting::getAccountingPeriod();
 
-        $end_date = Carbon::parse($period->end)
-                ->toDateTimeString();
+        $start_date = Accounting::getStartDate();
+
+        $end_date = Accounting::getEndDate();
 
         $accountsExp = Account::where('type', 'EXPENSES')->get()->pluck('name');
         $accountsRev = Account::where('type', 'REVENUE')->get()->pluck('name');
-        $revenues = GeneralJournal::whereIn('account', $accountsRev)
-        ->whereBetween('created_at', [
-            $start_date,$end_date
-        ])
-        ->get();
-        $expenses = GeneralJournal::whereIn('account', $accountsExp)
-        ->whereBetween('created_at', [
-            $start_date,$end_date
-        ])
-        ->get();
 
-        $totalExpenses = 0;
-        $totalRevenues = 0;
+        $revenues = Accounting::getAccounts($accountsRev);
 
-        foreach ($expenses as $item) {
-            $totalExpenses += ($item->debit ?? $item->credit);
-        }
-        foreach ($revenues as $item) {
-            $totalRevenues += ($item->debit ?? $item->credit);
-        }
+        $expenses = Accounting::getAccounts($accountsExp);
+
+        $totalExpenses = Accounting::getTotal($expenses);
+        $totalRevenues = Accounting::getTotal($revenues);
+
 
         $capitalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%capital%")->first()->name;
         $withdrawalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%drawing%")->first()->name;
@@ -96,15 +73,9 @@ class FinacialStatement extends Controller
             $start_date,$end_date
         ])->get();
 
-        $drawingTotal = 0;
-        $capitalTotal = 0;
-        foreach ($drawings as $item) {
-            $drawingTotal += ($item->debit + $item->credit);
-        }
+        $drawingTotal = Accounting::getTotal($drawings, true);
+        $capitalTotal = Accounting::getTotal($capitals, true);
 
-        foreach ($capitals as $item) {
-            $capitalTotal += ($item->debit + $item->credit);
-        }
 
         $net = $totalRevenues - $totalExpenses;
 
@@ -113,53 +84,35 @@ class FinacialStatement extends Controller
 
     public function financialposition()
     {
-        $period = AccountingPeriod::where('is_default', 'true')->latest()->first();
-        if ($period == null) {
-            return 'please set accounting period';
-        }
-        $start_date = Carbon::parse($period->start)
-        ->toDateTimeString();
+        $period =Accounting::getAccountingPeriod();
 
-        $end_date = Carbon::parse($period->end)
-                ->toDateTimeString();
+        $start_date = Accounting::getStartDate();
+
+        $end_date = Accounting::getEndDate();
+
         #######################assets
-        $assetsAccount = Account::where('type', "LIKE", "%ASSET%")->pluck('name');
-        $liabiltyAccount = Account::where('Type', "LIKE", "%LIABILITIES%")->pluck('name');
-        ###########################Liabilities
-        $liabilities =  GeneralJournal::where('account', $liabiltyAccount)
-        ->whereBetween('created_at', [
-            $start_date,$end_date
-        ])->get();
 
-        $assets =  GeneralJournal::where('account', $assetsAccount)
-        ->whereBetween('created_at', [
-            $start_date,$end_date
-        ])->get();
+
+
+
+        $liabilitiesCurrent = Accounting::getCurrentLiabilities();
+        $liabilitiesNonCurrent = Accounting::getNonCurrentLiabilities();
+
+        $assetsCurrent =  Accounting::getCurrentAssets();
+        $assetsNonCurrent =  Accounting::getNonCurrentAssets();
 
 
         //net ####################################
         $accountsExp = Account::where('type', 'EXPENSES')->get()->pluck('name');
         $accountsRev = Account::where('type', 'REVENUE')->get()->pluck('name');
-        $revenues = GeneralJournal::whereIn('account', $accountsRev)
-        ->whereBetween('created_at', [
-            $start_date,$end_date
-        ])
-        ->get();
-        $expenses = GeneralJournal::whereIn('account', $accountsExp)
-        ->whereBetween('created_at', [
-            $start_date,$end_date
-        ])
-        ->get();
 
-        $totalExpenses = 0;
-        $totalRevenues = 0;
+        $revenues = Accounting::getAccounts($accountsRev);
 
-        foreach ($expenses as $item) {
-            $totalExpenses += ($item->debit ?? $item->credit);
-        }
-        foreach ($revenues as $item) {
-            $totalRevenues += ($item->debit ?? $item->credit);
-        }
+        $expenses = Accounting::getAccounts($accountsExp);
+
+        $totalExpenses = Accounting::getTotal($expenses);
+        $totalRevenues = Accounting::getTotal($revenues);
+
 
         $capitalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%capital%")->first()->name;
         $withdrawalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%drawing%")->first()->name;
@@ -175,31 +128,30 @@ class FinacialStatement extends Controller
             $start_date,$end_date
         ])->get();
 
-        $drawingTotal = 0;
-        $capitalTotal = 0;
-        foreach ($drawings as $item) {
-            $drawingTotal += ($item->debit + $item->credit);
-        }
+        $drawingTotal = Accounting::getTotal($drawings, true);
+        $capitalTotal = Accounting::getTotal($capitals, true);
 
-        foreach ($capitals as $item) {
-            $capitalTotal += ($item->debit + $item->credit);
-        }
 
         $net = $totalRevenues - $totalExpenses;
-        $ownerEquity = $capitalTotal + $net + $drawingTotal;
 
-        //totals values
-        $assetsTotal = 0;
-        foreach ($assets as $asset) {
-            $assetsTotal += ($asset->debit ?? $asset->credit);
-        }
+        $ownerEquity = Accounting::getOwnerEquity($capitalTotal, $net, $drawingTotal);
+        $assetsCurrentTotal = Accounting::getTotal($assetsCurrent);
+        $assetsNonCurrentTotal = Accounting::getTotal($assetsNonCurrent);
+        $assetsTotal = ($assetsCurrentTotal + $assetsNonCurrentTotal);
 
-        $liabilitiesTotal = 0;
-        foreach ($liabilities as $l) {
-            $liabilitiesTotal += $l->debit ?? $l->credit;
-        }
 
-        $liabilitiesTotal += $ownerEquity;
-        return view('financialposition', compact('period', 'liabilities', 'assets', 'assetsTotal', 'ownerEquity', 'liabilitiesTotal'));
+        $liabilitiesCurrentTotal = Accounting::getTotal($liabilitiesCurrent);
+        $liabilitiesNonCurrentTotal = Accounting::getTotal($liabilitiesNonCurrent);
+        $liabilitiesTotal = ($liabilitiesCurrentTotal + $liabilitiesNonCurrentTotal) + $ownerEquity;
+
+        $assetsCurrentGroups = $assetsCurrent->groupBy('account');
+        $assetsNonCurrentGroups = $assetsNonCurrent->groupBy('account');
+
+        $liabilitiesCurrentGroups = $liabilitiesCurrent->groupBy('account');
+        $liabilitiesNonCurrentGroups = $liabilitiesNonCurrent->groupBy('account');
+
+
+
+        return view('financialposition', compact('period', 'assetsNonCurrentTotal', 'assetsCurrentTotal', 'liabilitiesCurrentTotal', 'liabilitiesNonCurrentTotal', 'liabilitiesCurrent', 'liabilitiesNonCurrent', 'assetsCurrent', 'assetsNonCurrent', 'assetsTotal', 'ownerEquity', 'liabilitiesTotal', 'assetsCurrentGroups', 'assetsNonCurrentGroups', 'liabilitiesCurrentGroups', 'liabilitiesNonCurrentGroups'));
     }
 }

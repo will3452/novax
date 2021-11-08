@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Models\Account as ModelsAccount;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
@@ -51,10 +52,16 @@ class Account extends Resource
             Select::make('Type')
                 ->options(\App\Models\TypeOfAccount::get()->pluck('name', 'name'))
                 ->rules(['required']),
+            Select::make('Normal Balance')
+                ->options([
+                    ModelsAccount::NORMAL_BALANCE_CREDIT => ModelsAccount::NORMAL_BALANCE_CREDIT,
+                    ModelsAccount::NORMAL_BALANCE_DEBIT => ModelsAccount::NORMAL_BALANCE_DEBIT,
+                ])
+                ->rules(['required']),
             Text::make('Name')
                 ->rules(['required']),
             Text::make('Code', 'prefix')
-                ->rules(['required', 'unique:accounts,prefix']),
+                ->rules(['required']),
         ];
     }
 

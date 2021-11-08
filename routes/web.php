@@ -1,11 +1,14 @@
 <?php
 
-use App\Http\Controllers\FinacialStatement;
-use App\Http\Controllers\PrintController;
-use App\Http\Controllers\TAccountController;
-use App\Models\StockTake;
+use App\Accounting;
 use App\Models\User;
+use App\Models\StockTake;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PrintController;
+use App\Http\Controllers\FinacialStatement;
+use App\Http\Controllers\TAccountController;
+use App\Http\Controllers\FinancialRatioController;
+use App\Models\Account;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +31,7 @@ Route::get('/general-grournal', [TAccountController::class, 'generalJournal']);
 Route::get('incoming-statement', [FinacialStatement::class, 'incomingStatement']);
 Route::get('financial-position', [FinacialStatement::class, 'financialposition']);
 Route::get('/owners-equity', [FinacialStatement::class, 'ownersEquity']);
+Route::get('/liquidity-ratio', [FinancialRatioController::class, 'liquidityRatio']);
 Route::get('/register', function () {
     return view('register');
 });
@@ -44,4 +48,9 @@ Route::post('/register', function () {
     User::create($data);
 
     return back()->withSuccess('Registered Successfully! You may now login.');
+});
+
+
+Route::get('/test', function () {
+    return Accounting::getTotal(Accounting::getInventories());
 });

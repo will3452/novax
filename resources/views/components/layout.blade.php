@@ -8,6 +8,11 @@
     <title>External</title>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <script src="//unpkg.com/alpinejs" defer></script>
+    <style>
+        * {
+            font-family: 'Times New Roman', Times, serif;
+        }
+    </style>
 </head>
 <body>
     <div>

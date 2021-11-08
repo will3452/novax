@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAccountsTable extends Migration
+class AddNormalBalanceToAccounts extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +14,8 @@ class CreateAccountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('accounts', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('type');
-            $table->string('prefix');
-            $table->timestamps();
+        Schema::table('accounts', function (Blueprint $table) {
+            $table->string('normal_balance')->default(Account::NORMAL_BALANCE_DEBIT);
         });
     }
 
@@ -30,6 +26,8 @@ class CreateAccountsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('accounts');
+        Schema::table('accounts', function (Blueprint $table) {
+            $table->dropColumn('normal_balance');
+        });
     }
 }

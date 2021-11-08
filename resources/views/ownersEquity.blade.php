@@ -40,7 +40,7 @@
             </tr>
             <tr>
                 <td>
-                    Net {{$net > 0 ? 'Loss' : 'Income'}}
+                    Net {{$net < 0 ? 'Loss' : 'Income'}}
                 </td>
                 <td tyle="width:200px;">
                     {{$net}}
@@ -50,16 +50,16 @@
                 <td>
                     {{$withdrawalName}}
                 </td>
-                <td tyle="width:200px;">
-                    {{$drawingTotal}}
+                <td tyle="width:200px;" class="underline">
+                    ({{$drawingTotal}})
                 </td>
             </tr>
-            <tr>
+            <tr class="font-bold">
                 <td>
                     Capital, {{\Carbon\Carbon::parse($period->end)->format('M d, Y')}}
                 </td>
-                <td class="underline">
-                    {{$capitalTotal + $net + $drawingTotal}}
+                <td class="">
+                    <x-total>{{($capitalTotal + $net) - $drawingTotal}}</x-total>
                 </td>
             </tr>
         </table>

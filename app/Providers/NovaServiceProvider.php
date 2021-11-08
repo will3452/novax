@@ -165,7 +165,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                                 'url' => '/owners-equity',
                             ]),
                             ExternalLink::make([
-                                'label' => 'Statement of Financial Position',
+                                'label' => 'Balance Sheet',
                                 'badge' => null,
                                 'icon' => null,
                                 'target' => '_blank',
@@ -175,6 +175,19 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                         ])->canSee(function ($request) {
                             return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
                         }),
+                    TopLevelResource::make([
+                        'label'=> 'FINANCIAL RATIO',
+                        'icon'=>null,
+                        'resources'=>[
+                            ExternalLink::make([
+                                'label' => 'Liquidity Ratio',
+                                'badge' => null,
+                                'icon' => null,
+                                'target' => '_blank',
+                                'url' => '/liquidity-ratio',
+                            ]),
+                        ]
+                    ]),
                     TopLevelResource::make([
                         'label'=> 'Data Setting',
                         'icon'=>null,

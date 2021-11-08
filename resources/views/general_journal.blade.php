@@ -30,7 +30,7 @@
                         <tr>
                             <td class="border text-center">
                                 @if ($viewDate)
-                                    {{$keyRecord}}
+                                    {{\App\Models\GeneralJournalRemark::find($keyRecord)->created_at->format('Y-m-d')}}
                                 @endif
                             </td>
                             @if ($item->credit)
@@ -55,7 +55,17 @@
                         @php
                             $viewDate =false;
                         @endphp
-
+                        @if ($loop->last)
+                            <tr>
+                                <td class="border"></td>
+                                <td class="border">
+                                    {{$item->remark()}}
+                                </td>
+                                <td class="border"></td>
+                                <td class="border"></td>
+                                <td class="border"></td>
+                            </tr>
+                        @endif
                     @endforeach
                     <tr class="text-white border">
                         <td colspan="100">
