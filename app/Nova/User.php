@@ -2,9 +2,11 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\MarkAsApproved;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
@@ -50,6 +52,10 @@ class User extends Resource
     {
         return [
             ID::make()->sortable(),
+
+            Boolean::make('Approved', function(){
+                return !is_null($this->approved_at);
+            })->exceptOnForms(),
 
             Text::make('Name')
                 ->sortable()
@@ -111,6 +117,8 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            MarkAsApproved::make()
+        ];
     }
 }

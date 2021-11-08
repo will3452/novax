@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'approved_at'
     ];
 
     /**
@@ -32,6 +33,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+
     ];
 
     /**
@@ -51,5 +53,16 @@ class User extends Authenticatable
     public function generalJournals()
     {
         return $this->hasMany(GeneralJournal::class);
+    }
+
+    public function markAsApproved($result=true)
+    {
+        if($result){
+            $this->update([
+                'approved_at'=>now()
+            ]);
+        }
+
+
     }
 }

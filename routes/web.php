@@ -8,6 +8,7 @@ use App\Http\Controllers\PrintController;
 use App\Http\Controllers\FinacialStatement;
 use App\Http\Controllers\TAccountController;
 use App\Http\Controllers\FinancialRatioController;
+use App\Http\Controllers\Nova\Auth\LoginController;
 use App\Models\Account;
 
 /*
@@ -20,7 +21,7 @@ use App\Models\Account;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::post(Nova::path().'/login', [LoginController::class, 'login'])->name('nova.login');
 Route::redirect('/', '/nova/login');
 
 Route::get('print-asset-register', [PrintController::class, 'printAssets']);

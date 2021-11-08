@@ -187,7 +187,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                                 'url' => '/liquidity-ratio',
                             ]),
                         ]
-                    ]),
+                    ])->canSee(function ($request) {
+                        return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+                    }),
                     TopLevelResource::make([
                         'label'=> 'Data Setting',
                         'icon'=>null,
@@ -203,7 +205,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                             'label'=> 'Access',
                             'icon'=>null,
                             'resources'=>[
-                                \App\Nova\Role::class,
+                                // \App\Nova\Role::class,
                                 \App\Nova\User::class,
                             ]
                             ]),
