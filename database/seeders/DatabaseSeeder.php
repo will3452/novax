@@ -14,14 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            AdminSeeder::class,
-            // AssetSeeder::class,
-            // ProductSeeder::class,
-            // LocationSeeder::class,
-            // StockTakeSeeder::class,
-        ]);
-
         $typesOfAccounts = [
             'ASSETS (current)',
             'ASSETS (non current)',
@@ -37,5 +29,13 @@ class DatabaseSeeder extends Seeder
                 'name'=>$account
             ]);
         }
+
+        $this->call([
+            AdminSeeder::class,
+            // AssetSeeder::class,
+            // ProductSeeder::class,
+            // LocationSeeder::class,
+            // StockTakeSeeder::class,
+        ]);
     }
 }
