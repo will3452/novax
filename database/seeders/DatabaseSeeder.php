@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             // AssetSeeder::class,
             // ProductSeeder::class,
             // LocationSeeder::class,
-            StockTakeSeeder::class,
+            // StockTakeSeeder::class,
         ]);
 
         $typesOfAccounts = [
