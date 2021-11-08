@@ -183,7 +183,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                             \App\Nova\Account::class,
                             \App\Nova\AccountingPeriod::class,
                         ]
-                        ]),
+                        ])->canSee(function ($request) {
+                            return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+                        }),
                         TopLevelResource::make([
                             'label'=> 'Access',
                             'icon'=>null,
