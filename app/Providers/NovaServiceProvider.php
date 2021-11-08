@@ -192,7 +192,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                             'resources'=>[
                                 \App\Nova\Role::class,
                                 \App\Nova\User::class,
-                                \App\Nova\AccountingPeriod::class,
                             ]
                             ]),
                 ]
