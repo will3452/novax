@@ -14,28 +14,20 @@ class TAccountController extends Controller
         $start_date = Carbon::parse(request()->from)
                              ->toDateTimeString();
 
-       $end_date = Carbon::parse(request()->to)
+        $end_date = Carbon::parse(request()->to)
                              ->toDateTimeString();
-
-       $records =  auth()->user()->generalJournals()->where('account', request()->account)->whereBetween('created_at', [
+        $records =  GeneralJournal::where('account', "LIKE", "%".request()->account."%")->whereBetween('created_at', [
          $start_date, $end_date
-       ])->get()->groupBy(function($g){
-           return $g->account;
-       });
-
-       if(!count($records)){
-           return 'no record';
-       }
-
+       ])->get();
         return view('t-accounts', compact('records'));
     }
 
     public function trialBalance()
-{
-    $period = AccountingPeriod::where('is_default', 'true')->latest()->first();
-    if($period == null){
-        return 'please set accounting period';
-    }
+    {
+        $period = AccountingPeriod::where('is_default', 'true')->latest()->first();
+        if ($period == null) {
+            return 'please set accounting period';
+        }
 
         $start_date = Carbon::parse($period->start)
         ->toDateTimeString();
@@ -44,9 +36,9 @@ class TAccountController extends Controller
                 ->toDateTimeString();
 
 
-        $accounts =  auth()->user()->generalJournals()->whereBetween('created_at', [
+        $accounts =  GeneralJournal::whereBetween('created_at', [
             $period, $end_date
-          ])->get()->groupBy(function($a){
+          ])->get()->groupBy(function ($a) {
               return $a->account;
           });
         return view('trial_balance', compact('accounts', 'period'));
@@ -57,12 +49,12 @@ class TAccountController extends Controller
         $start_date = Carbon::parse(request()->from)
                              ->toDateTimeString();
 
-       $end_date = Carbon::parse(request()->to)
+        $end_date = Carbon::parse(request()->to)
                              ->toDateTimeString();
 
-       $records = auth()->user()->generalJournals()->whereBetween('created_at', [
+        $records = GeneralJournal::whereBetween('created_at', [
          $start_date, $end_date
-       ])->get()->groupBy(function($q){
+       ])->get()->groupBy(function ($q) {
            return $q->created_at->format('Y-m-d');
        });
 

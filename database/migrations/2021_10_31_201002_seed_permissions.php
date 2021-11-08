@@ -27,15 +27,15 @@ class SeedPermissions extends Migration
     public function up()
     {
         $permissions = [
-            'asset',
+            // 'asset',
             'account',
-            'product',
+            // 'product',
             'accounting period',
             'general journal',
             'location',
             'role',
-            'stock take',
-            'stock report',
+            // 'stock take',
+            // 'stock report',
             'user'
         ];
 

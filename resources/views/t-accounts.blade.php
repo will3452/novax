@@ -78,7 +78,7 @@
                         {{$item->created_at->format('Y-m-d')}}
                     </td>
                     <td class="text-center border">
-                        {{$item->description}}
+                        {{$item->account}}
                     </td>
                     <td class="text-center border">
                         {{$item->reference_number}}

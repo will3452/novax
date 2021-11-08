@@ -111,27 +111,22 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             new CollapsibleResourceManager([
                 'navigation' => [
                     TopLevelResource::make([
-                        'label'=>'RECORDS',
-                        'icon' => null,
+                        'label'=>'RECORD MANAGEMENT',
+                        'icon'=>null,
                         'resources'=>[
                             \App\Nova\Asset::class,
-                            Group::make([
-                                'label'=>'Stock Reconciliation',
-                                'expanded'=>true,
-                                'resources'=>[
-                                    \App\Nova\Product::class,
-                                    \App\Nova\StockTake::class,
-                                    \App\Nova\StockReport::class,
-                                ]
-                            ]),
+                            \App\Nova\Product::class,
+                            \App\Nova\StockTake::class,
+                            \App\Nova\StockReport::class,
                         ]
-                        ])->canSee(function ($request) {
-                            return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
-                        }),
+                    ])->canSee(function ($request) {
+                        return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+                    }),
                     TopLevelResource::make([
                         'label'=>'ANALYSIS AND EVALUATION',
                         'icon' => null,
                         'resources'=>[
+
                             \App\Nova\GeneralJournalRemark::class,
                             ExternalLink::make([
                                 'label' => 'T Accounts',
@@ -167,22 +162,23 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                                 'badge' => null,
                                 'icon' => null,
                                 'target' => '_blank',
-                                'url' => '/trial-balance',
+                                'url' => '/owners-equity',
                             ]),
                             ExternalLink::make([
                                 'label' => 'Statement of Financial Position',
                                 'badge' => null,
                                 'icon' => null,
                                 'target' => '_blank',
-                                'url' => '/trial-balance',
+                                'url' => '/financial-position',
                             ]),
                         ]
-                        ]),
+                        ])->canSee(function ($request) {
+                            return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+                        }),
                     TopLevelResource::make([
                         'label'=> 'Data Setting',
                         'icon'=>null,
                         'resources'=>[
-
                             \App\Nova\Location::class,
                             \App\Nova\Account::class,
                             \App\Nova\AccountingPeriod::class,
@@ -194,9 +190,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                             'resources'=>[
                                 \App\Nova\Role::class,
                                 \App\Nova\User::class,
+                                \App\Nova\AccountingPeriod::class,
                             ]
                             ]),
-
                 ]
                 ]),
             new ProfileTool,

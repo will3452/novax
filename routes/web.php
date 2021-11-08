@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FinacialStatement;
 use App\Http\Controllers\PrintController;
 use App\Http\Controllers\TAccountController;
 use App\Models\StockTake;
@@ -24,7 +25,9 @@ Route::get('print-stocks-report', [PrintController::class, 'printStocks']);
 Route::get('/t-accounts', [TAccountController::class, 'index']);
 Route::get('/trial-balance', [TAccountController::class, 'trialBalance']);
 Route::get('/general-grournal', [TAccountController::class, 'generalJournal']);
-
+Route::get('incoming-statement', [FinacialStatement::class, 'incomingStatement']);
+Route::get('financial-position', [FinacialStatement::class, 'financialposition']);
+Route::get('/owners-equity', [FinacialStatement::class, 'ownersEquity']);
 Route::get('/register', function () {
     return view('register');
 });
