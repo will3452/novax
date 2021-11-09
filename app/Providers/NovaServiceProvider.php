@@ -117,7 +117,30 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     'categories' => [Accounting::getAccountingPeriodString()]
                 ],
             ])
-            ->width('2/3'),
+            ->width('1/2'),
+            (new BarChart())
+            ->title('Profitability Ratio')
+            ->animations([
+                'enabled' => true,
+                'easing' => 'easeinout',
+            ])
+            ->series(array([
+                'barPercentage' => 0.4,
+                'label' => 'Return on Assets',
+                'backgroundColor' => '#2A8192',
+                'data' => [abs(Accounting::getReturnOnAssetsRatio())],
+            ],[
+                'barPercentage' => 0.4,
+                'label' => 'Return on Equity',
+                'backgroundColor' => '#1ADCC9',
+                'data' => [abs(Accounting::getReturnOnEquity())],
+            ]))
+            ->options([
+                'xaxis' => [
+                    'categories' => [Accounting::getAccountingPeriodString()]
+                ],
+            ])
+            ->width('1/2'),
 
         ];
     }

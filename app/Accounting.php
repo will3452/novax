@@ -25,7 +25,7 @@ class Accounting
     {
         $result = self::getAccountingPeriod();
         if($result != 'please set accounting period'){
-            return self::getAccountingPeriod()->start->format('Y-m-d').' '.self::getAccountingPeriod()->end->format('Y-m-d');
+            return self::getAccountingPeriod()->start->format('Y-m-d').' - '.self::getAccountingPeriod()->end->format('Y-m-d');
         }
         return $result;
     }
