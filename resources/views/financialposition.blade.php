@@ -171,6 +171,7 @@
                 </tr>
                 <tr class="">
                     <td class="font-bold">
+
                         Capital, ({{\Carbon\Carbon::parse(\App\Accounting::getEndDate())->format('Y-m-d')}})
                     </td>
                     <td>
