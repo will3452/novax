@@ -7,8 +7,8 @@
             <form action="{{url()->current()}}" class="flex">
                 <select name="prof_ratio" id="" class="p-2 rounded w-10/12 border mx-2">
                     <option value="" {{request()->prof_ratio != ''?:'selected'}} disabled>---</option>
-                    <option value="acid_ratio" {{request()->prof_ratio != 'return_on_asssets'?:'selected'}}>Return on assets</option>
-                    <option value="cash_ratio" {{request()->prof_ratio != 'return_on_equity'?:'selected'}}>Return on equity</option>
+                    <option value="return_on_asssets" {{request()->prof_ratio != 'return_on_asssets'?:'selected'}}>Return on assets</option>
+                    <option value="return_on_equity" {{request()->prof_ratio != 'return_on_equity'?:'selected'}}>Return on equity</option>
                 </select>
                 <button class="p-2 rounded w-2/12 border bg-green-500 text-white font-bold mx-2">Submit</button>
             </form>
