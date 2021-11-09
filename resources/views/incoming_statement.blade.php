@@ -61,7 +61,7 @@
                     Expenses
                 </th>
             </tr>
-            @foreach ($expensesGroup as $item)
+            @foreach ($expensesGroup as $key=>$item)
             <tr>
                 <td class="pl-2">
                     {{$key}}
