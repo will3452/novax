@@ -171,7 +171,7 @@
                 </tr>
                 <tr class="">
                     <td class="font-bold">
-                        Owner's Equity
+                        Capital, {{\App\Accounting::getEndDate()}}
                     </td>
                     <td>
                         {{abs($ownerEquity)}}
