@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Accounting;
 use App\Models\Account;
-use App\Models\AccountingPeriod;
 use Illuminate\Http\Request;
 use App\Models\GeneralJournal;
 use Illuminate\Support\Carbon;
+use App\Models\AccountingPeriod;
+use App\Models\GeneralJournalRemark;
 
 class TAccountController extends Controller
 {
@@ -19,9 +20,12 @@ class TAccountController extends Controller
         $end_date = Carbon::parse(request()->to)->addDay()
                              ->toDateTimeString();
 
-        $records =  GeneralJournal::where('account', "LIKE", "%".request()->account."%")->whereBetween('created_at', [
-         $start_date, $end_date
-       ])->get();
+        $id = GeneralJournalRemark::whereBetween('created_at', [
+            $start_date, $end_date
+        ])->first()->id;
+
+        $records =  GeneralJournal::where('general_journal_remark_id', $id)->where('account', "LIKE", "%".request()->account."%")->get();
+
         return view('t-accounts', compact('records'));
     }
 
