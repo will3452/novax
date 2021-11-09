@@ -5,7 +5,7 @@
 <div
 style="display: flex; justify-content:center; width:100%;"
 >
-    <img src="/storage/{{nova_get_setting('logo')}}" alt="" styl="width:100px !important;"/>
+    <img src="/storage/{{nova_get_setting('logo')}}" alt="" style="width:100px !important;"/>
 </div>
 
 <form
