@@ -193,4 +193,26 @@ class Accounting
     {
         return (self::getNetIncome() / self::getTotalAssets()) * 100;
     }
+
+    public static function getReturnOnEquity()
+    {
+        $capitalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%capital%")->first()->name;
+        $withdrawalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%drawing%")->first()->name;
+
+
+        $capitals = GeneralJournal::where('account', $capitalName)
+        ->whereBetween('created_at', [
+            self::getStartDate(),self::getEndDate()
+        ])->get();
+
+        $drawings = GeneralJournal::where('account', $withdrawalName)
+        ->whereBetween('created_at', [
+            self::getStartDate(),self::getEndDate()
+        ])->get();
+
+        $drawingTotal = self::getTotal($drawings, true);
+        $capitalTotal = self::getTotal($capitals, true);
+
+        return (self::getNetIncome() / self::getOwnerEquity($capitalTotal, self::getNetIncome(), $drawingTotal)) * 100;
+    }
 }
