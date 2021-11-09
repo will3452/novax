@@ -36,6 +36,7 @@
                 <td class="w-20"></td>
                 <td>
                     <x-return-on-assets-calculate></x-return-on-assets-calculate>
+                    <x-return-on-equity-calculate></x-return-on-equity-calculate>
                 </td>
             </tr>
             <tr>
