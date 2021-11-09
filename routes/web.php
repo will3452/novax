@@ -9,6 +9,7 @@ use App\Http\Controllers\FinacialStatement;
 use App\Http\Controllers\TAccountController;
 use App\Http\Controllers\FinancialRatioController;
 use App\Http\Controllers\Nova\Auth\LoginController;
+use App\Http\Controllers\ProfitabiltyController;
 use App\Models\Account;
 
 /*
@@ -33,6 +34,7 @@ Route::get('incoming-statement', [FinacialStatement::class, 'incomingStatement']
 Route::get('financial-position', [FinacialStatement::class, 'financialposition']);
 Route::get('/owners-equity', [FinacialStatement::class, 'ownersEquity']);
 Route::get('/liquidity-ratio', [FinancialRatioController::class, 'liquidityRatio']);
+Route::get('/profitability-ratio', [ProfitabiltyController::class, 'returnOnAssets']);
 Route::get('/register', function () {
     return view('register');
 });

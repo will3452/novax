@@ -186,6 +186,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                                 'target' => '_blank',
                                 'url' => '/liquidity-ratio',
                             ]),
+                            ExternalLink::make([
+                                'label' => 'Profitability  Ratio',
+                                'badge' => null,
+                                'icon' => null,
+                                'target' => '_blank',
+                                'url' => '/profitability-ratio',
+                            ]),
                         ]
                     ])->canSee(function ($request) {
                         return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
