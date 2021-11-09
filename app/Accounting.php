@@ -6,6 +6,7 @@ use App\Models\Account;
 use App\Models\GeneralJournal;
 use Illuminate\Support\Carbon;
 use App\Models\AccountingPeriod;
+use App\Models\GeneralJournalRemark;
 
 class Accounting
 {
@@ -67,18 +68,20 @@ class Accounting
 
     public static function getTrialAccounts()
     {
-        return GeneralJournal::whereBetween('created_at', [
+        $ids = GeneralJournalRemark::whereBetween('created_at', [
             self::getStartDate(), self::getEndDate()
-          ])->get()->groupBy(function ($a) {
-              return $a->account;
-          });
+          ])->get()->pluck('id');
+        return GeneralJournal::whereIn('general_journal_remark_id', $ids)->get()->groupBy(function ($a) {
+            return $a->account;
+        });
     }
 
     public static function getTrialAccount($account)
     {
-        return GeneralJournal::whereBetween('created_at', [
+        $id = GeneralJournalRemark::whereBetween('created_at', [
             self::getStartDate(), self::getEndDate()
-          ])->where('account', $account)->get();
+          ])->first()->id;
+        return GeneralJournal::where('general_journal_remark_id', $id)->where('account', $account)->get();
     }
 
     public static function getCashTotal()
