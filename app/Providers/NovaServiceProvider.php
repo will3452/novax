@@ -271,7 +271,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                             'label'=> 'Access',
                             'icon'=>null,
                             'resources'=>[
-                                // \App\Nova\Role::class,
+                                \App\Nova\Role::class,
                                 \App\Nova\User::class,
                             ]
                             ]),
