@@ -3,9 +3,11 @@
 namespace App\Nova;
 
 use App\Models\Permission;
-use Coreproc\NovaPermissionsField\NovaPermissionsField;
+use App\Models\Role as ModelsRole;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Coreproc\NovaPermissionsField\NovaPermissionsField;
 
 class Role extends Resource
 {
@@ -15,6 +17,12 @@ class Role extends Resource
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>';
     }
     public static $group = 'access Control';
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        return $query->where('name', '!=', ModelsRole::SUPERADMIN);
+    }
+
     /**
      * The model the resource corresponds to.
      *
