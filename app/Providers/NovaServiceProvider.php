@@ -96,18 +96,18 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'easing' => 'easeinout',
             ])
             ->series(array([
-                'barPercentage' => 2,
+                'barPercentage' => 0.1,
                 'label' => 'Current Ratio',
                 'backgroundColor' => '#2A8192',
                 'data' => [0.1,abs(Accounting::getCurrentRatio())],
             ],[
-                'barPercentage' => 2,
+                'barPercentage' => 0.1,
                 'label' => 'Acid Test Ratio',
                 'backgroundColor' => '#1ADCC9',
                 'data' => [0.1,abs(Accounting::getAcidRatio())],
             ],
             [
-                'barPercentage' => 2,
+                'barPercentage' => 0.1,
                 'label' => 'Cash Ratio',
                 'backgroundColor' => '#222',
                 'data' => [0.1,abs(Accounting::getCashRatio())],
