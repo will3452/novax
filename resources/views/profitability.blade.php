@@ -47,7 +47,8 @@
                 </td>
                 <td class="w-20"></td>
                 <td>
-
+                    <x-return-on-assets-interpret></x-return-on-assets-interpret>
+                    <x-return-on-equity-interpret></x-return-on-equity-interpret>
                 </td>
             </tr>
         </table>
