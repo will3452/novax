@@ -23,13 +23,13 @@
     <div class="bg-white mx-auto my-5">
         <div class="text-center text-lg">
             <h1 class="font-bold">
-                Small and Medium-Sized Enterprises
+                {{nova_get_setting('company_name')}}
             </h1>
             <h1 class="font-bold">
-                MH Del Pilar St, Tarlac City
+                {{nova_get_setting('address')}}
             </h1>
             <h1 class="font-bold">
-                Daniel Dy - Proprietor
+                {{nova_get_setting('owner')}}
             </h1>
             <div class="text-sm font-bold mt-4">
                 {{$title}}
