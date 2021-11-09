@@ -65,7 +65,7 @@ class FinacialStatement extends Controller
           ])->get()->pluck('id');
 
         $capitals = GeneralJournal::whereIn('general_journal_remark_id', $ids)->where('account', 'LIKE', "%$capitalName%")->get();
-        $drawings = GeneralJournal::whereIn('general_journal_remark_id', $ids)->where('account', 'LIKE',"$withdrawalName")->get();
+        $drawings = GeneralJournal::whereIn('general_journal_remark_id', $ids)->where('account', 'LIKE',"%$withdrawalName%")->get();
 
         $drawingTotal = Accounting::getTotal($drawings, true);
         $capitalTotal = Accounting::getTotal($capitals, true);
