@@ -31,6 +31,8 @@ class TAccountController extends Controller
             $id = $remark->id;
         }
 
+        return request()->account;
+
         if ($id) {
             $records =  GeneralJournal::where('general_journal_remark_id', $id)->where('account', "LIKE", "%".request()->account."%")->get();
         }
