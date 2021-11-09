@@ -83,7 +83,7 @@ class Asset extends Resource
                 ->rules(['required']),
             Text::make('Insurance Coverage')
                 ->rules(['required']),
-            Text::make('Current Value of Asset', 'current_value')
+            Number::make('Current Value of Asset', 'current_value')
                 ->rules(['required']),
             Text::make('Depreciation Method used')
                 ->rules(['required']),
