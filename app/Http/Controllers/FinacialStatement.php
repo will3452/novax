@@ -57,8 +57,8 @@ class FinacialStatement extends Controller
         $totalRevenues = Accounting::getTotal($revenues, true);
 
 
-        $capitalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%capital%")->first()->name;
-        $withdrawalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%drawing%")->first()->name;
+        $capitalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%capital%")->get()->pluck('name');
+        $withdrawalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%drawing%")->get()->pluck('name');
 
 
         $capitals = Accounting::getAccounts($capitalName);
