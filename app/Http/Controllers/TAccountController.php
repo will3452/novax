@@ -34,8 +34,6 @@ class TAccountController extends Controller
 
         $accounts =  Accounting::getTrialAccounts();
 
-        return $accounts;
-
         return view('trial_balance', compact('accounts', 'period'));
     }
 

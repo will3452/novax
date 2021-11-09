@@ -55,13 +55,13 @@ class Accounting
 
     public static function getStartDate()
     {
-        return Carbon::parse(self::getAccountingPeriod()->start)
+        return Carbon::parse(self::getAccountingPeriod()->start)->subDay()
         ->toDateTimeString();
     }
 
     public static function getEndDate()
     {
-        return Carbon::parse(self::getAccountingPeriod()->end)
+        return Carbon::parse(self::getAccountingPeriod()->end)->addDay()
         ->toDateTimeString();
     }
 
