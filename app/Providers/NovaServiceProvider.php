@@ -99,18 +99,18 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'barPercentage' => 0.5,
                 'label' => 'Current Ratio',
                 'backgroundColor' => '#2A8192',
-                'data' => [Accounting::getCurrentRatio(),0],
+                'data' => [0,Accounting::getCurrentRatio(),0],
             ],[
                 'barPercentage' => 0.5,
                 'label' => 'Acid Test Ratio',
                 'backgroundColor' => '#1ADCC9',
-                'data' => [Accounting::getAcidRatio(),0],
+                'data' => [0,Accounting::getAcidRatio()],
             ],
             [
                 'barPercentage' => 0.5,
                 'label' => 'Cash Ratio',
                 'backgroundColor' => '#222',
-                'data' => [Accounting::getCashRatio(),0],
+                'data' => [0,Accounting::getCashRatio(),0],
             ]))
             ->options([
                 'xaxis' => [
