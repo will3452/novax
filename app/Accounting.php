@@ -56,13 +56,13 @@ class Accounting
 
     public static function getStartDate()
     {
-        return Carbon::parse(self::getAccountingPeriod()->start)->subDay()
+        return Carbon::parse(self::getAccountingPeriod()->start)
         ->toDateTimeString();
     }
 
     public static function getEndDate()
     {
-        return Carbon::parse(self::getAccountingPeriod()->end)->addDay()
+        return Carbon::parse(self::getAccountingPeriod()->end)
         ->toDateTimeString();
     }
 
@@ -86,10 +86,10 @@ class Accounting
 
     public static function getCashTotal()
     {
-        $accounts = GeneralJournal::whereBetween('created_at', [
+        $id = GeneralJournalRemark::whereBetween('created_at', [
             self::getStartDate(), self::getEndDate()
-          ])->where('account', 'cash')->get();
-        dd($accounts);
+          ])->first()->id;
+        $accounts = GeneralJournal::where('general_journal_remark_id', $id)->where('account', 'cash')->get();
         return self::getTotal($accounts, true);
     }
 
