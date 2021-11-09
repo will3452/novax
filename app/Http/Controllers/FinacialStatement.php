@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\GeneralJournal;
 use Illuminate\Support\Carbon;
 use App\Models\AccountingPeriod;
+use App\Models\GeneralJournalRemark;
 
 class FinacialStatement extends Controller
 {
@@ -57,13 +58,15 @@ class FinacialStatement extends Controller
         $totalRevenues = Accounting::getTotal($revenues, true);
 
 
-        $capitalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%Capital%")->first()->name;
-        $withdrawalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%Drawing%")->first()->name;
+        $capitalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%capital%")->first()->name;
+        $withdrawalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%drawing%")->get()->name;
 
+        $ids = GeneralJournalRemark::whereBetween('created_at', [
+            Accounting::getStartDate(), Accounting::getEndDate()
+          ])->get()->pluck('id');
 
-        $capitals = Accounting::getAccounts([$capitalName]);
-
-        $drawings = Accounting::getAccounts([$withdrawalName]);
+        $capitals = GeneralJournal::whereIn('general_journal_remark_id', $ids)->whereIn('account', $capitalName)->get();
+        $drawings = GeneralJournal::whereIn('general_journal_remark_id', $ids)->whereIn('account', $withdrawalName)->get();
 
         $drawingTotal = Accounting::getTotal($drawings, true);
         $capitalTotal = Accounting::getTotal($capitals, true);
