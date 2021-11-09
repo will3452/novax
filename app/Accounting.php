@@ -161,4 +161,19 @@ class Accounting
     {
         return ($capital + $net) - $drawing;
     }
+
+    public static function getNetIncome()
+    {
+        $accountsExp = Account::where('type', 'EXPENSES')->get()->pluck('name');
+        $accountsRev = Account::where('type', 'REVENUE')->get()->pluck('name');
+
+        $revenues = self::getAccounts($accountsRev);
+
+        $expenses = self::getAccounts($accountsExp);
+
+        $totalExpenses = self::getTotal($expenses);
+        $totalRevenues = self::getTotal($revenues);
+
+        return $totalRevenues - $totalExpenses;
+    }
 }

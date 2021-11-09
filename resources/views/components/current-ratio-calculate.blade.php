@@ -3,7 +3,7 @@
         <table class="text-xl w-full">
             <tr>
                 <td rowspan="2">
-                    Current Ratio ({{\Carbon\Carbon::parse(\App\Accounting::getEndDate())->format('Y/m/d')}})
+                    Current Ratio ({{\Carbon\Carbon::parse(\App\Accounting::getAccountingPeriod()->end)->format('Y/m/d')}})
                 </td>
                 <td rowspan="2" class="px-2">
                     =

@@ -3,7 +3,7 @@
         <table class="text-xl w-full">
             <tr>
                 <td rowspan="2">
-                    Cash Ratio ({{\Carbon\Carbon::parse(\App\Accounting::getEndDate())->format('Y/m/d')}})
+                    Cash Ratio ({{\Carbon\Carbon::parse(\App\Accounting::getAccountingPeriod()->end)->format('Y/m/d')}})
                 </td>
                 <td rowspan="2" class="px-2">
                     =
