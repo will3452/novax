@@ -151,9 +151,10 @@ class Accounting
 
     public static function getAccounts($accounts) // array
     {
-        return GeneralJournal::whereIn('account', $accounts)->whereBetween('created_at', [
+        $ids = GeneralJournalRemark::whereBetween('created_at', [
             self::getStartDate(), self::getEndDate()
-          ])->get();
+          ])->get()->pluck('id');
+        return GeneralJournal::whereIn('general_journal_remark_id', $ids)->whereIn('account', $accounts)->get();
     }
 
     public static function getTotal($items, $normal=false)
