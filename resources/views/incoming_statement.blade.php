@@ -21,7 +21,7 @@
                 {{nova_get_setting('company_name')}}
             </h1>
             <h2 class="text-xl font-bold">
-                Incoming Statement
+                Income Statement
             </h2>
             <h3 class="font-bold">
                 {{\Carbon\Carbon::parse($period->end)->format('M d, Y')}}
