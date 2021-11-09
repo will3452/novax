@@ -160,6 +160,6 @@ class Accounting
 
     public static function getOwnerEquity($capital, $net, $drawing)
     {
-        return ($capital + $net) - $drawing;
+        return $capital - $net - $drawing;
     }
 }
