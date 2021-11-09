@@ -110,8 +110,8 @@ class FinacialStatement extends Controller
 
         $expenses = Accounting::getAccounts($accountsExp);
 
-        $totalExpenses = Accounting::getTotal($expenses);
-        $totalRevenues = Accounting::getTotal($revenues);
+        $totalExpenses = Accounting::getTotal($expenses, true);
+        $totalRevenues = Accounting::getTotal($revenues, true);
 
 
         $capitalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%capital%")->first()->name;
