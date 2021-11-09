@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\AccountingPeriod;
 use App\Models\TypeOfAccount;
 use Illuminate\Database\Seeder;
 
@@ -29,6 +30,12 @@ class DatabaseSeeder extends Seeder
                 'name'=>$account
             ]);
         }
+
+        AccountingPeriod::create([
+            'start'=>now(),
+            'end'=>now()->addDays(30),
+            'is_default'=>true,
+        ]);
 
         $this->call([
             AdminSeeder::class,

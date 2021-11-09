@@ -80,6 +80,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
+        return [];
         return [
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
@@ -179,7 +180,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                             \App\Nova\StockReport::class,
                         ]
                     ])->canSee(function ($request) {
-                        return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+                        return $request->user()->can('access record management');
                     }),
                     TopLevelResource::make([
                         'label'=>'ANALYSIS AND EVALUATION',
@@ -203,7 +204,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                             ])
                         ]
                     ])->canSee(function ($request) {
-                        return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+                        return $request->user()->can('access analysis and evaluation');
                     }),
                     TopLevelResource::make([
                         'label'=> 'FINANCIAL STATEMENTS ',
@@ -232,7 +233,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                             ]),
                         ]
                         ])->canSee(function ($request) {
-                            return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+                            return $request->user()->can('access financial statements');
                         }),
                     TopLevelResource::make([
                         'label'=> 'FINANCIAL RATIO',
@@ -254,7 +255,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                             ]),
                         ]
                     ])->canSee(function ($request) {
-                        return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+                        return $request->user()->can('access financial ratio');
                     }),
                     TopLevelResource::make([
                         'label'=> 'Data Setting',
@@ -265,23 +266,29 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                             \App\Nova\AccountingPeriod::class,
                         ]
                         ])->canSee(function ($request) {
-                            return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+                            return $request->user()->can('access data settings');
                         }),
-                        TopLevelResource::make([
-                            'label'=> 'Access',
-                            'icon'=>null,
-                            'resources'=>[
-                                \App\Nova\Role::class,
-                                \App\Nova\User::class,
-                            ]
-                            ]),
+                    TopLevelResource::make([
+                        'label'=> 'Access',
+                        'icon'=>null,
+                        'resources'=>[
+                            \App\Nova\Role::class,
+                            \App\Nova\User::class,
+                        ]
+                        ])->canSee(function ($request) {
+                            return $request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+                        }),
                 ]
                 ]),
-            new ProfileTool,
+            (new ProfileTool)->canSee(function ($request) {
+                return $request->user()->can('access profie');
+            }),
             (new BackupTool)->canSee(function ($request) {
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN);
             }),
-            (new NovaSettings),
+            (new NovaSettings)->canSee(function ($request) {
+                return $request->user()->can('access system settings') || $request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+            }),
         ];
     }
 

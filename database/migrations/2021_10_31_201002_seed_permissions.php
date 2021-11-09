@@ -7,42 +7,25 @@ use Illuminate\Database\Migrations\Migration;
 
 class SeedPermissions extends Migration
 {
-    public function createPermission($p)
-    {
-        $permissions = [
-            "view $p list",
-            "view $p details",
-            "create $p",
-            "update $p",
-            "delete $p",
-        ];
-
-        foreach ($permissions as $permission) {
-            \App\Models\Permission::create([
-                'group'=>Str::plural($p),
-                'name'=>$permission
-            ]);
-        }
-    }
     public function up()
     {
         $permissions = [
-            // 'asset',
-            'account',
-            // 'product',
-            'accounting period',
-            'general journal',
-            'location',
-            'role',
-            // 'stock take',
-            // 'stock report',
-            'user'
+            'access record management',
+            'access analysis and evaluation',
+            'access financial statements',
+            'access financial ratio',
+            'access data settings',
+            'access profie',
+            'access system settings',
         ];
 
 
 
-        foreach ($permissions as $p) {
-            $this->createPermission($p);
+        foreach ($permissions as $permission) {
+            \App\Models\Permission::create([
+                'group'=>'permissions',
+                'name'=>$permission
+            ]);
         }
     }
 }
