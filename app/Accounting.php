@@ -89,6 +89,7 @@ class Accounting
         $accounts = GeneralJournal::whereBetween('created_at', [
             self::getStartDate(), self::getEndDate()
           ])->where('account', 'cash')->get();
+        dd($accounts);
         return self::getTotal($accounts, true);
     }
 
