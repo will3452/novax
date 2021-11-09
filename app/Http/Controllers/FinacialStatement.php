@@ -26,8 +26,8 @@ class FinacialStatement extends Controller
 
         $expenses = Accounting::getAccounts($accountsExp);
 
-        $totalExpenses = Accounting::getTotal($expenses);
-        $totalRevenues = Accounting::getTotal($revenues);
+        $totalExpenses = Accounting::getTotal($expenses, true);
+        $totalRevenues = Accounting::getTotal($revenues, true);
 
 
         return view('incoming_statement', compact('period', 'expenses', 'revenues', 'totalExpenses', 'totalRevenues'));

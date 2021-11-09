@@ -171,8 +171,8 @@ class Accounting
 
         $expenses = self::getAccounts($accountsExp);
 
-        $totalExpenses = self::getTotal($expenses);
-        $totalRevenues = self::getTotal($revenues);
+        $totalExpenses = self::getTotal($expenses, true);
+        $totalRevenues = self::getTotal($revenues, true);
 
         return $totalRevenues - $totalExpenses;
     }
