@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <td >
-                    {{\App\Accounting::getTotal(\App\Accounting::getCurrentLiabilities())}}
+                    {{abs(\App\Accounting::getTotal(\App\Accounting::getCurrentLiabilities()))}}
                 </td>
             </tr>
         </table>

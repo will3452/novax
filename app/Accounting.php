@@ -89,9 +89,7 @@ class Accounting
         $accounts = GeneralJournal::whereBetween('created_at', [
             self::getStartDate(), self::getEndDate()
           ])->where('account', 'cash')->get();
-        $debit = $accounts->sum('debit');
-        $credit = $accounts->sum('credit');
-        return $debit - $credit;
+        return self::getTotal($accounts, true);
     }
 
     public static function getInventories()
