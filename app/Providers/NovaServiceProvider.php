@@ -117,7 +117,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     'categories' => [Accounting::getAccountingPeriodString()]
                 ],
             ])
-            ->width('1/2'),
+            ->width('1/3'),
             (new BarChart())
             ->title('Profitability Ratio')
             ->animations([
@@ -140,7 +140,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     'categories' => [Accounting::getAccountingPeriodString()]
                 ],
             ])
-            ->width('1/2'),
+            ->width('1/3'),
 
         ];
     }
