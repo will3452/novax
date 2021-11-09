@@ -135,6 +135,7 @@ class FinacialStatement extends Controller
         $net = $totalRevenues - $totalExpenses;
 
         $ownerEquity = Accounting::getOwnerEquity($capitalTotal, $net, $drawingTotal);
+
         $assetsCurrentTotal = Accounting::getTotal($assetsCurrent);
         $assetsNonCurrentTotal = Accounting::getTotal($assetsNonCurrent);
         $assetsTotal = ($assetsCurrentTotal + $assetsNonCurrentTotal);
