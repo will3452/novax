@@ -24,6 +24,7 @@
                 <td class="w-20"></td>
                 <td>
                     <x-return-on-assets-formula></x-return-on-assets-formula>
+                    <x-return-on-equity-formula></x-return-on-equity-formula>
                 </td>
             </tr>
             <tr>
