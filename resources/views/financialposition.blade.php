@@ -171,7 +171,7 @@
                 </tr>
                 <tr class="">
                     <td class="font-bold">
-                        Capital, {{\App\Accounting::getEndDate()}}
+                        Capital, ({{\Carbon\Carbon::parse('Y-m-d')}})
                     </td>
                     <td>
                         {{abs($ownerEquity)}}
