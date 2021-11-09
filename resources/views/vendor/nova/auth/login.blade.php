@@ -7,7 +7,7 @@ style="display: flex; justify-content:center; width:100%;margin-bottom:1em;"
 >
     <img src="/storage/{{nova_get_setting('logo')}}" alt="" style="width:150px !important;"/>
 </div>
-
+{{-- fixed --}}
 <form
     class="bg-white shadow rounded-lg p-8 max-w-login mx-auto"
     method="POST"
