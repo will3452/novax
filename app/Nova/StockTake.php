@@ -76,7 +76,7 @@ class StockTake extends Resource
                 ->rules(['required']),
 
             Number::make('Current Physical Count')
-                ->rules(['required']),
+                ->rules([]),
 
             Number::make('Difference', 'difference')->exceptOnForms(),
 
@@ -87,8 +87,7 @@ class StockTake extends Resource
                     ModelsStockTake::INVENTORY_DESCREPANCY_MISMANAGED_RETURNS => ModelsStockTake::INVENTORY_DESCREPANCY_MISMANAGED_RETURNS,
                     ModelsStockTake::INVENTORY_DESCREPANCY_MISPLACED => ModelsStockTake::INVENTORY_DESCREPANCY_MISPLACED,
                     ModelsStockTake::INVENTORY_DESCREPANCY_NONE => ModelsStockTake::INVENTORY_DESCREPANCY_NONE
-                ])
-                ->rules(['required'])
+                ]),
 
         ];
     }
