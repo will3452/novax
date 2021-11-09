@@ -10,6 +10,7 @@ use App\Models\GeneralJournalRemark;
 
 class Accounting
 {
+
     public static function getAccountingPeriod()
     {
         $period =  AccountingPeriod::where('is_default', true)->latest()->first();
@@ -18,6 +19,15 @@ class Accounting
         }
 
         return $period;
+    }
+
+    public static function getAccountingPeriodString()
+    {
+        $result = self::getAccountingPeriod();
+        if($result != 'please set accounting period'){
+            return self::getStartDate().' '.self::getEndDate();
+        }
+        return $result;
     }
 
     public static function getCurrentAssets()

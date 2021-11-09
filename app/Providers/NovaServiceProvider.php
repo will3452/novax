@@ -2,21 +2,23 @@
 
 namespace App\Providers;
 
+use App\Accounting;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
+use Coroowicaksono\ChartJsIntegration\BarChart;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use DigitalCreative\CollapsibleResourceManager\Resources\Group;
-use DigitalCreative\CollapsibleResourceManager\CollapsibleResourceManager;
 use DigitalCreative\CollapsibleResourceManager\Resources\ExternalLink;
 use DigitalCreative\CollapsibleResourceManager\Resources\NovaResource;
+use DigitalCreative\CollapsibleResourceManager\CollapsibleResourceManager;
 use DigitalCreative\CollapsibleResourceManager\Resources\TopLevelResource;
-use Laravel\Nova\Fields\Date;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -87,6 +89,36 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'Asia/Manila',
                 'Asia/Tokyo',
             ])->defaultTimezone('Africa/Manila'),
+            (new BarChart())
+            ->title('Liquidity Ratio')
+            ->animations([
+                'enabled' => true,
+                'easing' => 'easeinout',
+            ])
+            ->series(array([
+                'barPercentage' => 0.5,
+                'label' => 'Current Ratio',
+                'backgroundColor' => '#2A8192',
+                'data' => [Accounting::getCurrentRatio(),0],
+            ],[
+                'barPercentage' => 0.5,
+                'label' => 'Acid Test Ratio',
+                'backgroundColor' => '#1ADCC9',
+                'data' => [Accounting::getAcidRatio(),0],
+            ],
+            [
+                'barPercentage' => 0.5,
+                'label' => 'Cash Ratio',
+                'backgroundColor' => '#222',
+                'data' => [Accounting::getCashRatio(),0],
+            ]))
+            ->options([
+                'xaxis' => [
+                    'categories' => [Accounting::getAccountingPeriodString()]
+                ],
+            ])
+            ->width('2/3'),
+
         ];
     }
 

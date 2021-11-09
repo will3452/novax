@@ -24,6 +24,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "coreproc/nova-permissions-field": "*",
+        "coroowicaksono/chart-js-integration": "^0.3.5",
         "digital-creative/collapsible-resource-manager": "^1.3",
         "example/miami-ice": "*",
         "fruitcake/laravel-cors": "^2.0",
