@@ -53,5 +53,5 @@ Route::post('/register', function () {
 
 
 Route::get('/test', function () {
-    return Accounting::getTotal(Accounting::getInventories());
+    return 5.93 > 1.0;
 });
