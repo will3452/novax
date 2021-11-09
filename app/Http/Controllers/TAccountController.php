@@ -39,10 +39,10 @@ class TAccountController extends Controller
 
     public function generalJournal()
     {
-        $start_date = Carbon::parse(request()->from)
+        $start_date = Carbon::parse(request()->from)->subDay()
                              ->toDateTimeString();
 
-        $end_date = Carbon::parse(request()->to)
+        $end_date = Carbon::parse(request()->to)->addDay()
                              ->toDateTimeString();
 
         $records = Accounting::getGeneralJournal($start_date, $end_date);
