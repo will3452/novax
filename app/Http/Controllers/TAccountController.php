@@ -25,10 +25,10 @@ class TAccountController extends Controller
 
         $remark = GeneralJournalRemark::whereBetween('created_at', [
             $start_date, $end_date
-        ])->get()->pluck('id');
+        ])->get();
 
         if ($remark) {
-            $id = $remark->id;
+            $id = $remark->pluck('id');
         }
 
         if ($id) {
