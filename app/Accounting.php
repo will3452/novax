@@ -12,7 +12,7 @@ class Accounting
     public static function getAccountingPeriod()
     {
         $period =  AccountingPeriod::where('is_default', true)->latest()->first();
-        if ($period == null) {
+        if (is_null($period)) {
             return 'please set accounting period';
         }
 
