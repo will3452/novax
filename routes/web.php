@@ -34,7 +34,7 @@ Route::get('incoming-statement', [FinacialStatement::class, 'incomingStatement']
 Route::get('financial-position', [FinacialStatement::class, 'financialposition']);
 Route::get('/owners-equity', [FinacialStatement::class, 'ownersEquity']);
 Route::get('/liquidity-ratio', [FinancialRatioController::class, 'liquidityRatio']);
-Route::get('/profitability-ratio', [ProfitabiltyController::class, 'returnOnAssets']);
+Route::get('/profitability-ratio', [ProfitabiltyController::class, 'index']);
 Route::get('/register', function () {
     return view('register');
 });
