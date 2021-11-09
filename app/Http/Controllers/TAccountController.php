@@ -21,10 +21,15 @@ class TAccountController extends Controller
                              ->toDateTimeString();
 
         $records = [];
+        $id = null;
 
-        $id = GeneralJournalRemark::whereBetween('created_at', [
+        $remark = GeneralJournalRemark::whereBetween('created_at', [
             $start_date, $end_date
-        ])->first()->id;
+        ])->first();
+
+        if ($remark) {
+            $id = $remark->id;
+        }
 
         if ($id) {
             $records =  GeneralJournal::where('general_journal_remark_id', $id)->where('account', "LIKE", "%".request()->account."%")->get();
