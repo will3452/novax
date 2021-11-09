@@ -89,8 +89,8 @@ class Accounting
         $id = GeneralJournalRemark::whereBetween('created_at', [
             self::getStartDate(), self::getEndDate()
           ])->first()->id;
-        $accounts = GeneralJournal::where('general_journal_remark_id', $id)->where('account', 'cash')->get();
-        return self::getTotal($accounts, true);
+        $accounts = GeneralJournal::where('general_journal_remark_id', $id)->where('account', 'LIKE', "%cash%")->get();
+        return self::getTotal($accounts);
     }
 
     public static function getInventories()
