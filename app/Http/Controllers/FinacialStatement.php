@@ -26,18 +26,16 @@ class FinacialStatement extends Controller
 
         $expenses = Accounting::getAccounts($accountsExp);
 
-        $totalExpenses = 0;
-        $totalRevenues = 0;
+        $totalExpenses = Accounting::getTotal($expenses, true);
+        $totalRevenues = Accounting::getTotal($revenues, true);
 
-        foreach ($expenses as $item) {
-            $totalExpenses += ($item->debit ?? $item->credit);
-        }
+        $expensesGroup = $expenses->groupBy('account');
+        $revenuesGroup = $revenues->groupBy('account');
 
-        foreach ($revenues as $item) {
-            $totalRevenues += ($item->debit ?? $item->credit);
-        }
-
-        return view('incoming_statement', compact('period', 'expenses', 'revenues', 'totalExpenses', 'totalRevenues'));
+        return view(
+            'incoming_statement',
+            compact('period', 'expenses', 'revenues', 'totalExpenses', 'totalRevenues', 'expensesGroup', 'revenuesGroup')
+        );
     }
 
     public function ownersEquity()

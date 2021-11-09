@@ -36,13 +36,13 @@
                     Revenues
                 </th>
             </tr>
-            @foreach ($revenues as $item)
+            @foreach ($revenuesGroup as $key=>$item)
             <tr>
-                <td class="">
-                    {{$item->account}}
-                </td >
-                <td class="">
-                    {{$item->credit ?? $item->debit}}
+                <td class="pl-2">
+                    {{$key}}
+                </td>
+                <td>
+                    {{abs(\App\Accounting::getTotal($item))}}
                 </td>
             </tr>
             @endforeach
@@ -61,13 +61,13 @@
                     Expenses
                 </th>
             </tr>
-            @foreach ($expenses as $item)
+            @foreach ($expensesGroup as $item)
             <tr>
-                <td class="text-left ">
-                    {{$item->account}}
+                <td class="pl-2">
+                    {{$key}}
                 </td>
-                <td class="text-left " style="width:200px;">
-                    {{$item->credit ?? $item->debit}}
+                <td>
+                    {{abs(\App\Accounting::getTotal($item))}}
                 </td>
             </tr>
             @endforeach
