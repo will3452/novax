@@ -60,7 +60,11 @@ class Accounting
 
     public static function getCurrentRatio()
     {
-        return self::getTotal(self::getCurrentAssets()) / self::getTotal(self::getCurrentLiabilities());
+        try{
+            return self::getTotal(self::getCurrentAssets()) / self::getTotal(self::getCurrentLiabilities());
+        }catch(\Exception $e){
+            return 0;
+        }
     }
 
 
@@ -119,12 +123,20 @@ class Accounting
 
     public static function getCashRatio()
     {
+        try{
         return self::getCashTotal() / self::getTotal(self::getCurrentLiabilities());
+        }catch(\Exception $e){
+            return 0;
+        }
     }
 
     public static function getAcidRatio()
     {
+        try{
         return self::getQuickAssets() / self::getTotal(self::getCurrentLiabilities());
+        }catch(\Exception $e){
+            return 0;
+        }
     }
 
     public static function getGeneralJournal($start, $end)
@@ -201,12 +213,20 @@ class Accounting
 
     public static function getReturnOnAssetsRatio()//%
     {
+        try{
         return (self::getNetIncome() / self::getTotalAssets()) * 100;
+        }catch(\Exception $e){
+            return 0;
+        }
     }
 
     public static function getReturnOnEquity()
     {
+        try{
         return (self::getNetIncome() / self::getCapitalTotal()) * 100;
+        }catch(\Exception $e){
+            return 0;
+        }
     }
 
     public static function getCapitalTotal()
