@@ -61,15 +61,9 @@ class FinacialStatement extends Controller
         $withdrawalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%drawing%")->orWhere('name', 'LIKE', "%Drawing%")->first()->name;
 
 
-        $capitals = GeneralJournal::where('account', $capitalName)
-        ->whereBetween('created_at', [
-            $start_date,$end_date
-        ])->get();
+        $capitals = GeneralJournal::getAccounts($capitalName);
 
-        $drawings = GeneralJournal::where('account', $withdrawalName)
-        ->whereBetween('created_at', [
-            $start_date,$end_date
-        ])->get();
+        $drawings = GeneralJournal::getAccounts($withdrawalName);
 
         $drawingTotal = Accounting::getTotal($drawings, true);
         $capitalTotal = Accounting::getTotal($capitals, true);
