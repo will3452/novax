@@ -188,4 +188,9 @@ class Accounting
 
         return $assetsTotal;
     }
+
+    public static function getReturnOnAssetsRatio()//%
+    {
+        return (self::getNetIncome() / self::getTotalAssets()) * 100;
+    }
 }

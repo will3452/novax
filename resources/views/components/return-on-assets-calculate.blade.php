@@ -16,7 +16,7 @@
                 </td>
                 <td rowspan="2">
                     <span class="p-2 bg-yellow-200 mx-2 rounded">
-
+                        {{\App\Accounting::getReturnOnAssetsRatio()}} %
                     </span>
 
                 </td>
