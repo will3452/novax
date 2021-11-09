@@ -20,11 +20,15 @@ class TAccountController extends Controller
         $end_date = Carbon::parse(request()->to)->addDay()
                              ->toDateTimeString();
 
+        $records = [];
+
         $id = GeneralJournalRemark::whereBetween('created_at', [
             $start_date, $end_date
         ])->first()->id;
 
-        $records =  GeneralJournal::where('general_journal_remark_id', $id)->where('account', "LIKE", "%".request()->account."%")->get();
+        if ($id) {
+            $records =  GeneralJournal::where('general_journal_remark_id', $id)->where('account', "LIKE", "%".request()->account."%")->get();
+        }
 
         return view('t-accounts', compact('records'));
     }
