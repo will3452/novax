@@ -86,10 +86,10 @@ class Accounting
 
     public static function getCashTotal()
     {
-        $id = GeneralJournalRemark::whereBetween('created_at', [
+        $ids = GeneralJournalRemark::whereBetween('created_at', [
             self::getStartDate(), self::getEndDate()
-          ])->first()->id;
-        $accounts = GeneralJournal::where('general_journal_remark_id', $id)->where('account', 'LIKE', "%cash%")->get();
+          ])->get()->pluck('id');
+        $accounts = GeneralJournal::whereIn('general_journal_remark_id', $ids)->where('account', 'LIKE', "%cash%")->get();
         return self::getTotal($accounts);
     }
 
