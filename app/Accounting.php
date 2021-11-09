@@ -90,6 +90,7 @@ class Accounting
             self::getStartDate(), self::getEndDate()
           ])->first()->id;
         $accounts = GeneralJournal::where('general_journal_remark_id', $id)->where('account', 'cash')->get();
+        dd($accounts);
         return self::getTotal($accounts, true);
     }
 
