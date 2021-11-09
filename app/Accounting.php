@@ -90,7 +90,8 @@ class Accounting
             self::getStartDate(), self::getEndDate()
           ])->first()->id;
         $accounts = GeneralJournal::where('general_journal_remark_id', $id)->where('account', 'LIKE', "%cash%")->get();
-        return self::getTotal($accounts);
+        dd($accounts);
+        return self::getTotal($accounts, true);
     }
 
     public static function getInventories()
