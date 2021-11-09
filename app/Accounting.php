@@ -120,9 +120,10 @@ class Accounting
 
     public static function getGeneralJournal($start, $end)
     {
-        return GeneralJournal::whereBetween('created_at', [
+        $ids = GeneralJournalRemark::whereBetween('created_at', [
             $start, $end
-          ])->get()->groupBy(function ($q) {
+          ])->get()->pluck('id');
+        return GeneralJournal::whereIn('general_journal_remark_id', $ids)->get()->groupBy(function ($q) {
               return $q->general_journal_remark_id;
           });
     }
