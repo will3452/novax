@@ -74,8 +74,7 @@ class Asset extends Resource
                 ->sortable(),
             Number::make('Purchase Cost')
                 ->rules(['required']),
-            Text::make('Location')
-                ->rules(['required']),
+            Text::make('Location'),
             Text::make('Owner')
                 ->rules(['required']),
             Text::make('Users')

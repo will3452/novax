@@ -67,7 +67,6 @@ class StockTake extends Resource
                 ->rules(['required']),
 
             Select::make('Location')
-                ->rules(['required'])
                 ->searchable()
                 ->options(function () {
                     return Location::where('user_id', auth()->id())->pluck('name', 'name');
