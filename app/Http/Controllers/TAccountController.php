@@ -16,7 +16,7 @@ class TAccountController extends Controller
         $start_date = Carbon::parse(request()->from)->subDay()
                              ->toDateTimeString();
 
-        return $start_date;
+        dd($start_date);
         //
 
         $end_date = Carbon::parse(request()->to)->addDay()
