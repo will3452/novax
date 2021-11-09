@@ -25,14 +25,14 @@ class TAccountController extends Controller
 
         $remark = GeneralJournalRemark::whereBetween('created_at', [
             $start_date, $end_date
-        ])->first();
+        ])->get()->pluck('id');
 
         if ($remark) {
             $id = $remark->id;
         }
 
         if ($id) {
-            $records =  GeneralJournal::where('general_journal_remark_id', $id)->where('account', "LIKE", "%".request()->account."%")->get();
+            $records =  GeneralJournal::whereIn('general_journal_remark_id', $id)->where('account', "LIKE", "%".request()->account."%")->get();
         }
 
         return view('t-accounts', compact('records'));
