@@ -143,7 +143,7 @@ class FinacialStatement extends Controller
 
         $liabilitiesCurrentTotal = Accounting::getTotal($liabilitiesCurrent);
         $liabilitiesNonCurrentTotal = Accounting::getTotal($liabilitiesNonCurrent);
-        $liabilitiesTotal = ($liabilitiesCurrentTotal + $liabilitiesNonCurrentTotal) + $ownerEquity;
+        $liabilitiesTotal = (abs($liabilitiesCurrentTotal) + abs($liabilitiesNonCurrentTotal)) + abs($ownerEquity);
 
         $assetsCurrentGroups = $assetsCurrent->groupBy('account');
         $assetsNonCurrentGroups = $assetsNonCurrent->groupBy('account');
