@@ -68,7 +68,7 @@ class Accounting
     public static function getTrialAccounts()
     {
         return GeneralJournal::whereBetween('created_at', [
-            Carbon::parse(self::getStartDate())->subDay()->toDateTimeString(), Carbon::parse(self::getEndDate())->subDay()->toDateTimeString()
+            self::getStartDate(), self::getEndDate()
           ])->get()->groupBy(function ($a) {
               return $a->account;
           });
@@ -77,14 +77,14 @@ class Accounting
     public static function getTrialAccount($account)
     {
         return GeneralJournal::whereBetween('created_at', [
-            Carbon::parse(self::getStartDate())->subDay()->toDateTimeString(), Carbon::parse(self::getEndDate())->subDay()->toDateTimeString()
+            self::getStartDate(), self::getEndDate()
           ])->where('account', $account)->get();
     }
 
     public static function getCashTotal()
     {
         $accounts = GeneralJournal::whereBetween('created_at', [
-            Carbon::parse(self::getStartDate())->subDay()->toDateTimeString(), Carbon::parse(self::getEndDate())->subDay()->toDateTimeString()
+            self::getStartDate(), self::getEndDate()
           ])->where('account', 'cash')->get();
         $debit = $accounts->sum('debit');
         $credit = $accounts->sum('credit');
@@ -127,7 +127,7 @@ class Accounting
     public static function getAccounts($accounts) // array
     {
         return GeneralJournal::whereIn('account', $accounts)->whereBetween('created_at', [
-            Carbon::parse(self::getStartDate())->subDay()->toDateTimeString(), Carbon::parse(self::getEndDate())->subDay()->toDateTimeString()
+            self::getStartDate(), self::getEndDate()
           ])->get();
     }
 
