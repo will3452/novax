@@ -23,7 +23,7 @@
                 </td>
                 <td class="w-20"></td>
                 <td>
-
+                    <x-return-on-assets-formula></x-return-on-assets-formula>
                 </td>
             </tr>
             <tr>

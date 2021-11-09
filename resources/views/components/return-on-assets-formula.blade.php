@@ -13,7 +13,6 @@
             </td>
         </tr>
         <tr>
-
             <td>
                 Total Assets
             </td>
