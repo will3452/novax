@@ -80,14 +80,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
-        return [(new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
-            'Africa/Nairobi',
-            'America/Mexico_City',
-            'Australia/Sydney',
-            'Europe/Paris',
-            'Asia/Manila',
-            'Asia/Tokyo',
-        ])->defaultTimezone('Africa/Manila')];
         return [
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
