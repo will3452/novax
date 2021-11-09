@@ -124,7 +124,7 @@
                     <td class="text-center border">
                         Balance
                     </td>
-                    @if (\App\Models\Account::getNormalBalance($item->account) == \App\Models\Account::NORMAL_BALANCE_DEBIT)
+                    @if (!is_null(request()->account) && \App\Models\Account::getNormalBalance(request()->account) == \App\Models\Account::NORMAL_BALANCE_DEBIT)
                     <td class="text-center border font-bold">
                         {{$totalDebs - $totalCreds}}
                     </td>
