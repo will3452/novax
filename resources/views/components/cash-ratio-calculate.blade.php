@@ -9,14 +9,14 @@
                     =
                 </td>
                 <td class="border-b-2 border-black">
-                    {{\App\Accounting::getCashTotal()}}
+                    {{abs(\App\Accounting::getCashTotal())}}
                 </td>
                 <td rowspan="2" class="px-2">
                     =
                 </td>
                 <td rowspan="2">
                     <span class="p-2 bg-yellow-200 mx-2 rounded">
-                        {{number_format(\App\Accounting::getCashRatio(), 2)}}
+                        {{number_format(abs(\App\Accounting::getCashRatio()), 2)}}
                     </span>
 
                 </td>

@@ -9,21 +9,21 @@
                     =
                 </td>
                 <td class="border-b-2 border-black">
-                    {{\App\Accounting::getQuickAssets()}}
+                    {{abs(\App\Accounting::getQuickAssets())}}
                 </td>
                 <td rowspan="2" class="px-2">
                     =
                 </td>
                 <td rowspan="2">
                     <span class="p-2 bg-yellow-200 mx-2 rounded">
-                        {{number_format(\App\Accounting::getAcidRatio(), 2)}}
+                        {{number_format(abs(\App\Accounting::getAcidRatio()), 2)}}
                     </span>
 
                 </td>
             </tr>
             <tr>
                 <td >
-                    {{\App\Accounting::getTotal(\App\Accounting::getCurrentLiabilities())}}
+                    {{\App\Accounting::getTotal(abs(\App\Accounting::getCurrentLiabilities()))}}
                 </td>
             </tr>
         </table>
