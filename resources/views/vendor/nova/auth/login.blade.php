@@ -3,7 +3,7 @@
 @section('content')
 
 <div
-style="display: flex; justify-content:center; width:100%;"
+style="display: flex; justify-content:center; width:100%;margin-bottom:1em;"
 >
     <img src="/storage/{{nova_get_setting('logo')}}" alt="" style="width:150px !important;"/>
 </div>
