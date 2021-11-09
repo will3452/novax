@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <td >
-
+                    {{number_format(abs(\App\Accounting::getTotalAssets()), 2)}}
                 </td>
             </tr>
         </table>

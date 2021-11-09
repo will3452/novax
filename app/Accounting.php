@@ -176,4 +176,16 @@ class Accounting
 
         return $totalRevenues - $totalExpenses;
     }
+
+    public static function getTotalAssets()
+    {
+        $assetsCurrent =  self::getCurrentAssets();
+        $assetsNonCurrent =  self::getNonCurrentAssets();
+
+        $assetsCurrentTotal = self::getTotal($assetsCurrent);
+        $assetsNonCurrentTotal = self::getTotal($assetsNonCurrent);
+        $assetsTotal = ($assetsCurrentTotal + $assetsNonCurrentTotal);
+
+        return $assetsTotal;
+    }
 }
