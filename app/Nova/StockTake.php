@@ -69,7 +69,7 @@ class StockTake extends Resource
             Select::make('Location')
                 ->searchable()
                 ->options(function () {
-                    return Location::where('user_id', auth()->id())->pluck('name', 'name');
+                    return Location::get()->pluck('name', 'name');
                 }),
 
             Number::make('Initial Number Of Stocks')
