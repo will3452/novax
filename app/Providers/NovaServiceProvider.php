@@ -80,74 +80,78 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
-        return [];
-        return [
-            (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
-                'Africa/Nairobi',
-                'America/Mexico_City',
-                'Australia/Sydney',
-                'Europe/Paris',
-                'Asia/Manila',
-                'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila'),
-            (new BarChart())
-            ->title('Liquidity Ratio')
-            ->animations([
-                'enabled' => true,
-                'easing' => 'easeinout',
-            ])
-            ->series(array([
-                'barPercentage' => 0.4,
-                'label' => 'Current Ratio',
-                'backgroundColor' => '#2A8192',
-                'data' => [abs(Accounting::getCurrentRatio())],
-            ],[
-                'barPercentage' => 0.4,
-                'label' => 'Acid Test Ratio',
-                'backgroundColor' => '#1ADCC9',
-                'data' => [abs(Accounting::getAcidRatio())],
-            ],
-            [
-                'barPercentage' => 0.4,
-                'label' => 'Cash Ratio',
-                'backgroundColor' => '#222',
-                'data' => [abs(Accounting::getCashRatio())],
-            ]))
-            ->options([
-                'xaxis' => [
-                    'categories' => [Accounting::getAccountingPeriodString()]
+        try{
+            return [
+                (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
+                    'Africa/Nairobi',
+                    'America/Mexico_City',
+                    'Australia/Sydney',
+                    'Europe/Paris',
+                    'Asia/Manila',
+                    'Asia/Tokyo',
+                ])->defaultTimezone('Africa/Manila'),
+                (new BarChart())
+                ->title('Liquidity Ratio')
+                ->animations([
+                    'enabled' => true,
+                    'easing' => 'easeinout',
+                ])
+                ->series(array([
+                    'barPercentage' => 0.4,
+                    'label' => 'Current Ratio',
+                    'backgroundColor' => '#2A8192',
+                    'data' => [abs(Accounting::getCurrentRatio())],
+                ],[
+                    'barPercentage' => 0.4,
+                    'label' => 'Acid Test Ratio',
+                    'backgroundColor' => '#1ADCC9',
+                    'data' => [abs(Accounting::getAcidRatio())],
                 ],
-            ])
-            ->width('1/3')->canSee(function ($request) {
-                return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
-            }),
-            (new BarChart())
-            ->title('Profitability Ratio')
-            ->animations([
-                'enabled' => true,
-                'easing' => 'easeinout',
-            ])
-            ->series(array([
-                'barPercentage' => 0.4,
-                'label' => 'Return on Assets',
-                'backgroundColor' => '#2A8192',
-                'data' => [abs(Accounting::getReturnOnAssetsRatio())],
-            ],[
-                'barPercentage' => 0.4,
-                'label' => 'Return on Equity',
-                'backgroundColor' => '#1ADCC9',
-                'data' => [abs(Accounting::getReturnOnEquity())],
-            ]))
-            ->options([
-                'xaxis' => [
-                    'categories' => [Accounting::getAccountingPeriodString()]
-                ],
-            ])
-            ->width('1/3')->canSee(function ($request) {
-                return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
-            }),
+                [
+                    'barPercentage' => 0.4,
+                    'label' => 'Cash Ratio',
+                    'backgroundColor' => '#222',
+                    'data' => [abs(Accounting::getCashRatio())],
+                ]))
+                ->options([
+                    'xaxis' => [
+                        'categories' => [Accounting::getAccountingPeriodString()]
+                    ],
+                ])
+                ->width('1/3')->canSee(function ($request) {
+                    return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+                }),
+                (new BarChart())
+                ->title('Profitability Ratio')
+                ->animations([
+                    'enabled' => true,
+                    'easing' => 'easeinout',
+                ])
+                ->series(array([
+                    'barPercentage' => 0.4,
+                    'label' => 'Return on Assets',
+                    'backgroundColor' => '#2A8192',
+                    'data' => [abs(Accounting::getReturnOnAssetsRatio())],
+                ],[
+                    'barPercentage' => 0.4,
+                    'label' => 'Return on Equity',
+                    'backgroundColor' => '#1ADCC9',
+                    'data' => [abs(Accounting::getReturnOnEquity())],
+                ]))
+                ->options([
+                    'xaxis' => [
+                        'categories' => [Accounting::getAccountingPeriodString()]
+                    ],
+                ])
+                ->width('1/3')->canSee(function ($request) {
+                    return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+                }),
 
-        ];
+            ];
+        }
+        catch (\exception $e){
+            return [];
+        }
     }
 
     /**
