@@ -196,6 +196,11 @@ class Accounting
 
     public static function getReturnOnEquity()
     {
+        return (self::getNetIncome() / self::getCapitalTotal()) * 100;
+    }
+
+    public static function getCapitalTotal()
+    {
         $capitalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%capital%")->first()->name;
         $withdrawalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%drawing%")->first()->name;
 
@@ -213,6 +218,6 @@ class Accounting
         $drawingTotal = self::getTotal($drawings, true);
         $capitalTotal = self::getTotal($capitals, true);
 
-        return (self::getNetIncome() / self::getOwnerEquity($capitalTotal, self::getNetIncome(), $drawingTotal)) * 100;
+        return self::getOwnerEquity($capitalTotal, self::getNetIncome(), $drawingTotal);
     }
 }

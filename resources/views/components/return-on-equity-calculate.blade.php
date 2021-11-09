@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <td >
-                    {{number_format(abs(\App\Accounting::getOwnerEquity()), 2)}}
+                    {{number_format(abs(\App\Accounting::getCapitalTotal()), 2)}}
                 </td>
             </tr>
         </table>
