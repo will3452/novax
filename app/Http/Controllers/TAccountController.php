@@ -13,10 +13,10 @@ class TAccountController extends Controller
 {
     public function index()
     {
-        $start_date = Carbon::parse(request()->from)
+        $start_date = Carbon::parse(request()->from)->subDay()
                              ->toDateTimeString();
 
-        $end_date = Carbon::parse(request()->to)
+        $end_date = Carbon::parse(request()->to)->addDay()
                              ->toDateTimeString();
         $records =  GeneralJournal::where('account', "LIKE", "%".request()->account."%")->whereBetween('created_at', [
          $start_date, $end_date
