@@ -124,8 +124,8 @@ class Accounting
             $start, $end
           ])->get()->pluck('id');
         return GeneralJournal::whereIn('general_journal_remark_id', $ids)->get()->groupBy(function ($q) {
-              return $q->general_journal_remark_id;
-          });
+            return $q->general_journal_remark_id;
+        });
     }
 
     public static function getAccounts($accounts) // array
@@ -160,6 +160,6 @@ class Accounting
 
     public static function getOwnerEquity($capital, $net, $drawing)
     {
-        return $capital - $net - $drawing;
+        return ($capital + $net) - $drawing;
     }
 }
