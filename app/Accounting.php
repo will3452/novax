@@ -55,20 +55,20 @@ class Accounting
 
     public static function getStartDate()
     {
-        return Carbon::parse(self::getAccountingPeriod()->start)->subDay()
+        return Carbon::parse(self::getAccountingPeriod()->start)
         ->toDateTimeString();
     }
 
     public static function getEndDate()
     {
-        return Carbon::parse(self::getAccountingPeriod()->end)->addDay()
+        return Carbon::parse(self::getAccountingPeriod()->end)
         ->toDateTimeString();
     }
 
     public static function getTrialAccounts()
     {
         return GeneralJournal::whereBetween('created_at', [
-            self::getStartDate(), self::getEndDate()
+            Carbon::parse(self::getStartDate())->subDay()->toDateTimeString(), Carbon::parse(self::getEndDate())->subDay()->toDateTimeString()
           ])->get()->groupBy(function ($a) {
               return $a->account;
           });
@@ -77,14 +77,14 @@ class Accounting
     public static function getTrialAccount($account)
     {
         return GeneralJournal::whereBetween('created_at', [
-            self::getStartDate(), self::getEndDate()
+            Carbon::parse(self::getStartDate())->subDay()->toDateTimeString(), Carbon::parse(self::getEndDate())->subDay()->toDateTimeString()
           ])->where('account', $account)->get();
     }
 
     public static function getCashTotal()
     {
         $accounts = GeneralJournal::whereBetween('created_at', [
-            self::getStartDate(), self::getEndDate()
+            Carbon::parse(self::getStartDate())->subDay()->toDateTimeString(), Carbon::parse(self::getEndDate())->subDay()->toDateTimeString()
           ])->where('account', 'cash')->get();
         $debit = $accounts->sum('debit');
         $credit = $accounts->sum('credit');
@@ -127,7 +127,7 @@ class Accounting
     public static function getAccounts($accounts) // array
     {
         return GeneralJournal::whereIn('account', $accounts)->whereBetween('created_at', [
-            self::getStartDate(), self::getEndDate()
+            Carbon::parse(self::getStartDate())->subDay()->toDateTimeString(), Carbon::parse(self::getEndDate())->subDay()->toDateTimeString()
           ])->get();
     }
 
