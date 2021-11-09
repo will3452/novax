@@ -32,6 +32,8 @@ class FinacialStatement extends Controller
         $expensesGroup = $expenses->groupBy('account');
         $revenuesGroup = $revenues->groupBy('account');
 
+        dd($expensesGroup);
+
         return view(
             'incoming_statement',
             compact('period', 'expenses', 'revenues', 'totalExpenses', 'totalRevenues', 'expensesGroup', 'revenuesGroup')
