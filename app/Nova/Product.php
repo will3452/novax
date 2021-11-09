@@ -64,8 +64,7 @@ class Product extends Resource
             Text::make('Name')
                 ->rules(['required']),
 
-            Textarea::make('Description')
-                ->alwaysShow()
+            Text::make('Description')
                 ->rules(['required']),
 
             Number::make('Unit Cost')
