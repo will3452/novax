@@ -2,7 +2,11 @@
 
 @section('content')
 
-@include('nova::auth.partials.header')
+<div
+style="display: flex; justify-content:center; width:100%;"
+>
+    <img src="/storage/{{nova_get_setting('logo')}}" alt="" styl="width:100px !important;"/>
+</div>
 
 <form
     class="bg-white shadow rounded-lg p-8 max-w-login mx-auto"
