@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Accounting;
 use App\Models\Account;
 use Pdmfc\NovaCards\Info;
 use Laravel\Nova\Fields\ID;
@@ -14,6 +15,12 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class GeneralJournalRemark extends Resource
 {
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        return $query->whereBetween('created_at', [
+            Accounting::getStartDate(), Accounting::getEndDate()
+        ]);
+    }
 
     public function icon()
     {
@@ -76,7 +83,7 @@ class GeneralJournalRemark extends Resource
         return [
             (new Info())
             ->info('Please Add Account first!')
-            ->canSee(function(){
+            ->canSee(function () {
                 return Account::count() == 0;
             })
         ];
