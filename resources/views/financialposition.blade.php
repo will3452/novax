@@ -50,7 +50,7 @@
                             {{$key}}
                         </td>
                         <td>
-                            {{\App\Accounting::getTotal($item)}}
+                            {{abs(\App\Accounting::getTotal($item))}}
                         </td>
                     </tr>
                  @endforeach
@@ -79,7 +79,7 @@
                         {{$key}}
                     </td>
                     <td>
-                        {{\App\Accounting::getTotal($item)}}
+                        {{abs(\App\Accounting::getTotal($item))}}
                     </td>
                 </tr>
                  @endforeach
@@ -88,7 +88,7 @@
                          Total Nonurrent Assets
                      </td>
                      <td class="font-bold">
-                         {{$assetsNonCurrentTotal}}
+                         {{abs($assetsNonCurrentTotal)}}
                      </td>
                  </tr>
 
@@ -98,7 +98,7 @@
                     </td>
                     <td  style="width:70px;">
                         <x-total>
-                            {{$assetsTotal}}
+                            {{abs($assetsTotal)}}
                         </x-total>
                     </td>
 
@@ -125,7 +125,7 @@
                             {{$key}}
                         </td>
                         <td>
-                            {{\App\Accounting::getTotal($item)}}
+                            {{abs(\App\Accounting::getTotal($item))}}
                         </td>
                     </tr>
                  @endforeach
@@ -134,7 +134,7 @@
                         Total Current Liabilities
                     </td>
                     <td class="font-bold">
-                        {{$liabilitiesCurrentTotal}}
+                        {{abs($liabilitiesCurrentTotal)}}
                     </td>
                 </tr>
                 <tr>
@@ -151,7 +151,7 @@
                             {{$key}}
                         </td>
                         <td>
-                            {{\App\Accounting::getTotal($item)}}
+                            {{abs(\App\Accounting::getTotal($item))}}
                         </td>
                     </tr>
                  @endforeach
@@ -160,7 +160,7 @@
                         Total NonCurrent Liabilities
                     </td>
                     <td class="font-bold">
-                        {{$liabilitiesNonCurrentTotal}}
+                        {{abs($liabilitiesNonCurrentTotal)}}
                     </td>
                 </tr>
                  <tr>
@@ -174,7 +174,7 @@
                         Owner's Equity
                     </td>
                     <td>
-                        {{$ownerEquity}}
+                        {{abs($ownerEquity)}}
                     </td>
                  </tr>
                 <th style="color:white">
@@ -185,7 +185,7 @@
                         Total Liabilities and Equity
                     </td>
                     <td class="" style="width:70px;">
-                        <x-total>{{$liabilitiesTotal}}</x-total>
+                        <x-total>{{abs($liabilitiesTotal)}}</x-total>
                     </td>
                 </tr>
             </table>
