@@ -236,14 +236,14 @@ class Accounting
         $withdrawalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%Drawing%")->first()->name;
 
         $ids = GeneralJournalRemark::whereBetween('created_at', [
-            Accounting::getStartDate(), Accounting::getEndDate()
+            Self::getStartDate(), Self::getEndDate()
           ])->get()->pluck('id');
 
         $capitals = GeneralJournal::whereIn('general_journal_remark_id', $ids)->where('account', 'LIKE', "%$capitalName%")->get();
         $drawings = GeneralJournal::whereIn('general_journal_remark_id', $ids)->where('account', 'LIKE',"%$withdrawalName%")->get();
 
-        $drawingTotal = Accounting::getTotal($drawings, true);
-        $capitalTotal = Accounting::getTotal($capitals, true);
+        $drawingTotal = Self::getTotal($drawings, true);
+        $capitalTotal = Self::getTotal($capitals, true);
 
         return self::getOwnerEquity($capitalTotal, self::getNetIncome(), $drawingTotal);
     }
