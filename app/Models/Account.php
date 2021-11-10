@@ -15,9 +15,9 @@ class Account extends Model
 
     public static function getNormalBalance($account)
     {
-        $hasAccount = self::where('name', 'LIKE', "$account")->first();
+        $hasAccount = self::where('name', 'LIKE', "%$account%")->first();
         if($hasAccount){
-            return self::where('name', 'LIKE', "$account")->first()->normal_balance;
+            return self::where('name', 'LIKE', "%$account%")->first()->normal_balance;
         }
     }
 }
