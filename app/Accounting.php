@@ -232,22 +232,18 @@ class Accounting
 
     public static function getCapitalTotal()
     {
-        $capitalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%capital%")->first()->name;
-        $withdrawalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%drawing%")->first()->name;
+        $capitalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%Capital%")->first()->name;
+        $withdrawalName = Account::where('type', 'CAPITAL')->where('name', 'LIKE', "%Drawing%")->first()->name;
 
+        $ids = GeneralJournalRemark::whereBetween('created_at', [
+            Accounting::getStartDate(), Accounting::getEndDate()
+          ])->get()->pluck('id');
 
-        $capitals = GeneralJournal::where('account', $capitalName)
-        ->whereBetween('created_at', [
-            self::getStartDate(),self::getEndDate()
-        ])->get();
+        $capitals = GeneralJournal::whereIn('general_journal_remark_id', $ids)->where('account', 'LIKE', "%$capitalName%")->get();
+        $drawings = GeneralJournal::whereIn('general_journal_remark_id', $ids)->where('account', 'LIKE',"%$withdrawalName%")->get();
 
-        $drawings = GeneralJournal::where('account', $withdrawalName)
-        ->whereBetween('created_at', [
-            self::getStartDate(),self::getEndDate()
-        ])->get();
-
-        $drawingTotal = self::getTotal($drawings, true);
-        $capitalTotal = self::getTotal($capitals, true);
+        $drawingTotal = Accounting::getTotal($drawings, true);
+        $capitalTotal = Accounting::getTotal($capitals, true);
 
         return self::getOwnerEquity($capitalTotal, self::getNetIncome(), $drawingTotal);
     }
