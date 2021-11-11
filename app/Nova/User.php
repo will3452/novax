@@ -12,7 +12,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
 {
-    public static $group = 'access Control';
+    public static $group = 'User Management';
 
     public static function indexQuery(NovaRequest $request, $query)
     {
