@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Text;
 
 class Role extends Resource
 {
+    public static $displayInNavigation = false;
     public static $group = 'access Control';
     /**
      * The model the resource corresponds to.
