@@ -45,7 +45,7 @@ class Category extends Resource
     {
         return [
             Text::make('Category Name', 'name')
-                ->rules(['required', 'unique:categories,name,{{ResourceId}}']),
+                ->rules(['required']),
 
             Image::make('Image')
                 ->rules(['required']),
