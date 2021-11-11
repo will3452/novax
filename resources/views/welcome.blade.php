@@ -1,3 +1,3 @@
-<h1>
-    Welcome to Nuwang.tech
-</h1>
+<x-app>
+
+</x-app>

@@ -24,6 +24,7 @@
         "laravel/nova": "*",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "laravel/ui": "^3.3",
         "optimistdigital/nova-settings": "^3.2",
         "runlinenl/nova-profile-tool": "^1.1",
         "spatie/laravel-backup": "^6.16",
