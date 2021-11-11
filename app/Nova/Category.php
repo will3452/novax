@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -45,6 +46,9 @@ class Category extends Resource
         return [
             Text::make('Category Name', 'name')
                 ->rules(['required', 'unique:categories,name']),
+
+            Image::make('Image')
+                ->rules(['required']),
         ];
     }
 
