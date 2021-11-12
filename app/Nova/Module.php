@@ -53,7 +53,7 @@ class Module extends Resource
     {
         return [
             Tabs::make('Module', [
-                Tab::make('Module Details',[
+                Tab::make('Module Details', [
                     Text::make('reference_number')
                         ->exceptOnForms(),
 
@@ -73,6 +73,7 @@ class Module extends Resource
                     Date::make('Uploaded Date', 'created_at')
                         ->exceptOnForms(),
                 ]),
+                HasMany::make('Materials'),
                 HasMany::make('Quizzes'),
                 HasMany::make('Exams')
             ])

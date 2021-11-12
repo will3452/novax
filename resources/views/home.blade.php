@@ -44,7 +44,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Pending Requests</div>
+                                Sample Data</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                         </div>
                         <div class="col-auto">
@@ -54,7 +54,28 @@
                 </div>
             </div>
         </div>
-
     </div>
+    <x-page-header>
+        Rooms
+    </x-page-header>
+        <div class="row">
+            @foreach (auth()->user()->classRooms as $room)
+            <div class="col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">{{$room->name}}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$room->code}}</div>
+                            </div>
+                            <div class="col-auto">
+                                <a href="/rooms/{{$room->id}}" class="btn-white btn-sm btn" ><i class="fa fa-eye"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+       </div>
     </x-page-container>
 </x-app>

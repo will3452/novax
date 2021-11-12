@@ -47,4 +47,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Module::class, 'uploader_id');
     }
+
+    public function classrooms()
+    {
+        return $this->belongsToMany(ClassRoom::class, 'class_room_student', 'student_id', 'class_room_id');
+    }
+
+
+    public function teacherClassrooms()
+    {
+        return $this->hasMany(ClassRoom::class);
+    }
 }

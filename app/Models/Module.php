@@ -36,4 +36,9 @@ class Module extends Model
     {
         return $this->hasMany(Exam::class);
     }
+
+    public function materials()
+    {
+        return $this->hasMany(Material::class);
+    }
 }

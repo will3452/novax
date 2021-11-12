@@ -2,31 +2,29 @@
 
 namespace App\Nova;
 
-use Eminiarts\Tabs\Tab;
-use Eminiarts\Tabs\Tabs;
+use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Subject extends Resource
+class Material extends Resource
 {
+    public static $displayInNavigation = false;
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Subject::class;
+    public static $model = \App\Models\Material::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public function title()
-    {
-        return "$this->code - $this->description";
-    }
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -34,9 +32,7 @@ class Subject extends Resource
      * @var array
      */
     public static $search = [
-        'reference_number',
-        'code',
-        'description'
+        'id',
     ];
 
     /**
@@ -48,25 +44,14 @@ class Subject extends Resource
     public function fields(Request $request)
     {
         return [
-            Tabs::make('Details', [
-                Tab::make('Subject Details', [
-                    Text::make('reference_number')
-                    ->exceptOnForms(),
+            BelongsTo::make('Module', 'module', Module::class),
 
-                Text::make('description')
-                    ->rules(['required']),
+            Text::make('Title')
+                ->rules(['required']),
 
-                Text::make('Modules Count', function () {
-                    return $this->modules->count();
-                }),
+            File::make('File'),
 
-                Text::make('code')
-                    ->hideWhenUpdating()
-                    ->rules(['required','unique:subjects,code']),
-                ]),
-                HasMany::make('Modules'),
-            ]),
-
+            Text::make('Link'),
         ];
     }
 

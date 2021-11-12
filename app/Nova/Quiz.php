@@ -2,11 +2,14 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Date;
+use Eminiarts\Tabs\Tab;
+use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Quiz extends Resource
@@ -46,12 +49,17 @@ class Quiz extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('Module')
-                ->searchable()
-                ->rules(['required']),
-            Textarea::make('description')
-                ->rules(['required']),
-            Date::make('Date', 'created_at'),
+            Tabs::make('quiz details', [
+                Tab::make('Details', [
+                    BelongsTo::make('Module')
+                        ->searchable()
+                        ->rules(['required']),
+                    Textarea::make('description')
+                        ->rules(['required']),
+                    Date::make('Date', 'created_at'),
+                ]),
+                MorphMany::make('Questions'),
+            ])
         ];
     }
 

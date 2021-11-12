@@ -2,31 +2,41 @@
 
 namespace App\Nova;
 
+use App\Models\Quiz as QuizModel;
 use Eminiarts\Tabs\Tab;
 use Eminiarts\Tabs\Tabs;
+use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Subject extends Resource
+class Question extends Resource
 {
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        if ($resource->questionable_type == QuizModel::class) {
+            return '/resources/' . Quiz::uriKey() . '/' . $resource->questionable_id . '?tab=questions';
+        }
+
+        return '/resources/' . Exam::uriKey() . '/' . $resource->questionable_id . '?tab=questions';
+    }
+
+    public static $displayInNavigation = false;
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Subject::class;
+    public static $model = \App\Models\Question::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public function title()
-    {
-        return "$this->code - $this->description";
-    }
+    public static $title = 'value';
 
     /**
      * The columns that should be searched.
@@ -34,9 +44,7 @@ class Subject extends Resource
      * @var array
      */
     public static $search = [
-        'reference_number',
-        'code',
-        'description'
+        'value',
     ];
 
     /**
@@ -48,25 +56,17 @@ class Subject extends Resource
     public function fields(Request $request)
     {
         return [
-            Tabs::make('Details', [
-                Tab::make('Subject Details', [
-                    Text::make('reference_number')
-                    ->exceptOnForms(),
+            Tabs::make('Questions', [
 
-                Text::make('description')
-                    ->rules(['required']),
-
-                Text::make('Modules Count', function () {
-                    return $this->modules->count();
-                }),
-
-                Text::make('code')
-                    ->hideWhenUpdating()
-                    ->rules(['required','unique:subjects,code']),
+                Tab::make('Question Information', [
+                    MorphTo::make('Questionable')->types([
+                        Exam::class,
+                        Quiz::class,
+                    ]),
+                    Text::make('Value'),
                 ]),
-                HasMany::make('Modules'),
+                HasMany::make('Answers', 'answers', Answer::class),
             ]),
-
         ];
     }
 

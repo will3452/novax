@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\Image;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
+use ChrisWare\NovaBreadcrumbs\NovaBreadcrumbs;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -87,11 +88,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
+            NovaBreadcrumbs::make(),
             new ProfileTool,
-            (new BackupTool)->canSee(function($request){
+            (new BackupTool)->canSee(function ($request) {
                 return $request->user()->hasRole(Role::SUPERADMIN);
             }),
-            (new NovaSettings)->canSee(function($request){
+            (new NovaSettings)->canSee(function ($request) {
                 return $request->user()->hasRole(Role::SUPERADMIN);
             }),
         ];

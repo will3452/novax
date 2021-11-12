@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "162dc9cfaaae059ddfcf569ecdcad695",
+    "content-hash": "44f368ec383bd46ad466c91403b50aef",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -241,6 +241,52 @@
                 "source": "https://github.com/cakephp/chronos"
             },
             "time": "2021-10-17T02:44:05+00:00"
+        },
+        {
+            "name": "chris-ware/nova-breadcrumbs",
+            "version": "2.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chris-ware/nova-breadcrumbs.git",
+                "reference": "140769704cf1dd89ea2a12ef07609c9bb321eb52"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chris-ware/nova-breadcrumbs/zipball/140769704cf1dd89ea2a12ef07609c9bb321eb52",
+                "reference": "140769704cf1dd89ea2a12ef07609c9bb321eb52",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": ">=3",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ChrisWare\\NovaBreadcrumbs\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ChrisWare\\NovaBreadcrumbs\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova tool.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/chris-ware/nova-breadcrumbs/issues",
+                "source": "https://github.com/chris-ware/nova-breadcrumbs/tree/2.3.1"
+            },
+            "time": "2021-07-19T17:38:52+00:00"
         },
         {
             "name": "coreproc/nova-permissions-field",

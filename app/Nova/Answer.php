@@ -2,31 +2,35 @@
 
 namespace App\Nova;
 
-use Eminiarts\Tabs\Tab;
-use Eminiarts\Tabs\Tabs;
+use App\Models\Answer as ModelsAnswer;
+use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Subject extends Resource
+class Answer extends Resource
 {
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . Question::uriKey() . '/' . $resource->question_id;
+    }
+
+    public static $displayInNavigation = false;
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Subject::class;
+    public static $model = \App\Models\Answer::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public function title()
-    {
-        return "$this->code - $this->description";
-    }
+    public static $title = 'value';
 
     /**
      * The columns that should be searched.
@@ -34,9 +38,7 @@ class Subject extends Resource
      * @var array
      */
     public static $search = [
-        'reference_number',
-        'code',
-        'description'
+        'value',
     ];
 
     /**
@@ -48,25 +50,15 @@ class Subject extends Resource
     public function fields(Request $request)
     {
         return [
-            Tabs::make('Details', [
-                Tab::make('Subject Details', [
-                    Text::make('reference_number')
-                    ->exceptOnForms(),
-
-                Text::make('description')
-                    ->rules(['required']),
-
-                Text::make('Modules Count', function () {
-                    return $this->modules->count();
-                }),
-
-                Text::make('code')
-                    ->hideWhenUpdating()
-                    ->rules(['required','unique:subjects,code']),
-                ]),
-                HasMany::make('Modules'),
-            ]),
-
+            BelongsTo::make('Question', 'question', Question::class),
+            Text::make('Value')
+                ->rules(['required']),
+            Select::make('Type')
+                ->options([
+                    ModelsAnswer::TYPE_CORRECT=>ModelsAnswer::TYPE_CORRECT,
+                    ModelsAnswer::TYPE_WRONG=>ModelsAnswer::TYPE_WRONG,
+                ])
+                ->rules(['required'])
         ];
     }
 
