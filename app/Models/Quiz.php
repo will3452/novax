@@ -20,4 +20,24 @@ class Quiz extends Model
     {
         return $this->hasMany(UserQuiz::class);
     }
+
+    public function wasTaken($userId)
+    {
+        $result = UserQuiz::where([
+            'quiz_id'=>$this->id,
+            'user_id'=>$userId
+        ])->count();
+
+        return $result !== 0;
+    }
+
+    public function getScore($userId)
+    {
+        $result = UserQuiz::where([
+            'quiz_id'=>$this->id,
+            'user_id'=>$userId
+        ])->first();
+
+        return $result->score;
+    }
 }

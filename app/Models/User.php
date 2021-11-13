@@ -63,4 +63,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserQuiz::class);
     }
+
+    public function userExams()
+    {
+        return $this->hasMany(UserExam::class);
+    }
 }

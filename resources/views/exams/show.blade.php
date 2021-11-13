@@ -7,13 +7,13 @@
     <x-page-container>
             <!-- Page Heading -->
         <x-page-header>
-            {{$quiz->description}}
+            {{$exam->description}}
         </x-page-header>
         <div class="row">
             <div class="col-md-8 mb-4">
-                <form action="/quizzes/{{$quiz->id}}" method="POST">
+                <form action="/exams/{{$exam->id}}" method="POST">
                     @csrf
-                    @foreach ($quiz->questions as $qkey=>$question)
+                    @foreach ($exam->questions as $qkey=>$question)
                         <div class="card border-left-warning shadow my-2">
                             <div class="card-body" id="question_{{$question->id}}">
                                 <div>
@@ -42,7 +42,7 @@
             <div class="col-md-4 p-relative d-none d-md-block">
                 <div class="card card-body shadow" style="position:fixed; width:300px;">
                     <div class="row">
-                        @foreach ($quiz->questions as $key=>$q)
+                        @foreach ($exam->questions as $key=>$q)
                            <div class="col-md-3 my-1">
                                 <a class="btn btn-light" href="#question_{{$q->id}}">{{$key+1}}</a>
                            </div>

@@ -2,11 +2,14 @@
 
 namespace App\Nova;
 
+use Eminiarts\Tabs\Tab;
+use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Exam extends Resource
@@ -17,7 +20,7 @@ class Exam extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\Quiz::class;
+    public static $model = \App\Models\Exam::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -46,12 +49,18 @@ class Exam extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('Module')
-                ->searchable()
-                ->rules(['required']),
-            Textarea::make('description')
-                ->rules(['required']),
-            Date::make('Date', 'created_at'),
+            Tabs::make('Exam details', [
+                Tab::make('Details', [
+                    BelongsTo::make('Module')
+                        ->searchable()
+                        ->rules(['required']),
+                    Textarea::make('description')
+                        ->rules(['required']),
+                    Date::make('Date', 'created_at')
+                    ->exceptOnForms(),
+                ]),
+                MorphMany::make('Questions'),
+            ])
         ];
     }
 

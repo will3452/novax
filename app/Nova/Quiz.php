@@ -56,7 +56,8 @@ class Quiz extends Resource
                         ->rules(['required']),
                     Textarea::make('description')
                         ->rules(['required']),
-                    Date::make('Date', 'created_at'),
+                    Date::make('Date', 'created_at')
+                    ->exceptOnForms(),
                 ]),
                 MorphMany::make('Questions'),
             ])

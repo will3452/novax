@@ -14,4 +14,25 @@ class Exam extends Model
     {
         return $this->belongsTo(Module::class);
     }
+
+
+    public function wasTaken($userId)
+    {
+        $result = UserExam::where([
+            'exam_id'=>$this->id,
+            'user_id'=>$userId
+        ])->count();
+
+        return $result !== 0;
+    }
+
+    public function getScore($userId)
+    {
+        $result = UserExam::where([
+            'exam_id'=>$this->id,
+            'user_id'=>$userId
+        ])->first();
+
+        return $result->score;
+    }
 }

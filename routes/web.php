@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExamController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuizController;
@@ -26,4 +27,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/rooms/{room}', [RoomController::class, 'show']);
 Route::get('/subjects/{subject}', [SubjectController::class, 'show']);
 Route::get('/quizzes/{quiz}', [QuizController::class, 'take']);
-Route::get('/quizzes/{quiz}', [QuizController::class, 'calculate']);
+Route::post('/quizzes/{quiz}', [QuizController::class, 'calculate']);
+
+Route::get('/exams/{exam}', [ExamController::class, 'take']);
+Route::post('/exams/{exam}', [ExamController::class, 'calculate']);
