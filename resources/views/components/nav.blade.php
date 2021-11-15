@@ -1,7 +1,7 @@
 <nav class=" p-2 bg-blue-500">
     <div class="flex justify-between items-center md:w-2/3 mx-auto">
         <a href="/">
-            <img class="rounded-full w-12" src="{{nova_get_setting('logo') ? "/storage/".nova_get_setting('logo') : 'https://via.placeholder.com/100x100?text=LOGO'}}" alt="">
+            <img class="rounded-full w-20" src="{{nova_get_setting('logo') ? "/storage/".nova_get_setting('logo') : 'https://via.placeholder.com/100x100?text=LOGO'}}" alt="">
         </a>
         <div>
             @auth
