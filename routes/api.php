@@ -78,7 +78,7 @@ Route::middleware('auth:sanctum')->group(function () {
             if ($topicId == null) {
                 return ErrorHelper::sendError(404);
             }
-            $users = Topic::find($topicId)->scores()->orderBy('score', 'ASC')->take($limit)->with('user')->get();
+            $users = Topic::find($topicId)->scores()->orderBy('score')->take($limit)->with('user')->get();
         }
 
         return response([
