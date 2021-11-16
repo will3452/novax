@@ -31,11 +31,13 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
 
-    Route::post('/score', function(){
+    Route::post('/score', function () {
         $score = request()->post('score') ?? 0;
         $topicId = request()->post('topic_id');
 
-        if(is_null($topicId)) return ErrorHelper::sendError(404);
+        if (is_null($topicId)) {
+            return ErrorHelper::sendError(404);
+        }
 
         $score = Score::create([
             'score'=>$score,
@@ -48,10 +50,12 @@ Route::middleware('auth:sanctum')->group(function () {
         ], 200);
     });
 
-    Route::get('/score', function(){
+    Route::get('/score', function () {
         $topicId = request()->get('topic_id');
 
-        if($topicId == null) return ErrorHelper::sendError(404);
+        if ($topicId == null) {
+            return ErrorHelper::sendError(404);
+        }
 
         $latestScore = Score::where([
             'user_id'=>auth()->id(),
@@ -63,16 +67,18 @@ Route::middleware('auth:sanctum')->group(function () {
         ], 200);
     });
 
-    Route::get('/leaderboard', function(){
+    Route::get('/leaderboard', function () {
         $type = request()->get('type') ?? 'topic';
         $topicId = request()->get('topic_id');
         $limit= request()->get('limit') ?? 10;
         $users = null;
-        if($type != 'topic') {
+        if ($type != 'topic') {
             $users = User::withSum('scores', 'score')->orderBy('scores_sum_score', 'DESC')->take($limit)->get();
-        }else {
-            if($topicId == null) return ErrorHelper::sendError(404);
-            $users = Topic::find($topicId)->scores()->latest()->orderBy('score', 'DESC')->take($limit)->with('user')->get();
+        } else {
+            if ($topicId == null) {
+                return ErrorHelper::sendError(404);
+            }
+            $users = Topic::find($topicId)->scores()->orderBy('score', 'DESC')->take($limit)->with('user')->get();
         }
 
         return response([
@@ -91,7 +97,7 @@ Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
 //get categories
-Route::get('/categories', function(){
+Route::get('/categories', function () {
     $categories = Category::withCount('topics')->get();
     return response([
         'categories'=>$categories,
@@ -99,29 +105,29 @@ Route::get('/categories', function(){
 });
 
 //get levels
-Route::get('/levels', function(){
+Route::get('/levels', function () {
     $levels = Level::get();
     return response([
         'levels'=>$levels->pluck('name'),
     ], 200);
 });
 
-Route::get('/topics', function(){
+Route::get('/topics', function () {
     $level = request()->get('level');
     $category = request()->get('category_id');
     $topics = null;
 
-    if($level == null && $category == null){
-       return ErrorHelper::sendError(400);
+    if ($level == null && $category == null) {
+        return ErrorHelper::sendError(400);
     }
 
-    if(is_null($category) && !is_null($level)){
+    if (is_null($category) && !is_null($level)) {
         $topics = Topic::where('level', $level)->get();
-    }else if(is_null($level) && !is_null($category)){
+    } elseif (is_null($level) && !is_null($category)) {
         $topics = Topic::where([
             'category_id'=>$category,
         ])->get();
-    }else {
+    } else {
         $topics = Topic::where([
             'level' => $level,
             'category_id'=>$category,
@@ -133,10 +139,12 @@ Route::get('/topics', function(){
     ], 200);
 });
 
-Route::get('/questions', function(){
+Route::get('/questions', function () {
     $topicId = request()->get('topic_id');
 
-    if(is_null($topicId)) return ErrorHelper::sendError(404);
+    if (is_null($topicId)) {
+        return ErrorHelper::sendError(404);
+    }
 
     $quetions = Question::where('topic_id', $topicId)->with('answers')->inRandomOrder()->get();
     return response([
