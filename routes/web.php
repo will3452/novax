@@ -30,18 +30,24 @@ Route::get('/location-not-found', function () {
     return "location not found";
 });
 
-Route::middleware(['guest'])->group(function(){
+Route::middleware(['guest'])->group(function () {
     Route::get('/register', [RegisterController::class, 'show']);
     Route::post('/register', [RegisterController::class, 'store']);
     Route::get('/login', [LoginController::class, 'show'])->name('login');
     Route::post('/login', [LoginController::class, 'store']);
 });
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth'])->group(function () {
     Route::get('/shops/{shop}', [ShopController::class, 'show']);
-    Route::get('/logout', function(){
+    Route::get('/logout', function () {
         Auth::logout();
         return redirect('/');
     });
     Route::post('/booking/{shop}', [BookingController::class, 'bookToday']);
+
+    Route::get('/bookings', [BookingController::class, 'index']);
+
 });
+
+
+Route::view('/success-register', 'success_register');

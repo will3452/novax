@@ -5,7 +5,7 @@
         </a>
         <div>
             @auth
-            <a href="">
+            <a href="/bookings" title="booking list">
                 <span class="material-icons text-white" style="font-size:32px;">
                     view_list
                 </span>

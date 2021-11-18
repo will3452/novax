@@ -18,7 +18,7 @@ class CreateBookingsTable extends Migration
             $table->id();
             $table->foreignId('shop_id');
             $table->foreignId('user_id');
-            $table->timestamp('date');
+            $table->timestamp('date')->nullable();
             $table->text('remarks')->nullable();
             $table->string('status')->default(Booking::STATUS_PENDING);
             $table->timestamps();

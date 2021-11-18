@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\BelongsTo;
+use GeneaLabs\NovaMapMarkerField\MapMarker;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Shop extends Resource
@@ -25,7 +26,10 @@ class Shop extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public function title()
+    {
+        return "$this->description - $this->address";
+    }
 
     /**
      * The columns that should be searched.
@@ -34,6 +38,8 @@ class Shop extends Resource
      */
     public static $search = [
         'id',
+        'description',
+        'address'
     ];
 
     /**
@@ -60,11 +66,9 @@ class Shop extends Resource
 
             Image::make('Logo'),
 
-            Text::make('Latitude', 'lat')
-                ->rules(['required']),
-
-            Text::make('Longitude', 'lng')
-                ->rules(['required']),
+            MapMarker::make("Location")
+                ->latitude('lat')
+                ->longitude('lng'),
 
             Text::make('Status')
                 ->exceptOnForms(),

@@ -107,9 +107,16 @@
         <a href="tel:{{$shop->contact_number}}" class="p-2 font-bold bg-green-500 text-white fixed w-4/12 left-0 bottom-0 h-10 text-center">
             Call
         </a>
-        <a href="#" x-on:click.prevent="modalIsOpen = true" class="p-2 font-bold bg-blue-500 text-white fixed w-8/12 right-0 bottom-0 h-10 text-center">
-            Book Today
-        </a>
+        @if (!\App\Models\Booking::hasBooking(auth()->id(), $shop->id, \App\Models\Booking::STATUS_PENDING))
+            <a href="#" x-on:click.prevent="modalIsOpen = true" class="p-2 font-bold bg-blue-500 text-white fixed w-8/12 right-0 bottom-0 h-10 text-center">
+                Book Today
+            </a>
+        @else
+            <a href="#" class="p-2 font-bold bg-blue-700 text-white fixed w-8/12 right-0 bottom-0 h-10 text-center">
+                You have pending Book here!
+            </a>
+        @endif
+
         @endif
     </div>
 </x-layout>
