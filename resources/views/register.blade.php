@@ -28,6 +28,10 @@
                     <label for="" class="mb-2 block text-xs font-bold">Password</label>
                     <input type="password" name="password" required class="p-2 border-2  w-full rounded">
                 </div>
+                <div class="my-2">
+                    <label for="" class="mb-2 block text-xs font-bold">Confirm Password</label>
+                    <input type="password" name="password_confirmation" required class="p-2 border-2  w-full rounded">
+                </div>
                 <button class="p-2 bg-green-500 font-bold rounded uppercase text-white w-full">
                     Register
                 </button>
