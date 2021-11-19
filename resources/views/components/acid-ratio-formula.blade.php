@@ -9,7 +9,7 @@
                 =
             </td>
             <td class="border-b-2 border-black text-center">
-                Quck Assets
+                Quick Assets
             </td>
         </tr>
         <tr>

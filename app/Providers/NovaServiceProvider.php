@@ -88,7 +88,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'Europe/Paris',
                 'Asia/Manila',
                 'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila'),
+            ])->width('1/3')->defaultTimezone('Africa/Manila'),
             (new BarChart())
             ->title('Liquidity Ratio')
             ->animations([
@@ -117,7 +117,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     'categories' => [Accounting::getAccountingPeriodString()]
                 ],
             ])
-            ->width('1/3'),
+            ->width('1/2'),
             (new BarChart())
             ->title('Profitability Ratio')
             ->animations([
@@ -140,7 +140,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     'categories' => [Accounting::getAccountingPeriodString()]
                 ],
             ])
-            ->width('1/3'),
+            ->width('1/2'),
 
         ];
     }
