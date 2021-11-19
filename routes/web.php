@@ -42,8 +42,8 @@ Route::get('/register', function () {
 Route::post('/register', function () {
     $data = request()->validate([
         'email'=>'required|email|unique:users,email',
-        'password'=>'required',
-        'name'=>'required'
+        'password'=>'required|confirmed',
+        'name'=>'required',
     ]);
 
     $data['password'] = bcrypt($data['password']);
