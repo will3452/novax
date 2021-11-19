@@ -23,12 +23,21 @@
                 </div>
                 <div class="my-2">
                     <label for="" class="mb-2 block text-xs font-bold">Email</label>
-                    <input type="email" name="email" required class="p-2 border-2  w-full rounded">
+                    <input type="email" name="email" required class="p-2 border-2  w-full rounded" value="{{request()->email}}" readonly>
                     @error('email')
                     <div class="text-xs font-bold uppercase text-red-500">
                         {{$message}}
                     </div>
                     @enderror
+                </div>
+                <div class="my-2">
+                    <label for="" class="mb-2 block text-xs font-bold">OTP code (sent to your Email)</label>
+                    <input type="text" name="otp" required class="p-2 border-2  w-full rounded">
+                    @if (session()->has('otp'))
+                    <div class="text-xs font-bold uppercase text-red-500">
+                        {{session('otp')}}
+                    </div>
+                    @endif
                 </div>
                 <div x-data="{
                     level: 2,

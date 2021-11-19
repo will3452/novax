@@ -41,7 +41,7 @@
                 <td class="pl-2">
                     {{$key}}
                 </td>
-                <td>
+                <td style="width:100px;text-align:right;">
                     {{abs(\App\Accounting::getTotal($item))}}
                 </td>
             </tr>
@@ -50,7 +50,7 @@
                 <td class="font-bold " >
                     Total Revenue
                 </td>
-                <td class="font-bold " style="width:200px;">
+                <td class="font-bold " style="width:100px;text-align:right;">
                     {{$totalRevenues}}
                 </td>
             </tr>
@@ -66,7 +66,7 @@
                 <td class="pl-2">
                     {{$key}}
                 </td>
-                <td>
+                <td style="width:100px;text-align:right;">
                     {{abs(\App\Accounting::getTotal($item))}}
                 </td>
             </tr>
@@ -75,7 +75,7 @@
                 <td class="font-bold text-left">
                     Total Expenses
                 </td>
-                <td class="font-bold text-left">
+                <td class="font-bold text-right" style="width:100px;text-align:right;">
                     {{$totalExpenses}}
                 </td>
             </tr>
@@ -89,7 +89,7 @@
                         Net Income
                     @endif
                 </th>
-                <td class="text-left" style="width:200px;">
+                <td class="text-left" style="width:100px;text-align:right;">
                     <x-total>{{$totalRevenues - $totalExpenses}}</x-total>
                 </td>
             </tr>

@@ -8,12 +8,12 @@
             <td rowspan="2" class="px-2">
                 =
             </td>
-            <td class="border-b-2 border-black">
+            <td class="border-b-2 border-black text-center">
                 Net Income
             </td>
         </tr>
         <tr>
-            <td>
+            <td class="text-center">
                 Total Assets
             </td>
         </tr>

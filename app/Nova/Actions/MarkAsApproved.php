@@ -2,10 +2,12 @@
 
 namespace App\Nova\Actions;
 
+use App\Mail\AccountApproved;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
@@ -24,6 +26,7 @@ class MarkAsApproved extends Action
     {
         foreach ($models as $model) {
             $model->markAsApproved();
+            Mail::to($model->email)->send(new AccountApproved($model));
         }
     }
 

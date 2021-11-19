@@ -11,6 +11,8 @@ use App\Http\Controllers\FinancialRatioController;
 use App\Http\Controllers\Nova\Auth\LoginController;
 use App\Http\Controllers\ProfitabiltyController;
 use App\Models\Account;
+use App\Models\Otp;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +37,12 @@ Route::get('financial-position', [FinacialStatement::class, 'financialposition']
 Route::get('/owners-equity', [FinacialStatement::class, 'ownersEquity']);
 Route::get('/liquidity-ratio', [FinancialRatioController::class, 'liquidityRatio']);
 Route::get('/profitability-ratio', [ProfitabiltyController::class, 'index']);
+
 Route::get('/register', function () {
+    request()->validate([
+        'otp'=>'required',
+        'email'=>'required',
+    ]);
     return view('register');
 });
 
@@ -43,14 +50,38 @@ Route::post('/register', function () {
     $data = request()->validate([
         'email'=>'required|email|unique:users,email',
         'password'=>'required|confirmed',
+        'otp'=>'required',
         'name'=>'required',
     ]);
+
+    $check = Otp::where('otp', request()->otp)->get();
+
+    if (!count($check)) {
+        return back()->with(['otp'=>'Invalid OTP code']);
+    }
 
     $data['password'] = bcrypt($data['password']);
 
     User::create($data);
 
     return back()->withSuccess('Registered Successfully! You may now login.');
+});
+
+
+Route::view('/register-email', 'register-email');
+
+Route::post('/register-email', function(){
+    request()->validate([
+        'email' => 'unique:users|required',
+    ]);
+
+    $email =  request()->email;
+
+    $otp =  Otp::create([
+        'email'=> $email
+    ]);
+    $otp = Hash::make($otp->otp);
+    return redirect()->to("/register?otp=$otp&email=$email");
 });
 
 

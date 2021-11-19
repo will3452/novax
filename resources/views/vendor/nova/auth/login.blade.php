@@ -59,7 +59,7 @@ style="display: flex; justify-content:center; width:100%;margin-bottom:1em;"
         {{ __('Login') }}
     </button>
     <div class="text-center py-2 ">
-        Create new Account <a href="/register">here</a>
+        Create new Account <a href="/register-email">here</a>
     </div>
 </form>
 @endsection
