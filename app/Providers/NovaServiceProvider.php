@@ -117,9 +117,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     'categories' => [Accounting::getAccountingPeriodString()]
                 ],
             ])
-            ->width('1/3')->canSee(function ($request) {
-                return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
-            }),
+            ->width('1/3'),
             (new BarChart())
             ->title('Profitability Ratio')
             ->animations([
@@ -142,9 +140,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     'categories' => [Accounting::getAccountingPeriodString()]
                 ],
             ])
-            ->width('1/3')->canSee(function ($request) {
-                return !$request->user()->hasRole(\App\Models\Role::SUPERADMIN);
-            }),
+            ->width('1/3'),
 
         ];
     }
