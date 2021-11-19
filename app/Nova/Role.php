@@ -18,10 +18,10 @@ class Role extends Resource
     }
     public static $group = 'access Control';
 
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('name', '!=', ModelsRole::SUPERADMIN);
-    }
+    // public static function indexQuery(NovaRequest $request, $query)
+    // {
+    //     // return $query->where('name', '!=', ModelsRole::SUPERADMIN);
+    // }
 
     /**
      * The model the resource corresponds to.
