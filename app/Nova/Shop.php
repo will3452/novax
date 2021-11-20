@@ -14,6 +14,15 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class Shop extends Resource
 {
     public static $group = "Menu";
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (!auth()->user()->hasRole(\App\Models\Role::SUPERADMIN)) {
+            return $query->where('user_id', auth()->id());
+        }
+        return $query;
+    }
+
     /**
      * The model the resource corresponds to.
      *

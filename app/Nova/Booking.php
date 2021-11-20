@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Models\Booking as ModelsBooking;
+use App\Models\Role;
 use App\Nova\Actions\ChangeStatus;
 use App\Nova\Actions\SetBookDateTime;
 use App\Nova\Filters\ViewStatus;
@@ -23,12 +24,13 @@ class Booking extends Resource
 
     public static $group = "Menu";
 
-    public function authorizedToUpdate(Request $request)
+    public static function indexQuery(NovaRequest $request, $query)
     {
-        if ($request->has('action')) {
-            return true;
+        if (!auth()->user()->hasRole(\App\Models\Role::SUPERADMIN)) {
+            $ids = auth()->user()->shops->pluck('id')->toArray();
+            return $query->whereIn('shop_id', $ids);
         }
-        return false;
+        return $query;
     }
     /**
      * The model the resource corresponds to.
@@ -140,14 +142,7 @@ class Booking extends Resource
     {
         return [
             ChangeStatus::make(),
-            SetBookDateTime::make()
-                ->canSee(function($request){
-                    if (is_null($request->date)) {
-                        return true;
-                    }
-
-                    return false;
-                }),
+            SetBookDateTime::make(),
         ];
     }
 }

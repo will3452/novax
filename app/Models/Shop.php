@@ -29,4 +29,9 @@ class Shop extends Model
 
         return end($logo);
     }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'shop_id');
+    }
 }
