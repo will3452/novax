@@ -2,10 +2,12 @@
 
 namespace App\Nova;
 
+use App\Models\Service as ModelsService;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -55,7 +57,11 @@ class Service extends Resource
 
             Textarea::make('Remarks'),
 
-            Text::make('Status'),
+            Select::make('Status')
+                ->options([
+                    ModelsService::STATUS_AVAILABLE => ModelsService::STATUS_AVAILABLE,
+                    ModelsService::STATUS_NOT_AVAILABLE => ModelsService::STATUS_NOT_AVAILABLE
+                ]),
         ];
     }
 
