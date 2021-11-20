@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\BookingController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/bookings', [BookingController::class, 'index']);
 
+    Route::get('/profile', [ProfileController::class, 'showProfile']);
+    Route::post('/profile', [ProfileController::class, 'updateProfile']);
 });
 
 

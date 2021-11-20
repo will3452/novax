@@ -10,7 +10,7 @@
                     view_list
                 </span>
             </a>
-            <a href="#">
+            <a href="/profile">
                 <span class="material-icons text-white" style="font-size:32px;">
                     account_circle
                 </span>
