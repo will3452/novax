@@ -16,10 +16,11 @@ class SubjectFactory extends Factory
      */
     public function definition()
     {
+        $subject = ['English', 'Math', 'PE', 'Filipino', 'GMRC'];
         return [
             'reference_number'=>ReferenceHelper::generate('SUB', Subject::count() + 1),
-            'description'=>$this->faker->sentence(),
-            'code'=>Str::random(9),
+            'description'=> $subject[$this->faker->numberBetween(0, count($subject) - 1)],
+            'code'=>Str::random(6),
         ];
     }
 }

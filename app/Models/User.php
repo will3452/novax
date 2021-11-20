@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
     ];
 
     /**
@@ -33,6 +34,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    const TYPE_STUDENT = 'student';
+    const TYPE_PARENT = 'parent';
 
     /**
      * The attributes that should be cast.
@@ -67,5 +71,49 @@ class User extends Authenticatable
     public function userExams()
     {
         return $this->hasMany(UserExam::class);
+    }
+
+    public function userModules()
+    {
+        return $this->hasMany(UserModule::class);
+    }
+
+    public function isModuleDone($moduleId)
+    {
+        $result = $this->userModules()->where('module_id', $moduleId)->get();
+        return count($result) != 0;
+    }
+
+    public function getMySubjectProgress($subjectId)
+    {
+        $subject = Subject::find($subjectId);
+        $markAsDoneCount = $this->userModules()->where('subject_id', $subjectId)->count();
+
+        return ($markAsDoneCount / $subject->modules()->count()) * 100;
+    }
+
+    public function latestRoom()
+    {
+        return $this->classrooms()->latest()->first();
+    }
+
+    public function userStudents()
+    {
+        return $this->hasMany(UserStudent::class, 'parent_id');
+    }
+
+    public function getTotalScoreToSubject($subjectId)
+    {
+        $total = 0;
+
+        $moduleIds = Subject::find($subjectId)->modules->pluck('id')->toArray();
+
+        $examScore = UserExam::where('user_id', $this->id)->whereIn('module_id', $moduleIds)->sum('score');
+
+        $quizScore = UserQuiz::where('user_id', $this->id)->whereIn('module_id', $moduleIds)->sum('score');
+
+        $total = ($examScore + $quizScore);
+
+        return $total;
     }
 }

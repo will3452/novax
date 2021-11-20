@@ -12,6 +12,19 @@
                    Subject Code: {{$subject->code}}
                </div>
 
+               <div class="card">
+                   <div class="card-header">
+                       Progress ( {{number_format(auth()->user()->getMySubjectProgress($subject->id), 2)}}% )
+                   </div>
+                   <div class="card-body">
+                    <div class="progress progress-sm mr-2">
+                        <div class="progress-bar bg-info" role="progressbar"
+                            style="width: {{auth()->user()->getMySubjectProgress($subject->id)}}%" aria-valuenow="50" aria-valuemin="0"
+                            aria-valuemax="100">
+                        </div>
+                    </div>
+                   </div>
+               </div>
            </div>
        </div>
        <div class="mt-5">
@@ -30,10 +43,16 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{$module->code}}</div>
                             </div>
                             <div class="col text-right">
-                                <form action="">
-                                    @csrf
-                                    <button class="btn btn-primary btn-sm">Mark As Done</button>
-                                </form>
+                                @if (!auth()->user()->isModuleDone($module->id))
+                                    <form action="/mark-as-done" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="subject_id" value="{{$subject->id}}">
+                                        <input type="hidden" name="module_id" value="{{$module->id}}">
+                                        <button class="btn btn-primary btn-sm">Mark As Done</button>
+                                    </form>
+                                @else
+                                    Done
+                                @endif
                             </div>
                         </div>
                     </div>

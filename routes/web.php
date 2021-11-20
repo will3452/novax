@@ -1,8 +1,11 @@
 <?php
 
-use App\Http\Controllers\ExamController;
+use App\Models\User;
+use App\Models\Subject;
+use App\Models\UserStudent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SubjectController;
@@ -31,3 +34,70 @@ Route::post('/quizzes/{quiz}', [QuizController::class, 'calculate']);
 
 Route::get('/exams/{exam}', [ExamController::class, 'take']);
 Route::post('/exams/{exam}', [ExamController::class, 'calculate']);
+
+Route::post('/mark-as-done', function () {
+    $data = request()->validate([
+        'module_id' => 'required',
+        'subject_id' => 'required',
+    ]);
+    auth()->user()->userModules()->create([
+        'module_id' => $data['module_id'],
+        'subject_id' => $data['subject_id'],
+    ]);
+    return back();
+});
+
+Route::post('/add-student', function () {
+    $data = request()->validate([
+        'email'=>'required'
+    ]);
+
+    $user = User::where('email', $data['email'])->first();
+
+    if ($user == null) {
+        return back()->withError('No Student found');
+    }
+
+    if ($user->type != User::TYPE_STUDENT) {
+        return back()->withError('Account is not student');
+    }
+
+    if (auth()->user()->userStudents()->where('student_id', $user->id)->count()) {
+        return back()->withError('Account is already in the list!');
+    }
+
+    auth()->user()->userStudents()->create([
+        'student_id' => $user->id,
+    ]);
+
+    return back()->withSuccess('Account added to your student list');
+});
+
+
+Route::get('/remove-student', function () {
+    $data = request()->validate([
+        'student_id'=>'required'
+    ]);
+
+    $record = auth()->user()->userStudents()->where('student_id', $data['student_id'])->first();
+    $record->delete();
+    return back();
+});
+
+Route::get('/view-progress/{student}', function (User $student) {
+    $subject = null;
+    return view('view-progress', compact('student', 'subject'));
+});
+
+
+Route::post('/load-report', function () {
+    $data = request()->validate([
+        'student_id' => 'required',
+        'subject_id' => 'required',
+    ]);
+
+    $student = User::find($data['student_id']);
+    $subject = Subject::find($data['subject_id']);
+
+    return view('view-progress', compact('student', 'subject'));
+});

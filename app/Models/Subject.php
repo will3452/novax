@@ -25,4 +25,26 @@ class Subject extends Model
     {
         return $this->hasMany(Module::class);
     }
+
+    public function getTotalScore()
+    {
+        $total = 0;
+        $modules = $this->modules;
+
+        foreach ($modules as $module) {
+            //for quiz
+            $qs = $module->quizzes;
+            foreach ($qs as $q) {
+                $total += count($q->questions);
+            }
+
+            //for exam
+            $qs = $module->exams;
+            foreach ($qs as $q) {
+                $total += count($q->questions);
+            }
+        }
+
+        return $total;
+    }
 }

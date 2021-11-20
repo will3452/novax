@@ -11,7 +11,7 @@ class ModuleObserver
     {
         $module->update([
             'reference_number'=>ReferenceHelper::generate('MOD', $module->id),
-            'uploader_id'=>auth()->id(),
+            'uploader_id'=>auth()->id() ?? 1,
         ]);
     }
 }

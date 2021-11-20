@@ -12,6 +12,14 @@
                         <form class="user" method="POST" action="/register">
                             @csrf
                             <div class="form-group">
+                                <label for="" class="d-block text-center">Register As</label>
+                                <select required name="type" id="" class="custom-select text-primary">
+                                    <option value="" disabled selected>---</option>
+                                    <option value="{{\App\Models\User::TYPE_STUDENT}}">Student</option>
+                                    <option value="{{\App\Models\User::TYPE_PARENT}}">Parent</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <input value="{{old('name')}}" required type="text" name="name" class="form-control form-control-user" id="exampleFirstName"
                                         placeholder="Name">
                                 @error('name')

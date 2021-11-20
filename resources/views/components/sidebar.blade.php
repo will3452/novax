@@ -28,6 +28,25 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
+    @parent
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+            aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Students</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">List of Rooms</h6>
+                @foreach (auth()->user()->userStudents as $us)
+                    <a class="collapse-item" href="/view-progress/{{$us->student_id}}">{{$us->student->name}}</a>
+                @endforeach
+            </div>
+        </div>
+    </li>
+
+    @else
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo">
@@ -43,6 +62,7 @@
             </div>
         </div>
     </li>
+    @endif
 
     {{-- <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
