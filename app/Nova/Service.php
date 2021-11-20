@@ -55,8 +55,7 @@ class Service extends Resource
 
             Textarea::make('Remarks'),
 
-            Text::make('Status')
-                ->exceptOnForms(),
+            Text::make('Status'),
         ];
     }
 
