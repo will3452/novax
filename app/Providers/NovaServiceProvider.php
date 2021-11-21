@@ -213,7 +213,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                                 'url' => '/incoming-statement',
                             ]),
                             ExternalLink::make([
-                                'label' => 'Owner’s Equity ',
+                                'label' => 'Changes in Owner\'s Equity',
                                 'badge' => null,
                                 'icon' => null,
                                 'target' => '_blank',
