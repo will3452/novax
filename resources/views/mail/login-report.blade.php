@@ -3,7 +3,7 @@
 
 Hello, {{$name}}
 
-The purpose of thios message is to notify you that you have logged into the application.
+The purpose of this message is to notify you that you have logged into the application.
 
 Datetime: {{now()}}
 IP address: {{$ip}}

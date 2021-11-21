@@ -12,7 +12,9 @@
             </h1>
             @if (session('success'))
             <div class="p-2 bg-green-300 rounded font-bold text-green-900">
-                Register Successfully!
+                Registration successful!
+
+                Our system admin will verify your account first and will notify you soon thru e-mail. Please wait for an email confirmation before logging in.
             </div>
             @endif
             <form action="/register" method="POST" x-on:keydown="formsubmit(event)">

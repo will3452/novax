@@ -55,7 +55,7 @@
                         $value = \App\Accounting::getTotal($item);
                     @endphp
                     @if (\App\Models\Account::getNormalBalance($key) == \App\Models\Account::NORMAL_BALANCE_DEBIT)
-                        <td  class="border border-black px-2">
+                        <td  class="border border-black px-2 text-center">
                             {{abs($value)}}
                             @php
                             $debit += $value;
@@ -68,7 +68,7 @@
                     <td  class="border border-black px-2">
 
                     </td>
-                    <td  class="border border-black px-2">
+                    <td  class="border border-black px-2 text-center">
                         {{abs($value)}}
                         @php
                             $credit += $value;
@@ -81,10 +81,10 @@
                     <th class="border border-black px-2">
                         Total
                     </th>
-                    <td class="border border-black px-2">
+                    <td class="border border-black px-2 text-center">
                         {{abs($debit)}}
                     </td>
-                    <td class="border border-black px-2">
+                    <td class="border border-black px-2 text-center">
                         {{abs($credit)}}
                     </td>
                 </tr>
