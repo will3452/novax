@@ -76,7 +76,15 @@ class Product extends Resource
                 ->step('0.01'),
 
             Number::make('Stocks')
-                ->rules(['required'])
+                ->rules(['required']),
+
+            Text::make('Person In-Charge', 'person_in_charge'),
+
+            Text::make('Position'),
+
+            Text::make('Contact Number', 'contact_number'),
+
+            Text::make('Address'),
         ];
     }
 
