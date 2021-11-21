@@ -18,7 +18,6 @@
            </h4>
            <div>
             <a class="btn btn-primary btn-sm" href="/subjects/{{$exam->module->subject->id}}">Back to subjects</a>
-            <button class="btn btn-success btn-sm">Share Score</button>
            </div>
        </div>
     </x-page-container>
