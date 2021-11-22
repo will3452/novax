@@ -2,7 +2,6 @@
 
 namespace App\Nova;
 
-use App\Models\Role;
 use App\Models\User as ModelUser;
 use Illuminate\Http\Request;
 use Laravel\Nova\Resource as NovaResource;
