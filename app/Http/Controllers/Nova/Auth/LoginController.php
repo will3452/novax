@@ -25,7 +25,8 @@ class LoginController extends ControllersLoginController
         }
         if ($this->attemptLogin($request)) {
             if ($request->user()->approved_at == null) {
-                return Auth::logout();
+                Auth::logout();
+                return "Please kindly wait for the admin's approval before logging in. Thank you for you patience. <a href='/nova/login'>back to login page</a>";
             }
             if ($request->hasSession()) {
                 $request->session()->put('auth.password_confirmed_at', time());
