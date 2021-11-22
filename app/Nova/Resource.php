@@ -9,7 +9,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 abstract class Resource extends NovaResource
 {
-    public static $perPageOptions = [5, 25, 50, 100, 200, 500];
+    public static $perPageOptions = [5, 25, 50, 100, 200, 500, 1000];
     public static $showColumnBorders = true;
     public static $tableStyle = 'tight';
     /**
