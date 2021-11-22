@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Models\Role;
+use App\Models\User as ModelUser;
 use Illuminate\Http\Request;
 use Laravel\Nova\Resource as NovaResource;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -64,11 +65,29 @@ abstract class Resource extends NovaResource
 
     public function authorizedToDelete(Request $request)
     {
-        return !auth()->user()->hasRole(Role::SUPERADMIN);
+        $valid = [
+            User::uriKey(),
+            Role::uriKey(),
+        ];
+
+        if (in_array(self::uriKey(), $valid)) {
+            return true;
+        }
+
+        return !auth()->user()->hasRole(\App\Models\Role::SUPERADMIN);
     }
 
     public function authorizedToUpdate(Request $request)
     {
-        return !auth()->user()->hasRole(Role::SUPERADMIN);
+        $valid = [
+            User::uriKey(),
+            Role::uriKey(),
+        ];
+
+        if (in_array(self::uriKey(), $valid)) {
+            return true;
+        }
+
+        return !auth()->user()->hasRole(\App\Models\Role::SUPERADMIN);
     }
 }
