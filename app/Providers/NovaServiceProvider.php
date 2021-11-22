@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Nova\Metrics\NewCustomerPerDay;
 use App\Nova\Metrics\PendingBooks;
+use App\Nova\Metrics\TotalNumberOfCustomers;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -77,7 +78,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'Asia/Tokyo',
             ])->defaultTimezone('Africa/Manila'),
             (new PendingBooks()),
-            (new NewCustomerPerDay())
+            (new NewCustomerPerDay()),
+            (new TotalNumberOfCustomers()),
         ];
     }
 
