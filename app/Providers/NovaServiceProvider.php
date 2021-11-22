@@ -84,7 +84,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     }
 
     /**
-     * Get the extra dashboards that should be displayed on the Nova dashboard.
+     * Get the extra dashboards that should be displayed on the Nova dashboard..
      *
      * @return array
      */
