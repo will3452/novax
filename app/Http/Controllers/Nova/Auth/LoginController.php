@@ -25,7 +25,7 @@ class LoginController extends ControllersLoginController
         }
         if ($this->attemptLogin($request)) {
             if ($request->user()->approved_at == null) {
-                Auth::logout();
+                return Auth::logout();
             }
             if ($request->hasSession()) {
                 $request->session()->put('auth.password_confirmed_at', time());
