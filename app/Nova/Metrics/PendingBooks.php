@@ -3,6 +3,7 @@
 namespace App\Nova\Metrics;
 
 use App\Models\Booking;
+use App\Models\Role;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Value;
 
@@ -20,6 +21,10 @@ class PendingBooks extends Value
         $count = 0;
         foreach ($shops as $shop) {
             $count +=  $shop->bookings()->where('status', Booking::STATUS_PENDING)->count();
+        }
+
+        if (auth()->user()->hasRole(Role::SUPERADMIN)) {
+            $count = Booking::whereStatus(Booking::STATUS_PENDING)->count();
         }
         return $this->result($count);
     }
