@@ -8,11 +8,20 @@
         <div x-show.transition.500ms="modalIsOpen" class="w-screen h-screen fixed left-0 right-0 top-0 bottom-0 bg-blue-900 bg-opacity-10 flex justify-center items-center">
             <form action="/booking/{{$shop->id}}" method="post" class="rounded-md bg-white p-4">
                 @csrf
-                <div class="uppercase font-bold text-xl">
-                    Are you Sure you want to Book Today?
-                    <div class="flex justify-between mt-2">
-                        <button class="w-1/2 mx-2 p-1 bg-blue-500 text-white rounded-md px-3">Yes</button>
-                        <button type="button" x-on:click="modalIsOpen = false" class="w-1/2 mx-2 p-1 bg-red-500 text-white rounded-md px-3">No</button>
+                <div class=" font-bold text-xl">
+                    <div class="uppercase">Select service</div>
+                    <div class=" mt-2">
+                        <div class="text-base font-normal">
+                            @foreach ($shop->services()->whereStatus(\App\Models\Service::STATUS_AVAILABLE)->get() as $service)
+                                <div>
+                                    <input type="checkbox" name="services[]" value="{{$service->description}}"/> {{$service->description}} (<span class="text-xs">Php</span> {{number_format($service->cost, 2)}})
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="flex mt-2">
+                            <button class="w-1/2 mx-2 p-1 bg-blue-500 text-white rounded-md px-3">Proceed</button>
+                            <button type="button" x-on:click="modalIsOpen = false" class="w-1/2 mx-2 p-1 bg-red-500 text-white rounded-md px-3">Cancel</button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -73,7 +82,7 @@
                                     {{$service->description}}
                                 </td>
                                 <td class="border border-black">
-                                    {{$service->cost}}
+                                  Php {{number_format($service->cost, 2)}}
                                 </td>
                                 <td class="border border-black ">
                                     <div class="flex justify-center items-center">

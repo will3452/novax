@@ -10,9 +10,15 @@ class BookingController extends Controller
 {
     public function bookToday(Shop $shop)
     {
+        $services = '';
+        if(request()->has('services')){
+            $services = implode(', ', request()->services);
+        }
+
         Booking::create([
             'user_id'=>auth()->id(),
             'shop_id'=>$shop->id,
+            'services' => $services,
         ]);
         return back()->withSuccess('Booked Successfully');
     }

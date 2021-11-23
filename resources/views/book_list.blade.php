@@ -17,6 +17,9 @@
                     <th class="border">
                         Shop
                     </th>
+                    <td>
+                        Services
+                    </td>
                     <th class="border">
                         Status
                     </th>
@@ -36,6 +39,9 @@
                         </td>
                         <td class="border">
                             <a href="/shops/{{$book->shop_id}}">{{$book->shop->description}}</a>
+                        </td>
+                        <td class="border">
+                            {{$book->services ?? 'N/a'}}
                         </td>
                         <td class="border">
                             {{$book->status}}

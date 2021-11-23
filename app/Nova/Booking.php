@@ -76,7 +76,7 @@ class Booking extends Resource
 
             DateTime::make('Book DateTime', 'date'),
 
-            Textarea::make('Remarks')->alwaysShow(),
+            Textarea::make('Services')->alwaysShow(),
 
             Select::make('Status')
                 ->options([

@@ -14,7 +14,7 @@ class ShopFactory extends Factory
      */
     public function definition()
     {
-        $image = $this->faker->image($dir = storage_path('app/public/'), $width = 300, $height = 300);
+        $image = null;
 
         $arr = explode('/', $image);
         $end = end($arr);
