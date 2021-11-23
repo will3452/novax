@@ -19,6 +19,10 @@ class User extends Resource
         return $query->where('email', '!=', 'super@admin.com');
     }
 
+    public function authorizedToUpdate(){
+
+    }
+
     /**
      * The model the resource corresponds to.
      *
