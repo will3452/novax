@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Models\Role;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
@@ -19,8 +20,9 @@ class User extends Resource
         return $query->where('email', '!=', 'super@admin.com');
     }
 
-    public function authorizedToUpdate(){
-
+    public function authorizedToUpdate(Request $request)
+    {
+        return request()->user()->hasRole(Role::SUPERADMIN);
     }
 
     /**
