@@ -14,7 +14,7 @@
                         <div class="text-base font-normal">
                             @foreach ($shop->services()->whereStatus(\App\Models\Service::STATUS_AVAILABLE)->get() as $service)
                                 <div>
-                                    <input type="checkbox" name="services[]" value="{{$service->description}}"/> {{$service->description}} (<span class="text-xs">Php</span> {{number_format($service->cost, 2)}})
+                                    <input type="checkbox" name="services[]" value="{{$service->description}}"/> {{$service->description}} (<span class="text-xs">Php</span> {{$service->cost}})
                                 </div>
                             @endforeach
                         </div>
@@ -82,7 +82,7 @@
                                     {{$service->description}}
                                 </td>
                                 <td class="border border-black">
-                                  Php {{number_format($service->cost, 2)}}
+                                  Php {{$service->cost}}
                                 </td>
                                 <td class="border border-black ">
                                     <div class="flex justify-center items-center">
