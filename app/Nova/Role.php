@@ -3,12 +3,19 @@
 namespace App\Nova;
 
 use App\Models\Permission;
-use Coreproc\NovaPermissionsField\NovaPermissionsField;
+use App\Models\Role as ModelsRole;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Coreproc\NovaPermissionsField\NovaPermissionsField;
 
 class Role extends Resource
 {
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        return $query->where('name', '!=', ModelsRole::SUPERADMIN);
+    }
+
     public static $group = 'access Control';
     /**
      * The model the resource corresponds to.
