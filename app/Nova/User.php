@@ -2,7 +2,7 @@
 
 namespace App\Nova;
 
-use App\Models\Role;
+use App\Models\Role as ModelRole;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
@@ -22,7 +22,7 @@ class User extends Resource
 
     public function authorizedToUpdate(Request $request)
     {
-        return request()->user()->hasRole(Role::SUPERADMIN);
+        return request()->user()->hasRole(ModelRole::SUPERADMIN);
     }
 
     /**
