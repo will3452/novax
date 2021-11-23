@@ -17,9 +17,9 @@
                     <th class="border">
                         Shop
                     </th>
-                    <td>
+                    <th class="border">
                         Services
-                    </td>
+                    </th>
                     <th class="border">
                         Status
                     </th>
