@@ -13,6 +13,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
+    const TYPE_SEEKER = 'applicant';
+    const TYPE_EMPLOYER = 'employer';
+    const TYPE_ADMIN = 'admin';
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -22,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
     ];
 
     /**
@@ -46,5 +52,15 @@ class User extends Authenticatable
     public function jobOffers()
     {
         return $this->hasMany(User::class, 'employer_id');
+    }
+
+    public function resume()
+    {
+        return $this->hasOne(Resume::class, 'applicant_id');
+    }
+
+    public function applications()
+    {
+        return $this->hasMany(JobApplication::class, 'applicant_id');
     }
 }

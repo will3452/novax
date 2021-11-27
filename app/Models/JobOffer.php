@@ -44,4 +44,9 @@ class JobOffer extends Model
     {
         return $this->hasMany(JobApplication::class);
     }
+
+    public function isApplicantApplied($applicantId)
+    {
+        return $this->applications()->where('applicant_id', $applicantId)->count() > 0;
+    }
 }
