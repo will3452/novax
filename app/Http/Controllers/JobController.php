@@ -10,7 +10,13 @@ class JobController extends Controller
 {
     public function browse()
     {
-        $offers = JobOffer::whereStatus(JobOffer::STATUS_OPEN)->get();
+        $offers = [];
+        if (isset(request()->keyword)) {
+            $offers = JobOffer::whereStatus(JobOffer::STATUS_OPEN)->where('position', 'LIKE', "%".request()->keyword."%")->get();
+        } else {
+            $offers = JobOffer::whereStatus(JobOffer::STATUS_OPEN)->get();
+        }
+
         return view('browse-jobs', compact('offers'));
     }
 
