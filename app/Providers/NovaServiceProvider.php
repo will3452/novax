@@ -171,6 +171,14 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                         'resources'=>[
                             \App\Nova\Asset::class,
                             \App\Nova\Product::class,
+                        ]
+                    ])->canSee(function ($request) {
+                        return $request->user()->can('access record management');
+                    }),
+                    TopLevelResource::make([
+                        'label'=>'STOCK RECONCILIATION',
+                        'icon'=>null,
+                        'resources'=>[
                             \App\Nova\StockTake::class,
                             \App\Nova\StockReport::class,
                         ]
