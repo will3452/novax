@@ -56,8 +56,9 @@
                @else
                <div class="card">
                     <div class="card-header">
-                        Room : <strong>{{auth()->user()->latestRoom()->name}}</strong>
+                        Room : <strong>{{auth()->user()->latestRoom() ? auth()->user()->latestRoom()->name : ''}}</strong>
                     </div>
+                    @if (auth()->user()->latestRoom())
                     <div class="card-body">
                         <ul class="p-0">
                             @foreach (auth()->user()->latestRoom()->subjects as $subject)
@@ -82,6 +83,7 @@
                             @endforeach
                         </ul>
                     </div>
+                    @endif
                 </div>
                @endif
             </div>
