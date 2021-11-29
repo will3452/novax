@@ -189,7 +189,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                         'label'=>'ANALYSIS AND EVALUATION',
                         'icon' => null,
                         'resources'=>[
-
                             \App\Nova\GeneralJournalRemark::class,
                             ExternalLink::make([
                                 'label' => 'T Accounts',
