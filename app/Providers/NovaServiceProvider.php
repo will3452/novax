@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\DailyRecords;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -74,6 +75,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'Asia/Manila',
                 'Asia/Tokyo',
             ])->defaultTimezone('Africa/Manila'),
+
+            DailyRecords::make(),
         ];
     }
 

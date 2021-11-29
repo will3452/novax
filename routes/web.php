@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Nova\Nova;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(Nova::path());
 });
 
 Route::get('/register', [RegisterController::class, 'registrationPage']);

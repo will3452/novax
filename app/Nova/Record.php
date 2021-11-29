@@ -4,7 +4,9 @@ namespace App\Nova;
 
 use App\Models\Record as ModelsRecord;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -77,8 +79,35 @@ class Record extends Resource
                 ->options([
                     ModelsRecord::JOB_STATUS_NO_PROBLEM => ModelsRecord::JOB_STATUS_NO_PROBLEM,
                     ModelsRecord::JOB_STATUS_WITH_PROBLEM => ModelsRecord::JOB_STATUS_WITH_PROBLEM,
-                ])
+                ]),
 
+            Text::make('FAS PIC', 'fas_pic')
+                ->rules(['required']),
+
+            Text::make('Maker')
+                ->rules(['required']),
+
+            Date::make('Received Date'),
+
+            Date::make('FAS Due Date', 'fas_due_date'),
+
+            Date::make('FASP Due Date', 'fasp_due_date'),
+
+            Date::make('Date Send', 'date_send'),
+
+            Select::make('Status')
+                ->rules(['required'])
+                ->options([
+                    ModelsRecord::STATUS_ON_GOING => ModelsRecord::STATUS_ON_GOING,
+                    ModelsRecord::STATUS_PENDING => ModelsRecord::STATUS_PENDING,
+                    ModelsRecord::STATUS_SENT => ModelsRecord::STATUS_SENT,
+                ]),
+
+            Number::make('Working Hours')
+                ->rules(['required']),
+
+            Number::make('Standard Time')
+                ->rules(['required']),
         ];
     }
 
