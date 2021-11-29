@@ -170,7 +170,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                         'icon'=>null,
                         'resources'=>[
                             \App\Nova\Asset::class,
-                            \App\Nova\Product::class,
                         ]
                     ])->canSee(function ($request) {
                         return $request->user()->can('access record management');
@@ -179,6 +178,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                         'label'=>'STOCK RECONCILIATION',
                         'icon'=>null,
                         'resources'=>[
+                            \App\Nova\Product::class,
                             \App\Nova\StockTake::class,
                             \App\Nova\StockReport::class,
                         ]
