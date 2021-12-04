@@ -11,7 +11,21 @@
                 <a href="/dashboard">Dashboard</a>
             </li>
             <li>
-                <a href="/jobs">Browse Jobs</a>
+                @if (auth()->user()->canApplyJob())
+                    <a href="/jobs">Browse Jobs</a>
+                @else
+                <a href="#">
+                    <label for="no-resume">
+                        Browse Jobs
+                    </label>
+                    <span class="material-icons">
+                        lock
+                    </span>
+                </a>
+                @endif
+            </li>
+            <li>
+                <a href="/profile/{{auth()->id()}}" >Profile</a>
             </li>
             <li>
                 <a href="/logout" >Logout</a>

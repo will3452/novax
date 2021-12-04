@@ -6,7 +6,13 @@
                 <div class="card lg:card-side bordered my-2">
                     <div class="card-body">
                     <h2 class="card-title">{{$offer->position}}
-                        <a class="text-xs badge">URGENT</a> <a class="text-xs badge-warning badge">VACANT SLOT <span class="font-bold"> ( {{$offer->slot}} )</span></a></h2>
+                        @if ($offer->urgent)
+                        <a class="text-xs badge">URGENT</a>
+                        @endif
+
+                         <a class="text-xs badge-warning badge">VACANT SLOT <span class="font-bold"> ( {{$offer->available_number_of_slots}} )</span></a>
+
+                        </h2>
                     <p>{{$offer->description}}</p>
                     <div class="card-actions">
                         <apply-button job_offer_id='{{$offer->id}}' is_applied="{{$offer->isApplicantApplied(auth()->id())}}"></apply-button>
@@ -33,7 +39,7 @@
                             Salary/Mo : {{$offer->salary}}
                         </div>
                         <div class="text-sm  py-2 font-bold">
-                            Vacant Slot : {{$offer->slot}}
+                            Vacant Slot : {{$offer->available_number_of_slots}}
                         </div>
                         <div class="p-2 mt-2 text-sm rounded border-dashed border-2">
                             {{$offer->description}}

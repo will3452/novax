@@ -63,4 +63,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(JobApplication::class, 'applicant_id');
     }
+
+    public function canApplyJob()
+    {
+        return !empty($this->resume);
+    }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
 }

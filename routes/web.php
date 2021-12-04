@@ -7,6 +7,7 @@ use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +48,9 @@ Route::middleware('auth')->group(function () {
     //notifications
     Route::get('/notifications', [NotificationController::class, 'showNotification']);
     Route::post('/notifications/{id}', [NotificationController::class, 'markAsRead']);
+
+    //profile
+    Route::get('/profile/{user}', [ProfileController::class, 'showProfile']);
+    Route::post('/profile-update-picture/{user}', [ProfileController::class, 'updatePicture']);
+    Route::post('/profile-save/{user}', [ProfileController::class, 'saveProfile']);
 });

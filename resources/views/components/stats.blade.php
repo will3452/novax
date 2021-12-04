@@ -16,7 +16,7 @@
             </span>
         </div>
         <div class="stat-title">Applications</div>
-        <div class="stat-value">{{auth()->user()->applications()->whereStatus(\App\Models\JobApplication::STATUS_PENDING)->count()}}</div>
+        <div class="stat-value">{{auth()->user()->applications()->count()}}</div>
     </div>
     <div class="stat">
         <div class="stat-figure text-secondary">
@@ -34,6 +34,6 @@
             </span>
         </div>
         <div class="stat-title">Interview</div>
-        <div class="stat-value">{{auth()->user()->applications()->whereStatus(\App\Models\JobApplication::STATUS_PENDING)->count()}}</div>
+        <div class="stat-value">{{auth()->user()->applications()->whereStatus(\App\Models\JobApplication::STATUS_INTERVIEW)->count()}}</div>
     </div>
   </div>
