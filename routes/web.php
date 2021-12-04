@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,4 +43,8 @@ Route::middleware('auth')->group(function () {
     //browser
     Route::get('/jobs', [JobController::class, 'browse']);
     Route::post('/applications', [JobController::class, 'submitApplication']);
+
+    //notifications
+    Route::get('/notifications', [NotificationController::class, 'showNotification']);
+    Route::post('/notifications/{id}', [NotificationController::class, 'markAsRead']);
 });

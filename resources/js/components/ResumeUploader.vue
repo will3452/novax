@@ -1,5 +1,5 @@
 <template>
-    <div class="card lg:card-side bordered">
+    <div class="card lg:card-side bordered mt-2">
     <div class="card-body text-center">
         <div v-if="noresume == 'true'">
             <h2 class="card-title">No Resume Found</h2>
