@@ -1,9 +1,9 @@
 <x-layout>
     <x-navbar></x-navbar>
     <x-content>
-        <div>
+        <div class="lg:flex">
             @forelse ($offers as $offer)
-                <div class="card lg:card-side bordered my-2">
+                <div class="card lg:card-side bordered my-2 lg:w-1/3 mx-2 shadow">
                     <div class="card-body">
                     <h2 class="card-title">{{$offer->position}}
                         @if ($offer->urgent)

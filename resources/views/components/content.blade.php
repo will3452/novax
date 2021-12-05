@@ -1,4 +1,4 @@
-<div class="rounded-lg shadow  drawer h-screen">
+<div class="rounded-lg shadow  overflow-auto drawer h-screen mb-20 md:mb-0">
     <input id="my-drawer" type="checkbox" class="drawer-toggle">
     <div class="p-2 drawer-content">
         {{$slot}}

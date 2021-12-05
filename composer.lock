@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17cb8e37b3e20aedf36d15dfdfd5ef87",
+    "content-hash": "398dcf6d3e7835eb97f1d6787ae69e02",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1074,6 +1074,65 @@
                 }
             ],
             "time": "2021-04-26T11:24:25+00:00"
+        },
+        {
+            "name": "gabrieliuga/laravel-nova-sidebar-links",
+            "version": "v1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gabrieliuga/laravel-nova-sidebar-links.git",
+                "reference": "f4b7ccb1b181f15cd1718440b92e133fd387dfaa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gabrieliuga/laravel-nova-sidebar-links/zipball/f4b7ccb1b181f15cd1718440b92e133fd387dfaa",
+                "reference": "f4b7ccb1b181f15cd1718440b92e133fd387dfaa",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": ">=6.2",
+                "laravel/nova": ">=2.9",
+                "php": ">=7.4.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Giuga\\LaravelNovaSidebar\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Giuga\\LaravelNovaSidebar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gabriel Iuga",
+                    "email": "me@iuga.dev",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Allow definition of custom links on Laravel Nova sidebar.",
+            "homepage": "https://github.com/gabrieliuga/laravel-nova-sidebar-links",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/gabrieliuga/laravel-nova-sidebar-links/issues",
+                "source": "https://github.com/gabrieliuga/laravel-nova-sidebar-links/tree/master"
+            },
+            "time": "2020-04-06T21:25:10+00:00"
         },
         {
             "name": "graham-campbell/result-type",

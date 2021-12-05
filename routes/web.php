@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\LoginController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SkillController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,4 +55,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/{user}', [ProfileController::class, 'showProfile']);
     Route::post('/profile-update-picture/{user}', [ProfileController::class, 'updatePicture']);
     Route::post('/profile-save/{user}', [ProfileController::class, 'saveProfile']);
+
+
+    //skills
+    Route::get('/skills/{user}', [SkillController::class, 'getSkills']);
+    Route::post('/skills/{user}', [SkillController::class, 'addSkill']);
+    Route::delete('/skills/{user}/{id}', [SkillController::class, 'removeSkill']);
+
+    Route::get('/chat', [ChatController::class, 'getChat']);
 });

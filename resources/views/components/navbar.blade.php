@@ -24,6 +24,9 @@
     </a>
     </div>
     <div class="flex-none">
+        <message-icon user="{{auth()->user()}}"></message-icon>
+      </div>
+    <div class="flex-none">
       <a href="/profile/{{auth()->id()}}">
         <div class="avatar">
             <div class="rounded-full w-10 h-10 m-1 cursor-pointer">

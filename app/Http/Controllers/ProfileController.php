@@ -28,10 +28,10 @@ class ProfileController extends Controller
     public function saveProfile(User $user)
     {
         $data = request()->validate([
-            'about' => 'required'
+            'about' => ''
         ]);
 
         Profile::updateOrCreate(['user_id' => $user->id], $data);
-        return back();
+        return response([], 200);
     }
 }

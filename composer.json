@@ -18,6 +18,7 @@
         "php": "^7.3|^8.0",
         "coreproc/nova-permissions-field": "*",
         "fruitcake/laravel-cors": "^2.0",
+        "gabrieliuga/laravel-nova-sidebar-links": "^1.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.65",
         "laravel/nova": "*",
