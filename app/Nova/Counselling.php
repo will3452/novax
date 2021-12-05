@@ -61,6 +61,13 @@ class Counselling extends Resource
                 ->sortable()
                 ->exceptOnForms(),
 
+            Badge::make('Type', function () {
+                return $this->students()->count() > 1 ? 'Group' : 'Individual';
+            })->map([
+                'Group' => 'info',
+                'Individual' => 'success',
+            ]),
+
             Badge::make('Status')
                 ->map([
                     ModelsCounselling::STATUS_DRAFTED => 'warning',
