@@ -49,4 +49,9 @@ class JobOffer extends Model
     {
         return $this->applications()->where('applicant_id', $applicantId)->count() > 0;
     }
+
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
 }

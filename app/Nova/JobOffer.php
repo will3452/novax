@@ -2,22 +2,32 @@
 
 namespace App\Nova;
 
-use App\Models\JobOffer as ModelsJobOffer;
-use App\Nova\Actions\JobOffer\ChangeStatus;
+use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Badge;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\BelongsTo;
+use App\Models\JobOffer as ModelsJobOffer;
+use App\Nova\Actions\JobOffer\ChangeStatus;
+use Facade\Ignition\Tabs\Tab;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class JobOffer extends Resource
 {
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (!$request->user()->hasRole(\App\Models\Role::SUPERADMIN)) {
+            return $query->where('employer_id', $request->user()->id);
+        }
+        return $query;
+    }
+
     public function authorizedToDelete(Request $request)
     {
         return false;
@@ -25,6 +35,10 @@ class JobOffer extends Resource
 
     public function authorizedToAdd(NovaRequest $request, $model)
     {
+        if ($request->viaRelationship === 'tags') {
+            return true;
+        }
+
         return false;
     }
     /**
@@ -64,44 +78,52 @@ class JobOffer extends Resource
     public function fields(Request $request)
     {
         return [
-            Date::make('Posted Date', 'created_at')
-                ->sortable()
-                ->exceptOnForms(),
+            new Tabs('Offer', [
+                'Offer Details' => [
+                    Date::make('Posted Date', 'created_at')
+                    ->sortable()
+                    ->exceptOnForms(),
 
-            BelongsTo::make('Employer', 'employer', User::class)
-                ->exceptOnForms(),
+                    BelongsTo::make('Employer', 'employer', User::class)
+                        ->exceptOnForms(),
 
-            Text::make('Position')
-                ->rules(['required']),
+                    Text::make('Position')
+                        ->rules(['required']),
 
-            Textarea::make('Description')
-                ->rules(['required'])
-                ->alwaysShow(),
+                    Textarea::make('Description')
+                        ->rules(['required'])
+                        ->alwaysShow(),
 
-            Number::make('Salary per month', 'salary')
-                ->sortable(),
+                    Number::make('Salary per month', 'salary')
+                        ->sortable(),
 
-            Number::make('Total Slot', 'slot'),
+                    Number::make('Total Slot', 'slot'),
 
-            Number::make('Available Slot', function () {
-                return $this->available_number_of_slots;
-            }),
+                    Number::make('Available Slot', function () {
+                        return $this->available_number_of_slots;
+                    }),
 
-            Number::make('No. Of Application', function () {
-                return $this->applications()->count();
-            })->exceptOnForms(),
+                    Number::make('No. Of Application', function () {
+                        return $this->applications()->count();
+                    })->exceptOnForms(),
 
-            Date::make('Ended Date', 'ended_at'),
+                    Date::make('Ended Date', 'ended_at'),
 
-            Boolean::make('Urgent'),
+                    Boolean::make('Urgent'),
 
-            Badge::make('Status')
-                ->map([
-                    ModelsJobOffer::STATUS_OPEN => 'success',
-                    ModelsJobOffer::STATUS_CLOSED => 'danger',
-                ]),
+                    Badge::make('Status')
+                        ->map([
+                            ModelsJobOffer::STATUS_OPEN => 'success',
+                            ModelsJobOffer::STATUS_CLOSED => 'danger',
+                        ]),
+                    ],
+
+                HasMany::make('Tags', 'tags', Tag::class),
+            ]),
 
             HasMany::make('Applications', 'applications', JobApplication::class),
+
+
         ];
     }
 

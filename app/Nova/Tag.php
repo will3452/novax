@@ -2,40 +2,33 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\ChatUser;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\HasOne;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Tag extends Resource
 {
-    public static $group = 'access Control';
+    public static $displayInNavigation = false;
+
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/job-offers/' . $request->viaResourceId;
+    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Tag::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
-
-    public function authorizedToUpdate(Request $request)
-    {
-        if ($request->has('action')) {
-            return true;
-        }
-
-        return false;
-    }
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -43,7 +36,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'description',
     ];
 
     /**
@@ -55,28 +48,12 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            Date::make('Date', 'created_at')
+                ->exceptOnForms()
+                ->sortable(),
 
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
-
-            MorphToMany::make('Roles', 'roles', Role::class),
-
-            HasOne::make('Resume', 'resume', Resume::class),
-
-            HasOne::make('Skills', 'skills', Skill::class),
+            Text::make('Description')
+                ->rules(['required']),
         ];
     }
 
@@ -121,8 +98,6 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            ChatUser::make()->onlyOnDetail()
-        ];
+        return [];
     }
 }
