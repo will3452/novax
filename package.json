@@ -7,7 +7,13 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "mix --production",
+        "build-NewsFeed": "cd nova-components/NewsFeed && npm run dev",
+        "build-NewsFeed-prod": "cd nova-components/NewsFeed && npm run prod",
+        "build-news-feed": "cd nova-components/NewsFeed && npm run dev",
+        "build-news-feed-prod": "cd nova-components/NewsFeed && npm run prod",
+        "build-newsfeed": "cd nova-components/Newsfeed && npm run dev",
+        "build-newsfeed-prod": "cd nova-components/Newsfeed && npm run prod"
     },
     "devDependencies": {
         "axios": "^0.21",

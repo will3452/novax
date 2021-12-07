@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Elezerk\Newsfeed\Newsfeed;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -102,6 +103,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             (new NovaSettings)->canSee(function ($request) {
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN);
             }),
+            (new Newsfeed),
         ];
     }
 

@@ -1,6 +1,6 @@
 {
-    "name": "example/miami-ice",
-    "description": "A Laravel Nova theme.",
+    "name": "elezerk/newsfeed",
+    "description": "A Laravel Nova tool.",
     "keywords": [
         "laravel",
         "nova"
@@ -11,13 +11,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Example\\MiamiIce\\": "src/"
+            "Elezerk\\Newsfeed\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Example\\MiamiIce\\ThemeServiceProvider"
+                "Elezerk\\Newsfeed\\ToolServiceProvider"
             ]
         }
     },
