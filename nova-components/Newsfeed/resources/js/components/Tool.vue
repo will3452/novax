@@ -1,5 +1,6 @@
 <template>
     <div>
+        <router-link :to="{name: 'otherpage'}">go to other page</router-link>
         <heading class="mb-6">Write new post</heading>
         <label for="">Title</label>
         <input v-model="title" type="text" placeholder="Aa" class="shadow block w-full p-2 rounded mb-2">
