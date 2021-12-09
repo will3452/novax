@@ -6,7 +6,7 @@
             signpost
         </span>
       </div>
-      <div class="stat-title">Job Offers</div>
+      <div class="stat-title">OJT Offers</div>
       <div class="stat-value">{{\App\Models\JobOffer::whereStatus(\App\Models\JobOffer::STATUS_OPEN)->count()}}</div>
     </div>
     <div class="stat">
@@ -15,7 +15,7 @@
                 description
             </span>
         </div>
-        <div class="stat-title">Applications</div>
+        <div class="stat-title">My Applications</div>
         <div class="stat-value">{{auth()->user()->applications()->count()}}</div>
     </div>
     <div class="stat">

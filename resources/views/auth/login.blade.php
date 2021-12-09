@@ -37,14 +37,14 @@
                 </x-form-error>
                 @enderror
                 <label class="label">
-                  <a href="#" class="label-text-alt">Forgot password?</a>
+                  <a href="javascript:alert('Under Maintenance')" class="label-text-alt">Forgot password?</a>
                 </label>
               </div>
               <div class="form-control ">
                 <input type="submit" value="Login" class="btn btn-primary">
               </div>
               <div class="mt-2 text-xs text-center">
-                  <a href="/register" class="underline">Register as Job Seeker</a> | <a href="/register-employer" class="underline">Register as Employer</a>
+                  <a href="/register" class="underline">Register as OJT Seeker</a> | <a href="/register-employer" class="underline">Register as Employer</a>
               </div>
             </form>
           </div>

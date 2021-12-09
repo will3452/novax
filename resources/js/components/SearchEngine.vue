@@ -2,7 +2,7 @@
     <form @submit.prevent="submit()">
         <div class="flex-1 lg:flex-none">
         <div class="form-control">
-            <input type="text" v-model="keyword" ref="input" name="keyword" placeholder="Search job" class="input input-ghost">
+            <input type="text" v-model="keyword" ref="input" name="keyword" placeholder="Search OJT" class="input input-ghost">
             <div class="text-xs text-red-600 font-bold text-center" v-if="hasError">
                 Please input the keyword.
             </div>

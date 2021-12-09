@@ -9,7 +9,7 @@
                 Registered Succesfully!
             </x-alert-success>
         @endif
-        <h1 class="uppercase text-center font-bold text-gray-700 text-2xl">Register</h1>
+        <h1 class="uppercase text-center font-bold text-gray-700 text-2xl">OJT Seeker Register</h1>
         <div class="form-control">
             <label class="label">
             <span class="label-text">Name</span>

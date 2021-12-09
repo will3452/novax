@@ -4756,7 +4756,7 @@ var render = function () {
             ],
             ref: "input",
             staticClass: "input input-ghost",
-            attrs: { type: "text", name: "keyword", placeholder: "Search job" },
+            attrs: { type: "text", name: "keyword", placeholder: "Search OJT" },
             domProps: { value: _vm.keyword },
             on: {
               input: function ($event) {
