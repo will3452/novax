@@ -14,7 +14,7 @@
                 search
                 </span>
                 <span class="mx-4">
-                    Find Job
+                    Let's Go
                 </span>
             </a>
           </div>
