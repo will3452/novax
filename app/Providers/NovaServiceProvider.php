@@ -2,8 +2,7 @@
 
 namespace App\Providers;
 
-use App\Nova\Metrics\NumberOfApplications;
-use App\Nova\Metrics\NumberOfJobOffers;
+use Elezerk\Chat\Chat;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -11,7 +10,9 @@ use Laravel\Nova\Fields\Image;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
+use App\Nova\Metrics\NumberOfJobOffers;
 use Giuga\LaravelNovaSidebar\NovaSidebar;
+use App\Nova\Metrics\NumberOfApplications;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -101,9 +102,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            (new NovaSidebar())->hydrate([
-                'Chat' => '/chat'
-            ]),
+            (new Chat),
             new ProfileTool,
             (new BackupTool)->canSee(function ($request) {
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN);

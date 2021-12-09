@@ -97,7 +97,8 @@ class JobOffer extends Resource
                     Number::make('Salary per month', 'salary')
                         ->sortable(),
 
-                    Number::make('Total Slot', 'slot'),
+                    Number::make('Total Slot', 'slot')
+                        ->required(),
 
                     Number::make('Available Slot', function () {
                         return $this->available_number_of_slots;

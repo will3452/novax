@@ -47,9 +47,6 @@ class ChangeStatus extends Action
                     JobApplication::STATUS_INTERVIEW => JobApplication::STATUS_INTERVIEW,
                 ])
                 ->rules(['required']),
-
-            Textarea::make('Message')
-                ->help('Simple message for the applicant'),
         ];
     }
 }
