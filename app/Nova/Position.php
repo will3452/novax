@@ -2,31 +2,24 @@
 
 namespace App\Nova;
 
-use Eminiarts\Tabs\Tab;
-use Eminiarts\Tabs\Tabs;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Position extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
+    public function authorizedToView(Request $request)
     {
-        return $query->where('email', '!=', 'super@admin.com');
+        return false;
     }
-
-    public static $group = 'access Control';
+    public static $group = 'data';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Position::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -41,7 +34,8 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'name'
     ];
 
     /**
@@ -53,27 +47,9 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            Tabs::make('Users', [
-                Tab::make('User details', [
-                    Text::make('Name')
-                        ->sortable()
-                        ->rules('required', 'max:255'),
-
-                    Text::make('Email')
-                        ->sortable()
-                        ->rules('required', 'email', 'max:254')
-                        ->creationRules('unique:users,email')
-                        ->updateRules('unique:users,email,{{resourceId}}'),
-
-                    Password::make('Password')
-                        ->onlyOnForms()
-                        ->creationRules('required', 'string', 'min:8')
-                        ->updateRules('nullable', 'string', 'min:8'),
-                ]),
-                MorphToMany::make('Roles', 'roles', Role::class),
-                ])->withToolbar(),
-
-                HasMany::make('Associated Records', 'userRecords', UserRecord::class),
+            Text::make('Name')
+                ->sortable()
+                ->rules(['required', 'unique:positions,name']),
         ];
     }
 

@@ -2,17 +2,22 @@
 
 namespace App\Nova;
 
-use App\Models\Record as ModelsRecord;
+use Eminiarts\Tabs\Tab;
+use Eminiarts\Tabs\Tabs;
+use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Text;
+use App\Models\Record as ModelsRecord;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Record extends Resource
 {
+    public static $group = 'Management';
     /**
      * The model the resource corresponds to.
      *
@@ -45,69 +50,63 @@ class Record extends Resource
      */
     public function fields(Request $request)
     {
-        /**
-     'fasp_control_number',
-        'fas_control_number',
-        'job_type',
-        'job_status',
-        'fas_pic',
-        'maker',
-        'received_date',
-        'fas_due_date',
-        'fasp_due_date',
-        'date_send',
-        'status',
-        'working_hours',
-        'standard_time',
-     **/
         return [
-            Text::make('FASP Control No.', 'fasp_control_number')
-                ->rules(['required'])
-                ->sortable(),
+            Tabs::make('Records', [
+                Tab::make(
+                    'Record Details',
+                    [
+                    Text::make('Company Ctrl No.', 'company_control_number')
+                        ->rules(['required'])
+                        ->sortable(),
 
-            Text::make('FAS Control No.', 'fas_control_number')
-                ->rules(['required'])
-                ->sortable(),
+                    Text::make('Customer Ctrl No.', 'customer_control_number')
+                        ->rules(['required'])
+                        ->sortable(),
 
-            Text::make('Job Type', 'job_type')
-                ->rules(['required'])
-                ->sortable(),
+                    Text::make('Job Type', 'job_type')
+                        ->rules(['required'])
+                        ->sortable(),
 
+                    Select::make('Job Status')
+                        ->onlyOnForms()
+                        ->rules(['required'])
+                        ->options([
+                            ModelsRecord::JOB_STATUS_NO_PROBLEM => ModelsRecord::JOB_STATUS_NO_PROBLEM,
+                            ModelsRecord::JOB_STATUS_WITH_PROBLEM => ModelsRecord::JOB_STATUS_WITH_PROBLEM,
+                        ]),
 
-            Select::make('Job Status')
-                ->rules(['required'])
-                ->options([
-                    ModelsRecord::JOB_STATUS_NO_PROBLEM => ModelsRecord::JOB_STATUS_NO_PROBLEM,
-                    ModelsRecord::JOB_STATUS_WITH_PROBLEM => ModelsRecord::JOB_STATUS_WITH_PROBLEM,
-                ]),
+                    Badge::make('Job Status')
+                        ->map([
+                            ModelsRecord::JOB_STATUS_NO_PROBLEM => 'success',
+                            ModelsRecord::JOB_STATUS_WITH_PROBLEM => 'danger',
+                        ]),
 
-            Text::make('FAS PIC', 'fas_pic')
-                ->rules(['required']),
+                    Text::make('Maker')
+                        ->rules(['required']),
 
-            Text::make('Maker')
-                ->rules(['required']),
+                    Date::make('Received Date'),
 
-            Date::make('Received Date'),
+                    Date::make('Company Due Date', 'company_due_date'),
 
-            Date::make('FAS Due Date', 'fas_due_date'),
+                    Date::make('Customer Due Date', 'customer_due_date'),
 
-            Date::make('FASP Due Date', 'fasp_due_date'),
+                    Date::make('Date Send', 'date_send'),
 
-            Date::make('Date Send', 'date_send'),
+                    Badge::make('Status')
+                        ->map([
+                            ModelsRecord::STATUS_ON_GOING => 'info',
+                            ModelsRecord::STATUS_PENDING => 'warning',
+                            ModelsRecord::STATUS_SENT => 'success',
+                        ]),
 
-            Select::make('Status')
-                ->rules(['required'])
-                ->options([
-                    ModelsRecord::STATUS_ON_GOING => ModelsRecord::STATUS_ON_GOING,
-                    ModelsRecord::STATUS_PENDING => ModelsRecord::STATUS_PENDING,
-                    ModelsRecord::STATUS_SENT => ModelsRecord::STATUS_SENT,
-                ]),
+                    Number::make('Standard Time (hours)', 'standard_time')
+                        ->rules(['required']),
+                    ]
+                ),
 
-            Number::make('Working Hours')
-                ->rules(['required']),
+                HasMany::make('Person In-Charge', 'userRecords', UserRecord::class),
 
-            Number::make('Standard Time')
-                ->rules(['required']),
+            ])->withToolbar(),
         ];
     }
 

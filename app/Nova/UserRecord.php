@@ -2,38 +2,45 @@
 
 namespace App\Nova;
 
-use Eminiarts\Tabs\Tab;
-use Eminiarts\Tabs\Tabs;
-use Laravel\Nova\Fields\ID;
+use App\Models\Position;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class UserRecord extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
+    public static function singularLabel()
     {
-        return $query->where('email', '!=', 'super@admin.com');
+        return 'Person In-charge';
     }
 
-    public static $group = 'access Control';
+    public static function createButtonLabel()
+    {
+        return __('Add :resource', ['resource' => static::singularLabel()]);
+    }
+
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/' . $request->viaResource . '/' . $request->viaResourceId . '?tab=person-in-charge';
+    }
+
+    public static $displayInNavigation = false;
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\UserRecord::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -41,7 +48,9 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'position',
+        'user_id',
+        'record_id',
     ];
 
     /**
@@ -53,27 +62,15 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            Tabs::make('Users', [
-                Tab::make('User details', [
-                    Text::make('Name')
-                        ->sortable()
-                        ->rules('required', 'max:255'),
+            BelongsTo::make('User', 'user', User::class)
+                ->searchable(),
 
-                    Text::make('Email')
-                        ->sortable()
-                        ->rules('required', 'email', 'max:254')
-                        ->creationRules('unique:users,email')
-                        ->updateRules('unique:users,email,{{resourceId}}'),
+            BelongsTo::make('Record', 'record', Record::class),
 
-                    Password::make('Password')
-                        ->onlyOnForms()
-                        ->creationRules('required', 'string', 'min:8')
-                        ->updateRules('nullable', 'string', 'min:8'),
-                ]),
-                MorphToMany::make('Roles', 'roles', Role::class),
-                ])->withToolbar(),
+            Select::make('Position')
+                ->options(Position::get()->pluck('name', 'name')),
 
-                HasMany::make('Associated Records', 'userRecords', UserRecord::class),
+            Boolean::make('Main PIC', 'is_main'),
         ];
     }
 
