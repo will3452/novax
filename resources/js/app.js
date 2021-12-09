@@ -15,6 +15,8 @@ Vue.component('about-updater', require('./components/AboutUpdater.vue').default)
 Vue.component('skills-adder', require('./components/SkillsAdder.vue').default);
 Vue.component('chat-talk', require('./components/ChatTalk.vue').default);
 Vue.component('message-icon', require('./components/MessageIcon.vue').default);
+Vue.component('icon', require('./components/Icon.vue').default);
+Vue.component('send-email-verification', require('./components/SendEmailVerification.vue').default);
 // Initialize Vue
 const app = new Vue({
     el: '#app',

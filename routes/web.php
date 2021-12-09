@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmailVerifyController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkillController;
@@ -63,4 +64,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/skills/{user}/{id}', [SkillController::class, 'removeSkill']);
 
     Route::get('/chat', [ChatController::class, 'getChat']);
+    Route::post('/send-verification', [EmailVerifyController::class, 'sendVerification']);
+    Route::get('/veriy-email', [EmailVerifyController::class, 'verifyEmail'])->name('verify-email');
 });
