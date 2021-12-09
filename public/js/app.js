@@ -2558,8 +2558,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['is_verify'],
+  props: ['isverify'],
   data: function data() {
     return {
       isLoading: false,
@@ -2568,7 +2572,19 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     sendVerification: function sendVerification() {
+      var _this = this;
+
       this.isLoading = true;
+      axios.post('/send-verification').then(function (res) {
+        _this.isLoading = false;
+
+        if (res.status == 200) {
+          _this.hasSend = true;
+        }
+      })["catch"](function (err) {
+        _this.isLoading = false;
+        alert('Server Errror!');
+      });
     }
   }
 });
@@ -3448,6 +3464,43 @@ component.options.__file = "resources/js/components/ExampleComponent.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/Icon.vue":
+/*!******************************************!*\
+  !*** ./resources/js/components/Icon.vue ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Icon_vue_vue_type_template_id_77a3cee4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Icon.vue?vue&type=template&id=77a3cee4& */ "./resources/js/components/Icon.vue?vue&type=template&id=77a3cee4&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _Icon_vue_vue_type_template_id_77a3cee4___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Icon_vue_vue_type_template_id_77a3cee4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Icon.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/ImageUploader.vue":
 /*!***************************************************!*\
   !*** ./resources/js/components/ImageUploader.vue ***!
@@ -3980,6 +4033,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Icon.vue?vue&type=template&id=77a3cee4&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/Icon.vue?vue&type=template&id=77a3cee4& ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Icon_vue_vue_type_template_id_77a3cee4___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Icon_vue_vue_type_template_id_77a3cee4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Icon_vue_vue_type_template_id_77a3cee4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Icon.vue?vue&type=template&id=77a3cee4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Icon.vue?vue&type=template&id=77a3cee4&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/ImageUploader.vue?vue&type=template&id=4984bfe4&scoped=true&":
 /*!**********************************************************************************************!*\
   !*** ./resources/js/components/ImageUploader.vue?vue&type=template&id=4984bfe4&scoped=true& ***!
@@ -4308,6 +4378,31 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [_vm._v("\n    hello\n")])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Icon.vue?vue&type=template&id=77a3cee4&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Icon.vue?vue&type=template&id=77a3cee4& ***!
+  \****************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("span", { staticClass: "material-icons" }, [_vm._t("default")], 2)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -4735,7 +4830,7 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    !_vm.is_verify
+    !_vm.isverify
       ? _c("div", { staticClass: "alert mb-2" }, [
           _vm._m(0),
           _vm._v(" "),
@@ -4749,6 +4844,21 @@ var render = function () {
                     on: { click: _vm.sendVerification },
                   },
                   [_vm._v("Send Verification")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.hasSend
+              ? _c(
+                  "button",
+                  { staticClass: "btn btn-sm btn-ghost" },
+                  [
+                    _c("icon", [_vm._v("done_all")]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "ml-2" }, [
+                      _vm._v("Verification has been sent!"),
+                    ]),
+                  ],
+                  1
                 )
               : _vm._e(),
           ]),
@@ -17166,6 +17276,7 @@ Vue.component('about-updater', (__webpack_require__(/*! ./components/AboutUpdate
 Vue.component('skills-adder', (__webpack_require__(/*! ./components/SkillsAdder.vue */ "./resources/js/components/SkillsAdder.vue")["default"]));
 Vue.component('chat-talk', (__webpack_require__(/*! ./components/ChatTalk.vue */ "./resources/js/components/ChatTalk.vue")["default"]));
 Vue.component('message-icon', (__webpack_require__(/*! ./components/MessageIcon.vue */ "./resources/js/components/MessageIcon.vue")["default"]));
+Vue.component('icon', (__webpack_require__(/*! ./components/Icon.vue */ "./resources/js/components/Icon.vue")["default"]));
 Vue.component('send-email-verification', (__webpack_require__(/*! ./components/SendEmailVerification.vue */ "./resources/js/components/SendEmailVerification.vue")["default"])); // Initialize Vue
 
 var app = new Vue({
