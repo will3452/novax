@@ -26,7 +26,7 @@ class CreateRecordsTable extends Migration
             $table->timestamp('customer_due_date')->nullable();
             $table->timestamp('company_due_date')->nullable();
             $table->timestamp('date_send')->nullable();
-            $table->string('status')->nullable(Record::STATUS_ON_GOING);
+            $table->string('status')->default(Record::STATUS_ON_GOING);
             $table->string('standard_time');
             $table->timestamps();
         });

@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserRecord::class, 'user_id');
     }
+
+    public function workingHours()
+    {
+        return $this->hasMany(RecordUserWorkingHour::class, 'user_id');
+    }
 }

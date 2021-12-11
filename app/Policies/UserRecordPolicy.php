@@ -3,9 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Models\UserRecord;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy
+class UserRecordPolicy
 {
     use HandlesAuthorization;
 
@@ -17,19 +18,19 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('view user list');
+        return $user->can('view pic list');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\UserRecord  $userRecord
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, User $model)
+    public function view(User $user, UserRecord $userRecord)
     {
-        return $user->can('view user details');
+        return $user->can('view pic details');
     }
 
     /**
@@ -40,54 +41,54 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create user');
+        return $user->can('create pic');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\UserRecord  $userRecord
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, User $model)
+    public function update(User $user, UserRecord $userRecord)
     {
-        return $user->can('update user');
+        return $user->can('update pic');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\UserRecord  $userRecord
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user, UserRecord $userRecord)
     {
-        return $user->can('delete user');
+        return $user->can('delete pic');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\UserRecord  $userRecord
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, User $model)
+    public function restore(User $user, UserRecord $userRecord)
     {
-        return $user->can('restore user');
+        return $user->can('restore pic');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\UserRecord  $userRecord
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, User $model)
+    public function forceDelete(User $user, UserRecord $userRecord)
     {
-        return $user->can('force delete user');
+        return $user->can('force delete pic');
     }
 }

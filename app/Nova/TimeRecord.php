@@ -2,38 +2,37 @@
 
 namespace App\Nova;
 
-use App\Models\Position;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class UserRecord extends Resource
+class TimeRecord extends Resource
 {
-    public static function singularLabel()
-    {
-        return 'Person In-charge';
-    }
-
-    public static function createButtonLabel()
-    {
-        return __('Add :resource', ['resource' => static::singularLabel()]);
-    }
-
-    public static function redirectAfterCreate(NovaRequest $request, $resource)
-    {
-        return '/resources/' . $request->viaResource . '/' . $request->viaResourceId . '?tab=person-in-charge';
-    }
-
     public static $displayInNavigation = false;
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return $this->user_id == auth()->id();
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return $this->user_id == auth()->id();
+    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\UserRecord::class;
+    public static $model = \App\Models\RecordUserWorkingHour::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -48,9 +47,7 @@ class UserRecord extends Resource
      * @var array
      */
     public static $search = [
-        'position',
-        'user_id',
-        'record_id',
+        'id',
     ];
 
     /**
@@ -62,16 +59,15 @@ class UserRecord extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('User', 'user', User::class)
-                ->searchable(),
+            Date::make('Date', 'created_at')
+                ->exceptOnForms()
+                ->sortable(),
+
+            BelongsTo::make('Person In-Charge', 'user', User::class),
 
             BelongsTo::make('Record', 'record', Record::class),
 
-            Select::make('Position')
-                ->required()
-                ->options(Position::get()->pluck('name', 'name')),
-
-            Boolean::make('Main PIC', 'is_main'),
+            Text::make('Hour'),
         ];
     }
 

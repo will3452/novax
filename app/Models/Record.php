@@ -41,4 +41,9 @@ class Record extends Model
     {
         return $this->hasMany(UserRecord::class, 'record_id');
     }
+
+    public function workingHours()
+    {
+        return $this->hasMany(RecordUserWorkingHour::class, 'record_id');
+    }
 }

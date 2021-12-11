@@ -12,6 +12,8 @@ use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use App\Models\Record as ModelsRecord;
+use App\Models\RecordUserWorkingHour;
+use App\Nova\Metrics\ActualTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -92,6 +94,13 @@ class Record extends Resource
 
                     Date::make('Date Send', 'date_send'),
 
+                    Select::make('Status')
+                        ->options([
+                            ModelsRecord::STATUS_ON_GOING => ModelsRecord::STATUS_ON_GOING,
+                            ModelsRecord::STATUS_PENDING =>  ModelsRecord::STATUS_PENDING,
+                            ModelsRecord::STATUS_SENT => ModelsRecord::STATUS_SENT,
+                        ])->showOnUpdating(),
+
                     Badge::make('Status')
                         ->map([
                             ModelsRecord::STATUS_ON_GOING => 'info',
@@ -107,6 +116,8 @@ class Record extends Resource
                 HasMany::make('Person In-Charge', 'userRecords', UserRecord::class),
 
             ])->withToolbar(),
+
+            HasMany::make('Working Hours', 'workingHours', TimeRecord::class),
         ];
     }
 
@@ -118,7 +129,9 @@ class Record extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new ActualTime($request->resourceId))->onlyOnDetail()
+        ];
     }
 
     /**

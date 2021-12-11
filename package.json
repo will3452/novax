@@ -7,7 +7,9 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "mix --production",
+        "build-user-time-record": "cd nova-components/UserTimeRecord && npm run dev",
+        "build-user-time-record-prod": "cd nova-components/UserTimeRecord && npm run prod"
     },
     "devDependencies": {
         "axios": "^0.21",

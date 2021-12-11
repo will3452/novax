@@ -14,17 +14,4 @@ class RecordObserver
             $record->status = Record::STATUS_SENT;
         }
     }
-
-    public function updated(Record $record)
-    {
-        if ($record->job_status === Record::JOB_STATUS_WITH_PROBLEM) {
-            $record->update([
-                'status' =>  Record::STATUS_PENDING,
-            ]);
-        } elseif ($record->date_send && $record->status !== Record::STATUS_SENT) {
-            $record->update([
-                'status' =>  Record::STATUS_SENT,
-            ]);
-        }
-    }
 }
