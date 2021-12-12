@@ -1,8 +1,12 @@
 <?php
 
-use App\Http\Controllers\RegisterController;
-use Illuminate\Support\Facades\Route;
+use App\Exports\ReportExport;
 use Laravel\Nova\Nova;
+use App\Exports\SampleExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisterController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +25,8 @@ Route::get('/', function () {
 
 Route::get('/register', [RegisterController::class, 'registrationPage']);
 Route::post('/register', [RegisterController::class, 'postRegister']);
+
+
+Route::get('/report', function (Request $request) {
+    return Excel::download(new ReportExport($request->init_date, $request->last_date), 'report.xlsx');
+});

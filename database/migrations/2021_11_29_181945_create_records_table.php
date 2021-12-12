@@ -28,6 +28,7 @@ class CreateRecordsTable extends Migration
             $table->timestamp('date_send')->nullable();
             $table->string('status')->default(Record::STATUS_ON_GOING);
             $table->string('standard_time');
+            $table->text('remarks')->nullable();
             $table->timestamps();
         });
     }

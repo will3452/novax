@@ -28,6 +28,7 @@ class Record extends Model
         'date_send',
         'status',
         'standard_time',
+        'remarks'
     ];
 
     protected $casts = [
