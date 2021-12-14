@@ -5,9 +5,13 @@ namespace App\Nova;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
+use App\Models\User as UserModel;
+use App\Nova\Filters\TypeOfUser;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
 {
@@ -35,6 +39,12 @@ class User extends Resource
         'id', 'name', 'email',
     ];
 
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        $admins  = ['super@admin.com', 'admin@admin.com']; //registered admin
+        return $query->whereNotIn('email', $admins);
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -45,6 +55,13 @@ class User extends Resource
     {
         return [
             ID::make()->sortable(),
+
+            Select::make('Type')
+                ->required()
+                ->options([
+                    UserModel::TYPE_STUDENT => UserModel::TYPE_STUDENT,
+                    UserModel::TYPE_PARENT => UserModel::TYPE_PARENT,
+                ]),
 
             Text::make('Name')
                 ->sortable()
@@ -84,7 +101,9 @@ class User extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            TypeOfUser::make(),
+        ];
     }
 
     /**
@@ -106,6 +125,7 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+        ];
     }
 }

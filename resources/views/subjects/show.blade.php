@@ -87,10 +87,14 @@
                                                 @foreach ($module->quizzes as $item)
                                                 <li>
                                                     {{$item->description}}
-                                                    @if (!$item->wasTaken(auth()->id()))
+                                                    @if (!$item->wasTaken(auth()->id()) && !auth()->user()->isModuleDone($module->id))
                                                         <a class="btn btn-sm btn-primary p-0 px-1 rounded" href="/quizzes/{{$item->id}}">Take now</a>
                                                     @else
+                                                    @if (auth()->user()->isModuleDone($module->id))
+                                                        <div>---</div>
+                                                    @else
                                                         <div class="text-xs">Your Score : {{$item->getScore(auth()->id())}}/{{$item->questions()->count()}}</div>
+                                                    @endif
                                                     @endif
                                                 </li>
                                                 @endforeach
@@ -101,10 +105,15 @@
                                                 @foreach ($module->exams as $item)
                                                 <li>
                                                     {{$item->description}}
-                                                    @if (!$item->wasTaken(auth()->id()))
-                                                        <a class="btn btn-sm btn-primary p-0 px-1 rounded" href="/quizzes/{{$item->id}}">Take now</a>
+                                                    @if (!$item->wasTaken(auth()->id()) && !auth()->user()->isModuleDone($module->id))
+                                                        <a class="btn btn-sm btn-primary p-0 px-1 rounded" href="/exams/{{$item->id}}">Take now</a>
+                                                    @else
+                                                    @if (auth()->user()->isModuleDone($module->id))
+                                                        <div>---</div>
                                                     @else
                                                         <div class="text-xs">Your Score : {{$item->getScore(auth()->id())}}/{{$item->questions()->count()}}</div>
+                                                    @endif
+
                                                     @endif
                                                 </li>
                                                 @endforeach

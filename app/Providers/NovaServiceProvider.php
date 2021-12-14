@@ -10,6 +10,9 @@ use Laravel\Nova\Fields\Image;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
+use App\Nova\Metrics\TotalNumberOfParents;
+use App\Nova\Metrics\TotalNumberOfStudent;
+use App\Nova\Metrics\TotalNumberOfSubjects;
 use ChrisWare\NovaBreadcrumbs\NovaBreadcrumbs;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -67,7 +70,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
-        return [];
+        return [
+            (new TotalNumberOfStudent()),
+            (new TotalNumberOfParents()),
+            (new TotalNumberOfSubjects())
+        ];
     }
 
     /**
