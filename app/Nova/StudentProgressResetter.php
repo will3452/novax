@@ -2,31 +2,42 @@
 
 namespace App\Nova;
 
-use Eminiarts\Tabs\Tab;
-use Eminiarts\Tabs\Tabs;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class ClassRoom extends Resource
+class StudentProgressResetter extends Resource
 {
-    public static $group = 'Data';
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToView(Request $request)
+    {
+        return false;
+    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\ClassRoom::class;
+    public static $model = \App\Models\UserModule::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -34,8 +45,8 @@ class ClassRoom extends Resource
      * @var array
      */
     public static $search = [
-        'name',
-        'code'
+        'user_id',
+        'created_at',
     ];
 
     /**
@@ -47,17 +58,13 @@ class ClassRoom extends Resource
     public function fields(Request $request)
     {
         return [
-            Tabs::make('Class Room', [
-                Tab::make('Details', [
-                    Text::make('Name')
-                      ->rules(['required']),
-                    Text::make('Code')
-                        ->rules(['required']),
-                    BelongsTo::make('Teacher', 'teacher', User::class),
-                ]),
-                BelongsToMany::make('Students', 'students', User::class),
-                BelongsToMany::make('Subjects', 'subjects', Subject::class),
-            ])
+            Date::make('Date', 'created_at'),
+
+            BelongsTo::make('Subject', 'subject', Subject::class),
+
+            BelongsTo::make('Module', 'module', Module::class),
+
+            BelongsTo::make('User', 'user', User::class),
         ];
     }
 

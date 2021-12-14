@@ -14,6 +14,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Module extends Resource
 {
+    public static $group = 'Data';
     /**
      * The model the resource corresponds to.
      *
