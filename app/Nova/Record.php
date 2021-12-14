@@ -21,6 +21,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Record extends Resource
 {
+    public static function label()
+    {
+        return 'Jobs';
+    }
     public static $group = 'Management';
     /**
      * The model the resource corresponds to.

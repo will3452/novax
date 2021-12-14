@@ -1,6 +1,6 @@
 <template>
     <card style="height:auto">
-        <div class="px-3 py-3">
+        <div class="px-3 py-3" v-if="!isLoading">
             {{selectedRecordId}}
             <div v-if="records.length">
                     <select name="" v-model="selectedRecordId" id="" @change="recordSelected()" class="
@@ -49,6 +49,9 @@
                 No Record Assigned
             </div>
         </div>
+        <div v-if="isLoading">
+            Please Wait, form has been processing...
+        </div>
     </card>
 </template>
 
@@ -71,7 +74,8 @@ export default {
             companyDueDate:null,
             customerDueDate:null,
             selectedRecordId:null,
-            hour:''
+            hour:'',
+            isLoading:false,
         };
     },
 
@@ -98,6 +102,7 @@ export default {
             })
         },
         submitWork() {
+            this.isLoading = true;
             if(this.hour.length) {
                 axios.post('/nova-vendor/user-time-record/submit-work-hour', {
                     'record_id' : this.selectedRecordId,
@@ -112,6 +117,7 @@ export default {
                     this.customer = null;
                     this.customerDueDate = null;
                     this.companyDueDate = null;
+                    this.isLoading = false;
                 })
             }
         }

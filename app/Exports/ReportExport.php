@@ -30,13 +30,14 @@ class ReportExport implements FromCollection, WithHeadings
             $arrayRecords[$key][2] = $record->job_type;
             $arrayRecords[$key][3] = $record->job_status;
             $arrayRecords[$key][4] = $record->maker;
-            $arrayRecords[$key][5] = $record->received_date;
-            $arrayRecords[$key][6] = $record->customer_due_date;
-            $arrayRecords[$key][7] = $record->company_due_date;
-            $arrayRecords[$key][8] = $record->date_send;
-            $arrayRecords[$key][9] = $record->status;
-            $arrayRecords[$key][10] = $record->standard_time;
-            $arrayRecords[$key][11] = RecordUserWorkingHour::where('record_id', $record->id)->sum('hour');
+            $arrayRecords[$key][5] = $record->userRecords()->where('is_main', true)->first()->user->name;
+            $arrayRecords[$key][6] = $record->received_date;
+            $arrayRecords[$key][7] = $record->customer_due_date;
+            $arrayRecords[$key][8] = $record->company_due_date;
+            $arrayRecords[$key][9] = $record->date_send;
+            $arrayRecords[$key][19] = $record->status;
+            $arrayRecords[$key][11] = $record->standard_time;
+            $arrayRecords[$key][12] = RecordUserWorkingHour::where('record_id', $record->id)->sum('hour');
         }
 
         return $arrayRecords;
@@ -50,6 +51,7 @@ class ReportExport implements FromCollection, WithHeadings
             'JOB TYPE',
             'JOB STATUS',
             'MAKER',
+            'MAIN PIC',
             'RECEIVED DATE',
             'CUSTOMER DUE DATE',
             'COMPANY DUE DATE',

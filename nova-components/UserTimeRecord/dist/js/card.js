@@ -90,176 +90,186 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("card", { staticStyle: { height: "auto" } }, [
-    _c("div", { staticClass: "px-3 py-3" }, [
-      _vm._v("\n        " + _vm._s(_vm.selectedRecordId) + "\n        "),
-      _vm.records.length
-        ? _c("div", [
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.selectedRecordId,
-                    expression: "selectedRecordId",
-                  },
-                ],
-                staticClass:
-                  "\n                    select-box-sm\n                    ml-auto\n                    min-w-24\n                    h-6\n                    text-xs\n                    appearance-none\n                    bg-40\n                    pl-2\n                    pr-6\n                    active:outline-none active:shadow-outline\n                    focus:outline-none focus:shadow-outline\n                ",
-                attrs: { name: "", id: "" },
-                on: {
-                  change: [
-                    function ($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function (o) {
-                          return o.selected
-                        })
-                        .map(function (o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.selectedRecordId = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                    function ($event) {
-                      return _vm.recordSelected()
-                    },
-                  ],
-                },
-              },
-              [
+    !_vm.isLoading
+      ? _c("div", { staticClass: "px-3 py-3" }, [
+          _vm._v("\n        " + _vm._s(_vm.selectedRecordId) + "\n        "),
+          _vm.records.length
+            ? _c("div", [
                 _c(
-                  "option",
-                  { attrs: { value: "", disabled: "", selected: "" } },
-                  [_vm._v("---")]
-                ),
-                _vm._v(" "),
-                _vm._l(_vm.records, function (record) {
-                  return _c(
-                    "option",
-                    {
-                      directives: [
-                        {
-                          name: "key",
-                          rawName: "v-key",
-                          value: record.id,
-                          expression: "record.id",
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selectedRecordId,
+                        expression: "selectedRecordId",
+                      },
+                    ],
+                    staticClass:
+                      "\n                    select-box-sm\n                    ml-auto\n                    min-w-24\n                    h-6\n                    text-xs\n                    appearance-none\n                    bg-40\n                    pl-2\n                    pr-6\n                    active:outline-none active:shadow-outline\n                    focus:outline-none focus:shadow-outline\n                ",
+                    attrs: { name: "", id: "" },
+                    on: {
+                      change: [
+                        function ($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function (o) {
+                              return o.selected
+                            })
+                            .map(function (o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.selectedRecordId = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        function ($event) {
+                          return _vm.recordSelected()
                         },
                       ],
-                      domProps: { value: record.record.id },
                     },
-                    [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(record.record.customer_control_number) +
-                          "\n                "
-                      ),
-                    ]
-                  )
-                }),
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "mt-2 flex justify-between" }, [
-              _c("div", [
-                _vm._v(
-                  "\n                    Role : " +
-                    _vm._s(_vm.position ? _vm.position : "---") +
-                    " "
-                ),
-                _vm.main ? _c("small", [_vm._v("(main PIC)")]) : _vm._e(),
-              ]),
-              _vm._v(" "),
-              _c("div", [
-                _vm._v(
-                  "\n                    Customer : " +
-                    _vm._s(_vm.customer ? _vm.customer : "---") +
-                    "\n                "
-                ),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "mt-2 flex justify-between" }, [
-              _c("div", [
-                _vm._v(
-                  "\n                    Company Due Date : " +
-                    _vm._s(_vm.customer ? _vm.companyDueDate : "---") +
-                    "\n                "
-                ),
-              ]),
-              _vm._v(" "),
-              _c("div", [
-                _vm._v(
-                  "\n                    Customer Due Date : " +
-                    _vm._s(_vm.customer ? _vm.customerDueDate : "---") +
-                    "\n                "
-                ),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "mt-2" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.hour,
-                    expression: "hour",
                   },
-                ],
-                staticClass:
-                  "w-full form-control form-input form-input-bordered",
-                attrs: { type: "number", placeholder: "Enter Work hour" },
-                domProps: { value: _vm.hour },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.hour = $event.target.value
-                  },
-                },
-              }),
-            ]),
-            _vm._v(" "),
-            _vm.selectedRecordId
-              ? _c(
-                  "div",
-                  { staticClass: "flex justify-between items-center" },
                   [
                     _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-light btn-default mt-2 block",
-                        attrs: {
-                          href:
-                            "/admin/resources/records/" + _vm.selectedRecordId,
-                        },
-                      },
-                      [_vm._v("View Details")]
+                      "option",
+                      { attrs: { value: "", disabled: "", selected: "" } },
+                      [_vm._v("---")]
                     ),
                     _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary btn-default mt-2 block",
-                        on: { click: _vm.submitWork },
-                      },
-                      [_vm._v("Submit Work Hour")]
+                    _vm._l(_vm.records, function (record) {
+                      return _c(
+                        "option",
+                        {
+                          directives: [
+                            {
+                              name: "key",
+                              rawName: "v-key",
+                              value: record.id,
+                              expression: "record.id",
+                            },
+                          ],
+                          domProps: { value: record.record.id },
+                        },
+                        [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(record.record.customer_control_number) +
+                              "\n                "
+                          ),
+                        ]
+                      )
+                    }),
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2 flex justify-between" }, [
+                  _c("div", [
+                    _vm._v(
+                      "\n                    Role : " +
+                        _vm._s(_vm.position ? _vm.position : "---") +
+                        " "
                     ),
-                  ]
-                )
-              : _vm._e(),
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      !_vm.records.length
-        ? _c("div", [_vm._v("\n            No Record Assigned\n        ")])
-        : _vm._e(),
-    ]),
+                    _vm.main ? _c("small", [_vm._v("(main PIC)")]) : _vm._e(),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _vm._v(
+                      "\n                    Customer : " +
+                        _vm._s(_vm.customer ? _vm.customer : "---") +
+                        "\n                "
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2 flex justify-between" }, [
+                  _c("div", [
+                    _vm._v(
+                      "\n                    Company Due Date : " +
+                        _vm._s(_vm.customer ? _vm.companyDueDate : "---") +
+                        "\n                "
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _vm._v(
+                      "\n                    Customer Due Date : " +
+                        _vm._s(_vm.customer ? _vm.customerDueDate : "---") +
+                        "\n                "
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.hour,
+                        expression: "hour",
+                      },
+                    ],
+                    staticClass:
+                      "w-full form-control form-input form-input-bordered",
+                    attrs: { type: "number", placeholder: "Enter Work hour" },
+                    domProps: { value: _vm.hour },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.hour = $event.target.value
+                      },
+                    },
+                  }),
+                ]),
+                _vm._v(" "),
+                _vm.selectedRecordId
+                  ? _c(
+                      "div",
+                      { staticClass: "flex justify-between items-center" },
+                      [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-light btn-default mt-2 block",
+                            attrs: {
+                              href:
+                                "/admin/resources/records/" +
+                                _vm.selectedRecordId,
+                            },
+                          },
+                          [_vm._v("View Details")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-primary btn-default mt-2 block",
+                            on: { click: _vm.submitWork },
+                          },
+                          [_vm._v("Submit Work Hour")]
+                        ),
+                      ]
+                    )
+                  : _vm._e(),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.records.length
+            ? _c("div", [_vm._v("\n            No Record Assigned\n        ")])
+            : _vm._e(),
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.isLoading
+      ? _c("div", [
+          _vm._v("\n        Please Wait, form has been processing...\n    "),
+        ])
+      : _vm._e(),
   ])
 }
 var staticRenderFns = []
@@ -2593,6 +2603,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['card' // The following props are only available on resource detail cards...
   // 'resource',
@@ -2608,7 +2621,8 @@ __webpack_require__.r(__webpack_exports__);
       companyDueDate: null,
       customerDueDate: null,
       selectedRecordId: null,
-      hour: ''
+      hour: '',
+      isLoading: false
     };
   },
   mounted: function mounted() {
@@ -2638,6 +2652,8 @@ __webpack_require__.r(__webpack_exports__);
     submitWork: function submitWork() {
       var _this3 = this;
 
+      this.isLoading = true;
+
       if (this.hour.length) {
         axios.post('/nova-vendor/user-time-record/submit-work-hour', {
           'record_id': this.selectedRecordId,
@@ -2652,6 +2668,7 @@ __webpack_require__.r(__webpack_exports__);
           _this3.customer = null;
           _this3.customerDueDate = null;
           _this3.companyDueDate = null;
+          _this3.isLoading = false;
         });
       }
     }
