@@ -22,6 +22,7 @@ class CreateCounsellingsTable extends Migration
             $table->text('goal')->nullable();
             $table->text('recommendation')->nullable();
             $table->string('status')->default(Counselling::STATUS_DRAFTED);
+            $table->string('type')->default(Counselling::TYPE_INDIVIDUAL);
             $table->timestamps();
         });
     }

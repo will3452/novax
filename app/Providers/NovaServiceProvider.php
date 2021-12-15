@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\GroupCounselling;
+use App\Nova\Metrics\IndividualCounselling;
+use App\Nova\Metrics\TotalNumberOfStudents;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -22,6 +25,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+
+        Nova::style('custom-fields-css', public_path('css/custom.css'));
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
@@ -74,6 +79,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'Asia/Manila',
                 'Asia/Tokyo',
             ])->defaultTimezone('Africa/Manila'),
+
+            (new GroupCounselling()),
+
+            (new IndividualCounselling()),
+
+            (new TotalNumberOfStudents())
         ];
     }
 

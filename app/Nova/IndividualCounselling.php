@@ -2,31 +2,45 @@
 
 namespace App\Nova;
 
-use App\Models\Counselling as ModelsCounselling;
-use App\Models\Student as ModelsStudent;
-use App\Nova\Actions\ChangeStatus;
-use App\Nova\Actions\SaveCounselling;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Badge;
-use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\Hidden;
+use App\Nova\Actions\AddStudent;
+use App\Nova\Actions\ChangeStatus;
+use App\Nova\Actions\SaveCounselling;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use App\Models\Counselling as ModelsCounselling;
 
-class Counselling extends Resource
+class IndividualCounselling extends Resource
 {
-    public static $group = 'Services';
-
-    public static $displayInNavigation = false;
+    public static $group = 'Counselling';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Counselling::class;
+    public static $model = \App\Models\IndividualCounselling::class;
+
+    public function authorizedToAttachAny(NovaRequest $request, $model)
+    {
+        return false;
+    }
+
+    public function authorizedToDetach(NovaRequest $request, $model, $relationship)
+    {
+        return ModelsCounselling::find($request->viaResourceId)->status === ModelsCounselling::STATUS_DRAFTED;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+
+        return $this->status === ModelsCounselling::STATUS_DRAFTED;
+    }
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -42,9 +56,8 @@ class Counselling extends Resource
      */
     public static $search = [
         'reference_number',
-        'created_at',
+        'created_at'
     ];
-
 
     /**
      * Get the fields displayed by the resource.
@@ -62,13 +75,6 @@ class Counselling extends Resource
             Text::make('Reference Number', 'reference_number')
                 ->sortable()
                 ->exceptOnForms(),
-
-            Badge::make('Type', function () {
-                return $this->students()->count() > 1 ? 'Group' : 'Individual';
-            })->map([
-                'Group' => 'info',
-                'Individual' => 'success',
-            ]),
 
             Badge::make('Status')
                 ->map([
@@ -94,9 +100,8 @@ class Counselling extends Resource
                 ->alwaysShow()
                 ->rules('required', 'max:1000'),
 
-            BelongsToMany::make('Students Involved', 'students', Student::class)
+            BelongsToMany::make('Student Involved', 'students', Student::class)
                 ->searchable(),
-
         ];
     }
 
@@ -142,6 +147,26 @@ class Counselling extends Resource
     public function actions(Request $request)
     {
         return [
+            (new AddStudent())
+                ->canSee(function(NovaRequest $resource) {
+                    if ($resource->has('action')) {
+                        return true;
+                    }
+                    $model = null;
+                    if ($resource->resourceId) {
+                        $model = ModelsCounselling::find($resource->resourceId);
+                    }
+
+                    if ($resource->viaResourceId) {
+                        $model = ModelsCounselling::find($resource->viaResourceId);
+                    }
+
+                    if ($model == null) {
+                        return false;
+                    }
+                    return $model->status === ModelsCounselling::STATUS_DRAFTED && ($model->students()->count() == 0 || $model->students()->count() > 1);
+                })
+                ->onlyOnDetail(),
             SaveCounselling::make()
                 ->onlyOnDetail()
                 ->canSee(function (NovaRequest $resource) {
@@ -161,7 +186,7 @@ class Counselling extends Resource
                     if ($model == null) {
                         return false;
                     }
-                    return $model->status === ModelsCounselling::STATUS_DRAFTED;
+                    return $model->status === ModelsCounselling::STATUS_DRAFTED && $model->students()->count();
                 }),
             ChangeStatus::make()
                 ->onlyOnDetail()

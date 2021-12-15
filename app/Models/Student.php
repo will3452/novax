@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     use HasFactory;
-    protected $guarded = [
-        'user_id',
+    protected $fillable = [
         'student_number',
         'first_name',
         'last_name',
@@ -27,11 +26,6 @@ class Student extends Model
     public function getFullNameAttribute()
     {
         return $this->last_name . ' ' . $this->first_name . ', '. $this->middle_name;
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 
     public function course()

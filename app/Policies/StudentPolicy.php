@@ -2,10 +2,11 @@
 
 namespace App\Policies;
 
+use App\Models\Student;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy
+class StudentPolicy
 {
     use HandlesAuthorization;
 
@@ -17,19 +18,19 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('view user list');
+        return $user->can('view student list');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Student  $student
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, User $model)
+    public function view(User $user, Student $student)
     {
-        return $user->can('view user details');
+        return $user->can('view student details');
     }
 
     /**
@@ -40,54 +41,54 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create user');
+        return $user->can('create student');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Student  $student
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, User $model)
+    public function update(User $user, Student $student)
     {
-        return $user->can('update user');
+        return $user->can('update student');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Student  $student
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user, Student $student)
     {
-        return $user->can('delete user');
+        return $user->can('delete student');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Student  $student
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, User $model)
+    public function restore(User $user, Student $student)
     {
-        return $user->can('restore user');
+        return $user->can('restore student');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Student  $student
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, User $model)
+    public function forceDelete(User $user, Student $student)
     {
-        return $user->can('force delete user');
+        return $user->can('force delete student');
     }
 }

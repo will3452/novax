@@ -15,6 +15,9 @@ class Counselling extends Model
     const STATUS_SOLVED = 'Solved';
     const STATUS_RESCHEDULED = 'Re-scheduled';
 
+    const TYPE_GROUP = 'group';
+    const TYPE_INDIVIDUAL = 'individual';
+
     protected $fillable = [
         'reference_number',
         'case',

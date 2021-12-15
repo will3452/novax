@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\DownloadTemplate;
+use App\Nova\Actions\ImportExcel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
@@ -25,7 +27,6 @@ class Student extends Resource
      *
      * @var string
      */
-    public static $title = 'student_number';
 
     public function title()
     {
@@ -131,6 +132,9 @@ class Student extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new ImportExcel())->standalone(),
+            (new DownloadTemplate)->standalone(),
+        ];
     }
 }

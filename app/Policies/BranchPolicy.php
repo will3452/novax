@@ -2,12 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Counselling;
-use App\Models\Student;
+use App\Models\Branch;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CounsellingPolicy
+class BranchPolicy
 {
     use HandlesAuthorization;
 
@@ -19,19 +18,19 @@ class CounsellingPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->can('view branch list');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Counselling  $counselling
+     * @param  \App\Models\Branch  $branch
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Counselling $counselling)
+    public function view(User $user, Branch $branch)
     {
-        return true;
+        return $user->can('view branch details');
     }
 
     /**
@@ -42,59 +41,54 @@ class CounsellingPolicy
      */
     public function create(User $user)
     {
-        return true;
+        return $user->can('create branch');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Counselling  $counselling
+     * @param  \App\Models\Branch  $branch
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Counselling $counselling)
+    public function update(User $user, Branch $branch)
     {
-        return true;
+        return $user->can('update branch');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Counselling  $counselling
+     * @param  \App\Models\Branch  $branch
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Counselling $counselling)
+    public function delete(User $user, Branch $branch)
     {
-        return true;
+        return $user->can('delete branch');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Counselling  $counselling
+     * @param  \App\Models\Branch  $branch
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Counselling $counselling)
+    public function restore(User $user, Branch $branch)
     {
-        return true;
+        return $user->can('restore branch');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Counselling  $counselling
+     * @param  \App\Models\Branch  $branch
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Counselling $counselling)
+    public function forceDelete(User $user, Branch $branch)
     {
-        return true;
-    }
-
-    public function attachAnyStudent(User $user, Counselling $counselling)
-    {
-        return $counselling->status === Counselling::STATUS_DRAFTED;
+        return $user->can('force delete branch');
     }
 }
