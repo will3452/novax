@@ -25,7 +25,13 @@ class SeedPermissions extends Migration
     public function up()
     {
         $permissions = [
-            //all permission goes here
+            'branch',
+            'course',
+            'group counselling',
+            'individual counselling',
+            'role',
+            'student',
+            'user',
         ];
 
 
