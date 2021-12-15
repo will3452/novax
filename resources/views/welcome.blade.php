@@ -1,7 +1,16 @@
-<x-layout>
-    <div class="w-screen h-screen flex justify-center items-center bg-gray-100">
-        <h1 class="text-3xl uppercase font-bold text-gray-700">
-            &lt;Under Development /&gt;
-        </h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <file-uploader></file-uploader>
     </div>
-</x-layout>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
