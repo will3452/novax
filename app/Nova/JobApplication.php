@@ -77,6 +77,9 @@ class JobApplication extends Resource
             BelongsTo::make('Applicant', 'applicant', User::class),
 
             Text::make('Resume', function ($model) {
+                if ($model->applicant->resume == null) {
+                    return "<a target='_blank' class='btn btn-primary btn-default' href='javascript:alert(`resume not found!`)'>View Resume</a>";
+                }
                 $path = $model->applicant->resume->storage_path;
                 return "<a target='_blank' class='btn btn-primary btn-default' href='/$path'>View Resume</a>";
             })->asHtml(),
