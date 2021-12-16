@@ -78,10 +78,10 @@ class JobApplication extends Resource
 
             Text::make('Resume', function ($model) {
                 if ($model->applicant->resume == null) {
-                    return "<a target='_blank' class='btn btn-primary btn-default' href='javascript:alert(`resume not found!`)'>View Resume</a>";
+                    return "<a target='_blank' class='btn btn-primary btn-default' href='javascript:alert(`resume not found!`)'>Resume</a>";
                 }
                 $path = $model->applicant->resume->storage_path;
-                return "<a target='_blank' class='btn btn-primary btn-default' href='/$path'>View Resume</a>";
+                return "<a target='_blank' class='btn btn-primary btn-default' href='/$path'>Resume</a>";
             })->asHtml(),
 
 
