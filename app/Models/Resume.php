@@ -20,7 +20,6 @@ class Resume extends Model
 
     public function getStoragePathAttribute()
     {
-        $path = explode('/', $this->file);
-        return '/storage/' . end($path);
+        return str_replace('public', 'storage', $this->file);
     }
 }

@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class JobApplication extends Resource
@@ -73,13 +74,18 @@ class JobApplication extends Resource
     public function fields(Request $request)
     {
         return [
-            Date::make('Date Submitted', 'created_at')
-                ->sortable()
-                ->exceptOnForms(),
+            BelongsTo::make('Applicant', 'applicant', User::class),
+
+            Text::make('Resume', function ($model) {
+                $path = $model->applicant->resume->storage_path;
+                return "<a target='_blank' class='btn btn-primary btn-default' href='/$path'>View Resume</a>";
+            })->asHtml(),
+
+
 
             BelongsTo::make('Job Offer', 'jobOffer', JobOffer::class),
 
-            BelongsTo::make('Applicant', 'applicant', User::class),
+
 
             Badge::make('Status')
                 ->map([
@@ -88,6 +94,10 @@ class JobApplication extends Resource
                     ModelsJobApplication::STATUS_INTERVIEW => 'info',
                     ModelsJobApplication::STATUS_PENDING => 'warning',
                 ]),
+
+            Date::make('Date Submitted', 'created_at')
+                ->sortable()
+                ->exceptOnForms(),
         ];
     }
 

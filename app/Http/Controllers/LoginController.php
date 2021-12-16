@@ -31,6 +31,11 @@ class LoginController extends Controller
                 dd($user);
             }
 
+            if ($user->approved_at == null) {
+                Auth::logout();
+                return redirect('/login')->withError('You\'re not approved yet!');
+            }
+
             return redirect(Nova::path());
         }
 

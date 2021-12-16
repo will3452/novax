@@ -31,7 +31,18 @@
                     {{$message}}
                 </x-form-error>
                 @enderror
-                </div>
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Address</span>
+                </label>
+                <input type="text" value="{{old('address')}}" name="address" required placeholder="address" class="input input-bordered">
+                @error('address')
+                <x-form-error>
+                    {{$message}}
+                </x-form-error>
+                @enderror
+            </div>
             <div class="form-control">
                 <label class="label">
                 <span class="label-text">Password</span>

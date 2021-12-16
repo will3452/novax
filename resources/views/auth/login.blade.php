@@ -15,6 +15,11 @@
                 Welcome Back!
             </h2>
             @csrf
+             @if (session()->has('error'))
+                <x-form-error>
+                    {{session('error')}}
+                </x-form-error>
+             @endif
               <div class="form-control">
                 <label class="label">
                   <span class="label-text">Email</span>

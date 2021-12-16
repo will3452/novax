@@ -19,6 +19,10 @@
         {
             "type": "path",
             "url": "./nova-components/Chat"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/ProfileTool"
         }
     ],
     "require": {
@@ -38,7 +42,8 @@
         "spatie/laravel-backup": "^6.16",
         "spatie/laravel-permission": "^5.3",
         "spatie/nova-backup-tool": "^4.1",
-        "elezerk/chat": "*"
+        "elezerk/chat": "*",
+        "elezerk/profile-tool": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

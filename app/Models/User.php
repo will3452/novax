@@ -17,7 +17,6 @@ class User extends Authenticatable
     const TYPE_EMPLOYER = 'employer';
     const TYPE_ADMIN = 'admin';
 
-
     /**
      * The attributes that are mass assignable.
      *
@@ -28,7 +27,10 @@ class User extends Authenticatable
         'email',
         'password',
         'type',
-        'email_verified_at'
+        'email_verified_at',
+        'address',
+        'logo',
+        'approved_at',
     ];
 
     /**
@@ -48,6 +50,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'approved_at' => 'datetime',
     ];
 
     public function jobOffers()
@@ -72,12 +75,12 @@ class User extends Authenticatable
 
     public function profile()
     {
-        return $this->hasOne(Profile::class);
+        return $this->hasOne(Profile::class, 'user_id');
     }
 
     public function skills()
     {
-        return $this->hasMany(Skill::class);
+        return $this->hasMany(Skill::class, 'user_id');
     }
 
     protected $with = ['profile'];

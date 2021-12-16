@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="hero min-h-screen" style="background-image: url('/pexels-liza-summer-6347900.jpg');">
+    <div class="hero min-h-screen" style="background-image: url('{{nova_get_setting('landing_image') ? '/storage/': ''}}{{nova_get_setting('landing_image', '/pexels-liza-summer-6347900.jpg')}}');">
         <div class="hero-overlay bg-opacity-60"></div>
         <div class="text-center hero-content text-neutral-content">
           <div class="max-w-md">

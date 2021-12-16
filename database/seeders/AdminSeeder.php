@@ -22,6 +22,7 @@ class AdminSeeder extends Seeder
             'email'=>'super@admin.com',
             'password'=> bcrypt('password'),
             'type' => User::TYPE_ADMIN,
+            'approved_at'=> now(),
         ]);
 
         $user->assignRole($superadmin);

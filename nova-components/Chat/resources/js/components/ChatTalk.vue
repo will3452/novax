@@ -22,12 +22,22 @@ import Talk from 'talkjs';
                 .then((res)=>{
                     this.currentUser = res.data;
                     this.otherUser = res.data;
+                    let photoUrlOther = this.otherUser.profile === null ? '/user.png' : '/' + this.otherUser.profile.picture.replace('public', 'storage');
+                    if(this.otherUser.logo != null) {
+                        photoUrlOther = "/" +this.otherUser.logo.replace('public', 'storage');
+                    }
+
+                    let photoUrlMe = this.currentUser.profile === null ? '/user.png' : '/' + this.currentUser.profile.picture.replace('public', 'storage');
+                    if(this.currentUser.logo != null) {
+                        photoUrlMe = "/" +this.currentUser.logo.replace('public', 'storage');
+                    }
+
                     Talk.ready.then(()=>{
                         var me = new Talk.User({
                             id: this.currentUser.id,
                             name: this.currentUser.name,
                             email: this.currentUser.email,
-                            photoUrl: this.currentUser.profile === null ? '/user.png' : '/' + this.currentUser.profile.picture.replace('public', 'storage'),
+                            photoUrl: photoUrlMe,
                             welcomeMessage: "Hey there! How are you? :-)",
                             role: "default"
                         });
@@ -41,7 +51,7 @@ import Talk from 'talkjs';
                             id: this.otherUser.id,
                             name: this.otherUser.name,
                             email: this.otherUser.email,
-                            photoUrl: this.otherUser.profile === null ? '/user.png' : '/' + this.otherUser.profile.picture.replace('public', 'storage'),
+                            photoUrl: photoUrlOther,
                             welcomeMessage: 'Hey there! How are you? :-)',
                             role: 'default',
                             });

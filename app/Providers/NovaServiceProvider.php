@@ -13,6 +13,7 @@ use Runline\ProfileTool\ProfileTool;
 use App\Nova\Metrics\NumberOfJobOffers;
 use Giuga\LaravelNovaSidebar\NovaSidebar;
 use App\Nova\Metrics\NumberOfApplications;
+use Elezerk\ProfileTool\ProfileTool as ProfileToolProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -29,6 +30,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Image::make('Landing Image'),
             Text::make('Tagline'),
             Text::make('Footer Text'),
         ]);
@@ -103,7 +105,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             (new Chat),
-            new ProfileTool,
+            (new ProfileToolProfileTool),
             (new BackupTool)->canSee(function ($request) {
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN);
             }),
