@@ -9,7 +9,7 @@ class JobApplication extends Model
 {
     use HasFactory;
 
-    const STATUS_INTERVIEW = 'interview';
+    const STATUS_INTERVIEW = 'for interview';
     const STATUS_ACCEPTED = 'accepted';
     const STATUS_DECLINED = 'declined';
     const STATUS_PENDING = 'pending';
