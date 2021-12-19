@@ -54,4 +54,6 @@ class JobOffer extends Model
     {
         return $this->hasMany(Tag::class);
     }
+
+    protected $with = ['tags'];
 }

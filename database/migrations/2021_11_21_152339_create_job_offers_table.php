@@ -15,7 +15,7 @@ class CreateJobOffersTable extends Migration
     {
         Schema::create('job_offers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('employer_id');
+            $table->foreignId('employer_id')->default(1);
             $table->string('position');
             $table->text('description');
             $table->string('salary')->nullable();

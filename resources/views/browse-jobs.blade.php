@@ -11,9 +11,16 @@
                         @endif
 
                          <a class="text-xs badge-warning badge">VACANT SLOT <span class="font-bold"> ( {{$offer->available_number_of_slots}} )</span></a>
-
                         </h2>
                     <p>{{$offer->description}}</p>
+                    <p>
+                        @foreach ($offer->tags as $tag)
+                        <a href="#link" class="font-bold text-xs">#{{$tag->description}}</a>
+                        @if (!$loop->last)
+                            /
+                        @endif
+                        @endforeach
+                    </p>
                     <div class="card-actions">
                         <apply-button job_offer_id='{{$offer->id}}' is_applied="{{$offer->isApplicantApplied(auth()->id())}}"></apply-button>
                         <label class="btn btn-ghost" for="my-modal-{{$offer->id}}">More info</label>
