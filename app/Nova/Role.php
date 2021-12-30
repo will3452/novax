@@ -11,6 +11,7 @@ use Coreproc\NovaPermissionsField\NovaPermissionsField;
 
 class Role extends Resource
 {
+    public static $displayInNavigation = false;
     public static function indexQuery(NovaRequest $request, $query)
     {
         return $query->where('name', '!=', ModelsRole::SUPERADMIN);

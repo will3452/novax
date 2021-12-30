@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions;
 
+use App\Models\CounsellingStudent;
 use App\Models\Student;
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Fields\Select;
@@ -15,6 +16,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class AddStudent extends Action
 {
     use InteractsWithQueue, Queueable;
+    public $branch;
+    public function __construct($id)
+    {
+        $this->branch = $id;
+    }
 
     /**
      * Perform the action on the given models.
@@ -26,10 +32,13 @@ class AddStudent extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            if($model->students()->where('student_id', $fields['student'])->count()) {
+            if($model->counsellingStudents()->where('student_id', $fields['student'])->count()) {
                 return Action::danger('Student was already added!');
             }
-            $model->students()->attach($fields['student']);
+            CounsellingStudent::create([
+                'student_id' => $fields['student'],
+                'counselling_id' => $model->id,
+            ]);
         }
     }
 
@@ -44,7 +53,7 @@ class AddStudent extends Action
             Select::make('Student')
                 ->help('Enter Student No.')
                 ->searchable()
-                ->options(Student::get()->pluck('student_number', 'id'))
+                ->options(Student::where('branch_id', $this->branch)->get()->pluck('student_number', 'id'))
                 ->required(),
         ];
     }

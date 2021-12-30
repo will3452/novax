@@ -23,6 +23,7 @@ class CreateStudentsTable extends Migration
             $table->string('gender')->nullable();
             $table->timestamp('birthdate')->nullable();
             $table->foreignId('course_id')->nullable();
+            $table->foreignId('branch_id')->nullable();
             $table->timestamps();
         });
     }

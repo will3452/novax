@@ -17,6 +17,7 @@ class Student extends Model
         'gender',
         'birthdate',
         'course_id',
+        'branch_id'
     ];
 
     protected $casts = [
@@ -33,8 +34,13 @@ class Student extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function counsellings()
+    public function branch()
     {
-        return $this->belongsToMany(Counselling::class, 'counselling_student', 'student_id', 'counselling_id');
+        return $this->belongsTo(Branch::class);
+    }
+
+    public function counsellingStudents()
+    {
+        return $this->hasMany(CounsellingStudent::class);
     }
 }

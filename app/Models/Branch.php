@@ -13,8 +13,13 @@ class Branch extends Model
         'address',
     ];
 
-    public function courses()
+    public function students()
     {
-        return $this->belongsToMany(Course::class, 'branch_course', 'branch_id', 'course_id');
+        return $this->hasMany(Student::class);
+    }
+
+    public function counsellings()
+    {
+        return $this->hasMany(Counselling::class);
     }
 }

@@ -16,6 +16,7 @@ class CreateCounsellingsTable extends Migration
     {
         Schema::create('counsellings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('branch_id');
             $table->string('reference_number')->nullable();
             $table->text('case')->nullable();
             $table->text('plan')->nullable();

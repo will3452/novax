@@ -11,6 +11,12 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 class StudentImport implements ToCollection
 {
 
+    public $branchId;
+    public function __construct($branchId)
+    {
+        $this->branchId = $branchId;
+    }
+
     /**
     * @param array $row
     *
@@ -35,6 +41,7 @@ class StudentImport implements ToCollection
                     'gender' => $row[3],
                     'birthdate' => Carbon::parse($row[4], 'Asia/Manila'),
                     'course_id' => $courseId,
+                    'branch_id' => $this->branchId,
                 ]);
             }
 

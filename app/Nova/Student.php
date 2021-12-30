@@ -88,6 +88,9 @@ class Student extends Resource
 
             BelongsTo::make('Course', 'course', Course::class)
                 ->searchable(),
+
+            BelongsTo::make('Branch', 'branch', Branch::class)
+                ->searchable(),
         ];
     }
 

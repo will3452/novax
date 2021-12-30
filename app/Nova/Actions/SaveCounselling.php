@@ -24,7 +24,7 @@ class SaveCounselling extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            if (!$model->students()->count()) {
+            if (!$model->counsellingStudents()->count()) {
                 return Action::danger('Please Attach student(s).');
             }
             $model->update([

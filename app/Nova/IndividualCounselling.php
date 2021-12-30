@@ -15,10 +15,13 @@ use App\Nova\Actions\SaveCounselling;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Models\Counselling as ModelsCounselling;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\HasOne;
 
 class IndividualCounselling extends Resource
 {
     public static $group = 'Counselling';
+
     /**
      * The model the resource corresponds to.
      *
@@ -31,6 +34,8 @@ class IndividualCounselling extends Resource
         return false;
     }
 
+
+
     public function authorizedToDetach(NovaRequest $request, $model, $relationship)
     {
         return ModelsCounselling::find($request->viaResourceId)->status === ModelsCounselling::STATUS_DRAFTED;
@@ -38,6 +43,9 @@ class IndividualCounselling extends Resource
 
     public function authorizedToUpdate(Request $request)
     {
+        if ($request->has('action')) {
+            return true;
+        }
 
         return $this->status === ModelsCounselling::STATUS_DRAFTED;
     }
@@ -72,6 +80,8 @@ class IndividualCounselling extends Resource
                 ->sortable()
                 ->exceptOnForms(),
 
+            BelongsTo::make('Branch', 'branch', Branch::class)->required(),
+
             Text::make('Reference Number', 'reference_number')
                 ->sortable()
                 ->exceptOnForms(),
@@ -100,8 +110,9 @@ class IndividualCounselling extends Resource
                 ->alwaysShow()
                 ->rules('required', 'max:1000'),
 
-            BelongsToMany::make('Student Involved', 'students', Student::class)
-                ->searchable(),
+            HasOne::make('Student', 'CounsellingStudent', CounsellingStudent::class),
+
+
         ];
     }
 
@@ -147,8 +158,8 @@ class IndividualCounselling extends Resource
     public function actions(Request $request)
     {
         return [
-            (new AddStudent())
-                ->canSee(function(NovaRequest $resource) {
+            (new AddStudent($this->branch_id))
+                ->canSee(function (NovaRequest $resource) {
                     if ($resource->has('action')) {
                         return true;
                     }
@@ -164,7 +175,7 @@ class IndividualCounselling extends Resource
                     if ($model == null) {
                         return false;
                     }
-                    return $model->status === ModelsCounselling::STATUS_DRAFTED && ($model->students()->count() == 0 || $model->students()->count() > 1);
+                    return $model->status === ModelsCounselling::STATUS_DRAFTED && ($model->counsellingstudents()->count() == 0 || $model->counsellingstudents()->count() > 1);
                 })
                 ->onlyOnDetail(),
             SaveCounselling::make()
@@ -186,7 +197,7 @@ class IndividualCounselling extends Resource
                     if ($model == null) {
                         return false;
                     }
-                    return $model->status === ModelsCounselling::STATUS_DRAFTED && $model->students()->count();
+                    return $model->status === ModelsCounselling::STATUS_DRAFTED && $model->counsellingstudents()->count();
                 }),
             ChangeStatus::make()
                 ->onlyOnDetail()

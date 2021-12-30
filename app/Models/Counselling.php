@@ -24,12 +24,28 @@ class Counselling extends Model
         'goal',
         'plan',
         'recommendation',
-        'status'
+        'status',
+        'branch_id',
     ];
 
-    public function students()
+    // public function students()
+    // {
+    //     return $this->belongsToMany(Student::class, 'counselling_student', 'counselling_id', 'student_id');
+    // }
+
+    public function counsellingStudents()
     {
-        return $this->belongsToMany(Student::class, 'counselling_student', 'counselling_id', 'student_id');
+        return $this->hasMany(CounsellingStudent::class, 'counselling_id');
+    }
+
+    public function counsellingStudent()
+    {
+        return $this->hasOne(CounsellingStudent::class, 'counselling_id');
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
     }
 
     public static function boot()
