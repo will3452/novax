@@ -16,6 +16,11 @@ class Role extends Resource
         return $query->where('name', '!=', ModelsRole::SUPERADMIN);
     }
 
+    public static function availableForNavigation(Request $request)
+    {
+        return config('novax.role_enabled', false);
+    }
+
     public static $group = 'access Control';
     /**
      * The model the resource corresponds to.

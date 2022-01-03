@@ -17,7 +17,7 @@ class User extends Resource
         return $query->where('email', '!=', 'super@admin.com');
     }
 
-    public static $group = 'access Control';
+    public static $group = 'Data';
     /**
      * The model the resource corresponds to.
      *

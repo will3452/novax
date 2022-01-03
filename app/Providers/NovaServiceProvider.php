@@ -25,7 +25,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
-            Text::make('Footer Text'),
         ]);
     }
 
@@ -73,7 +72,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'Europe/Paris',
                 'Asia/Manila',
                 'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila'),
+            ])->defaultTimezone('Africa/Manila')
+            ->canSee(function () {
+                return config('novax.time_enabled');
+            }),
         ];
     }
 
@@ -95,12 +97,16 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            new ProfileTool,
+            (new ProfileTool)->canSee(function () {
+                return config('novax.profile_enabled');
+            }),
             (new BackupTool)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
+                config('novax.back_up_enabled');
             }),
             (new NovaSettings)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN);
+                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
+                config('novax.setting_enabled');
             }),
         ];
     }
