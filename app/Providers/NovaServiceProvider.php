@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Elezerk\BookingCalendar\BookingCalendar;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -97,6 +98,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
+            (new BookingCalendar()),
             (new ProfileTool)->canSee(function () {
                 return config('novax.profile_enabled');
             }),

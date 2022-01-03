@@ -7,7 +7,9 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "mix --production",
+        "build-booking-calendar": "cd nova-components/BookingCalendar && npm run dev",
+        "build-booking-calendar-prod": "cd nova-components/BookingCalendar && npm run prod"
     },
     "devDependencies": {
         "axios": "^0.21",
