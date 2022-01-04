@@ -27,6 +27,8 @@ class Booking extends Model
     const BOOKING_STATUS_PENDING = 'pending';
     const BOOKING_STATUS_APPROVED = 'approved';
     const BOOKING_STATUS_DISAPPROVED = 'disapproved';
+    const BOOKING_STATUS_IN = 'in';
+    const BOOKING_STATUS_OUT = 'out';
 
     const BOOKING_CHANNEL_WEBSITE = 'website';
     const BOOKING_CHANNEL_WALK_IN = 'walk-in';

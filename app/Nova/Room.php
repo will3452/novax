@@ -16,6 +16,13 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Room extends Resource
 {
+    public static $polling = true;
+
+    public static $pollingInterval = 5;
+
+    public static $showPollingToggle = true;
+
+
     /**
      * The model the resource corresponds to.
      *
@@ -68,9 +75,6 @@ class Room extends Resource
 
             Currency::make('Price')
                 ->help('Per Night')
-                ->rules(['required']),
-
-            Number::make('Unit')
                 ->rules(['required']),
 
             Trix::make('Description')

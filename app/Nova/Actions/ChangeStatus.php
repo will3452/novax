@@ -44,6 +44,8 @@ class ChangeStatus extends Action
                     ModelsBooking::BOOKING_STATUS_DISAPPROVED => ModelsBooking::BOOKING_STATUS_DISAPPROVED,
                     ModelsBooking::BOOKING_STATUS_PENDING => ModelsBooking::BOOKING_STATUS_PENDING,
                     ModelsBooking::BOOKING_STATUS_APPROVED => ModelsBooking::BOOKING_STATUS_APPROVED,
+                    ModelsBooking::BOOKING_STATUS_IN => ModelsBooking::BOOKING_STATUS_IN,
+                    ModelsBooking::BOOKING_STATUS_OUT => ModelsBooking::BOOKING_STATUS_OUT,
                 ])
         ];
     }

@@ -32,7 +32,8 @@ class Booking extends Resource
      */
     public static $title = 'reference_number';
 
-    public function subtitle(){
+    public function subtitle()
+    {
         return $this->room->name;
     }
 
@@ -83,6 +84,8 @@ class Booking extends Resource
                     ModelsBooking::BOOKING_STATUS_DISAPPROVED => 'danger',
                     ModelsBooking::BOOKING_STATUS_PENDING => 'warning',
                     ModelsBooking::BOOKING_STATUS_APPROVED => 'success',
+                    ModelsBooking::BOOKING_STATUS_IN => 'info',
+                    ModelsBooking::BOOKING_STATUS_OUT => 'warning',
                 ]),
 
             Text::make('Client Mobile No.', 'mobile_number'),
@@ -91,7 +94,7 @@ class Booking extends Resource
                 ->rules(['required']),
 
             Datetime::make('Arrival')
-                ->default(function(){
+                ->default(function () {
                     return now()->format('Y-m-d H:i:s.u');
                 })
                 ->rules(['required', 'after_or_equal:now']),
