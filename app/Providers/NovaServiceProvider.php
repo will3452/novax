@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\DailyBookings;
 use Elezerk\BookingCalendar\BookingCalendar;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
@@ -77,6 +78,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
+            (new DailyBookings()),
         ];
     }
 

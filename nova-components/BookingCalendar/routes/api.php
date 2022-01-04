@@ -16,16 +16,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/get-approved-bookings', function (Request $request) {
-    return Booking::whereStatus(Booking::BOOKING_STATUS_APPROVED)->get()->map(function($query){
+    return Booking::whereStatus(Booking::BOOKING_STATUS_APPROVED)->get()->map(function ($query) {
         $room = $query->room->name;
         return [
+            'reference_number' => $query->reference_number,
             'title' => "$room - $query->customer_name",
-            'start' => $query->arrival->format('Y-m-d H:i'),
-            'end' => $query->departure->format('Y-m-d H:i'),
-            'backgroundColor' => "#".substr(md5(rand()), 0, 6),
-            'extendedProps' => [
-                'id' => $query->id,
-            ]
+            'startDate' => $query->arrival->format('Y-m-d'),
+            'endDate' => $query->departure->format('Y-m-d'),
+            'time' => $query->arrival->format('H:i A') . ' - ' .$query->departure->format('H:i A'),
+            'id'=>$query->id,
+            'customer_name' => $query->customer_name,
         ];
     });
 });

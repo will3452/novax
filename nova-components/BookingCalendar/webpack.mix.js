@@ -3,5 +3,7 @@ let mix = require('laravel-mix')
 mix
   .setPublicPath('dist')
   .js('resources/js/tool.js', 'js')
-  .sass('resources/sass/tool.scss', 'css')
+  .postCss('resources/css/tool.css', 'css', [
+      require('tailwindcss')
+  ])
   .vue()

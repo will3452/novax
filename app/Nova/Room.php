@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -69,13 +70,17 @@ class Room extends Resource
                 ->help('Per Night')
                 ->rules(['required']),
 
+            Number::make('Unit')
+                ->rules(['required']),
+
             Trix::make('Description')
                 ->alwaysShow()
                 ->rules(['required'])
                 ->help('Please provide useful information. e.g No. of beds, With T.V and etc..,'),
 
-            Boolean::make('Available')
-                ->exceptOnForms(),
+            Boolean::make('Available'),
+
+
         ];
     }
 
