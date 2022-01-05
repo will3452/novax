@@ -12,7 +12,7 @@ class BookingObserver
         $booking->reference_number = Str::random(11) . now()->format('mdY');
 
         if ($booking->channel == Booking::BOOKING_CHANNEL_WALK_IN) {
-            $booking->status == Booking::BOOKING_STATUS_IN;
+            $booking->status = Booking::BOOKING_STATUS_IN;
             $booking->room->update(['available'=>false]);
         }
     }

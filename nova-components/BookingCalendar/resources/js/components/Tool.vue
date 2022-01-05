@@ -1,6 +1,6 @@
 <template>
     <div class="flex relative">
-        <div v-if="selectedDate" class="mx-2 fixed w-6/12 z-50 top-20 right-20">
+        <div v-if="selectedDate" class="fixed w-full z-50 top-20 right-20">
                 <card class="p-4 bg-white border">
                     <button @click="selectedDate = null" class="block absolute rotate-45 bg-red-500 flex items-center justify-center rounded-full shadow-lg border w-10 h-10 font-bold text-white text-xl -right-4 -top-4">
                         +
@@ -36,13 +36,11 @@
                     </ul>
                 </card>
             </div>
-        <div class="mx-2">
-            <card class="p-4 w-full">
-                <v-calendar v-if="!isLoading"
+        <div>
+            <v-calendar v-if="!isLoading"
                 :data-source="bookings"
                 @click-day="clickDayHandler"
                 ></v-calendar>
-            </card>
         </div>
     </div>
 </template>

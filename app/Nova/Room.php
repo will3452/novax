@@ -70,6 +70,9 @@ class Room extends Resource
             Text::make('Name')
                 ->rules(['required']),
 
+            Text::make('Room Number', 'number')
+                ->rules(['required', 'unique:rooms,number,{{resourceId}}']),
+
             Image::make('Picture')
                 ->disableDownload(),
 
