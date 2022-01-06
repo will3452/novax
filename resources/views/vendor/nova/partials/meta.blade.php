@@ -9,7 +9,7 @@
         --primary-50: {{nova_get_setting('primary_50')}} !important;
         --primary-30: {{nova_get_setting('primary_30')}} !important;
         --primary-10: {{nova_get_setting('primary_10')}} !important;
-        --logo: {{nova_get_setting('logo')}} !important;
+        --logo: {{nova_get_setting('logo_color')}} !important;
         --sidebar-icon:{{nova_get_setting('sidebar_icon')}} !important;
       }
 

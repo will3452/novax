@@ -41,7 +41,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             Swatches::make('Primary 50'),
             Swatches::make('Primary 30'),
             Swatches::make('Primary 10'),
-            Swatches::make('logo'),
+            Swatches::make('logo', 'logo_color'),
             Swatches::make('sidebar icon')
         ]);
     }
@@ -91,14 +91,14 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         // ]
         $branches = Branch::get();
         $series = [];
-        foreach($branches as $branch) {
-            $items = $branch->counsellings()->whereYear('created_at', date('Y'))->get()->groupBy(function($q){
+        foreach ($branches as $branch) {
+            $items = $branch->counsellings()->whereYear('created_at', date('Y'))->get()->groupBy(function ($q) {
                 return $q->created_at->format('m');
             });
 
             $data = [];
 
-            for($i = 1; $i <= 12; $i++) {
+            for ($i = 1; $i <= 12; $i++) {
                 $i = $i <= 9 ? "0" . $i : $i;
                 $data[] = array_key_exists($i, $items->all()) ? count($items->all()[$i]) : 0;
             }
