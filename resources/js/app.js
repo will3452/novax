@@ -6,6 +6,7 @@ window.axios = require("axios");
 
 // Register Vue Components
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('profile-form', require('./components/ProfileForm.vue').default);
 Vue.component('resume-uploader', require('./components/ResumeUploader.vue').default);
 Vue.component('apply-button', require('./components/ApplyButton.vue').default);
 Vue.component('search-engine', require('./components/SearchEngine.vue').default);

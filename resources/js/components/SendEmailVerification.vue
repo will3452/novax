@@ -2,13 +2,13 @@
 <div>
     <div class="alert mb-2" v-if="!isverify">
         <div class="flex-1">
-            <label class="mx-3">You're Email is not yet verify!</label>
+            <span class="ml-2" v-if="hasSend">Verification has been sent!</span>
+            <label class="mx-3" v-else>You're Email is not yet verify!</label>
         </div>
         <div class="flex-none">
             <button v-if="!hasSend" @click="sendVerification" class="btn btn-sm btn-primary " :class="{'loading':isLoading}">Send Verification</button>
             <button class="btn btn-sm btn-ghost" v-if="hasSend">
                 <icon>done_all</icon>
-                <span class="ml-2">Verification has been sent!</span>
             </button>
         </div>
     </div>

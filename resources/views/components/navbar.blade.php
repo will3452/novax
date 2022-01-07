@@ -29,7 +29,7 @@
     <div class="flex-none">
       <a href="/profile/{{auth()->id()}}">
         <div class="avatar">
-            <div class="rounded-full w-10 h-10 m-1 cursor-pointer">
+            <div class="rounded-full w-8 h-8 m-1 cursor-pointer">
               <img src="{{auth()->user()->profile ? auth()->user()->profile->public_picture: '/user.png'}}">
             </div>
         </div>

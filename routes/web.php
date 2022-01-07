@@ -11,6 +11,7 @@ use App\Http\Controllers\EmailVerifyController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkillController;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,5 +66,24 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/chat', [ChatController::class, 'getChat']);
     Route::post('/send-verification', [EmailVerifyController::class, 'sendVerification']);
-    Route::get('/veriy-email', [EmailVerifyController::class, 'verifyEmail'])->name('verify-email');
+});
+
+Route::get('/veriy-email', [EmailVerifyController::class, 'verifyEmail'])->name('verify-email');
+
+Route::post('/check-password', function () {
+    return Hash::check(request()->currentPassword, auth()->user()->password);
+});
+
+Route::post('/update-account', function () {
+    $payload = [
+        'mobile_number' => request()->newMobile,
+        'address' => request()->newAddress,
+        'school' => request()->newSchool,
+    ];
+
+    if (request()->has('newPassword')) {
+        $payload['password'] = bcrypt(request()->newPassword);
+    }
+
+    return auth()->user()->update($payload);
 });

@@ -25,6 +25,6 @@ class EmailVerifyController extends Controller
             'email_verified_at' => now(),
         ]);
 
-        return 'Your Email has been verified !';
+        return view('email-result');
     }
 }
