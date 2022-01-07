@@ -12,9 +12,19 @@
         "build-booking-calendar-prod": "cd nova-components/BookingCalendar && npm run prod"
     },
     "devDependencies": {
+        "@vue/compiler-sfc": "^3.2.26",
+        "autoprefixer": "^10.4.1",
         "axios": "^0.21",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "postcss": "^8.1.14"
+        "postcss": "^8.4.5",
+        "tailwindcss": "^3.0.11",
+        "vue-loader": "^16.2.0"
+    },
+    "dependencies": {
+        "@inertiajs/inertia": "^0.10.1",
+        "@inertiajs/inertia-vue3": "^0.5.2",
+        "@inertiajs/progress": "^0.2.6",
+        "vue": "^3.2.26"
     }
 }

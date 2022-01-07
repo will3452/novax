@@ -24,8 +24,10 @@
     "require": {
         "php": "^7.3|^8.0",
         "coreproc/nova-permissions-field": "*",
+        "elezerk/booking-calendar": "*",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "inertiajs/inertia-laravel": "^0.4.5",
         "laravel/framework": "^8.65",
         "laravel/nova": "*",
         "laravel/sanctum": "^2.12",
@@ -36,8 +38,7 @@
         "runlinenl/nova-profile-tool": "^1.1",
         "spatie/laravel-backup": "^6.16",
         "spatie/laravel-permission": "^5.3",
-        "spatie/nova-backup-tool": "^4.1",
-        "elezerk/booking-calendar": "*"
+        "spatie/nova-backup-tool": "^4.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

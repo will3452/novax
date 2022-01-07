@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class RegisterController extends Controller
 {
     public function registrationPage()
     {
-        return view('auth.register');
+        return Inertia::render('Register');
     }
 
     public function postRegister()
