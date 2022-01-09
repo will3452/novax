@@ -78,7 +78,7 @@ class JobApplication extends Resource
 
             Text::make('Chat', function ($model) {
                 $id = $model->applicant_id;
-                return "<a target='_blank' class='btn btn-primary btn-default' href='/chat?other_id=$id'>Chat Now</a>";
+                return "<a target='_blank' class='btn btn-primary btn-default' href='/chat?other_id=$id'>Chat</a>";
             })->asHtml(),
 
             Text::make('Resume', function ($model) {
