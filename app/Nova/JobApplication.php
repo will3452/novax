@@ -76,6 +76,11 @@ class JobApplication extends Resource
         return [
             BelongsTo::make('Applicant', 'applicant', User::class),
 
+            Text::make('Chat', function ($model) {
+                $id = $model->applicant_id;
+                return "<a target='_blank' class='btn btn-primary btn-default' href='/chat?other_id=$id'>Chat Now</a>";
+            })->asHtml(),
+
             Text::make('Resume', function ($model) {
                 if ($model->applicant->resume == null) {
                     return "<a target='_blank' class='btn btn-primary btn-default' href='javascript:alert(`resume not found!`)'>Resume</a>";

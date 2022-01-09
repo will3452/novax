@@ -1,10 +1,14 @@
 <div class="rounded-lg shadow  overflow-auto drawer h-screen mb-20 md:mb-0">
     <input id="my-drawer" type="checkbox" class="drawer-toggle">
     <div class="p-2 drawer-content">
+        @if (auth()->user()->type === \App\Models\User::TYPE_SEEKER)
         <send-email-verification isverify="{{auth()->user()->email_verified_at}}"></send-email-verification>
+        @endif
         {{$slot}}
         <x-menu></x-menu>
     </div>
+
+
     <div class="drawer-side">
         <label for="my-drawer" class="drawer-overlay"></label>
         <ul class="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
