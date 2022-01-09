@@ -23,6 +23,28 @@
             </div>
             <div class="form-control">
                 <label class="label">
+                <span class="label-text">Company Name</span>
+                </label>
+                <input type="text" value="{{old('company_name')}}" name="company_name" required placeholder="company_name" class="input input-bordered">
+                @error('company_name')
+                <x-form-error>
+                    {{$message}}
+                </x-form-error>
+                @enderror
+            </div>
+            <div class="form-control">
+                <label class="label">
+                <span class="label-text">Mobile No.</span>
+                </label>
+                <input type="text" value="{{old('mobile_number')}}" name="mobile_number" required placeholder="+63" class="input input-bordered">
+                @error('mobile_number')
+                <x-form-error>
+                    {{$message}}
+                </x-form-error>
+                @enderror
+            </div>
+            <div class="form-control">
+                <label class="label">
                     <span class="label-text">Email</span>
                 </label>
                 <input type="text" value="{{old('email')}}" name="email" required placeholder="email" class="input input-bordered">
@@ -34,7 +56,7 @@
             </div>
             <div class="form-control">
                 <label class="label">
-                    <span class="label-text">Address</span>
+                    <span class="label-text">Company Address</span>
                 </label>
                 <input type="text" value="{{old('address')}}" name="address" required placeholder="address" class="input input-bordered">
                 @error('address')
@@ -43,6 +65,7 @@
                 </x-form-error>
                 @enderror
             </div>
+
             <div class="form-control">
                 <label class="label">
                 <span class="label-text">Password</span>

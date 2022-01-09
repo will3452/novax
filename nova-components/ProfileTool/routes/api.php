@@ -33,6 +33,18 @@ Route::post('/update', function (Request $request) {
         ]);
     }
 
+    if ($request->has('company_name')) {
+        $user->update([
+            'company_name'=>$request->company_name
+        ]);
+    }
+
+    if ($request->has('mobile_number')) {
+        $user->update([
+            'mobile_number'=>$request->mobile_number
+        ]);
+    }
+
     if ($request->has('address')) {
         $user->update([
             'address'=>$request->address

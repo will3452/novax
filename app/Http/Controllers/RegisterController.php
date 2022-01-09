@@ -36,9 +36,11 @@ class RegisterController extends Controller
     {
         $data = request()->validate([
             'name' => 'required',
+            'company_name' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required|confirmed|min:6',
             'address'=> 'required',
+            'mobile_number' => 'required',
         ]);
 
         $data['password'] = bcrypt($data['password']);

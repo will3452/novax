@@ -21,12 +21,38 @@
             <div class="flex border-b border-40">
                 <div class="px-8 py-6 w-1/3">
                     <label for="position" class="inline-block text-80 pt-2 leading-tight">
+                        Company Name <span class="text-danger text-sm">*</span>
+                    </label>
+                </div>
+                <div class="py-6 px-8 w-11/12">
+                    <input v-model="companyName" id="position" list="position-list" type="text" placeholder="Company Name" class="w-full form-control form-input form-input-bordered">
+                    <small class="text-danger" v-if="!companyName.length">
+                        field is required
+                    </small>
+                </div>
+            </div>
+            <div class="flex border-b border-40">
+                <div class="px-8 py-6 w-1/3">
+                    <label for="position" class="inline-block text-80 pt-2 leading-tight">
                         Email <span class="text-danger text-sm">*</span>
                     </label>
                 </div>
                 <div class="py-6 px-8 w-11/12">
                     <input v-model="email" id="position" list="position-list" type="text" placeholder="Email" class="w-full form-control form-input form-input-bordered">
                     <small class="text-danger" v-if="!email.length">
+                        field is required
+                    </small>
+                </div>
+            </div>
+            <div class="flex border-b border-40">
+                <div class="px-8 py-6 w-1/3">
+                    <label for="position" class="inline-block text-80 pt-2 leading-tight">
+                        Mobile No. <span class="text-danger text-sm">*</span>
+                    </label>
+                </div>
+                <div class="py-6 px-8 w-11/12">
+                    <input v-model="mobileNumber" id="position" list="position-list" type="text" placeholder="Mobile No." class="w-full form-control form-input form-input-bordered">
+                    <small class="text-danger" v-if="!mobileNumber.length">
                         field is required
                     </small>
                 </div>
@@ -102,9 +128,11 @@ export default {
     data() {
         return {
             name:'',
+            companyName:'',
             email:'',
             password:'',
             cpassword:'',
+            mobileNumber:'',
             logo:'',
             isLoading:false,
             address:'',
@@ -118,6 +146,8 @@ export default {
             .then(({data})=>{
                 this.email = data.email;
                 this.name = data.name;
+                this.companyName = data.company_name;
+                this.mobileNumber = data.mobile_number ? data.mobile_number : '';
                 this.isLoading = false;
                 this.address = data.address != null ? data.address : '';
                 this.logo = data.logo;
@@ -132,6 +162,8 @@ export default {
             const formData = new FormData();
             formData.append('logo', this.file);
             formData.append('name', this.name);
+            formData.append('company_name', this.companyName);
+            formData.append('mobile_number', this.mobileNumber);
             formData.append('email', this.email);
             formData.append('password', this.password);
             formData.append('address', this.address);

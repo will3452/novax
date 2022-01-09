@@ -86,5 +86,10 @@ class User extends Authenticatable
         return $this->hasMany(Skill::class, 'user_id');
     }
 
+    public function getPublicLogoAttribute()
+    {
+        return '/' . str_replace('public', 'storage', $this->logo);
+    }
+
     protected $with = ['profile'];
 }

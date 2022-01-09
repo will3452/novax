@@ -1,11 +1,26 @@
 <x-layout>
     <x-navbar></x-navbar>
     <x-content>
+        <div class="flex justify-center mb-2">
+            <form action="{{url()->full()}}">
+                <input name="address" type="text" placeholder="Search By Address" class="border border-2 rounded p-2">
+                <button class="p-2 bg-primary rounded text-white font-bold">SEARCH</button>
+            </form>
+        </div>
         <div class="lg:flex">
             @foreach ($offers as $offer)
                 <div class="card lg:card-side bordered my-2 lg:w-1/3 mx-2 shadow">
                     <div class="card-body">
-                    <h2 class="card-title">{{$offer->position}}
+                    <h2 class="card-title">
+                        <div class="flex justify-between">
+                            <img src="{{$offer->employer->public_logo}}" alt="" class="rounded-full w-12 h-12">
+                            <div>
+                                <p>
+                                    {{$offer->employer->address}}
+                                </p>
+                            </div>
+                        </div>
+                        {{$offer->position}}
                         @if ($offer->urgent)
                         <a class="text-xs badge">URGENT</a>
                         @endif
@@ -24,6 +39,7 @@
                 <div class="modal">
                 <div class="modal-box">
                     <div>
+                        <img src="{{$offer->employer->public_logo}}" alt="" class="rounded-full w-20 h-20">
                         <h1 class="text-2xl font-bold my-2">
                             {{$offer->position}}
                         </h1>
@@ -35,6 +51,12 @@
                                 URGENT
                             </div>
                         @endif
+                        <div class="text-sm py-2  font-bold">
+                            Company Address : {{$offer->employer->address}}
+                        </div>
+                        <div class="text-sm py-2  font-bold">
+                            Mobile Number : {{$offer->employer->mobile_number}}
+                        </div>
                         <div class="text-sm py-2  font-bold">
                             Salary/Mo : {{$offer->salary}}
                         </div>
