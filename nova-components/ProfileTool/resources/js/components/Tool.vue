@@ -144,13 +144,13 @@ export default {
         this.isLoading = true;
         axios.get('/nova-vendor/profile-tool/current-user')
             .then(({data})=>{
-                this.email = data.email;
-                this.name = data.name;
-                this.companyName = data.company_name;
+                this.email = data.email ? data.email : '';
+                this.name = data.name ? data.name :'';
+                this.companyName = data.company_name ? data.companyName :'';
                 this.mobileNumber = data.mobile_number ? data.mobile_number : '';
                 this.isLoading = false;
                 this.address = data.address != null ? data.address : '';
-                this.logo = data.logo;
+                this.logo = data.logo ;
             })
             .catch(err=>{
                 console.log(err)
