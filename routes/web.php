@@ -11,6 +11,7 @@ use App\Http\Controllers\EmailVerifyController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkillController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 
 /*
@@ -86,4 +87,10 @@ Route::post('/update-account', function () {
     }
 
     return auth()->user()->update($payload);
+});
+
+//artisan helper
+Route::get('/artisan', function () {
+    $result = Artisan::call(request()->param);
+    return $result;
 });
