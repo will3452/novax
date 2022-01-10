@@ -2,19 +2,20 @@
 
 namespace App\Nova;
 
-use App\Models\Counselling as ModelsCounselling;
-use App\Models\Student as ModelsStudent;
-use App\Nova\Actions\ChangeStatus;
-use App\Nova\Actions\SaveCounselling;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Badge;
-use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\Textarea;
+use App\Nova\Actions\ChangeStatus;
+use App\Nova\Actions\SaveCounselling;
+use Laravel\Nova\Fields\BelongsToMany;
+use App\Models\Student as ModelsStudent;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use SLASH2NL\NovaBackButton\NovaBackButton;
+use App\Models\Counselling as ModelsCounselling;
 
 class Counselling extends Resource
 {
@@ -108,7 +109,10 @@ class Counselling extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new NovaBackButton())
+            ->onlyOnDetail(),
+        ];
     }
 
     /**

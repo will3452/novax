@@ -2,15 +2,16 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\DownloadTemplate;
-use App\Nova\Actions\ImportExcel;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Select;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
+use App\Nova\Actions\ImportExcel;
+use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Actions\DownloadTemplate;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use SLASH2NL\NovaBackButton\NovaBackButton;
 
 class Student extends Resource
 {
@@ -84,6 +85,12 @@ class Student extends Resource
                     'Female' => 'Female',
                 ]),
 
+            Text::make('Email')
+                ->sortable(),
+
+            Text::make('Mobile Number')
+                ->sortable(),
+
             Date::make('BIrthdate'),
 
             BelongsTo::make('Course', 'course', Course::class)
@@ -102,7 +109,10 @@ class Student extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new NovaBackButton())
+            ->onlyOnDetail(),
+        ];
     }
 
     /**

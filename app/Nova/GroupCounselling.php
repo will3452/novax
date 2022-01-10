@@ -16,6 +16,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use App\Nova\Actions\SaveCounselling;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use SLASH2NL\NovaBackButton\NovaBackButton;
 use App\Models\Counselling as ModelsCounselling;
 
 class GroupCounselling extends Resource
@@ -121,7 +122,10 @@ class GroupCounselling extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new NovaBackButton())
+            ->onlyOnDetail(),
+        ];
     }
 
     /**

@@ -2,11 +2,12 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use SLASH2NL\NovaBackButton\NovaBackButton;
 
 class CounsellingStudent extends Resource
 {
@@ -77,7 +78,10 @@ class CounsellingStudent extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new NovaBackButton())
+            ->onlyOnDetail(),
+        ];
     }
 
     /**

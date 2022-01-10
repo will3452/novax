@@ -9,6 +9,7 @@ class CounsellingObserver
 {
     public function creating(Counselling $counselling)
     {
-        $counselling->reference_number = now()->format('Y'). '-' .now()->format('md') . '-' . Str::padLeft($counselling->id, 6, '0');
+        $prefix = $counselling->type === Counselling::TYPE_GROUP ? 'GR' : 'IN';
+        $counselling->reference_number = $prefix . '-' . now()->format('Y'). '-' .now()->format('md') . '-' . Str::padLeft(Counselling::count(), 6, '0');
     }
 }

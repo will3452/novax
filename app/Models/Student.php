@@ -17,7 +17,9 @@ class Student extends Model
         'gender',
         'birthdate',
         'course_id',
-        'branch_id'
+        'branch_id',
+        'mobile_number',
+        'email',
     ];
 
     protected $casts = [

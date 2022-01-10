@@ -8,15 +8,16 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\Hidden;
 use App\Nova\Actions\AddStudent;
 use App\Nova\Actions\ChangeStatus;
+use Laravel\Nova\Fields\BelongsTo;
 use App\Nova\Actions\SaveCounselling;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use SLASH2NL\NovaBackButton\NovaBackButton;
 use App\Models\Counselling as ModelsCounselling;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\HasOne;
 
 class IndividualCounselling extends Resource
 {
@@ -80,6 +81,13 @@ class IndividualCounselling extends Resource
                 ->sortable()
                 ->exceptOnForms(),
 
+            Text::make('Student', function ($model) {
+                if (! $model->counsellingStudent) {
+                    return '-';
+                }
+                return $model->counsellingStudent->student->full_name;
+            })->onlyOnIndex(),
+
             BelongsTo::make('Branch', 'branch', Branch::class)->required(),
 
             Text::make('Reference Number', 'reference_number')
@@ -124,7 +132,10 @@ class IndividualCounselling extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new NovaBackButton())
+            ->onlyOnDetail(),
+        ];
     }
 
     /**

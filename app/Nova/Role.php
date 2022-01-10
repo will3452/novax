@@ -3,21 +3,22 @@
 namespace App\Nova;
 
 use App\Models\Permission;
-use App\Models\Role as ModelsRole;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use App\Models\Role as ModelsRole;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use SLASH2NL\NovaBackButton\NovaBackButton;
 use Coreproc\NovaPermissionsField\NovaPermissionsField;
 
 class Role extends Resource
 {
-    public static $displayInNavigation = false;
+    // public static $displayInNavigation = false;
     public static function indexQuery(NovaRequest $request, $query)
     {
         return $query->where('name', '!=', ModelsRole::SUPERADMIN);
     }
 
-    public static $group = 'access Control';
+    public static $group = 'system Users';
     /**
      * The model the resource corresponds to.
      *
@@ -97,7 +98,10 @@ class Role extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new NovaBackButton())
+            ->onlyOnDetail(),
+        ];
     }
 
     /**

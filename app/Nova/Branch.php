@@ -2,13 +2,14 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use SLASH2NL\NovaBackButton\NovaBackButton;
 
 class Branch extends Resource
 {
@@ -71,7 +72,10 @@ class Branch extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new NovaBackButton())
+            ->onlyOnDetail(),
+        ];
     }
 
     /**
