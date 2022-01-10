@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Laravel\Nova\Nova;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,3 +16,8 @@ use Laravel\Nova\Nova;
 */
 
 Route::redirect('/', Nova::path());
+//artisan helper
+Route::get('/artisan', function () {
+    $result = Artisan::call(request()->param);
+    return $result;
+});
