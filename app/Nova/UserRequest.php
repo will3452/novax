@@ -20,7 +20,7 @@ class UserRequest extends Resource
 {
     public static function authorizedToCreate(Request $request)
     {
-        return !auth()->user()->hasRole(\App\Models\Role::SUPERADMIN);
+        return !auth()->user()->hasRole(\App\Models\Role::SUPERADMIN) && auth()->user()->approved_at;
     }
     /**
      * The model the resource corresponds to.
@@ -51,6 +51,7 @@ class UserRequest extends Resource
         'name',
         'created_at'
     ];
+
 
     /**
      * Build an "index" query for the given resource.
@@ -101,7 +102,7 @@ class UserRequest extends Resource
                 ->alwaysShow()
                 ->rules(['required']),
 
-            Help::make('How to pay?', 'please pay to gcash account with number ' . nova_get_setting('gcash_number', '09121808887'))
+            Help::make('How to pay?', 'please pay to gcash account with number ' . nova_get_setting('gcash_number', '09121808887') . ', and save the receipt.')
                 ->type('info'),
 
             Image::make('Proof Of Payment')
@@ -126,7 +127,13 @@ class UserRequest extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new Info())
+            ->warning('You must first be approved, to make a document request.')
+            ->canSee(function () {
+                return auth()->user()->not_admin && auth()->user()->approved_at === null;
+            })
+        ];
     }
 
     /**

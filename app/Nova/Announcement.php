@@ -2,36 +2,43 @@
 
 namespace App\Nova;
 
-use Pdmfc\NovaCards\Info;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Announcement extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
+
+    public static function authorizedToCreate(Request $request)
     {
-        return $query->where('email', '!=', 'super@admin.com');
+        return ! auth()->user()->not_admin;
     }
 
-    public static $group = 'Data';
+    public function authorizedToUpdate(Request $request)
+    {
+        return $this->isAdmin();
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return $this->isAdmin();
+    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Announcement::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -39,7 +46,9 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'title',
+        'created_at',
     ];
 
     /**
@@ -51,20 +60,16 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
+            Date::make('Posted At', 'created_at')
+                ->exceptOnForms()
+                ->sortable(),
 
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
+            Text::make('Title')
+                ->rules('required'),
 
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+            Textarea::make('Body')
+                ->alwaysShow()
+                ->rules(['required', 'max:200']),
         ];
     }
 
@@ -76,10 +81,7 @@ class User extends Resource
      */
     public function cards(Request $request)
     {
-        return [
-            (new Info())
-                ->info('All users (approved|pending) goes here.')
-        ];
+        return [];
     }
 
     /**

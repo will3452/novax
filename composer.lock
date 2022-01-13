@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8718c1e5c133b995301e2f2772275431",
+    "content-hash": "57570ded258ffb74956e348864580e69",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1046,6 +1046,42 @@
                 }
             ],
             "time": "2020-12-29T14:50:06+00:00"
+        },
+        {
+            "name": "elezerk/latest-document-requested",
+            "version": "dev-barangay_management_system",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/LatestDocumentRequested",
+                "reference": "177e472e239e5ff109ff5e9508854fbc0362521c"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Elezerk\\LatestDocumentRequested\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Elezerk\\LatestDocumentRequested\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova card.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "fruitcake/laravel-cors",

@@ -2,6 +2,16 @@
 
 namespace App\Providers;
 
+use App\Models\Announcement;
+use App\Nova\Metrics\RequestPerDay;
+use App\Nova\Metrics\ResolvedAndPendingRequest;
+use App\Nova\Metrics\TotalNumberOfAnnouncement;
+use App\Nova\Metrics\TotalNumberOfRequest;
+use App\Nova\Metrics\TotalNumberOfApprovedUsers;
+use App\Nova\Metrics\TotalNumberOfUserRequestDocument;
+use App\Nova\Metrics\TotalPendingRequest;
+use App\Nova\Metrics\VaccinationSummary;
+use Elezerk\LatestDocumentRequested\LatestDocumentRequested;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -11,6 +21,7 @@ use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Pdmfc\NovaCards\Info;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -70,7 +81,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
-        return [
+        $cards = [
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
                 'America/Mexico_City',
@@ -82,7 +93,63 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
+            (new TotalNumberOfRequest())
+                ->canSee(function () {
+                    return auth()->user()->not_admin;
+                }),
+            (new TotalPendingRequest())
+                ->canSee(function () {
+                    return auth()->user()->not_admin;
+                }),
+            (new LatestDocumentRequested())
+                ->canSee(function () {
+                    return auth()->user()->not_admin;
+                }),
+            (new TotalNumberOfAnnouncement())
+                ->canSee(function () {
+                    return ! auth()->user()->not_admin;
+                }),
+            (new TotalNumberOfApprovedUsers())
+                ->canSee(function () {
+                    return ! auth()->user()->not_admin;
+                }),
+            (new RequestPerDay())
+                ->canSee(function () {
+                    return ! auth()->user()->not_admin;
+                }),
+            (new TotalNumberOfUserRequestDocument())
+                ->canSee(function () {
+                    return ! auth()->user()->not_admin;
+                }),
+            (new ResolvedAndPendingRequest())
+                ->canSee(function () {
+                    return ! auth()->user()->not_admin;
+                }),
+            (new VaccinationSummary())
+                ->canSee(function () {
+                    return ! auth()->user()->not_admin;
+                }),
+
         ];
+
+        $announcements = Announcement::latest()->get();
+
+        if ( auth()->user()->not_admin && auth()->user()->approved_at === null )
+        {
+            $cards[] = (new Info())
+            ->warning('You must first be approved, to make a document request.');
+        }
+
+        if ($announcements && auth()->user()->not_admin)
+        {
+            foreach ($announcements as $a) {
+                $message = "$a->title - $a->body";
+                $cards[] = (new Info())
+                    ->info($message);
+            }
+        }
+
+        return $cards;
     }
 
     /**

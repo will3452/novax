@@ -7,6 +7,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -22,6 +23,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'approved_at',
+        'valid_id',
     ];
 
     /**
@@ -41,5 +44,43 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'approved_at' => 'datetime',
     ];
+
+    public function requests(): HasMany
+    {
+        return $this->hasMany(UserRequest::class, 'user_id');
+    }
+
+
+    public function getTotalPendingRequestAttribute(): int
+    {
+        return $this->requests()
+            ->whereStatus(UserRequest::STATUS_UNRESOLVED)
+            ->count();
+    }
+
+    public function getNotAdminAttribute(): bool
+    {
+        return ! $this->hasRole(Role::SUPERADMIN);
+    }
+
+    //model action
+    public function approvedNow(): bool
+    {
+       return $this->update(['approved_at' => now()]);
+    }
+
+    //local scopes
+    public function scopeNotApproved($q)
+    {
+       return $q->whereNull('approved_at');
+    }
+
+    public function scopeApproved($q)
+    {
+       return $q->whereNotNull('approved_at');
+    }
+
+
 }

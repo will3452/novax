@@ -24,6 +24,8 @@ class UserRequest extends Model
         'status'
     ];
 
+    protected $with = ['requestDocument'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
