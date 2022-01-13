@@ -25,6 +25,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Text::make('Gcash Number')
+                ->rules(['required']),
+            Text::make('Barangay Name')
+                ->rules(['required']),
+            Text::make('Barangay Address')
+                ->rules(['required'])
         ]);
     }
 

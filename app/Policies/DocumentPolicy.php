@@ -18,7 +18,7 @@ class DocumentPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**

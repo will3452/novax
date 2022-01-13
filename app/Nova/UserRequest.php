@@ -2,7 +2,7 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
+use Pdmfc\NovaCards\Info;
 use Illuminate\Http\Request;
 use App\Nova\Actions\Resolve;
 use Laravel\Nova\Fields\Date;
@@ -12,6 +12,7 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
+use Comodolab\Nova\Fields\Help\Help;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Models\UserRequest as ModelsUserRequest;
 
@@ -83,7 +84,7 @@ class UserRequest extends Resource
                 ->exceptOnForms()
                 ->rules(['required']),
 
-            BelongsTo::make('Requested Document', 'document', Document::class)
+            BelongsTo::make('Request Document', 'document', Document::class)
                 ->rules(['required']),
 
             Text::make('Requestor Name', 'name')
@@ -100,6 +101,9 @@ class UserRequest extends Resource
                 ->alwaysShow()
                 ->rules(['required']),
 
+            Help::make('How to pay?', 'please pay to gcash account with number ' . nova_get_setting('gcash_number', '09121808887'))
+                ->type('info'),
+
             Image::make('Proof Of Payment')
                 ->rules(['required', 'max:2000'])
                 ->help('Maximum of 2mb image only!'),
@@ -111,7 +115,6 @@ class UserRequest extends Resource
                 ]),
 
             HasOne::make('Requested Document', 'requestDocument', RequestDocument::class),
-
         ];
     }
 
