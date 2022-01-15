@@ -49,6 +49,16 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
             Text::make('Contacts')
                 ->help('please separate contact info thru comma (,)'),
+
+            Image::make('Image 1'),
+
+            Image::make('Image 2'),
+
+            Image::make('Image 3'),
+
+            Image::make('Image 4'),
+
+            Image::make('Image 5'),
         ]);
     }
 

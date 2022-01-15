@@ -4,16 +4,20 @@
 
     <x-carousel-container>
         <x-carousel-item id="item1">
-            <img src="https://picsum.photos/id/500/800/300" class="w-full">
+            <img src="/storage/{{nova_get_setting('image_1', '#')}}" class="w-full object-cover">
         </x-carousel-item>
         <x-carousel-item id="item2">
-            <img src="https://picsum.photos/id/501/800/300" class="w-full">
+            <img src="/storage/{{nova_get_setting('image_2', '#')}}" class="w-full object-cover">
         </x-carousel-item>
         <x-carousel-item id="item3">
-            <img src="https://picsum.photos/id/502/800/300" class="w-full">
+            <img src="/storage/{{nova_get_setting('image_3', '#')}}" class="w-full object-cover">
         </x-carousel-item>
         <x-carousel-item id="item4">
-            <img src="https://picsum.photos/id/503/800/300" class="w-full">
+            <img src="/storage/{{nova_get_setting('image_4', '#')}}" class="w-full object-cover">
+        </x-carousel-item>
+
+        <x-carousel-item id="item5">
+            <img src="/storage/{{nova_get_setting('image_5', '#')}}" class="w-full object-cover">
         </x-carousel-item>
     </x-carousel-container>
 
@@ -29,6 +33,9 @@
         </x-carousel-trigger-item>
         <x-carousel-trigger-item target="item4">
             4
+        </x-carousel-trigger-item>
+        <x-carousel-trigger-item target="item5">
+            5
         </x-carousel-trigger-item>
     </x-carousel-trigger-container>
 

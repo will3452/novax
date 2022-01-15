@@ -1,5 +1,5 @@
 @props(['id'])
-<div id="{{$id}}" class="w-full carousel-item">
+<div id="{{$id}}" class="w-full carousel-item" style="max-height: 60vh;">
     {{$slot}}
 </div>
 
