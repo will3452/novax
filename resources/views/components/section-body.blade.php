@@ -1,3 +1,3 @@
-<p class="text-center text-base font-serif tracking-wider">
+<p class="text-left text-base font-serif tracking-wider">
     {{$slot}}
 </p>
