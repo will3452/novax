@@ -25,6 +25,7 @@ class User extends Authenticatable
         'password',
         'approved_at',
         'valid_id',
+        'is_vaccinated',
     ];
 
     /**

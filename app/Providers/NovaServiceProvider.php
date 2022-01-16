@@ -2,27 +2,28 @@
 
 namespace App\Providers;
 
-use App\Models\Announcement;
-use App\Nova\Metrics\RequestPerDay;
-use App\Nova\Metrics\ResolvedAndPendingRequest;
-use App\Nova\Metrics\TotalNumberOfAnnouncement;
-use App\Nova\Metrics\TotalNumberOfRequest;
-use App\Nova\Metrics\TotalNumberOfApprovedUsers;
-use App\Nova\Metrics\TotalNumberOfUserRequestDocument;
-use App\Nova\Metrics\TotalPendingRequest;
-use App\Nova\Metrics\VaccinationSummary;
-use Elezerk\LatestDocumentRequested\LatestDocumentRequested;
 use Laravel\Nova\Nova;
+use Pdmfc\NovaCards\Info;
+use App\Models\Announcement;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
-use Spatie\BackupTool\BackupTool;
-use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Fields\Textarea;
+use Spatie\BackupTool\BackupTool;
+use App\Nova\Metrics\RequestPerDay;
+use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
+use Elezerk\IsVaccinated\IsVaccinated;
+use App\Nova\Metrics\VaccinationSummary;
+use App\Nova\Metrics\TotalPendingRequest;
+use App\Nova\Metrics\TotalNumberOfRequest;
 use OptimistDigital\NovaSettings\NovaSettings;
+use App\Nova\Metrics\ResolvedAndPendingRequest;
+use App\Nova\Metrics\TotalNumberOfAnnouncement;
+use App\Nova\Metrics\TotalNumberOfApprovedUsers;
 use Laravel\Nova\NovaApplicationServiceProvider;
-use Pdmfc\NovaCards\Info;
+use App\Nova\Metrics\TotalNumberOfUserRequestDocument;
+use Elezerk\LatestDocumentRequested\LatestDocumentRequested;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -122,6 +123,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ->canSee(function () {
                     return auth()->user()->not_admin;
                 }),
+
+            (new IsVaccinated())
+                ->canSee(function () {
+                    return auth()->user()->not_admin;
+                }),
+
             (new TotalNumberOfAnnouncement())
                 ->canSee(function () {
                     return ! auth()->user()->not_admin;

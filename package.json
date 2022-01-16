@@ -9,7 +9,11 @@
         "prod": "npm run production",
         "production": "mix --production",
         "build-latest-document-requested": "cd nova-components/LatestDocumentRequested && npm run dev",
-        "build-latest-document-requested-prod": "cd nova-components/LatestDocumentRequested && npm run prod"
+        "build-latest-document-requested-prod": "cd nova-components/LatestDocumentRequested && npm run prod",
+        "build-is-vacinated": "cd nova-components/IsVacinated && npm run dev",
+        "build-is-vacinated-prod": "cd nova-components/IsVacinated && npm run prod",
+        "build-is-vaccinated": "cd nova-components/IsVaccinated && npm run dev",
+        "build-is-vaccinated-prod": "cd nova-components/IsVaccinated && npm run prod"
     },
     "devDependencies": {
         "axios": "^0.21",
