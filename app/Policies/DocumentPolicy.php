@@ -30,7 +30,7 @@ class DocumentPolicy
      */
     public function view(User $user, Document $document)
     {
-        //
+        return true;
     }
 
     /**

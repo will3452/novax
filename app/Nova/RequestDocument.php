@@ -31,6 +31,9 @@ class RequestDocument extends Resource
 
     public function authorizedToUpdate(Request $request)
     {
+        if ($request->has('action')) {
+            return true;
+        }
         return auth()->user()->hasRole(\App\Models\Role::SUPERADMIN);
     }
     /**
