@@ -22,18 +22,21 @@ class ApiAuthenticationController extends Controller
 
     public function register(Request $request)
     {
-        $name = $request->name;
-        $email = $request->email;
+        $name = $request->name ?? 'client_' . uniqid();
+        $username = $request->username;
+        $gender = $request->gender;
+        $birthDay = $request->birth_day;
+        $email = $request->email ?? "$name@example.com";
         $password = $request->password;
 
-        if (is_null($name) || is_null($email) || is_null($password)) {
+        if (is_null($name) || is_null($email) || is_null($password) || is_null($username) || is_null($gender) || is_null($birthDay)) {
             return ErrorHelper::sendError(400, 'field(s) are required!');
         }
 
-        $user = User::where('email', $email)->first();
+        $user = User::where('username', $username)->first();
 
         if ($user) {
-            return ErrorHelper::sendError(400, 'email is already in used!');
+            return ErrorHelper::sendError(400, 'username is already in used!');
         }
 
         if (strlen($password) <= 6) {
@@ -41,9 +44,12 @@ class ApiAuthenticationController extends Controller
         }
 
         $user = $this->createUser([
-            'name'=>$name,
-            'email'=>$email,
-            'password'=>$password,
+            'name' => $name,
+            'email' => $email,
+            'username' => $username,
+            'gender' => $gender,
+            'birth_day' => $birthDay,
+            'password' => $password,
         ]);
 
         $token = $this->createToken($user);
@@ -56,15 +62,15 @@ class ApiAuthenticationController extends Controller
 
     public function login(Request $request)
     {
-        $email = $request->email;
+        $username = $request->username;
         $password = $request->password;
 
 
-        if (is_null($email) || is_null($password)) {
+        if (is_null($username) || is_null($password)) {
             return ErrorHelper::sendError(400, 'field(s) are required!');
         }
 
-        $user = User::where('email', $email)->first();
+        $user = User::where('username', $username)->first();
 
         if (is_null($user)) {
             return ErrorHelper::sendError(404, 'user not found!');

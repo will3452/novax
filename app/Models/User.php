@@ -22,6 +22,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'username',
+        'birth_day',
+        'gender'
     ];
 
     /**
@@ -41,5 +44,11 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'birth_day' => 'datetime'
     ];
+
+    public function bms()
+    {
+       return $this->hasMany(Bms::class, 'user_id');
+    }
 }
