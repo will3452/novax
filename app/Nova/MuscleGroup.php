@@ -2,21 +2,20 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use SLASH2NL\NovaBackButton\NovaBackButton;
 
-class Difficulty extends Resource
+class MuscleGroup extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Difficulty::class;
+    public static $model = \App\Models\MuscleGroup::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -45,8 +44,7 @@ class Difficulty extends Resource
     {
         return [
             Text::make('Description')
-                ->rules(['required', 'max:30', 'unique:difficulties,description,{{resourceId}}']),
-            HasMany::make('Weeks', 'weeks', Week::class),
+                ->rules(['required', 'unique:muscle_groups,description']),
         ];
     }
 
@@ -58,10 +56,7 @@ class Difficulty extends Resource
      */
     public function cards(Request $request)
     {
-        return [
-            (new NovaBackButton())
-                ->onlyOnDetail(),
-        ];
+        return [];
     }
 
     /**

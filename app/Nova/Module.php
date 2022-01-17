@@ -4,26 +4,31 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\BelongsTo;
+use App\Models\Module as ModelsModule;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SLASH2NL\NovaBackButton\NovaBackButton;
 
-class Difficulty extends Resource
+class Module extends Resource
 {
+    public static $displayInNavigation = false;
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Difficulty::class;
+    public static $model = \App\Models\Module::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'description';
+    public function title()
+    {
+       return "$this->type - $this->day";
+    }
 
     /**
      * The columns that should be searched.
@@ -31,8 +36,8 @@ class Difficulty extends Resource
      * @var array
      */
     public static $search = [
-        'id',
-        'description',
+        'day',
+        'type',
     ];
 
     /**
@@ -44,9 +49,16 @@ class Difficulty extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Description')
-                ->rules(['required', 'max:30', 'unique:difficulties,description,{{resourceId}}']),
-            HasMany::make('Weeks', 'weeks', Week::class),
+            BelongsTo::make('Week', 'week', Week::class),
+            Select::make('Type')
+                ->options([
+                    ModelsModule::TYPE_EXERCISE => ModelsModule::TYPE_EXERCISE,
+                    ModelsModule::TYPE_MEAL => ModelsModule::TYPE_MEAL,
+                ])
+                ->rules(['required']),
+            Select::make('Day')
+                    ->options(ModelsModule::DAY_OPTIONS)
+                    ->rules(['required']),
         ];
     }
 

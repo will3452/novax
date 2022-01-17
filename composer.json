@@ -17,6 +17,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "coreproc/nova-permissions-field": "*",
+        "eminiarts/nova-tabs": "^1.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.65",
@@ -27,6 +28,7 @@
         "optimistdigital/nova-settings": "^3.2",
         "richardkeep/nova-timenow": "^1.0",
         "runlinenl/nova-profile-tool": "^1.1",
+        "slash2nl/nova-back-button": "^1.0",
         "spatie/laravel-backup": "^6.16",
         "spatie/laravel-permission": "^5.3",
         "spatie/nova-backup-tool": "^4.1"

@@ -2,11 +2,14 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
+use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use SLASH2NL\NovaBackButton\NovaBackButton;
 
 class Week extends Resource
 {
@@ -17,12 +20,14 @@ class Week extends Resource
      */
     public static $model = \App\Models\Week::class;
 
+    public static $displayInNavigation = false;
+
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'sequence';
 
     /**
      * The columns that should be searched.
@@ -44,10 +49,17 @@ class Week extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Sequence')
-                ->rules(['required']),
+            Tabs::make('root', [
+                'Details' => [
+                    Text::make('Week', 'sequence')
+                         ->rules(['required']),
+                     BelongsTo::make('Difficulty', 'difficulty', Difficulty::class),
+                ],
+                HasMany::make('Exercises', 'exercises', Exercise::class),
+                HasMany::make('Meals', 'meals', Meal::class),
+            ])
 
-            BelongsTo::make('Difficulty', 'difficulty', Difficulty::class),
+
         ];
     }
 
@@ -59,7 +71,10 @@ class Week extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new NovaBackButton())
+                ->onlyOnDetail(),
+        ];
     }
 
     /**

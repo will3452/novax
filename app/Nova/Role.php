@@ -3,10 +3,11 @@
 namespace App\Nova;
 
 use App\Models\Permission;
-use App\Models\Role as ModelsRole;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use App\Models\Role as ModelsRole;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use SLASH2NL\NovaBackButton\NovaBackButton;
 use Coreproc\NovaPermissionsField\NovaPermissionsField;
 
 class Role extends Resource
@@ -101,7 +102,10 @@ class Role extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new NovaBackButton())
+                ->onlyOnDetail(),
+        ];
     }
 
     /**

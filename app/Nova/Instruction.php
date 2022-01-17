@@ -4,26 +4,29 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Hidden;
+use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SLASH2NL\NovaBackButton\NovaBackButton;
 
-class Difficulty extends Resource
+class Instruction extends Resource
 {
+    public static $displayInNavigation = false;
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Difficulty::class;
+    public static $model = \App\Models\Instruction::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'description';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -33,6 +36,7 @@ class Difficulty extends Resource
     public static $search = [
         'id',
         'description',
+        'image',
     ];
 
     /**
@@ -44,9 +48,14 @@ class Difficulty extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Description')
-                ->rules(['required', 'max:30', 'unique:difficulties,description,{{resourceId}}']),
-            HasMany::make('Weeks', 'weeks', Week::class),
+            Hidden::make('module_id')->default(fn () => request()->viaResourceId),
+            BelongsTo::make('Module', 'module', Module::class)
+                ->exceptOnForms(),
+            Textarea::make('Description')
+                ->alwaysShow()
+                ->rules(['required']),
+            Image::make('Image')
+                ->rules(['required']),
         ];
     }
 
