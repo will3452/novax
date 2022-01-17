@@ -2,11 +2,14 @@
 
 namespace App\Nova;
 
+use App\Nova\User;
 use Eminiarts\Tabs\Tab;
 use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
+use App\Models\User as UserModel;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -53,7 +56,12 @@ class ClassRoom extends Resource
                       ->rules(['required']),
                     Text::make('Code')
                         ->rules(['required']),
-                    BelongsTo::make('Teacher', 'teacher', User::class),
+                    BelongsTo::make('Teacher', 'teacher', User::class)
+                        ->exceptOnForms(),
+                    Select::make('Teacher', 'teacher_id')
+                        ->options(UserModel::where('type', 'LIKE', "%teacher%")->get()->pluck('name', 'id'))
+                        ->onlyOnForms()
+
                 ]),
                 BelongsToMany::make('Students', 'students', User::class),
                 BelongsToMany::make('Subjects', 'subjects', Subject::class),

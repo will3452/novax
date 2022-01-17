@@ -37,6 +37,18 @@ class User extends Authenticatable
 
     const TYPE_STUDENT = 'student';
     const TYPE_PARENT = 'parent';
+    const TYPE_TEACHER = 'teacher';
+
+    public static function OPTION_TYPE()
+    {
+        $arr = [
+            self::TYPE_PARENT => self::TYPE_PARENT,
+            self::TYPE_STUDENT => self::TYPE_STUDENT,
+            self::TYPE_TEACHER => self::TYPE_TEACHER,
+        ];
+        $dynamicOptions = UserType::get()->pluck('description', 'description')->toArray();
+       return array_merge($dynamicOptions, $arr);
+    }
 
     /**
      * The attributes that should be cast.

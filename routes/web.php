@@ -3,6 +3,7 @@
 use App\Models\User;
 use App\Models\Subject;
 use App\Models\UserStudent;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExamController;
@@ -100,4 +101,14 @@ Route::post('/load-report', function () {
     $subject = Subject::find($data['subject_id']);
 
     return view('view-progress', compact('student', 'subject'));
+});
+
+
+Route::post('/update', function (Request $request) {
+    $payload = request()->validate([
+        'password' => ['required', 'confirmed'],
+    ]);
+
+    auth()->user()->update(['password' => bcrypt($payload['password'])]);
+    return back();
 });

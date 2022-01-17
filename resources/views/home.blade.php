@@ -99,7 +99,7 @@
                             </div>
                         </div>
                         <div class="my-4">
-                            <form class="user" method="POST" action="/register">
+                            <form class="user" method="POST" action="/update">
                                 @csrf
                                 <div class="form-group">
                                     <input readonly value="{{auth()->user()->name}}" required type="text" name="" class="form-control form-control-user" id="exampleFirstName"
