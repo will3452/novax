@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SLASH2NL\NovaBackButton\NovaBackButton;
 
@@ -37,6 +38,7 @@ class Instruction extends Resource
         'id',
         'description',
         'image',
+        'name',
     ];
 
     /**
@@ -49,6 +51,8 @@ class Instruction extends Resource
     {
         return [
             Hidden::make('module_id')->default(fn () => request()->viaResourceId),
+            Text::make('Name')
+                ->rules(['required']),
             BelongsTo::make('Module', 'module', Module::class)
                 ->exceptOnForms(),
             Textarea::make('Description')

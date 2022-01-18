@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\Select;
 use App\Nova\ShouldBackToParent;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SLASH2NL\NovaBackButton\NovaBackButton;
 

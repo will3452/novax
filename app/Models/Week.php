@@ -15,7 +15,8 @@ class Week extends Model
     ];
 
     protected $with = [
-        'modules',
+        'meals',
+        'exercises',
     ];
 
     public function difficulty()

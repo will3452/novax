@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApiAuthenticationController;
 use App\Http\Controllers\ApiBmsController;
+use App\Http\Controllers\ApiDifficultyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,3 +27,5 @@ Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
 Route::post('/bms', [ApiBmsController::class, 'create']);
 Route::get('/bms', [ApiBmsController::class, 'index']);
+
+Route::get('/difficulties', [ApiDifficultyController::class, 'index']);

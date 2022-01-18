@@ -12,6 +12,13 @@ class Module extends Model
     const TYPE_EXERCISE = 'Exercise';
     const TYPE_MEAL = 'Meal';
 
+    // const MEAL_TYPE = [
+    //     'Breakfast' => 'Breakfast',
+    //     'Snack' => 'Snack',
+    //     'Lunch' => 'Lunch',
+    //     'Dinner' => 'Dinner',
+    // ];
+
     const DAY_OPTIONS = [
         'mon' => 'mon',
         'tue' => 'tue',

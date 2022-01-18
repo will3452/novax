@@ -12,6 +12,7 @@ class Instruction extends Model
         'module_id',
         'image',
         'description',
+        'name',
     ];
 
     public function module()
