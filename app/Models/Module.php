@@ -50,10 +50,19 @@ class Module extends Model
        return $this->hasMany(Instruction::class, 'module_id');
     }
 
+    public function isDone(): bool
+    {
+       return (bool) UserModule::where([
+           'module_id' => $this->id,
+           'user_id' => auth()->id(),
+       ])->count();
+    }
+
     //actions
     public function markAsDone()
     {
-       UserModule::create([
+        if ($this->isDone()) return null;
+       return UserModule::create([
            'module_id' => $this->id,
            'user_id' => auth()->id(),
        ]);
