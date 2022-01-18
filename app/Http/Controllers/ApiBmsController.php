@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BmsCreateRequest;
+use App\Http\Requests\BmsRequest;
 use App\Models\Bms;
 use Illuminate\Http\Request;
 
 class ApiBmsController extends Controller
 {
-    public function index(Request $request)
+    public function index(BmsRequest $request)
     {
         $user = auth()->user();
         $response = null;
@@ -20,15 +22,10 @@ class ApiBmsController extends Controller
         return $response;
     }
 
-    public function create(Request $request)
+    public function create(BmsCreateRequest $request)
     {
         $user = auth()->user();
-        $payload = request()->validate([
-            'height' => 'required',
-            'weight' => 'required',
-            'result' => 'required',
-            'type' => 'required',
-        ]);
+        $payload = $request->validated();
 
         $payload['age'] = is_null($user->birth_day) ? 12 : \Carbon\Carbon::parse($user->birth_day)->age;
         $payload['user_id'] = $user->id;

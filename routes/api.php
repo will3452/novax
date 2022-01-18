@@ -20,11 +20,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/is-done', [ApiDifficultyController::class, 'isDone']);
 
     Route::get('/stats', [ApiStatController::class, 'index']);
+
+    Route::post('/bms', [ApiBmsController::class, 'create']);
+    Route::get('/bms', [ApiBmsController::class, 'index']);
 });
 
-Route::get('/public-test', function () {
-    return 'public test';
-});
 
 
 //user authentication
@@ -32,7 +32,6 @@ Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
 
-Route::post('/bms', [ApiBmsController::class, 'create']);
-Route::get('/bms', [ApiBmsController::class, 'index']);
+
 
 Route::get('/difficulties', [ApiDifficultyController::class, 'index']);

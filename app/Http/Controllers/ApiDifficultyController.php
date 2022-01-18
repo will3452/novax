@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Difficulty;
 use App\Models\Module;
+use App\Models\Difficulty;
 use Illuminate\Http\Request;
+use App\Http\Requests\IsDoneRequest;
+use App\Http\Requests\MarkAsDoneRequest;
 
 class ApiDifficultyController extends Controller
 {
@@ -13,20 +15,16 @@ class ApiDifficultyController extends Controller
         return Difficulty::get();
     }
 
-    public function markAsDone()
+    public function markAsDone(MarkAsDoneRequest $request)
     {
-        request()->validate([
-            'module_id' => 'required',
-        ]);
-        Module::find(request()->module_id)->markAsDone();
+       $request->validated();
+        Module::find($request->module_id)->markAsDone();
         return 'done!';
     }
 
-    public function isDone()
+    public function isDone(MarkAsDoneRequest $request)
     {
-       request()->validate([
-           'module_id' => 'required',
-       ]);
+        $request->validated();
 
        return optional(Module::find(request()->module_id))->isDone() ? 'true':'false';
     }

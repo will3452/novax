@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Api\ErrorHelper;
+use App\Http\Requests\UserLoginRequest;
+use App\Http\Requests\UserRegisterRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,7 +22,7 @@ class ApiAuthenticationController extends Controller
         return User::create($data);
     }
 
-    public function register(Request $request)
+    public function register(UserRegisterRequests $request)
     {
         $name = $request->name ?? 'client_' . uniqid();
         $username = $request->username;
@@ -60,7 +62,7 @@ class ApiAuthenticationController extends Controller
         ], 200);
     }
 
-    public function login(Request $request)
+    public function login(UserLoginRequest $request)
     {
         $username = $request->username;
         $password = $request->password;
