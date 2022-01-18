@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\TotalNumberOfExercises;
 use App\Nova\Metrics\TotalNumberOfMeals;
 use App\Nova\Metrics\TotalNumberOfUsers;
 use Laravel\Nova\Nova;
@@ -79,6 +80,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return config('novax.time_enabled');
             }),
             (new TotalNumberOfUsers()),
+            (new TotalNumberOfExercises()),
             (new TotalNumberOfMeals()),
         ];
     }
