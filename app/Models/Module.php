@@ -36,6 +36,10 @@ class Module extends Model
         'type',
     ];
 
+    protected $with = [
+        'instructions',
+    ];
+
     public function week()
     {
        return $this->belongsTo(Week::class, 'week_id');
