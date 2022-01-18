@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\TotalNumberOfMeals;
+use App\Nova\Metrics\TotalNumberOfUsers;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -76,6 +78,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
+            (new TotalNumberOfUsers()),
+            (new TotalNumberOfMeals()),
         ];
     }
 
