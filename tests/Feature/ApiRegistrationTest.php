@@ -12,7 +12,7 @@ class ApiRegistrationTest extends TestCase
     public function it_register_user_through_api()
     {
       $data = [
-          'username' => 'sample_user22',
+          'username' => 'ss',
           'password' => 'password132',
           'gender' => 'male',
           'birth_day' => now(),
