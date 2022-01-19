@@ -12,7 +12,9 @@ class ApiDifficultyController extends Controller
 {
     public function index()
     {
-        return Difficulty::get();
+        return [
+            'difficulties' => Difficulty::get(),
+        ];
     }
 
     public function markAsDone(MarkAsDoneRequest $request)
