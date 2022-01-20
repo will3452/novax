@@ -7,6 +7,7 @@ use App\Http\Controllers\ApiStatController;
 use App\Http\Controllers\ApiDifficultyController;
 use App\Http\Controllers\ApiAuthenticationController;
 use App\Http\Controllers\ApiRecipeController;
+use App\Http\Controllers\ApiTipsController;
 
 //private access
 Route::middleware('auth:sanctum')->group(function () {
@@ -37,3 +38,5 @@ Route::post('/login', [ApiAuthenticationController::class, 'login']);
 Route::get('/difficulties', [ApiDifficultyController::class, 'index']);
 Route::get('/recipes', [ApiRecipeController::class, 'index']);
 Route::get('/recipes/{recipe}', [ApiRecipeController::class, 'show']);
+Route::get('/tip', [ApiTipsController::class, 'tip']);
+Route::get('/quote', [ApiTipsController::class, 'quote']);
