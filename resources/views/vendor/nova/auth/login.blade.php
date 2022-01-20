@@ -55,7 +55,7 @@
         {{ __('Login') }}
     </button>
     <div>
-        <a class="p-2 text-center block uppercase" href="{{nova_get_setting('android_app') ? '/storage':''}}{{nova_get_setting('android_app', 'javascript:alert("no android apk uploaded!");')}}" download="fitdroid.apk">Download Android App</a>
+        <a class="p-2 text-center block uppercase" href="{{nova_get_setting('android_app') ? '/storage/':''}}{{nova_get_setting('android_app', 'javascript:alert("no android apk uploaded!");')}}" download="fitdroid.apk">Download Android App</a>
     </div>
 </form>
 @endsection
