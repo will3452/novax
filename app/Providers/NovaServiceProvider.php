@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Fields\File;
 use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -35,7 +36,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             Text::make('Song Of Nature Link')
                 ->default(function () {
                     return 'https://www.youtube.com/channel/UC_nnhTXgKPjZjYb_8l3ebbw';
-                })
+                }),
+            File::make('Android App'),
         ]);
     }
 
