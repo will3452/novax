@@ -11,6 +11,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class CovidInfo extends Resource
 {
+    public static function label(): string
+    {
+        return "Covid Facts & Articles";
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -49,6 +53,7 @@ class CovidInfo extends Resource
             Text::make('Title')
                 ->rules(['required', 'unique:covid_infos,title,{{resourceId}}']),
             Trix::make('Body')
+                ->alwaysShow()
                 ->rules(['required'])
         ];
     }

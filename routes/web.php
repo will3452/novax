@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CovidController;
 use Laravel\Nova\Nova;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -18,6 +19,5 @@ Route::get('/artisan', function () {
 });
 
 
-Route::get('/covid', function () {
-    return 'under development....';
-});
+Route::get('covid', [CovidController::class, 'index'])->name('covid.index');
+Route::get('covid/{covidInfo}', [CovidController::class, 'show']);
