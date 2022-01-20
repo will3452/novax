@@ -37,7 +37,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ->default(function () {
                     return 'https://www.youtube.com/channel/UC_nnhTXgKPjZjYb_8l3ebbw';
                 }),
-            File::make('Android App'),
+            Text::make('Android App'),
         ]);
     }
 
