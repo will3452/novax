@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiBmsController;
 use App\Http\Controllers\ApiStatController;
 use App\Http\Controllers\ApiDifficultyController;
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Http\Controllers\ApiMentalDescriptionController;
 use App\Http\Controllers\ApiRecipeController;
 use App\Http\Controllers\ApiTipsController;
 
@@ -33,10 +34,9 @@ Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
 
-
-
 Route::get('/difficulties', [ApiDifficultyController::class, 'index']);
 Route::get('/recipes', [ApiRecipeController::class, 'index']);
 Route::get('/recipes/{recipe}', [ApiRecipeController::class, 'show']);
 Route::get('/tip', [ApiTipsController::class, 'tip']);
 Route::get('/quote', [ApiTipsController::class, 'quote']);
+Route::get('/mental-descriptions', [ApiMentalDescriptionController::class, 'index']);
