@@ -84,6 +84,8 @@ class ApiAuthenticationController extends Controller
         $token = $this->createToken($user);
         return response([
             'user'=>$user,
+            'songs_of_nature' => nova_get_setting('song_of_nature_link', 'https://www.youtube.com/channel/UC_nnhTXgKPjZjYb_8l3ebbw'),
+            'meditation' => nova_get_setting('meditation_link', 'https://www.youtube.com/watch?v=cQm8mhwezd4'),
             'token'=>$token,
         ], 200);
     }

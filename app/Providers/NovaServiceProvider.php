@@ -28,6 +28,14 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Text::make('Meditation Link')
+                ->default(function () {
+                    return 'https://www.youtube.com/watch?v=cQm8mhwezd4';
+                }),
+            Text::make('Song Of Nature Link')
+                ->default(function () {
+                    return 'https://www.youtube.com/channel/UC_nnhTXgKPjZjYb_8l3ebbw';
+                })
         ]);
     }
 
