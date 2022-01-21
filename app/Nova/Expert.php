@@ -2,28 +2,22 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use SLASH2NL\NovaBackButton\NovaBackButton;
 
-class User extends Resource
+class Expert extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'super@admin.com');
-    }
-
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Expert::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -38,7 +32,8 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email','username',
+        'id',
+        'name'
     ];
 
     /**
@@ -50,25 +45,17 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
             Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Username')
-                ->sortable(),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+                ->rules(['required', 'unique:experts,name,{{resourceId}}']),
+            Text::make('Title')
+                ->rules(['required']),
+            Trix::make('About')
+                ->alwaysShow()
+                ->help('Make if short, but descriptive 😊')
+                ->rules(['required', 'max:500']),
+            Image::make('Image')
+                ->rules(['required', 'image','max:1000']),
+            HasMany::make('Files', 'files', File::class),
         ];
     }
 
@@ -80,10 +67,7 @@ class User extends Resource
      */
     public function cards(Request $request)
     {
-        return [
-            (new NovaBackButton())
-                ->onlyOnDetail(),
-        ];
+        return [];
     }
 
     /**
