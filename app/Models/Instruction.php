@@ -24,6 +24,11 @@ class Instruction extends Model
         'Dinner' => 'Dinner',
     ];
 
+    const MEAL_BREAKFAST = 'Breakfast';
+    const MEAL_LUNCH = 'Lunch';
+    const MEAL_SNACKS = 'Snacks';
+    const MEAL_DINNER = 'Dinner';
+
     public function module()
     {
        return $this->belongsTo(Module::class, 'module_id');
