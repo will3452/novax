@@ -6,7 +6,6 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\File as NovaFile;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -50,9 +49,8 @@ class File extends Resource
             BelongsTo::make('Expert', 'expert', Expert::class),
             Date::make('Date uploaded', 'created_at')
                 ->exceptOnForms(),
-            NovaFile::make('File')
-                ->rules(['required', 'max:5000'])
-                ->help('max upload up to 5mb only'),
+            Text::make('File Url', 'file')
+                ->rules(['required']),
             Text::make('Name Of File', 'title')
                 ->rules(['required']),
         ];

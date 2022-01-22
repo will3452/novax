@@ -29,8 +29,8 @@
                         <ul class="list-disc">
                             @foreach ($expert->files as $file)
                                 <li class="my-1">
-                                    <a href="/storage/{{$file->file}}" download class="justify-between font-bold flex block shadow bg-gray-400 p-2 rounded">{{$file->title}}
-                                        <span class="font-thin text-xs uppercase underline">Download</span>
+                                    <a href="{{$file->file}}" target="_blank" class="justify-between font-bold flex block shadow bg-gray-400 p-2 rounded">{{$file->title}}
+                                        <span class="font-thin text-xs uppercase underline">Browse</span>
                                     </a>
                                 </li>
                             @endforeach
