@@ -13,6 +13,15 @@ class Instruction extends Model
         'image',
         'description',
         'name',
+        'meal_type',
+        'calories',
+    ];
+
+    const MEAL_TYPE_OPTIONS = [
+        'Breakfast' => 'Breakfast',
+        'Lunch' => 'Lunch',
+        'Snacks' => 'Snacks',
+        'Dinner' => 'Dinner',
     ];
 
     public function module()

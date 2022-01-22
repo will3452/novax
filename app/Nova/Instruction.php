@@ -8,6 +8,8 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SLASH2NL\NovaBackButton\NovaBackButton;
@@ -41,6 +43,11 @@ class Instruction extends Resource
         'name',
     ];
 
+    public function seeIfMeal()
+    {
+        return request()->viaResource === 'meals' || request()->resource === self::uriKey();
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -53,13 +60,20 @@ class Instruction extends Resource
             Hidden::make('module_id')->default(fn () => request()->viaResourceId),
             Text::make('Name')
                 ->rules(['required']),
+            Select::make('Meal Type')
+                ->options((self::$model)::MEAL_TYPE_OPTIONS)
+                ->rules(['required'])
+                ->canSee(fn () => $this->seeIfMeal()),
+            Number::make('Calories')
+                ->step('0.1')
+                ->canSee(fn () => $this->seeIfMeal())
+                ->rules(['required']),
             BelongsTo::make('Module', 'module', Module::class)
                 ->exceptOnForms(),
             Textarea::make('Description')
                 ->alwaysShow()
                 ->rules(['required']),
             Image::make('Image')
-                ->rules(['required']),
         ];
     }
 
