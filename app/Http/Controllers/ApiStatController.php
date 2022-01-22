@@ -24,7 +24,7 @@ class ApiStatController extends Controller
 
        return [
            'keys' => $groups,
-           'values' => $result
+           'values' => $result,
        ];
     }
 
