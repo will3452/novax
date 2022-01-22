@@ -59,6 +59,10 @@ class User extends Resource
             Text::make('Username')
                 ->sortable(),
 
+            Text::make('Gender')
+                ->hideWhenUpdating()
+                ->sortable(),
+
             Text::make('Email')
                 ->sortable()
                 ->rules('required', 'email', 'max:254')
