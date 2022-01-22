@@ -17,9 +17,12 @@ class ApiStatController extends Controller
 
        foreach ($groups as $group) {
            $exercisesIds = Exercise::whereMuscleGroup($group)->get()->pluck('id');
-           $result[$group] = UserModule::whereUserId(auth()->id())->whereIn('module_id', $exercisesIds)->count();
+           $result[] = UserModule::whereUserId(auth()->id())->whereIn('module_id', $exercisesIds)->count();
        }
 
-       return $result;
+       return [
+           'keys' => $groups,
+           'values' => $result
+       ];
     }
 }
