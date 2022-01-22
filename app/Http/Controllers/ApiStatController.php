@@ -35,7 +35,7 @@ class ApiStatController extends Controller
         foreach ($keys as $key) {
             $ids = UserModule::whereUserId(auth()->id())->get()->pluck('module_id');
             $modulesId = Module::whereIn('id', $ids)->whereType(Module::TYPE_MEAL)->get()->pluck('id');
-            $values[] = Instruction::whereMealType($key)->whereIn('module_id', $modulesId)->sum();
+            $values[] = Instruction::whereMealType($key)->whereIn('module_id', $modulesId)->sum('calories');
         }
         return [
             'keys' => $keys,
@@ -45,9 +45,9 @@ class ApiStatController extends Controller
     public function index()
     {
        if (request()->has('type') && request()->type === 'meal') {
-           $this->meals();
+           return $this->meals();
        } else {
-           $this->workOuts();
+           return $this->workOuts();
        }
     }
 }
