@@ -114,6 +114,11 @@ class User extends Authenticatable
         return $this->hasMany(UserStudent::class, 'parent_id');
     }
 
+    public function userParent()
+    {
+        return $this->hasOne(UserStudent::class, 'student_id');
+    }
+
     public function getTotalScoreToSubject($subjectId)
     {
         $total = 0;

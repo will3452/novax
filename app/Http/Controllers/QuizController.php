@@ -46,7 +46,7 @@ class QuizController extends Controller
 
         $perfectScore = $quiz->questions()->count();
 
-        $remark = $score == $perfectScore ? "Excellent! you got perfect score!":"Good Job!";
+        $remark = $score == $perfectScore ? "Excellent! you got perfect score!":"Nice Try";
         return view('quizzes.result', compact('quiz', 'score', 'perfectScore'))->with(['remark'=>$remark]);
     }
 }

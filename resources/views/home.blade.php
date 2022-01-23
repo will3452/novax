@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-8">
                @parent()
-               <div class="card">
+               {{-- <div class="card">
                    <div class="card-header">
                         Add Students
                    </div>
@@ -27,7 +27,7 @@
                            </div>
                        </form>
                    </div>
-               </div>
+               </div> --}}
                <div class="my-2">
                     <div class="card">
                         <div class="card-header">
@@ -41,7 +41,6 @@
                                     <form action="/remove-student">
                                         <a class="btn btn-sm btn-success" href="/view-progress/{{$us->student_id}}">View Progress</a>
                                         <input type="hidden" name="student_id" value="{{$us->student_id}}">
-                                        <button class="btn btn-sm btn-secondary">remove</button>
                                     </form>
                                    </div>
                                 </div>

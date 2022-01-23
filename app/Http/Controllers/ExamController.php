@@ -46,7 +46,7 @@ class ExamController extends Controller
 
         $perfectScore = $exam->questions()->count();
 
-        $remark = $score == $perfectScore ? "Excellent! you got perfect score!":"Good Job!";
+        $remark = $score == $perfectScore ? "Excellent! you got perfect score!":"Nice Try!";
         return view('exams.results', compact('exam', 'score', 'perfectScore'))->with(['remark'=>$remark]);
     }
 }

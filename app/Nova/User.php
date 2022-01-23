@@ -5,11 +5,13 @@ namespace App\Nova;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\Select;
 use App\Nova\Filters\TypeOfUser;
 use App\Models\User as UserModel;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
@@ -55,8 +57,6 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
             Select::make('Type')
                 ->required()
                 ->options(UserModel::OPTION_TYPE()),
@@ -77,6 +77,9 @@ class User extends Resource
                 ->updateRules('nullable', 'string', 'min:8'),
 
             MorphToMany::make('Roles', 'roles', Role::class),
+
+            HasOne::make('Parent', 'userParent', UserStudent::class)
+                ->canSee(fn () => $this->type === (static::$model)::TYPE_STUDENT),
         ];
     }
 

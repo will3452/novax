@@ -87,6 +87,9 @@ Route::get('/remove-student', function () {
 
 Route::get('/view-progress/{student}', function (User $student) {
     $subject = null;
+    if (! $student->latestRoom()) {
+        return 'Room is not yet initialized!';
+    }
     return view('view-progress', compact('student', 'subject'));
 });
 
