@@ -2,32 +2,23 @@
 
 namespace App\Nova;
 
-use App\Models\Study;
-use App\Nova\Filters\TypeOfUser;
-use Laravel\Nova\Fields\ID;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\Image;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Course extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'super@admin.com');
-    }
-
-    public static $group = 'Data';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Course::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -42,7 +33,9 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'name',
+        'code',
     ];
 
     /**
@@ -54,36 +47,18 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            Select::make('Account Type', 'type')
-                ->options(
-                    (static::$model)::TYPE_OPTIONS,
-                )->rules(['required']),
-
-            Select::make('Study')
-                ->options(Study::get()->pluck('name', 'name'))
-                ->rules(['required']),
-
-            Text::make('School Id')
+            Text::make('Code')
                 ->sortable()
-                ->rules(['required', 'unique:users,school_id,{{resourceId}}']),
+                ->rules(['required', 'unique:courses,code,{{resourceId}}']),
 
-            Image::make('School picture', 'picture'),
-
-        Text::make('Name')
+            Text::make('Name')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules(['required', 'unique:courses,name,{{resourceId}}']),
 
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
+            Select::make('Instructor', 'user_id')
+                ->options(User::instructors()->get()->pluck('name', 'id')),
 
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
-
+            HasMany::make('Students', 'userCourses', UserCourse::class),
         ];
     }
 
@@ -106,9 +81,7 @@ class User extends Resource
      */
     public function filters(Request $request)
     {
-        return [
-            (new TypeOfUser())
-        ];
+        return [];
     }
 
     /**

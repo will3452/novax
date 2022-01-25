@@ -22,7 +22,25 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'study',
+        'school_id',
+        'type',
+        'picture',
     ];
+
+    const TYPE_STUDENT = 'Student';
+    const TYPE_INSTRUCTOR = 'Instructor';
+
+    const TYPE_OPTIONS = [
+        self::TYPE_INSTRUCTOR => self::TYPE_INSTRUCTOR,
+        self::TYPE_STUDENT => self::TYPE_STUDENT,
+    ];
+
+    // scopes
+    public function scopeInstructors($query)
+    {
+        return $query->whereType(self::TYPE_INSTRUCTOR);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
