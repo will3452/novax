@@ -2,32 +2,28 @@
 
 namespace App\Nova;
 
+use App\Models\Module as ModelsModule;
+use App\Nova\Actions\ChangeModuleStatus;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\File;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use SLASH2NL\NovaBackButton\NovaBackButton;
 
-class UserCourse extends Resource
+class Module extends Resource
 {
-    public static $displayInNavigation = false;
-
-
-    public static function authorizedToCreate(Request $request)
-    {
-        return false;
-    }
-
-    public function authorizedToUpdate(Request $request)
-    {
-        return false;
-    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\UserCourse::class;
+    public static $model = \App\Models\Module::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -43,6 +39,7 @@ class UserCourse extends Resource
      */
     public static $search = [
         'id',
+        'course_id',
     ];
 
     /**
@@ -56,10 +53,20 @@ class UserCourse extends Resource
         return [
             Date::make('Date', 'created_at')
                 ->exceptOnForms(),
-
-            BelongsTo::make('Student', 'user', User::class),
-
+            File::make('Material')
+                ->disableDownload()
+                ->rules(['required']),
             BelongsTo::make('Course', 'course', Course::class),
+            BelongsTo::make('Instructor', 'user', User::class)
+                ->exceptOnForms(),
+            Badge::make('Status')
+                ->map([
+                    ModelsModule::STATUS_DISABLED => 'danger',
+                    ModelsModule::STATUS_ENABLE => 'success',
+                ]),
+            Hidden::make('user_id')
+                ->default(fn () => auth()->id()),
+            HasMany::make('Exams', 'exams', Exam::class),
         ];
     }
 
@@ -71,7 +78,10 @@ class UserCourse extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new NovaBackButton())
+                ->onlyOnDetail(),
+        ];
     }
 
     /**
@@ -104,6 +114,8 @@ class UserCourse extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new ChangeModuleStatus())->onlyOnDetail(),
+        ];
     }
 }

@@ -42,6 +42,11 @@ class User extends Authenticatable
         return $query->whereType(self::TYPE_INSTRUCTOR);
     }
 
+    public function scopeStudents($query)
+    {
+        return $query->whereType(self::TYPE_STUDENT);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

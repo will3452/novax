@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "repositories": [
         {
@@ -12,6 +15,10 @@
         {
             "type": "path",
             "url": "./nova-components/NovaPermissionsField"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/PdfViewer"
         }
     ],
     "require": {
@@ -27,9 +34,11 @@
         "optimistdigital/nova-settings": "^3.2",
         "richardkeep/nova-timenow": "^1.0",
         "runlinenl/nova-profile-tool": "^1.1",
+        "slash2nl/nova-back-button": "^1.0",
         "spatie/laravel-backup": "^6.16",
         "spatie/laravel-permission": "^5.3",
-        "spatie/nova-backup-tool": "^4.1"
+        "spatie/nova-backup-tool": "^4.1",
+        "elezerk/pdf-viewer": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -21,6 +21,16 @@ class UserCourse extends Model // connection between student and course
 
     public function course()
     {
-        return $this->belongsTo(Course::class, 'course_id');
+        return $this->belongsTo(Course::class);
+    }
+
+
+    //methods
+    public static function addStudent($userId, $courseId)
+    {
+        static::create([
+            'user_id' => $userId,
+            'course_id' => $courseId,
+        ]);
     }
 }

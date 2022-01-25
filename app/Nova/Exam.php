@@ -5,36 +5,28 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use SLASH2NL\NovaBackButton\NovaBackButton;
 
-class UserCourse extends Resource
+class Exam extends Resource
 {
     public static $displayInNavigation = false;
-
-
-    public static function authorizedToCreate(Request $request)
-    {
-        return false;
-    }
-
-    public function authorizedToUpdate(Request $request)
-    {
-        return false;
-    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\UserCourse::class;
+    public static $model = \App\Models\Exam::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -43,6 +35,7 @@ class UserCourse extends Resource
      */
     public static $search = [
         'id',
+        'name'
     ];
 
     /**
@@ -57,9 +50,19 @@ class UserCourse extends Resource
             Date::make('Date', 'created_at')
                 ->exceptOnForms(),
 
-            BelongsTo::make('Student', 'user', User::class),
+            Text::make('Name')
+                ->rules(['required']),
 
-            BelongsTo::make('Course', 'course', Course::class),
+            BelongsTo::make('Module', 'module', Module::class)->exceptOnForms(),
+
+            BelongsTo::make('Instructor', 'user', User::class)
+                ->exceptOnForms(),
+
+            Hidden::make('user_id')
+                ->default(fn () => auth()->id()),
+
+            Hidden::make('module_id')
+                ->default(fn () => request()->viaResourceId)
         ];
     }
 
@@ -71,7 +74,9 @@ class UserCourse extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new NovaBackButton())->onlyOnDetail(),
+        ];
     }
 
     /**

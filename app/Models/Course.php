@@ -16,8 +16,22 @@ class Course extends Model
         'status', //closed | open
     ];
 
+    public function modules()
+    {
+        return $this->hasMany(Module::class);
+    }
+
     const STATUS_ACTIVE = 'Active';
     const STATUS_INACTIVE = 'In-Active';
+
+    public function scopeActive($q)
+    {
+        if (auth()->user()->hasRole(Role::SUPERADMIN)) {
+            return $q->whereStatus(self::STATUS_ACTIVE);
+        }
+
+        return $q->whereStatus(self::STATUS_ACTIVE)->whereUserId(auth()->id());
+    }
 
     public function instructor()
     {
@@ -27,6 +41,6 @@ class Course extends Model
     //students
     public function userCourses()
     {
-        return $this->hasMany(UserCourse::class, 'user_id');
+        return $this->hasMany(UserCourse::class, 'course_id');
     }
 }

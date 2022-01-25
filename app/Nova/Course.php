@@ -3,13 +3,17 @@
 namespace App\Nova;
 
 use App\Models\User;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Select;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\Select;
+use App\Nova\Actions\AddStudent;
+use Laravel\Nova\Fields\HasMany;
+use App\Nova\Actions\ChangeStatus;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use SLASH2NL\NovaBackButton\NovaBackButton;
 
 class Course extends Resource
 {
@@ -56,9 +60,22 @@ class Course extends Resource
                 ->rules(['required', 'unique:courses,name,{{resourceId}}']),
 
             Select::make('Instructor', 'user_id')
+                ->onlyOnForms()
                 ->options(User::instructors()->get()->pluck('name', 'id')),
 
+            BelongsTo::make('Instructor', 'instructor', \App\Nova\User::class)
+                ->exceptOnForms(),
+
+            Badge::make('Status')
+                ->map([
+                    (static::$model)::STATUS_ACTIVE => 'success',
+                    (static::$model)::STATUS_INACTIVE => 'danger',
+                ]),
+
             HasMany::make('Students', 'userCourses', UserCourse::class),
+
+            HasMany::make('Module', 'modules', Module::class),
+
         ];
     }
 
@@ -70,7 +87,9 @@ class Course extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new NovaBackButton())
+        ];
     }
 
     /**
@@ -103,6 +122,11 @@ class Course extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new AddStudent())
+                ->onlyOnDetail(),
+            (new ChangeStatus)
+                ->onlyOnDetail(),
+        ];
     }
 }
