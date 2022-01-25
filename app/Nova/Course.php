@@ -12,11 +12,17 @@ use App\Nova\Actions\AddStudent;
 use Laravel\Nova\Fields\HasMany;
 use App\Nova\Actions\ChangeStatus;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SLASH2NL\NovaBackButton\NovaBackButton;
 
 class Course extends Resource
 {
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        // $course
+        // return $query->whereUserId();
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -61,7 +67,11 @@ class Course extends Resource
 
             Select::make('Instructor', 'user_id')
                 ->onlyOnForms()
-                ->options(User::instructors()->get()->pluck('name', 'id')),
+                ->options(fn () => ! auth()->user()
+                    ->hasRole(\App\Models\Role::SUPERADMIN) ?
+                    [auth()->id() => auth()->user()->name] :
+                    User::instructors()->get()->pluck('name', 'id')
+                ),
 
             BelongsTo::make('Instructor', 'instructor', \App\Nova\User::class)
                 ->exceptOnForms(),
@@ -74,7 +84,7 @@ class Course extends Resource
 
             HasMany::make('Students', 'userCourses', UserCourse::class),
 
-            HasMany::make('Module', 'modules', Module::class),
+            HasMany::make('Modules', 'modules', Module::class),
 
         ];
     }

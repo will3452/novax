@@ -16,6 +16,16 @@ class Role extends Resource
         return $query->where('name', '!=', ModelsRole::SUPERADMIN);
     }
 
+    public function authorizedToDelete(Request $request)
+    {
+        return false;
+    }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+
     public static function availableForNavigation(Request $request)
     {
         return config('novax.role_enabled', false);
@@ -61,13 +71,7 @@ class Role extends Resource
     {
         return [
             Text::make(__('Name'), 'name')
-                ->readonly(function () {
-                    /** @phpstan-ignore-next-line */
-                    if ($this->name === \App\Models\Role::SUPERADMIN) {
-                        return true;
-                    }
-                    return false;
-                })
+                ->readonly()
                 ->rules(['required', 'string', 'max:125'])
                 ->creationRules('unique:' . config('permission.table_names.roles'))
                 ->updateRules('unique:' . config('permission.table_names.roles') . ',name,{{resourceId}}'),

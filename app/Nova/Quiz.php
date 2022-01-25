@@ -2,17 +2,17 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\MorphMany;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Hidden;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SLASH2NL\NovaBackButton\NovaBackButton;
 
-class Exam extends Resource
+class Quiz extends Resource
 {
     public static $displayInNavigation = false;
     /**
@@ -20,7 +20,7 @@ class Exam extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\Exam::class;
+    public static $model = \App\Models\Quiz::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -36,7 +36,8 @@ class Exam extends Resource
      */
     public static $search = [
         'id',
-        'name'
+        'name',
+        'created_at'
     ];
 
     /**
@@ -54,7 +55,8 @@ class Exam extends Resource
             Text::make('Name')
                 ->rules(['required']),
 
-            BelongsTo::make('Module', 'module', Module::class)->exceptOnForms(),
+            BelongsTo::make('Module', 'module', Module::class)
+                ->exceptOnForms(),
 
             BelongsTo::make('Instructor', 'user', User::class)
                 ->exceptOnForms(),

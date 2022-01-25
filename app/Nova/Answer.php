@@ -3,31 +3,37 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\MorphMany;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use SLASH2NL\NovaBackButton\NovaBackButton;
 
-class Exam extends Resource
+class Answer extends Resource
 {
     public static $displayInNavigation = false;
+
+    public function authorizedToView(Request $request)
+    {
+        return false;
+    }
+
+    public static function redirectAfterCreate(NovaRequest $request, $resource)
+    {
+        return '/resources/questions/' . $request->viaResourceId;
+    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Exam::class;
+    public static $model = \App\Models\Answer::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -36,7 +42,7 @@ class Exam extends Resource
      */
     public static $search = [
         'id',
-        'name'
+        'answer',
     ];
 
     /**
@@ -48,24 +54,15 @@ class Exam extends Resource
     public function fields(Request $request)
     {
         return [
-            Date::make('Date', 'created_at')
-                ->exceptOnForms(),
-
-            Text::make('Name')
-                ->rules(['required']),
-
-            BelongsTo::make('Module', 'module', Module::class)->exceptOnForms(),
-
-            BelongsTo::make('Instructor', 'user', User::class)
-                ->exceptOnForms(),
-
-            Hidden::make('user_id')
-                ->default(fn () => auth()->id()),
-
-            Hidden::make('module_id')
-                ->default(fn () => request()->viaResourceId),
-
-            MorphMany::make('Questions', 'questions', Question::class),
+            Select::make('Type')
+                ->default(fn () => (static::$model)::TYPE_CORRECT)
+                ->options([
+                    (static::$model)::TYPE_CORRECT => (static::$model)::TYPE_CORRECT,
+                    (static::$model)::TYPE_WRONG => (static::$model)::TYPE_WRONG,
+                ]),
+            Text::make('Answer')
+                ->rules(['required'])
+                ->sortable(),
         ];
     }
 
@@ -77,12 +74,7 @@ class Exam extends Resource
      */
     public function cards(Request $request)
     {
-        $moduleId = (self::$model)::find($request->resourceId)->module_id;
-        return [
-            (new NovaBackButton())
-                ->url("/resources/modules/$moduleId")
-                ->onlyOnDetail(),
-        ];
+        return [];
     }
 
     /**

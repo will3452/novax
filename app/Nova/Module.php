@@ -66,6 +66,8 @@ class Module extends Resource
                 ]),
             Hidden::make('user_id')
                 ->default(fn () => auth()->id()),
+            HasMany::make('Activities', 'activities', Activity::class),
+            HasMany::make('Quizzes', 'quizzes', Quiz::class),
             HasMany::make('Exams', 'exams', Exam::class),
         ];
     }
@@ -78,8 +80,10 @@ class Module extends Resource
      */
     public function cards(Request $request)
     {
+        $courseId = optional((static::$model)::find($request->resourceId))->course_id;
         return [
             (new NovaBackButton())
+                ->url('/resources/courses/' . $courseId)
                 ->onlyOnDetail(),
         ];
     }

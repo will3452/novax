@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Exam extends Model
+class Activity extends Model
 {
-    use HasFactory, HasQuestions;
+    use HasFactory;
+
     protected $fillable = [
         'module_id',
         'name',

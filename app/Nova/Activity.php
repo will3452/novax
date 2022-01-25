@@ -2,17 +2,16 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\MorphMany;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Hidden;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SLASH2NL\NovaBackButton\NovaBackButton;
 
-class Exam extends Resource
+class Activity extends Resource
 {
     public static $displayInNavigation = false;
     /**
@@ -20,14 +19,14 @@ class Exam extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\Exam::class;
+    public static $model = \App\Models\Activity::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -36,7 +35,6 @@ class Exam extends Resource
      */
     public static $search = [
         'id',
-        'name'
     ];
 
     /**
@@ -51,7 +49,7 @@ class Exam extends Resource
             Date::make('Date', 'created_at')
                 ->exceptOnForms(),
 
-            Text::make('Name')
+            Text::make('Instructions / Descriptions', 'name')
                 ->rules(['required']),
 
             BelongsTo::make('Module', 'module', Module::class)->exceptOnForms(),
@@ -64,8 +62,6 @@ class Exam extends Resource
 
             Hidden::make('module_id')
                 ->default(fn () => request()->viaResourceId),
-
-            MorphMany::make('Questions', 'questions', Question::class),
         ];
     }
 
@@ -77,10 +73,8 @@ class Exam extends Resource
      */
     public function cards(Request $request)
     {
-        $moduleId = (self::$model)::find($request->resourceId)->module_id;
         return [
             (new NovaBackButton())
-                ->url("/resources/modules/$moduleId")
                 ->onlyOnDetail(),
         ];
     }

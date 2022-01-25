@@ -2,17 +2,17 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\Hidden;
+use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\MorphMany;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\MorphTo;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SLASH2NL\NovaBackButton\NovaBackButton;
 
-class Exam extends Resource
+class Question extends Resource
 {
     public static $displayInNavigation = false;
     /**
@@ -20,14 +20,14 @@ class Exam extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\Exam::class;
+    public static $model = \App\Models\Question::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -36,7 +36,6 @@ class Exam extends Resource
      */
     public static $search = [
         'id',
-        'name'
     ];
 
     /**
@@ -48,24 +47,20 @@ class Exam extends Resource
     public function fields(Request $request)
     {
         return [
-            Date::make('Date', 'created_at')
-                ->exceptOnForms(),
+            MorphTo::make('Questionable')
+                ->exceptOnForms()
+                ->types([
+                    Exam::class,
+                    Quiz::class,
+                ]),
+            Text::make('Question', fn () => Str::limit($this->question, 100))
+                ->onlyOnIndex(),
+            Textarea::make('Question')
+                ->alwaysShow()
+                ->rules(['required', 'max:250'])
+                ->help('Maximum of 250 characters only.'),
 
-            Text::make('Name')
-                ->rules(['required']),
-
-            BelongsTo::make('Module', 'module', Module::class)->exceptOnForms(),
-
-            BelongsTo::make('Instructor', 'user', User::class)
-                ->exceptOnForms(),
-
-            Hidden::make('user_id')
-                ->default(fn () => auth()->id()),
-
-            Hidden::make('module_id')
-                ->default(fn () => request()->viaResourceId),
-
-            MorphMany::make('Questions', 'questions', Question::class),
+            HasMany::make('Choices', 'answers', Answer::class),
         ];
     }
 
@@ -77,10 +72,12 @@ class Exam extends Resource
      */
     public function cards(Request $request)
     {
-        $moduleId = (self::$model)::find($request->resourceId)->module_id;
+        $type = str_replace('Models', 'Nova', (static::$model)::find($request->resourceId)->questionable_type);
+        $id = (static::$model)::find($request->resourceId)->questionable_id;
+        $novaClass = ($type)::uriKey();
         return [
             (new NovaBackButton())
-                ->url("/resources/modules/$moduleId")
+                ->url("/resources/$novaClass/$id")
                 ->onlyOnDetail(),
         ];
     }

@@ -40,4 +40,14 @@ class Module extends Model
     {
         return $this->hasMany(Exam::class);
     }
+
+    public function quizzes()
+    {
+        return $this->hasMany(Quiz::class);
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
 }
