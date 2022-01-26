@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Models\Module as ModelsModule;
 use App\Nova\Actions\ChangeModuleStatus;
+use Elezerk\PdfViewer\PdfViewer;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
@@ -13,6 +14,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SLASH2NL\NovaBackButton\NovaBackButton;
 
@@ -53,7 +55,12 @@ class Module extends Resource
         return [
             Date::make('Date', 'created_at')
                 ->exceptOnForms(),
+            Text::make('Document Material', fn () =>
+                    "<a href='/view-module-document/$this->id' target='_blank' class='btn p-2 btn-xs btn-primary'>View</a>"
+                )->onlyOnDetail()
+                ->asHtml(),
             File::make('Material')
+                ->onlyOnForms()
                 ->disableDownload()
                 ->rules(['required']),
             BelongsTo::make('Course', 'course', Course::class),
@@ -64,6 +71,7 @@ class Module extends Resource
                     ModelsModule::STATUS_DISABLED => 'danger',
                     ModelsModule::STATUS_ENABLE => 'success',
                 ]),
+
             Hidden::make('user_id')
                 ->default(fn () => auth()->id()),
             HasMany::make('Activities', 'activities', Activity::class),

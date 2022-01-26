@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Contracts\Attemptable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +18,10 @@ class Quiz extends Model
         'name',
         'status',
         'user_id',//instructor
+    ];
+
+    protected $with = [
+        'questions',
     ];
 
     public function user()

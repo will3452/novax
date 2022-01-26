@@ -4,8 +4,12 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use App\Nova\Actions\TakeNow;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
+use App\Nova\Actions\CloseNow;
+use Laravel\Nova\Fields\Badge;
+use App\Nova\Actions\OpenAgain;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphMany;
@@ -65,6 +69,11 @@ class Quiz extends Resource
             Hidden::make('user_id')
                 ->default(fn () => auth()->id()),
 
+            Badge::make('Status')
+                ->map([
+                    (self::$model)::STATUS_OPEN => 'success',
+                    (self::$model)::STATUS_CLOSED => 'danger',
+                ]),
             Hidden::make('module_id')
                 ->default(fn () => request()->viaResourceId),
 
@@ -118,6 +127,29 @@ class Quiz extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new TakeNow())
+                ->canSee(fn () =>
+                    auth()->user()->hasRole(\App\Models\User::TYPE_STUDENT) &&
+                    (
+                        $this->isOpen() ||
+                        $request->has('action') ||
+                        optional($this->attempts()->latest()->first())->isInProgress()
+                    )
+                )
+                ->showOnTableRow(),
+            (new CloseNow())
+            ->showOnTableRow()
+            ->canSee(fn ($request) =>
+                ($this->isOpen() || $request->has('action')) &&
+                    ! auth()->user()->hasRole(\App\Models\User::TYPE_STUDENT)
+                ),
+            (new OpenAgain())
+                ->showOnTableRow()
+                ->canSee(fn ($request) =>
+                    (! $this->isOpen() || $request->has('action')) &&
+                     ! auth()->user()->hasRole(\App\Models\User::TYPE_STUDENT)
+            ),
+        ];
     }
 }

@@ -8,4 +8,9 @@ trait HasQuestions
     {
         return $this->morphMany(Question::class, 'questionable');
     }
+
+    public function attempts()
+    {
+        return $this->morphMany(Attempt::class, 'attemptable');
+    }
 }
