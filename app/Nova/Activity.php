@@ -6,13 +6,20 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
+use App\Nova\Actions\CloseNow;
+use App\Nova\Actions\OpenAgain;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Actions\SubmitActivity;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SLASH2NL\NovaBackButton\NovaBackButton;
 
 class Activity extends Resource
 {
+    use CannotModifyByStudentTrait;
+
     public static $displayInNavigation = false;
     /**
      * The model the resource corresponds to.
@@ -52,10 +59,19 @@ class Activity extends Resource
             Text::make('Instructions / Descriptions', 'name')
                 ->rules(['required']),
 
-            BelongsTo::make('Module', 'module', Module::class)->exceptOnForms(),
+            BelongsTo::make('Module', 'module', Module::class)
+                ->onlyOnIndex(),
 
             BelongsTo::make('Instructor', 'user', User::class)
                 ->exceptOnForms(),
+
+            Badge::make('Status')
+                ->map([
+                    (self::$model)::STATUS_OPEN => 'success',
+                    (self::$model)::STATUS_CLOSED => 'danger',
+                ]),
+
+            HasMany::make('Submissions', 'submissions', UserActivity::class),
 
             Hidden::make('user_id')
                 ->default(fn () => auth()->id()),
@@ -109,6 +125,28 @@ class Activity extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new CloseNow())
+                ->showOnTableRow()
+                ->canSee(fn ($request) =>
+                    ($this->isOpen() || $request->has('action')) &&
+                     ! auth()->user()->hasRole(\App\Models\User::TYPE_STUDENT)
+                ),
+            (new OpenAgain())
+                ->showOnTableRow()
+                ->canSee(fn ($request) =>
+                    (! $this->isOpen() || $request->has('action')) &&
+                     ! auth()->user()->hasRole(\App\Models\User::TYPE_STUDENT)
+            ),
+            (new SubmitActivity())
+                ->showOnTableRow()
+                ->canSee(fn ($request) =>
+                    ($this->isOpen() || $request->has('action')) &&
+                    auth()->user()->hasRole(\App\Models\User::TYPE_STUDENT) &&
+                    ! (\App\Models\UserActivity::whereActivityId($this->id)
+                        ->whereUserId(auth()->id())
+                        ->count())
+                ),
+        ];
     }
 }

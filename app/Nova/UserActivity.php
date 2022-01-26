@@ -2,39 +2,52 @@
 
 namespace App\Nova;
 
-use App\Models\Study;
-use App\Nova\Filters\TypeOfUser;
+use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\Image;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class UserActivity extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
+    use CannotModifyByStudentTrait;
+
+    public static function authorizedToCreate(Request $request)
     {
-        return $query->where('email', '!=', 'super@admin.com');
+        return false;
     }
 
-    public static $group = 'Data';
+    public function authorizedToView(Request $request)
+    {
+        return false;
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (auth()->user()->hasRole(\App\Models\User::TYPE_STUDENT)) {
+            return $query->whereUserId(auth()->id());
+        }
+        return $query;
+    }
+
+    public static $displayInNavigation = false;
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\UserActivity::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -42,7 +55,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
     ];
 
     /**
@@ -53,38 +66,21 @@ class User extends Resource
      */
     public function fields(Request $request)
     {
+        $file = "/" . str_replace('public', 'storage', $this->file);
         return [
-            Select::make('Account Type', 'type')
-                ->options(
-                    (static::$model)::TYPE_OPTIONS,
-                )->rules(['required']),
-
-            Image::make('School picture', 'picture'),
-
-            Select::make('Study')
-                ->options(Study::get()->pluck('name', 'name'))
-                ->rules(['required']),
-
-            Text::make('School Id')
+            DateTime::make('Time & Date', 'created_at')
+                ->exceptOnForms()
+                ->sortable(),
+            BelongsTo::make('Submitted By', 'user', User::class)
+                ->readonly(),
+            BelongsTo::make('Activity', 'activity', Activity::class),
+            Text::make('Submitted File', fn () =>
+                "<a href='$file' target='_blank' class='btn pt-1 btn-xs  btn-primary'> view </a>"
+            )->asHtml(),
+            Text::make('Score')
                 ->sortable()
-                ->rules(['required', 'unique:users,school_id,{{resourceId}}']),
-
-            Text::make('Name')
-                    ->sortable()
-                    ->rules('required', 'max:255'),
-
-            Text::make('Email')
-                ->hideFromIndex()
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
-
+                ->default(fn () => 0),
+            Text::make('Remark'),
         ];
     }
 
@@ -107,9 +103,7 @@ class User extends Resource
      */
     public function filters(Request $request)
     {
-        return [
-            (new TypeOfUser())
-        ];
+        return [];
     }
 
     /**

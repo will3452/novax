@@ -20,8 +20,16 @@ class Course extends Resource
 {
     public static function indexQuery(NovaRequest $request, $query)
     {
-        // $course
-        // return $query->whereUserId();
+        if (auth()->user()->hasRole(User::TYPE_INSTRUCTOR)) {
+            return $query->whereUserId(auth()->id());
+        }
+
+        if (auth()->user()->hasRole(User::TYPE_STUDENT)) {
+            $userCourse = \App\Models\UserCourse::whereUserId(auth()->id())->get()->pluck('course_id');
+            return $query->whereIn('id', $userCourse);
+        }
+
+        return $query;
     }
     /**
      * The model the resource corresponds to.

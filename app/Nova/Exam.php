@@ -14,6 +14,7 @@ use SLASH2NL\NovaBackButton\NovaBackButton;
 
 class Exam extends Resource
 {
+    use CannotModifyByStudentTrait, CannotViewByStudentTrait;
     public static $displayInNavigation = false;
     /**
      * The model the resource corresponds to.

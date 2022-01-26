@@ -12,6 +12,10 @@ class UserCourse extends Resource
 {
     public static $displayInNavigation = false;
 
+    public function authorizedToView(Request $request)
+    {
+        return false;
+    }
 
     public static function authorizedToCreate(Request $request)
     {
@@ -21,6 +25,11 @@ class UserCourse extends Resource
     public function authorizedToUpdate(Request $request)
     {
         return false;
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return ! auth()->user()->hasRole(\App\Models\User::TYPE_STUDENT);
     }
     /**
      * The model the resource corresponds to.

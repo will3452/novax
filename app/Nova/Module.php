@@ -119,7 +119,9 @@ class Module extends Resource
     public function actions(Request $request)
     {
         return [
-            (new ChangeModuleStatus())->onlyOnDetail(),
+            (new ChangeModuleStatus())
+                ->canSee(fn ($request) => ! auth()->user()->hasRole(\App\Models\User::TYPE_STUDENT))
+                ->onlyOnDetail(),
         ];
     }
 }

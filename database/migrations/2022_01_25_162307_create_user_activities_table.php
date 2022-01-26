@@ -1,11 +1,10 @@
 <?php
 
-use App\Models\Quiz;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuizzesTable extends Migration
+class CreateUserActivitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,15 +13,15 @@ class CreateQuizzesTable extends Migration
      */
     public function up()
     {
-        Schema::create('quizzes', function (Blueprint $table) {
+        Schema::create('user_activities', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('status')->default(Quiz::STATUS_OPEN);
             $table->foreignId('user_id')
-                ->nullable()
-                ->onDelete('set null');
-            $table->foreignId('module_id')
                 ->onDelete('cascade');
+            $table->foreignId('activity_id')
+                ->onDelete('cascade');
+            $table->string('remark')->nullable();
+            $table->string('score')->nullable();
+            $table->string('file');
             $table->timestamps();
         });
     }
@@ -34,6 +33,6 @@ class CreateQuizzesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quizzes');
+        Schema::dropIfExists('user_activities');
     }
 }

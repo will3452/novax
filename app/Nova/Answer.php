@@ -2,20 +2,17 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Select;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Answer extends Resource
 {
-    public static $displayInNavigation = false;
+    use CannotModifyByStudentTrait, CannotViewByStudentTrait;
 
-    public function authorizedToView(Request $request)
-    {
-        return false;
-    }
+    public static $displayInNavigation = false;
 
     public static function redirectAfterCreate(NovaRequest $request, $resource)
     {

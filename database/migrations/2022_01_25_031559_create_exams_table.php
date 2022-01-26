@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Exam;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,6 +17,7 @@ class CreateExamsTable extends Migration
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('status')->default(Exam::STATUS_OPEN);
             $table->foreignId('user_id')
                 ->nullable()
                 ->onDelete('set null');
