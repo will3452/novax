@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions;
 
+use App\Helpers\ModelHelper;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -23,7 +24,9 @@ class TakeNow extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
          foreach ($models as $model) {
-             return Action::redirect('/take-quiz/' . $model->id);
+             $type = ModelHelper::extract(get_class($model));
+             $id = $model->id;
+             return Action::redirect("/take-quiz?model=$type&id=$id");
          }
     }
 

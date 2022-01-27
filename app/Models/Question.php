@@ -15,6 +15,10 @@ class Question extends Model
         'type', // nullable just incase
     ];
 
+    protected $with = [
+        'answers',
+    ];
+
     public function questionable()
     {
         return $this->morphTo();

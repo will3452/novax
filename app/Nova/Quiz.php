@@ -74,9 +74,33 @@ class Quiz extends Resource
                     (self::$model)::STATUS_OPEN => 'success',
                     (self::$model)::STATUS_CLOSED => 'danger',
                 ]),
+
+            Text::make('Score', fn () =>
+            \App\Models\Attempt::whereUserId(auth()->id())
+                        ->whereAttemptableType(self::$model)
+                        ->whereAttemptableId($this->id)
+                        ->latest()
+                        ->first()->score . "/" .
+                        \App\Models\Attempt::whereUserId(auth()->id())
+                        ->whereAttemptableType(self::$model)
+                        ->whereAttemptableId($this->id)
+                        ->latest()
+                        ->first()->number_of_items
+            )
+                ->canSee(fn () =>
+                    optional(
+                            \App\Models\Attempt::whereUserId(auth()->id())
+                            ->whereAttemptableType(self::$model)
+                            ->whereAttemptableId($this->id)
+                            ->latest()
+                            ->first()
+                        )->isDone() &&
+                        auth()->user()->hasRole(\App\Models\User::TYPE_STUDENT)
+                ),
+
             Hidden::make('module_id')
                 ->default(fn () => request()->viaResourceId),
-
+            MorphMany::make('Results', 'attempts', Attempt::class),
             MorphMany::make('Questions', 'questions', Question::class),
         ];
     }
@@ -132,9 +156,11 @@ class Quiz extends Resource
                 ->canSee(fn () =>
                     auth()->user()->hasRole(\App\Models\User::TYPE_STUDENT) &&
                     (
-                        $this->isOpen() ||
-                        $request->has('action') ||
-                        optional($this->attempts()->latest()->first())->isInProgress()
+                        (
+                            $this->isOpen() ||
+                            $request->has('action')
+                        ) &&
+                        ! optional($this->attempts()->latest()->first())->isDone()
                     )
                 )
                 ->showOnTableRow(),

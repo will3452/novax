@@ -11,7 +11,7 @@ class Attempt extends Model
     protected $fillable = [
         'attemptable_id',
         'attemptable_type',
-        'user_id',
+        'user_id', // student
         'status',
         'score',
         'number_of_items',
@@ -31,9 +31,29 @@ class Attempt extends Model
         return $this->morphTo();
     }
 
+    public function answers()
+    {
+        return $this->hasMany(AttemptAnswer::class);
+    }
+
     //helper
     public function isInProgress()
     {
         return $this->status === self::STATUS_IN_PROGRESS;
+    }
+
+    public function isDone()
+    {
+        return $this->status === self::STATUS_DONE;
+    }
+
+    public function markAs($type, $score = 0, $items = 0)
+    {
+         $this->update([
+            'status' => $type,
+            'score' => $score,
+            'number_of_items' => $items,
+        ]);
+        return $type;
     }
 }

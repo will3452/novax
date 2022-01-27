@@ -2,13 +2,17 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\MorphMany;
+use Illuminate\Http\Request;
+use App\Nova\Actions\TakeNow;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
+use App\Nova\Actions\CloseNow;
+use Laravel\Nova\Fields\Badge;
+use App\Nova\Actions\OpenAgain;
+use Laravel\Nova\Fields\Hidden;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SLASH2NL\NovaBackButton\NovaBackButton;
 
@@ -60,12 +64,42 @@ class Exam extends Resource
             BelongsTo::make('Instructor', 'user', User::class)
                 ->exceptOnForms(),
 
+            Badge::make('Status')
+                ->map([
+                    (self::$model)::STATUS_OPEN => 'success',
+                    (self::$model)::STATUS_CLOSED => 'danger',
+                ]),
+
+            Text::make('Score', fn () =>
+                \App\Models\Attempt::whereUserId(auth()->id())
+                            ->whereAttemptableType(self::$model)
+                            ->whereAttemptableId($this->id)
+                            ->latest()
+                            ->first()->score ?? 0 . "/" .
+                            \App\Models\Attempt::whereUserId(auth()->id())
+                            ->whereAttemptableType(self::$model)
+                            ->whereAttemptableId($this->id)
+                            ->latest()
+                            ->first()->number_of_items
+                )
+                    ->canSee(fn () =>
+                        optional(
+                            \App\Models\Attempt::whereUserId(auth()->id())
+                            ->whereAttemptableType(self::$model)
+                            ->whereAttemptableId($this->id)
+                            ->latest()
+                            ->first()
+                        )->isDone() &&
+                            auth()->user()->hasRole(\App\Models\User::TYPE_STUDENT)
+                    ),
+
             Hidden::make('user_id')
                 ->default(fn () => auth()->id()),
 
             Hidden::make('module_id')
                 ->default(fn () => request()->viaResourceId),
 
+            MorphMany::make('Results', 'attempts', Attempt::class),
             MorphMany::make('Questions', 'questions', Question::class),
         ];
     }
@@ -116,6 +150,31 @@ class Exam extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new TakeNow())
+                ->canSee(fn () =>
+                    auth()->user()->hasRole(\App\Models\User::TYPE_STUDENT) &&
+                    (
+                        (
+                            $this->isOpen() ||
+                            $request->has('action')
+                        ) &&
+                        ! optional($this->attempts()->latest()->first())->isDone()
+                    )
+                )
+                ->showOnTableRow(),
+            (new CloseNow())
+            ->showOnTableRow()
+            ->canSee(fn ($request) =>
+                ($this->isOpen() || $request->has('action')) &&
+                    ! auth()->user()->hasRole(\App\Models\User::TYPE_STUDENT)
+                ),
+            (new OpenAgain())
+                ->showOnTableRow()
+                ->canSee(fn ($request) =>
+                    (! $this->isOpen() || $request->has('action')) &&
+                     ! auth()->user()->hasRole(\App\Models\User::TYPE_STUDENT)
+            ),
+        ];
     }
 }

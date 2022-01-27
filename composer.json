@@ -15,10 +15,6 @@
         {
             "type": "path",
             "url": "./nova-components/NovaPermissionsField"
-        },
-        {
-            "type": "path",
-            "url": "./nova-components/PdfViewer"
         }
     ],
     "require": {
@@ -37,8 +33,7 @@
         "slash2nl/nova-back-button": "^1.0",
         "spatie/laravel-backup": "^6.16",
         "spatie/laravel-permission": "^5.3",
-        "spatie/nova-backup-tool": "^4.1",
-        "elezerk/pdf-viewer": "*"
+        "spatie/nova-backup-tool": "^4.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
