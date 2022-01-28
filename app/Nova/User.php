@@ -4,20 +4,20 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Country;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\HasOne;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'super@admin.com');
-    }
-
-    public static $group = 'Data';
+    public static $group = 'user Management';
     /**
      * The model the resource corresponds to.
      *
@@ -30,7 +30,10 @@ class User extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public function title()
+    {
+        return "$this->first_name, $this->last_name";
+    }
 
     /**
      * The columns that should be searched.
@@ -38,7 +41,12 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'first_name',
+        'last_name',
+        'middle_name',
+        'user_name',
+        'email',
     ];
 
     /**
@@ -50,11 +58,66 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
-            Text::make('Name')
+            Text::make('First Name')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:32'),
+
+            Text::make('Last Name')
+                ->sortable()
+                ->rules('required', 'max:32'),
+
+            Text::make('Middle Name')
+                ->sortable()
+                ->rules('required', 'max:32'),
+
+            Text::make('Username', 'user_name')
+                ->sortable()
+                ->rules('required', 'max:20'),
+
+            Date::make('Birth Date')
+                ->rules(['required']),
+
+            Select::make('Gender')
+                ->options([
+                    (static::$model)::GENDER_FEMALE => (static::$model)::GENDER_FEMALE,
+                    (static::$model)::GENDER_MALE => (static::$model)::GENDER_MALE,
+                    (static::$model)::GENDER_LGBT => (static::$model)::GENDER_LGBT,
+                ])->rules(['required']),
+
+            Select::make('Sex')
+                ->options([
+                    (static::$model)::GENDER_FEMALE => (static::$model)::GENDER_FEMALE,
+                    (static::$model)::GENDER_MALE => (static::$model)::GENDER_MALE,
+                    (static::$model)::GENDER_LGBT => (static::$model)::GENDER_LGBT,
+                ])->rules(['required']),
+
+            Text::make('Address', 'address')
+                ->sortable()
+                ->rules('required', 'max:100'),
+
+            Country::make('Country')
+                ->sortable()
+                ->searchable()
+                ->rules('required'),
+
+            Text::make('City')
+                ->rules(['required']),
+
+            Image::make('Picture')
+                ->rules(['required']),
+
+            Select::make('Account Type')
+                ->options([
+                    (static::$model)::ACCOUNT_FREE => (static::$model)::ACCOUNT_FREE,
+                    (static::$model)::ACCOUNT_PREMIUM => (static::$model)::ACCOUNT_PREMIUM,
+                ])->rules(['required']),
+
+            Select::make('Role')
+                ->options([
+                        (static::$model)::ROLE_NORMAL => (static::$model)::ROLE_NORMAL,
+                        (static::$model)::ROLE_AUTHOR => (static::$model)::ROLE_AUTHOR,
+                        (static::$model)::ROLE_ARTIST => (static::$model)::ROLE_ARTIST,
+                ])->rules(['required']),
 
             Text::make('Email')
                 ->sortable()
@@ -67,7 +130,7 @@ class User extends Resource
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
 
-            MorphToMany::make('Roles', 'roles', Role::class),
+            HasOne::make('AAN', 'aan'),
         ];
     }
 

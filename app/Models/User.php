@@ -19,10 +19,44 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'middle_name',
+        'user_name',
+        'gender',
+        'sex',
+        'address',
+        'country',
+        'city',
+        'picture',
+        'account_type',
+        'role',
+        'birth_date',
         'email',
         'password',
     ];
+
+    const ACCOUNT_PREMIUM = 'Premium';
+    const ACCOUNT_FREE = 'Free';
+
+    const ROLE_AUTHOR = 'Author';
+    const ROLE_NORMAL = 'Normal';
+    const ROLE_ARTIST = 'Artist';
+
+    const GENDER_MALE = 'Male';
+    const GENDER_FEMALE = 'Female';
+    const GENDER_LGBT = 'LGBT';
+
+    public function aan()
+    {
+        return $this->hasOne(Aan::class);
+    }
+
+    public function interest()
+    {
+        return $this->hasOne(Interest::class);
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -41,5 +75,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'birth_date' => 'datetime',
     ];
 }

@@ -1,26 +1,20 @@
 <?php
 
+use App\Models\Club;
+use Inertia\Inertia;
+use App\Models\Course;
+use App\Models\College;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RegistrationController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', fn () => 'welcome to the app');
 
-Route::get('/register', [RegisterController::class, 'registrationPage']);
-Route::post('/register', [RegisterController::class, 'postRegister']);
+Route::get('/register', [RegisterController::class, 'registerScholar']);
+
+Route::post('/register', [RegisterController::class, 'registerScholarPost']);
 
 
 //artisan helper
@@ -28,3 +22,17 @@ Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);
     return $result;
 });
+
+
+//ajax requests
+Route::get('/colleges', fn () =>
+    College::get()
+);
+
+Route::get('/courses', fn () =>
+    Course::whereCollegeId(request()->college_id)->get()
+);
+
+Route::get('/clubs', fn () =>
+    Club::whereCollegeId(request()->college_id)->get()
+);

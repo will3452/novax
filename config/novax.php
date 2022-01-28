@@ -6,5 +6,5 @@ return [
     'time_enabled' => false,
     'back_up_enabled' => false,
     'setting_enabled' => true,
-    'profile_enabled' => true,
+    'profile_enabled' => false,
 ];

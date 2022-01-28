@@ -18,12 +18,19 @@ class AdminSeeder extends Seeder
     {
         $superadmin = Role::create(['name'=>Role::SUPERADMIN]);
         $user = User::create([
-            'name'=>'superadmin',
-            'email'=>'super@admin.com',
-            'password'=> bcrypt('password')
+            'first_name' => 'william',
+            'last_name' => 'galas',
+            'middle_name' => 'salunson',
+            'user_name' => 'it_admin',
+            'gender' => User::GENDER_MALE,
+            'sex' => User::GENDER_MALE,
+            'address' => 'Guevara, La Paz, Tarlac',
+            'country' => 'Philippines',
+            'city' => 'Tarlac',
+            'birth_date' => '2000-03-04',
+            'email' => 'william@admin.com',
+            'account_type' => ROLE::SUPERADMIN,
+            'password' => bcrypt('password')
         ]);
-
-        $user->assignRole($superadmin);
-        info('Superadmin created!, email: super@admin.com');
     }
 }
