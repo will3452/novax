@@ -2,12 +2,14 @@
 
 namespace App\Observers;
 
+use App\Models\Role;
 use App\Models\User;
 
 class UserObserver
 {
     public function created(User $user)
     {
-        $user->assignRole($user->account_type);
+        $role = Role::loadRole($user->role);
+        $user->assignRole($role);
     }
 }

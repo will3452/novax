@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use Elezerk\LargeFile\LargeFile;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Country;

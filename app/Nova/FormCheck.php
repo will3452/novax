@@ -52,7 +52,7 @@ class FormCheck extends Resource
                 ->rules(['required', 'unique:users']),
             File::make('File')
                 ->help('Maximum of 5mb only.')
-                ->rules(['max:5000']),
+                ->rules(['required','max:5000']),
             Textarea::make('Description')
                 ->alwaysShow()
                 ->help('Maximum of 5 characters.')

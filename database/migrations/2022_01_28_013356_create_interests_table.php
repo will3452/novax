@@ -15,6 +15,10 @@ class CreateInterestsTable extends Migration
     {
         Schema::create('interests', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->onDelete('cascade');
+            $table->foreignId('course_id')->nullable();
+            $table->foreignId('club_id')->nullable();
+            $table->foreignId('college_id')->nullable();
             $table->timestamps();
         });
     }

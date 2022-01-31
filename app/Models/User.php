@@ -12,7 +12,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -57,6 +56,11 @@ class User extends Authenticatable
         return $this->hasOne(Interest::class);
     }
 
+    public function accounts()
+    {
+        return $this->hasMany(Account::class);
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -67,6 +71,12 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    //auto encrypt the password
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
 
     /**
      * The attributes that should be cast.

@@ -1,6 +1,6 @@
 <x-layout>
     <x-header>
-        Scholar Registration
+        <img src="/storage/{{nova_get_setting('logo')}}" alt="" style="width:200px !important;">
     </x-header>
     <x-container>
        <div class="w-11/12 md:w-8/12 mx-auto">
@@ -118,7 +118,10 @@
                     <x-check :check="$check"></x-check>
                 </x-vspace>
              @endforeach
-             <div class="text-right">
+             <div class="flex justify-between w-8/12 ml-auto">
+                <a href="{{Nova::path()}}" class="text-xs underline text-gray-700 font-bold p-2" type="submit">
+                    ALREADY HAVE AN ACOUNT?
+                </a>
                 <button class="bg-purple-900 text-white font-bold p-2" type="submit">
                     REGISTER NOW
                 </button>

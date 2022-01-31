@@ -5,15 +5,11 @@
 @include('nova::auth.partials.header')
 
 <form
-    class="bg-white shadow rounded-lg p-8 max-w-login mx-auto"
+    class="bg-40 shadow rounded-lg p-8 max-w-login mx-auto"
     method="POST"
     action="{{ route('nova.login') }}"
 >
     {{ csrf_field() }}
-
-    @component('nova::auth.partials.heading')
-        {{ __('Welcome Back!') }}
-    @endcomponent
 
     @if ($errors->any())
     <p class="text-center font-semibold text-danger my-3">

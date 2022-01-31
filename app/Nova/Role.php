@@ -16,12 +16,18 @@ class Role extends Resource
         return $query->where('name', '!=', ModelsRole::SUPERADMIN);
     }
 
+    public function authorizedToDelete(Request $request)
+    {
+        $model = self::$model;
+        return ! in_array($this->name, $model::SYSTEM_ROLES);
+    }
+
     public static function availableForNavigation(Request $request)
     {
         return config('novax.role_enabled', false);
     }
 
-    public static $group = 'access Control';
+    public static $group = 'user Management';
     /**
      * The model the resource corresponds to.
      *

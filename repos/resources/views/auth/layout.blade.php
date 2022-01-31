@@ -21,7 +21,7 @@
         <link rel="stylesheet" href="{{ $publicPath }}">
     @endforeach
 </head>
-<body class="bg-40 text-black h-full">
+<body style="background: #16042C;" class=" text-black h-full">
     <div class="h-full">
         <div class="px-view py-view mx-auto">
             @yield('content')
