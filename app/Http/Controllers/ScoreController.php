@@ -44,13 +44,13 @@ class ScoreController extends Controller
             return ErrorHelper::sendError(404);
         }
 
-        $latestScore = Score::where([
+        $highestScore = Score::where([
             'user_id'=>auth()->id(),
             'topic_id'=>$topicId
         ])->orderBy('score', 'desc')->first();
 
         return response([
-            'score'=>$latestScore->score,
+            'score'=>$highestScore->score,
         ], 200);
     }
 }
