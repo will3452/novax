@@ -31,6 +31,10 @@ class ScoreController extends Controller
 
     public function history()
     {
+        $scores = auth()->user()->scores()->latest()->get();
+        foreach ($scores as $score) {
+            $score->created_at = $score->created_at->diffForHumans();
+        }
         return response([
             'history' => auth()->user()->scores()->latest()->get(),
         ]);
