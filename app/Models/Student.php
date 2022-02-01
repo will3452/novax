@@ -20,6 +20,9 @@ class Student extends Model
         'branch_id',
         'mobile_number',
         'email',
+        'guardian',
+        'guardian_mobile_number',
+        'guardian_address',
     ];
 
     protected $casts = [
