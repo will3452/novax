@@ -34,7 +34,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
             Text::make('Footer Text'),
-            Text::make('Sidebar'),
+            Text::make('Sidebar')
+                ->help('to get the value of your desired color, please go to https://colorpicker.me/#0ab23d'),
             Text::make('Primary'),
             Text::make('Primary Dark'),
             Text::make('Primary 70'),
