@@ -29,7 +29,7 @@ class LeadboardController extends Controller
         // ], 200) ;
 
         return [
-            'leaderboard' => User::withSum('scores', 'score')->orderBy('scores_sum_score', 'DESC')->take($limit)->get(),
+            'leaderboard' => User::withSum('scores', 'score')->orderBy('scores_sum_score', 'DESC')->get(),
         ];
     }
 }
