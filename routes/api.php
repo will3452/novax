@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/change-name', function () {
         $newName = request()->newName;
-        auth()->user()->update([
+        $user = auth()->user()->update([
             'name' => $newName,
         ]);
         return $user;
