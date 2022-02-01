@@ -31,7 +31,7 @@ Route::get('/check-time', function () {
     ];
 });
 
-Route::get('/scores', funtion() {
+Route::get('/scores', function() {
     $scores = Score::get();
 
     foreach ($scores as $score) {
