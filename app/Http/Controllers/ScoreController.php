@@ -31,7 +31,9 @@ class ScoreController extends Controller
 
     public function history()
     {
-        return auth()->user()->scores()->latest()->get();
+        return response([
+            'history' => auth()->user()->scores()->latest()->get(),
+        ]);
     }
 
     public function show()
