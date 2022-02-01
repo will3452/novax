@@ -29,3 +29,12 @@ Route::get('/check-time', function () {
         'time_readable' => now()->format('h:i A'),
     ];
 });
+
+Route::get('/scores', funtion() {
+    $scores = Score::get();
+
+    foreach ($scores as $score) {
+        $score->created_at = $score->created_at->diffForHumans();
+    }
+    return $scores;
+});
