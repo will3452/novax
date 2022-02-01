@@ -36,7 +36,7 @@ class ScoreController extends Controller
             $score->created_at = $score->created_at->diffForHumans();
         }
         return response([
-            'history' => auth()->user()->scores()->latest()->get(),
+            'history' => $scores,
         ]);
     }
 
