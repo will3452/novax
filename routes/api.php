@@ -23,6 +23,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/score', [ScoreController::class, 'show']);
 
+    Route::get('/sample', function () {
+        return 'sample';
+    });
+
     Route::get('/leaderboard', [LeadboardController::class, 'getLeaderboard']);
     // end of private access
 });
