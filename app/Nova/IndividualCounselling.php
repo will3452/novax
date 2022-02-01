@@ -100,6 +100,7 @@ class IndividualCounselling extends Resource
                     ModelsCounselling::STATUS_SAVED => 'info',
                     ModelsCounselling::STATUS_SOLVED => 'success',
                     ModelsCounselling::STATUS_RESCHEDULED => 'danger',
+                    ModelsCounselling::STATUS_TO_FOLLOW => 'warning',
                 ]),
 
             Trix::make('Background of the case', 'case')
