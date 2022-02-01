@@ -28,7 +28,7 @@ class GroupCounselling extends Resource
 
     public function authorizedToDetach(NovaRequest $request, $model, $relationship)
     {
-        return ModelsCounselling::find($request->viaResourceId)->status === ModelsCounselling::STATUS_DRAFTED;
+        return ModelsCounselling::find($request->viaResourceId)->status !== ModelsCounselling::STATUS_SOLVED;
     }
 
     public function authorizedToUpdate(Request $request)
@@ -36,7 +36,7 @@ class GroupCounselling extends Resource
         if ($request->has('action')) {
             return true;
         }
-        return $this->status === ModelsCounselling::STATUS_DRAFTED;
+        return $this->status !== ModelsCounselling::STATUS_SOLVED;
     }
 
 

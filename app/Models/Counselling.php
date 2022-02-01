@@ -14,7 +14,7 @@ class Counselling extends Model
     const STATUS_SAVED = 'Saved';
     const STATUS_SOLVED = 'Solved';
     const STATUS_RESCHEDULED = 'Re-scheduled';
-
+    const STATS_TO_FOLLOW = 'To follow Up';
     const TYPE_GROUP = 'group';
     const TYPE_INDIVIDUAL = 'individual';
 
