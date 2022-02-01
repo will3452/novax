@@ -16,22 +16,10 @@ class IndividualCounselling extends Trend
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->countByDays($request, ModelsIndividualCounselling::class);
+        return $this->result(ModelsIndividualCounselling::count());
     }
 
-    /**
-     * Get the ranges available for the metric.
-     *
-     * @return array
-     */
-    public function ranges()
-    {
-        return [
-            30 => __('30 Days'),
-            60 => __('60 Days'),
-            90 => __('90 Days'),
-        ];
-    }
+
 
     /**
      * Determine for how many minutes the metric should be cached.

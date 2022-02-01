@@ -16,21 +16,7 @@ class GroupCounselling extends Trend
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->countByDays($request, ModelsGroupCounselling::class);
-    }
-
-    /**
-     * Get the ranges available for the metric.
-     *
-     * @return array
-     */
-    public function ranges()
-    {
-        return [
-            30 => __('30 Days'),
-            60 => __('60 Days'),
-            90 => __('90 Days'),
-        ];
+        return $this->result(ModelsGroupCounselling::count());
     }
 
     /**
