@@ -21,3 +21,10 @@ Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);
     return $result;
 });
+
+Route::get('/check-time', function () {
+    return [
+        'timezone' => config('app.timezone'),
+        'time_now' => now(),
+    ];
+});
