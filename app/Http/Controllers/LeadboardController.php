@@ -12,7 +12,7 @@ class LeadboardController extends Controller
     public function getLeaderboard()
     {
         return [
-            'leaderboard' => User::withAvg('scores', 'score')->orderBy('scores_avg_score', 'DESC')->get(),
+            'leaderboard' => User::withAvg('scores', 'score')->withCount('scores')->orderBy('scores_avg_score', 'DESC')->get(),
         ];
     }
 }
