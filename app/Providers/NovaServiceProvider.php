@@ -34,15 +34,15 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
             Text::make('Footer Text'),
-            Swatches::make('Sidebar'),
-            Swatches::make('Primary'),
-            Swatches::make('Primary Dark'),
-            Swatches::make('Primary 70'),
-            Swatches::make('Primary 50'),
-            Swatches::make('Primary 30'),
-            Swatches::make('Primary 10'),
-            Swatches::make('logo', 'logo_color'),
-            Swatches::make('sidebar icon')
+            Text::make('Sidebar'),
+            Text::make('Primary'),
+            Text::make('Primary Dark'),
+            Text::make('Primary 70'),
+            Text::make('Primary 50'),
+            Text::make('Primary 30'),
+            Text::make('Primary 10'),
+            Text::make('logo', 'logo_color'),
+            Text::make('sidebar icon'),
         ]);
     }
 
