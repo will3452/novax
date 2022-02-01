@@ -16,7 +16,7 @@ class LeadboardController extends Controller
         $limit= request()->get('limit') ?? 10;
         $users = null;
         if ($type != 'topic') {
-            $users = User::withAvg('scores', 'score')->orderBy('scores_sum_score', 'DESC')->take($limit)->get();
+            $users = User::withSum('scores', 'score')->orderBy('scores_sum_score', 'DESC')->take($limit)->get();
         } else {
             if ($topicId == null) {
                 return ErrorHelper::sendError(404);
