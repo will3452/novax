@@ -42,6 +42,10 @@ class StudentImport implements ToCollection
                     'birthdate' => Carbon::parse($row[4], 'Asia/Manila'),
                     'course_id' => $courseId,
                     'branch_id' => $this->branchId,
+                    'mobile_number' => $row[6],
+                    'guardian' => $row[7],
+                    'guardian_address' => $row[8],
+                    'guardian_mobile_number' => $row[9],
                 ]);
             }
 

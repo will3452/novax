@@ -16,6 +16,7 @@ class AddGuardianToStudents extends Migration
         Schema::table('students', function (Blueprint $table) {
             $table->string('guardian')->nullable();
             $table->string('guardian_address')->nullable();
+            $table->string('guardian_mobile_number')->nullable();
         });
     }
 

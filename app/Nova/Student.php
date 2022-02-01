@@ -93,6 +93,12 @@ class Student extends Resource
 
             Date::make('Birthdate'),
 
+            Text::make('Guardian Name', 'guardian'),
+
+            Text::make('Guardian Address', 'guardian_address'),
+
+            Text::make('Guardian Mobile Number', 'guardian_mobile_number'),
+
             BelongsTo::make('Course', 'course', Course::class)
                 ->searchable(),
 
