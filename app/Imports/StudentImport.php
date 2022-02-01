@@ -31,7 +31,10 @@ class StudentImport implements ToCollection
                 [$firstName, $lastName, $middleName] = explode(',', $row[1]);
 
                 $courseId = Course::whereCode($row[5])->first() ? Course::whereCode($row[5])->first()->id: null;
-
+                $guardian = $row[7] ?? '';
+                $mobileNumber = $row[6] ?? '';
+                $guardian_address = $row[8] ?? '';
+                $guardian_mobile_number = $row[9] ?? '';
                 Student::updateOrCreate(['student_number'=>$row[0]],[
                     'student_number' => $row[0],
                     'first_name' => $firstName,
@@ -42,10 +45,10 @@ class StudentImport implements ToCollection
                     'birthdate' => Carbon::parse($row[4], 'Asia/Manila'),
                     'course_id' => $courseId,
                     'branch_id' => $this->branchId,
-                    'mobile_number' => $row[6],
-                    'guardian' => $row[7],
-                    'guardian_address' => $row[8],
-                    'guardian_mobile_number' => $row[9],
+                    'mobile_number' => $mobileNumber,
+                    'guardian' => $guardian,
+                    'guardian_address' => $guardian_address,
+                    'guardian_mobile_number' =>  $guardian_mobile_number,
                 ]);
             }
 
