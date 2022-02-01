@@ -220,7 +220,7 @@ class GroupCounselling extends Resource
                     if ($model == null) {
                         return false;
                     }
-                    return $model->status === ModelsCounselling::STATUS_SAVED;
+                    return $model->status === ModelsCounselling::STATUS_SAVED || $model->status === ModelsCounselling::STATUS_RESCHEDULED || $model->status === ModelsCounselling::STATUS_TO_FOLLOW;
                 }),
         ];
     }
