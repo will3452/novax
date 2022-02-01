@@ -11,7 +11,6 @@ class LeadboardController extends Controller
 {
     public function getLeaderboard()
     {
-        return 1;
         // $type = request()->get('type') ?? 'topic';
         // $topicId = request()->get('topic_id');
         // $limit= request()->get('limit') ?? 10;
@@ -28,5 +27,9 @@ class LeadboardController extends Controller
         // return response([
         //     'leaderboard'=>$users,
         // ], 200) ;
+
+        return [
+            'leaderboard' => User::withSum('scores', 'score')->orderBy('scores_sum_score', 'DESC')->take($limit)->get(),
+        ];
     }
 }
