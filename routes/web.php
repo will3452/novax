@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Score;
 use Laravel\Nova\Nova;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
