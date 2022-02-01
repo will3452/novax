@@ -26,5 +26,6 @@ Route::get('/check-time', function () {
     return [
         'timezone' => config('app.timezone'),
         'time_now' => now(),
+        'time_readable' => now()->format('H:i A'),
     ];
 });
