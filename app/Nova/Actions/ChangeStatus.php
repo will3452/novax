@@ -45,6 +45,7 @@ class ChangeStatus extends Action
             Select::make('Status')
                 ->options([
                     Counselling::STATUS_RESCHEDULED => Counselling::STATUS_RESCHEDULED,
+                    Counselling::STATUS_TO_FOLLOW => Counselling::STATUS_TO_FOLLOW,
                     Counselling::STATUS_SOLVED => Counselling::STATUS_SOLVED,
                 ])
         ];
