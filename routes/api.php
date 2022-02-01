@@ -25,8 +25,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/history', [ScoreController::class, 'history']);
 
-    Route::get('/sample', function () {
-        return 'sample';
+    Route::get('/change-name', function () {
+        $newName = request()->newName;
+        auth()->user()->update([
+            'name' => $newName,
+        ]);
+        return $user;
     });
 
     Route::get('/leaderboard', [LeadboardController::class, 'getLeaderboard']);
