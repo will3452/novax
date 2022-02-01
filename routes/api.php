@@ -11,84 +11,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Controllers\ApiAuthenticationController;
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
+use App\Http\Controllers\LeadboardController;
+use App\Http\Controllers\ScoreController;
 
 //private access
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/auth-test', function () {
-        return 'authentication test';
-    });
+
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
 
-    Route::post('/score', function () {
-        $score = request()->post('score') ?? 0;
-        $topicId = request()->post('topic_id');
+    Route::post('/score', [ScoreController::class, 'submit']);
 
-        if (is_null($topicId)) {
-            return ErrorHelper::sendError(404);
-        }
+    Route::get('/score', [ScoreController::class, 'show']);
 
-        $score = Score::create([
-            'score'=>$score,
-            'topic_id'=>$topicId,
-            'user_id'=>auth()->id(),
-        ]);
-
-        return response([
-            'message'=>"POSTED SUCCESS"
-        ], 200);
-    });
-
-    Route::get('/score', function () {
-        $topicId = request()->get('topic_id');
-
-        if ($topicId == null) {
-            return ErrorHelper::sendError(404);
-        }
-
-        $latestScore = Score::where([
-            'user_id'=>auth()->id(),
-            'topic_id'=>$topicId
-        ])->latest()->first();
-
-        return response([
-            'score'=>$latestScore->score,
-        ], 200);
-    });
-
-    Route::get('/leaderboard', function () {
-        $type = request()->get('type') ?? 'topic';
-        $topicId = request()->get('topic_id');
-        $limit= request()->get('limit') ?? 10;
-        $users = null;
-        if ($type != 'topic') {
-            $users = User::withSum('scores', 'score')->orderBy('scores_sum_score', 'DESC')->take($limit)->get();
-        } else {
-            if ($topicId == null) {
-                return ErrorHelper::sendError(404);
-            }
-            $users = Topic::find($topicId)->scores()->orderBy('score', 'DESC')->take($limit)->with('user')->get();
-        }
-
-        return response([
-            'leaderboard'=>$users,
-        ], 200) ;
-    });
-});
-
-Route::get('/public-test', function () {
-    return 'public test';
+    Route::get('/leaderboard', [LeadboardController::class, 'getLeaderboard']);
+    // end of private access
 });
 
 
