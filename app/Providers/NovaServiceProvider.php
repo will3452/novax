@@ -36,14 +36,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             Text::make('Footer Text'),
             Text::make('Sidebar')
                 ->help('to get the value of your desired color, please go to https://colorpicker.me/#0ab23d'),
-            Text::make('Primary'),
-            Text::make('Primary Dark'),
-            Text::make('Primary 70'),
-            Text::make('Primary 50'),
-            Text::make('Primary 30'),
-            Text::make('Primary 10'),
-            Text::make('logo', 'logo_color'),
-            Text::make('sidebar icon'),
+            Text::make('Confirm Button'),
+            Text::make('Main color'),
+            Text::make('Input Fields Active Color'),
+            Text::make('Cards Color'),
+            Text::make('Background Logo Color', 'logo_color')
+
         ]);
     }
 

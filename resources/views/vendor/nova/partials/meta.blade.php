@@ -3,6 +3,11 @@
 
 <style>
     :root {
+        --primary: {{nova_get_setting('main_color', 'red')}} !important;
+        --primary-50: {{nova_get_setting('input_fields_active_color', 'red')}} !important;
+        --logo: {{nova_get_setting('logo_color', 'red')}} !important;
+    }
+    /* :root {
         --primary: {{nova_get_setting('primary')}} !important;
         --primary-dark: {{nova_get_setting('primary_dark')}} !important;
         --primary-70: {{nova_get_setting('primary_70')}} !important;
@@ -11,10 +16,26 @@
         --primary-10: {{nova_get_setting('primary_10')}} !important;
         --logo: {{nova_get_setting('logo_color')}} !important;
         --sidebar-icon:{{nova_get_setting('sidebar_icon')}} !important;
-      }
+      } */
 
       .bg-grad-sidebar {
         background: {{nova_get_setting('sidebar')}} !important;
+      }
+
+      .btn-primary {
+          /* background: #222 !important; */
+          background: {{nova_get_setting('confirm_button', 'red')}} !important;
+      }
+
+      .form-input-bordered::focus, .form-control::focus, .form-input::focus {
+          outline-color: {{nova_get_setting('active_input_border', 'blue')}} !important;
+      }
+      .card {
+          background: {{nova_get_setting('cards_color', 'red')}}} !important;
+      }
+
+      .bg-logo, .w-sidebar {
+          background: red !important;
       }
 
 </style>
