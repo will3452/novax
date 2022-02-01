@@ -39,7 +39,7 @@ class ScoreController extends Controller
         $latestScore = Score::where([
             'user_id'=>auth()->id(),
             'topic_id'=>$topicId
-        ])->latest()->first();
+        ])->orderBy('score', 'desc')->first();
 
         return response([
             'score'=>$latestScore->score,
