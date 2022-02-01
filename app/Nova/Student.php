@@ -91,7 +91,7 @@ class Student extends Resource
             Text::make('Mobile Number')
                 ->sortable(),
 
-            Date::make('BIrthdate'),
+            Date::make('Birthdate'),
 
             BelongsTo::make('Course', 'course', Course::class)
                 ->searchable(),
