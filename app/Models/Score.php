@@ -10,6 +10,10 @@ class Score extends Model
     use HasFactory;
     protected $guarded = [];
 
+    protected $with = [
+        'topic',
+    ];
+
     public function topic()
     {
         return $this->belongsTo(Topic::class);

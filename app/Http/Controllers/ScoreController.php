@@ -28,6 +28,12 @@ class ScoreController extends Controller
         ], 200);
     }
 
+
+    public function history()
+    {
+        return auth()->user()->scores()->latest()->get();
+    }
+
     public function show()
     {
         $topicId = request()->get('topic_id');

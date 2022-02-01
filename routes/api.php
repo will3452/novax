@@ -23,6 +23,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/score', [ScoreController::class, 'show']);
 
+    Route::get('/history', [ScoreController::class, 'history']);
+
     Route::get('/sample', function () {
         return 'sample';
     });
