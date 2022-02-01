@@ -28,7 +28,7 @@ class AddGuardianToStudents extends Migration
     public function down()
     {
         Schema::table('students', function (Blueprint $table) {
-            //
+            $table->dropColumn(['guardian', 'guardian_address', 'guardian_mobile_number']);
         });
     }
 }
