@@ -37,7 +37,7 @@ Route::get('/scores', function() {
     $finalScores = [];
 
     foreach ($scores as $score) {
-        $score->readable_date = $score->created_at->diffForHumans();
+        $score->readable_date = $score->created_at->format('m-d-Y h:i a');
         $finalScores[] = $score;
     }
     return $finalScores;
