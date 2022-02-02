@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\TotalNumberOfCourses;
+use App\Nova\Metrics\TotalNumberOfModules;
+use App\Nova\Metrics\TotalNumberOfStudents;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -11,6 +14,7 @@ use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Signifly\Nova\Cards\ProgressBar\ProgressBar;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -51,9 +55,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+            return true;
         });
     }
 
@@ -76,6 +78,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
+            (new TotalNumberOfStudents()),
+            (new TotalNumberOfCourses()),
+            (new TotalNumberOfModules()),
         ];
     }
 

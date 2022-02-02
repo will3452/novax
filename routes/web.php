@@ -6,9 +6,8 @@ use Laravel\Nova\Nova;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
-use App\Models\Attempt;
 
-Route::redirect('/', Nova::path())->name('login');
+Route::redirect('/', Nova::path());
 
 Route::get('/register', [RegisterController::class, 'registrationPage']);
 Route::post('/register', [RegisterController::class, 'postRegister']);
