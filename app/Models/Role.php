@@ -6,7 +6,7 @@ use Spatie\Permission\Models\Role as ModelsRole;
 
 class Role extends ModelsRole
 {
-    const SUPERADMIN = 'super admin';
+    const SUPERADMIN = 'Super Admin';
 
     const SYSTEM_ROLES = [
         User::ROLE_ARTIST,

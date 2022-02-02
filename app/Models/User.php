@@ -41,6 +41,7 @@ class User extends Authenticatable
     const ROLE_AUTHOR = 'Author';
     const ROLE_NORMAL = 'Normal';
     const ROLE_ARTIST = 'Artist';
+    const ROLE_ADMIN = 'Super Admin';
 
     const GENDER_MALE = 'Male';
     const GENDER_FEMALE = 'Female';

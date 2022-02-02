@@ -16,7 +16,6 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        $superadmin = Role::create(['name'=>Role::SUPERADMIN]);
         $user = User::create([
             'first_name' => 'william',
             'last_name' => 'galas',
@@ -27,10 +26,11 @@ class AdminSeeder extends Seeder
             'address' => 'Guevara, La Paz, Tarlac',
             'country' => 'Philippines',
             'city' => 'Tarlac',
+            'role' => User::ROLE_ADMIN,
             'birth_date' => '2000-03-04',
             'email' => 'william@admin.com',
             'account_type' => ROLE::SUPERADMIN,
-            'password' => bcrypt('password')
+            'password' => 'password',
         ]);
     }
 }
