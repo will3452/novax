@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SLASH2NL\NovaBackButton\NovaBackButton;
 
@@ -57,9 +58,9 @@ class Question extends Resource
                 ]),
             Text::make('Question', fn () => Str::limit($this->question, 100))
                 ->onlyOnIndex(),
-            Textarea::make('Question')
+            Trix::make('Question')
                 ->alwaysShow()
-                ->rules(['required', 'max:250'])
+                ->rules(['required'])
                 ->help('Maximum of 250 characters only.'),
 
             HasMany::make('Choices', 'answers', Answer::class),
