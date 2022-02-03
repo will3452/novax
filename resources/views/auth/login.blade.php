@@ -58,6 +58,8 @@
             </div>
 
         </div>
-
+    </div>
+    <div class="alert alert-info">
+        Contact us : {{nova_get_setting('contact_us', 'no contact inputted')}}
     </div>
 </x-auth>

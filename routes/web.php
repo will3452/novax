@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\User;
+use App\Models\Report;
 use App\Models\Subject;
+use App\Models\Feedback;
 use App\Models\UserStudent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -114,4 +116,35 @@ Route::post('/update', function (Request $request) {
 
     auth()->user()->update(['password' => bcrypt($payload['password'])]);
     return back();
+});
+
+Route::get('/send-report', fn () =>
+    view('send_report_form')
+)->middleware('auth');
+
+Route::post('/send-report', function () {
+    $data = request()->validate([
+        'type' => 'required',
+        'message' => 'required',
+    ]);
+
+    //set the user id in the data
+    $data['user_id'] = auth()->id();
+
+    Report::create($data);
+
+    return back()->withSuccess('issue sent!');
+});
+
+Route::get('/send-feedback', fn () =>
+    view('send_feedback_form')
+)->middleware(['auth']);
+
+Route::post('/send-feedback', function () {
+    $data = request()->validate([
+        'message' => 'required',
+    ]);
+    $data['user_id'] = auth()->id();
+    Feedback::create($data);
+    return back()->withSuccess('feedback sent');
 });

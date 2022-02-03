@@ -31,6 +31,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
             Text::make('Footer Text'),
+            Text::make('Contact us'),
         ]);
     }
 

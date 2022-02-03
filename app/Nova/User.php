@@ -6,6 +6,7 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\HasOne;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use App\Nova\Filters\TypeOfUser;
 use App\Models\User as UserModel;
@@ -75,6 +76,14 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
+
+            Number::make('Mobile Number'),
+
+            Text::make('Year Level'),
+
+            Text::make('Address'),
+
+            Text::make('Guardian'),
 
             MorphToMany::make('Roles', 'roles', Role::class),
 
