@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\EmailVerificationController;
@@ -57,3 +58,7 @@ Route::get('/email-verify/{id}/{hash}', [EmailVerificationController::class, 've
 
 //file uploader
 Route::post('/upload-large-file', [FileUploaderController::class, 'upload']);
+
+//contact us, to get aan, concerns,
+Route::get('/contact-form', fn () => view('contact-form'));
+Route::post('/contact-form', [InquiryController::class, 'submit']);
