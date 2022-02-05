@@ -9,6 +9,9 @@ class Topic extends Model
 {
     use HasFactory;
     public $guarded = [];
+    protected $with = [
+        'category',
+    ];
 
     public function category()
     {
