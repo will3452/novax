@@ -157,7 +157,7 @@
             <a href="/send-feedback" class="nav-link">Send Feedback</a>
         </li>
         <li class="nav-item no-arrow">
-            <a href="/report-issue" class="nav-link">Report Issue</a>
+            <a href="/send-report" class="nav-link">Report Issue</a>
         </li>
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
