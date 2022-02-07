@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class FileUploaderController extends Controller
 {
-    public function upload()
+    public function upload(Request $request)
     {
         $file = $request->file('file');
         $path = Storage::disk('local')->path("{$file->getClientOriginalName()}");

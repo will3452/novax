@@ -5,10 +5,11 @@ namespace App\Models;
 use App\Models\Traits\HasCover;
 use App\Models\Traits\BookTrait;
 use Cartalyst\Tags\TaggableTrait;
+use App\Models\Traits\HasLargeFile;
 use Cartalyst\Tags\TaggableInterface;
 use App\Models\Traits\BelongsToAccount;
-use App\Models\Traits\HasReviewQuestion;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\HasReviewQuestion;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class AudioBook extends Model implements TaggableInterface
@@ -18,6 +19,7 @@ class AudioBook extends Model implements TaggableInterface
         TaggableTrait,
         HasCover,
         BookTrait,
+        HasLargeFile,
         HasReviewQuestion;
 
     protected $with = [

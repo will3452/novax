@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
-use App\Models\Traits\BelongsToAccount;
 use App\Models\Traits\HasCover;
-use Cartalyst\Tags\TaggableInterface;
 use Cartalyst\Tags\TaggableTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Traits\HasLargeFile;
+use Cartalyst\Tags\TaggableInterface;
+use App\Models\Traits\BelongsToAccount;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Song extends Model implements TaggableInterface
 {
     use HasFactory,
         TaggableTrait,
         BelongsToAccount,
+        HasLargeFile,
         HasCover;
 
     protected $with = [

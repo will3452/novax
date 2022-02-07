@@ -5,7 +5,7 @@
             College
             <span class="text-red-600">*</span>
         </label>
-        <select v-model="collegeId" @change="onCollegeChange" name="college" id="course" class="p-2 border-2 border-gray-400 w-full md:w-8/12">
+        <select v-model="collegeId" @change="onCollegeChange" name="college" id="course" class="p-2 border border-gray-400 w-full md:w-8/12">
         <option value="" disabled selected></option>
             <option v-for="college in colleges" :key="college.id" :value="college.id"> {{college.name}} </option>
         </select>
@@ -15,7 +15,7 @@
             Course
             <span class="text-red-600">*</span>
         </label>
-        <select v-model="courseId"  name="course" id="course" class="p-2 border-2 border-gray-400 w-full md:w-8/12">
+        <select v-model="courseId"  name="course" id="course" class="p-2 border border-gray-400 w-full md:w-8/12">
         <option value="" disabled selected></option>
             <option v-for="course in courses" :key="course.id" :value="course.id"> {{course.name}} </option>
         </select>
@@ -25,7 +25,7 @@
             Club
             <span class="text-red-600">*</span>
         </label>
-        <select v-model="clubId"  name="club" id="course" class="p-2 border-2 border-gray-400 w-full md:w-8/12">
+        <select v-model="clubId"  name="club" id="course" class="p-2 border border-gray-400 w-full md:w-8/12">
         <option value="" disabled selected></option>
             <option v-for="club in clubs" :key="club.id" :value="club.id"> {{club.name}} </option>
         </select>

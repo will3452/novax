@@ -20,7 +20,7 @@ class Cover extends Media
             Date::make('Date Uploaded', 'created_at')
                 ->exceptOnForms(),
             Image::make('Cover', 'path')
-                ->rules('required'),
+                ->rules('required', 'image', 'max:10000'), // maximum of 10 mb
             Boolean::make('Copyright Disclaimer')
                 ->hideFromIndex()
                 ->help(nova_get_setting('copyright_disclaimer'))

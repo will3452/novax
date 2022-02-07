@@ -104,6 +104,7 @@ class Podcast extends Resource
                         ->rules(['required']),
                 ]),
                 MorphOne::make('Cover', 'cover', Cover::class),
+                MorphOne::make('Upload Podcast', 'largeFile', LargeMedia::class),
             ])->withToolbar(),
         ];
     }

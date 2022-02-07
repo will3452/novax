@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\HasCover;
 use Cartalyst\Tags\TaggableTrait;
+use App\Models\Traits\HasLargeFile;
 use Cartalyst\Tags\TaggableInterface;
 use App\Models\Traits\BelongsToAccount;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +15,7 @@ class Podcast extends Model implements TaggableInterface
     use HasFactory,
         BelongsToAccount,
         HasCover,
+        HasLargeFile,
         TaggableTrait;
 
     protected $with = [

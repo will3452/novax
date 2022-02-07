@@ -120,6 +120,7 @@ class Film extends Resource
                         ->default(fn () => 0),
                 ]),
                 MorphOne::make('Cover', 'cover', Cover::class),
+                MorphOne::make('Upload Film', 'largeFile', LargeMedia::class),
                 Tab::make('Publish', [
                     Date::make('Published Date', 'published_at')
                         ->exceptOnForms(),

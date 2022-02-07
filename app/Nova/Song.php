@@ -123,6 +123,7 @@ class Song extends Resource
                      ]
                 ),
                 MorphOne::make('Cover', 'cover', Cover::class),
+                MorphOne::make('Upload Song', 'largeFile', LargeMedia::class),
                 Tab::make('Publish', [
                     Date::make('Published Date', 'published_at')
                         ->exceptOnForms(),

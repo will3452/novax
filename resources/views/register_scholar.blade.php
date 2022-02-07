@@ -8,7 +8,7 @@
             @csrf
              <x-vspace>
                 <x-form-input name="aan" label="AAN" is-required="true">
-                    <x-link>I have no AAN.</x-link> | <x-link>I forgot my AAN.</x-link>
+                    <x-link href="/contact-form">I have no AAN.</x-link>
                 </x-form-input>
              </x-vspace>
              <x-vspace>

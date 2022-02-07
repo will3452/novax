@@ -20532,7 +20532,7 @@ var render = function () {
                 expression: "collegeId",
               },
             ],
-            staticClass: "p-2 border-2 border-gray-400 w-full md:w-8/12",
+            staticClass: "p-2 border border-gray-400 w-full md:w-8/12",
             attrs: { name: "college", id: "course" },
             on: {
               change: [
@@ -20586,7 +20586,7 @@ var render = function () {
                 expression: "courseId",
               },
             ],
-            staticClass: "p-2 border-2 border-gray-400 w-full md:w-8/12",
+            staticClass: "p-2 border border-gray-400 w-full md:w-8/12",
             attrs: { name: "course", id: "course" },
             on: {
               change: function ($event) {
@@ -20637,7 +20637,7 @@ var render = function () {
                 expression: "clubId",
               },
             ],
-            staticClass: "p-2 border-2 border-gray-400 w-full md:w-8/12",
+            staticClass: "p-2 border border-gray-400 w-full md:w-8/12",
             attrs: { name: "club", id: "course" },
             on: {
               change: function ($event) {

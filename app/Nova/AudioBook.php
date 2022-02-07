@@ -155,6 +155,7 @@ class AudioBook extends Resource
                 ]),
                 //relationship here
                 MorphOne::make('Cover', 'cover', Cover::class),
+                MorphOne::make('Upload Audio Book', 'largeFile', LargeMedia::class),
                 Tab::make('Publish', [
                     Date::make('Published Date', 'published_at')
                         ->exceptOnForms(),

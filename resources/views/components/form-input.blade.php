@@ -17,7 +17,7 @@
         @endif
     </label>
     @if (strtolower($type) !== 'select')
-<input type="{{$type}}" id="{{$id ?? $name}}" placeholder="{{$placeholder}}" name="{{$name}}" value="{{$value ?: old($name)}}" class="p-2  border-2 border-gray-400 w-full md:w-8/12">
+<input type="{{$type}}" id="{{$id ?? $name}}" placeholder="{{$placeholder}}" name="{{$name}}" value="{{$value ?: old($name)}}" class="p-2  border border-gray-400 w-full md:w-8/12">
     @endif
 
     @if ($type === 'select')
@@ -27,7 +27,7 @@
         @endif
         name="{{$name}}"
         id="{{$id ?? $name}}"
-        class="p-2 border-2 border-gray-400 w-full md:w-8/12">
+        class="p-2 border border-gray-400 w-full md:w-8/12">
             @foreach ($options as $option)
                 <option value="{{$option['value']}}">{{$option['label']}}</option>
             @endforeach

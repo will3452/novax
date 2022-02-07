@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\FileUploaderController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\EmailVerificationController;
 
