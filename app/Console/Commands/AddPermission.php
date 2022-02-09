@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Permission;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 
@@ -20,7 +21,7 @@ class AddPermission extends Command
      *
      * @var string
      */
-    protected $description = 'Create new permission';
+    protected $description = 'Create new permission, if the given argument is equal to the word "all" this will create permissions base from the file /public/setup/permissions.txt';
 
     /**
      * Create a new command instance.
@@ -32,15 +33,8 @@ class AddPermission extends Command
         parent::__construct();
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
-    public function handle()
+    public function generatePermission(string $permissionName)
     {
-        $permissionName = $this->argument('permission_name');
-
         $permissions = [
             "view list: $permissionName",
             "view details: $permissionName",
@@ -55,8 +49,30 @@ class AddPermission extends Command
                 'name'=>$permission,
             ]);
         }
+    }
 
-        error_log($permissionName. 'permission has been created!');
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     */
+    public function handle()
+    {
+        $permissionName = $this->argument('permission_name');
+
+        $arr = Arr::wrap($permissionName);
+
+        if ($permissionName === 'all') {
+            $content = file_get_contents('./public/setup/permissions.txt');
+            $rawArray = preg_split("/\,\r\n/", $content);
+            $arr = collect($rawArray)->filter(fn ($a) => strlen($a));
+        }
+
+        foreach ($arr as $name) {
+            $this->generatePermission($name);
+        }
+
+        error_log(' permission(s) has been created!');
         return 0;
     }
 }
