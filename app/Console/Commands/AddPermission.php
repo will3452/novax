@@ -64,7 +64,36 @@ class AddPermission extends Command
 
         if ($permissionName === 'all') {
             $content = file_get_contents('./public/setup/permissions.txt');
-            $rawArray = preg_split("/\,\r\n/", $content);
+            $rawArray = [
+                "art scene",
+                "audio book",
+                "book",
+                "film",
+                "category",
+                "chapter",
+                "club",
+                "college",
+                "course",
+                "epilogue",
+                "free art scene",
+                "genre",
+                "inquiry",
+                "interest",
+                "language",
+                "level",
+                "media",
+                "permission",
+                "podcast",
+                "policy",
+                "prologue",
+                "review question",
+                "role",
+                "song",
+                "user",
+                "account",
+                "series",
+                "file",
+            ];
             $arr = collect($rawArray)->filter(fn ($a) => strlen($a));
         }
 
