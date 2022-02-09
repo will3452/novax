@@ -49,7 +49,7 @@ class FormCheck extends Resource
     {
         return [
             Text::make('Title')
-                ->rules(['required', 'unique:users']),
+                ->rules(['required']),
             File::make('File')
                 ->help('Maximum of 5mb only.')
                 ->rules(['required','max:5000']),
