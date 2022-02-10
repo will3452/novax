@@ -1,6 +1,6 @@
 # TheBrumultiverse
 
-> it is not official code of brumultiverse for their website.
+> this is not official code of brumultiverse for their website.
 
 ## installation
 1. Clone this repo
