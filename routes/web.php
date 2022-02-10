@@ -18,7 +18,8 @@ use App\Http\Controllers\EmailVerificationController;
 
 
 //home
-Route::redirect('/', '/register');
+Route::redirect('/', '/welcome');
+Route::view('/welcome', 'Home')->name('welcome');
 Route::redirect('/home', Nova::path());
 
 //registration
