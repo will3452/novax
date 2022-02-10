@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\HasCover;
 use App\Models\Traits\BelongsToAccount;
+use App\Models\Traits\HasPublishApproval;
 use App\Models\Traits\HasWorks;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,6 +14,7 @@ class Series extends Model
     use HasFactory,
         HasCover,
         HasWorks,
+        HasPublishApproval,
         BelongsToAccount;
 
     protected $fillable = [
@@ -23,6 +25,12 @@ class Series extends Model
         'account_id',
         'user_id',
         'published_at',
+    ];
+
+
+
+    protected $casts = [
+        'published_at' => 'datetime',
     ];
 
     const TYPE_BOOK = 'Book';

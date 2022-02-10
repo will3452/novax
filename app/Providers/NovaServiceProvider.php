@@ -5,13 +5,20 @@ namespace App\Providers;
 use App\Models\Role;
 use Laravel\Nova\Nova;
 use Pdmfc\NovaCards\Info;
+use App\Nova\Metrics\Books;
+use App\Nova\Metrics\Films;
+use App\Nova\Metrics\Songs;
+use App\Nova\Metrics\Users;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
+use App\Nova\Metrics\Podcasts;
 use Laravel\Nova\Fields\Image;
+use App\Nova\Metrics\ArtScenes;
 use Laravel\Nova\Fields\Number;
+use App\Nova\Metrics\AudioBooks;
+use Laravel\Nova\Fields\Textarea;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
-use Laravel\Nova\Fields\Textarea;
 use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -74,6 +81,14 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
+            (new Users())
+                ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
+            (new Books()),
+            (new AudioBooks()),
+            (new ArtScenes()),
+            (new Films()),
+            (new Podcasts()),
+            (new Songs()),
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
                 'America/Mexico_City',
@@ -89,7 +104,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ->warning('
                 <div class="flex justify-between w-full items-center">
                     Please verify your email address.
-                    <a href="/send-email-verification-notification" class="block ml-2 underline dim text-primary font-bold">Send Verification</a>
+                    <a target="_blank"href="/send-email-verification-notification" class="mx-4 btn btn-default block btn-primary">Send Verification.</a>
                 </div>
                 ')
                 ->asHtml()

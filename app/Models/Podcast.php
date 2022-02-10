@@ -8,6 +8,7 @@ use App\Models\Traits\HasLargeFile;
 use Cartalyst\Tags\TaggableInterface;
 use App\Models\Traits\BelongsToAccount;
 use App\Models\Traits\BelongsToClass;
+use App\Models\Traits\HasPublishApproval;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -18,10 +19,16 @@ class Podcast extends Model implements TaggableInterface
         BelongsToClass,
         HasCover,
         HasLargeFile,
+        HasPublishApproval,
         TaggableTrait;
 
     protected $with = [
         'cover',
+    ];
+
+    protected $casts = [
+        'published_at' => 'datetime',
+        'launch_at' => 'date',
     ];
 
     protected $fillable = [
@@ -35,10 +42,6 @@ class Podcast extends Model implements TaggableInterface
         'cost',
         'launch_at',
         'published_at',
-    ];
-
-    protected $casts = [
-        'launch_at' => 'date',
     ];
 
     const TYPE_REGULAR = 'Regular';

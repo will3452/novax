@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\Select;
 use Elezerk\LargeFile\LargeFile;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Country;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
@@ -60,6 +61,11 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
+            Badge::make('Verified Email', fn () => $this->email_verified_at !== null ? 'Verified' : 'Unverified')
+                ->map([
+                    'Verified' => 'success',
+                    'Unverified' => 'danger',
+                ]),
             Text::make('First Name')
                 ->sortable()
                 ->rules('required', 'max:32'),

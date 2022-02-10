@@ -16,11 +16,13 @@ use App\Nova\Actions\SendEmail;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
+use App\Nova\Actions\PublishWork;
 use Laravel\Nova\Fields\MorphOne;
 use Laravel\Nova\Fields\Textarea;
 use App\Models\Film as ModelsFilm;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphMany;
+use App\Nova\Actions\RequestToPublish;
 use App\Nova\Traits\ForUserIndividualOnly;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -176,6 +178,11 @@ class Film extends Resource
     {
         return [
             (new SendEmail)
+                ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
+
+            (new RequestToPublish),
+
+            (new PublishWork)
                 ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
         ];
     }

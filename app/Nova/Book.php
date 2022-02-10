@@ -29,6 +29,8 @@ use Laravel\Nova\Fields\MorphOne;
 use Laravel\Nova\Fields\Textarea;
 use PalauaAndSons\TagsField\Tags;
 use App\Models\Book as ModelsBook;
+use App\Nova\Actions\PublishWork;
+use App\Nova\Actions\RequestToPublish;
 use App\Nova\Actions\SetHeatLevel;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphMany;
@@ -161,8 +163,9 @@ class Book extends Resource
                             User::GENDER_MALE => User::GENDER_MALE,
                             User::GENDER_LGBT => User::GENDER_LGBT,
                         ]),
-                    File::make('Front Matter'),
-                    File::make('Back Matter'),
+                    File::make('PDF', 'front_matter')
+                        ->help('Title, Copyright, Acknowledgements and Dedication pages.'),
+                    // File::make('Back Matter'),
                 ]),
                 //relationship here
                 MorphOne::make('Cover', 'cover', Cover::class),
@@ -229,6 +232,12 @@ class Book extends Resource
                 ->canSee(fn () => ! $this->violenceLevel),
 
             (new SendEmail)
+                ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
+
+            (new RequestToPublish)
+                ->onlyOnDetail(),
+
+            (new PublishWork)
                 ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
         ];
 

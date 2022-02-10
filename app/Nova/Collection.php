@@ -14,13 +14,15 @@ use Laravel\Nova\Fields\Text;
 use App\Nova\Actions\SendEmail;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Select;
+use App\Nova\Actions\PublishWork;
 use Laravel\Nova\Fields\MorphOne;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphMany;
+use App\Nova\Actions\RequestToPublish;
+use App\Nova\Traits\ForUserIndividualOnly;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Models\Collection as ModelsCollection;
-use App\Nova\Traits\ForUserIndividualOnly;
 
 class Collection extends Resource
 {
@@ -150,6 +152,11 @@ class Collection extends Resource
             (new AddWork($currentModel->type ?? "Book"))
                 ->onlyOnDetail(),
             (new SendEmail)
+                ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
+
+            (new RequestToPublish),
+
+            (new PublishWork)
                 ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
         ];
     }

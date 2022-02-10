@@ -9,9 +9,9 @@ use Cartalyst\Tags\TaggableInterface;
 use App\Models\Traits\BelongsToAccount;
 use App\Models\Traits\BelongsToClass;
 use App\Models\Traits\HasFreeArtScenes;
+use App\Models\Traits\HasPublishApproval;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-//TODO: upload film, published_button,
 class Film extends Model implements TaggableInterface
 {
     use HasFactory,
@@ -20,6 +20,7 @@ class Film extends Model implements TaggableInterface
         BelongsToAccount,
         BelongsToClass,
         HasLargeFile,
+        HasPublishApproval,
         TaggableTrait;
 
     protected $fillable = [
@@ -35,6 +36,10 @@ class Film extends Model implements TaggableInterface
         'published_at',
         'credit',
         'description',
+    ];
+
+    protected $casts = [
+        'published_at' => 'datetime',
     ];
 
     const TYPE_FILM = 'Film';

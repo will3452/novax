@@ -11,6 +11,7 @@ use App\Models\Traits\HasChapters;
 use App\Models\Traits\HasEpilogue;
 use App\Models\Traits\HasFreeArtScenes;
 use App\Models\Traits\HasPrologue;
+use App\Models\Traits\HasPublishApproval;
 use App\Models\Traits\HasReviewQuestion;
 use App\Models\Traits\HasViolenceLevel;
 use Cartalyst\Tags\TaggableInterface;
@@ -29,11 +30,16 @@ class Book extends Model implements TaggableInterface
         BelongsToAccount,
         HasCover,
         HasChapters,
+        HasPublishApproval,
         BookTrait;
 
     protected $with = [
         'cover',
         'chapters',
+    ];
+
+    protected $casts = [
+        'published_at' => 'datetime',
     ];
 
     protected $fillable = [

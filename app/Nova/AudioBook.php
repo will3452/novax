@@ -20,12 +20,14 @@ use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
+use App\Nova\Actions\PublishWork;
 use Laravel\Nova\Fields\MorphOne;
 use Laravel\Nova\Fields\Textarea;
 use PalauaAndSons\TagsField\Tags;
 use App\Nova\Actions\SetHeatLevel;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphMany;
+use App\Nova\Actions\RequestToPublish;
 use App\Nova\Actions\SetViolenceLevel;
 use App\Nova\Traits\ForUserIndividualOnly;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -216,6 +218,11 @@ class AudioBook extends Resource
                 ->canSee(fn () => ! $this->violenceLevel),
 
             (new SendEmail)
+                ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
+
+            (new RequestToPublish),
+
+            (new PublishWork)
                 ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
         ];
 

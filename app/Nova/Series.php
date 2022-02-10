@@ -2,24 +2,26 @@
 
 namespace App\Nova;
 
-use App\Models\Account;
 use App\Models\Role;
-use Laravel\Nova\Fields\ID;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Hidden;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\BelongsTo;
-use App\Models\Series as ModelsSeries;
-use App\Nova\Actions\AddWork;
-use App\Nova\Actions\SendEmail;
-use App\Nova\Traits\ForUserIndividualOnly;
+use App\Models\Account;
 use Eminiarts\Tabs\Tab;
 use Eminiarts\Tabs\Tabs;
-use Laravel\Nova\Fields\MorphMany;
+use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
+use App\Nova\Actions\AddWork;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Text;
+use App\Nova\Actions\SendEmail;
+use Laravel\Nova\Fields\Hidden;
+use Laravel\Nova\Fields\Select;
+use App\Nova\Actions\PublishWork;
 use Laravel\Nova\Fields\MorphOne;
 use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\MorphMany;
+use App\Models\Series as ModelsSeries;
+use App\Nova\Actions\RequestToPublish;
+use App\Nova\Traits\ForUserIndividualOnly;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Series extends Resource
@@ -148,6 +150,11 @@ class Series extends Resource
             (new AddWork($currentModel->type ?? "Book"))
                 ->onlyOnDetail(),
             (new SendEmail)
+                ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
+
+            (new RequestToPublish),
+
+            (new PublishWork)
                 ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
         ];
     }

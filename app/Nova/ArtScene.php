@@ -16,11 +16,13 @@ use App\Nova\Actions\SendEmail;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
+use App\Nova\Actions\PublishWork;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\MorphOne;
 use Laravel\Nova\Fields\Textarea;
 use PalauaAndSons\TagsField\Tags;
 use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Actions\RequestToPublish;
 use App\Nova\Traits\ForUserIndividualOnly;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -166,6 +168,10 @@ class ArtScene extends Resource
     {
         return [
             (new SendEmail)
+                ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
+            (new RequestToPublish),
+
+            (new PublishWork)
                 ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
         ];
     }
