@@ -7,6 +7,7 @@ use Cartalyst\Tags\TaggableTrait;
 use App\Models\Traits\HasLargeFile;
 use Cartalyst\Tags\TaggableInterface;
 use App\Models\Traits\BelongsToAccount;
+use App\Models\Traits\BelongsToClass;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -16,6 +17,7 @@ class Song extends Model implements TaggableInterface
         TaggableTrait,
         BelongsToAccount,
         HasLargeFile,
+        BelongsToClass,
         HasCover;
 
     protected $with = [

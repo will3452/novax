@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\HasCover;
 use App\Models\Traits\HasHeatLevel;
 use App\Models\Traits\BelongsToAccount;
+use App\Models\Traits\BelongsToClass;
 use App\Models\Traits\BookTrait;
 use App\Models\Traits\HasChapters;
 use App\Models\Traits\HasEpilogue;
@@ -16,10 +17,10 @@ use Cartalyst\Tags\TaggableInterface;
 use Cartalyst\Tags\TaggableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-//TODO: chapters, free arts, prologue, epilogue, published_button
 class Book extends Model implements TaggableInterface
 {
     use HasFactory,
+        BelongsToClass,
         HasPrologue,
         HasEpilogue,
         HasFreeArtScenes,

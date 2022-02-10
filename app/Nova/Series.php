@@ -11,15 +11,18 @@ use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\BelongsTo;
 use App\Models\Series as ModelsSeries;
+use App\Nova\Actions\AddWork;
 use App\Nova\Traits\ForUserIndividualOnly;
 use Eminiarts\Tabs\Tab;
 use Eminiarts\Tabs\Tabs;
+use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\MorphOne;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Series extends Resource
 {
+    public static $group = "Collections";
     /**
      * The model the resource corresponds to.
      *
@@ -89,7 +92,8 @@ class Series extends Resource
                         Date::make('Published Date', 'published_at')
                             ->exceptOnForms(),
                     ]),
-            ]),
+            ])->withToolbar(),
+            MorphMany::make("Works", 'works', ClassWork::class),
         ];
     }
 
@@ -134,6 +138,10 @@ class Series extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        $currentModel = (self::$model)::find($request->resourceId);
+        return [
+            (new AddWork(optional($currentModel)->type ?? "Book"))
+                ->onlyOnDetail(),
+        ];
     }
 }

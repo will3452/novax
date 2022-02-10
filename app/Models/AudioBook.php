@@ -6,6 +6,7 @@ use App\Models\Traits\HasCover;
 use App\Models\Traits\BookTrait;
 use Cartalyst\Tags\TaggableTrait;
 use App\Models\Traits\HasLargeFile;
+use App\Models\Traits\BelongsToClass;
 use Cartalyst\Tags\TaggableInterface;
 use App\Models\Traits\BelongsToAccount;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class AudioBook extends Model implements TaggableInterface
 {
     use HasFactory,
+        BelongsToClass,
         BelongsToAccount,
         TaggableTrait,
         HasCover,

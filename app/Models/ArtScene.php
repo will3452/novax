@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\HasArtFile;
 use Cartalyst\Tags\TaggableTrait;
+use App\Models\Traits\BelongsToClass;
 use Cartalyst\Tags\TaggableInterface;
 use App\Models\Traits\BelongsToAccount;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ArtScene extends Model implements TaggableInterface
 {
     use HasFactory,
+        BelongsToClass,
         BelongsToAccount,
         HasArtFile,
         TaggableTrait;
