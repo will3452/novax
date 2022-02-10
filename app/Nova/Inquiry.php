@@ -13,6 +13,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Inquiry extends Resource
 {
+
+    public static $group = 'user Management';
     /**
      * The model the resource corresponds to.
      *

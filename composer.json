@@ -33,6 +33,7 @@
         "php": "^7.3|^8.0",
         "coreproc/nova-permissions-field": "*",
         "elezerk/bru-default": "*",
+        "elezerk/large-file": "*",
         "eminiarts/nova-tabs": "^1.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -49,8 +50,7 @@
         "runlinenl/nova-profile-tool": "^1.1",
         "spatie/laravel-backup": "^6.16",
         "spatie/laravel-permission": "^5.3",
-        "spatie/nova-backup-tool": "^4.1",
-        "elezerk/large-file": "*"
+        "spatie/nova-backup-tool": "^4.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

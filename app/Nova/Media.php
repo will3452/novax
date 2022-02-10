@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Helpers\FormHelper;
+use App\Rules\ShouldChecked;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
@@ -14,6 +15,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Media extends Resource
 {
+    public static $group = 'misc';
     /**
      * The model the resource corresponds to.
      *
@@ -57,7 +59,7 @@ class Media extends Resource
                 ->rules(['required']),
             Boolean::make('Copyright Disclaimer')
                 ->help(nova_get_setting('copyright_disclaimer'))
-                ->rules(['required']),
+                ->rules(['required', (new ShouldChecked)]),
         ];
     }
 

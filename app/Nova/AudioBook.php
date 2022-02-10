@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Models\Role;
 use App\Models\User;
 use App\Models\Genre;
 use App\Models\Account;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
 use App\Helpers\CrystalHelper;
+use App\Nova\Actions\SendEmail;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
@@ -23,11 +25,11 @@ use Laravel\Nova\Fields\Textarea;
 use PalauaAndSons\TagsField\Tags;
 use App\Nova\Actions\SetHeatLevel;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\MorphMany;
 use App\Nova\Actions\SetViolenceLevel;
 use App\Nova\Traits\ForUserIndividualOnly;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Models\AudioBook as ModelsAudioBook;
-use Laravel\Nova\Fields\MorphMany;
 
 class AudioBook extends Resource
 {
@@ -211,7 +213,10 @@ class AudioBook extends Resource
                 ->canSee(fn () => ! $this->heatLevel),
 
             (new SetViolenceLevel($this))
-                ->canSee(fn () => ! $this->violenceLevel)
+                ->canSee(fn () => ! $this->violenceLevel),
+
+            (new SendEmail)
+                ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
         ];
 
         return $actions;

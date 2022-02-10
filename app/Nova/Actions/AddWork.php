@@ -23,7 +23,7 @@ class AddWork extends Action
 
     public $resourceModel;
 
-    public function __construct(string $type = "Book")
+    public function __construct(string $type)
     {
         $this->resourceModel = $this->getModel($type);
     }
@@ -39,7 +39,7 @@ class AddWork extends Action
     {
         foreach($models as $model) {
             $exists = ClassWork::where([
-                'work_type' => $this->resourceModel,
+                'work_type' => $this->getModel($model->type),
                 'work_id' => $fields['work_id'],
                 'class_id' => $model->id,
                 'class_type' => get_class($model),
@@ -49,7 +49,7 @@ class AddWork extends Action
                 return Action::danger('Book was already added!');
             }
             ClassWork::create([
-                'work_type' => $this->resourceModel,
+                'work_type' => $this->getModel($model->type),
                 'work_id' => $fields['work_id'],
                 'class_id' => $model->id,
                 'class_type' => get_class($model),

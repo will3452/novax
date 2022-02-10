@@ -47,6 +47,7 @@ class GeneratePolicy extends Command
                     'Traits',
                     'HeatLevel.php',
                     'ViolenceLevel.php',
+                    'ClassWork.php',
             ]
         );
 

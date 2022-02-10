@@ -2,6 +2,7 @@
 
 namespace App\Models\Traits;
 
+use App\Models\User;
 use App\Models\Account;
 
 trait BelongsToAccount

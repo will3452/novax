@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Models\Role;
 use App\Models\User;
 use App\Models\Genre;
 use App\Models\Level;
@@ -18,6 +19,7 @@ use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Text;
 use App\Helpers\CrystalHelper;
 use Laravel\Nova\Fields\Image;
+use App\Nova\Actions\SendEmail;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
@@ -29,11 +31,11 @@ use PalauaAndSons\TagsField\Tags;
 use App\Models\Book as ModelsBook;
 use App\Nova\Actions\SetHeatLevel;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\MorphMany;
 use App\Nova\Actions\SetViolenceLevel;
 use App\Nova\Traits\ForUserIndividualOnly;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Hubertnnn\LaravelNova\Fields\DynamicSelect\DynamicSelect;
-use Laravel\Nova\Fields\MorphMany;
 
 class Book extends Resource
 {
@@ -224,7 +226,10 @@ class Book extends Resource
                 ->canSee(fn () => ! $this->heatLevel),
 
             (new SetViolenceLevel($this))
-                ->canSee(fn () => ! $this->violenceLevel)
+                ->canSee(fn () => ! $this->violenceLevel),
+
+            (new SendEmail)
+                ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
         ];
 
         return $actions;

@@ -18,10 +18,7 @@ class ReviewQuestion extends Resource
      */
     public static $model = \App\Models\ReviewQuestion::class;
 
-    public static function availableForNavigation(Request $request)
-    {
-        return auth()->user()->hasRole(\App\Models\Role::SUPERADMIN);
-    }
+    public static $displayInNavigation = false;
 
     /**
      * The single value that should be used to represent the resource when being displayed.

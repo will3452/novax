@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Rules\ShouldChecked;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
@@ -31,7 +32,7 @@ class LargeMedia extends Media
                 ->rules(['required']),
             Boolean::make('Copyright Disclaimer')
                 ->help(nova_get_setting('copyright_disclaimer'))
-                ->rules(['required']),
+                ->rules(['required', (new ShouldChecked)]),
         ];
     }
 }

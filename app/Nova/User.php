@@ -2,18 +2,19 @@
 
 namespace App\Nova;
 
-use Elezerk\LargeFile\LargeFile;
+use App\Nova\Actions\SendEmail;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Country;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\HasOne;
+use Laravel\Nova\Fields\Select;
+use Elezerk\LargeFile\LargeFile;
+use Laravel\Nova\Fields\Country;
+use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
@@ -176,6 +177,8 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new SendEmail)
+        ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Models\Account;
+use App\Models\Role;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
@@ -12,6 +13,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\BelongsTo;
 use App\Models\Series as ModelsSeries;
 use App\Nova\Actions\AddWork;
+use App\Nova\Actions\SendEmail;
 use App\Nova\Traits\ForUserIndividualOnly;
 use Eminiarts\Tabs\Tab;
 use Eminiarts\Tabs\Tabs;
@@ -22,6 +24,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Series extends Resource
 {
+    use ForUserIndividualOnly;
+
     public static $group = "Collections";
     /**
      * The model the resource corresponds to.
@@ -44,6 +48,7 @@ class Series extends Resource
      */
     public static $search = [
         'id',
+        'title',
     ];
 
     /**
@@ -140,8 +145,10 @@ class Series extends Resource
     {
         $currentModel = (self::$model)::find($request->resourceId);
         return [
-            (new AddWork(optional($currentModel)->type ?? "Book"))
+            (new AddWork($currentModel->type ?? "Book"))
                 ->onlyOnDetail(),
+            (new SendEmail)
+                ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
         ];
     }
 }

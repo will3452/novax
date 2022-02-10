@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Rules\ShouldChecked;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Boolean;
@@ -24,7 +25,7 @@ class ArtFile extends Media
             Boolean::make('Copyright Disclaimer')
                 ->hideFromIndex()
                 ->help(nova_get_setting('copyright_disclaimer'))
-                ->rules(['required']),
+                ->rules(['required', (new ShouldChecked)]),
         ];
     }
 }

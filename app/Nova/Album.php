@@ -3,44 +3,43 @@
 namespace App\Nova;
 
 use App\Models\Role;
-use App\Models\Genre;
 use App\Models\Account;
 use Eminiarts\Tabs\Tab;
 use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use App\Nova\Actions\AddWork;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
-use App\Helpers\CrystalHelper;
 use App\Nova\Actions\SendEmail;
 use Laravel\Nova\Fields\Hidden;
-use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\MorphOne;
 use Laravel\Nova\Fields\Textarea;
-use App\Models\Film as ModelsFilm;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphMany;
+use App\Models\Album as ModelsAlbum;
 use App\Nova\Traits\ForUserIndividualOnly;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Film extends Resource
+class Album extends Resource
 {
     use ForUserIndividualOnly;
-    public static $group = "Works";
+
+    public static $group = "Collections";
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Film::class;
+    public static $model = \App\Models\Album::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'title';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -52,11 +51,6 @@ class Film extends Resource
         'title',
     ];
 
-    public function subtitle()
-    {
-        return 'Film';
-    }
-
     /**
      * Get the fields displayed by the resource.
      *
@@ -66,11 +60,17 @@ class Film extends Resource
     public function fields(Request $request)
     {
         return [
-            Tabs::make('Film', [
+            Tabs::make('Album',[
                 Tab::make('Details', [
+                    Select::make('Type')
+                    ->options([
+                        ModelsAlbum::TYPE_ART_SCENE => ModelsAlbum::TYPE_ART_SCENE,
+                        ModelsAlbum::TYPE_SONG => ModelsAlbum::TYPE_SONG,
+                    ])
+                    ->rules(['required']),
                     BelongsTo::make('Account', 'account', \App\Nova\Account::class)
-                            ->hideWhenCreating()
-                            ->hideWhenUpdating(),
+                                ->hideWhenCreating()
+                                ->hideWhenUpdating(),
                     Select::make('Account', 'account_id')
                         ->onlyOnForms()
                         ->options(
@@ -83,53 +83,20 @@ class Film extends Resource
                         ->default(fn () => auth()->id()),
                     Text::make('Title')
                         ->rules(['required']),
-                    Select::make('Type')
-                        ->options([
-                            ModelsFilm::TYPE_ANIMATION => ModelsFilm::TYPE_ANIMATION,
-                            ModelsFilm::TYPE_FILM => ModelsFilm::TYPE_FILM,
-                            ModelsFilm::TYPE_TRAILER => ModelsFilm::TYPE_TRAILER,
-                        ])
-                        ->rules(['required']),
-                    Text::make('Genre', fn () => $this->genre->name)
-                        ->exceptOnForms(),
-                    Select::make('Genre', 'genre_id')
-                        ->onlyOnForms()
-                        ->options(
-                            Genre::whereType(Genre::TYPE_VIDEO)
-                                ->get()
-                                ->pluck('name', 'id')
-                        )->rules(['required']),
-                    Number::make('Age Restriction')
-                        ->nullable()
-                        ->help('for X And Above only.'),
-                    BelongsTo::make('Language', 'language', Language::class),
                     Textarea::make('Description')
-                        ->alwaysShow()
-                        ->rules(['required']),
+                            ->alwaysShow()
+                            ->rules(['required']),
                     Textarea::make('Credits', 'credit')
-                        ->alwaysShow()
-                        ->rules(['required']),
-                    Select::make('Crystal/Ticket/Passes', 'cost_type')
-                        ->options([
-                            'None' => 'None',
-                            CrystalHelper::WHITE_CRYSTAL => CrystalHelper::WHITE_CRYSTAL,
-                            CrystalHelper::PURPLE_CRYSTAL => CrystalHelper::PURPLE_CRYSTAL,
-                            CrystalHelper::HALL_PASS => CrystalHelper::HALL_PASS,
-                            CrystalHelper::SILVER_TICKET => CrystalHelper::SILVER_TICKET,
-                        ]),
-                    Number::make('Cost', 'cost')
-                        ->rules(['required', 'gt:-1'])
-                        ->default(fn () => 0),
-                ]),
-                MorphOne::make('Cover', 'cover', Cover::class),
-                MorphOne::make('Upload Film', 'largeFile', LargeMedia::class),
-                Tab::make('Publish', [
-                    Date::make('Published Date', 'published_at')
-                        ->exceptOnForms(),
-                ]),
+                            ->alwaysShow()
+                            ->rules(['required']),
+                    ]),
+                    MorphOne::make('Cover', 'cover', Cover::class),
+                    Tab::make('Publish', [
+                        Date::make('Published Date', 'published_at')
+                            ->exceptOnForms(),
+                    ]),
             ])->withToolbar(),
-            //relations
-            MorphMany::make('Free Art Scenes', 'freeArtScenes', FreeArtScene::class),
+            MorphMany::make("Works", 'works', ClassWork::class),
         ];
     }
 
@@ -174,7 +141,10 @@ class Film extends Resource
      */
     public function actions(Request $request)
     {
+        $currentModel = (self::$model)::find($request->resourceId);
         return [
+            (new AddWork($currentModel->type ?? "Song"))
+                ->onlyOnDetail(),
             (new SendEmail)
                 ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
         ];

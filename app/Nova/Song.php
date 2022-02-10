@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Models\Role;
 use App\Models\Genre;
 use App\Models\Account;
 use Eminiarts\Tabs\Tab;
@@ -12,6 +13,7 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
 use App\Helpers\CrystalHelper;
+use App\Nova\Actions\SendEmail;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
@@ -173,6 +175,9 @@ class Song extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new SendEmail)
+                ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
+        ];
     }
 }
