@@ -40,7 +40,7 @@
         {{$message}}
     </x-form-error>
 </div>
-@enderror
+@else
 @if ($help)
     <div class="text-right">
         <x-form-help-text>
@@ -48,6 +48,8 @@
         </x-form-help-text>
     </div>
 @endif
+@enderror
+
 @if ($slot)
     <div class="text-right">
         {{$slot}}

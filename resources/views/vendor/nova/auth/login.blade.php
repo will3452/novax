@@ -17,12 +17,12 @@
     @endif
     <div class="mb-6 {{ $errors->has('email') ? ' has-error' : '' }}">
         <label class="block font-bold mb-2" for="email">{{ __('Email Address') }}</label>
-        <input class="p-2 w-full" id="email" type="email" name="email" value="{{ old('email') }}" required autofocus>
+        <input class="p-2 w-full text-black" id="email" type="email" name="email" value="{{ old('email') }}" required autofocus>
     </div>
 
     <div class="mb-6 {{ $errors->has('password') ? ' has-error' : '' }}">
         <label class="block font-bold mb-2" for="password">{{ __('Password') }}</label>
-        <input class="p-2 w-full" id="password" type="password" name="password" required>
+        <input class="p-2 w-full text-black" id="password" type="password" name="password" required>
     </div>
 
     <div class="flex mb-6">

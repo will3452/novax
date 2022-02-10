@@ -20532,7 +20532,8 @@ var render = function () {
                 expression: "collegeId",
               },
             ],
-            staticClass: "p-2 border border-gray-400 w-full md:w-8/12",
+            staticClass:
+              "p-2 border border-gray-400 text-gray-900 w-full md:w-8/12",
             attrs: { name: "college", id: "course" },
             on: {
               change: [
@@ -20586,7 +20587,8 @@ var render = function () {
                 expression: "courseId",
               },
             ],
-            staticClass: "p-2 border border-gray-400 w-full md:w-8/12",
+            staticClass:
+              "p-2 border border-gray-400 text-gray-900 w-full md:w-8/12",
             attrs: { name: "course", id: "course" },
             on: {
               change: function ($event) {
@@ -20637,7 +20639,8 @@ var render = function () {
                 expression: "clubId",
               },
             ],
-            staticClass: "p-2 border border-gray-400 w-full md:w-8/12",
+            staticClass:
+              "p-2 border border-gray-400 text-gray-900 w-full md:w-8/12",
             attrs: { name: "club", id: "course" },
             on: {
               change: function ($event) {
@@ -20681,7 +20684,7 @@ var staticRenderFns = [
       "label",
       {
         staticClass:
-          "text-gray-800 font-bold block w-4/12 p-0 text-left md:text-right md:px-4 md:pr-6",
+          "text-white font-bold block w-4/12 p-0 text-left md:text-right md:px-4 md:pr-6",
         attrs: { for: "" },
       },
       [
@@ -20698,7 +20701,7 @@ var staticRenderFns = [
       "label",
       {
         staticClass:
-          "text-gray-800 font-bold block w-4/12 p-0 text-left md:text-right md:px-4 md:pr-6",
+          "text-white font-bold block w-4/12 p-0 text-left md:text-right md:px-4 md:pr-6",
         attrs: { for: "" },
       },
       [
@@ -20715,7 +20718,7 @@ var staticRenderFns = [
       "label",
       {
         staticClass:
-          "text-gray-800 font-bold block w-4/12 p-0 text-left md:text-right md:px-4 md:pr-6",
+          "text-white font-bold block w-4/12 p-0 text-left md:text-right md:px-4 md:pr-6",
         attrs: { for: "" },
       },
       [

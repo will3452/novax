@@ -17,19 +17,22 @@
     </style>
 </head>
 <body style="background:#0F021B !important;" class="text-white">
-    <x-home-nav></x-home-nav>
-    {{$slot}}
-    <footer>
-        <div class="flex justify-center mt-4">
-            <img src="/bru_assets/circle_logo.png" alt="circle logo" class="w-20">
-        </div>
-        <x-home-text-container>
-            We’d love for you to join our growing BRU family!
-            <h2 class="text-center font-bold text-2xl">
-                BRUMULTIVERSE
-            </h2>
-            Immerse yourself, experience and be part of each university story on e-books, audio books, short videos and songs from authors and artists around the globe!
-        </x-home-text-container>
-    </footer>
+    <div id="app">
+        <x-home-nav></x-home-nav>
+        {{$slot}}
+        <footer>
+            <div class="flex justify-center mt-4">
+                <img src="/bru_assets/circle_logo.png" alt="circle logo" class="w-20">
+            </div>
+            <x-home-text-container>
+                We’d love for you to join our growing BRU family!
+                <h2 class="text-center font-bold text-2xl">
+                    BRUMULTIVERSE
+                </h2>
+                Immerse yourself, experience and be part of each university story on e-books, audio books, short videos and songs from authors and artists around the globe!
+            </x-home-text-container>
+        </footer>
+    </div>
+    <script src="/js/app.js"></script>
 </body>
 </html>

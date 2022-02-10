@@ -35,7 +35,7 @@ class UserRequest extends FormRequest
             'address' => 'required',
             'country' => 'required',
             'city' => 'required',
-            'birth_date' => ['required',new  ValidAge],
+            'birth_date' => ['required',new ValidAge],
             'email' => ['required', 'unique:users,email'],
             'password' => ['required', 'confirmed', 'min:6'],
             'college' => 'required',
