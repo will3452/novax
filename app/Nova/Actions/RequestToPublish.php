@@ -24,7 +24,15 @@ class RequestToPublish extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
+        if (! auth()->user()->can('create publish approval')) {
+            return Action::danger('You don\'t have permission to send request.');
+        }
         foreach ($models as $model) {
+
+            if ($model->published_at != null) {
+                return Action::danger('The work was already Published!');
+            }
+
             $model->publishApprovals()->create([
                 'notes' => $fields['notes'],
                 'user_id' => auth()->id(),
