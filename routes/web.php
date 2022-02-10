@@ -20,10 +20,13 @@ use App\Http\Controllers\EmailVerificationController;
 //home
 Route::redirect('/', '/welcome');
 Route::view('/welcome', 'Home')->name('welcome');
+Route::view('/about', 'About')->name('about');
+Route::view('/contact', 'Contact')->name('contact');
 Route::redirect('/home', Nova::path());
+Route::view(Nova::path() . '/login', 'vendor.nova.auth.login')->name('login');
 
 //registration
-Route::get('/register', [RegisterController::class, 'registerScholar']);
+Route::get('/register', [RegisterController::class, 'registerScholar'])->name('register.scholar');
 Route::post('/register', [RegisterController::class, 'registerScholarPost']);
 
 

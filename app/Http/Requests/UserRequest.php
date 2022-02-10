@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\ValidAan;
+use App\Rules\ValidAge;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserRequest extends FormRequest
@@ -34,7 +35,7 @@ class UserRequest extends FormRequest
             'address' => 'required',
             'country' => 'required',
             'city' => 'required',
-            'birth_date' => 'required',
+            'birth_date' => ['required',new  ValidAge],
             'email' => ['required', 'unique:users,email'],
             'password' => ['required', 'confirmed', 'min:6'],
             'college' => 'required',

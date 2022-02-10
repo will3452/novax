@@ -1,4 +1,4 @@
 @props(['href'=>''])
-<a href="{{$href}}" class="underline text-sm font-bold text-gray-500 uppercase">
+<a href="{{$href}}" class="underline text-sm font-bold text-gray-100 uppercase">
     {{$slot}}
 </a>
