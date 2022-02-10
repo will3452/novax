@@ -15,7 +15,7 @@ class LargeMedia extends Media
     public static $model = \App\Models\File::class;
 
     public static function label() {
-        return 'file';
+        return 'File';
     }
 
     public static function availableForNavigation(Request $request)
