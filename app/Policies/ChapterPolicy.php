@@ -18,7 +18,7 @@ class ChapterPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->can('view list: chapter');
     }
 
     /**
@@ -30,7 +30,7 @@ class ChapterPolicy
      */
     public function view(User $user, Chapter $chapter)
     {
-        //
+        return $user->can('view details: chapter');
     }
 
     /**
@@ -41,7 +41,7 @@ class ChapterPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('create chapter');
     }
 
     /**
@@ -53,7 +53,7 @@ class ChapterPolicy
      */
     public function update(User $user, Chapter $chapter)
     {
-        //
+        return $user->can('update chapter');
     }
 
     /**
@@ -65,7 +65,7 @@ class ChapterPolicy
      */
     public function delete(User $user, Chapter $chapter)
     {
-        //
+        return $user->can('delete chapter');
     }
 
     /**
@@ -77,7 +77,7 @@ class ChapterPolicy
      */
     public function restore(User $user, Chapter $chapter)
     {
-        //
+        return $user->can('restore chapter');
     }
 
     /**
