@@ -6,7 +6,7 @@
              @csrf
              <x-vspace>
                 <div class="text-right">
-                    <x-link href="/register"><div class="flex items-center">Register As Scholar <x-angle-icon></x-angle-icon></div></x-link>
+                    <x-link href="/register"><div class="flex items-center">Register As Student <x-angle-icon></x-angle-icon></div></x-link>
                 </div>
              </x-vspace>
               <x-vspace>
