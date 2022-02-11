@@ -17,11 +17,13 @@ use Laravel\Nova\Fields\Image;
 use App\Nova\Metrics\ArtScenes;
 use Laravel\Nova\Fields\Number;
 use App\Nova\Metrics\AudioBooks;
-use Elezerk\BruProfile\BruProfile;
 use Laravel\Nova\Fields\Textarea;
 use Spatie\BackupTool\BackupTool;
+use Elezerk\BruProfile\BruProfile;
 use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
+use Giuga\LaravelNovaSidebar\NovaSidebar;
+use Giuga\LaravelNovaSidebar\SidebarLink;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -154,6 +156,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
+            (new NovaSidebar())
+                ->addLink((new SidebarLink())->setUrl('/library')->setType('_blank')->setName('Library')),
             (new ProfileTool)->canSee(function () {
                 return config('novax.profile_enabled');
             }),

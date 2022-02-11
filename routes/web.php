@@ -15,7 +15,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\FileUploaderController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\EmailVerificationController;
-
+use App\Http\Controllers\LibraryController;
 
 //home
 Route::redirect('/', '/welcome');
@@ -71,3 +71,8 @@ Route::post('/upload-large-file', [FileUploaderController::class, 'upload']);
 //contact us, to get aan, concerns,
 Route::get('/contact-form', fn () => view('contact-form'));
 Route::post('/contact-form', [InquiryController::class, 'submit']);
+
+//works
+Route::get('/library', [LibraryController::class, 'index']);
+Route::get('/library/{book}', [LibraryController::class, 'show']);
+Route::Get('/library/{book}/chapters', [LibraryController::class, 'read']);
