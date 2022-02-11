@@ -93,9 +93,10 @@ class AddPermission extends Command
                 // "account",
                 // "series",
                 // "file",
-                "collection",
-                "album",
-                'publish approval',
+                // "collection",
+                // "album",
+                // 'publish approval',
+                'brunity',
             ];
             $arr = collect($rawArray)->filter(fn ($a) => strlen($a));
         }

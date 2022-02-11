@@ -15,7 +15,6 @@
     <x-home-text-container>
         The brainchild of Khiara Laurea and Miel Salva, BRUMULTIVERSE is vast, having multifold dimensions and realms, and parallel realities and universes, characters that come to life in the dead of night, and names that echo whispered dreams and stirred feelings. It is an immense plane, where billions of stories, waiting to be told, exist. Some of the best ones have already been written, while others await their rightful storytellers.
     </x-home-text-container>
-
     {{-- art picture --}}
     <div
     style="
