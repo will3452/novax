@@ -2,31 +2,12 @@
     <h1 class="my-10"></h1>
     <x-container>
         <div class="w-11/12 md:w-8/12 mx-auto">
-          <form action="/register-scholar" method="POST" enctype="multipart/form-data">
+          <form action="/register" method="POST" enctype="multipart/form-data">
              @csrf
-             <x-vspace>
+              <x-vspace>
                 <div class="text-right">
-                    <x-link href="/register"><div class="flex items-center">Register As Scholar <x-angle-icon></x-angle-icon></div></x-link>
+                    <x-link href="/register-scholar"><div class="flex items-center">Register As Scholar <x-angle-icon></x-angle-icon></div></x-link>
                 </div>
-             </x-vspace>
-              <x-vspace>
-                 <x-form-input name="aan" label="AAN" is-required="true">
-                     <x-link href="/contact-form">I have no AAN.</x-link>
-                 </x-form-input>
-              </x-vspace>
-              <x-vspace>
-                 <x-form-input type="select" name="role" is-required="true" label="Register As"
-                 :options="[
-                     [
-                         'label' => \App\Models\User::ROLE_AUTHOR,
-                         'value' => \App\Models\User::ROLE_AUTHOR,
-                    ],
-                    [
-                         'label' => \App\Models\User::ROLE_ARTIST,
-                         'value' => \App\Models\User::ROLE_ARTIST,
-                     ],
-                     ]"
-                 ></x-form-input>
              </x-vspace>
               <x-vspace>
                  <x-form-input name="first_name" label="First Name" is-required="true"></x-form-input>

@@ -9,7 +9,7 @@ class UserObserver
 {
     public function created(User $user)
     {
-        $role = Role::loadRole($user->role);
+        $role = Role::loadRole($user->role ?? User::ROLE_NORMAL);
         $user->assignRole($role);
     }
 }

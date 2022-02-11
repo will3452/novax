@@ -28,8 +28,10 @@ Route::view(Nova::path() . '/login', 'vendor.nova.auth.login')->name('login');
 
 
 //registration
-Route::get('/register', [RegisterController::class, 'registerScholar'])->name('register.scholar');
-Route::post('/register', [RegisterController::class, 'registerScholarPost']);
+Route::get('/register-scholar', [RegisterController::class, 'registerScholar'])->name('register.scholar');
+Route::get('/register', [RegisterController::class, 'registerStudent'])->name('register');
+Route::post('/register-scholar', [RegisterController::class, 'registerScholarPost']);
+Route::post('/register', [RegisterController::class, 'registerStudentPost']);
 
 
 //artisan helper -- turn the website down or up

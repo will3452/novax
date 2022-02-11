@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Role;
+use App\Models\User;
 use Laravel\Nova\Nova;
 use Pdmfc\NovaCards\Info;
 use App\Nova\Metrics\Books;
@@ -83,6 +84,23 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
+        if (auth()->user()->hasRole(User::ROLE_NORMAL)) { // this will check if the user is student
+            return [
+                (new Info())
+                ->warning('
+                <div class="flex justify-between w-full items-center">
+                    Please verify your email address.
+                    <a target="_blank"href="/send-email-verification-notification" class="mx-4 btn btn-default block btn-primary">Send Verification.</a>
+                </div>
+                ')
+                ->asHtml()
+                ->canSee(fn () =>
+                    ! optional(auth()->user())->hasRole(Role::SUPERADMIN) &&
+                    ! optional(auth()->user())->hasVerifiedEmail()
+                ),
+            ];
+        }
+
         return [
             (new Users())
                 ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
@@ -143,11 +161,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
                 config('novax.back_up_enabled');
             }),
+            (new BruProfile)->canSee(fn ($request) => ! $request->user()->hasRole(User::ROLE_NORMAL)),
             (new NovaSettings)->canSee(function ($request) {
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
                 config('novax.setting_enabled');
             }),
-            (new BruProfile),
         ];
     }
 

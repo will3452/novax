@@ -10,7 +10,7 @@
         <x-home-nav-link href="/contact" :isActive="url()->current() === route('contact')">
             Contact
         </x-home-nav-link>
-        <x-home-nav-link href="{{route('register.scholar')}}" :isActive="url()->current() === route('register.scholar')">
+        <x-home-nav-link href="/register" :isActive="url()->current() === route('register.scholar') || url()->current() === route('register')">
             Sign Up
         </x-home-nav-link>
         <x-home-nav-link href="{{Nova::path()}}" :isActive="url()->current() === route('login')">
