@@ -7,14 +7,20 @@
     <title>Document</title>
 </head>
 <body>
+
     @foreach ($chapters as $chapter)
+        <a href="/library/{{$chapter->model->id}}">Back to book details.</a>
         <h3>
             Chapter Title: {{$chapter->title}}
         </h3>
-        <div>
-            {!!$chapter->content!!}
-        </div>
+        @if ($chapter->model->category->file_type === \App\Models\Category::FILE_TYPE_TEXT)
+            <div>
+                {!!$chapter->content!!}
+            </div>
+        @else
+            <iframe src="/storage/{{$chapter->content}}" frameborder="0" width="400" height="700"></iframe>
+        @endif
     @endforeach
-    {{$chapters}}
+    {{$chapters->links()}}
 </body>
 </html>
