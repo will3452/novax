@@ -13,7 +13,7 @@ class LibraryController extends Controller
         if (request()->has('keyword')) {
             $keyword = request()->keyword;
             $books = Book::published()->where('title', "LIKE", "%$keyword%")->get();
-        }else {
+        } else {
             $books = Book::published()->get();
         }
 
