@@ -65,7 +65,7 @@ class RegisterController extends Controller
 
     public function registerStudent()
     {
-        return view('register_student');
+        return view('Register_student');
     }
 
     public function registerStudentPost(StudentUserRequest $request)
