@@ -16,6 +16,7 @@ use Laravel\Nova\Fields\Image;
 use App\Nova\Metrics\ArtScenes;
 use Laravel\Nova\Fields\Number;
 use App\Nova\Metrics\AudioBooks;
+use Elezerk\BruProfile\BruProfile;
 use Laravel\Nova\Fields\Textarea;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
@@ -144,6 +145,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
                 config('novax.setting_enabled');
             }),
+            (new BruProfile),
         ];
     }
 

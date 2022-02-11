@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "00495ea4a061dcd918344c751b8c2a0c",
+    "content-hash": "0ed00c284226c885dfc654bc343d197c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1096,6 +1096,42 @@
             }
         },
         {
+            "name": "elezerk/bru-profile",
+            "version": "dev-the-brumultiverse-com",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/BruProfile",
+                "reference": "152f8e305ad0c17b414b20332aca9940588d220d"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Elezerk\\BruProfile\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Elezerk\\BruProfile\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova tool.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "elezerk/large-file",
             "version": "dev-the-brumultiverse-com",
             "dist": {
@@ -1703,16 +1739,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.82.0",
+            "version": "v8.83.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "411d5243c58cbf12b0fc89cab1ceb50088968c27"
+                "reference": "29bc8779103909ebc428478b339ee6fa8703e193"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/411d5243c58cbf12b0fc89cab1ceb50088968c27",
-                "reference": "411d5243c58cbf12b0fc89cab1ceb50088968c27",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/29bc8779103909ebc428478b339ee6fa8703e193",
+                "reference": "29bc8779103909ebc428478b339ee6fa8703e193",
                 "shasum": ""
             },
             "require": {
@@ -1872,7 +1908,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-02-01T16:13:57+00:00"
+            "time": "2022-02-08T15:44:51+00:00"
         },
         {
             "name": "laravel/nova",
@@ -3126,16 +3162,16 @@
         },
         {
             "name": "optimistdigital/nova-settings",
-            "version": "3.5.0",
+            "version": "3.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/optimistdigital/nova-settings.git",
-                "reference": "72c1a09539a70ef0cf8b6d1a7d8a498218fa3dbf"
+                "reference": "cf415e1c9e4b28e36e00d1754df81fba9aedf42e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/optimistdigital/nova-settings/zipball/72c1a09539a70ef0cf8b6d1a7d8a498218fa3dbf",
-                "reference": "72c1a09539a70ef0cf8b6d1a7d8a498218fa3dbf",
+                "url": "https://api.github.com/repos/optimistdigital/nova-settings/zipball/cf415e1c9e4b28e36e00d1754df81fba9aedf42e",
+                "reference": "cf415e1c9e4b28e36e00d1754df81fba9aedf42e",
                 "shasum": ""
             },
             "require": {
@@ -3158,12 +3194,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "OptimistDigital\\NovaSettings\\": "src/"
-                },
                 "files": [
                     "./src/helpers.php"
-                ]
+                ],
+                "psr-4": {
+                    "OptimistDigital\\NovaSettings\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -3176,7 +3212,7 @@
             ],
             "support": {
                 "issues": "https://github.com/optimistdigital/nova-settings/issues",
-                "source": "https://github.com/optimistdigital/nova-settings/tree/3.5.0"
+                "source": "https://github.com/optimistdigital/nova-settings/tree/3.5.1"
             },
             "funding": [
                 {
@@ -3184,7 +3220,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-17T13:35:33+00:00"
+            "time": "2022-02-07T08:17:09+00:00"
         },
         {
             "name": "optimistdigital/nova-translations-loader",
@@ -4593,12 +4629,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Spatie\\Backup\\": "src"
-                },
                 "files": [
                     "src/Helpers/functions.php"
-                ]
+                ],
+                "psr-4": {
+                    "Spatie\\Backup\\": "src"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -4720,29 +4756,29 @@
         },
         {
             "name": "spatie/nova-backup-tool",
-            "version": "4.1.9",
+            "version": "4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/nova-backup-tool.git",
-                "reference": "fdf01a0f546b9dc31e473d94f8add01c9413d619"
+                "reference": "0d2fa6e77d76749eb04090efe653f815373b54d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/nova-backup-tool/zipball/fdf01a0f546b9dc31e473d94f8add01c9413d619",
-                "reference": "fdf01a0f546b9dc31e473d94f8add01c9413d619",
+                "url": "https://api.github.com/repos/spatie/nova-backup-tool/zipball/0d2fa6e77d76749eb04090efe653f815373b54d9",
+                "reference": "0d2fa6e77d76749eb04090efe653f815373b54d9",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "^7.0|^8.0",
+                "illuminate/support": "^7.0|^8.0|^9.0",
                 "laravel/nova": "^3.0",
                 "nesbot/carbon": "^2.31",
                 "php": "^8.0|^7.3",
-                "spatie/laravel-backup": "^6.0|^7.0"
+                "spatie/laravel-backup": "^6.0|^7.0|^8.0"
             },
             "require-dev": {
-                "orchestra/testbench": "^5.0|^6.0",
+                "orchestra/testbench": "^5.0|^6.0|^7.0",
                 "phpunit/phpunit": "9.3",
-                "spatie/phpunit-snapshot-assertions": "^3.0"
+                "spatie/phpunit-snapshot-assertions": "^3.0|^4.0"
             },
             "type": "library",
             "extra": {
@@ -4777,7 +4813,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/nova-backup-tool/issues",
-                "source": "https://github.com/spatie/nova-backup-tool/tree/4.1.9"
+                "source": "https://github.com/spatie/nova-backup-tool/tree/4.2.0"
             },
             "funding": [
                 {
@@ -4785,7 +4821,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-07-06T23:08:45+00:00"
+            "time": "2022-02-09T07:59:56+00:00"
         },
         {
             "name": "spatie/once",
@@ -7716,12 +7752,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Facade\\Ignition\\": "src"
-                },
                 "files": [
                     "src/helpers.php"
-                ]
+                ],
+                "psr-4": {
+                    "Facade\\Ignition\\": "src"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -7987,16 +8023,16 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.13.1",
+            "version": "v1.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "b9749028732eca8080c26d01cd88a2f3549c2e3e"
+                "reference": "ede5e861549be2c3a8b789cdb34203a5aef5b92a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/b9749028732eca8080c26d01cd88a2f3549c2e3e",
-                "reference": "b9749028732eca8080c26d01cd88a2f3549c2e3e",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/ede5e861549be2c3a8b789cdb34203a5aef5b92a",
+                "reference": "ede5e861549be2c3a8b789cdb34203a5aef5b92a",
                 "shasum": ""
             },
             "require": {
@@ -8043,7 +8079,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2022-01-20T15:31:25+00:00"
+            "time": "2022-02-08T14:14:12+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -8324,16 +8360,16 @@
         },
         {
             "name": "phar-io/version",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phar-io/version.git",
-                "reference": "bae7c545bef187884426f042434e561ab1ddb182"
+                "reference": "15a90844ad40f127afd244c0cad228de2a80052a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phar-io/version/zipball/bae7c545bef187884426f042434e561ab1ddb182",
-                "reference": "bae7c545bef187884426f042434e561ab1ddb182",
+                "url": "https://api.github.com/repos/phar-io/version/zipball/15a90844ad40f127afd244c0cad228de2a80052a",
+                "reference": "15a90844ad40f127afd244c0cad228de2a80052a",
                 "shasum": ""
             },
             "require": {
@@ -8369,9 +8405,9 @@
             "description": "Library for handling version information and constraints",
             "support": {
                 "issues": "https://github.com/phar-io/version/issues",
-                "source": "https://github.com/phar-io/version/tree/3.1.0"
+                "source": "https://github.com/phar-io/version/tree/3.1.1"
             },
-            "time": "2021-02-23T14:00:09+00:00"
+            "time": "2022-02-07T21:56:48+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -8980,11 +9016,11 @@
                 }
             },
             "autoload": {
-                "classmap": [
-                    "src/"
-                ],
                 "files": [
                     "src/Framework/Assert/Functions.php"
+                ],
+                "classmap": [
+                    "src/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -9527,16 +9563,16 @@
         },
         {
             "name": "sebastian/global-state",
-            "version": "5.0.3",
+            "version": "5.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/global-state.git",
-                "reference": "23bd5951f7ff26f12d4e3242864df3e08dec4e49"
+                "reference": "19c519631c5a511b7ed0ad64a6713fdb3fd25fe4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/23bd5951f7ff26f12d4e3242864df3e08dec4e49",
-                "reference": "23bd5951f7ff26f12d4e3242864df3e08dec4e49",
+                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/19c519631c5a511b7ed0ad64a6713fdb3fd25fe4",
+                "reference": "19c519631c5a511b7ed0ad64a6713fdb3fd25fe4",
                 "shasum": ""
             },
             "require": {
@@ -9579,7 +9615,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/global-state/issues",
-                "source": "https://github.com/sebastianbergmann/global-state/tree/5.0.3"
+                "source": "https://github.com/sebastianbergmann/global-state/tree/5.0.4"
             },
             "funding": [
                 {
@@ -9587,7 +9623,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-06-11T13:31:12+00:00"
+            "time": "2022-02-10T07:01:19+00:00"
         },
         {
             "name": "sebastian/lines-of-code",

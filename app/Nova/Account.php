@@ -3,20 +3,21 @@
 namespace App\Nova;
 
 use App\Models\User;
-use App\Nova\Actions\ApproveAccount;
-use App\Nova\Traits\ForUserIndividualOnly;
+use Pdmfc\NovaCards\Info;
 use Laravel\Nova\Fields\ID;
+use App\Rules\ShouldChecked;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Badge;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Country;
-use Laravel\Nova\Fields\Hidden;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Image;
-use Pdmfc\NovaCards\Info;
+use Laravel\Nova\Fields\Hidden;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Country;
+use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Actions\ApproveAccount;
+use App\Nova\Traits\ForUserIndividualOnly;
 
 class Account extends Resource
 {
@@ -76,6 +77,7 @@ class Account extends Resource
                 ]),
 
             Text::make('PenName', 'penname')
+                ->hideWhenUpdating(fn () => $this->approved_at !== null)
                 ->rules(['required', 'unique:accounts,penname,{{resourceId}}']),
 
             Country::make('Country')
@@ -90,7 +92,10 @@ class Account extends Resource
 
             Image::make('Picture')
                 ->help('maximum of 5mb only')
-                ->rules(['required', 'max:5000', 'image'])
+                ->rules(['required', 'max:5000', 'image']),
+            Boolean::make('Copyright Disclaimer')
+                ->help(nova_get_setting('copyright_disclaimer'))
+                ->rules(['required', (new ShouldChecked)]),
         ];
     }
 

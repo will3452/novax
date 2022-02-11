@@ -9,7 +9,9 @@
         "prod": "npm run production",
         "production": "mix --production",
         "build-large-file": "cd nova-components/LargeFile && npm run dev",
-        "build-large-file-prod": "cd nova-components/LargeFile && npm run prod"
+        "build-large-file-prod": "cd nova-components/LargeFile && npm run prod",
+        "build-bru-profile": "cd nova-components/BruProfile && npm run dev",
+        "build-bru-profile-prod": "cd nova-components/BruProfile && npm run prod"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.2",

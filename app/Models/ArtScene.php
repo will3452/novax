@@ -20,6 +20,10 @@ class ArtScene extends Model implements TaggableInterface
         HasPublishApproval,
         TaggableTrait;
 
+    protected $with = [
+        'artFile',
+    ];
+
     protected $fillable = [
         'title',
         'description',
