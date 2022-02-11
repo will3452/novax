@@ -17,17 +17,17 @@ class LibraryController extends Controller
             $books = Book::published()->get();
         }
 
-        return view('initial.library_index', compact('books'));
+        return view('Initial.library_index', compact('books'));
     }
 
     public function show(Book $book)
     {
-        return view('initial.library_show', compact('book'));
+        return view('Initial.library_show', compact('book'));
     }
 
     public function read(Book $book)
     {
         $chapters = $book->chapters()->simplePaginate(1);
-        return view('initial.library_read', compact('chapters'));
+        return view('Initial.library_read', compact('chapters'));
     }
 }
