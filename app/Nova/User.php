@@ -125,6 +125,7 @@ class User extends Resource
                         (static::$model)::ROLE_NORMAL => (static::$model)::ROLE_NORMAL,
                         (static::$model)::ROLE_AUTHOR => (static::$model)::ROLE_AUTHOR,
                         (static::$model)::ROLE_ARTIST => (static::$model)::ROLE_ARTIST,
+                        'Other' => 'Other',
                 ])->rules(['required']),
 
             Text::make('Email')
