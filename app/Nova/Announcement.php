@@ -64,10 +64,10 @@ class Announcement extends Resource
                 ->exceptOnForms()
                 ->sortable(),
 
-            Text::make('Title')
+            Text::make('Title') // short text
                 ->rules('required'),
 
-            Textarea::make('Body')
+            Textarea::make('Body') // long text
                 ->alwaysShow()
                 ->rules(['required', 'max:200']),
         ];
