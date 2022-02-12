@@ -1,14 +1,17 @@
 <?php
 
-use App\Aes as AppAes;
 use App\AES128;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\RegisterController;
+use App\Models\Image;
+use App\Aes as AppAes;
+use phpseclib3\Crypt\AES;
+use Illuminate\Http\Request;
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
-use phpseclib3\Crypt\AES;
+use App\Http\Controllers\RegisterController;
+use Illuminate\Http\Response;
 
 Route::redirect('/', Nova::path());
 
@@ -48,4 +51,20 @@ Route::post('/enc', function () {
 Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);
     return $result;
+});
+
+Route::get('/view-file', function (Request $request) {
+    $image = Image::findOrFail($request->model);
+    $key = $request->key;
+
+
+    //decryption
+    $aes = new AES128($key);
+    $file = Storage::get('/public/' . $image->path);
+    $result = $aes->decrypt($file);
+
+    return response()->stream(function () use ($result) {
+        $img = @imagecreatefromstring($result);
+        imagejpeg($img);
+    }, 200, ['content-type' => 'image/jpeg']);
 });

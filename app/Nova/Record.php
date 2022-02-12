@@ -42,6 +42,14 @@ class Record extends Resource
         'created_at',
     ];
 
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (auth()->user()->hasRole(\App\Models\User::ROLE_PATIENT)) {
+            return $query->whereUserId(auth()->id());
+        }
+        return $query;
+    }
+
     public static function authorizedToCreate(Request $request)
     {
         return auth()->user()->hasRole(Role::SUPERADMIN);
@@ -82,7 +90,7 @@ class Record extends Resource
                 ->help('maximum of 500 characters only.')
                 ->rules(['max:500']),
 
-            HasMany::make('Test Items', 'testItems', TestItem::class),
+            HasMany::make('Tests', 'testItems', TestItem::class),
 
             MorphMany::make('X-ray Images', 'images', Image::class),
         ];

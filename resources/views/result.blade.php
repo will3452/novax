@@ -7,7 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-    <img src="data:image/png;base64,{!!base64_decode($encrypted)!!}" alt="encrypted image" style="display:block;height:130px;width:100px;border:2px solid red;">
-    <img src="data:image/png;base64,{!!base64_encode($decrypted)!!}" alt="" style="display:block;height:130px;width:100px;border:2px solid red;">
+    <img src="data:image/png;base64,{!!base64_encode($result)!!}" alt="" style="display:block;height:130px;width:100px;border:2px solid red;">
 </body>
 </html>

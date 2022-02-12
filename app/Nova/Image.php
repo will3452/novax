@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Models\Role;
+use App\Nova\Actions\DecryptImage;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
@@ -61,6 +62,11 @@ class Image extends Resource
         'id',
     ];
 
+    public function canSeeKey()
+    {
+        return fn () => true;
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -75,11 +81,10 @@ class Image extends Resource
                 ->sortable(),
             MorphTo::make('Model', 'model'),
             File::make('Image', 'path')
-                ->rules(['required'])
-                ->disableDownload(),
+                ->rules(['required']),
             Text::make('Key')
                 ->exceptOnForms()
-                ->canSee(fn () => optional($this->model)->user_id === auth()->id() || auth()->user()->hasRole(Role::SUPERADMIN)),
+                ->canSee($this->canSeeKey()),
             Badge::make('Status', fn () => ! is_null($this->opened_at) ? 'Seen' : 'Not Seen' )
                 ->map([
                     'Seen' => 'success',
@@ -129,6 +134,11 @@ class Image extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+
+        $model = (self::$model)::find($request->resourceId ?? 1);
+        return [
+            (new DecryptImage($model))
+                ->showOnTableRow(),
+        ];
     }
 }

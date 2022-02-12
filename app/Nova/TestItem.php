@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
@@ -29,6 +31,42 @@ class TestItem extends Resource
      * @var string
      */
     public static $title = 'id';
+
+    public function isAuthorized(): bool
+    {
+        if (auth()->user()->hasRole(User::ROLE_DOCTOR)) {
+            return true;
+        }
+
+        if (auth()->user()->hasRole(Role::SUPERADMIN)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        if (auth()->user()->hasRole(User::ROLE_DOCTOR)) {
+            return true;
+        }
+
+        if (auth()->user()->hasRole(Role::SUPERADMIN)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return $this->isAuthorized();
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return $this->isAuthorized();
+    }
 
     /**
      * The columns that should be searched.

@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Models\Role;
 use App\Models\User as ModelsUser;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -16,6 +17,11 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->hasRole(Role::SUPERADMIN);
+    }
+
     public static function indexQuery(NovaRequest $request, $query)
     {
         return $query->where('email', '!=', 'super@admin.com');
