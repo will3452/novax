@@ -2,39 +2,33 @@
 
 namespace App\Nova;
 
-use App\Models\User as ModelsUser;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
-use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class TestItem extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'super@admin.com');
-    }
 
     public static $group = 'Data';
+
+    public static $displayInNavigation = false;
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\TestItem::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -42,7 +36,8 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'created_at',
+        'name',
     ];
 
     /**
@@ -54,42 +49,19 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-
-            Select::make('Role')
-                ->options([
-                    ModelsUser::ROLE_DOCTOR => ModelsUser::ROLE_DOCTOR,
-                    ModelsUser::ROLE_PATIENT => ModelsUser::ROLE_PATIENT,
-                ])->rules(['required']),
-
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Number::make('Phone')
-                ->rules(['required', 'unique:users,phone,{{resourceId}}']),
-
-            Text::make('Address')
+            BelongsTo::make('Record')
                 ->rules(['required']),
-
-            Date::make('Date of birth')
+            Text::make('Test Name', 'name')
                 ->rules(['required']),
-
-            Select::make('Gender')
-                ->options([
-                    'Male' => 'Male',
-                    'Female' => 'Female',
-                ]),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+            DateTime::make('Date')
+                ->rules(['required']),
+            Textarea::make('Result')
+                ->alwaysShow()
+                ->rules(['max:500']),
+            Text::make('Conducted By'),
+            Textarea::make('Diagnosis Summary')
+                ->alwaysShow()
+                ->rules(['max:500']),
         ];
     }
 

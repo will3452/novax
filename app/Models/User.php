@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasRecords;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -11,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasRecords;
 
     /**
      * The attributes that are mass assignable.
@@ -21,8 +22,16 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'address',
+        'gender',
+        'phone',
+        'date_of_birth',
         'password',
+        'role', //patient,doctor, admin
     ];
+
+    const ROLE_PATIENT = 'Patient';
+    const ROLE_DOCTOR = 'Doctor';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -41,5 +50,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'date_of_birth' => 'datetime',
     ];
 }

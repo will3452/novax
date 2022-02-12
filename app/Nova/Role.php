@@ -21,6 +21,16 @@ class Role extends Resource
         return config('novax.role_enabled', false);
     }
 
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return false;
+    }
+
     public static $group = 'access Control';
     /**
      * The model the resource corresponds to.
@@ -61,13 +71,7 @@ class Role extends Resource
     {
         return [
             Text::make(__('Name'), 'name')
-                ->readonly(function () {
-                    /** @phpstan-ignore-next-line */
-                    if ($this->name === \App\Models\Role::SUPERADMIN) {
-                        return true;
-                    }
-                    return false;
-                })
+                ->readonly()
                 ->rules(['required', 'string', 'max:125'])
                 ->creationRules('unique:' . config('permission.table_names.roles'))
                 ->updateRules('unique:' . config('permission.table_names.roles') . ',name,{{resourceId}}'),
