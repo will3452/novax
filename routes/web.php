@@ -28,22 +28,20 @@ Route::get('/test', function () {
 Route::post('/enc', function () {
     $image = request()->image->get();
 
-    $image = base64_encode($image);
-
-
-    $key = AES128::generateKey();
-
-    $aes = new AES128($key);
-
-    $encrypted = $aes->encrypt($image);
-
-    $filename = uniqid() . '.dat';
-
-    Storage::put("public/$filename", $encrypted);
-
-    $decrypted = base64_decode($aes->decrypt($encrypted));
-
-    return view('result', compact('encrypted', 'decrypted'));
+    $im = @imagecreatefromstring($image);
+    $colors = [];
+    $width = imagesx($im) / 3;
+    $height = imagesy($im) / 3;
+    for ( $x = 0; $x < $width; $x++) {
+        for ($y = 0; $y < $height; $y++) {
+            $rgb = imagecolorat($im, $x, $y);
+            $r = ($rgb >> 16) & 0xFF;
+            $g = ($rgb >> 8) & 0xFF;
+            $b = $rgb & 0xFF;
+            $colors[$x][$y] = ['r' => $r, 'g' => $g, 'b' => $b];
+        }
+    }
+    return view('result', compact('colors', 'height', 'width'));
 });
 
 
@@ -68,3 +66,5 @@ Route::get('/view-file', function (Request $request) {
         imagejpeg($img);
     }, 200, ['content-type' => 'image/jpeg']);
 });
+
+Route::get('/reports', fn () => 'no report found.');

@@ -17,9 +17,13 @@ class RegisterController extends Controller
         $data = request()->validate([
             'name' => 'required',
             'email' => 'required|unique:users,email',
-            'password' => 'required|confirmed|min:6'
+            'password' => 'required|confirmed|min:6',
+            'address' => 'required',
+            'gender' => 'required',
+            'date_of_birth' => 'required',
         ]);
         $data['password'] = bcrypt($data['password']);
+        $data['role'] = User::ROLE_PATIENT;
         $user = User::create($data);
         return back()->withSuccess('success');
     }
