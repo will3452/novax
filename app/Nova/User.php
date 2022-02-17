@@ -2,12 +2,21 @@
 
 namespace App\Nova;
 
+use App\Models\User as ModelsUser;
+use App\Nova\Actions\Block;
+use App\Nova\Actions\SetActive;
+use App\Nova\Filters\User\Status;
+use App\Nova\Filters\User\Type;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
@@ -17,7 +26,6 @@ class User extends Resource
         return $query->where('email', '!=', 'super@admin.com');
     }
 
-    public static $group = 'Data';
     /**
      * The model the resource corresponds to.
      *
@@ -50,11 +58,41 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            Image::make('Image')
+                ->rules(['max:2000']),
+
+            Date::make('Registered At', 'created_at')
+                ->exceptOnForms()
+                ->sortable(),
 
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
+
+            Select::make('Gender')
+                ->options([
+                    'Male' => 'Male',
+                    'Female' => 'Female'
+                ])->rules(['required']),
+
+            Date::make('BirthDate', 'birth_date')
+                ->rules(['required']),
+
+            Text::make('Address')
+                ->rules(['required']),
+
+            Select::make('Type')
+                ->options([
+                    ModelsUser::TYPE_STAFF => ModelsUser::TYPE_STAFF,
+                    ModelsUser::TYPE_PATIENT => ModelsUser::TYPE_PATIENT,
+                ])->rules(['required']),
+
+            Badge::make('Status')
+                ->map([
+                    ModelsUser::STATUS_ACTIVE => 'success',
+                    ModelsUser::STATUS_BLOCKED => 'danger',
+                    ModelsUser::STATUS_PENDING => 'warning',
+                ]),
 
             Text::make('Email')
                 ->sortable()
@@ -66,8 +104,6 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
-
-            MorphToMany::make('Roles', 'roles', Role::class),
         ];
     }
 
@@ -90,7 +126,10 @@ class User extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            (new Status),
+            (new Type),
+        ];
     }
 
     /**
@@ -112,6 +151,9 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new Block),
+            (new SetActive),
+        ];
     }
 }
