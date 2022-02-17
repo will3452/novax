@@ -18,6 +18,10 @@ use SLASH2NL\NovaBackButton\NovaBackButton;
 
 class Course extends Resource
 {
+    public static function label()
+    {
+        return "Studies";
+    }
     public static function indexQuery(NovaRequest $request, $query)
     {
         if (auth()->user()->hasRole(User::TYPE_INSTRUCTOR)) {

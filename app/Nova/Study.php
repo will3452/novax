@@ -9,6 +9,11 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Study extends Resource
 {
+
+    public static function label()
+    {
+        return "Courses";
+    }
     /**
      * The model the resource corresponds to.
      *
