@@ -3,6 +3,8 @@
 namespace App\Nova;
 
 use App\Models\Study;
+use App\Nova\Actions\DownloadImportStudentTemplate;
+use App\Nova\Actions\ImportStudent;
 use App\Nova\Filters\TypeOfUser;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -131,6 +133,11 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadImportStudentTemplate)
+                ->standalone(),
+            (new ImportStudent)
+                ->standalone()
+        ];
     }
 }

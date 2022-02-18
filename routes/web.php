@@ -34,3 +34,5 @@ Route::get('/take-quiz', [AttemptController::class, 'attempt'])
     ->middleware('auth');
 
 Route::post('/submit-answers', [AttemptController::class, 'checkAnswers']);
+
+Route::get('/error', fn () => 'Error! please contact your instructor!');

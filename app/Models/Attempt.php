@@ -15,6 +15,7 @@ class Attempt extends Model
         'status',
         'score',
         'number_of_items',
+        'video',
     ];
 
     const STATUS_IN_PROGRESS = 'In-Progress';
@@ -49,6 +50,7 @@ class Attempt extends Model
 
     public function markAs($type, $score = 0, $items = 0)
     {
+
          $this->update([
             'status' => $type,
             'score' => $score,

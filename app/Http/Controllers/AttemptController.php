@@ -45,7 +45,8 @@ class AttemptController extends Controller
     public function renderQuestions($model)
     {
         // return $model;
-        return view('quiz_show', compact('model'));
+        $attempt = $this->getAttempt($model);
+        return view('quiz_show', compact('model', 'attempt'));
     }
 
 

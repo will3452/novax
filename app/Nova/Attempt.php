@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\File;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Attempt extends Resource
@@ -75,6 +76,11 @@ class Attempt extends Resource
 
             Number::make('Number Of Items')
                 ->exceptOnForms(),
+
+            Text::make('Screen Record', function () {
+                $path = "/storage/" . $this->video;
+                return "<a href='$path' target='_blank'class='no-underline dim text-primary font-bold'> watch </a>";
+            })->asHtml(),
 
             Text::make('Remarks', fn () =>
                 $this->score === $this->number_of_items ?
