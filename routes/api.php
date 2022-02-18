@@ -33,7 +33,7 @@ Route::post('/save-video', function (Request $request) {
     if ($request->has('is_last') && $request->boolean('is_last')) {
         $name = basename($path, '.part');
 
-        File::move($path,storage_path("app\\public\\" . $name));
+        File::move($path,storage_path("app/public/" . $name));
 
         Attempt::find($request->attempt_id)->update(['video'=>$name]);
     }
