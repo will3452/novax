@@ -159,8 +159,7 @@ class Exam extends Resource
                             $this->isOpen() ||
                             $request->has('action')
                         ) &&
-                        ! optional($this->attempts()->latest()->first())->isDone() &&
-                        $this->questions()->count()
+                        ! optional($this->attempts()->latest()->first())->isDone()
                     )
                 )
                 ->showOnTableRow(),
