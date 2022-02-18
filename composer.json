@@ -29,6 +29,7 @@
         "laravelwebdev/responsive": "^1.0",
         "maatwebsite/excel": "^3.1",
         "optimistdigital/nova-settings": "^3.2",
+        "pdmfc/nova-info-card": "^1.0",
         "richardkeep/nova-timenow": "^1.0",
         "runlinenl/nova-profile-tool": "^1.1",
         "signifly/nova-progressbar-card": "^0.2.1",

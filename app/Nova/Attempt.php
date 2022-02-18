@@ -80,7 +80,8 @@ class Attempt extends Resource
             Text::make('Screen Record', function () {
                 $path = "/storage/" . $this->video;
                 return "<a href='$path' target='_blank'class='no-underline dim text-primary font-bold'> watch </a>";
-            })->asHtml(),
+            }) ->canSee(fn () => get_class($this->attemptable) === \App\Models\Exam::class)
+                ->asHtml(),
 
             Text::make('Remarks', fn () =>
                 $this->score === $this->number_of_items ?

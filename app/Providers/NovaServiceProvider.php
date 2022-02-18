@@ -2,17 +2,18 @@
 
 namespace App\Providers;
 
-use App\Nova\Metrics\TotalNumberOfCourses;
-use App\Nova\Metrics\TotalNumberOfModules;
-use App\Nova\Metrics\TotalNumberOfStudents;
 use Laravel\Nova\Nova;
+use Pdmfc\NovaCards\Info;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Textarea;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
-use Laravel\Nova\Fields\Textarea;
 use Runline\ProfileTool\ProfileTool;
+use App\Nova\Metrics\TotalNumberOfCourses;
+use App\Nova\Metrics\TotalNumberOfModules;
+use App\Nova\Metrics\TotalNumberOfStudents;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use Signifly\Nova\Cards\ProgressBar\ProgressBar;
@@ -69,7 +70,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
-        return [
+        $card = [
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
                 'America/Mexico_City',
@@ -85,6 +86,17 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             (new TotalNumberOfCourses()),
             (new TotalNumberOfModules()),
         ];
+
+        foreach (auth()->user()->unreadNotifications as $n) {
+            $message = $n->data['message'];
+            $time = $n->created_at->diffForHumans();
+            $path = '/mark-as-read/' . $n->id;
+            array_unshift($card, (new Info())
+                ->heading($message)
+                ->info("<div class='flex justify-between items-center'>  $time <a href='$path' class='btn btn-primary btn-xs pt-1 mx-4'>Check now</a></div>")->asHtml());
+        }
+
+        return $card;
     }
 
     /**

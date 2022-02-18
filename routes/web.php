@@ -36,3 +36,10 @@ Route::get('/take-quiz', [AttemptController::class, 'attempt'])
 Route::post('/submit-answers', [AttemptController::class, 'checkAnswers']);
 
 Route::get('/error', fn () => 'Error! please contact your instructor!');
+
+
+Route::get('/mark-as-read/{id}' , function ($id) {
+    $notif = auth()->user()->notifications()->whereId($id)->first();
+    $notif->markAsRead();
+    return redirect()->to(Nova::path() . '/resources/modules/' . $notif->data['module_id']);
+});

@@ -36,7 +36,7 @@
     </div>
     <div id="avatar" class="fixed bottom-0 right-0 w-1/2 flex items-start hidden ">
         <div class="bg-yellow-300 rounded-xl p-4 font-bold text-yellow-900 shadow">
-            {{nova_get_setting('avatar_start_message', "You've 1 hour and 30 mins to ace the quiz or exams! Good luck!")}}
+            {{nova_get_setting('avatar_start_message', "You've 1 hour and 30 mins to ace the exams! Good luck!")}}
         </div>
         <img src="/avatar.png" alt="" class="block w-48 relative animate-bounce">
     </div>
@@ -55,7 +55,11 @@
         // });
         let mediaRecorder = null;
         function submitForm(e) {
-            mediaRecorder.stop();
+            @if(get_class($model) === \App\Models\Quiz::class)
+                mainForm.submit();
+            @else
+                mediaRecorder.stop();
+            @endif
         }
 
         function createChunks(file) {
@@ -104,6 +108,7 @@
         }
 
         async function startRecord () {
+            @if(get_class($model) === \App\Models\Exam::class)
             try {
                 let stream = await navigator.mediaDevices.getDisplayMedia({
                     video: true
@@ -148,9 +153,10 @@
                     avatar.classList.add('hidden');
                 }, 5000);
             }catch {
-                alert("Not having permission to record the screen will cause you to be unable to access this quiz or exam!");
+                alert("Not having permission to record the screen will cause you to be unable to access this exam!");
                 window.location.href = "/error";
             }
+            @endif
 
         }
 
