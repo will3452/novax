@@ -160,7 +160,8 @@ class Quiz extends Resource
                             $this->isOpen() ||
                             $request->has('action')
                         ) &&
-                        ! optional($this->attempts()->latest()->first())->isDone()
+                        ! optional($this->attempts()->latest()->first())->isDone() &&
+                        $this->questions()->count()
                     )
                 )
                 ->showOnTableRow(),
