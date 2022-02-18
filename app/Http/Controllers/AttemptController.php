@@ -112,6 +112,8 @@ class AttemptController extends Controller
         }
         $attemptId = $attempt->id;
 
+        $this->totalItems = $model->questions()->count();
+
         foreach ($answers as $answer) {
 
             [$questionId, $answerId, $type] = $this
@@ -119,7 +121,6 @@ class AttemptController extends Controller
             if ($type === Answer::TYPE_CORRECT) {
                 $this->totalScore ++;
             }
-            $this->totalItems ++;
 
             $newItem = AttemptAnswer::create([
                 'attempt_id' => $attemptId,
