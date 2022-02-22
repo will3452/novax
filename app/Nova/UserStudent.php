@@ -14,6 +14,11 @@ class UserStudent extends Resource
 {
     public static $displayInNavigation = false;
 
+    public static function createButtonLabel()
+    {
+        return 'Create User Parent';
+    }
+
     public static function redirectAfterCreate(NovaRequest $request, $resource)
     {
         return url()->previous(2);

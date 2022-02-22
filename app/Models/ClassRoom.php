@@ -12,6 +12,7 @@ class ClassRoom extends Model
         'name',
         'code',
         'teacher_id',
+        'year_level',
     ];
 
     public function teacher()

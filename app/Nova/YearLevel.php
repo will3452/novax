@@ -2,37 +2,26 @@
 
 namespace App\Nova;
 
-use App\Nova\User;
-use Eminiarts\Tabs\Tab;
-use Eminiarts\Tabs\Tabs;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Select;
-use App\Models\User as UserModel;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use OptimistDigital\MultiselectField\Multiselect;
 
-class ClassRoom extends Resource
+class YearLevel extends Resource
 {
-    public static $group = 'Data';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\ClassRoom::class;
-
-
+    public static $model = \App\Models\YearLevel::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -40,8 +29,8 @@ class ClassRoom extends Resource
      * @var array
      */
     public static $search = [
-        'name',
-        'code'
+        'id',
+        'description',
     ];
 
     /**
@@ -53,23 +42,8 @@ class ClassRoom extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Name')
-                ->rules(['required']),
-            Select::make('Year Level')
-                ->options(\App\Models\YearLevel::get()->pluck('description', 'description'))
-                ->rules(['required']),
-            Text::make('Code')->exceptOnForms(),
-            BelongsTo::make('Teacher', 'teacher', User::class)
-                ->exceptOnForms(),
-            Select::make('Teacher', 'teacher_id')
-                ->options(UserModel::availableTeacher()->get()->pluck('name', 'id'))
-                ->onlyOnForms(),
-
-            Multiselect::make('Students', 'students')
-                ->belongsToMany(Student::class),
-
-            BelongsToMany::make('Students', 'students', Student::class),
-            BelongsToMany::make('Subjects', 'subjects', Subject::class),
+            Text::make('Description')
+                ->rules(['required', 'unique:year_levels,description']),
         ];
     }
 

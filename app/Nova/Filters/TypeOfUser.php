@@ -3,6 +3,7 @@
 namespace App\Nova\Filters;
 
 use App\Models\User;
+use App\Models\UserType;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
 
@@ -36,9 +37,12 @@ class TypeOfUser extends Filter
      */
     public function options(Request $request)
     {
-        return [
+        $data = [
             User::TYPE_PARENT => User::TYPE_PARENT,
             User::TYPE_STUDENT => User::TYPE_STUDENT,
+            User::TYPE_TEACHER => User::TYPE_TEACHER,
         ];
+        $userType = UserType::get()->pluck('description', 'description')->toArray();
+        return array_merge($userType, $data);
     }
 }

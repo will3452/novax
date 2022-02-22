@@ -15,10 +15,14 @@ use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Epartment\NovaDependencyContainer\HasDependencies;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
+use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 
 class User extends Resource
 {
+    use HasDependencies;
+
     public static $group = 'access Control';
     /**
      * The model the resource corresponds to.
@@ -74,16 +78,27 @@ class User extends Resource
 
             Password::make('Password')
                 ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
+                ->exceptOnForms()
                 ->updateRules('nullable', 'string', 'min:8'),
 
-            Number::make('Mobile Number'),
+            Number::make('Mobile Number')
+                ->help('format: 09XXXXXXXXX')
+                ->rules('max:11'),
 
-            Text::make('Year Level'),
+            NovaDependencyContainer::make([
+
+                Text::make('Student ID', 'student_number')
+                    ->rules(['required', 'unique:users,student_number,{{resourceId}}']),
+
+                Select::make('Year Level')
+                    ->options(\App\Models\YearLevel::get()->pluck('description', 'description'))
+                        ->rules(['required']),
+
+            ])->dependsOn('type', UserModel::TYPE_STUDENT),
 
             Text::make('Address'),
 
-            Text::make('Guardian'),
+            // Text::make('Guardian'),
 
             MorphToMany::make('Roles', 'roles', Role::class),
 

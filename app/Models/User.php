@@ -27,6 +27,7 @@ class User extends Authenticatable
         'year_level',
         'address',
         'guardian',
+        'student_number'
     ];
 
     /**
@@ -68,6 +69,10 @@ class User extends Authenticatable
         return $this->hasMany(Module::class, 'uploader_id');
     }
 
+    public function scopeAvailableTeacher($q) { // noi classroom handle
+        return $q->where('type', 'LIKE', "%teacher%")->whereDoesntHave('teacherClassrooms');
+    }
+
     public function classrooms()
     {
         return $this->belongsToMany(ClassRoom::class, 'class_room_student', 'student_id', 'class_room_id');
@@ -76,7 +81,7 @@ class User extends Authenticatable
 
     public function teacherClassrooms()
     {
-        return $this->hasMany(ClassRoom::class);
+        return $this->hasMany(ClassRoom::class, 'teacher_id');
     }
 
     public function userQuizzes()
