@@ -2,16 +2,23 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasRoom;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Traits\HasStudentsOrParent;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens,
+        HasStudentsOrParent,
+        HasFactory,
+        HasRoom,
+        Notifiable,
+        HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -22,7 +29,17 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'year_level',
+        'student_number',
+        'phone',
+        'type',
+        'address',
     ];
+
+    const TYPE_STUDENT = 'Student';
+    const TYPE_TEACHER = 'Teacher';
+    const TYPE_PARENT = 'Parent';
+    const TYPE_PARTNER = 'Partner';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -42,4 +59,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //student room
+    public function classRoom()
+    {
+        return $this->hasOne(StudentRoom::class, 'student_id');
+    }
 }
