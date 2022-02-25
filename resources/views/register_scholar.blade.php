@@ -4,14 +4,18 @@
         <div class="w-11/12 md:w-8/12 mx-auto">
           <form action="/register-scholar" method="POST" enctype="multipart/form-data">
              @csrf
-             <x-vspace>
+             {{-- <x-vspace>
                 <div class="text-right">
                     <x-link href="/register"><div class="flex items-center">Register As Student <x-angle-icon></x-angle-icon></div></x-link>
+                </div>
+             </x-vspace> --}}
+             <x-vspace>
+                <div class="text-right">
+                    <x-link href="/contact-form">I have no AAN.</x-link>
                 </div>
              </x-vspace>
               <x-vspace>
                  <x-form-input name="aan" label="AAN" is-required="true">
-                     <x-link href="/contact-form">I have no AAN.</x-link>
                  </x-form-input>
               </x-vspace>
               <x-vspace>

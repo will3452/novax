@@ -156,8 +156,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            (new NovaSidebar())
-                ->addLink((new SidebarLink())->setUrl('/library')->setType('_blank')->setName('Library')),
+            // (new NovaSidebar())
+            //     ->addLink((new SidebarLink())->setUrl('/library')->setType('_blank')->setName('Library')),
             (new ProfileTool)->canSee(function () {
                 return config('novax.profile_enabled');
             }),
@@ -165,7 +165,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
                 config('novax.back_up_enabled');
             }),
-            (new BruProfile)->canSee(fn ($request) => ! $request->user()->hasRole(User::ROLE_NORMAL)),
+            // (new BruProfile)->canSee(fn ($request) => ! $request->user()->hasRole(User::ROLE_NORMAL)),
             (new NovaSettings)->canSee(function ($request) {
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
                 config('novax.setting_enabled');

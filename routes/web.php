@@ -73,6 +73,8 @@ Route::get('/contact-form', fn () => view('contact-form'));
 Route::post('/contact-form', [InquiryController::class, 'submit']);
 
 //works
-Route::get('/library', [LibraryController::class, 'index']);
-Route::get('/library/{book}', [LibraryController::class, 'show']);
-Route::Get('/library/{book}/chapters', [LibraryController::class, 'read']);
+// Route::get('/library', [LibraryController::class, 'index']);
+// Route::get('/library/{book}', [LibraryController::class, 'show']);
+// Route::get('/library/{book}/chapters', [LibraryController::class, 'read']);
+
+Route::get('/test', fn () => view('test'));
