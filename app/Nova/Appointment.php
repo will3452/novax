@@ -112,6 +112,7 @@ class Appointment extends Resource
             Hidden::make('patient_id')
                 ->default(fn () => auth()->id()),
             Select::make('Doctor', 'doctor_id')
+                ->onlyOnForms()
                 ->options(\App\Models\User::whereRole(\App\Models\User::ROLE_DOCTOR)->get()->pluck('name', 'id')),
             Textarea::make('Notes')
                 ->alwaysShow()
