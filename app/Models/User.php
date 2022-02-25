@@ -28,6 +28,7 @@ class User extends Authenticatable
         'date_of_birth',
         'password',
         'role', //patient,doctor, admin
+        'last_login_at',
     ];
 
     const ROLE_PATIENT = 'Patient';
@@ -51,10 +52,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'date_of_birth' => 'datetime',
+        'last_login_at' => 'datetime',
     ];
 
     public function schedules()
     {
         return $this->hasMany(Schedule::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
     }
 }

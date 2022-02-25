@@ -9,6 +9,9 @@
 <body>
     <form method="post" action="/enc" enctype="multipart/form-data">
         @csrf
+        <h1>
+            DICOM - JPG Conversion
+        </h1>
         <input type="file" name="image">
         <button type="submit">submit</button>
     </form>

@@ -3,14 +3,15 @@
 namespace App\Providers;
 
 use App\Models\User;
-use App\Nova\Metrics\TotalRecords;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Spatie\BackupTool\BackupTool;
+use App\Nova\Metrics\TotalRecords;
 use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
+use Ericlagarda\NovaTextCard\TextCard;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -79,6 +80,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return config('novax.time_enabled');
             }),
             (new TotalRecords()),
+            (new TextCard())
+                ->heading('Last login at')
+                ->text(optional(auth()->user()->last_login_at)->format('m-d-Y H:i A')),
         ];
     }
 

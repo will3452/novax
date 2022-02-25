@@ -1,0 +1,14 @@
+:root {
+  --primary: ##D72638;
+  --primary-dark: #8E1C28;
+  --primary-70: #CB3948;
+  --primary-50: #CE5D68;
+  --primary-30: #E98992;
+  --primary-10: #FFACB4;
+  --logo: #F22B29;
+  --sidebar-icon: #F49D37;
+}
+
+.bg-grad-sidebar, .btn-default, button[dusk="run-inline-action-button"] {
+  background: #140F2D !important;
+}

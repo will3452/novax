@@ -17,14 +17,26 @@ class AES128 extends Encrypter
     {
         return parent::generateKey($cipher);
     }
+
+    public static function saveFile($encrypted, $isDec=false)
+    {
+        $filename = '';
+        if (! $isDec) {
+            $filename = Str::uuid() . '.dat';
+        } else {
+            $filename = Str::uuid() . '.png';
+        }
+
+        Storage::put("public/$filename", $encrypted);
+        return $filename;
+    }
+
     public static function storeFile($file) // key, filepath
     {
         $key = bin2hex(random_bytes(8));
         $aes = new self($key);
         $encrypted = $aes->encrypt(file_get_contents($file));
-        $filename = Str::uuid() . '.dat';
-        Storage::put("public/$filename", $encrypted);
-
+        $filename = self::saveFile($encrypted);
         return [
             $key,
             $filename,

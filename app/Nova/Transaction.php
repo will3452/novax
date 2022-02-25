@@ -3,24 +3,52 @@
 namespace App\Nova;
 
 use App\Models\Role;
+use App\Nova\Actions\Decrypt;
+use App\Nova\Actions\Encrypt;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use App\Nova\Actions\GenerateReport;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\File;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Report extends Resource
+class Transaction extends Resource
 {
+
+    public static function label()
+    {
+        return "Encryption & Decryption";
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (auth()->user()->hasRole(\App\Models\User::ROLE_PATIENT)) {
+            return $query->whereUserId(auth()->id());
+        }
+        return $query;
+    }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return auth()->user()->hasRole(Role::SUPERADMIN);
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return auth()->user()->hasRole(Role::SUPERADMIN);
+    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Report::class;
-
-    public static function availableForNavigation(Request $request)
-    {
-        return auth()->user()->hasRole(Role::SUPERADMIN);
-    }
+    public static $model = \App\Models\Transaction::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -38,11 +66,6 @@ class Report extends Resource
         'id',
     ];
 
-    public static function authorizedToCreate(Request $request)
-    {
-        return false;
-    }
-
     /**
      * Get the fields displayed by the resource.
      *
@@ -52,7 +75,13 @@ class Report extends Resource
     public function fields(Request $request)
     {
         return [
-
+            Date::make('Date', 'created_at')
+                ->exceptOnForms(),
+            Text::make('Type'),
+            BelongsTo::make('Owner', 'user', User::class),
+            File::make('Content'),
+            Text::make('Key'),
+            Text::make('Execution Time (milliseconds)', 'execution_time'),
         ];
     }
 
@@ -98,8 +127,10 @@ class Report extends Resource
     public function actions(Request $request)
     {
         return [
-            (new GenerateReport)
-                ->standalone()
+            (new Encrypt())
+                ->standalone(),
+            (new Decrypt())
+                ->standalone(),
         ];
     }
 }

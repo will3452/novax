@@ -3,45 +3,39 @@
 use App\AES128;
 use App\Models\Image;
 use App\Aes as AppAes;
+use App\Helpers\Dicom;
 use phpseclib3\Crypt\AES;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-use Illuminate\Http\Response;
 
 Route::redirect('/', Nova::path());
 
 Route::get('/register', [RegisterController::class, 'registrationPage']);
 Route::post('/register', [RegisterController::class, 'postRegister']);
 
+Route::get(Nova::path() . '/login', [LoginController::class, 'showLoginForm']);
+Route::post(Nova::path(). '/login', [LoginController::class, 'login'])->name('nova.login');
+
 
 //testing
 
-Route::get('/test', function () {
+Route::get('/dcm-to-jpg', function () {
     return view('upload_test');
 });
 
-Route::post('/enc', function () {
-    $image = request()->image->get();
 
-    $im = @imagecreatefromstring($image);
-    $colors = [];
-    $width = imagesx($im) / 3;
-    $height = imagesy($im) / 3;
-    for ( $x = 0; $x < $width; $x++) {
-        for ($y = 0; $y < $height; $y++) {
-            $rgb = imagecolorat($im, $x, $y);
-            $r = ($rgb >> 16) & 0xFF;
-            $g = ($rgb >> 8) & 0xFF;
-            $b = $rgb & 0xFF;
-            $colors[$x][$y] = ['r' => $r, 'g' => $g, 'b' => $b];
-        }
-    }
-    return view('result', compact('colors', 'height', 'width'));
+Route::post('/enc', function () {
+
+    $newFile = Dicom::convertDicom(request()->image);
+    // move_uploaded_file($newFile, public_path('sample.jpg'));
+    return response()->download($newFile);
 });
 
 
@@ -55,7 +49,6 @@ Route::get('/view-file', function (Request $request) {
     $image = Image::findOrFail($request->model);
     $key = $request->key;
 
-
     //decryption
     $aes = new AES128($key);
     $file = Storage::get('/public/' . $image->path);
@@ -67,4 +60,6 @@ Route::get('/view-file', function (Request $request) {
     }, 200, ['content-type' => 'image/jpeg']);
 });
 
-Route::get('/reports', fn () => 'no report found.');
+Route::get('/reports',  function () {
+    return view('report');
+});

@@ -7,6 +7,7 @@ use App\Models\User as ModelsUser;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
@@ -60,7 +61,9 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-
+            DateTime::make('Last Login At')
+                ->sortable()
+                ->exceptOnForms(),
             Select::make('Role')
                 ->options([
                     ModelsUser::ROLE_DOCTOR => ModelsUser::ROLE_DOCTOR,
