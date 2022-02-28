@@ -14,7 +14,7 @@ class Group extends Model
     protected $fillable = [
         'name',
         'user_id',
-        'account_id',
+        'account_id', // group creator
         'type',
         'description', //short, about
         'status', //pending, banned, active, in-active, declined
@@ -35,5 +35,18 @@ class Group extends Model
     public function approver()
     {
         return $this->belongsTo(User::class, 'approved_by_user_id');
+    }
+
+    public function members()
+    {
+        return $this->hasMany(GroupMember::class, 'group_id');
+    }
+
+    //helper
+    public function isGroupCreator(User $user): bool
+    {
+        $creator = $this->account_id;
+        $accountIds = $user->accounts()->pluck('id')->toArray();
+        return in_array($creator, $accountIds);
     }
 }

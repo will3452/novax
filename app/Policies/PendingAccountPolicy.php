@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Group;
+use App\Models\PendingAccount;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class GroupPolicy
+class PendingAccountPolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +18,19 @@ class GroupPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('view list: group');
+        return $user->can('view list: pending account');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Group  $group
+     * @param  \App\Models\PendingAccount  $pendingAccount
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Group $group)
+    public function view(User $user, PendingAccount $pendingAccount)
     {
-        return $user->can('view details: group');
+        return $user->can('view details: pending account');
     }
 
     /**
@@ -41,54 +41,54 @@ class GroupPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create group');
+        return false;
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Group  $group
+     * @param  \App\Models\PendingAccount  $pendingAccount
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Group $group)
+    public function update(User $user, PendingAccount $pendingAccount)
     {
-        return $user->can('update group');
+        return $user->can('update pending account');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Group  $group
+     * @param  \App\Models\PendingAccount  $pendingAccount
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Group $group)
+    public function delete(User $user, PendingAccount $pendingAccount)
     {
-        return $user->can('delete group');
+        return $user->can('delete pending account');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Group  $group
+     * @param  \App\Models\PendingAccount  $pendingAccount
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Group $group)
+    public function restore(User $user, PendingAccount $pendingAccount)
     {
-        return $user->can('restore group');
+        return $user->can('restore pending account');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Group  $group
+     * @param  \App\Models\PendingAccount  $pendingAccount
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Group $group)
+    public function forceDelete(User $user, PendingAccount $pendingAccount)
     {
-        return $user->can('force delete group');
+        return $user->can('force delete pending account');
     }
 }

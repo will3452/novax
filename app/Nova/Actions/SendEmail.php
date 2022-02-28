@@ -17,7 +17,12 @@ use Laravel\Nova\Fields\Trix;
 class SendEmail extends Action
 {
     use InteractsWithQueue, Queueable;
+    public $hasEmail;
 
+    public function __construct($hasEmail = true)
+    {
+        $this->hasEmail = $hasEmail;
+    }
     /**
      * Perform the action on the given models.
      *
@@ -28,7 +33,9 @@ class SendEmail extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            if (get_class($model) === 'App\\Models\\User') {
+            if (! $this->hasEmail) {
+                Mail::to($fields['email'])->send(new GenericMail($fields['introduction'], $fields['message']));
+            } else if (get_class($model) === 'App\\Models\\User') {
                 Mail::to($model)->send(new GenericMail($fields['introduction'], $fields['message']));
             } else {
                 Mail::to($model->user)->send(new GenericMail($fields['introduction'], $fields['message']));
@@ -43,11 +50,23 @@ class SendEmail extends Action
      */
     public function fields()
     {
+        if ($this->hasEmail) {
+            return [
+                Text::make('Subject', 'introduction')
+                    ->rules(['required']),
+                Trix::make('Message')
+                    ->rules(['required']),
+            ];
+        }
+
         return [
+            Text::make('Email')
+                ->rules(['required', 'email']),
             Text::make('Subject', 'introduction')
                 ->rules(['required']),
             Trix::make('Message')
                 ->rules(['required']),
         ];
+
     }
 }

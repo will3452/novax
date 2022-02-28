@@ -18,7 +18,7 @@ class PendingGroupPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->can('view list: pending group');
     }
 
     /**
@@ -30,7 +30,7 @@ class PendingGroupPolicy
      */
     public function view(User $user, PendingGroup $pendingGroup)
     {
-        //
+        return $user->can('view details: pending group');
     }
 
     /**
@@ -41,7 +41,7 @@ class PendingGroupPolicy
      */
     public function create(User $user)
     {
-        //
+        return false;
     }
 
     /**
@@ -53,7 +53,7 @@ class PendingGroupPolicy
      */
     public function update(User $user, PendingGroup $pendingGroup)
     {
-        //
+        return $user->can('update pending group');
     }
 
     /**
@@ -65,7 +65,7 @@ class PendingGroupPolicy
      */
     public function delete(User $user, PendingGroup $pendingGroup)
     {
-        //
+        return $user->can('delete pending group');
     }
 
     /**
@@ -77,7 +77,7 @@ class PendingGroupPolicy
      */
     public function restore(User $user, PendingGroup $pendingGroup)
     {
-        //
+        return $user->can('restore pending group');
     }
 
     /**
@@ -89,6 +89,6 @@ class PendingGroupPolicy
      */
     public function forceDelete(User $user, PendingGroup $pendingGroup)
     {
-        //
+        return $user->can('force delete pending group');
     }
 }

@@ -63,7 +63,6 @@ class AddPermission extends Command
         $arr = Arr::wrap($permissionName);
 
         if ($permissionName === 'all') {
-            $content = file_get_contents('./public/setup/permissions.txt');
             $rawArray = [
                 // "art scene",
                 // "audio book",
@@ -96,7 +95,12 @@ class AddPermission extends Command
                 // "collection",
                 // "album",
                 // 'publish approval',
-                'brunity',
+                // 'brunity',
+                // 'group type',
+                // 'group',
+                // 'group member',
+                // 'pending account',
+                // 'pending group',
             ];
             $arr = collect($rawArray)->filter(fn ($a) => strlen($a));
         }

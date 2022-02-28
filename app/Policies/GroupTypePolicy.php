@@ -18,7 +18,7 @@ class GroupTypePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->can('view group type: list');
     }
 
     /**
@@ -30,7 +30,7 @@ class GroupTypePolicy
      */
     public function view(User $user, GroupType $groupType)
     {
-        //
+        return $user->can('view group type: details');
     }
 
     /**
@@ -41,7 +41,7 @@ class GroupTypePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->can('create group type');
     }
 
     /**
@@ -53,7 +53,7 @@ class GroupTypePolicy
      */
     public function update(User $user, GroupType $groupType)
     {
-        //
+        return $user->can('update group type');
     }
 
     /**
@@ -65,7 +65,7 @@ class GroupTypePolicy
      */
     public function delete(User $user, GroupType $groupType)
     {
-        //
+        return $user->can('delete group type');
     }
 
     /**
@@ -77,7 +77,7 @@ class GroupTypePolicy
      */
     public function restore(User $user, GroupType $groupType)
     {
-        //
+        return $user->can('restore group type');
     }
 
     /**
@@ -89,6 +89,6 @@ class GroupTypePolicy
      */
     public function forceDelete(User $user, GroupType $groupType)
     {
-        //
+        return $user->can('force delete group type');
     }
 }

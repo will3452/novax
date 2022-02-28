@@ -16,6 +16,8 @@ use App\Http\Controllers\FileUploaderController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\LibraryController;
+use App\Http\Controllers\LoginController;
+use Laravel\Nova\Nova;
 
 //home
 Route::redirect('/', '/welcome');
@@ -25,6 +27,8 @@ Route::view('/contact', 'Contact')->name('contact');
 Route::redirect('/home', Nova::path());
 Route::view('/brunity', 'Brunity')->name('brunity');
 Route::view(Nova::path() . '/login', 'vendor.nova.auth.login')->name('login');
+Route::get(Nova::path() . '/login?ref=nova', [LoginController::class, 'showLoginForm'])->name('nova.login');
+Route::post(Nova::path() . '/login', [LoginController::class, 'login']);
 
 
 //registration

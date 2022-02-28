@@ -74,6 +74,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Account::class);
     }
 
+    public function groups() // method to fetch all group where user belongs
+    {
+        $accountIds = $this->accounts->pluck('id')->toArray();
+        return GroupMember::whereStatus(GroupMember::STATUS_CONFIRMED)
+            ->whereIn('account_member_id', $accountIds)
+            ->get();
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.

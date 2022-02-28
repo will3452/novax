@@ -106,12 +106,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             (new Users())
                 ->canSee(fn () => auth()->user()->hasRole(Role::SUPERADMIN)),
-            (new Books()),
-            (new AudioBooks()),
-            (new ArtScenes()),
-            (new Films()),
-            (new Podcasts()),
-            (new Songs()),
+            (new Books())->canSee(fn () => auth()->user()->isAdmin() || auth()->user()->can('view list: book')),
+            (new AudioBooks())->canSee(fn () => auth()->user()->isAdmin() || auth()->user()->can('view list: audio book')),
+            (new ArtScenes())->canSee(fn () => auth()->user()->isAdmin() || auth()->user()->can('view list: art scene')),
+            (new Films())->canSee(fn () => auth()->user()->isAdmin() || auth()->user()->can('view list: film')),
+            (new Podcasts())->canSee(fn () => auth()->user()->isAdmin() || auth()->user()->can('view list: podcast')),
+            (new Songs())->canSee(fn () => auth()->user()->isAdmin() || auth()->user()->can('view list: song')),
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
                 'America/Mexico_City',
