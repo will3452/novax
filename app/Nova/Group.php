@@ -19,6 +19,7 @@ use Laravel\Nova\Fields\DateTime as FieldsDateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Pdmfc\NovaCards\Info;
 
 class Group extends Resource
 {
@@ -123,7 +124,10 @@ class Group extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new Info())
+                ->info('The group to be created will be reviewed and approved by the Administrator.')
+        ];
     }
 
     /**
