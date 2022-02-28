@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasInvitation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class GroupMember extends Model
 {
-    use HasFactory;
+    use HasFactory,
+        HasInvitation;
 
     protected $fillable = [
         'group_id',

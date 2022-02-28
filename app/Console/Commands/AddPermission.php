@@ -101,6 +101,8 @@ class AddPermission extends Command
                 // 'group member',
                 // 'pending account',
                 // 'pending group',
+                // 'group invitation',
+                'invitation',
             ];
             $arr = collect($rawArray)->filter(fn ($a) => strlen($a));
         }

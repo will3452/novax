@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
             if ($user->hasRole(Role::SUPERADMIN)) {
                 return true;
             }
-            return null;
+            return is_null($user->email_verified_at) ? false : null;
         });
     }
 }

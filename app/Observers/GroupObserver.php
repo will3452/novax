@@ -13,8 +13,9 @@ class GroupObserver
 
         GroupMember::create([
             'group_id' => $group->id,
+            'account_requestor_id' => auth()->id(),
             'remarks' => "Group Creator",
-            'account_member_id' => auth()->id(),
+            'account_member_id' => $group->account_id,
             'confirmed_at' => now(),
             'status' => GroupMember::STATUS_CONFIRMED,
         ]);

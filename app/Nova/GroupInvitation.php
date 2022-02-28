@@ -2,37 +2,39 @@
 
 namespace App\Nova;
 
-use App\Models\GroupMember as ModelsGroupMember;
-use App\Rules\AccountIsNotYetIncluded;
+use App\Nova\Actions\Invitation\Accept;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Badge;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Hidden;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class GroupMember extends Resource
+class GroupInvitation extends Resource
 {
-    public static $displayInNavigation = false;
-
-    public static function createButtonLabel()
+    public static function authorizedToCreate(Request $request)
     {
-        return "Add New Member";
+        return false;
     }
 
-    public function authorizedToDelete(Request $request)
+    public static function indexQuery(NovaRequest $request, $query)
     {
-        $isTheCreator = $this->group->isGroupCreator(auth()->user());
-        return auth()->user()->isAdmin() || $isTheCreator;
+        return $query->whereUserId(auth()->id());
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        if ($request->has('action')) {
+            return true;
+        }
+        return false;
     }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\GroupMember::class;
+    public static $model = \App\Models\GroupInvitation::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -47,8 +49,7 @@ class GroupMember extends Resource
      * @var array
      */
     public static $search = [
-        'account_id',
-        'position'
+        'id',
     ];
 
     /**
@@ -59,26 +60,13 @@ class GroupMember extends Resource
      */
     public function fields(Request $request)
     {
-        $group = \App\Models\Group::find($request->viaResourceId ?? $this->group_id);
         return [
-            BelongsTo::make('Group', 'group', Group::class)
-                ->hideFromIndex(),
-            Text::make('Account', fn()=>optional($this->member)->penname)
+            Date::make('Date', 'created_at')
+                ->sortable()
                 ->exceptOnForms(),
-            Select::make('Account', 'account_member_id')
-                ->onlyOnForms()
-                ->options(\App\Models\Account::whereNotNull('approved_at')->get()->pluck('penname', 'id'))
-                ->searchable()
-                ->rules(['required', (new AccountIsNotYetIncluded($group))]),
-            Text::make('Remarks')
-                ->exceptOnForms(),
-            Text::make('Position'),
-            Badge::make('Status')
-                ->map([
-                    ModelsGroupMember::STATUS_CONFIRMED => 'success',
-                    ModelsGroupMember::STATUS_DECLINED => 'danger',
-                    ModelsGroupMember::STATUS_PENDING => 'info'
-                ]),
+            Text::make('Title'),
+            Textarea::make('Body')
+                ->alwaysShow(),
         ];
     }
 
@@ -123,6 +111,9 @@ class GroupMember extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new Accept)
+                ->onlyOnDetail(),
+        ];
     }
 }
