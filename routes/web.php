@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChangelogController;
 use App\Models\Club;
 use Inertia\Inertia;
 use App\Models\Course;
@@ -18,6 +19,11 @@ use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\LoginController;
 use Laravel\Nova\Nova;
+
+//changelog
+Route::get('/changelog/create', [ChangelogController::class, 'create'])->middleware(['auth.basic']);
+Route::post('/changelog', [ChangelogController::class, 'store']);
+Route::get('/changelog', [ChangelogController::class, 'index']);
 
 //home
 Route::redirect('/', '/welcome');
