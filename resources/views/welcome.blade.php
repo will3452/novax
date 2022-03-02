@@ -1,7 +1,12 @@
 <x-layout>
-    <div class="w-screen h-screen flex justify-center items-center bg-gray-100">
-        <h1 class="text-3xl uppercase font-bold text-gray-700">
-            &lt;Under Development /&gt;
-        </h1>
-    </div>
+    <div class="hero min-h-screen bg-base-200">
+        <div class="flex-col hero-content lg:flex-row">
+          <x-illustration></x-illustration>
+          <div>
+            <h1 class="text-5xl font-bold">Memory Virtual and Health Related Application</h1>
+            <p class="py-6">{{nova_get_setting('landing_message', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eum, corrupti deleniti corporis quidem laborum alias in. Quidem nobis at nulla.')}}</p>
+            <a href="/register" class="btn btn-primary">Register now</a>
+          </div>
+        </div>
+      </div>
 </x-layout>

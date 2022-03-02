@@ -42,4 +42,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function gameRecords()
+    {
+        return $this->hasMany(GameRecord::class, 'user_id');
+    }
+
+    public function images()
+    {
+        return $this->hasMany(Image::class, 'user_id');
+    }
 }
