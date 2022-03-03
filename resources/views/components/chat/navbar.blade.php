@@ -4,7 +4,7 @@
             {{config('app.name')}}
         </span>
     </div>
-    <div>
+    <div class="alert alert-warning alert-sm">
         All Conversation will be deleted after 30 days.
     </div>
   </div>
