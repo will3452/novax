@@ -47,8 +47,8 @@ class GroupMember extends Resource
      * @var array
      */
     public static $search = [
-        'account_id',
-        'position'
+        // 'account_id',
+        // 'position'
     ];
 
     /**

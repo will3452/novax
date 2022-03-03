@@ -1,13 +1,13 @@
 <dropdown-trigger class="h-9 flex items-center">
-    @isset($user->picture)
+    @isset(auth()->user()->picture)
         <img
-            src="/storage/{{$user->picture}}"
+            src="/storage/{{auth()->user()->picture}}"
             class="rounded-full w-8 h-8 mr-3 border-2"
         />
     @endisset
 
     <span class="text-90">
-        {{ $user->name ?? $user->email ?? __('Nova User') }}
+        {{ auth()->user()->email ?? __('Nova User') }}
     </span>
 </dropdown-trigger>
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasChat;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -14,6 +15,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasApiTokens,
         HasFactory,
         Notifiable,
+        HasChat,
         HasRoles;
     protected $with = [
         'accounts',
@@ -93,11 +95,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
-    //auto encrypt the password
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
+    // //auto encrypt the password
+    // public function setPasswordAttribute($value)
+    // {
+    //     $this->attributes['password'] = bcrypt($value);
+    // }
 
     /**
      * The attributes that should be cast.

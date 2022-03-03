@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\ChangelogController;
 use App\Models\Club;
 use Inertia\Inertia;
 use App\Models\Course;
+use Laravel\Nova\Nova;
 use App\Models\College;
 use Illuminate\Http\Request;
 use Laravel\Nova\Actions\Action;
@@ -11,14 +11,15 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ChangelogController;
 use App\Http\Controllers\FileUploaderController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\EmailVerificationController;
-use App\Http\Controllers\LibraryController;
-use App\Http\Controllers\LoginController;
-use Laravel\Nova\Nova;
 
 //changelog
 Route::get('/changelog/create', [ChangelogController::class, 'create'])->middleware(['auth.basic']);
@@ -81,6 +82,15 @@ Route::post('/upload-large-file', [FileUploaderController::class, 'upload']);
 //contact us, to get aan, concerns,
 Route::get('/contact-form', fn () => view('contact-form'));
 Route::post('/contact-form', [InquiryController::class, 'submit']);
+
+//chats
+Route::post('/chats', [ChatController::class, 'store']);
+Route::get('/chats/create', [ChatController::class, 'create']);
+Route::get('/chats/{chat}', [ChatController::class, 'index']);
+Route::post('/messages/create/{chat}', [ChatController::class, 'createMessage']);
+
+// Route::get('/chats/', [ChatController::class, 'show']);
+
 
 //works
 // Route::get('/library', [LibraryController::class, 'index']);

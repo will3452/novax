@@ -7,7 +7,7 @@
     <title>{{config('app.name', 'Nuwang')}}</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.25.4/dist/full.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="bg-gray-100">
     <div id="app">

@@ -30,7 +30,7 @@ class AdminSeeder extends Seeder
             'birth_date' => '2000-03-04',
             'email' => 'william@admin.com',
             'account_type' => ROLE::SUPERADMIN,
-            'password' => 'password',
+            'password' => bcrypt('password'),
         ]);
     }
 }

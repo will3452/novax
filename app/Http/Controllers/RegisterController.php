@@ -46,6 +46,8 @@ class RegisterController extends Controller
             $validated
         );
 
+        $userFields['password'] = bcrypt($userFields['password']);
+
         //this will create a fields
         $user = User::create($userFields);
 
