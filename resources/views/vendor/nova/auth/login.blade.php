@@ -1,57 +1,44 @@
-@extends('nova::auth.layout')
+<x-layout>
+    <div class="flex justify-center my-8 items-center">
+        <img src="/main.png" alt="" class="mx-4 w-4/12">
+        <div class="w-4/12">
+            <div class="btn-group my-2">
+                <a class="btn" href="/">Register</a>
+                <a class="btn bg-black text-white">Login</a>
+            </div>
+            <form action="{{route('nova.login')}}" method="POST"  class="overflow-y-auto card flex-shrink-0 w-full max-w-lg shadow-2xl bg-base-100">
+                @csrf
+                <div class="card-body">
+                <h1 class="uppercase text-center font-bold text-gray-700 text-2xl">Login</h1>
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Email</span>
+                    </label>
+                    <input type="text" value="{{old('email')}}" name="email" required placeholder="email" class="input input-bordered">
+                    @error('email')
+                    <x-form-error>
+                        {{$message}}
+                    </x-form-error>
+                    @enderror
+                    </div>
+                <div class="form-control">
+                    <label class="label">
+                    <span class="label-text">Password</span>
+                    </label>
+                    <input type="password" name="password" required placeholder="password" class="input input-bordered">
+                    @error('password')
+                    <x-form-error>
+                        {{$message}}
+                    </x-form-error>
+                    @enderror
+                </div>
 
-@section('content')
-
-@include('nova::auth.partials.header')
-
-<form
-    class="bg-white shadow rounded-lg p-8 max-w-login mx-auto"
-    method="POST"
-    action="{{ route('nova.login') }}"
->
-    {{ csrf_field() }}
-
-    @component('nova::auth.partials.heading')
-        {{ __('Welcome Back!') }}
-    @endcomponent
-
-    @if ($errors->any())
-    <p class="text-center font-semibold text-danger my-3">
-        @if ($errors->has('email'))
-            {{ $errors->first('email') }}
-        @else
-            {{ $errors->first('password') }}
-        @endif
-        </p>
-    @endif
-
-    <div class="mb-6 {{ $errors->has('email') ? ' has-error' : '' }}">
-        <label class="block font-bold mb-2" for="email">{{ __('Email Address') }}</label>
-        <input class="form-control form-input form-input-bordered w-full" id="email" type="email" name="email" value="{{ old('email') }}" required autofocus>
-    </div>
-
-    <div class="mb-6 {{ $errors->has('password') ? ' has-error' : '' }}">
-        <label class="block font-bold mb-2" for="password">{{ __('Password') }}</label>
-        <input class="form-control form-input form-input-bordered w-full" id="password" type="password" name="password" required>
-    </div>
-
-    <div class="flex mb-6">
-        <a class="text-primary dim font-bold no-underline" href="/register">
-            Register as patient.
-        </a>
-
-
-        @if (\Laravel\Nova\Nova::resetsPasswords())
-        <div class="ml-auto">
-            <a class="text-primary dim font-bold no-underline" href="{{ route('nova.password.request') }}">
-                {{ __('Forgot Your Password?') }}
-            </a>
+                <div class="form-control mt-6">
+                    <input type="submit" value="Login" class="btn text-white bg-black">
+                </div>
+                </div>
+            </form>
         </div>
-        @endif
-    </div>
 
-    <button class="w-full btn btn-default btn-primary hover:bg-primary-dark" type="submit">
-        {{ __('Login') }}
-    </button>
-</form>
-@endsection
+    </div>
+</x-layout>

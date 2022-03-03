@@ -3,15 +3,18 @@
 namespace App\Providers;
 
 use App\Models\User;
+use App\Nova\Metrics\PendingAppointment;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Spatie\BackupTool\BackupTool;
 use App\Nova\Metrics\TotalRecords;
+use App\Nova\Metrics\UsersPopulation;
 use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
 use Ericlagarda\NovaTextCard\TextCard;
+use Laravel\Nova\Fields\Textarea;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -28,6 +31,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Textarea::make('Contact Us Content', 'contact'),
+            Textarea::make('About Us Content', 'about'),
         ]);
     }
 
@@ -79,6 +84,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
+            (new UsersPopulation()),
+            (new PendingAppointment()),
             (new TotalRecords()),
             (new TextCard())
                 ->heading('Last login at')

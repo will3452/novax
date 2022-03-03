@@ -34,6 +34,16 @@ class User extends Authenticatable
     const ROLE_PATIENT = 'Patient';
     const ROLE_DOCTOR = 'Doctor';
 
+    public function patientAppointments()
+    {
+        return $this->hasMany(Appointment::class, 'patient_id');
+    }
+
+    public function doctorAppointments()
+    {
+        return $this->hasMany(Appointment::class, 'doctor_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

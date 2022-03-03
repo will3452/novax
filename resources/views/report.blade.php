@@ -15,7 +15,7 @@
         <h4>
             Transactions ({{\App\Models\Transaction::count()}})
         </h4>
-        <table border="1">
+        <table border="1" style="width:100vw;">
             <tr>
                 <th>
                     Date
@@ -46,7 +46,7 @@
         <h4>
             List of users  ({{\App\Models\User::count()}})
         </h4>
-        <table border="1">
+        <table border="1" style="width:100vw;">
             <tr>
                 <th>
                     Register_at
@@ -89,7 +89,7 @@
         <h4>
             Appointments (Latest - Oldest)  ({{\App\Models\Appointment::count()}})
         </h4>
-        <table border="1">
+        <table border="1" style="width:100vw;">
             <tr>
                 <th>
                     Requested Date
