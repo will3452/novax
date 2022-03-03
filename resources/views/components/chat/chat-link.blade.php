@@ -1,5 +1,5 @@
 @props(['chat' => null, 'active' => false])
-<a href="/chats/{{$chat->id}}" class="flex justify-between items-center p-2 border-t-2 {{! $active  ? : 'bg-neutral text-white'}}">
+<a href="/chats/{{$chat->id}}" class="flex justify-between items-center p-2 border-t-2 {{! $active  ? : 'bg-blue-900 text-white'}}">
     <div class="-space-x-6 avatar-group">
         @foreach ($chat->users as $user)
             @if ($user->id !== auth()->id())
