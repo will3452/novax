@@ -466,12 +466,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .relative {
   position: relative;
 }
-.-right-2 {
-  right: -0.5rem;
-}
-.bottom-0 {
-  bottom: 0px;
-}
 .right-7 {
   right: 1.75rem;
 }
@@ -480,6 +474,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .right-6 {
   right: 1.5rem;
+}
+.-right-2 {
+  right: -0.5rem;
+}
+.bottom-0 {
+  bottom: 0px;
 }
 .z-20 {
   z-index: 20;
@@ -583,9 +583,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-full {
   height: 100%;
 }
-.h-4\/6 {
-  height: 66.666667%;
-}
 .h-6 {
   height: 1.5rem;
 }
@@ -603,9 +600,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .h-8 {
   height: 2rem;
-}
-.h-2\/6 {
-  height: 33.333333%;
 }
 .min-h-full {
   min-height: 100%;
@@ -637,12 +631,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-9\/12 {
   width: 75%;
 }
-.w-10\/12 {
-  width: 83.333333%;
-}
-.w-2\/12 {
-  width: 16.666667%;
-}
 .w-6 {
   width: 1.5rem;
 }
@@ -652,14 +640,20 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-52 {
   width: 13rem;
 }
+.w-10\/12 {
+  width: 83.333333%;
+}
+.w-2\/12 {
+  width: 16.666667%;
+}
+.w-auto {
+  width: auto;
+}
 .w-10 {
   width: 2.5rem;
 }
 .w-4 {
   width: 1rem;
-}
-.w-auto {
-  width: auto;
 }
 .w-2 {
   width: 0.5rem;
@@ -843,17 +837,13 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
-.bg-green-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(74 222 128 / var(--tw-bg-opacity));
-}
 .bg-gray-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(209 213 219 / var(--tw-bg-opacity));
 }
-.bg-red-400 {
+.bg-green-400 {
   --tw-bg-opacity: 1;
-  background-color: rgb(248 113 113 / var(--tw-bg-opacity));
+  background-color: rgb(74 222 128 / var(--tw-bg-opacity));
 }
 .bg-gradient-to-br {
   background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
@@ -1051,10 +1041,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .blur-sm {
   --tw-blur: blur(4px);
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-.blur-xl {
-  --tw-blur: blur(24px);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 @media (min-width: 768px) {
