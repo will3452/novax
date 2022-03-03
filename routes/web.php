@@ -14,16 +14,17 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-
-Route::redirect('/', Nova::path());
-
+Route::get('/', function () {
+    return view('welcome');
+});
 Route::get('/register', [RegisterController::class, 'registrationPage']);
 Route::post('/register', [RegisterController::class, 'postRegister']);
 
 Route::get(Nova::path() . '/login', [LoginController::class, 'showLoginForm']);
 Route::post(Nova::path(). '/login', [LoginController::class, 'login'])->name('nova.login');
 
-
+Route::view('/about', 'about');
+Route::view('/contact', 'contact');
 //testing
 
 Route::get('/dcm-to-jpg', function () {
