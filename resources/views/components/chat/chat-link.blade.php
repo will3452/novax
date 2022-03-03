@@ -2,11 +2,13 @@
 <a href="/chats/{{$chat->id}}" class="flex justify-between items-center p-2 border-t-2 {{! $active  ? : 'bg-neutral text-white'}}">
     <div class="-space-x-6 avatar-group">
         @foreach ($chat->users as $user)
-            <div class="avatar">
-                <div class="w-10 h-10">
-                <img src="/storage/{{$user->picture}}" class="bg-white">
+            @if ($user->id !== auth()->id())
+                <div class="avatar">
+                    <div class="w-10 h-10">
+                    <img src="/storage/{{$user->picture}}" class="bg-white">
+                    </div>
                 </div>
-            </div>
+            @endif
         @endforeach
     </div>
     <div>
