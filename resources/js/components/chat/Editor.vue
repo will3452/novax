@@ -26,9 +26,15 @@
         },
         methods: {
             sendMessage() {
+                var newMessage = this.newMessage.replace(/^\s+|\s+$/gm,'');
+
+                if (! newMessage.length) {
+                    return false;
+                }
+
                 this.isLoading = true;
                 let postUrl = this.uri + this.chatId;
-                window.axios.post(postUrl, {message:this.newMessage})
+                window.axios.post(postUrl, {message:newMessage})
                     .then(res=>{
                         this.isLoading = false;
                         this.newMessage = ''; // clear the message

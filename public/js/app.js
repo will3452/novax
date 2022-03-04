@@ -2230,10 +2230,16 @@ __webpack_require__.r(__webpack_exports__);
     sendMessage: function sendMessage() {
       var _this = this;
 
+      var newMessage = this.newMessage.replace(/^\s+|\s+$/gm, '');
+
+      if (!newMessage.length) {
+        return false;
+      }
+
       this.isLoading = true;
       var postUrl = this.uri + this.chatId;
       window.axios.post(postUrl, {
-        message: this.newMessage
+        message: newMessage
       }).then(function (res) {
         _this.isLoading = false;
         _this.newMessage = ''; // clear the message
