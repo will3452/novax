@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasRecords;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Module extends Model
 {
-    use HasFactory;
+    use HasFactory,
+        HasRecords;
 
     protected $fillable = [
         'subject_id',
@@ -16,6 +18,8 @@ class Module extends Model
         'code',
         'type', // synchronous and asynch
     ];
+
+    protected $with = ['activities', 'materials'];
 
     const TYPE_SYNCHRONOUS = 'Synchronous';
     const TYPE_ASYNCHRONOUS = 'Asynchronous';

@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasRecords;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-    use HasFactory;
+    use HasFactory,
+        HasRecords;
     protected $fillable = [
         'type',
         'category',//quiz, exam, project

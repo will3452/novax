@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\HasRoom;
+use App\Models\Traits\HasRecords;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -17,6 +18,7 @@ class User extends Authenticatable
         HasStudentsOrParent,
         HasFactory,
         HasRoom,
+        HasRecords,
         Notifiable,
         HasRoles;
 

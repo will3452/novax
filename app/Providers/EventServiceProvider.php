@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Material;
 use App\Models\Module;
 use App\Models\Question;
 use App\Models\Room;
 use App\Models\Subject;
 use App\Models\User;
+use App\Observers\MaterialObserver;
 use App\Observers\ModuleObserver;
 use App\Observers\QuestionObserver;
 use App\Observers\RoomObserver;
@@ -42,5 +44,6 @@ class EventServiceProvider extends ServiceProvider
         Subject::observe(SubjectObserver::class);
         Module::observe(ModuleObserver::class);
         Question::observe(QuestionObserver::class);
+        Material::observe(MaterialObserver::class);
     }
 }

@@ -1,6 +1,12 @@
 # Todo
- 1. Check Upload file, in material
- 2. proceed to roles
- 3. Implement Teacher
- 4. Student
- 5. testing
+ - Check Upload file, in material (DONE)
+ - proceed to roles
+ - Implement Teacher (DONE)
+ - Student (DONE)
+ - testing
+ - fix countdown (DONE)
+ - progress resetter
+ - profile
+ - dashboard
+ - report issue
+ - report generator

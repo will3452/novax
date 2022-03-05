@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class Question extends Model
 {
@@ -25,5 +26,13 @@ class Question extends Model
     public function activity()
     {
         return $this->belongsTo(Activity::class);
+    }
+
+    public function getRandomChoicesAttribute()
+    {
+        $arr = explode(self::SEPARATOR, $this->choices);
+        array_push($arr, $this->correct_answer);
+
+        return Arr::shuffle($arr);
     }
 }

@@ -13,6 +13,10 @@ class StudentRoom extends Model
         'student_id',
     ];
 
+    protected $with = [
+        'student',
+    ];
+
     public function student()
     {
         return $this->belongsTo(User::class, 'student_id');

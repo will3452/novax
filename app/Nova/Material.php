@@ -57,15 +57,12 @@ class Material extends Resource
                     ModelsMaterial::TYPE_HYPERLINK => ModelsMaterial::TYPE_HYPERLINK,
                     ModelsMaterial::TYPE_PDF => ModelsMaterial::TYPE_PDF,
                 ])->rules(['required']),
-            NovaDependencyContainer::make([
-                Filepond::make('Content')
-                    ->mimesTypes(['application/pdf'])
-                    ->rules(['required', 'max:10000']),
-            ])->dependsOn('type', ModelsMaterial::TYPE_PDF),
-            NovaDependencyContainer::make([
-                Text::make('Content')
-                    ->rules(['required'])
-            ])->dependsOn('type', ModelsMaterial::TYPE_HYPERLINK),
+            File::make('File')
+                ->rules(['max:10000'])
+                ->onlyOnForms(),
+            Text::make('Link')
+                ->onlyOnForms(),
+            Text::make('Content')->exceptOnForms(),
         ];
     }
 

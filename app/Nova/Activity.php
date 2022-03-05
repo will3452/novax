@@ -88,6 +88,7 @@ class Activity extends Resource
                 ->dependsOnNot('category', ModelsOutput::CATEGORY_PROJECT),
             NovaDependencyContainer::make([
                 Textarea::make('Instructions', 'instruction')
+                    ->alwaysShow()
                     ->rules(['required']),
                 FieldsDateTime::make('Deadline')
                     ->rules(['required', 'after:now']),

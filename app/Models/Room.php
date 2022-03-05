@@ -16,6 +16,12 @@ class Room extends Model
         'code',
     ];
 
+    protected $with = [
+        'subjects',
+        'studentRooms',
+        'teacher',
+    ];
+
     public function teacher()
     {
         return $this->belongsTo(User::class, 'teacher_id');

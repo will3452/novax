@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasRecords;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Material extends Model
 {
-    use HasFactory;
+    use HasFactory, HasRecords;
 
     protected $fillable = [
         'content',
@@ -22,5 +23,10 @@ class Material extends Model
     public function module()
     {
         return $this->belongsTo(Module::class);
+    }
+
+    public function getLinkAttribute()
+    {
+        return $this->type === self::TYPE_HYPERLINK ? $this->content : "/storage/$this->content";
     }
 }
