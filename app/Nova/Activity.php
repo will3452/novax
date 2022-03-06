@@ -86,7 +86,8 @@ class Activity extends Resource
                 //     ->rules(['required']), // 00:00
                 // Text::make('Time Limit', 'time_limit')
                 //     ->exceptOnForms(),
-                Text::make('Time Limit (hr)', 'time_limit'),
+                Text::make('Time Limit', 'time_limit')
+                    ->help('format: (HH:MM:SS)'),
             ])
                 ->help('In Hour')
                 ->dependsOnNot('category', ModelsOutput::CATEGORY_PROJECT),
