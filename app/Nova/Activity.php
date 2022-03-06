@@ -82,7 +82,10 @@ class Activity extends Resource
             //     ])->rules(['required']),
             NovaDependencyContainer::make([
                 TimeField::make('Time Limit (hr)', 'time_limit')
-                    ->rules(['required'])
+                    ->onlyOnForms()
+                    ->rules(['required']),
+                Text::make('Time Limit', 'time_limit')
+                    ->exceptOnForms(),
             ])
                 ->help('In Hour')
                 ->dependsOnNot('category', ModelsOutput::CATEGORY_PROJECT),
