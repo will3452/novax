@@ -8,7 +8,7 @@ class MaterialObserver
 {
     public function creating(Material $material)
     {
-        if ($material->type === Material::TYPE_HYPERLINK) {
+        if ($material->type == Material::TYPE_HYPERLINK) {
             $material->content = $material->link;
         } else {
             $material->content = $material->file;
@@ -16,6 +16,5 @@ class MaterialObserver
 
         unset($material->file);
         unset($material->link);
-
     }
 }
