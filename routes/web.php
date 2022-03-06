@@ -1,13 +1,22 @@
 <?php
 
+use App\Exports\RoomsExport;
+use App\Exports\SubjectsExport;
+use App\Exports\UsersExport;
+use App\Exports\YearLevelExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\TakeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RecordController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\TakeController;
+use App\Http\Controllers\ReportIssueController;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
@@ -49,8 +58,33 @@ Route::get('/', function () {
 Route::get('/register', [RegisterController::class, 'registrationPage']);
 Route::post('/register', [RegisterController::class, 'postRegister']);
 
+Route::get('/profile', [ProfileController::class, 'profile']);
+Route::post('/profile', [ProfileController::class, 'update']);
 
+Route::get('/report-issue', [ReportIssueController::class, 'create']);
+Route::post('/report-issue', [ReportIssueController::class, 'store']);
 
+Route::post('/submit-feedback', [FeedbackController::class, 'store']);
+
+Route::get('/report', function () {
+    if (request()->get('data') === 'users') {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
+    if (request()->get('data') === 'subjects') {
+        return Excel::download(new SubjectsExport, 'subjects.xlsx');
+    }
+
+    if (request()->get('data') === 'rooms') {
+        return Excel::download(new RoomsExport, 'rooms.xlsx');
+    }
+
+    if (request()->get('data') === 'year-level') {
+        return Excel::download(new YearLevelExport, 'yearlevels.xlsx');
+    }
+});
+
+// Route::get('/feedback', []);
 //artisan helper
 Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);

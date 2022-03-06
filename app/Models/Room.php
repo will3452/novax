@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasFeedback;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
 {
-    use HasFactory;
+    use HasFactory,
+        HasFeedback;
 
     protected $fillable = [
         'name',

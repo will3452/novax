@@ -12,6 +12,7 @@
         const hh = document.getElementById('hh');
         const mm = document.getElementById('mm');
         const ss = document.getElementById('ss');
+        const form = document.getElementById('answerForm');
         let hv = hh.innerText;
         let mv = mm.innerText;
         let sv = ss.innerText;
@@ -29,6 +30,7 @@
             }
             if (hv == 0 && mv == 0 && sv ==0) {
                 //examination is done!
+                form.submit();
                 clearInterval(ctimer);
             }
             sv --;

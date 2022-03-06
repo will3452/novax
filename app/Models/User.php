@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasFeedback;
 use App\Models\Traits\HasRoom;
 use App\Models\Traits\HasRecords;
 use Laravel\Sanctum\HasApiTokens;
@@ -20,6 +21,7 @@ class User extends Authenticatable
         HasRoom,
         HasRecords,
         Notifiable,
+        HasFeedback,
         HasRoles;
 
     /**
@@ -66,5 +68,10 @@ class User extends Authenticatable
     public function classRoom()
     {
         return $this->hasOne(StudentRoom::class, 'student_id');
+    }
+
+    public function issues()
+    {
+        return $this->hasMany(Issue::class, 'user_id');
     }
 }

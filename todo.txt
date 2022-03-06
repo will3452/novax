@@ -5,8 +5,9 @@
  - Student (DONE)
  - testing
  - fix countdown (DONE)
- - progress resetter
- - profile
- - dashboard
- - report issue
+ - progress resetter (DONE)
+ - feedback (DONE)
+ - profile (DONE)
+ - dashboard (DONE)
+ - report issue (DONE)
  - report generator
