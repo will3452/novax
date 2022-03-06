@@ -22,6 +22,7 @@ class Activity extends Model
 
     protected $casts = [
         'deadline' => 'datetime',
+        'time_limit' => 'datetime'
     ];
 
     const CATEGORY_QUIZ = 'Quiz';

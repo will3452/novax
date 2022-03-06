@@ -75,11 +75,11 @@ class Activity extends Resource
                     ModelsOutput::CATEGORY_PROJECT => ModelsOutput::CATEGORY_PROJECT,
                     ModelsOutput::CATEGORY_QUIZ => ModelsOutput::CATEGORY_QUIZ,
                 ])->rules(['required']),
-            Select::make('Type')
-                ->options([
-                    ModelsOutput::TYPE_ASYNCHRONOUS => ModelsOutput::TYPE_ASYNCHRONOUS,
-                    ModelsOutput::TYPE_SYNCHRONOUS => ModelsOutput::TYPE_SYNCHRONOUS,
-                ])->rules(['required']),
+            // Select::make('Type')
+            //     ->options([
+            //         ModelsOutput::TYPE_ASYNCHRONOUS => ModelsOutput::TYPE_ASYNCHRONOUS,
+            //         ModelsOutput::TYPE_SYNCHRONOUS => ModelsOutput::TYPE_SYNCHRONOUS,
+            //     ])->rules(['required']),
             NovaDependencyContainer::make([
                 TimeField::make('Time Limit (hr)', 'time_limit')
                     ->rules(['required'])
