@@ -80,13 +80,13 @@ class Activity extends Resource
             //         ModelsOutput::TYPE_ASYNCHRONOUS => ModelsOutput::TYPE_ASYNCHRONOUS,
             //         ModelsOutput::TYPE_SYNCHRONOUS => ModelsOutput::TYPE_SYNCHRONOUS,
             //     ])->rules(['required']),
+            Text::make('Time Limit', function () {
+                return $this->time_limit->format('H:i:s');
+            })->exceptOnForms(),
             NovaDependencyContainer::make([
                 Text::make('Time Limit', 'time_limit')
                     ->help('format: (HH:MM:SS)')
                     ->onlyOnForms(),
-                Text::make('Time Limit', function () {
-                    return $this->time_limit->format('H:i:s');
-                })->exceptOnForms(),
             ])
                 ->dependsOnNot('category', ModelsOutput::CATEGORY_PROJECT),
             NovaDependencyContainer::make([
