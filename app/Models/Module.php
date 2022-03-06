@@ -16,7 +16,7 @@ class Module extends Model
         'uploader_id', //uploader id
         'name',
         'code',
-        'type', // synchronous and asynch
+        // 'type', // synchronous and asynch
     ];
 
     protected $with = ['activities', 'materials'];

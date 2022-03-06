@@ -54,11 +54,11 @@ class Module extends Resource
                 ->exceptOnForms(),
             Text::make('Description', 'name')
                 ->rules(['required']),
-            Select::make('Type')
-                ->options([
-                    ModelsModule::TYPE_ASYNCHRONOUS => ModelsModule::TYPE_ASYNCHRONOUS,
-                    ModelsModule::TYPE_SYNCHRONOUS => ModelsModule::TYPE_SYNCHRONOUS,
-                ]),
+            // Select::make('Type')
+            //     ->options([
+            //         ModelsModule::TYPE_ASYNCHRONOUS => ModelsModule::TYPE_ASYNCHRONOUS,
+            //         ModelsModule::TYPE_SYNCHRONOUS => ModelsModule::TYPE_SYNCHRONOUS,
+            //     ]),
             HasMany::make('Materials', 'materials', Material::class),
             HasMany::make('Activities', 'activities', Activity::class),
         ];
