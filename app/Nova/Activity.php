@@ -85,7 +85,7 @@ class Activity extends Resource
             })->exceptOnForms(),
             NovaDependencyContainer::make([
                 Text::make('Time Limit', 'time_limit')
-                    ->help('format: (HH:MM:SS)')
+                    ->help('format: (HH:MM)')
                     ->onlyOnForms(),
             ])
                 ->dependsOnNot('category', ModelsOutput::CATEGORY_PROJECT),
