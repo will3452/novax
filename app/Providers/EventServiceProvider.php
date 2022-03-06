@@ -44,6 +44,6 @@ class EventServiceProvider extends ServiceProvider
         Subject::observe(SubjectObserver::class);
         Module::observe(ModuleObserver::class);
         Question::observe(QuestionObserver::class);
-        Material::observe(MaterialObserver::class);
+        // Material::observe(MaterialObserver::class);
     }
 }
