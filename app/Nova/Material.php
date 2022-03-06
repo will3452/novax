@@ -58,12 +58,12 @@ class Material extends Resource
                     ModelsMaterial::TYPE_PDF => ModelsMaterial::TYPE_PDF,
                 ])->rules(['required']),
             NovaDependencyContainer::make([
-                File::make('File')
+                File::make('Content')
                 ->rules(['max:10000'])
                 ->onlyOnForms(),
             ])->dependsOn('type', ModelsMaterial::TYPE_PDF),
             NovaDependencyContainer::make([
-                Text::make('Link')
+                Text::make('Content')
                     ->onlyOnForms(),
             ])->dependsOn('type', ModelsMaterial::TYPE_HYPERLINK),
             Text::make('Content')->exceptOnForms(),
