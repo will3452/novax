@@ -81,7 +81,7 @@ class Activity extends Resource
             //         ModelsOutput::TYPE_SYNCHRONOUS => ModelsOutput::TYPE_SYNCHRONOUS,
             //     ])->rules(['required']),
             Text::make('Time Limit', function () {
-                return $this->time_limit->format('H:i:s');
+                return optional($this->time_limit)->format('H:i:s');
             })->exceptOnForms(),
             NovaDependencyContainer::make([
                 Text::make('Time Limit', 'time_limit')
