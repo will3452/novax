@@ -81,11 +81,12 @@ class Activity extends Resource
             //         ModelsOutput::TYPE_SYNCHRONOUS => ModelsOutput::TYPE_SYNCHRONOUS,
             //     ])->rules(['required']),
             NovaDependencyContainer::make([
-                TimeField::make('Time Limit (hr)', 'time_limit')
-                    ->onlyOnForms()
-                    ->rules(['required']),
-                Text::make('Time Limit', 'time_limit')
-                    ->exceptOnForms(),
+                // TimeField::make('Time Limit (hr)', 'time_limit')
+                //     ->onlyOnForms()
+                //     ->rules(['required']), // 00:00
+                // Text::make('Time Limit', 'time_limit')
+                //     ->exceptOnForms(),
+                Text::make('Time Limit (hr)', 'time_limit'),
             ])
                 ->help('In Hour')
                 ->dependsOnNot('category', ModelsOutput::CATEGORY_PROJECT),
