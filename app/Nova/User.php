@@ -104,7 +104,7 @@ class User extends Resource
 
             HasOne::make('Parent', 'parent', StudentParent::class)->canSee(fn () => $this->type === ModelsUser::TYPE_STUDENT),
 
-            MorphToMany::make('Roles', 'roles', Role::class),
+            // MorphToMany::make('Roles', 'roles', Role::class),
         ];
     }
 
