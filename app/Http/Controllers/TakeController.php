@@ -91,8 +91,13 @@ class TakeController extends Controller
         $score = 0;
         foreach ($request->ques as $q) {
             $question = Question::find($q);
-            if ($question->correct_answer === $request->ans[$q]) {
-                $score ++;
+            if (count($request->ans) === 0) {
+                $score = 0;
+                break;
+            } else {
+                if ($question->correct_answer === $request->ans[$q]) {
+                    $score ++;
+                }
             }
         }
         $rate = $score . "/" . count(request()->ques);

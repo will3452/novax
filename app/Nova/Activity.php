@@ -88,7 +88,6 @@ class Activity extends Resource
                     return $this->time_limit->format('H:i:s');
                 })->exceptOnForms(),
             ])
-                ->help('In Hour')
                 ->dependsOnNot('category', ModelsOutput::CATEGORY_PROJECT),
             NovaDependencyContainer::make([
                 Textarea::make('Instructions', 'instruction')
