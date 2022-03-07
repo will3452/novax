@@ -49,6 +49,7 @@
             if (hv <= 0 && mv <= 0 && sv <= 0) {
                 //examination is done!
                 form.submit();
+                sessionStorage.clear();
                 clearInterval(ctimer);
             }
 
