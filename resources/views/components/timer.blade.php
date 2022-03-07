@@ -20,7 +20,7 @@
         let mv = mm.innerText;
         let sv = 59;
         var ctimer = setInterval(() => {
-            if (hv <= 0 && mv <= 0 && sv <=0) {
+            if (hv <= 0 && mv <= 0 && sv <= 0) {
                 //examination is done!
                 form.submit();
                 clearInterval(ctimer);
@@ -38,7 +38,10 @@
                 sv = 60;
             }
 
-            sv --;
+            if (sv > 0) {
+                sv --;
+            }
+
             console.log(sv);
         }, 1200);
     }
