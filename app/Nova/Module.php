@@ -53,7 +53,7 @@ class Module extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('Subect', 'subject', Subject::class),
+            BelongsTo::make('Subject', 'subject', Subject::class),
             BelongsTo::make('Uploader', 'uploader', User::class)
                 ->exceptOnForms(),
             Text::make('Code')
