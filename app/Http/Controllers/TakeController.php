@@ -24,13 +24,15 @@ class TakeController extends Controller
 
     public function remainingTime($record, $activity)
     {
-        $timeTaken = now()->diffInMinutes($record->created_at);
+        $timeTaken = now()->diffInSeconds($record->created_at);
         $timeLimit = $this->hourToMinutes($activity->time_limit);
-        $givenMinutes = $timeLimit - $timeTaken;
+        $timeLimit = $timeLimit * 60; // in seconds
+        $givenSeconds = $timeLimit - $timeTaken;
 
-        $hr = intdiv($givenMinutes, 60);
-        $min = $givenMinutes % 60;
-        return [$hr, $min];
+        $hr = intdiv($givenSeconds, 3600);
+        $min = intdiv($givenSeconds, 60);
+        $sec = $givenSeconds % 60;
+        return [$hr, $min, $sec];
     }
 
     public function isExpired($record, $activity)
@@ -38,7 +40,7 @@ class TakeController extends Controller
         $timeTaken = now()->diffInMinutes($record->created_at);
         $timeLimit = $this->hourToMinutes($activity->time_limit);
 
-        return ($timeLimit + 3) < $timeTaken;
+        return $timeLimit < $timeTaken;
     }
 
     public function getRecord($activity)

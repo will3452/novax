@@ -110,6 +110,6 @@ trait HasRecords {
 
         $timeTaken = now()->diffInMinutes($record->created_at);
         $timeLimit = $this->hourToMinutes($this->time_limit);
-        return ($timeLimit + 3) < $timeTaken;
+        return $timeLimit < $timeTaken;
     }
 }
