@@ -2,13 +2,14 @@
 
 namespace Laravel\Nova\Http\Controllers;
 
-use Illuminate\Foundation\Auth\ResetsPasswords;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+use App\Models\User;
+use Laravel\Nova\Nova;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
-use Laravel\Nova\Nova;
+use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class ResetPasswordController extends Controller
 {
@@ -59,6 +60,16 @@ class ResetPasswordController extends Controller
      */
     public function redirectPath()
     {
+        $types = [
+            User::TYPE_PARENT,
+            User::TYPE_STUDENT,
+            User::TYPE_TEACHER,
+        ];
+
+        if (in_array(auth()->user()->type, $types)) {
+            return '/home';
+        }
+
         return Nova::path();
     }
 
