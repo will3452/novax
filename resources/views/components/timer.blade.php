@@ -10,7 +10,7 @@
         </span>
     </div>
     <div id="sec" class="hidden">
-        <div class="text-xs text-center text-red-500">
+        <div class="text-xs text-center text-red-500 text-2xl">
             <span id="ss"></span> s
         </div>
     </div>
@@ -35,7 +35,7 @@
                 clearInterval(ctimer);
             }
 
-            if (mv<= 10 && hv <= 0) {
+            if (mv<= 0 && hv <= 0) {
                 hm.classList.add('hidden');
                 sec.classList.remove('hidden');
             }
