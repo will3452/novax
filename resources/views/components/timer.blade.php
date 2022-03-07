@@ -54,7 +54,7 @@
 
             if (sv > 0) {
                 sv --;
-                sec.innerText = sv;
+                ss.innerText = sv;
             }//
 
             console.log(sv);
