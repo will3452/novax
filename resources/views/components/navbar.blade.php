@@ -1,4 +1,4 @@
-<div class="navbar bg-base-100 shadow">
+<div class="navbar bg-base-100 shadow overflow-x-auto">
     <div class="flex-1">
         @guest
             <a href="/" class="btn btn-ghost normal-case text-xl">{{config('app.name')}}</a>
