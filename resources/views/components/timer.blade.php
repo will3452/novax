@@ -47,9 +47,9 @@
             sv = parseInt(st);
         }
 
-        hh.innerText = (hv + "").padStart(2, 0);
-        mm.innerText = (mv + "").padStart(2, 0);
-        ss.innerText = (sv + "").padStart(2, 0);
+        hh.innerText = (hv + "").padStart(2, '0');
+        mm.innerText = (mv + "").padStart(2, '0');
+        ss.innerText = (sv + "").padStart(2, '0');
         //re
         var ctimer = setInterval(async () => {
             if (hv <= 0 && mv <= 0 && sv <= 0) {
