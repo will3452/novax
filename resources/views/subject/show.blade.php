@@ -44,7 +44,7 @@
             </div>
             @if (\App\Models\User::find($userId)->type !== \App\Models\User::TYPE_TEACHER)
             <div class="md:w-1/2 w-full flex justify-center hidden md:block">
-                <div class="radial-progress bg-primary text-success" style="--value:{{$subject->getProgress($userId)}};--size:12rem">{{$subject->getProgress($userId)}}%</div>
+                <div class="radial-progress bg-primary text-success" style="--value:{{$subject->getProgress($userId)}};--size:12rem">{{number_format($subject->getProgress($userId), 2)}}%</div>
             </div>
             @endif
         </div>

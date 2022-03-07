@@ -11,10 +11,12 @@ class Material extends Model
     use HasFactory, HasRecords;
 
     protected $fillable = [
-        'content',
+        // 'content',
         'type',
         'name',
         'module_id',
+        'file',
+        'link',
     ];
 
     const TYPE_PDF = 'PDF';
@@ -25,8 +27,8 @@ class Material extends Model
         return $this->belongsTo(Module::class);
     }
 
-    public function getLinkAttribute()
+    public function getContentAttribute()
     {
-        return $this->type === self::TYPE_HYPERLINK ? $this->content : "/storage/$this->content";
+        return $this->type === self::TYPE_HYPERLINK ? $this->link : "/storage/$this->file";
     }
 }

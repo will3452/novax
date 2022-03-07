@@ -43,7 +43,7 @@ class User extends Authenticatable
     const TYPE_STUDENT = 'Student';
     const TYPE_TEACHER = 'Teacher';
     const TYPE_PARENT = 'Parent';
-    const TYPE_PARTNER = 'Partner';
+    const TYPE_PARTNER = 'System Partner';
 
     /**
      * The attributes that should be hidden for serialization.

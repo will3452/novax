@@ -8,6 +8,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 
 class MarkAsSolved extends Action
 {
@@ -23,7 +25,7 @@ class MarkAsSolved extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            $model->markAsSolved();
+            $model->markAsSolved($fields['note']);
         }
     }
 
@@ -34,6 +36,9 @@ class MarkAsSolved extends Action
      */
     public function fields()
     {
-        return [];
+        return [
+            Textarea::make('Resolution Note', 'note')
+                ->rules(['required']),
+        ];
     }
 }

@@ -11,4 +11,8 @@ class Student extends User
     public static $model = \App\Models\Student::class;
 
     public static $displayInNavigation = false;
+    public static function availableForNavigation(Request $request)
+    {
+        return false;
+    }
 }

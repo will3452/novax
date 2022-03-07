@@ -58,7 +58,7 @@ class RecordController extends Controller
         $cb = "";
 
         if (Model::getFullModel($type) === "\\" . Material::class) {
-            $cb = $recordable->link;
+            $cb = $recordable->content; // this will get the content of the module
         } else {
             $activityCategory = $recordable->category;
             $cb = "/take/$activityCategory/$id";

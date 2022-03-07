@@ -67,6 +67,8 @@ class Issue extends Resource
                 ->rules(['required']),
             Text::make('Attachment', fn () => is_null($this->attachment) ? "No Attachment." :"<a target='_blank' href='/storage/$this->actual_file'>View<a/>")
                 ->asHtml(),
+            Textarea::make('Notes/Remarks', 'note')
+                ->alwaysShow(),
             Badge::make('Status')
                 ->map([
                     ModelsIssue::STATUS_PENDING => 'info',

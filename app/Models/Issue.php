@@ -14,6 +14,7 @@ class Issue extends Model
         'details',
         'attachment',
         'status',
+        'note',
     ];
 
     const STATUS_SOLVED = 'Solved';
@@ -30,10 +31,11 @@ class Issue extends Model
         return end($arr);
     }
 
-    public function markAsSolved()
+    public function markAsSolved($note)
     {
         $this->update([
             'status' => self::STATUS_SOLVED,
+            'note' => $note,
         ]);
     }
 }

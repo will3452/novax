@@ -12,6 +12,7 @@ use DigitalCreative\Filepond\Filepond;
 use App\Models\Material as ModelsMaterial;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
+use Laravel\Nova\Fields\Textarea;
 
 class Material extends Resource
 {
@@ -57,16 +58,11 @@ class Material extends Resource
                     ModelsMaterial::TYPE_HYPERLINK => ModelsMaterial::TYPE_HYPERLINK,
                     ModelsMaterial::TYPE_PDF => ModelsMaterial::TYPE_PDF,
                 ])->rules(['required']),
-            NovaDependencyContainer::make([
-                File::make('Content')
-                ->rules(['max:10000'])
-                ->onlyOnForms(),
-            ])->dependsOn('type', ModelsMaterial::TYPE_PDF),
-            NovaDependencyContainer::make([
-                Text::make('Content')
-                    ->onlyOnForms(),
-            ])->dependsOn('type', ModelsMaterial::TYPE_HYPERLINK),
-            Text::make('Content')->exceptOnForms(),
+            Textarea::make('URL', 'link')
+                ->alwaysShow(),
+            File::make('File')
+                ->help('maximum of 5mb')
+                ->rules(['max:5000']),
         ];
     }
 

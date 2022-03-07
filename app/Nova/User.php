@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Models\Role;
 use App\Models\User as ModelsUser;
 use App\Models\UserType;
 use App\Models\YearLevel;
@@ -25,6 +26,11 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class User extends Resource
 {
     use HasDependencies;
+
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->hasRole(Role::SUPERADMIN);
+    }
 
     public function authorizedToUpdate(Request $request)
     {

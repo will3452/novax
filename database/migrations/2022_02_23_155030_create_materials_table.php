@@ -16,11 +16,12 @@ class CreateMaterialsTable extends Migration
     {
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
-            $table->string('content');
             $table->string('type')->default(Material::TYPE_HYPERLINK);
             $table->string('name');
             $table->foreignId('module_id')
                 ->onDelete('cascade');
+            $table->string('link')->nullable();
+            $table->string('file')->nullable();
             $table->timestamps();
         });
     }

@@ -89,6 +89,9 @@ class TakeController extends Controller
             return abort(401);
         }
         $score = 0;
+        if (is_null($request->quest)) {
+            return redirect('/home')->withSuccess('Something went wrong');
+        }
         foreach ($request->ques as $q) {
             $question = Question::find($q);
             if (array_key_exists($q, $request->ans) && $question->correct_answer === $request->ans[$q]) {

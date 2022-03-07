@@ -1,4 +1,5 @@
 <x-layout>
+
     <x-container>
         <x-header>
             My Room
@@ -15,4 +16,5 @@
             </div>
         </div>
     </x-container>
+    <x-write-feedback :room="$room"></x-write-feedback>
 </x-layout>

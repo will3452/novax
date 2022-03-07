@@ -46,6 +46,9 @@
                             Attachment
                         </th>
                         <th>
+                            Resolution.
+                        </th>
+                        <th>
                             Status
                         </th>
                     </tr>
@@ -68,6 +71,9 @@
                             @else
                                 No Attachment.
                             @endif
+                        </td>
+                        <td>
+                            {{$i->note ?? 'N/a'}}
                         </td>
                         <td>
                             {{$i->status}}
