@@ -82,6 +82,7 @@ class User extends Resource
                     \App\Models\User::TYPE_STUDENT => \App\Models\User::TYPE_STUDENT,
                     \App\Models\User::TYPE_PARTNER => \App\Models\User::TYPE_PARTNER,
                     \App\Models\User::TYPE_TEACHER => \App\Models\User::TYPE_TEACHER,
+                    \App\Models\User::TYPE_PRINCIPAL => \App\Models\User::TYPE_PRINCIPAL,
                 ], UserType::get()->pluck('name', 'name')->toArray())),
 
             Text::make('Name')

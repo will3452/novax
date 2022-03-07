@@ -11,9 +11,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class UserType extends Resource
 {
-    use HideTrait;
-
-    const hideToUserType = Model::forAll;
+    public static $displayInNavigation = false;
     /**
      * The model the resource corresponds to.
      *
