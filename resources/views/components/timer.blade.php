@@ -37,9 +37,9 @@
         if (sessionStorage.getItem('time') == null) {
             console.log('set')
             // [ht, mt, st] = setTime("{{$rt[0]}}:{{$rt[1]}}:0");
-            hv = parseInt(ht);
-            mv = parseInt(mt);
-            sv = parseInt(st);
+            hv = parseInt({{$rt[0]}});
+            mv = parseInt({{$rt[1]}});
+            sv = parseInt(0);
         } else {
             [ht, mt, st] = sessionStorage.getItem('time').split(':');
             hv = parseInt(ht);
