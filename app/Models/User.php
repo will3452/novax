@@ -22,7 +22,28 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'number', //student number
+        'level', // year level
+        'type', // teacher, admin, student
+        'strand',
     ];
+
+    const LEVEL = [
+        "Grade 11",
+        "Grade 12",
+    ];
+
+    const STRAND = [
+        "GAS",
+        "ABM",
+        "STEM",
+        "HUMSS",
+    ];
+
+    const TYPE_STUDENT = "Student";
+    const TYPE_TEACHER = "Teacher";
+    const TYPE_OTHER = "Other";
+
 
     /**
      * The attributes that should be hidden for serialization.
