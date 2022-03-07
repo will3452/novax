@@ -2,8 +2,10 @@
 
 namespace App\Nova;
 
+use App\Helpers\Model;
 use App\Models\Issue as ModelsIssue;
 use App\Nova\Actions\MarkAsSolved;
+use App\Nova\Traits\HideTrait;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
@@ -13,9 +15,13 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use App\Models\User as UserModel;
 
 class Issue extends Resource
 {
+    use HideTrait;
+
+    const hideToUserType = Model::forAll;
     /**
      * The model the resource corresponds to.
      *
@@ -37,6 +43,8 @@ class Issue extends Resource
      */
     public static $search = [
         'id',
+        'created_at',
+        'Subject'
     ];
 
     /**
@@ -57,7 +65,7 @@ class Issue extends Resource
             Textarea::make('Details')
                 ->alwaysShow()
                 ->rules(['required']),
-            Text::make('Attachment', fn () => "<a target='_blank' href='/storage/$this->actual_file'>View<a/>")
+            Text::make('Attachment', fn () => is_null($this->attachment) ? "No Attachment." :"<a target='_blank' href='/storage/$this->actual_file'>View<a/>")
                 ->asHtml(),
             Badge::make('Status')
                 ->map([

@@ -86,8 +86,8 @@ class Activity extends Resource
             NovaDependencyContainer::make([
                 Text::make('Time Limit', 'time_limit')
                     ->help('format: (HH:MM)')
-                    ->onlyOnForms(),
             ])
+                ->onlyOnForms()
                 ->dependsOnNot('category', ModelsOutput::CATEGORY_PROJECT),
             NovaDependencyContainer::make([
                 Textarea::make('Instructions', 'instruction')

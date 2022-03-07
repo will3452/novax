@@ -2,7 +2,9 @@
 
 namespace App\Nova;
 
+use App\Helpers\Model;
 use App\Models\Module as ModelsModule;
+use App\Nova\Traits\HideTrait;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\HasMany;
@@ -13,6 +15,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Module extends Resource
 {
+    use HideTrait;
+
+    const hideToUserType = Model::forPartners;
+
     /**
      * The model the resource corresponds to.
      *

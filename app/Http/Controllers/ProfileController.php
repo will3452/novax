@@ -21,6 +21,7 @@ class ProfileController extends Controller
         $data = $request->validate([
             'phone' => 'required|max:11',
             'password' => 'required|min:6',
+            'address' => 'required',
         ]);
 
         $data['password'] = bcrypt($data['password']);

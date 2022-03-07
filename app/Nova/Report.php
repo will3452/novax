@@ -2,14 +2,19 @@
 
 namespace App\Nova;
 
+use App\Helpers\Model;
 use App\Nova\Actions\AllUsers;
 use App\Nova\Actions\DownloadExcel;
+use App\Nova\Traits\HideTrait;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Report extends Resource
 {
+    use HideTrait;
+
+    const hideToUserType = Model::forAll;
     /**
      * The model the resource corresponds to.
      *

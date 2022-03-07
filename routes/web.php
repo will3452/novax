@@ -14,13 +14,15 @@ use App\Http\Controllers\RecordController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\Nova\LoginController as NovaLoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ReportIssueController;
-use Symfony\Component\HttpKernel\Profiler\Profile;
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout']);
+
+Route::post(Nova::path() . '/login', [NovaLoginController::class, 'login'])->name('nova.login');
 
 Route::prefix('teacher')->name('teacher.')->middleware(['auth'])->group(function () {
     //rooms

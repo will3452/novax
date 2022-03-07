@@ -53,9 +53,9 @@
                         {{ \Laravel\Nova\Nova::name() }}
                     </a>
 
-                    @if (count(\Laravel\Nova\Nova::globallySearchableResources(request())) > 0)
+                    {{-- @if (count(\Laravel\Nova\Nova::globallySearchableResources(request())) > 0)
                         <global-search dusk="global-search-component"></global-search>
-                    @endif
+                    @endif --}}
 
                     <dropdown class="ml-auto h-9 flex items-center dropdown-right">
                         @include('nova::partials.user')

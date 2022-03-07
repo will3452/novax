@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Helpers\Model;
+use App\Nova\Traits\HideTrait;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -9,6 +11,9 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class UserType extends Resource
 {
+    use HideTrait;
+
+    const hideToUserType = Model::forAll;
     /**
      * The model the resource corresponds to.
      *

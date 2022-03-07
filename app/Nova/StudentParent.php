@@ -15,6 +15,11 @@ class StudentParent extends Resource
     {
         return 'Record';
     }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
     /**
      * The model the resource corresponds to.
      *

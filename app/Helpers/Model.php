@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use App\Models\User;
+
 class Model
 {
     public static function getModel($model)
@@ -16,4 +18,17 @@ class Model
     {
         return "\App\\Models\\$model";
     }
+
+    const forPartners = [
+        User::TYPE_PARENT,
+        User::TYPE_STUDENT,
+        User::TYPE_TEACHER,
+    ];
+
+    const forAll = [
+        User::TYPE_PARENT,
+        User::TYPE_STUDENT,
+        User::TYPE_TEACHER,
+        User::TYPE_PARTNER,
+    ];
 }

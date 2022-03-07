@@ -8,7 +8,7 @@
                 <label class="label">
                   <span class="label-text">Email</span>
                 </label>
-                <input type="text" placeholder="email" requried name="email" class="input input-bordered">
+                <input type="text" autofocus placeholder="email" requried name="email" class="input input-bordered">
               </div>
               <div class="form-control">
                 <label class="label">

@@ -2,7 +2,9 @@
 
 namespace App\Nova;
 
+use App\Helpers\Model;
 use App\Models\YearLevel;
+use App\Nova\Traits\HideTrait;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\HasMany;
@@ -12,6 +14,9 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Subject extends Resource
 {
+    use HideTrait;
+
+    const hideToUserType = Model::forPartners;
     /**
      * The model the resource corresponds to.
      *

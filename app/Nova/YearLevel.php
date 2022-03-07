@@ -2,13 +2,18 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
+use App\Helpers\Model;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use App\Nova\Traits\HideTrait;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class YearLevel extends Resource
 {
+    use HideTrait;
+
+    const hideToUserType = Model::forAll;
     /**
      * The model the resource corresponds to.
      *

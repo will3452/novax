@@ -2,9 +2,11 @@
 
 namespace App\Nova;
 
+use App\Helpers\Model;
 use App\Models\User;
 use App\Models\YearLevel;
 use App\Nova\Actions\AddStudents;
+use App\Nova\Traits\HideTrait;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
@@ -17,6 +19,9 @@ use OptimistDigital\MultiselectField\Multiselect;
 
 class Room extends Resource
 {
+    use HideTrait;
+
+    const hideToUserType = Model::forPartners;
     /**
      * The model the resource corresponds to.
      *

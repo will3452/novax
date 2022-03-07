@@ -63,7 +63,11 @@
                             {{$i->details}}
                         </td>
                         <td>
-                            <a class="underline" targe="_blank" href="/storage/{{$i->actual_file}}">view</a>
+                            @if (! is_null($i->attachment))
+                                <a class="underline" targe="_blank" href="/storage/{{$i->actual_file}}">view</a>
+                            @else
+                                No Attachment.
+                            @endif
                         </td>
                         <td>
                             {{$i->status}}

@@ -5,6 +5,8 @@ namespace App\Nova;
 use App\Models\User as ModelsUser;
 use App\Models\UserType;
 use App\Models\YearLevel;
+use App\Nova\Actions\AssignParent;
+use App\Nova\Actions\AssignStudents;
 use App\Nova\Filters\UserType as UserTypeFilter;
 use Epartment\NovaDependencyContainer\HasDependencies;
 use Epartment\NovaDependencyContainer\NovaDependencyContainer;
@@ -23,6 +25,11 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class User extends Resource
 {
     use HasDependencies;
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return true;
+    }
 
     public static function indexQuery(NovaRequest $request, $query)
     {
@@ -151,6 +158,11 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new AssignParent)
+                ->canSee(fn () => (($this->type === ModelsUser::TYPE_STUDENT && ! $this->parent()->count()) || $request->has('action'))),
+            (new AssignStudents)
+                ->canSee(fn () => (($this->type === ModelsUser::TYPE_PARENT) || $request->has('action'))),
+        ];
     }
 }

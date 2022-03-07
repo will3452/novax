@@ -18,6 +18,12 @@
                     <label for="">Phone #</label>
                     <input type="number" name="phone" class="w-full input input-bordered" required value="{{auth()->user()->phone}}">
                 </div>
+
+                <div class="mb-4">
+                    <label for="">Address</label>
+                    <input type="text" name="address" class="w-full input input-bordered" required value="{{auth()->user()->address}}">
+                </div>
+
                 <div class="mb-4">
                     <label for="">New Password</label>
                     <input type="password" name="password" class="w-full input input-bordered" required value="">
