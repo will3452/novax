@@ -10,4 +10,9 @@
             <a href="/subjects/{{$activity->module->subject->id}}" class="btn-xs btn btn-primary">Back to Subject.</a>
         </div>
     </x-container>
+    <script>
+        window.onload = function () {
+            sessionStorage.clear();
+        }
+    </script>
 </x-layout>

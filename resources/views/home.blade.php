@@ -22,6 +22,10 @@
         @parent
             <x-students :students="auth()->user()->students"></x-students>
         @endparent
-
+        <script>
+            window.onload = function () {
+                sessionStorage.clear();
+            }
+        </script>
     </x-container>
 </x-layout>

@@ -29,6 +29,7 @@ Route::prefix('teacher')->name('teacher.')->middleware(['auth'])->group(function
     Route::get('/room', [RoomController::class, 'teacherRoom'])->name('room');
 });
 
+Route::get('/reset', fn () => 'reset!@');
 Route::prefix('student')->name('student.')->middleware(['auth'])->group(function () {
     //rooms
     Route::get('/room', [RoomController::class, 'studentRoom'])->name('room');
