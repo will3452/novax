@@ -89,7 +89,7 @@ class TakeController extends Controller
             return abort(401);
         }
         $score = 0;
-        if (is_null($request->quest)) {
+        if (is_null($request->ques)) {
             return redirect('/home')->withSuccess('Something went wrong');
         }
         foreach ($request->ques as $q) {
