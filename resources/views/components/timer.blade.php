@@ -19,6 +19,7 @@
         let hv = hh.innerText;
         let mv = mm.innerText;
         let sv = 0;
+        //re
         var ctimer = setInterval(() => {
             if (hv <= 0 && mv <= 0 && sv <= 0) {
                 //examination is done!
