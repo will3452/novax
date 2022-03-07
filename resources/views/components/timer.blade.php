@@ -9,8 +9,8 @@
             <span id="mm">{{\Str::padLeft($rt[1], 2, 0)}}</span>
         </span>
     </div>
-    <div id="sec">
-        <div class="text-xs text-center text-red-500 hidden">
+    <div id="sec" class="hidden">
+        <div class="text-xs text-center text-red-500">
             <span id="ss"></span> s
         </div>
     </div>
