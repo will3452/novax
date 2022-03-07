@@ -21,7 +21,20 @@ class Issue extends Resource
 {
     use HideTrait;
 
-    const hideToUserType = Model::forAll;
+    public static function availableForNavigation(Request $request)
+    {
+        if (self::hideToAdmin() && auth()->user()->hasRole(Role::SUPERADMIN)) {
+            return false;
+        }
+
+        return ! in_array(auth()->user()->type, [
+            User::TYPE_PARENT,
+            User::TYPE_STUDENT,
+            User::TYPE_TEACHER,
+            User::TYPE_PARTNER,
+            User::TYPE_PRINCIPAL,
+        ]);
+    }
     /**
      * The model the resource corresponds to.
      *
