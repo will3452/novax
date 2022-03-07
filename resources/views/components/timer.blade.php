@@ -79,6 +79,6 @@
             ss.innerText = (sv + "").padStart(2, '0');
             sv --;
             setTime(`${hv}:${mv}:${sv}`);
-        }, 250);
+        }, 1000);
     }
 </script>
