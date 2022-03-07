@@ -32,6 +32,6 @@ class ReportIssueController extends Controller
 
         auth()->user()->issues()->create($data);
 
-        return redirect('/home')->withSuccess('Issue Submitted!');
+        return back()->withSuccess('Issue Submitted!');
     }
 }
