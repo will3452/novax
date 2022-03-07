@@ -40,7 +40,7 @@
 
             if (sv > 0) {
                 sv --;
-            }
+            }//
 
             console.log(sv);
         }, 1200);
