@@ -28,11 +28,11 @@ class Issue extends Resource
         }
 
         return ! in_array(auth()->user()->type, [
-            User::TYPE_PARENT,
-            User::TYPE_STUDENT,
-            User::TYPE_TEACHER,
-            User::TYPE_PARTNER,
-            User::TYPE_PRINCIPAL,
+            \App\Models\User::TYPE_PARENT,
+            \App\Models\User::TYPE_STUDENT,
+            \App\Models\User::TYPE_TEACHER,
+            \App\Models\User::TYPE_PARTNER,
+            \App\Models\User::TYPE_PRINCIPAL,
         ]);
     }
     /**
