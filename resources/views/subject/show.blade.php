@@ -48,6 +48,11 @@
             </div>
             @endif
         </div>
+        <script>
+            window.onload = function () {
+                sessionStorage.clear();
+            }
+        </script>
     </x-container>
 </x-layout>
 

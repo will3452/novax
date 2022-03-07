@@ -1,6 +1,10 @@
 @props(['feedback' => [], 'room' => null, 'root' => true, 'count'=>0, 'canReply' => true,])
+@if ($root)
+    <button onclick="toggle()" class="btn btn-xs my-4">Show/Hide Feedback </button>
+@endif
 <x-table-container>
-    @foreach ($feedback as $fb)
+    <div id="root-con">
+        @foreach ($feedback as $fb)
             <div class="mt-4 border-t-2 border-2 border-r-0 p-2 pr-0">
                 <div class="flex items-center justify-between">
                     <div>
@@ -24,4 +28,18 @@
                 </div>
             </div>
     @endforeach
+    </div>
 </x-table-container>
+
+<script>
+    var rootCon = document.getElementById('root-con');
+    var isHide = false;
+    function toggle() {
+        if (! isHide) {
+            rootCon.classList.add('hidden');
+        } else {
+            rootCon.classList.remove('hidden');
+        }
+        isHide = !isHide;
+    }
+</script>
