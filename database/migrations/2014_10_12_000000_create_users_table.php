@@ -22,7 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('level')->nullable();
             $table->string('strand')->nullable();
-            $table->string('type')->default(User::TYPE_STUDENT);
+            $table->string('number')->nullable();
+            $table->string('type')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

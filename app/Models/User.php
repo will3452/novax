@@ -44,7 +44,6 @@ class User extends Authenticatable
     const TYPE_TEACHER = "Teacher";
     const TYPE_OTHER = "Other";
 
-
     /**
      * The attributes that should be hidden for serialization.
      *

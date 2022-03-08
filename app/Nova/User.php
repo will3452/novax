@@ -2,12 +2,14 @@
 
 namespace App\Nova;
 
+use App\Models\User as ModelsUser;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
@@ -50,8 +52,17 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
+            Text::make('LRN', 'number')
+                ->rules(['required']),
+            Select::make('Type')
+                ->options([
+                    ModelsUser::TYPE_STUDENT => ModelsUser::TYPE_STUDENT,
+                    ModelsUser::TYPE_TEACHER => ModelsUser::TYPE_TEACHER,
+                ]),
+            Select::make('Strand (Course)', 'strand')
+                ->options(collect(ModelsUser::STRAND)->flatMap(fn ($e) => [$e => $e])->all()),
+            Select::make('Year Level', 'level')
+                ->options(collect(ModelsUser::LEVEL)->flatMap(fn ($e) => [$e => $e])->all()),
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
@@ -67,7 +78,7 @@ class User extends Resource
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
 
-            MorphToMany::make('Roles', 'roles', Role::class),
+            // MorphToMany::make('Roles', 'roles', Role::class),
         ];
     }
 
