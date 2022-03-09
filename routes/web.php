@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\IssueReport;
 use App\Exports\RoomsExport;
 use App\Exports\SubjectsExport;
 use App\Exports\UsersExport;
@@ -75,15 +76,19 @@ Route::get('/report', function () {
     }
 
     if (request()->get('data') === 'subjects') {
-        return Excel::download(new SubjectsExport, 'subjects.xlsx');
+        return Excel::download(new SubjectsExport, now()->format('mdy') . 'subjects.xlsx');
     }
 
     if (request()->get('data') === 'rooms') {
-        return Excel::download(new RoomsExport, 'rooms.xlsx');
+        return Excel::download(new RoomsExport, now()->format('mdy') . 'rooms.xlsx');
     }
 
     if (request()->get('data') === 'year-level') {
-        return Excel::download(new YearLevelExport, 'yearlevels.xlsx');
+        return Excel::download(new YearLevelExport, now()->format('mdy') . 'yearlevels.xlsx');
+    }
+
+    if (request()->get('data') === 'reported issue') {
+        return Excel::download(new IssueReport, now()->format('mdy') . 'reportedIssues.xlsx');
     }
 });
 

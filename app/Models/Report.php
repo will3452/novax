@@ -13,5 +13,6 @@ class Report extends Model
         'subjects' => 'subjects',
         'rooms' => 'rooms',
         'year-level' => 'year-level',
+        'reported issues' => 'reported issues',
     ];
 }
