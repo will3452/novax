@@ -87,7 +87,7 @@ Route::get('/report', function () {
         return Excel::download(new YearLevelExport, now()->format('mdy') . 'yearlevels.xlsx');
     }
 
-    if (request()->get('data') === 'reported issue') {
+    if (request()->get('data') === 'reported issues') {
         return Excel::download(new IssueReport, now()->format('mdy') . 'reportedIssues.xlsx');
     }
 });
