@@ -20,6 +20,8 @@ use App\Http\Controllers\ChangelogController;
 use App\Http\Controllers\FileUploaderController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\Scholar\BookController;
+use App\Http\Controllers\Scholar\HomeController;
 
 //changelog
 Route::get('/changelog/create', [ChangelogController::class, 'create'])->middleware(['auth.basic']);
@@ -65,11 +67,6 @@ Route::get('/clubs', fn () =>
     Club::whereCollegeId(request()->college_id)->get()
 );
 
-
-// request for AAN
-
-
-
 // email verification
 Route::get('/send-email-verification-notification', [EmailVerificationController::class, 'resend']);
 Route::get('/email-verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])
@@ -89,12 +86,16 @@ Route::get('/chats/create', [ChatController::class, 'create']);
 Route::get('/chats/{chat}', [ChatController::class, 'index']);
 Route::post('/messages/create/{chat}', [ChatController::class, 'createMessage']);
 
-// Route::get('/chats/', [ChatController::class, 'show']);
 
+//scholars
 
-//works
-// Route::get('/library', [LibraryController::class, 'index']);
-// Route::get('/library/{book}', [LibraryController::class, 'show']);
-// Route::get('/library/{book}/chapters', [LibraryController::class, 'read']);
+Route::prefix('scholar')->name('scholar.')->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+    //books
+    Route::prefix('books')->name('book.')->group(function () {
+        Route::get('/', [BookController::class, 'index'])->name('index');
+    });
+});
 
 Route::get('/test', fn () => view('test'));

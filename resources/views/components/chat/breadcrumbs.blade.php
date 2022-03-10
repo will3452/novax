@@ -1,5 +1,5 @@
 @props(['links'=>[]])
-<div class="text-sm breadcrumbs px-6">
+<div class="text-sm breadcrumbs">
     <ul>
         @foreach ($links as $link)
             <li>

@@ -40,6 +40,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Number::make('Event Day Away')
+                ->rules(['gt:0'])
+                ->help('default value: 60'),
             Number::make('Maximum Account Per Scholar', 'max_account')
                 ->default(fn () => 3),
             Textarea::make('Copyright Disclaimer')
