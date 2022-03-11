@@ -7,7 +7,13 @@
         @elseif (! is_null($score))
             <span class="text-xs font-bold"> - score:{{$score}}</span>
         @else
-                <span class="text-xs text-red-600"> - No Grade.</span>
+                @activity($model)
+                    <span class="text-xs text-red-600"> - No Grade.</span>
+                @else
+                    <span class="text-xs text-red-600"> - Opened.</span>
+                @endactivity
+
+
         @endif
     @else
 
@@ -43,13 +49,20 @@
                @endactivity
             @endstudent
         @else
-            @if (! is_null($score))
-            <span class="text-xs font-bold"> - score:{{$score}}</span>
+            @activity($model)
+                @if (! is_null($score))
+                    <span class="text-xs font-bold"> - score:{{$score}}</span>
+                @else
+                    <span class="text-xs text-red-600"> - No Grade.</span>
+                @endif
             @else
-                 <span class="text-xs text-red-600"> - No Grade.</span>
-            @endif
+                @if (! is_null($score))
+                    <span class="text-xs font-bold"> - score:{{$score}}</span>
+                @else
+                    <span class="text-xs text-red-600"> - Opened</span>
+                @endif
+            @endactivity
         @endif
     @endif
-
     @endteacher
 </li>
