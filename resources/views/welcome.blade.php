@@ -1,7 +1,11 @@
 <x-layout>
-    <div class="w-screen h-screen flex justify-center items-center bg-gray-100">
-        <h1 class="text-3xl uppercase font-bold text-gray-700">
-            &lt;Under Development /&gt;
-        </h1>
-    </div>
+    <div class="hero min-h-screen bg-base-200">
+        <div class="hero-content text-center">
+          <div class="max-w-md">
+            <h1 class="text-5xl font-bold">{{nova_get_setting('app_name', config('app.name'))}}</h1>
+            <p class="py-6">{{nova_get_setting('introduction', 'setup in the setting of the administrator!')}}</p>
+            <a href="/login" class="btn btn-primary">Get Started</a>
+          </div>
+        </div>
+      </div>
 </x-layout>

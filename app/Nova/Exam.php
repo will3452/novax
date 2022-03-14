@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
@@ -49,6 +50,7 @@ class Exam extends Resource
             Date::make('Date Created', 'created_at')
                 ->exceptOnForms()
                 ->sortable(),
+            BelongsTo::make('Teacher', 'teacher', User::class),
             Text::make('Name')
                 ->rules(['required']),
             Select::make('Strand')
@@ -56,7 +58,7 @@ class Exam extends Resource
             Select::make('Level')
                 ->options(collect(\App\Models\User::LEVEL)->flatMap(fn ($e) => [$e => $e])->all()),
             Text::make('Time Limit', 'time_limit')
-                ->help('format: hh:mm:ss (eg. 01:30:00)'),
+                ->help('In minutes'),
             Date::make('Opened At')
                 ->rules(['required']),
             Date::make('Closed At')

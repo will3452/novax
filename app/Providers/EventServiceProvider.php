@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Exam;
+use App\Models\User;
 use App\Observers\ExamObserver;
+use App\Observers\UserObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -30,5 +32,6 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         Exam::observe(ExamObserver::class);
+        User::observe(UserObserver::class);
     }
 }
