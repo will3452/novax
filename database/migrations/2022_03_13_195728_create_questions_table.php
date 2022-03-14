@@ -15,6 +15,8 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('exam_id')
+                ->onDelete('cascade');
             $table->string('question')->nullable();
             $table->string('question_image')->nullable();
             $table->string('type');

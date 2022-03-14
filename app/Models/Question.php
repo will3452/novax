@@ -25,6 +25,19 @@ class Question extends Model
         return $this->belongsTo(Exam::class, 'exam_id');
     }
 
+    public function getAllChoiceAttribute()
+    {
+        $arr = explode('{"value":"', $this->choices);
+        $str = implode("", $arr);
+        $arr = explode("\"}", $str);
+        $str = implode("", $arr);
+        $arr = explode('[', $str);
+        $str = implode("", $arr);
+        $arr = explode(']', $str);
+        $str = implode("", $arr);
+        return explode(',', $str);
+    }
+
     const TYPE_MULTIPLE_CHOICE = 'Multiple Choice';
     const TYPE_IDENTIFICATION = 'Identification';
     const TYPE_TRUE_OR_FALSE = 'True or False';

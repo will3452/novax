@@ -86,6 +86,50 @@
             </form>
         </x-modal>
     </div>
+    <x-table>
+        <thead>
+            <tr>
+                <th>
+                    Question
+                </th>
+                <th>
+                    Correct Answer
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Choices
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($exam->questions as $q)
+                <tr>
+                    <td>
+                        {{$q->question}}
+                    </td>
+                    <td>
+                        {{$q->answer}}
+                    </td>
+                    <td>
+                        {{$q->type}}
+                    </td>
+                    <td>
+                        @foreach ($q->all_choice as $c)
+                            <span>{{$c}}</span> -
+                        @endforeach
+                    </td>
+                    <td>
+                        <x-modal button="delete" extra="btn-xs btn-warning"></x-modal>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </x-table>
     @push('styles')
         <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     @endpush
