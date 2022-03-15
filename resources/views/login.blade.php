@@ -1,6 +1,6 @@
 <x-layout>
-    <div class="flex justify-center items-center min-h-screen bg-base-200">
-        <form action="/login" class="card flex-shrink-0 w-full max-w-md shadow-2xl bg-base-100" method="POST">
+    <div class="flex justify-center items-center min-h-screen">
+        <form action="/login" class="card flex-shrink-0 w-full max-w-md shadow-2xl bg-base-200" method="POST">
             @csrf
             <div class="card-body">
               <div class="form-control">

@@ -25,6 +25,14 @@ class Question extends Model
         return $this->belongsTo(Exam::class, 'exam_id');
     }
 
+    public function getStorageQuestionAttribute()
+    {
+        $arr = explode("/", $this->question_image);
+        $end = end($arr);
+
+        return "/storage/" . $end;
+    }
+
     public function getAllChoiceAttribute()
     {
         $arr = explode('{"value":"', $this->choices);

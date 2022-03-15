@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Exam;
+use App\Models\Question;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -23,5 +24,11 @@ class QuestionController extends Controller
         ]);
 
         return back()->withSuccess('success!');
+    }
+
+    public function destroy(Question $question)
+    {
+        $question->delete();
+        return back()->withSuccess('Success!');
     }
 }

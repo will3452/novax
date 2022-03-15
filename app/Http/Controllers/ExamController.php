@@ -41,7 +41,7 @@ class ExamController extends Controller
             'name' => 'required|unique:exams,name',
             'code' => '',
             'time_limit' => 'required',
-            'opened_at' => 'required|after:now',
+            'opened_at' => 'required|after:yesterday',
             'closed_at' => 'required|after:opened_at',
             'level' => 'required',
             'strand' => 'required',
@@ -54,5 +54,20 @@ class ExamController extends Controller
     public function show(Exam $exam)
     {
         return view('exam.show', compact('exam'));
+    }
+
+    public function update(Request $request, Exam $exam)
+    {
+        $data = $request->validate([
+            'name' => 'required',
+            'code' => '',
+            'time_limit' => 'required',
+            'opened_at' => 'required|after:yesterday',
+            'closed_at' => 'required|after:opened_at',
+            'level' => 'required',
+            'strand' => 'required',
+        ]);
+        $exam->update($data);
+        return back()->withSuccess('Success');
     }
 }

@@ -25,6 +25,10 @@ class Exam extends Model
         'closed_at' => 'date',
     ];
 
+    protected $with = [
+        'questions',
+    ];
+
     public function teacher()
     {
         return $this->belongsTo(User::class, 'teacher_id');
@@ -33,5 +37,20 @@ class Exam extends Model
     public function questions()
     {
         return $this->hasMany(Question::class, 'exam_id');
+    }
+
+    public function records()
+    {
+        return $this->hasMany(Record::class, 'exam_id');
+    }
+
+    public function hasRecordOf($userId): bool
+    {
+        return $this->records()->whereUserId($userId)->count();
+    }
+
+    public function getRecordOf($userId): int
+    {
+        return $this->records()->whereUserId($userId)->latest()->first()->id;
     }
 }
