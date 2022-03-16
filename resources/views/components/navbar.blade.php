@@ -9,6 +9,7 @@
             <li><a href="/login">Login</a></li>
         @else
             <li><a href="/applications">Apps</a></li>
+            <li><a href="/games">Games</a></li>
             <li><a href="/profile">Profile</a></li>
             <li><a href="/logout">Logout</a></li>
         @endif

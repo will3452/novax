@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="w-11/12 mx-auto my-4">
+    <div class="w-11/12 mx-auto my-4 h-screen">
         <h1 class="text-center text-2xl uppercase mb-4">
             Dashboard
         </h1>

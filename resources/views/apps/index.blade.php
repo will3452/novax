@@ -9,12 +9,6 @@
             </x-alert-success>
         @endif
         <div class="flex flex-wrap justify-center">
-            <x-card title="Sudoku" img="/soduku.jpg" href="/games/sudoku">
-                a puzzle in which players insert the numbers one to nine into a grid consisting of nine squares subdivided into a further nine smaller squares in such a way that every number appears once in each horizontal line, vertical line, and square.
-            </x-card>
-            <x-card title="Memory flip cards" img="/cards.jpg" href="{{auth()->user()->images()->count() >= 6 ? '/games/flip-card' : 'javascript:alert(`Please Upload at lease 6 Images first. `)'}}">
-                Flashcards are a proven method to speed up your learning. As well as flashcards, Memory's Smart mode uses a modern twist to the flashcard concept, offering you many ways to answer questions and to optimise your learning path automatically.
-            </x-card>
             <x-card title="Gallery" img="/clay-banks-fEVaiLwWvlU-unsplash.jpg" proceed-text="View All" href="{{route('gallery')}}">
                 Add new images related to your family and experience that you want to remember and don't want to forget.
             </x-card>

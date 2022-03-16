@@ -26,6 +26,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Image::make('Background Image'),
             Textarea::make('Landing Message'),
         ]);
     }

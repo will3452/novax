@@ -1,10 +1,10 @@
 <x-layout>
     <div class="w-11/12 mx-auto my-4">
         <h1 class="text-center text-2xl uppercase mb-4">
-            Gallery
+            {{\App\Models\Album::find(request()->album)->name}}
         </h1>
         <div class="my-4 text-center">
-            <a href="{{route('gallery')}}/create" class="btn btn-xs btn-primary">
+            <a href="{{route('gallery')}}/create?album={{request()->album}}" class="btn btn-xs btn-primary">
                 Upload new
             </a>
         </div>

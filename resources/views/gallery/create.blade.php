@@ -11,6 +11,7 @@
         <div class="flex flex-wrap justify-center">
             <form action="{{route('gallery')}}" method="POST" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="album_id" value="{{request()->album}}">
                 <div class="mb-4">
                     <input type="text" required placeholder="Title" class="input input-bordered w-full max-w-xs" name="title" required>
                 </div>

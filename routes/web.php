@@ -8,7 +8,9 @@ use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
+use App\Models\Album;
 use Illuminate\Auth\Access\Gate;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,7 +27,19 @@ Route::get('/logout', function () {
 
 //dashboard
 Route::get('/home', [DashboardController::class, 'index'])->name('home');
+Route::view('/profile', 'profile');
+Route::post('/profile', function (Request $request) {
+    $data = $request->validate([
+        'name' => 'required',
+        'password' => 'required',
+    ]);
+    $data['password'] = bcrypt($data['password']);
+    auth()->user()->update($data);
+    return back()->withAlert('Updated!');
+});
 
+
+Route::get('/games', [GameController::class, 'index']);
 //games
 Route::get('games/sudoku', [GameController::class, 'sudoku']);
 Route::get('games/flip-card', [GameController::class, 'flipCard']);
@@ -35,6 +49,17 @@ Route::get('gallery', [GalleryController::class, 'index'])->name('gallery');
 Route::get('gallery/create', [GalleryController::class, 'create']);
 Route::post('gallery', [GalleryController::class, 'store']);
 Route::get('gallery/remove/{image}', [GalleryController::class, 'delete']);
+Route::get('/images', [GalleryController::class, 'imageIndex']);
+Route::post('/create-album', function (Request $request) {
+    $data = $request->validate([
+        'name' => 'required',
+        'description' => 'required',
+    ]);
+    $data['user_id'] = auth()->id();
+    Album::create($data);
+
+    return back()->withAlert('Success');
+});
 
 //apps controller
 Route::get('/applications', [AppsController::class, 'index']);

@@ -9,7 +9,13 @@ class GalleryController extends Controller
 {
     public function index()
     {
-        $images = auth()->user()->images()->latest()->simplePaginate(5);
+        $albums = auth()->user()->albums()->latest()->simplePaginate(5);
+        return view('gallery.album_index', compact('albums'));
+    }
+
+    public function imageIndex()
+    {
+        $images = auth()->user()->images()->whereAlbumId(request()->album)->latest()->simplePaginate(5);
         return view('gallery.index', compact('images'));
     }
 
@@ -21,6 +27,7 @@ class GalleryController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
+            'album_id' => ['required', 'exists:albums,id'],
             'file' => 'image|required|max:5000',
             'caption' => 'required',
             'title' => 'required',
@@ -32,8 +39,8 @@ class GalleryController extends Controller
         $data['path'] = end($arrayPath);
 
         auth()->user()->images()->create($data);
-
-        return redirect(route('gallery') . "?alert=new image has been uploaded!");
+        $album = $data['album_id'];
+        return redirect('/images/' . "?album=$album&alert=new image has been uploaded!");
     }
 
     public function delete(Image $image)

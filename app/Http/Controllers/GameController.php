@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
+    public function index()
+    {
+        return view('game_index');
+    }
     public function sudoku()
     {
         return view('sudoku');
