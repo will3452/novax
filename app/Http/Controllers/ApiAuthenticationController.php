@@ -91,7 +91,7 @@ class ApiAuthenticationController extends Controller
         $request->validated();
 
         $vCode = VerificationCode::whereCode($request->code)
-            ->whereRecipient($request->recipient)->latest()->first();
+            ->whereRecipient($request->contact)->latest()->first();
 
         $vCode->update(['status' => VerificationCode::STATUS_USED]);
         if ($request->type === 'email') {
