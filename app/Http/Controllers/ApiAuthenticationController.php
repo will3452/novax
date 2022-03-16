@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Api\ErrorHelper;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\SubmitCodeRequest;
 use App\Http\Requests\VerificationCodeRequest;
@@ -37,15 +38,11 @@ class ApiAuthenticationController extends Controller
         ], 200);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
+        $request->validated();
         $email = $request->email;
         $password = $request->password;
-
-
-        if (is_null($email) || is_null($password)) {
-            return ErrorHelper::sendError(400, 'field(s) are required!');
-        }
 
         $user = User::where('email', $email)->first();
 
