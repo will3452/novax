@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Product extends Resource
@@ -53,6 +54,8 @@ class Product extends Resource
             BelongsTo::make('Store', 'store', User::class),
             Text::make('Name')
                 ->rules(['required']),
+            Textarea::make('Description')
+                ->alwaysShow(),
             Image::make('Image')
                 ->rules(['required', 'max:2000']),
             Text::make('Category'),
