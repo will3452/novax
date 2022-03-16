@@ -21,8 +21,20 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'address',
+        'type',
         'password',
+        'farmers_cooperative_id',
+        'phone',
+        'store_name',
+        'coordinates',
+        'phone_verified_at',
     ];
+
+    const TYPE_SELLER = 'Seller';
+    const TYPE_CONSUMER = 'Consumer';
+
+    const COORDINATES_SEPARATOR = ',';
 
     /**
      * The attributes that should be hidden for serialization.

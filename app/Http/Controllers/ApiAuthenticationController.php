@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Api\ErrorHelper;
+use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\SubmitCodeRequest;
+use App\Http\Requests\VerificationCodeRequest;
+use App\Models\VerificationCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,31 +24,10 @@ class ApiAuthenticationController extends Controller
         return User::create($data);
     }
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $name = $request->name;
-        $email = $request->email;
-        $password = $request->password;
-
-        if (is_null($name) || is_null($email) || is_null($password)) {
-            return ErrorHelper::sendError(400, 'field(s) are required!');
-        }
-
-        $user = User::where('email', $email)->first();
-
-        if ($user) {
-            return ErrorHelper::sendError(400, 'email is already in used!');
-        }
-
-        if (strlen($password) <= 6) {
-            return ErrorHelper::sendError(400, 'password is too short!');
-        }
-
-        $user = $this->createUser([
-            'name'=>$name,
-            'email'=>$email,
-            'password'=>$password,
-        ]);
+        $data = $request->validated();
+        $user = $this->createUser($data);
 
         $token = $this->createToken($user);
 
@@ -85,6 +68,42 @@ class ApiAuthenticationController extends Controller
         $request->user()->currentAccessToken()->delete();
         return response([
             'message'=>"LOGOUT SUCCESS!",
+        ], 200);
+    }
+
+    public function requestVerificationCode(VerificationCodeRequest $request)
+    {
+        $data = $request->validated();
+
+        if ($data['type'] === 'email') {
+            return 'not available';
+        }
+
+        VerificationCode::smsHandler($data['contact']);
+
+        return response([
+            'message' => 'ok',
+        ], 200);
+    }
+
+    public function submitCode(SubmitCodeRequest $request)
+    {
+        $request->validated();
+
+        $vCode = VerificationCode::whereCode($request->code)
+            ->whereRecipient($request->recipient)->latest()->first();
+
+        $vCode->update(['status' => VerificationCode::STATUS_USED]);
+        if ($request->type === 'email') {
+            return 'not available';
+        }
+
+        User::wherePhone($request->contact)->first()->update([
+            'phone_verified_at' => now(),
+        ]);
+
+        return response([
+            'message' => 'ok'
         ], 200);
     }
 }
