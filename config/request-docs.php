@@ -4,7 +4,7 @@ return [
      // change it to true will make lrd to throw exception if rules in request class need to be changed
      // keep it false
     'debug'  => false,
-    'document_name'  => 'LRD',
+    'document_name'  => 'YOURYAJ.xyz',
 
     /*
     * Route where request docs will be served from
@@ -26,7 +26,7 @@ return [
     'sort_by' => 'default',
 
     //Use only routes where ->uri start with next string Using Str::startWith( . e.g. - /api/mobile
-    'only_route_uri_start_with' => '',
+    'only_route_uri_start_with' => 'api',
 
     'hide_matching' => [
         "#^telescope#",

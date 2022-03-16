@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Http\Controllers\ApiProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,5 @@ Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
 Route::post('/request-verification-code', [ApiAuthenticationController::class, 'requestVerificationCode']);
 Route::post('/submit-verification-code', [ApiAuthenticationController::class, 'submitCode']);
+
+Route::get('/products', [ApiProductController::class, 'products']);
