@@ -16,7 +16,7 @@ class CreateVerificationCodesTable extends Migration
     {
         Schema::create('verification_codes', function (Blueprint $table) {
             $table->id();
-            $table->string('message')->nullable();
+            $table->text('message')->nullable();
             $table->string('recipient')->nullable();
             $table->string('status')->default(VerificationCode::STATUS_NOT_USED);
             $table->string('code')->nullable();
