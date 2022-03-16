@@ -122,7 +122,7 @@
                         Level
                     </th>
                     <th>
-                        Actions
+
                     </th>
                 </tr>
             </thead>
@@ -256,7 +256,13 @@
                                         </form>
                                     </x-modal>
                                 @else
-                                    <a href="/take/{{$e->getRecordOf(auth()->id())}}" class="btn btn-primary btn-sm">continue</a>
+                                    @if ($e->canTakeOf(auth()->id()))
+                                        <a href="/take/{{$e->getRecordIdOf(auth()->id())}}" class="btn btn-primary btn-sm">continue</a>
+                                    @else
+                                        <span>
+                                            {{$e->getRecordOf(auth()->id())->score}}
+                                        </span>
+                                    @endif
                                 @endif
                             @endteacher
                         </td>

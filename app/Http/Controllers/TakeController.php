@@ -11,12 +11,32 @@ class TakeController extends Controller
     public function take(Record $record)
     {
         $exam = $record->exam;
-        return view('take', compact('record', 'exam'));
+        $min = $exam->getTimeOfRecord($record);
+        if ($min <= 0) {
+            return 'your time is over';
+        }
+        $time['hh'] = intdiv($min, 60);
+        $time['mm'] = $min % 60;
+        return view('take', compact('record', 'exam', 'time'));
     }
 
     public function submit(Request $request, Record $record)
     {
-        dd($record->screen_record);
+        $questions = $record->exam->questions;
+        $total = count($questions);
+        $points = 0;
+
+        $answers = $request->a;
+
+        foreach ($answers as $key => $value) {
+            if ($value === $questions[$key]->answer) {
+                $points ++;
+            }
+        }
+        $score = "$points/$total";
+        $record->update(['score' => $score]);
+
+        return view('take_done', compact('score', 'record'));
     }
 
     public function takeNow(Request $request, Exam $exam)

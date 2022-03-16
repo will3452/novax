@@ -49,8 +49,29 @@ class Exam extends Model
         return $this->records()->whereUserId($userId)->count();
     }
 
-    public function getRecordOf($userId): int
+    public function getRecordIdOf($userId): int
     {
         return $this->records()->whereUserId($userId)->latest()->first()->id;
+    }
+
+    public function getRecordOf($userId)
+    {
+        return $this->records()->whereUserId($userId)->latest()->first();
+    }
+
+    public function canTakeOf($userId)
+    {
+        $record = $this->records()->whereUserId($userId)->latest()->first();
+
+        if (! is_null($record)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getTimeOfRecord($record)
+    {
+        return $this->time_limit - $record->created_at->diffInMinutes(now());
     }
 }

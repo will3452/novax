@@ -3,13 +3,7 @@
         {{$record->exam_name}}
     </x-page-title>
     {{-- timer --}}
-    <div class="text-center mt-4">
-        <div class="text-2xl">
-            <span>10</span> :
-            <span>45</span> :
-            <span>23</span>
-        </div>
-    </div>
+    <x-timer :time="$time"></x-timer>
     {{-- questions --}}
     <div>
         <form id="mainForm" action="/submit/{{$record->id}}" method="POST">
