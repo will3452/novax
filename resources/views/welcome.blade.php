@@ -19,7 +19,7 @@
             <h1 class="text-3xl uppercase font-bold text-gray-700">
                 Yourzaj.xyz
             </h1>
-            <a x-on:mouseover="#" x-ref="button" href="/admin/login" class="fixed bg-gray-800 p-2 rounded-lg text-white uppercase font-bold">
+            <a x-on:mouseover="change()" x-ref="button" class="fixed bg-gray-800 p-2 rounded-lg text-white uppercase font-bold">
                 Administrator
             </a>
         </div>
