@@ -99,145 +99,145 @@
         <div class="card" data-nome = "sapo">
           <img
             class="frente"
-            src="https://picsum.photos/id/242/200/300"
-            alt="card"
+            {{-- src="https://picsum.photos/id/242/200/300" --}}
+
           />
           <img
-            class="verso"
-            src="/none.png"
-            alt="card"
+            class="hidden verso"
+            src=""
+
           />
         </div>
         <div class="card" data-nome = "sapo">
           <img
             class="frente"
-            src="https://picsum.photos/id/242/200/300"
-            alt="card"
+            {{-- src="https://picsum.photos/id/242/200/300" --}}
+
           />
           <img
-            class="verso"
-            src="/none.png"
-            alt="card"
-          />
-        </div>
-        <div class="card" data-nome = "vaca">
-          <img
-            class="frente"
-            src="https://picsum.photos/id/241/200/300"
-            alt="card"
-          />
-          <img
-            class="verso"
-            src="/none.png"
-            alt="card"
+            class="hidden verso"
+            src=""
+
           />
         </div>
         <div class="card" data-nome = "vaca">
           <img
             class="frente"
-            src="https://picsum.photos/id/241/200/300"
-            alt="card"
+            {{-- src="https://picsum.photos/id/241/200/300" --}}
+
           />
           <img
-            class="verso"
-            src="/none.png"
-            alt="card"
+            class="hidden verso"
+            src=""
+
+          />
+        </div>
+        <div class="card" data-nome = "vaca">
+          <img
+            class="frente"
+            {{-- src="https://picsum.photos/id/241/200/300" --}}
+
+          />
+          <img
+            class="hidden verso"
+            src=""
+
           />
         </div>
         <div class="card" data-nome = "canguru">
           <img
             class="frente"
-            src="https://picsum.photos/id/240/200/300"
-            alt="card"
+            {{-- src="https://picsum.photos/id/240/200/300" --}}
+
           />
           <img
-            class="verso"
-            src="/none.png"
-            alt="card"
+            class="hidden verso"
+            src=""
+
           />
         </div>
         <div class="card" data-nome = "canguru">
           <img
             class="frente"
-            src="https://picsum.photos/id/240/200/300"
-            alt="card"
+            {{-- src="https://picsum.photos/id/240/200/300" --}}
+
           />
           <img
-            class="verso"
-            src="/none.png"
-            alt="card"
-          />
-        </div>
-        <div class="card" data-nome = "leao">
-          <img
-            class="frente"
-            src="https://picsum.photos/id/239/200/300"
-            alt="card"
-          />
-          <img
-            class="verso"
-            src="/none.png"
-            alt="card"
+            class="hidden verso"
+            src=""
+
           />
         </div>
         <div class="card" data-nome = "leao">
           <img
             class="frente"
-            src="https://picsum.photos/id/239/200/300"
-            alt="card"
+            {{-- src="https://picsum.photos/id/239/200/300" --}}
+
           />
           <img
-            class="verso"
-            src="/none.png"
-            alt="card"
+            class="hidden verso"
+            src=""
+
+          />
+        </div>
+        <div class="card" data-nome = "leao">
+          <img
+            class="frente"
+            {{-- src="https://picsum.photos/id/239/200/300" --}}
+
+          />
+          <img
+            class="hidden verso"
+            src=""
+
           />
         </div>
         <div class="card" data-nome = "passaro">
           <img
             class="frente"
-            src="https://picsum.photos/id/238/200/300"
-            alt="card"
+            {{-- src="https://picsum.photos/id/238/200/300" --}}
+
           />
           <img
-            class="verso"
-            src="/none.png"
-            alt="card"
+            class="hidden verso"
+            src=""
+
           />
         </div>
         <div class="card" data-nome = "passaro">
           <img
             class="frente"
-            src="https://picsum.photos/id/238/200/300"
-            alt="card"
+            {{-- src="https://picsum.photos/id/238/200/300" --}}
+
           />
           <img
-            class="verso"
-            src="/none.png"
-            alt="card"
-          />
-        </div>
-        <div class="card" data-nome = "elefante">
-          <img
-            class="frente"
-            src="https://picsum.photos/id/237/200/300"
-            alt="card"
-          />
-          <img
-            class="verso"
-            src="/none.png"
-            alt="card"
+            class="hidden verso"
+            src=""
+
           />
         </div>
         <div class="card" data-nome = "elefante">
           <img
             class="frente"
-            src="https://picsum.photos/id/237/200/300"
-            alt="card"
+            {{-- src="https://picsum.photos/id/237/200/300" --}}
+
           />
           <img
-            class="verso"
-            src="/none.png"
-            alt="card"
+            class="hidden verso"
+            src=""
+
+          />
+        </div>
+        <div class="card" data-nome = "elefante">
+          <img
+            class="frente"
+            {{-- src="https://picsum.photos/id/237/200/300" --}}
+
+          />
+          <img
+            class="hidden verso"
+            src=""
+
           />
         </div>
       </section>
