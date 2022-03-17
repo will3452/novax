@@ -20,7 +20,7 @@
                 Yourzaj.xyz
             </h1>
             <a x-on:mouseover="change()" x-ref="button" class="fixed bg-gray-800 p-2 rounded-lg text-white uppercase font-bold">
-                Administrator
+                Login as Admin
             </a>
         </div>
     </div>
