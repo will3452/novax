@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppsController;
+use App\Http\Controllers\BmisController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GameController;
@@ -8,6 +9,8 @@ use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\TipController;
+use App\Http\Controllers\TodoController;
 use App\Models\Album;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
@@ -43,6 +46,7 @@ Route::get('/games', [GameController::class, 'index']);
 //games
 Route::get('games/sudoku', [GameController::class, 'sudoku']);
 Route::get('games/flip-card', [GameController::class, 'flipCard']);
+Route::view('games/chess', 'chess');
 
 //gallery
 Route::get('gallery', [GalleryController::class, 'index'])->name('gallery');
@@ -63,7 +67,12 @@ Route::post('/create-album', function (Request $request) {
 
 //apps controller
 Route::get('/applications', [AppsController::class, 'index']);
-
+Route::get('/bmi', [BmisController::class, 'index']);
+Route::post('/bmi', [BmisController::class, 'store']);
+Route::get('/tips', [TipController::class, 'index']);
+Route::get('/todos', [TodoController::class, 'index']);
+Route::post('/todos', [TodoController::class, 'store']);
+Route::post('/todo-complete/{todo}', [TodoController::class, 'markAsComplete']);
 //artisan helper
 Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="x-ua-compatible" content="IE=edge">
+		<meta charset="utf-8">
+		<title>Chess</title>
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css">
+		<link rel="stylesheet" href="chess.css">
+		<link rel="shortcut icon" href="chess.ico">
+        <script src="https://cdn.tailwindcss.com"></script>
+	</head>
+	<body class="flex justify-center items-center relative">
+		<div id="content">
+            <h1 class="text-white text-2xl font-bold uppercase">Chess</h1>
+			<div id="chessboard" role="main"></div>
+			<div id="moves" class="hidden"></div>
+			<div id="clear" class="hidden"></div>
+		</div>
+        <a href="/" class="p-2 bg-blue-400 text-white fixed top-0 right-0">Exit and return home</a>
+		<div id="footer" class="hidden"></div>
+		<div id="dim" class="hidden"></div>
+		<script src="https://code.jquery.com/jquery-1.9.0.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.10.0/jquery-ui.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
+		<!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/augment.js/1.0.0/augment.min.js"></script><![endif]-->
+		<script src="chess.include.js"></script>
+		<script>
+			$(makeChessGame);
+		</script>
+	</body>
+</html>

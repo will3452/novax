@@ -15,6 +15,9 @@
             <x-card title="Memory flip cards" img="/cards.jpg" href="{{auth()->user()->images()->count() >= 6 ? '/games/flip-card' : 'javascript:alert(`Please Upload at lease 6 Images first. `)'}}">
                 Flashcards are a proven method to speed up your learning. As well as flashcards, Memory's Smart mode uses a modern twist to the flashcard concept, offering you many ways to answer questions and to optimise your learning path automatically.
             </x-card>
+            <x-card title="Chess" img="/felix-mittermeier-nAjil1z3eLk-unsplash.jpg" href="/Chess/chess.html">
+Chess is a board game played between two players. It is sometimes called Western chess or international chess to distinguish it from related games such as xiangqi and shogi.
+            </x-card>
         </div>
     </div>
 </x-layout>

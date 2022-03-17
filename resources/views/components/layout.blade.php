@@ -7,6 +7,7 @@
     <title>{{config('app.name', 'Nuwang')}}</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@2.2.2/dist/full.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    @stack('head')
 </head>
 <body style="background:url('/storage/{{nova_get_setting('background_image')}}'); background-size:cover; background-position:center;">
     <x-navbar></x-navbar>

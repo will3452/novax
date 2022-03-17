@@ -57,4 +57,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Album::class, 'user_id');
     }
+
+    public function bmis()
+    {
+        return $this->hasMany(Bmi::class, 'user_id');
+    }
 }
