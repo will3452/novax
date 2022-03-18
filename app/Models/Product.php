@@ -18,7 +18,7 @@ class Product extends Model
         'quantity',
     ];
 
-    public function store()
+    public function ownerStore()
     {
         return $this->belongsTo(User::class, 'store_id');
     }

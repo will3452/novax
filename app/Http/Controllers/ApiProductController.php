@@ -20,12 +20,18 @@ class ApiProductController extends Controller
 
         $image = time();
 
-        $data['image'] = Image::make($data['image'])
+        Image::make($data['image'])
             ->encode('png', 75)
             ->save(public_path("img/products/$image.png"));
 
+        $data['image'] = "img/products/$image.png";
+
         $data['store_id'] = auth()->user()->id;
 
-        Product::create($data);
+        $product = Product::create($data);
+
+        return response([
+            'product' => $product,
+        ], 200);
     }
 }
