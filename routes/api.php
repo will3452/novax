@@ -5,21 +5,11 @@ use App\Http\Controllers\ApiProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
 
 //private access
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
+    Route::post('/products', [ApiProductController::class, 'store']);
 });
 
 Route::get('/public-test', function () {
