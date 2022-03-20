@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use stdClass;
 use App\Models\User;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -43,15 +44,17 @@ class ApiProductController extends Controller
 
     public function master()
     {
+        // $user = User::WhereNotNull('approved_as_store_owner_at')->get();
         $user = User::get();
+        $store = collect([]);
         $category = null;
 
-        foreach ($user as $u) {
+        foreach ($user as $key=>$u) {
             $category = Product::whereStoreId($u->id)->get()->groupBy(function ($e) {
                 return $e->category;
             });
-            $u->category = $category;
-            $category = null;
+
+            $u->categories = count($category) == 0 ? new stdClass():$category;
         }
 
         return $user;

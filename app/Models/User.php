@@ -29,6 +29,7 @@ class User extends Authenticatable
         'phone',
         'store_name',
         'coordinates',
+        'approved_as_store_owner_at',
         'phone_verified_at',
     ];
 
