@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;

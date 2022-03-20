@@ -51,7 +51,7 @@ class Product extends Resource
             Date::make('Date', 'created_at')
                 ->sortable()
                 ->exceptOnForms(),
-            BelongsTo::make('Store', 'store', User::class),
+            BelongsTo::make('Store', 'storeOwner', User::class),
             Text::make('Name')
                 ->rules(['required']),
             Textarea::make('Description')

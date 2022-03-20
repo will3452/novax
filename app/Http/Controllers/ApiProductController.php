@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -38,5 +39,21 @@ class ApiProductController extends Controller
     public function myProducts()
     {
         return auth()->user()->products;
+    }
+
+    public function master()
+    {
+        $user = User::get();
+        $category = null;
+
+        foreach ($user as $u) {
+            $category = Product::whereStoreId($u->id)->get()->groupBy(function ($e) {
+                return $e->category;
+            });
+            $u->category = $category;
+            $category = null;
+        }
+
+        return $user;
     }
 }

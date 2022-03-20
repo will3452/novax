@@ -24,3 +24,4 @@ Route::post('/request-verification-code', [ApiAuthenticationController::class, '
 Route::post('/submit-verification-code', [ApiAuthenticationController::class, 'submitCode']);
 
 Route::get('/products', [ApiProductController::class, 'products']);
+Route::get('/store-master', [ApiProductController::class, 'master']);
