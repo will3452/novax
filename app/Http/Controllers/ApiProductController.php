@@ -47,12 +47,21 @@ class ApiProductController extends Controller
         $user = User::WhereNotNull('approved_as_store_owner_at')->get();
         $category = null;
 
-        foreach ($user as $key=>$u) {
-            $category = Product::whereStoreId($u->id)->get()->groupBy(function ($e) {
-                return $e->category;
-            });
+        $lists = [
+                "Vegetable",
+                "Fruit",
+                "Meat",
+                "Fish",
+                "Dairy",
+                "Poultry",
+                "Seeds",
+                "Plant",
+            ];
 
-            $u->categories = count($category) == 0 ? new stdClass():$category;
+        foreach ($user as $u) {
+            foreach ($lists as $list) {
+                $u[$list] = Product::whereCategory($list)->get();
+            }
         }
 
         return $user;
