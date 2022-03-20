@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiApproveSellerController;
 use App\Http\Controllers\ApiAuthenticationController;
 use App\Http\Controllers\ApiCartController;
 use App\Http\Controllers\ApiOrderController;
@@ -11,6 +12,9 @@ use Spatie\BackupTool\Http\Controllers\ApiController;
 
 //private access
 Route::middleware('auth:sanctum')->group(function () {
+    //approve seller
+    Route::post('/approve-seller', [ApiApproveSellerController::class, 'approve']);
+
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
     Route::post('/products', [ApiProductController::class, 'store']);
     Route::get('/my-products', [ApiProductController::class, 'myProducts']);
@@ -27,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //sales | seller
     Route::get('/sales', [ApiSalesController::class, 'getSales']);
+
 });
 
 Route::get('/public-test', function () {

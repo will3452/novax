@@ -44,9 +44,7 @@ class ApiProductController extends Controller
 
     public function master()
     {
-        // $user = User::WhereNotNull('approved_as_store_owner_at')->get();
-        $user = User::get();
-        $store = collect([]);
+        $user = User::WhereNotNull('approved_as_store_owner_at')->get();
         $category = null;
 
         foreach ($user as $key=>$u) {
