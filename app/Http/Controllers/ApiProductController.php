@@ -34,4 +34,9 @@ class ApiProductController extends Controller
             'product' => $product,
         ], 200);
     }
+
+    public function myProducts()
+    {
+        return auth()->user()->products;
+    }
 }

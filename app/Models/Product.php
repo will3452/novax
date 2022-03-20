@@ -18,7 +18,11 @@ class Product extends Model
         'quantity',
     ];
 
-    public function ownerStore()
+    protected $with = [
+        'storeOwner',
+    ];
+
+    public function storeOwner()
     {
         return $this->belongsTo(User::class, 'store_id');
     }

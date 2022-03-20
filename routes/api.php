@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
     Route::post('/products', [ApiProductController::class, 'store']);
+    Route::get('/my-products', [ApiProductController::class, 'myProducts']);
 });
 
 Route::get('/public-test', function () {
