@@ -43,6 +43,6 @@ class ApiCartController extends Controller
 
         auth()->user()->processCartToOrder($r->address, $r->remarks);
 
-        $this->getCartItems();
+        return $this->getCartItems();
     }
 }

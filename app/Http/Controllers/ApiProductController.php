@@ -24,6 +24,7 @@ class ApiProductController extends Controller
 
         Image::make($data['image'])
             ->encode('png', 75)
+            ->resize(75, 150)
             ->save(public_path("img/products/$image.png"));
 
         $data['image'] = "img/products/$image.png";

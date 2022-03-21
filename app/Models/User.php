@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Traits\HasCartItems;
+use App\Models\Traits\HasWishlists;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -12,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasCartItems;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasCartItems, HasWishlists;
 
     /**
      * The attributes that are mass assignable.
@@ -31,6 +32,7 @@ class User extends Authenticatable
         'coordinates',
         'approved_as_store_owner_at',
         'phone_verified_at',
+        'image',
     ];
 
     const TYPE_SELLER = 'Seller';

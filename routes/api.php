@@ -5,7 +5,9 @@ use App\Http\Controllers\ApiAuthenticationController;
 use App\Http\Controllers\ApiCartController;
 use App\Http\Controllers\ApiOrderController;
 use App\Http\Controllers\ApiProductController;
+use App\Http\Controllers\ApiProfileController;
 use App\Http\Controllers\ApiSalesController;
+use App\Http\Controllers\ApiWishlistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Spatie\BackupTool\Http\Controllers\ApiController;
@@ -25,6 +27,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/remove-to-cart', [ApiCartController::class, 'removeToCart']);
     Route::post('clear-cart', [ApiCartController::class, 'clearCart']);
     Route::post('checkout', [ApiCartController::class, 'processCartToOrder']);
+
+    //wishlists
+    Route::get('/get-wishlist', [ApiWishlistController::class, 'getWishlist']);
+    Route::post('/clear-wishlist', [ApiWishlistController::class, 'clearWishlist']);
+    Route::post('/add-to-wishlist', [ApiWishlistController::class, 'addToWishlist']);
+    Route::post('/remove-to-wishlist', [ApiWishlistController::class, 'removeWishlist']);
+
+    //profile
+    Route::get('/my-profile', [ApiProfileController::class, 'myProfile']);
+    Route::post('/update-profile', [ApiProfileController::class, 'updateProfile']);
 
     //orders | consumer
     Route::get('/orders', [ApiOrderController::class, 'getOrders']);
