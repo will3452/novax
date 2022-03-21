@@ -26,7 +26,7 @@ class ApiProfileController extends Controller
 
             Image::make($r->image)
                 ->encode('png', 75)
-                ->resize(75, 150)
+                ->resize(90, 90)
                 ->save(public_path("img/products/$image.png"));
 
             auth()->user()->update(['image' => "img/products/$image.png"]);
