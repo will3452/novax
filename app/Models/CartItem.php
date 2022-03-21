@@ -15,6 +15,11 @@ class CartItem extends Model
         'quantity',
     ];
 
+    protected $with = [
+        'product',
+        'user',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
