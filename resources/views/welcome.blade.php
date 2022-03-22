@@ -132,10 +132,10 @@
                             </span>
                             <div>
                                 <span class="text-xs">
-                                    PHP @if (is_null($p->promo()))
-                                    {{number_format($p->price, 2)}}
+                                    PHP @if (is_null($i->product->promo()))
+                                    {{number_format($i->product->price, 2)}}
                                 @else
-                                    <span class="text-gray-400 line-through">{{number_format($p->price, 2)}}</span> {{number_format($p->discount_price, 2)}}
+                                    <span class="text-gray-400 line-through">{{number_format($i->product->price, 2)}}</span> {{number_format($i->product->discount_price, 2)}}
                                 @endif
                                 </span>
                             </div>
