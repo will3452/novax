@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\DashboardChart;
 use App\Nova\Metrics\TotalSales;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
@@ -67,7 +68,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
-        return [
+        $cards =  [
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
                 'America/Mexico_City',
@@ -81,6 +82,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             }),
             (new TotalSales()),
         ];
+
+        return array_merge($cards, DashboardChart::init());
     }
 
     /**

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Controllers\RegisterController;
 use App\Models\Category;
+use App\Models\Sale;
+use App\Nova\Actions\GenerateReport;
 
 Route::get('/', function (Request $request) {
     $products = Product::where('category', "LIKE", "%" . ($request->category ?? "") . "%")
@@ -52,6 +54,15 @@ Route::post('/process-order', function (Request $request) {
 Route::get('/register', [RegisterController::class, 'registrationPage']);
 Route::post('/register', [RegisterController::class, 'postRegister']);
 
+Route::get('/report', function (Request $request) {
+    if ($request->has('to') && $request->has('from')) {
+        $sales = Sale::whereBetween('created_at', [$request->to, $request->from])->get();
+    } else {
+        $sales = Sale::latest()->get();
+    }
+
+    return view('report', compact('sales'));
+});
 //artisan helper
 Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);

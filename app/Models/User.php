@@ -27,6 +27,10 @@ class User extends Authenticatable
         'password',
     ];
 
+    protected $with = [
+        'sales'
+    ];
+
     const TYPE_ADMIN = 'Admin';
     const TYPE_CASHIER = 'Cashier';
 
