@@ -18,4 +18,14 @@ class Product extends Model
         'notes',
         'sku', // stock-keeping unit
     ];
+
+    public function promos()
+    {
+        return $this->belongsToMany(Promo::class);
+    }
+
+    public function promo()
+    {
+        return $this->promos()->latest()->first();
+    }
 }

@@ -52,7 +52,6 @@ Route::post('/process-order', function (Request $request) {
 Route::get('/register', [RegisterController::class, 'registrationPage']);
 Route::post('/register', [RegisterController::class, 'postRegister']);
 
-
 //artisan helper
 Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);

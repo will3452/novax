@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Nova\Actions\NewAdjustment;
 use App\Nova\Filters\FilterByQuantity;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\HasMany;
@@ -79,6 +80,14 @@ class Product extends Resource
 
 
             Text::make('Stock-Keeping Unit (SKU)', 'sku'),
+
+            Text::make('Discount', function () {
+                if (is_null($this->promo())) {
+                    return "---";
+                }
+                $rate = $this->promo()->discount_rate . "%";
+                return "<span class='p-1 rounded'>$rate</span>";
+            })->asHtml(),
 
             Textarea::make('Notes')
                 ->alwaysShow(),
