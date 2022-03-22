@@ -64,7 +64,8 @@ trait HasItems
         $sub = 0;
 
         foreach ($items as $i) {
-            $sub += ($i->product->price * $i->quantity);
+            $price = is_null($i->product->promo()) ? $i->product->price : $i->product->discount_price;
+            $sub += ($price * $i->quantity);
         }
 
         return $sub;

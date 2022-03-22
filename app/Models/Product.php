@@ -28,4 +28,9 @@ class Product extends Model
     {
         return $this->promos()->latest()->first();
     }
+
+    public function getDiscountPriceAttribute()
+    {
+        return $this->price  - ($this->price * ($this->promo()->discount_rate / 100));
+    }
 }
