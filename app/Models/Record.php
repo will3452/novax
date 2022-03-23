@@ -31,6 +31,15 @@ class Record extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function getSubjectAttribute()
+    {
+        if (get_class($this->model) == Activity::class) {
+            return optional(optional($this->model->module)->subject)->name;
+        }
+
+        return optional($this->model->subject)->name;
+    }
+
     public function getRateAttribute()
     {
         $arr = explode("/", $this->score);

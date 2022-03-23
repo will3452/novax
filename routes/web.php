@@ -17,6 +17,7 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\Nova\LoginController as NovaLoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReportIssueController;
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -69,24 +70,26 @@ Route::post('/report-issue', [ReportIssueController::class, 'store']);
 Route::post('/submit-feedback', [FeedbackController::class, 'store']);
 
 Route::get('/report', function () {
+    $type = strtolower(request()->type ?? 'Xlsx');
+
     if (request()->get('data') === 'users') {
-        return Excel::download(new UsersExport, 'users.xlsx');
+        return Excel::download(new UsersExport, "user.$type", request()->type);
     }
 
     if (request()->get('data') === 'subjects') {
-        return Excel::download(new SubjectsExport, now()->format('mdy') . 'subjects.xlsx');
+        return Excel::download(new SubjectsExport, now()->format('mdy') . "subjects.$type", request()->type);
     }
 
     if (request()->get('data') === 'rooms') {
-        return Excel::download(new RoomsExport, now()->format('mdy') . 'rooms.xlsx');
+        return Excel::download(new RoomsExport, now()->format('mdy') . "rooms.$type", request()->type);
     }
 
     if (request()->get('data') === 'year-level') {
-        return Excel::download(new YearLevelExport, now()->format('mdy') . 'yearlevels.xlsx');
+        return Excel::download(new YearLevelExport, now()->format('mdy') . "yearlevel.$type", request()->type);
     }
 
     if (request()->get('data') === 'reported issues') {
-        return Excel::download(new IssueReport, now()->format('mdy') . 'reportedIssues.xlsx');
+        return Excel::download(new IssueReport, now()->format('mdy') . "reportedissue.$type", request()->type);
     }
 });
 

@@ -17,7 +17,7 @@ class Record extends Resource
 {
     use HideTrait;
 
-    const hideToUserType = Model::forAll;
+    const hideToUserType = Model::forTeacher;
     /**
      * The model the resource corresponds to.
      *
@@ -53,6 +53,8 @@ class Record extends Resource
             Date::make('Date','created_at')
                 ->exceptOnForms()
                 ->sortable(),
+            Text::make('Subject')
+                ->exceptOnForms(),
             MorphTo::make('Data', 'model'),
             BelongsTo::make('User', 'user', User::class),
             Text::make('Score'),

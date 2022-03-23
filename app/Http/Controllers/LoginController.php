@@ -30,7 +30,6 @@ class LoginController extends Controller
         if (auth()->check()) {
             auth()->logout();
         }
-
         return redirect('/');
     }
 }

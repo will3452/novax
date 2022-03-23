@@ -2,14 +2,15 @@
 
 namespace App\Providers;
 
-use App\Nova\Metrics\Population;
+use App\Models\User;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
+use App\Nova\Metrics\Population;
+use Laravel\Nova\Fields\Textarea;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
-use Laravel\Nova\Fields\Textarea;
 use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -56,9 +57,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+            $types = [
+                User::TYPE_PARENT,
+                User::TYPE_STUDENT,
+                // User::TYPE_TEACHER,
+            ];
+
+            return ! in_array(auth()->user()->type, $types);
         });
     }
 

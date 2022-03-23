@@ -31,7 +31,7 @@ class LoginController extends ControllersLoginController
             $types = [
                 User::TYPE_PARENT,
                 User::TYPE_STUDENT,
-                User::TYPE_TEACHER,
+                // User::TYPE_TEACHER,
             ];
 
             if (in_array(auth()->user()->type, $types)) {
@@ -54,7 +54,7 @@ class LoginController extends ControllersLoginController
         $types = [
             User::TYPE_PARENT,
             User::TYPE_STUDENT,
-            User::TYPE_TEACHER,
+            // User::TYPE_TEACHER,
         ];
 
         if (in_array(auth()->user()->type, $types)) {

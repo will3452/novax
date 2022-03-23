@@ -14,6 +14,12 @@ class Feedback extends Model
         'user_id',
         'reply_to_feedback_id',
         'message',
+        'subject_id',
+    ];
+
+    protected $with = [
+        'user',
+        'replies',
     ];
 
     public function user()

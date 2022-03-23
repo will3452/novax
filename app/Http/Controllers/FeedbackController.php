@@ -12,6 +12,7 @@ class FeedbackController extends Controller
             'message' => 'required|max:5000',
             'room_id' => 'required',
             'reply_to_feedback_id' => '',
+            'subject_id' => 'required',
         ]);
 
         auth()->user()->feedback()->create($data);

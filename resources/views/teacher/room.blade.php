@@ -7,7 +7,8 @@
         <x-room-details :room="$room"></x-room-details>
         <x-students :students="$room->studentRooms"></x-students>
         <x-room-subjects :subjects="$room->subjects"></x-room-subjects>
-        <div class="mt-4">
+    </x-container>
+        {{-- <div class="mt-4">
             <x-text-bold>
                 Feedbacks ({{$room->feedback()->whereNull('reply_to_feedback_id')->count()}})
             </x-text-bold>
@@ -16,5 +17,5 @@
             </div>
         </div>
     </x-container>
-    <x-write-feedback :room="$room"></x-write-feedback>
+    <x-write-feedback :room="$room"></x-write-feedback> --}}
 </x-layout>

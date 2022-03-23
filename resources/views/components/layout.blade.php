@@ -7,6 +7,7 @@
     <title>{{config('app.name', 'Nuwang')}}</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
     <style>
         *  {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;

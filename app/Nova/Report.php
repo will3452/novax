@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Helpers\Model;
 use App\Nova\Actions\AllUsers;
 use App\Nova\Actions\DownloadExcel;
+use App\Nova\Actions\GenerateReport;
 use App\Nova\Traits\HideTrait;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
@@ -98,7 +99,7 @@ class Report extends Resource
     public function actions(Request $request)
     {
         return [
-            (new DownloadExcel())
+            (new GenerateReport())
                 ->standalone(),
         ];
     }

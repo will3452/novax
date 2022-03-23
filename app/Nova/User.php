@@ -112,6 +112,9 @@ class User extends Resource
 
                 Text::make('Student ID', 'student_number')
                     ->rules(['required', 'unique:users,student_number,{resourceId}']),
+
+                Text::make('School Year', 'sy')
+                    ->rules(['required']),
             ])->dependsOn('type', \App\Models\User::TYPE_STUDENT),
 
             HasMany::make('Students', 'students', StudentParent::class)->canSee(fn () => $this->type === ModelsUser::TYPE_PARENT),

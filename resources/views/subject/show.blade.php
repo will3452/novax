@@ -8,8 +8,8 @@
                 Student Name: {{\App\Models\User::find($userId)->name}}
             </div>
         @endif
-        <div class="flex flex-wrap">
-            <div class="md:w-1/2 w-full">
+        <div class="flex flex-wrap justify-between">
+            <div class="md:w-1/3 w-full">
                 <x-step-container>
                     @foreach ($subject->modules as $item)
                         <x-step :active="$item->isNotLocked($userId, $loop, $subject->modules)">
@@ -43,10 +43,32 @@
                 </x-step-container>
             </div>
             @if (\App\Models\User::find($userId)->type !== \App\Models\User::TYPE_TEACHER)
-            <div class="md:w-1/2 w-full flex justify-center hidden md:block">
+            <div class="md:w-1/3 w-full flex justify-center hidden md:block">
                 <div class="radial-progress bg-primary text-success" style="--value:{{$subject->getProgress($userId)}};--size:12rem">{{number_format($subject->getProgress($userId), 2)}}%</div>
             </div>
             @endif
+            <div class="w-full md:w-1/3">
+                @parent
+                @else
+                <div class="mt-4" x-data="{open:true}">
+                    <div class="flex justify-between">
+                        <x-text-bold>
+                            Feedbacks:
+                        </x-text-bold>
+                        <button class="btn btn-sm" x-on:click="open = !open">Show/Hide Feedback</button>
+                    </div>
+                    <div class="border-r-2 pr-2" x-show="open">
+                        @foreach ($feedbacks as $key=>$feedback)
+                            @foreach ($feedback as $f)
+                                <x-feedback key="{{$key}}" :subject="$subject" :room="$room" :feedback="\App\Models\Feedback::find($f)"></x-feedback>
+                            @endforeach
+                            <br/>
+                        @endforeach
+                    </div>
+                </div>
+                @endparent
+            <x-write-feedback :room="$room" :subject="$subject"></x-write-feedback>
+            </div>
         </div>
         <script>
             window.onload = function () {

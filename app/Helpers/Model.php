@@ -31,4 +31,10 @@ class Model
         User::TYPE_TEACHER,
         User::TYPE_PARTNER,
     ];
+
+    const forTeacher = [
+        User::TYPE_PARENT,
+        User::TYPE_STUDENT,
+        User::TYPE_PARTNER,
+    ];
 }

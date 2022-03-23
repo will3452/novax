@@ -15,4 +15,12 @@ class Report extends Model
         'year-level' => 'year-level',
         'reported issues' => 'reported issues',
     ];
+
+    const OPTIONS_TYPE = [
+        'Xlsx' => 'Xlsx',
+        'Csv' => 'Csv',
+        'Html' => 'Html',
+        'Xml' => 'Xml',
+        'Xls' => 'Xls',
+    ];
 }
