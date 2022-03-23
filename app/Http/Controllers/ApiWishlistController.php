@@ -10,7 +10,7 @@ class ApiWishlistController extends Controller
 {
     public function getWishlist()
     {
-        return auth()->user()->wishlists();
+        return auth()->user()->wishlists;
     }
 
     public function removeWishlist(RemoveWishListRequest $r)
