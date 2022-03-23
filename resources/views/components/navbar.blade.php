@@ -9,9 +9,7 @@
     <div class="flex-none">
       <ul class="menu menu-horizontal p-0">
         @guest
-            <li class="hidden md:block"><a href="/">Home</a></li>
             <li  class="hidden md:block"><a href="/about">About Us</a></li>
-            <li><a href="/login">Login</a></li>
         @endguest
         @auth
         <li class="hidden md:inline-block"><a href="/home">Dashboard</a></li>

@@ -55,9 +55,7 @@ Route::view('/forgot-password', 'forgotpassword');
 Route::view('/about', 'about');
 Route::view('/contact', 'contact');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/login');
 
 Route::get('/register', [RegisterController::class, 'registrationPage']);
 Route::post('/register', [RegisterController::class, 'postRegister']);
