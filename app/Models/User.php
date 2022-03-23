@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Traits\HasCartItems;
+use App\Models\Traits\HasFeedback;
 use App\Models\Traits\HasWishlists;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -13,7 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasCartItems, HasWishlists;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasCartItems, HasWishlists, HasFeedback;
 
     /**
      * The attributes that are mass assignable.

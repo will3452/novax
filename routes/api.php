@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApiApproveSellerController;
 use App\Http\Controllers\ApiAuthenticationController;
 use App\Http\Controllers\ApiCartController;
+use App\Http\Controllers\ApiFeedbackController;
 use App\Http\Controllers\ApiOrderController;
 use App\Http\Controllers\ApiProductController;
 use App\Http\Controllers\ApiProfileController;
@@ -49,6 +50,10 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/public-test', function () {
     return 'public test';
 });
+
+//get feedback of product
+Route::get('/feedback-products', [ApiFeedbackController::class, 'getFeedbacks']);
+Route::post('/write-feedback', [ApiFeedbackController::class, 'storeFeedback']);
 
 //user authentication
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
