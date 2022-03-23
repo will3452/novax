@@ -14,6 +14,10 @@ class Wishlist extends Model
         'consumer_id',
     ];
 
+    protected $with = [
+        'product',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'consumer_id');
