@@ -41,7 +41,7 @@ trait HasWishlists
 
     public function clearWishlist()
     {
-        $wishlists  = $this->wishlists();
+        $wishlists  = $this->wishlists;
         foreach ($wishlists as $w) {
             $w->delete();
         }
