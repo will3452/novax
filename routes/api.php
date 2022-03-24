@@ -41,6 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //orders | consumer
     Route::get('/orders', [ApiOrderController::class, 'getOrders']);
+    Route::post('/mark-order-as-completed', [ApiOrderController::class, 'markAsCompleted']);
 
     //sales | seller
     Route::get('/sales', [ApiSalesController::class, 'getSales']);
