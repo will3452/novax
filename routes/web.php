@@ -3,10 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
-
+use Laravel\Nova\Nova;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(Nova::path());
 });
 
 Route::get('/register', [RegisterController::class, 'registrationPage']);
