@@ -16,6 +16,10 @@ class Sale extends Model
         'total',
     ];
 
+    protected $with = [
+        'product',
+    ];
+
     public function storeOwner()
     {
         return $this->belongsTo(User::class, 'store_id');
