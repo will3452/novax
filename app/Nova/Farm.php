@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Models\Barangay;
 use App\Models\Farm as ModelsFarm;
+use App\Nova\Actions\PinToMap;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -69,7 +70,7 @@ class Farm extends Resource
             Text::make('Address')
                 ->rules(['required']),
 
-            Number::make('Total Farm Area (ha)', 'total_form_area')
+            Number::make('Total Farm Area (ha)', 'total_farm_area')
                 ->rules('required')
                 ->step('0.1'),
 
@@ -92,7 +93,8 @@ class Farm extends Resource
                     ModelsFarm::SOW_DEEP_WELL => ModelsFarm::SOW_DEEP_WELL,
                     ModelsFarm::SOW_TUBE_WELL => ModelsFarm::SOW_TUBE_WELL,
                 ]),
-            BelongsTo::make('Farmer', 'farmer', Farmer::class),
+
+            BelongsTo::make('Farmer', 'farmer', Farmer::class)->searchable(),
         ];
     }
 
@@ -137,6 +139,8 @@ class Farm extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new PinToMap(),
+        ];
     }
 }

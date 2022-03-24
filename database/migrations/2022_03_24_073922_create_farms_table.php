@@ -20,7 +20,9 @@ class CreateFarmsTable extends Migration
             $table->string('barangay');
             $table->string('address');
             $table->string('total_farm_area');
-            $table->string('coordinates')->nullable();
+            $table->text('coordinates')->nullable();
+            $table->string('color')->nullable();
+            $table->string('fill')->nullable();
             $table->string('land_owner')->nullable();
             $table->string('tenure_type');
             $table->string('size');

@@ -21,6 +21,8 @@ class Farm extends Model
         'is_organically_grown', //yes | no
         'source_of_water',
         'farmer_id',
+        'color',
+        'fill',
     ];
 
     const SOW_DEEP_WELL = 'Deep Well';
@@ -28,6 +30,15 @@ class Farm extends Model
 
     public function farmer()
     {
-        $this->belongsTo(Farmer::class, 'farmer_id');
+        return $this->belongsTo(Farmer::class, 'farmer_id');
+    }
+
+    public function setPin($positions, $color, $fill)
+    {
+        $this->update([
+            'coordinates' => $positions,
+            'color' => $color,
+            'fill' => $fill,
+        ]);
     }
 }
