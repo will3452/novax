@@ -56,7 +56,7 @@ class Store extends Resource
             Password::make('Password')
                 ->rules(['required']),
             Text::make('Address'),
-            Text::make("Farmer's cooperative ID")
+            Text::make("Farmer's cooperative ID", 'farmers_cooperative_id')
                 ->rules(['required']),
             Text::make('Phone')
                 ->rules(['required']),
