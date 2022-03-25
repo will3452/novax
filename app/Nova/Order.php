@@ -53,6 +53,7 @@ class Order extends Resource
                     'Packaging' => 'warning',
                 ]),
             Text::make('Items', function() {
+                return $this->itemsBreakdown;
                 $items = "<ul>";
                 $data = explode("\n", $this->itemsBreakdown);
                 foreach ($data as $v) {
