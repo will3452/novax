@@ -58,6 +58,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'approved_as_store_owner_at' => 'datetime'
     ];
 
     public function products()
