@@ -29,5 +29,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::before(function ($user, $ability) {
             return $user->hasRole(Role::SUPERADMIN) ? true : null;
         });
+
+        Gate::define('viewWebTinker', function ($user = null) {
+            return true;
+        });
     }
 }
