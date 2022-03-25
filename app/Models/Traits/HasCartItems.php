@@ -77,7 +77,7 @@ trait HasCartItems
             $sub += $c->product->price * $c->quantity;
             $product = $c->product;
             $this->createSale($product, $c->quantity, $sub);
-            $itemsBreakdown .= "$product->id***$product->name***$product->price****$c->quantity\n";
+            $itemsBreakdown .= "$product->id***$product->name***$product->price***$c->quantity\n";
             $this->removeToCart($product->id, true);
         }
         $vat = nova_get_setting('vat', 0.12);
