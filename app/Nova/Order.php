@@ -54,13 +54,13 @@ class Order extends Resource
                 ]),
             Text::make('Items', function() {
                 return $this->itemsBreakdown;
-                $items = "<ul>";
-                $data = explode("\n", $this->itemsBreakdown);
-                foreach ($data as $v) {
-                    $p = explode("***", $v);
-                    $items .= "<li>[pid: $p[0]] $p[1] ($p[2]) - $p[3]</li>";
-                }
-                return $items .= "</ul>";
+                // $items = "<ul>";
+                // $data = explode("\n", $this->itemsBreakdown);
+                // foreach ($data as $v) {
+                //     $p = explode("***", $v);
+                //     $items .= "<li>[pid: $p[0]] $p[1] ($p[2]) - $p[3]</li>";
+                // }
+                // return $items .= "</ul>";
             })->asHtml(),
             Text::make('SubTotal', 'subTotal'),
             Text::make('VAT due', 'vatDue'),
