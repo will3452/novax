@@ -54,7 +54,7 @@ class Order extends Resource
                 ]),
             Text::make('Items', function() {
                 $items = "<ul>";
-                $data = explode("\n", $this->$itemsBreakdown);
+                $data = explode("\n", $this->itemsBreakdown);
                 foreach ($data as $v) {
                     $p = explode("***", $v);
                     $items .= "<li>[pid: $p[0]] $p[1] ($p[2]) - $p[3]</li>";
@@ -98,9 +98,7 @@ class Order extends Resource
      */
     public function lenses(Request $request)
     {
-        return [
-            new ChangeStatus
-        ];
+        return [];
     }
 
     /**
@@ -111,6 +109,8 @@ class Order extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new ChangeStatus
+        ];
     }
 }
