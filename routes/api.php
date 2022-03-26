@@ -8,6 +8,7 @@ use App\Http\Controllers\ApiOrderController;
 use App\Http\Controllers\ApiProductController;
 use App\Http\Controllers\ApiProfileController;
 use App\Http\Controllers\ApiSalesController;
+use App\Http\Controllers\ApiSearchProductController;
 use App\Http\Controllers\ApiWishlistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -64,3 +65,5 @@ Route::post('/submit-verification-code', [ApiAuthenticationController::class, 's
 
 Route::get('/products', [ApiProductController::class, 'products']);
 Route::get('/store-master', [ApiProductController::class, 'master']);
+
+Route::get('/search-products', [ApiSearchProductController::class, 'search']);

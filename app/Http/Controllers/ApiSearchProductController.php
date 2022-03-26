@@ -14,7 +14,6 @@ class ApiSearchProductController extends Controller
         $products = Product::where('name', 'LIKE', "%" . $r->keyword . "%")
             ->orWhere('description', 'LIKE', "%" . $r->keyword . "%")
             ->get();
-
         return $products;
     }
 }
