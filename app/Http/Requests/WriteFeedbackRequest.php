@@ -25,7 +25,7 @@ class WriteFeedbackRequest extends FormRequest
     {
         return [
             'product_id' => 'required|exists:products,id',
-            'order_id', => '',
+            'order_id' => '',
             'star' => 'required',
             'message' => 'required',
         ];
