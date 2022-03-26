@@ -47,6 +47,9 @@ Route::middleware('auth:sanctum')->group(function () {
     //sales | seller
     Route::get('/sales', [ApiSalesController::class, 'getSales']);
 
+
+    Route::post('/write-feedback', [ApiFeedbackController::class, 'storeFeedback']);
+
 });
 
 Route::get('/public-test', function () {
@@ -55,7 +58,6 @@ Route::get('/public-test', function () {
 
 //get feedback of product
 Route::get('/feedback-products', [ApiFeedbackController::class, 'getFeedbacks']);
-Route::post('/write-feedback', [ApiFeedbackController::class, 'storeFeedback']);
 
 //user authentication
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
