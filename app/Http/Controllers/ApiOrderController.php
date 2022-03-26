@@ -15,7 +15,7 @@ class ApiOrderController extends Controller
     public function markAsCompleted(MarkAsRequest $r)
     {
         $r->validated();
-        Order::find($r->id)->markAs(Order::STATUS_COMPLETED);
+        Order::find($r->order_id)->markAs(Order::STATUS_COMPLETED);
         return $this->getOrders();
     }
 }
