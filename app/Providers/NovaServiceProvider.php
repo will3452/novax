@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\NumberOfProducts;
+use App\Nova\Metrics\OrdersPerDay;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -78,6 +80,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
+            (new OrdersPerDay()),
+            (new NumberOfProducts()),
         ];
     }
 
