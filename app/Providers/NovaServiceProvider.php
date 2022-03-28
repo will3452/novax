@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\NumberOfBarangay;
+use App\Nova\Metrics\NumberOfFarmers;
+use App\Nova\Metrics\NumberOfItems;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -25,6 +28,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Text::make('Unit of Measurements', 'uom')
+                ->help('use comma (,) to separate UoM'),
         ]);
     }
 
@@ -76,6 +81,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
+            (new NumberOfItems()),
+            (new NumberOfFarmers()),
+            (new NumberOfBarangay()),
         ];
     }
 

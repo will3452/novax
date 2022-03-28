@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Farm;
+use Laravel\Nova\Nova;
 use Illuminate\Http\Request;
 
 class MapController extends Controller
@@ -17,6 +18,6 @@ class MapController extends Controller
     public function setPin(Request $request, Farm $farm)
     {
         $farm->setPin($request->coordinates, $request->color, $request->fill);
-        return 'success!';
+        return redirect(Nova::path() . '/resources/farms/' . $farm->id);
     }
 }

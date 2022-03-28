@@ -9,7 +9,7 @@ use App\Http\Controllers\RegisterController;
 use App\Models\Farm;
 
 Route::get('/', function () {
-    return redirect(Nova::path());
+    return redirect('/map');
 });
 
 Route::get('/map/', [MapController::class, 'showMap']);

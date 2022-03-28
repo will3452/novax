@@ -12,12 +12,12 @@
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
    crossorigin=""></script>
    <style>
-       #map { height: 300px; width: 500px;}
+       #map { height: 500px; width: 800px;}
    </style>
    <script src="//unpkg.com/alpinejs" defer></script>
    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-green-200">
     <div class="flex justify-center m-10" x-data="{
         frams:[],
         map:null,
@@ -60,7 +60,7 @@
             this.addTag = false;
         },
         init() {
-            this.map = L.map('map').setView([17.57472, 120.38694], 14);
+            this.map = L.map('map').setView([17.57472, 120.38694], 16);
             this.setTileLayer();
             @foreach($farms as $farm)
                 let f{{$farm->id}} = L.polygon([
@@ -87,9 +87,24 @@
         }
     }">
         <div>
-            <div id="map"></div>
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold">
+                    {{config('app.name')}}
+                </h1>
+                @guest
+                <a class="underline underline-offset-1" href="{{Nova::path()}}">
+                    Login
+                </a>
+                @else
+                <a class="underline underline-offset-1" href="{{Nova::path()}}">
+                    Home
+                </a>
+                @endguest
+            </div>
+            <div id="map" class="border-2 border-gray-900"></div>
+            <button class="p-2 text-sm py-1 rounded-2xl shadow bg-orange-700 text-white m-1"  x-on:click="idMap = idMap == m1 ? m2: m1; setTileLayer()">Change Map</button>
+            @if (request()->has('farm'))
             <div class="flex justify-center">
-                <button class="p-2 text-sm py-1 rounded-2xl shadow bg-orange-700 text-white m-1"  x-on:click="idMap = idMap == m1 ? m2: m1; setTileLayer()">Change Map</button>
                 <button x-show="! addTag" class="p-2 text-sm py-1 rounded-2xl shadow bg-blue-800 text-white m-1"  x-on:click="addTag = true">Set Tag</button>
                 <button x-show="addTag" class="p-2 text-sm py-1 rounded-2xl shadow bg-green-700 text-white m-1"  x-on:click="save()">Apply</button>
                 <button x-show="addTag" class="p-2 text-sm py-1 rounded-2xl shadow bg-red-900 text-white m-1"  x-on:click="reset()">Reset</button>
@@ -105,6 +120,7 @@
                     <button type="button" x-on:click="setColor = false; render()" class="p-2 text-sm py-1 rounded-2xl shadow bg-gray-900 text-white m-1">Apply Colors</button>
                 </div>
             </form>
+            @endif
         </div>
     </div>
 </body>

@@ -4,6 +4,8 @@ namespace App\Nova;
 
 use App\Models\Barangay;
 use App\Models\Farmer as ModelsFarmer;
+use App\Nova\Actions\SendNotification;
+use App\Nova\Filters\Barangay as FiltersBarangay;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Date;
@@ -112,7 +114,9 @@ class Farmer extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            (new FiltersBarangay()),
+        ];
     }
 
     /**
@@ -134,6 +138,8 @@ class Farmer extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new SendNotification()),
+        ];
     }
 }
