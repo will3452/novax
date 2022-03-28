@@ -38,20 +38,7 @@ class TakeController extends Controller
         }
 
         foreach ($answers as $key => $value) {
-            if ($value === $questions[$key]->answer) {
-                $points ++;
-            }
-
-            if (is_array($value)) {
-                $correctAnswer = Question::parseArray($questions[$key]->answer);
-                $countCorrect = 0;
-                foreach ($value as $a) {
-                    $countCorrect = in_array($a, $correctAnswer) ? ++ $countCorrect : -- $countCorrect;
-                }
-                if ($countCorrect == count($correctAnswer)) {
-                    $points ++;
-                }
-            }
+            $points = Question::isCorrect($questions[$key], $value) ? ++ $points : $points;
         }
         $score = $record->exam->is_manual_checking ? "Not yet checked" : "$points/$total";
         $record->update(['score' => $score]);

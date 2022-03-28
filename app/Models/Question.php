@@ -61,6 +61,24 @@ class Question extends Model
         return $this->hasMany(Answer::class, 'question_id');
     }
 
+    public static function isCorrect(Question $question, $value)
+    {
+        if ($value === $question->answer) {
+            return true;
+        }
+
+        if (is_array($value)) {
+            $correctAnswer = self::parseArray($question->answer);
+            $countCorrect = 0;
+            foreach ($value as $a) {
+                $countCorrect = in_array($a, $correctAnswer) ? ++ $countCorrect : -- $countCorrect;
+            }
+            return $countCorrect == count($correctAnswer);
+        }
+
+        return false;
+    }
+
     const TYPE_MULTIPLE_CHOICE = 'Multiple Choice';
     const TYPE_IDENTIFICATION = 'Identification';
     const TYPE_TRUE_OR_FALSE = 'True or False';
