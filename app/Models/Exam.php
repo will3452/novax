@@ -16,6 +16,7 @@ class Exam extends Model
         'level',
         'name',
         'time_limit',
+        'is_manual_checking',
         'opened_at',
         'closed_at',
     ];
@@ -73,5 +74,17 @@ class Exam extends Model
     public function getTimeOfRecord($record)
     {
         return $this->time_limit - $record->created_at->diffInMinutes(now());
+    }
+
+    public function canTakeNow()
+    {
+        $dates = \Carbon\CarbonPeriod::create($this->opened_at, $this->closed_at);
+        foreach ($dates as $date) {
+            if ($date->format('m-d-y') === now()->format('m-d-y')) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

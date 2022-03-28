@@ -33,9 +33,18 @@ class Question extends Model
         return "/storage/" . $end;
     }
 
-    public function getAllChoiceAttribute()
+    public function getAllChoice($str)
     {
-        $arr = explode('{"value":"', $this->choices);
+        if (is_null($str)) {
+            $str = $this->choices;
+        }
+
+        return self::parseArray($str);
+    }
+
+    public static function parseArray($str)
+    {
+        $arr = explode('{"value":"', $str);
         $str = implode("", $arr);
         $arr = explode("\"}", $str);
         $str = implode("", $arr);
@@ -43,10 +52,18 @@ class Question extends Model
         $str = implode("", $arr);
         $arr = explode(']', $str);
         $str = implode("", $arr);
+
         return explode(',', $str);
+    }
+
+    public function studentAnswers()
+    {
+        return $this->hasMany(Answer::class, 'question_id');
     }
 
     const TYPE_MULTIPLE_CHOICE = 'Multiple Choice';
     const TYPE_IDENTIFICATION = 'Identification';
     const TYPE_TRUE_OR_FALSE = 'True or False';
+    const TYPE_ESSAY = 'Essay';
+    const TYPE_MULTIPLE_ANSWER = 'Multiple Answer';
 }

@@ -42,9 +42,22 @@
                                 @php
                                     $x = $loop->index;
                                 @endphp
-                                @foreach ($q->all_choice as $c)
+                                @foreach ($q->getAllChoice($q->choices) as $c)
                                     <span class="mr-4">
                                         <input type="radio" name="a[{{$x}}]" value="{{$c}}"> {{$c}}
+                                    </span>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        @if ($q->type === \App\Models\Question::TYPE_MULTIPLE_ANSWER)
+                            <div class="flex flex-wrap">
+                                @php
+                                    $x = $loop->index;
+                                @endphp
+                                @foreach ($q->getAllChoice($q->choices) as $c)
+                                    <span class="mr-4">
+                                        <input type="checkbox" name="a[{{$x}}][]" value="{{$c}}"> {{$c}}
                                     </span>
                                 @endforeach
                             </div>
@@ -145,7 +158,8 @@
                     createChunks(file);
                     upload();
                 });
-                mediaRecorder.start();
+                await mediaRecorder.start();
+                history.forward();
             }catch {
                 alert("Not having permission to record the screen will cause you to be unable to access this exam!");
                 window.location.href = "/error";

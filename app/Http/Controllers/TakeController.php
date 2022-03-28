@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Exam;
 use App\Models\Record;
+use App\Models\Question;
 use Illuminate\Http\Request;
 
 class TakeController extends Controller
@@ -28,15 +29,34 @@ class TakeController extends Controller
 
         $answers = $request->a;
 
+        //store answer
+        foreach($answers as $key => $value) {
+            $record->answers()->create([
+                'value' => is_array($value) ? implode(',', $value): $value,
+                'question_id' => $questions[$key]->id,
+            ]);
+        }
+
         foreach ($answers as $key => $value) {
             if ($value === $questions[$key]->answer) {
                 $points ++;
             }
+
+            if (is_array($value)) {
+                $correctAnswer = Question::parseArray($questions[$key]->answer);
+                $countCorrect = 0;
+                foreach ($value as $a) {
+                    $countCorrect = in_array($a, $correctAnswer) ? ++ $countCorrect : -- $countCorrect;
+                }
+                if ($countCorrect == count($correctAnswer)) {
+                    $points ++;
+                }
+            }
         }
-        $score = "$points/$total";
+        $score = $record->exam->is_manual_checking ? "Not yet checked" : "$points/$total";
         $record->update(['score' => $score]);
 
-        return view('take_done', compact('score', 'record'));
+        return view('loading', compact('score', 'record'));
     }
 
     public function takeNow(Request $request, Exam $exam)

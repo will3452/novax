@@ -28,10 +28,14 @@
                         <div class="label-text">Type</div>
                     </div>
                     <select name="type" x-model="type" class="select select-bordered w-full" required>
-                        <option value="" disabled selectedz></option>
+                        <option value="" disabled selected></option>
                         <option value="{{\App\Models\Question::TYPE_MULTIPLE_CHOICE}}">{{\App\Models\Question::TYPE_MULTIPLE_CHOICE}}</option>
                         <option value="{{\App\Models\Question::TYPE_IDENTIFICATION}}">{{\App\Models\Question::TYPE_IDENTIFICATION}}</option>
                         <option value="{{\App\Models\Question::TYPE_TRUE_OR_FALSE}}">{{\App\Models\Question::TYPE_TRUE_OR_FALSE}}</option>
+                        <option value="{{\App\Models\Question::TYPE_MULTIPLE_ANSWER}}">{{\App\Models\Question::TYPE_MULTIPLE_ANSWER}}</option>
+                        @if ($exam->is_manual_checking)
+                            <option value="{{\App\Models\Question::TYPE_ESSAY}}">{{\App\Models\Question::TYPE_ESSAY}}</option>
+                        @endif
                     </select>
                     <div class="form-control">
                         <template x-if="type == `{{\App\Models\Question::TYPE_TRUE_OR_FALSE}}`">
@@ -61,13 +65,28 @@
                                 <input type="text" name="answer" required class="input input-bordered w-full">
                             </div>
                         </template>
-                        <template x-if="type == `{{\App\Models\Question::TYPE_MULTIPLE_CHOICE}}`">
+                        <template x-if="type == `{{\App\Models\Question::TYPE_MULTIPLE_CHOICE}}` || type == `{{\App\Models\Question::TYPE_MULTIPLE_ANSWER}}`">
                             <div>
                                 <div class="my-1">
                                     <div class="label">
                                         <div class="label-text">Correct answer</div>
                                     </div>
-                                    <input type="text" name="answer" required class="input input-bordered w-full">
+
+                                    <template x-if="type == `{{\App\Models\Question::TYPE_MULTIPLE_ANSWER}}`">
+                                        <div>
+                                            <input id="tt" type="text" name="answer" required class="input input-bordered w-full">
+                                            <script>
+                                                var x = document.querySelector('#tt');
+                                                var xt = new Tagify(x);
+                                            </script>
+                                        </div>
+                                    </template>
+
+                                    <template x-if="type == `{{\App\Models\Question::TYPE_MULTIPLE_CHOICE}}`">
+                                        <div>
+                                            <input type="text" name="answer" required class="input input-bordered w-full">
+                                        </div>
+                                    </template>
                                 </div>
                                 <div class="my-1">
                                     <div class="label">
@@ -121,14 +140,26 @@
                         @endif
                     </td>
                     <td>
-                        {{$q->answer}}
+                        @if ($q->type === \App\Models\Question::TYPE_MULTIPLE_ANSWER)
+                            @foreach ($q->getAllChoice($q->answer) as $c)
+                                <span>{{$c}}</span>
+                                @if (!$loop->last)
+                                    ,
+                                @endif
+                            @endforeach
+                        @else
+                            {{$q->answer}}
+                        @endif
                     </td>
                     <td>
                         {{$q->type}}
                     </td>
                     <td>
-                        @foreach ($q->all_choice as $c)
-                            <span>{{$c}}</span> -
+                        @foreach ($q->getAllChoice(null) as $c)
+                            <span>{{$c}}</span>
+                            @if (!$loop->last)
+                                ,
+                            @endif
                         @endforeach
                     </td>
                     <td>

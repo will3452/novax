@@ -7,6 +7,15 @@
         <x-modal button="Create new Exam">
             <form action="/exams" method="POST">
                 @csrf
+                <div class="form-conrol">
+                    <div class="label">
+                        <div class="label-text">Auto Check / Manual Check</div>
+                    </div>
+                    <select name="is_manual_checking" id="" class="select w-full select-bordered">
+                        <option value="0">Auto Check</option>
+                        <option value="1">Manual Check</option>
+                    </select>
+                </div>
                 <div class="form-control">
                     <div class="label">
                         <div class="label-text">Description</div>
@@ -102,6 +111,9 @@
                         Date Created
                     </th>
                     <th>
+                        Auto
+                    </th>
+                    <th>
                         Description
                     </th>
                     @teacher
@@ -131,6 +143,9 @@
                     <tr>
                         <td>
                             {{$e->created_at->format('m/d/y')}}
+                        </td>
+                        <td>
+                            {{$e->is_manual_checking ? 'Manual' : 'Auto'}}
                         </td>
                         <td>
                             {{$e->name}}
@@ -237,6 +252,7 @@
                                 </x-modal>
                             @else
                                 @if (! $e->hasRecordOf(auth()->id()))
+                                    @if ($e->canTakeNow())
                                     <x-modal button="Take now" extra="btn-sm">
                                         <form action="/take-now/{{$e->id}}" method="POST">
                                             @csrf
@@ -255,13 +271,16 @@
                                             <button class="btn btn-primary">Take Now</button>
                                         </form>
                                     </x-modal>
+                                    @else
+                                    <button class="btn btn-sm" disabled>Take Now</button>
+                                    @endif
                                 @else
                                     @if ($e->canTakeOf(auth()->id()))
-                                        <a href="/take/{{$e->getRecordIdOf(auth()->id())}}" class="btn btn-primary btn-sm">continue</a>
-                                    @else
-                                        <span>
-                                            {{$e->getRecordOf(auth()->id())->score}}
-                                        </span>
+                                            <a href="/take/{{$e->getRecordIdOf(auth()->id())}}" class="btn btn-primary btn-sm">continue</a>
+                                        @else
+                                            <span>
+                                                {{$e->getRecordOf(auth()->id())->score}}
+                                            </span>
                                     @endif
                                 @endif
                             @endteacher

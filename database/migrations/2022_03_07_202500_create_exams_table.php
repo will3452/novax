@@ -21,6 +21,7 @@ class CreateExamsTable extends Migration
             $table->string('strand')->nullable();
             $table->string('level')->nullable();
             $table->string('name');
+            $table->boolean('is_manual_checking')->default(0);
             $table->string('time_limit')->nullable();
             $table->timestamp('opened_at')->nullable();
             $table->timestamp('closed_at')->nullable();

@@ -41,8 +41,9 @@ class ExamController extends Controller
             'name' => 'required|unique:exams,name',
             'code' => '',
             'time_limit' => 'required',
-            'opened_at' => 'required|after:yesterday',
+            'opened_at' => 'required',
             'closed_at' => 'required|after:opened_at',
+            'is_manual_checking' => 'required',
             'level' => 'required',
             'strand' => 'required',
         ]);

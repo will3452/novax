@@ -8,10 +8,21 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TakeController;
+use App\Models\Record;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('result', function (Request $request) {
+    $record = Record::find($request->record_id);
+    if (auth()->user()->id !== $record->user_id) {
+        return abort(403);
+    }
+    $score = $record->score;
+    return view('take_done', compact('record', 'score'));
 });
 
 // Route::get('/register', [RegisterController::class, 'registrationPage']);

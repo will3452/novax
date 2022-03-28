@@ -53,7 +53,7 @@ class User extends Resource
     {
         return [
             Text::make('LRN', 'number')
-                ->rules(['required']),
+                ->rules(['max:11']),
             Select::make('Type')
                 ->options([
                     ModelsUser::TYPE_STUDENT => ModelsUser::TYPE_STUDENT,

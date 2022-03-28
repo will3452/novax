@@ -14,9 +14,6 @@
                   <span class="label-text">Password</span>
                 </label>
                 <input type="password" name="password" placeholder="password" class="input input-bordered">
-                <label class="label">
-                    <a href="/forgot-password" class="label-text-alt link link-hover">Forgot password?</a>
-                </label>
               </div>
               <div class="form-control mt-6">
                 <button class="btn btn-primary" type="submit">Login</button>
