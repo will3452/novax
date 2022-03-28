@@ -8,12 +8,24 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use App\Http\Requests\ProductStoreRequest;
+use App\Http\Requests\ProductUpdateRequest;
 
 class ApiProductController extends Controller
 {
     public function products()
     {
         return Product::latest()->get();
+    }
+
+    public function updateQuantity(ProductUpdateRequest $p)
+    {
+        $p->validated();
+
+        $pd = Product::find($p)->update([
+            'quantity' => $p->quantity,
+        ]);
+
+        return $pd;
     }
 
     public function store(ProductStoreRequest $r)

@@ -49,7 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     Route::post('/write-feedback', [ApiFeedbackController::class, 'storeFeedback']);
-
+    Route::post('/update-quantity', [ApiProductController::class, 'updateQuantity']);
 });
 
 Route::get('/public-test', function () {
