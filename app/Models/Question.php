@@ -61,8 +61,11 @@ class Question extends Model
         return $this->hasMany(Answer::class, 'question_id');
     }
 
-    public static function isCorrect(Question $question, $value)
+    public static function isCorrect($question, $value)
     {
+        if (is_int($question)) {
+            $question = self::find($question);
+        }
         if ($value === $question->answer) {
             return true;
         }
