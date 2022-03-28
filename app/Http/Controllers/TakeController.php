@@ -42,7 +42,9 @@ class TakeController extends Controller
         }
         $score = $record->exam->is_manual_checking ? "Not yet checked" : "$points/$total";
         $record->update(['score' => $score]);
-
+        if ($record->exam->is_manual_checking) {
+            return view('manual_check_done');
+        }
         return view('loading', compact('score', 'record'));
     }
 

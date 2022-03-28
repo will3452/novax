@@ -15,6 +15,11 @@ class QuestionController extends Controller
             $request->question_image = $request->question_image->store('public');
         }
 
+
+        if (request()->type === \App\Models\Question::TYPE_ESSAY) {
+            $request->answer = '';
+        }
+
         $exam->questions()->create([
             'question' => $request->question,
             'question_image' => $request->question_image,
@@ -22,6 +27,7 @@ class QuestionController extends Controller
             'answer' => $request->answer,
             'choices' => $request->choices,
         ]);
+
 
         return back()->withSuccess('success!');
     }
