@@ -229,7 +229,7 @@
                            <form action="{{route('update.grade.of.record', ['record' => $i->id])}}" method="POST">
                             @csrf
                                @foreach ($i->answers as $a)
-                                   <div class="mb-2  p-2 border border-dashed border-2">
+                                   <div class="mb-2  p-2 border border-dashed border-2 break-all">
                                     <div class="bg-base-200 p-2 rounded mb-2">
                                         <span class="font-bold block">
                                             Question/Instruction:
@@ -240,9 +240,9 @@
                                     </div>
                                     <div class="bg-base-200 p-2 rounded">
                                         <span class="font-bold block">Answer:</span>
-                                        <span>
+                                        <div class="text-xs overflow-x-auto">
                                             {{$a->value}}
-                                        </span>
+                                        </div>
                                     </div>
                                     <div class="form-control">
                                         <label for="" class="label"><span class="label-text">Enter Score: </span></label>
