@@ -226,7 +226,8 @@
                 <td>
                     @if ($exam->is_manual_checking)
                        <x-modal button="view answers" extra="btn-secondary">
-                           <form action="">
+                           <form action="{{route('update.grade.of.record', ['record' => $i->id])}}" method="POST">
+                            @csrf
                                @foreach ($i->answers as $a)
                                    <div class="mb-2  p-2 border border-dashed border-2">
                                     <div class="bg-base-200 p-2 rounded mb-2">
