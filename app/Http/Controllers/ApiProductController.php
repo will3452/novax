@@ -21,7 +21,7 @@ class ApiProductController extends Controller
     {
         $p->validated();
 
-        $pd = Product::find($p)->update([
+        $pd = Product::find($p->product_id)->update([
             'quantity' => $p->quantity,
         ]);
 
