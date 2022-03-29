@@ -23,23 +23,23 @@
                     <div class="ml-4 my-2">
                         <input type="hidden" name="q[{{$loop->index}}]" value="{{$q->id}}" />
                         @if ($q->type === \App\Models\Question::TYPE_IDENTIFICATION)
-                            <input required type="text" name="a[{{$loop->index}}]" class="input input-bordered input-sm">
+                            <input required type="text" name="a[{{$q->id}}][{{$loop->index}}]" class="input input-bordered input-sm">
                         @endif
 
                         @if ($q->type === \App\Models\Question::TYPE_TRUE_OR_FALSE)
                             <div class="flex">
                                 <span class="mr-4">
-                                    <input required type="radio" name="a[{{$loop->index}}]" value="1"> True
+                                    <input required type="radio" name="a[{{$q->id}}][{{$loop->index}}]" value="1"> True
                                 </span>
                                 <span class="mr-4">
-                                    <input required type="radio" name="a[{{$loop->index}}]" value="0"> False
+                                    <input required type="radio" name="a[{{$q->id}}][{{$loop->index}}]" value="0"> False
                                 </span>
                             </div>
                         @endif
 
                         @if ($q->type === \App\Models\Question::TYPE_ESSAY)
                             <div class="flex">
-                                <textarea required name="a[{{$loop->index}}]" id="" cols="30" rows="10" class="w-full textarea textarea-bordered"></textarea>
+                                <textarea required name="a[{{$q->id}}][{{$loop->index}}]" id="" cols="30" rows="10" class="w-full textarea textarea-bordered"></textarea>
                             </div>
                         @endif
 
@@ -50,7 +50,7 @@
                                 @endphp
                                 @foreach ($q->getAllChoice($q->choices) as $c)
                                     <span class="mr-4">
-                                        <input  required type="radio" name="a[{{$x}}]" value="{{$c}}"> {{$c}}
+                                        <input  required type="radio" name="a[{{$q->id}}][{{$x}}]" value="{{$c}}"> {{$c}}
                                     </span>
                                 @endforeach
                             </div>
@@ -63,7 +63,7 @@
                                 @endphp
                                 @foreach ($q->getAllChoice($q->choices) as $c)
                                     <span class="mr-4">
-                                        <input required type="checkbox" name="a[{{$x}}][]" value="{{$c}}"> {{$c}}
+                                        <input required type="checkbox" name="a[{{$q->id}}][{{$x}}][]" value="{{$c}}"> {{$c}}
                                     </span>
                                 @endforeach
                             </div>

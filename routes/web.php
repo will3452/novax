@@ -25,6 +25,15 @@ Route::get('result', function (Request $request) {
     return view('take_done', compact('record', 'score'));
 });
 
+Route::post('update-password', function(Request $request) {
+    $request->validate([
+        'password' => 'required',
+    ]);
+
+    auth()->user()->update(['password' => bcrypt($request->password)]);
+    return back()->withSuccess('updated!');
+});
+
 // Route::get('/register', [RegisterController::class, 'registrationPage']);
 // Route::post('/register', [RegisterController::class, 'postRegister']);
 

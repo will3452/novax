@@ -40,6 +40,27 @@ class User extends Authenticatable
         "HUMSS",
     ];
 
+    public function totalExams()
+    {
+        return Exam::whereStrand($this->strand)->whereLevel($this->level)->count();
+    }
+
+
+    public function notFinished()
+    {
+        $records = Record::whereUserId($this->id)->count();
+        return ($this->totalExams() - $records) <= 0 ? 0 :$this->totalExams() - $records;
+    }
+
+    public function incomingExam()
+    {
+        if ($this->notFinished() == 0) {
+            return 'No incoming exam';
+        }
+        $exam = Exam::whereStrand($this->strand)->whereLevel($this->level)->orderBy('opened_at', 'DESC')->first();
+        return $exam->opened_at->format('m/d/y');
+    }
+
     const TYPE_STUDENT = "Student";
     const TYPE_TEACHER = "Teacher";
     const TYPE_OTHER = "Other";

@@ -23,26 +23,36 @@ class TakeController extends Controller
 
     public function submit(Request $request, Record $record)
     {
+        // dd($request->all());
+        $qs = $request->q;
+        $answers = $request->a;
         $questions = $record->exam->questions;
         $total = count($questions);
         $points = 0;
 
-        $answers = $request->a;
 
-        //store answer
-        foreach($questions as $key => $value) {
-            $ans = $answers[$key];
-            $record->answers()->create([
-                'value' => is_array($ans) ? implode(',', $ans): $value,
-                'question_id' => $questions[$key]->id,
-            ]);
+        foreach ($answers ?? [] as $qId => $ans) {
+            if ($ans) {
+                $newArr = $ans;
+                if (Question::find($qId)->type === Question::TYPE_MULTIPLE_ANSWER) {
+                    $newArr = implode(",", $newArr[0]);
+                    // dd($newArr);
+                } else {
+                    $newArr = end($answers[$qId]);
+                }
+                $record->answers()->create([
+                    'value' => $newArr ?? '',
+                    'question_id' =>$qId,
+                ]);
+            }
         }
 
         if (! $record->exam->is_manual_checking) {
-            foreach ($records->answers as $key => $value) {
-                if (Question::isCorrect($questions[$key], $value->value)) {
+            foreach ($record->answers as $key => $value) {
+                $val = $questions[$key]->type === Question::TYPE_MULTIPLE_ANSWER ? explode(',', $value->value) : $value->value;
+                if (Question::isCorrect($questions[$key], $val)) {
+                    $value->update(['status' => 1]);
                     $points ++;
-                    $value->update(['satatus' => 1]);
                 }
             }
         }
