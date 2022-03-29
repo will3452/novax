@@ -38,8 +38,11 @@ class TakeController extends Controller
         }
 
         if (! $record->exam->is_manual_checking) {
-            foreach ($answers as $key => $value) {
-                $points = Question::isCorrect($questions[$key], $value) ? ++ $points : $points;
+            foreach ($records->answers as $key => $value) {
+                if (Question::isCorrect($questions[$key], $value->value)) {
+                    $points ++;
+                    $value->update(['satatus' => 1]);
+                }
             }
         }
 
