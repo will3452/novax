@@ -36,9 +36,27 @@ Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('/home', [HomeController::class, 'home'])->name('home');
 Route::get('/exams', [ExamController::class, 'index'])->middleware('auth');
 Route::put('/exams/{exam}', [ExamController::class, 'update']);
-Route::get('/exams/{exam}', [ExamController::class, 'show']);
+Route::get('/exams/reports/{exam}', [ExamController::class, 'showReport'])->name('exam.report');
+Route::get('/exams/result/{exam}', [ExamController::class, 'showRecords'])->name('exam.result');
+Route::get('/exams/{exam}', [ExamController::class, 'show'])->name('exam.show');
 Route::delete('/exams/{exam}', [ExamController::class, 'destroy']);
 Route::post('/exams', [ExamController::class, 'store']);
+
+// when teacher update the grade of the student base of the  given sanswers.
+Route::post('/update-grade/{record}', function (Request $request, Record $record) {
+    $points = 0;
+    $grades = $request->status;
+    $answers = $record->answers;
+    foreach ($answers as $key => $a) {
+        $a->update([
+            'status' => $grades[$key],
+        ]);
+        $points += $grades[$key];
+    }
+
+    $record->update(['score' => $points]);
+    return back()->withSuccess('Done!');
+})->name('update.grade.of.record');
 
 Route::post('/questions', [QuestionController::class, 'store']);
 Route::delete('/questions/{question}', [QuestionController::class, 'destroy']);

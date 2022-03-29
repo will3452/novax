@@ -1,4 +1,4 @@
-<div class="navbar bg-base-100 shadow-xl mb-5">
+<div class="navbar bg-base-100 border-b-4 border-gray-200 mb-5">
 <div class="flex-1">
     <a href="/" class="btn btn-ghost normal-case text-xl">{{nova_get_setting('app_name', config('app.name'))}}</a>
 </div>
