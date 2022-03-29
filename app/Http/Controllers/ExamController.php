@@ -57,6 +57,18 @@ class ExamController extends Controller
         return view('exam.show', compact('exam'));
     }
 
+    public function showReport(Request $request, Exam $exam)
+    {
+        $reports = '';
+        return view('exam.show', compact('exam', 'reports'));
+    }
+
+    public function showRecords(Request $request, Exam $exam)
+    {
+        $records = '';
+        return view('exam.show', compact('exam', 'records'));
+    }
+
     public function update(Request $request, Exam $exam)
     {
         $data = $request->validate([

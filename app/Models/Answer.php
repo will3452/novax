@@ -12,8 +12,17 @@ class Answer extends Model
     protected $fillable = [
         'record_id',
         'question_id',
+        'status',
         'value',
     ];
+
+    protected $with = [
+        'question',
+    ];
+
+    const STATUS_WRONG = 'Wrong';
+    const STATUS_CORRECT = 'Correct';
+    const STATUS_NOT_CHECKED = 'Not yet checked';
 
     public function record()
     {

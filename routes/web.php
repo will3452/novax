@@ -36,9 +36,14 @@ Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('/home', [HomeController::class, 'home'])->name('home');
 Route::get('/exams', [ExamController::class, 'index'])->middleware('auth');
 Route::put('/exams/{exam}', [ExamController::class, 'update']);
-Route::get('/exams/{exam}', [ExamController::class, 'show']);
+Route::get('/exams/reports/{exam}', [ExamController::class, 'showReport'])->name('exam.report');
+Route::get('/exams/result/{exam}', [ExamController::class, 'showRecords'])->name('exam.result');
+Route::get('/exams/{exam}', [ExamController::class, 'show'])->name('exam.show');
 Route::delete('/exams/{exam}', [ExamController::class, 'destroy']);
 Route::post('/exams', [ExamController::class, 'store']);
+Route::get('/update-grade/{record}', function () {
+
+});
 
 Route::post('/questions', [QuestionController::class, 'store']);
 Route::delete('/questions/{question}', [QuestionController::class, 'destroy']);

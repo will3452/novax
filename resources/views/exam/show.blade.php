@@ -3,7 +3,7 @@
         {{$exam->name}}
     </x-page-title>
     @teacher
-    <div class="flex justify-center my-4">
+    <div class="flex justify-between my-4">
         <x-modal button="Create new question">
             <form action="/questions" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -105,8 +105,14 @@
                 <button class="btn btn-primary mt-4" type="submit">submit</button>
             </form>
         </x-modal>
+        <div class="tabs">
+            <a  href="{{route('exam.show', ['exam' => $exam->id])}}"  class="tab tab-bordered {{route('exam.show', ['exam' => $exam->id]) == url()->current() ? 'tab-active':''}}">Questionnaire</a>
+            <a  href="{{route('exam.result', ['exam' => $exam->id])}}"  class="tab tab-bordered {{route('exam.result', ['exam' => $exam->id]) == url()->current() ? 'tab-active':''}}">Submissions</a>
+            <a  href="{{route('exam.report', ['exam' => $exam->id])}}" class="tab tab-bordered {{route('exam.report', ['exam' => $exam->id]) == url()->current() ? 'tab-active':''}}">Reports</a>
+        </div>
     </div>
     @endteacher
+    @if (route('exam.show', ['exam' => $exam->id]) == url()->current())
     <x-table>
         <thead>
             <tr>
@@ -180,6 +186,80 @@
             @endforeach
         </tbody>
     </x-table>
+    @endif
+
+    @if(route('exam.result', ['exam' => $exam->id]) == url()->current())
+    <x-table>
+        <thead>
+            <tr>
+                <th>
+                    Date (mm/dd/yy hh:mm)
+                </th>
+                <th>
+                    Student
+                </th>
+                <th>
+                    Score
+                </th>
+                <th>
+                    Screen Rec.
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        @foreach ($exam->records as $i)
+            <tr>
+                <td>
+                    {{$i->updated_at->format('m/d/y h:i a')}}
+                </td>
+                <td>
+                    {{$i->user->name}} - {{$i->user->number}}
+                </td>
+                <td>
+                    {{$i->score}}
+                </td>
+                <td>
+                    <a href="/storage/{{$i->screen_record}}" target="_blank" class="btn btn-xs btn-primary">watch</a>
+                </td>
+                <td>
+                    @if ($exam->is_manual_checking)
+                       <x-modal button="view answers" extra="btn-secondary">
+                           <form action="">
+                               @foreach ($i->answers as $a)
+                                   <div class="mb-2  p-2 border border-dashed border-2">
+                                    <div class="bg-base-200 p-2 rounded mb-2">
+                                        <span class="font-bold block">
+                                            Question/Instruction:
+                                        </span>
+                                        <span>
+                                            {{$a->question->question}}
+                                        </span>
+                                    </div>
+                                    <div class="bg-base-200 p-2 rounded">
+                                        <span class="font-bold block">Answer:</span>
+                                        <span>
+                                            {{$a->value}}
+                                        </span>
+                                    </div>
+                                    <div class="form-control">
+                                        <label for="" class="label"><span class="label-text">Enter Score: </span></label>
+                                        <input type="text" name="status[]" class="input input-bordered input-sm w-full">
+                                    </div>
+                                   </div>
+                               @endforeach
+                               <button class="btn w-full btn-primary">
+                                   Submit
+                               </button>
+                           </form>
+                       </x-modal>
+                    @endif
+                </td>
+            </tr>
+        @endforeach
+    </x-table>
+    @endif
     @push('styles')
         <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     @endpush
