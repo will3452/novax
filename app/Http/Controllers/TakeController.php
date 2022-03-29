@@ -30,9 +30,10 @@ class TakeController extends Controller
         $answers = $request->a;
 
         //store answer
-        foreach($answers as $key => $value) {
+        foreach($questions as $key => $value) {
+            $ans = $answers[$key];
             $record->answers()->create([
-                'value' => is_array($value) ? implode(',', $value): $value,
+                'value' => is_array($ans) ? implode(',', $ans): $value,
                 'question_id' => $questions[$key]->id,
             ]);
         }

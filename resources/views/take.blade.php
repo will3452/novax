@@ -37,6 +37,12 @@
                             </div>
                         @endif
 
+                        @if ($q->type === \App\Models\Question::TYPE_ESSAY)
+                            <div class="flex">
+                                <textarea name="name=a[{{$loop->index}}]" id="" cols="30" rows="10" class="w-full textarea textarea-bordered"></textarea>
+                            </div>
+                        @endif
+
                         @if ($q->type === \App\Models\Question::TYPE_MULTIPLE_CHOICE)
                             <div class="flex flex-wrap">
                                 @php
