@@ -35,7 +35,8 @@ class TakeController extends Controller
             if ($ans) {
                 $newArr = $ans;
                 if (Question::find($qId)->type === Question::TYPE_MULTIPLE_ANSWER) {
-                    $newArr = implode(",", $newArr[0]);
+                    $arr = end($newArr);
+                    $newArr = implode(",", $arr);
                     // dd($newArr);
                 } else {
                     $newArr = end($answers[$qId]);
@@ -49,8 +50,8 @@ class TakeController extends Controller
 
         if (! $record->exam->is_manual_checking) {
             foreach ($record->answers as $key => $value) {
-                $val = $questions[$key]->type === Question::TYPE_MULTIPLE_ANSWER ? explode(',', $value->value) : $value->value;
-                if (Question::isCorrect($questions[$key], $val)) {
+                $val = $value->question->type === Question::TYPE_MULTIPLE_ANSWER ? explode(',', $value->value) : $value->value;
+                if (Question::isCorrect($value->question, $val)) {
                     $value->update(['status' => 1]);
                     $points ++;
                 }

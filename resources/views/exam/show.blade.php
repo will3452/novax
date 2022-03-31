@@ -261,6 +261,20 @@
         @endforeach
     </x-table>
     @endif
+
+    @if(route('exam.report', ['exam' => $exam->id]) == url()->current())
+    <div class="flex">
+        <x-card description="Average Score">
+            {{$exam->averageScore()}}
+        </x-card>
+        <x-card description="Lowest Score">
+            {{$exam->lowestScore()}}
+        </x-card>
+        <x-card description="Highest Score">
+            {{$exam->highestScore()}}
+        </x-card>
+    </div>
+    @endif
     @push('styles')
         <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     @endpush
