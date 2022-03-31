@@ -116,7 +116,7 @@ class Appointment extends Resource
     public function actions(Request $request)
     {
         return [
-            (new ChangeStatus),
+            (new ChangeStatus)->canSee(fn ($e) => auth()->user()->type != \App\Models\User::TYPE_PATIENT),
         ];
     }
 }

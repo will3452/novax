@@ -38,6 +38,21 @@ class Service extends Resource
         'description',
     ];
 
+    public static function authorizedToCreate(Request $request)
+    {
+        return auth()->user()->type != \App\Models\User::TYPE_PATIENT;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return auth()->user()->type != \App\Models\User::TYPE_PATIENT;
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return auth()->user()->type != \App\Models\User::TYPE_PATIENT;
+    }
+
     /**
      * Get the fields displayed by the resource.
      *

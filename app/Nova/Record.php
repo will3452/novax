@@ -12,6 +12,11 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Record extends Resource
 {
+
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->type != \App\Models\User::TYPE_PATIENT;
+    }
     /**
      * The model the resource corresponds to.
      *

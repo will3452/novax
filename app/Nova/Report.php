@@ -12,6 +12,11 @@ class Report extends Resource
     {
         return false;
     }
+
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->type != \App\Models\User::TYPE_PATIENT;
+    }
     /**
      * The model the resource corresponds to.
      *
