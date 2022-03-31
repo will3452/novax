@@ -53,7 +53,7 @@ class User extends Resource
     {
         return [
             Text::make('LRN', 'number')
-                ->rules(['max:11']),
+                ->rules(['max:12']),
             Select::make('Type')
                 ->options([
                     ModelsUser::TYPE_STUDENT => ModelsUser::TYPE_STUDENT,
@@ -72,6 +72,10 @@ class User extends Resource
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
+
+            Password::make('Password')
+                ->hideWhenCreating()
+                ->updateRules(['required']),
 
             // MorphToMany::make('Roles', 'roles', Role::class),
         ];

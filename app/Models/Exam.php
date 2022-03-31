@@ -69,7 +69,7 @@ class Exam extends Model
         $highest = $init[0];
 
         foreach ($this->records as $r) {
-            $s = explode('/', $this->records()->first()->score);
+            $s = explode('/', $r->score);
             if ($highest < $s[0]) {
                 $highest = $s[0];
             }
