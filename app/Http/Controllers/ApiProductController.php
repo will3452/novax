@@ -57,9 +57,7 @@ class ApiProductController extends Controller
 
     public function master()
     {
-        $user = User::WhereNotNull('approved_as_store_owner_at')->get();
-        $u = [];
-        $category = null;
+        $users = User::WhereNotNull('approved_as_store_owner_at')->get();
 
         $lists = [
                 "Vegetable",
@@ -72,12 +70,12 @@ class ApiProductController extends Controller
                 "Plant",
             ];
 
-        foreach ($user as $u) {
+        foreach ($users as $u) {
             foreach ($lists as $list) {
-                $u[$list] = Product::whereCategory($list)->get();
+                $u[$list] = Product::whereCategory($list)->whereStoreId($u->id)->get();
             }
         }
 
-        return $u;
+        return $users;
     }
 }
