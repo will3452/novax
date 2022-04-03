@@ -58,6 +58,7 @@ class ApiProductController extends Controller
     public function master()
     {
         $user = User::WhereNotNull('approved_as_store_owner_at')->get();
+        $u = [];
         $category = null;
 
         $lists = [
@@ -77,6 +78,6 @@ class ApiProductController extends Controller
             }
         }
 
-        return $user;
+        return $u;
     }
 }
