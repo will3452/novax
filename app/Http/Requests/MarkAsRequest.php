@@ -25,6 +25,7 @@ class MarkAsRequest extends FormRequest
     {
         return [
             'order_id' => 'required|exists:orders,id',
+            'image' => 'required',
         ];
     }
 }

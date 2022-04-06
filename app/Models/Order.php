@@ -40,4 +40,9 @@ class Order extends Model
             'status' => $status,
         ]);
     }
+
+    public function pop()
+    {
+        return $this->hasMany(Pop::class);
+    }
 }
