@@ -57,7 +57,7 @@ class Product extends Resource
             Textarea::make('Description')
                 ->alwaysShow(),
             Text::make('Image', function () {
-                return "<img style='width:20px;height:20px;object-fit:contain;' src='$this->image' />";
+                return "<img style='width:20px;height:20px;object-fit:contain;' src='/$this->image' />";
             })->asHtml(),
             Text::make('Category'),
             Currency::make('Price')
