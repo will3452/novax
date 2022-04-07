@@ -16,7 +16,7 @@ class AveragePricePerCategory extends Partition
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->average($request, OrderProduct::class, 'product_price', 'product_category');
+        return $this->average($request, OrderProduct::class, 'product_price', 'product_category');//
     }
 
     /**
