@@ -51,6 +51,9 @@ class OrderProduct extends Model
             [$id, $name, $price, $quantity] = explode("***", $f);
 
             $product = Product::find($id);
+            if (is_null($product)) {
+                continue;
+            }
             $result[] = [
                 "order_id" => $orderId,
                 "store_id" => $product->store_id,
