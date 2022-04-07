@@ -27,7 +27,7 @@ class CooperativeFilter extends Filter
     public function apply(Request $request, $query, $value)
     {
         return $query->whereHas('storeOwner', function (Builder $q) use ($value) {
-            $q->whereCategory($value);
+            $q->whereCooperative($value);
         });
     }
 
