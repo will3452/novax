@@ -3,6 +3,7 @@
 namespace App\Nova\Filters;
 
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
 
@@ -25,7 +26,9 @@ class CooperativeFilter extends Filter
      */
     public function apply(Request $request, $query, $value)
     {
-        return $query->where('storeOwner.cooperative', $value);
+        return $query->whereHas('storeOwner', function (Builder $q) use ($value) {
+            $q->whereCategory($value);
+        });
     }
 
     /**
