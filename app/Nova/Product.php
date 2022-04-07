@@ -56,8 +56,9 @@ class Product extends Resource
                 ->rules(['required']),
             Textarea::make('Description')
                 ->alwaysShow(),
-            Image::make('Image')
-                ->rules(['required', 'max:2000']),
+            Text::make('Image', function () {
+                return "<img style='width:20px;height:20px;object-fit:contain;' src='$this->image' />";
+            })->asHtml(),
             Text::make('Category'),
             Currency::make('Price')
                 ->rules(['required']),
