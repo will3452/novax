@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
+use App\Models\Record;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +19,16 @@ use App\Http\Controllers\RegisterController;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/generate-report', function (Request $request) {
+    $records = [];
+    if ($request->has('to') && $request->has('from')) {
+        $records = Record::whereBetween('created_at', [$request->from, $request->to])->get();
+    } else {
+        $records = Record::get();
+    }
+    return view('generate-report', compact('records'));
 });
 
 Route::get('/register', [RegisterController::class, 'registrationPage']);

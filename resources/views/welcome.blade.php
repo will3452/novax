@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{!!nova_get_setting('system_name','CHANGE MY NAME')!!}</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <header style="background: #6A7BCF;" class="text-white text-center text-3xl font-bold p-4">
-        {{config('app.name', 'hello world')}}
+        {!!nova_get_setting('system_name','CHANGE MY NAME')!!}
     </header>
     <div>
         <div class="flex justify-center -mt-20">
@@ -33,18 +33,18 @@
         </h2>
         <div class="mt-4">
             <div>
-                Email: william@mail.com
+                Email: {{nova_get_setting('email', 'admin@admin.com')}}
             </div>
             <div>
-                Phone: +63903 - 123 - 3344
+                Phone: {{nova_get_setting('phone', '09121808887')}}
             </div>
         </div>
         <div id="map" class="mt-10 mb-20 mx-auto w-6/12">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15447.469809057398!2d121.04497624999998!3d14.54957145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sph!4v1645522395342!5m2!1sen!2sph" class="w-full" style="height:400px;" allowfullscreen="" loading="lazy"></iframe>
+            {!!nova_get_setting('map_code','map here')!!}
         </div>
     </div>
     <footer class="mb-20 text-2xl text-center text-gray-600">
-        COPYRIGHT - {{now()->format('Y')}} , {{config('app.name')}}
+        COPYRIGHT - {{now()->format('Y')}} , {!!nova_get_setting('system_name','CHANGE MY NAME')!!}
     </footer>
 </body>
 </html>

@@ -14,6 +14,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Fields\Code;
 use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -30,7 +31,16 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         parent::boot();
 
         NovaSettings::addSettingsFields([
-            Image::make('Logo'),
+            // Image::make('Logo'),
+            Text::make('System Name')
+                ->rules(['required']),
+            Text::make('Email')
+                ->rules(['required']),
+            Text::make('Phone')
+                ->rules(['required']),
+            Code::make('Map code')
+                ->help('generate google map codes here https://googlemapsiframegenerator.com/')
+                ->rules(['required']),
         ]);
     }
 

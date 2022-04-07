@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\GenerateReport;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -94,6 +95,9 @@ class Report extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new GenerateReport())
+                ->standalone()
+        ];
     }
 }
