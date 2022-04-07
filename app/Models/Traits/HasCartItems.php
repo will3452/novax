@@ -4,6 +4,7 @@ namespace App\Models\Traits;
 
 use App\Models\CartItem;
 use App\Models\Order;
+use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\Sale;
 
@@ -55,15 +56,17 @@ trait HasCartItems
 
     public function createOrder($itemsBreakdown, $sub, $vatDue, $vatRate, $total, $address, $remarks)
     {
-        return $this->orders()->create([
-            'itemsBreakdown' => $itemsBreakdown,
-            'subTotal' => $sub,
-            'vatDue' => $vatDue,
-            'vatRate' => $vatRate,
-            'total' => $total,
-            'address' => $address ?? $this->address,
-            'remarks' => $remarks ?? "---",
-        ]);
+        $order = $this->orders()->create([
+                'itemsBreakdown' => $itemsBreakdown,
+                'subTotal' => $sub,
+                'vatDue' => $vatDue,
+                'vatRate' => $vatRate,
+                'total' => $total,
+                'address' => $address ?? $this->address,
+                'remarks' => $remarks ?? "---",
+            ]);
+        OrderProduct::createFromOrderItemsBreakdown($order->id); // this will create orders
+        return $order;
     }
 
     public function processCartToOrder($address=null, $remarks=null)

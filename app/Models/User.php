@@ -75,4 +75,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Sale::class, 'store_id');
     }
+
+    public function getCooperativeAttribute()
+    {
+        $arr = explode("|", $this->farmers_cooperative_id);
+        return end($arr);
+    }
 }
