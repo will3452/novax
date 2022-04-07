@@ -21,10 +21,6 @@ class Order extends Model
         'status',
     ];
 
-    protected $with = [
-        'pop',
-    ];
-
     const STATUS_COMPLETED = 'Completed';
     const STATUS_DELIVERY = 'Delivery';
     const STATUS_PACKAGING = 'Packaging';
