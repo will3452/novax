@@ -30,6 +30,7 @@ class User extends Authenticatable
         'farmers_cooperative_id',
         'phone',
         'store_name',
+        'cooperative',
         'coordinates',
         'approved_as_store_owner_at',
         'phone_verified_at',
@@ -76,7 +77,7 @@ class User extends Authenticatable
         return $this->hasMany(Sale::class, 'store_id');
     }
 
-    public function getCooperativeAttribute()
+    public function getCooperativeFromFarmersId()
     {
         $arr = explode("|", $this->farmers_cooperative_id);
         return end($arr);
