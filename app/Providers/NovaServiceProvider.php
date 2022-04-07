@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\AveragePricePerCategory;
 use App\Nova\Metrics\CooperativeSales;
 use App\Nova\Metrics\NumberOfProducts;
 use App\Nova\Metrics\OrdersPerDay;
@@ -84,6 +85,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             (new OrdersPerDay()),
             (new NumberOfProducts()),
             (new CooperativeSales()),
+            (new AveragePricePerCategory()),
         ];
     }
 
