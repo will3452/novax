@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Nova\Filters\CategoryFilter;
+use App\Nova\Filters\CooperativeFilter;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
@@ -89,6 +90,7 @@ class Product extends Resource
     {
         return [
             (new CategoryFilter()),
+            (new CooperativeFilter()),
         ];
     }
 
