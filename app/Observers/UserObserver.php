@@ -14,5 +14,7 @@ class UserObserver
             VerificationCode::smsHandler($phone);
         }
 
+        $user->update(['cooperative' => $user->getCooperativeFromFarmersId()]); // this will assign cooperative automatically
+
     }
 }
