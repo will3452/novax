@@ -63,8 +63,8 @@ class OrderProduct extends Model
                 ];
         }
 
-        foreach ($fruits as $f) {
-            self::create($f);
+        foreach ($result as $r) {
+            self::create($r);
         }
     }
 }
