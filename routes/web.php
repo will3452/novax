@@ -22,3 +22,5 @@ Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);
     return $result;
 });
+
+Route::get('test'., fn()=>'test1');
