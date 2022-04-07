@@ -23,4 +23,4 @@ Route::get('/artisan', function () {
     return $result;
 });
 
-Route::get('test', fn()=>'test4'); //
+Route::get('test', fn()=>'test5'); //
