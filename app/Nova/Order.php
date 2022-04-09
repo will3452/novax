@@ -54,10 +54,12 @@ class Order extends Resource
                 ]),
             Text::make('Items', function() {
                 $items = "<ul>";
-                $data = explode(" ", $this->itemsBreakdown);
-                foreach ($data as $v) {
-                    $p = explode("***", $v);
-                    $items .= "<li>[pid: $p[0]] $p[1] ($p[2]) - $p[3]</li>";
+                $data = $this->products;
+                foreach ($data as $d) {
+                    $product = $d->product_name;
+                    $qty = $d->order_quantity;
+                    $price = $d->product_price;
+                    $items .= "<li>$qty x - $product (php $price)</li>";
                 }
                 return $items .= "</ul>";
             })->asHtml(),

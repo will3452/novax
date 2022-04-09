@@ -45,4 +45,9 @@ class Order extends Model
     {
         return $this->hasMany(Pop::class);
     }
+
+    public function products()
+    {
+        return $this->hasMany(OrderProduct::class);
+    }
 }
