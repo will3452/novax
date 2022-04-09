@@ -69,7 +69,7 @@ class User extends Resource
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
 
-            MorphToMany::make('Roles', 'roles', Role::class),
+            // MorphToMany::make('Roles', 'roles', Role::class),
         ];
     }
 
