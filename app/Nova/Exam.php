@@ -12,6 +12,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Exam extends Resource
 {
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
     /**
      * The model the resource corresponds to.
      *
