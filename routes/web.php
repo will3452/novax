@@ -16,6 +16,8 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
+Route::view('/about', 'about');
+
 Route::get('result', function (Request $request) {
     $record = Record::find($request->record_id);
     if (auth()->user()->id !== $record->user_id) {
