@@ -25,12 +25,15 @@ class ReportExport implements FromCollection, WithHeadings
         $arrayRecords  = [];
         $records = Record::whereBetween('created_at', [Carbon::parse($this->initYear), Carbon::parse($this->lastYear)])->get();
         foreach ($records as $key=>$record) {
+            if (! $record->userRecords()->count()) {
+                continue;
+            }
             $arrayRecords[$key][0] = $record->customer_control_number;
             $arrayRecords[$key][1] = $record->company_control_number;
             $arrayRecords[$key][2] = $record->job_type;
             $arrayRecords[$key][3] = $record->job_status;
             $arrayRecords[$key][4] = $record->maker;
-            $arrayRecords[$key][5] = $record->userRecords()->where('is_main', true)->first()->user->name;
+            $arrayRecords[$key][5] = optional(optional($record->userRecords()->where('is_main', true)->first())->user)->name;
             $arrayRecords[$key][6] = $record->received_date;
             $arrayRecords[$key][7] = $record->customer_due_date;
             $arrayRecords[$key][8] = $record->company_due_date;
