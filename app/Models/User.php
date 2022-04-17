@@ -82,4 +82,14 @@ class User extends Authenticatable
         $arr = explode("|", $this->farmers_cooperative_id);
         return end($arr);
     }
+
+    public function followers()
+    {
+        return $this->hasMany(Follow::class, 'store_id');
+    }
+
+    public function followings()
+    {
+        return $this->hasMany(Follow::class, 'follower_id');
+    }
 }

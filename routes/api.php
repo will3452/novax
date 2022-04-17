@@ -4,6 +4,8 @@ use App\Http\Controllers\ApiApproveSellerController;
 use App\Http\Controllers\ApiAuthenticationController;
 use App\Http\Controllers\ApiCartController;
 use App\Http\Controllers\ApiFeedbackController;
+use App\Http\Controllers\ApiFollowController;
+use App\Http\Controllers\ApiNotificationController;
 use App\Http\Controllers\ApiOrderController;
 use App\Http\Controllers\ApiProductController;
 use App\Http\Controllers\ApiProfileController;
@@ -16,6 +18,12 @@ use Spatie\BackupTool\Http\Controllers\ApiController;
 
 //private access
 Route::middleware('auth:sanctum')->group(function () {
+
+    //follow and unfollow
+    Route::post('follow/{store}', [ApiFollowController::class, 'follow']);
+    Route::post('unfollow/{store}', [ApiFollowController::class, 'unfollow']);
+
+    Route::get('notifications', [ApiNotificationController::class, 'getNotifications']);
     //approve seller
     Route::post('/approve-seller', [ApiApproveSellerController::class, 'approve']);
 
