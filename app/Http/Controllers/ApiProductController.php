@@ -71,6 +71,7 @@ class ApiProductController extends Controller
             ];
 
         foreach ($users as $u) {
+            $u['can_be_follow'] = ! auth()->user()->followings()->whereStoreId($u->id)->exists();
             foreach ($lists as $list) {
                 $u[$list] = Product::whereCategory($list)->whereStoreId($u->id)->get();
             }

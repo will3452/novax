@@ -59,6 +59,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/write-feedback', [ApiFeedbackController::class, 'storeFeedback']);
     Route::post('/update-quantity', [ApiProductController::class, 'updateQuantity']);
+
+
+    Route::get('/store-master', [ApiProductController::class, 'master']);
 });
 
 Route::get('/public-test', function () {
@@ -75,6 +78,5 @@ Route::post('/request-verification-code', [ApiAuthenticationController::class, '
 Route::post('/submit-verification-code', [ApiAuthenticationController::class, 'submitCode']);
 
 Route::get('/products', [ApiProductController::class, 'products']);
-Route::get('/store-master', [ApiProductController::class, 'master']);
 
 Route::get('/search-products', [ApiSearchProductController::class, 'search']);
