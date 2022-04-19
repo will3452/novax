@@ -13,7 +13,7 @@ class ProductObserver
         $store = $product->storeOwner;
         $storeFollowers = $store->followers;
         foreach ($storeFollowers as $f) {
-            Notification::send($f, new NewProductsHasBeenAdded($store));
+            Notification::send($f->follower, new NewProductsHasBeenAdded($store));
         }
     }
 }
