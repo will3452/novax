@@ -10,7 +10,7 @@ class ProductObserver
 {
     public function created(Product $product)
     {
-        $store = $product->store;
+        $store = $product->storeOwner;
         $storeFollowers = $store->followers;
         foreach ($storeFollowers as $f) {
             Notification::send($f, new NewProductsHasBeenAdded($store));
