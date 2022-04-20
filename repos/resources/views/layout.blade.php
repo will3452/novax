@@ -29,6 +29,12 @@
     @foreach(\Laravel\Nova\Nova::themeStyles() as $publicPath)
         <link rel="stylesheet" href="{{ $publicPath }}">
     @endforeach
+
+    <style>
+        input.pl-search.w-full.form-global-search, div[dusk="global-search-component"] {
+            display: none !important;
+        }
+    </style>
 </head>
 <body class="min-w-site bg-40 text-90 font-medium min-h-full">
     <div id="nova">

@@ -41,10 +41,6 @@ class Exam extends Resource
         return self::isAdmin();
     }
 
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'super@admin.com');
-    }
     /**
      * The model the resource corresponds to.
      *
