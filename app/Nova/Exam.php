@@ -16,6 +16,35 @@ class Exam extends Resource
     {
         return false;
     }
+
+    public static function isAdmin() {
+        return auth()->user()->hasRole(\App\Models\Role::SUPERADMIN);
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return self::isAdmin();
+    }
+
+    public function authorizedToView(Request $request)
+    {
+        return self::isAdmin();
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return self::isAdmin();
+    }
+
+    public static function availableForNavigation(Request $request)
+    {
+        return self::isAdmin();
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        return $query->where('email', '!=', 'super@admin.com');
+    }
     /**
      * The model the resource corresponds to.
      *
