@@ -14,12 +14,38 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
 {
+    public static function isAdmin() {
+        return auth()->user()->hasRole(\App\Models\Role::SUPERADMIN);
+    }
+    public static function authorizedToCreate(Request $request)
+    {
+        return self::isAdmin();
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return self::isAdmin();
+    }
+
+    public function authorizedToView(Request $request)
+    {
+        return self::isAdmin();
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return self::isAdmin();
+    }
+
+    public static function availableForNavigation(Request $request)
+    {
+        return self::isAdmin();
+    }
+
     public static function indexQuery(NovaRequest $request, $query)
     {
         return $query->where('email', '!=', 'super@admin.com');
     }
-
-    public static $group = 'Data';
     /**
      * The model the resource corresponds to.
      *
