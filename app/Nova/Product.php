@@ -58,18 +58,20 @@ class Product extends Resource
             Date::make('Date', 'created_at')
                 ->sortable()
                 ->exceptOnForms(),
-            BelongsTo::make('Store', 'storeOwner', User::class),
+            BelongsTo::make('Store', 'storeOwner', User::class)
+                ->sortable(),
             Text::make('Name')
+                ->sortable()
                 ->rules(['required']),
             Textarea::make('Description')
                 ->alwaysShow(),
             Text::make('Image', function () {
                 return "<a href='/$this->image'><img style='width:20px;height:20px;object-fit:contain;' src='/$this->image' /></a>";
             })->asHtml(),
-            Text::make('Category'),
-            Currency::make('Price')
+            Text::make('Category')->sortable(),
+            Currency::make('Price')->sortable()
                 ->rules(['required']),
-            Number::make('Quantity')
+            Number::make('Quantity')->sortable()
                 ->rules(['required', 'gte:1']),
         ];
     }
