@@ -6,15 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Report</title>
     <link rel="stylesheet" href="https://unpkg.com/purecss@2.1.0/build/pure-min.css" integrity="sha384-yHIFVG6ClnONEA5yB5DJXfW2/KC173DIQrYoZMEtBvGzmf0PKiGyNEqe9N6BNDBH" crossorigin="anonymous">
+    <style>
+        @media print {
+            .hideme {
+                display:none;
+            }
+        }
+    </style>
 </head>
 <body style="padding:1em">
     <div style="color:#444">
-        <h3>Cooperative: {{request()->cooperative}}</h3>
-        <h3>Category: {{request()->category}}</h3>
-        <h3>Date: {{request()->from}} - {{request()->to}}</h3>
+        <p>Cooperative: {{request()->cooperative}}</p>
+        <p>Category: {{request()->category}}</p>
+        <p>Date: {{request()->from}} - {{request()->to}}</p>
     </div>
-    <div style="margin: 10px 0px" >
-        <button class="pure-button">Print</button>
+    <div style="margin: 10px 0px" class="hideme">
+        <button class="pure-button" onclick="window.print()">Print</button>
     </div>
     @php
         $totalCost = 0;
