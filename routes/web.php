@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/admin/login');
 
 Route::get('/login', fn () => 'you must be authenticated!')->name('login');
 
