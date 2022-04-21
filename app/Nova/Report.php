@@ -2,12 +2,31 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\GenerateReport;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Report extends Resource
 {
+    /**
+     * Indicates if the resource should be searchable on the index view.
+     *
+     * @var bool
+     */
+    public static $searchable = false;
+
+    /**
+     * The per-page options used the resource index.
+     *
+     * @var array
+     */
+    public static $perPageOptions = [];
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -85,7 +104,10 @@ class Report extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new GenerateReport)
+                ->standalone()
+        ];
     }
 
     public static function icon()
