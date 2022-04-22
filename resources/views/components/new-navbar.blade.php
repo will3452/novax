@@ -19,7 +19,7 @@
         </a>
       </li> --}}
       <li class="nav-item pe-2 d-flex align-items-center">
-        <a href="javascript:;" class="nav-link text-body p-0" data-bs-toggle="modal" data-bs-target="#logout">
+        <a href="javascript:;" class="nav-link text-body p-0 mx-2" data-bs-toggle="modal" data-bs-target="#logout">
           <img src="{{auth()->user()->getPicture()}}" alt="" style="width:30px;height:30px; object-cover:fit; border-radius:50%; border:1px solid #aaa;margin-right:10px;">
           <span class="d-sm-inline d-none">{{auth()->user()->name}}</span>
         </a>
