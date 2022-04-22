@@ -15,6 +15,11 @@
         @endteacher
         @admin
             <div class="row">
+                <div class="col-md-12">
+                    <x-calendar
+                    :title='"This year`s Examination."'
+                    :data="\App\Models\Exam::getExamCurrentYear()"/>
+                </div>
                 <div class="col-md-6">
                     <x-pie
                     title="System Users Populations"

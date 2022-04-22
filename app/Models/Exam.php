@@ -49,6 +49,19 @@ class Exam extends Model
         return $this->records()->whereUserId($userId)->count();
     }
 
+    public static function getExamCurrentYear()
+    {
+        $result = [];
+        $yearExam = Exam::whereYear('created_at', '=', now()->format('Y'))->get()->groupBy(function ($e) {
+            return $e->created_at->format('Y-m-d');
+        } );
+        foreach ($yearExam as $key => $value) {
+            $result[$key] = count($value);
+        }
+
+        return $result;
+    }
+
     public function averageScore()
     {
         $sum = 0;
