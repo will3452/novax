@@ -56,6 +56,15 @@ class User extends Authenticatable
         return Exam::whereStrand($this->strand)->whereLevel($this->level)->count();
     }
 
+    public static function dashboardStudentPerStrand()
+    {
+        $result = ['Strand' => 'Count'];
+        foreach (self::STRAND as $strand) {
+            $result[$strand] = self::whereStrand($strand)->count();
+        }
+        return $result;
+    }
+
 
     public function notFinished()
     {
