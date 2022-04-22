@@ -65,6 +65,11 @@ class User extends Authenticatable
         return $result;
     }
 
+    public function dashboardRemainingExams()
+    {
+        return $this->notFinished();
+    }
+
 
     public function notFinished()
     {
@@ -103,4 +108,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // dashboard
+
+    public function dashboardCurrentYearExam()
+    {
+        $result = [];
+        $yearExam = Exam::whereStrand($this->strand)->whereYear('created_at', '=', now()->format('Y'))->get()->groupBy(function ($e) {
+            return $e->created_at->format('Y-m-d');
+        } );
+        foreach ($yearExam as $key => $value) {
+            $result[$key] = count($value);
+        }
+
+        return $result;
+    }
 }

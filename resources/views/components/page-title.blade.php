@@ -1,3 +1,3 @@
-<h1 class="text-uppercase text-4xl tracking-widest font-bold">
+<h3 class="text-uppercase text-center">
     {{$slot}}
-</h1>
+</h3>

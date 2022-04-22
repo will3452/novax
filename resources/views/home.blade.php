@@ -1,12 +1,12 @@
 <x-new-layout>
     <div class="card-body">
         @if (auth()->user()->type === \App\Models\User::TYPE_STUDENT)
-            <x-card :description="'Exams'">
-                {{auth()->user()->totalExams()}}
-            </x-card>
-            <x-card :description="'Pending'">
-                {{auth()->user()->notFinished()}}
-            </x-card>
+            <div class="row">
+                <div class="col-md-12">
+                    <x-calendar title="Exams" :data="auth()->user()->dashboardCurrentYearExam()"/>
+                </div>
+                <x-new-card title="Remaining Exams" value="{{auth()->user()->dashboardRemainingExams()}}" icon="subject"/>
+            </div>
         @endif
         @teacher
         <x-card :description="'Created Exam'">

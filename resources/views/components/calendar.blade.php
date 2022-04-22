@@ -20,8 +20,11 @@
        title: "{{$title}}",
        calendar: { cellSize: 13 },
        noDataPattern: {
-           backgroundColor: '#ccc',
-           color: '#ccc'
+           backgroundColor: '#ECF87F',
+           color: '#ECF87F'
+         },
+         colorAxis: {
+             colors: ['#81B622', '#59981A', '#3D550C']
          }
      };
 

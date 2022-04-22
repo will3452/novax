@@ -25,7 +25,7 @@
   @stack('styles')
 </head>
 
-<body class="g-sidenav-show  bg-gray-200">
+<body class="g-sidenav-show bg-gray-100">
   @auth
   <x-new-sidebar></x-new-sidebar>
   @endauth
