@@ -5,13 +5,11 @@
                 <img src="/logo.png" alt="logo" style="width:150px; height:150px;">
             </div>
             <h4 class="text-center">Online Examination System</h4>
-            <form action="/login" class="card flex-shrink-0 w-full  shadow-2xl bg-base-200" method="POST">
+            <form action="{{route('password.send.link')}}" class="card flex-shrink-0 w-full  shadow-2xl bg-base-200" method="POST">
                 @csrf
                 <div class="card-body">
-                <h5>Login</h5>
                   <x-input label="Email" name="email"/>
-                  <x-input label="Password" name="password" type="password"/>
-                  <button class="btn btn-primary"  type="submit">Login</button><a class="mx-2 btn btn-light" href="{{route('password.enter.email')}}">Forgot password</a>
+                  <button class="btn btn-primary"  type="submit">Send Password Reset Link</button>
                 </div>
             </form>
         </div>

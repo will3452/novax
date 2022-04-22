@@ -10,7 +10,7 @@ class UserObserver
 {
     public function creating(User $user)
     {
-        if (strlen($user->password )) {
+        if (strlen($user->password)) {
             return;
         }
         $password = \Str::random(16); // generate 16 random characters

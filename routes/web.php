@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -57,6 +58,13 @@ Route::post('update-password', function(Request $request) {
 
 // Route::get('/register', [RegisterController::class, 'registrationPage']);
 // Route::post('/register', [RegisterController::class, 'postRegister']);
+
+Route::prefix('password')->name('password.')->group(function () {
+    Route::get('enter-email', [PasswordController::class, 'enterEmail'])->name('enter.email');
+    Route::post('send-link', [PasswordController::class, 'requestPasswordResetLink'])->name('send.link');
+    Route::get('reset-link/{passwordResetLink:uuid}',[PasswordController::class, 'showPasswordReset'])->name('reset.link');
+    Route::post('reset-password/{passwordResetLink:uuid}', [PasswordController::class, 'resetPassword'])->name('reset.password');
+});
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])
     ->name('login')
