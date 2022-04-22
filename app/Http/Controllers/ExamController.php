@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
+    public function edit(Exam $exam)
+    {
+        return view('exam.edit', compact('exam'));
+    }
+    public function create()
+    {
+        return view('exam.create');
+    }
     public function getExams()
     {
         if (auth()->user()->type === User::TYPE_STUDENT) {
@@ -49,7 +57,7 @@ class ExamController extends Controller
         ]);
         $data['teacher_id'] = auth()->id();
         Exam::create($data);
-        return back()->withSuccess('Success!');
+        return redirect('/exams/')->withSuccess('Success!');
     }
 
     public function show(Exam $exam)

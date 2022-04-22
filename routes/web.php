@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
@@ -9,6 +10,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TakeController;
+use App\Models\Exam;
+use App\Models\Question;
 use App\Models\Record;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -33,7 +36,15 @@ Route::post('update-password', function(Request $request) {
     $data = $request->validate([
         'password' => ['required', 'confirmed'],
         'current_password' => 'required',
+        'picture' => 'image',
     ]);
+
+    if ($request->has('picture')) {
+        $picture = $request->picture->store('public');
+        $arr = explode('/', $picture);
+        $endArr = end($arr);
+        auth()->user()->update(['picture' => $endArr]);
+    }
 
     if (! Hash::check($data['current_password'], auth()->user()->password)) {
         return back()->withErrors('Invalid old password!');
@@ -52,8 +63,14 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])
     ->middleware(['guest']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout']);
-Route::get('/home', [HomeController::class, 'home'])->name('home');
+Route::get('/home', [HomeController::class, 'home'])->name('home')->middleware('auth');
 Route::get('/exams', [ExamController::class, 'index'])->middleware('auth');
+Route::get('/exam/create', [ExamController::class, 'create']);
+Route::get('/exams/edit/{exam}', [ExamController::class, 'edit']);
+Route::get('/exams/delete/{exam}', function (Exam $exam) {
+    $exam->delete();
+    return back();
+});
 Route::put('/exams/{exam}', [ExamController::class, 'update']);
 Route::get('/exams/reports/{exam}', [ExamController::class, 'showReport'])->name('exam.report');
 Route::get('/exams/result/{exam}', [ExamController::class, 'showRecords'])->name('exam.result');
@@ -61,6 +78,9 @@ Route::get('/exams/{exam}', [ExamController::class, 'show'])->name('exam.show');
 Route::delete('/exams/{exam}', [ExamController::class, 'destroy']);
 Route::post('/exams', [ExamController::class, 'store']);
 Route::get('/account', [AccountController::class, 'getAccount']);
+Route::get('/take-confirm/{exam}', function (Exam $exam) {
+    return view('take-confirm', ['e' => $exam]);
+});
 
 // when teacher update the grade of the student base of the  given sanswers.
 Route::post('/update-grade/{record}', function (Request $request, Record $record) {
@@ -79,6 +99,11 @@ Route::post('/update-grade/{record}', function (Request $request, Record $record
 })->name('update.grade.of.record');
 
 Route::post('/questions', [QuestionController::class, 'store']);
+Route::get('/questions/delete/{question}', function (Question $question) {
+    $question->delete();
+    return back()->withSuccess('Deleted!');
+});
+Route::get('/questions/create/{exam}', [QuestionController::class, 'create']);
 Route::delete('/questions/{question}', [QuestionController::class, 'destroy']);
 
 Route::post('take-now/{exam}', [TakeController::class, 'takeNow']);
@@ -89,4 +114,18 @@ Route::post('submit/{record}', [TakeController::class, 'submit']);
 Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);
     return $result;
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::prefix('users')->name('user.')->group(function () {
+        Route::get('/', [AdminUserController::class, 'index'])->name('index');
+        Route::get('create', [AdminUserController::class, 'create'])->name('create');
+        Route::post('/', [AdminUserController::class, 'store'])->name('store');
+        Route::get('/edit/{user}', [AdminUserController::class, 'edit'])->name('edit');
+        Route::put('/{user}', [AdminUserController::class, 'update'])->name('update');
+    });
+});
+
+Route::get('layout-test', function () {
+    return view('layout-testing');
 });

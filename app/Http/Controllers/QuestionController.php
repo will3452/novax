@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
+    public function create(Exam $exam)
+    {
+        return view('exam.question_create', compact('exam'));
+    }
     public function store(Request $request)
     {
         $exam = Exam::find($request->exam_id);
@@ -29,7 +33,7 @@ class QuestionController extends Controller
         ]);
 
 
-        return back()->withSuccess('success!');
+        return redirect('/exams/' . $exam->id)->withSuccess('Added!');
     }
 
     public function destroy(Question $question)

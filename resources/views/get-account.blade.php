@@ -1,33 +1,22 @@
-<x-layout>
+<x-new-layout>
     <div>
         <h1 class="text-center text-2xl">
-            My Account
+            Account setting
         </h1>
         <div>
-            <form action="update-password" method="POST">
+            <form action="update-password" method="POST" class="card-body" enctype="multipart/form-data">
                 @csrf
-                <div class="form-control">
-                    <label for="" class="label">
-                        <span class="label-text">Old Password</span>
-                    </label>
-                    <input type="password" name="current_password" class="input input-bordered">
+                <div>
+                    <label for="" class="form-label">Upload/Update Picture</label>
+                    <x-input name="picture" required="0" type="file" />
                 </div>
-                <div class="form-control">
-                    <label for="" class="label">
-                        <span class="label-text">New Password</span>
-                    </label>
-                    <input type="password" name="password" class="input input-bordered">
-                </div>
-                <div class="form-control">
-                    <label for="" class="label">
-                        <span class="label-text">Re-type New Password</span>
-                    </label>
-                    <input type="password" name="password_confirmation" class="input input-bordered">
-                </div>
+                <x-input name="current_password" label="Old Password" type="password"/>
+                <x-input name="password" label="New Password" type="password"/>
+                <x-input name="password_confirmation" label="Password Confirmation" type="password"/>
                 <button class="btn btn-primary mt-4">
-                    Update Password
+                     Submit
                 </button>
             </form>
         </div>
     </div>
-</x-layout>
+</x-new-layout>

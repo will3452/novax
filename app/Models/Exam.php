@@ -54,7 +54,7 @@ class Exam extends Model
         $sum = 0;
         foreach ($this->records as $r) {
             $arr = explode('/', $r->score);
-            $sum += $arr[0];
+            $sum += is_numeric($arr[0]) ? $arr[0] : 0;
         }
         if (! $this->records()->count()) {
             return 0;

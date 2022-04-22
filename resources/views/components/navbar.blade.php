@@ -10,10 +10,16 @@
         @endguest
 
         @auth
-        <li><a href="/home">Dashboard</a></li>
+            <li><a href="/home">Dashboard</a></li>
+        @endauth
+
+        @admin
+        @else
         <li><a href="/exams">Examinations</a></li>
-        <li><a href="/account">Account</a></li>
-        <li><a href="/logout">Logout</a></li>
+        @endadmin
+        @auth
+            <li><a href="/account">Account</a></li>
+            <li><a href="/logout">Logout</a></li>
         @endauth
     </ul>
 </div>

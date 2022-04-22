@@ -11,7 +11,7 @@
     @stack('styles')
 </head>
 <body>
-    <x-navbar></x-navbar>
+    {{-- <x-navbar></x-navbar> --}}
     <div id="app" class="md:w-11/12 p-2 mx-auto">
         @if (session()->has('success'))
             <x-alert-success>

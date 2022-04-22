@@ -29,6 +29,11 @@ class User extends Authenticatable
         'strand',
     ];
 
+    public function getPicture()
+    {
+        return is_null($this->picture) ? '/no-user.png' : "/storage/$this->picture";
+    }
+
     public function isAdmin()
     {
         return $this->type === 'Admin';

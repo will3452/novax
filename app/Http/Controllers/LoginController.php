@@ -23,7 +23,7 @@ class LoginController
             return redirect(RouteServiceProvider::HOME);
         }
 
-        return back()->withError('Wrong email or password!');
+        return back()->withErrors('Wrong email or password!');
     }
 
     public function logout(Request $request)
