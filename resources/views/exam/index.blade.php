@@ -7,7 +7,7 @@
             <a href="/exam/create" class="btn btn-primary">Create New Exam</a>
         @endteacher
     </div>
-    <div class="mt-4">
+    <div class="mt-4" id="exams">
         @empty($exams->toArray())
             <div class="alert alert-warning">
                 No Examinations found!.
@@ -15,6 +15,14 @@
         @else
         <div class="card-body card">
             <div class="table-responsive">
+                <div class="p-2">
+                    <div class="input-group input-group-outline mb-3">
+                        <label for="" class="form-label">Search by title or date</label>
+                        <input class="search form-control"/>
+                        <button class="sort btn-secondary" data-sort="title">Sort By Title</button>
+                        <button class="sort  btn-info" data-sort="date">Sort By Date</button>
+                    </div>
+                </div>
                 <table class="table">
                     <thead>
                         <tr>
@@ -49,36 +57,36 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="list">
                         @foreach ($exams as $e)
                             <tr>
-                                <td>
+                                <td class="text-center date">
                                     {{$e->created_at->format('m/d/y')}}
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     {{$e->is_manual_checking ? 'Manual Checking' : 'Automatic Checking'}}
                                 </td>
-                                <td>
+                                <td class="text-center title">
                                     {{$e->name}}
                                 </td>
                                 @teacher
-                                <td>
+                                <td class="text-center">
                                     {{$e->code ?? 'N/a'}}
                                 </td>
                                 @endteacher
-                                <td>
+                                <td class="text-center">
                                     {{$e->opened_at->format('m/d/y')}}
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     {{$e->time_limit}}
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     {{$e->strand}}
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     {{$e->level}}
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     @teacher
                                         <a href="/exams/{{$e->id}}" class="btn btn-primary btn-sm">view</a>
                                         <a href="/exams/edit/{{$e->id}}" class="btn btn-secondary btn-sm">edit</a>
@@ -109,4 +117,12 @@
         </div>
         @endempty
     </div>
+    @push('scripts')
+        <script>
+            var options = {
+            valueNames: [ 'title', 'date' ]
+            };
+            var userList = new List('exams', options);
+        </script>
+    @endpush
 </x-new-layout>

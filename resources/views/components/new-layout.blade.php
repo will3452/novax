@@ -23,6 +23,7 @@
   <link id="pagestyle" href="/assets/css/material-dashboard.css?v=3.0.2" rel="stylesheet" />
   <script src="//unpkg.com/alpinejs" defer></script>
   @stack('styles')
+  <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
