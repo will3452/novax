@@ -9,9 +9,14 @@
             </div>
         @endif
         @teacher
-        <x-card :description="'Created Exam'">
-            {{\App\Models\Exam::whereTeacherId(auth()->id())->count()}}
-        </x-card>
+            <div class="row">
+                <div class="col-md-12">
+                    <x-calendar title="Exams you created this year" :data="auth()->user()->dashboardMyCreatedExamsThisYear()"/>
+                </div>
+                <x-new-card icon="people" title="Assigned" value="{{count(auth()->user()->dashboardAssignedStudents())}}"/>
+                <x-new-card icon="people" title="Turned In" value="{{count(auth()->user()->dashboardTurnedInStudents())}}"/>
+                <x-new-card icon="people" title="Graded" value="{{implode('/', auth()->user()->dashboardMyCreatedExamGraded())}}"/>
+            </div>
         @endteacher
         @admin
             <div class="row">

@@ -70,6 +70,60 @@ class User extends Authenticatable
         return $this->notFinished();
     }
 
+    public function dashboardAssignedStudents()
+    {
+        return self::whereType(self::TYPE_STUDENT)->whereStrand($this->strand)->whereLevel($this->level)->get();
+    }
+
+    public function yearIsNull($year)
+    {
+        if (is_null($year)) {
+            $year = now()->format('Y');
+        }
+
+        return $year;
+    }
+
+    public function dashboardMyCreatedExams($year = null)
+    {
+        $year = $this->yearIsNull($year);
+        return Exam::whereTeacherId($this->id)->whereYear('created_at', '=', $year)->get();
+    }
+
+    public function dashboardMyCreatedExamsThisYear()
+    {
+        $exams = $this->dashboardMyCreatedExams()->groupBy(fn($e)=>$e->created_at->format('Y-m-d'));
+        $results = [];
+        foreach ($exams as $key => $val) {
+            $results[$key] = count($val);
+        }
+        return $results;
+    }
+
+    public function completedMyCreatedExams($userId): bool
+    {
+        $exams = $this->dashboardMyCreatedExams();
+        foreach ($exams as $exam) {
+            if (! $exam->hasRecordOf($userId)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function dashboardTurnedInStudents()
+    {
+        $students = $this->dashboardAssignedStudents();
+        $result = [];
+        foreach($students as $student) {
+            if ($this->completedMyCreatedExams($student->id)) {
+                $result[] = $student;
+            }
+        }
+
+        return $result;
+    }
 
     public function notFinished()
     {
@@ -122,5 +176,18 @@ class User extends Authenticatable
         }
 
         return $result;
+    }
+
+    public function dashboardMyCreatedExamGraded()
+    {
+        $exams = $this->dashboardMyCreatedExams();
+        $totalGraded = 0;
+        $notGraded = 0;
+        foreach ($exams as $exam) {
+            $notGraded += $exam->records()->where('score', '!=', 'Not yet checked')->count();
+            $totalGraded += $exam->records()->count();
+        }
+
+        return [$notGraded, $totalGraded];
     }
 }

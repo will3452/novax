@@ -82,6 +82,9 @@ Route::get('/exams/delete/{exam}', function (Exam $exam) {
 Route::put('/exams/{exam}', [ExamController::class, 'update']);
 Route::get('/exams/reports/{exam}', [ExamController::class, 'showReport'])->name('exam.report');
 Route::get('/exams/result/{exam}', [ExamController::class, 'showRecords'])->name('exam.result');
+Route::get('/exams/graded/{exam}', [ExamController::class, 'showGraded'])->name('exam.graded');
+Route::get('/exams/no-grade/{exam}', [ExamController::class, 'showNoGrade'])->name('exam.nograde');
+Route::get('/exams/not-yet/{exam}', [ExamController::class, 'showNotYet'])->name('exam.notyet');
 Route::get('/exams/{exam}', [ExamController::class, 'show'])->name('exam.show');
 Route::delete('/exams/{exam}', [ExamController::class, 'destroy']);
 Route::post('/exams', [ExamController::class, 'store']);

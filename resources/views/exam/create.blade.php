@@ -15,16 +15,18 @@
         <x-input name="description" label="Description"/>
         <x-date name="opened_at" label="Date to open" type="date"/>
         <x-input name="time_limit" label="Time constraint (in minutes)" type="number"/>
-        <x-select name="strand" label="Choose Strand">
+        {{-- <x-select name="strand" label="Choose Strand">
             @foreach (\App\Models\User::STRAND as $s)
                 <option value="{{$s}}">{{$s}}</option>
             @endforeach
         </x-select>
-        <x-select name="level" label="Choose Leven">
+        <x-select name="level" label="Choose Level">
             @foreach (\App\Models\User::LEVEL as $s)
                     <option value="{{$s}}">{{$s}}</option>
                 @endforeach
-        </x-select>
+        </x-select> --}}
+        <input type="hidden" name="strand" value="{{auth()->user()->strand}}">
+        <input type="hidden" name="level" value="{{auth()->user()->level}}">
         <div class="form-control my-2" x-data="{
             hasCode:false,
             toggle() {
