@@ -4,7 +4,7 @@
             About
         </h1>
         <p>
-            {!!\Str::markdown(nova_get_setting('about', 'set to admin setting please'))!!}
+            About page
         </p>
     </div>
 </x-layout>

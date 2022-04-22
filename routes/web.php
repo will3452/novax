@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\TakeController;
 use App\Models\Record;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -28,12 +30,18 @@ Route::get('result', function (Request $request) {
 });
 
 Route::post('update-password', function(Request $request) {
-    $request->validate([
-        'password' => 'required',
+    $data = $request->validate([
+        'password' => ['required', 'confirmed'],
+        'current_password' => 'required',
     ]);
 
-    auth()->user()->update(['password' => bcrypt($request->password)]);
-    return back()->withSuccess('updated!');
+    if (! Hash::check($data['current_password'], auth()->user()->password)) {
+        return back()->withErrors('Invalid old password!');
+    }
+
+    auth()->user()->update(['password' => bcrypt($data['password'])]);
+
+    return back()->withSuccess('success');
 });
 
 // Route::get('/register', [RegisterController::class, 'registrationPage']);
@@ -52,6 +60,7 @@ Route::get('/exams/result/{exam}', [ExamController::class, 'showRecords'])->name
 Route::get('/exams/{exam}', [ExamController::class, 'show'])->name('exam.show');
 Route::delete('/exams/{exam}', [ExamController::class, 'destroy']);
 Route::post('/exams', [ExamController::class, 'store']);
+Route::get('/account', [AccountController::class, 'getAccount']);
 
 // when teacher update the grade of the student base of the  given sanswers.
 Route::post('/update-grade/{record}', function (Request $request, Record $record) {

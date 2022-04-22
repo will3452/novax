@@ -1,6 +1,6 @@
-<div class="navbar bg-base-100 border-b-4 border-gray-200 mb-5">
+<div class="navbar bg-base-200 border-gray-200 mb-5">
 <div class="flex-1">
-    <a href="/" class="btn btn-ghost normal-case text-xl">{{nova_get_setting('app_name', config('app.name'))}}</a>
+    <a href="/" class="btn btn-ghost normal-case text-xl">Online Examination System in Joyland</a>
 </div>
 <div class="flex-none">
     <ul class="menu menu-horizontal p-0">
@@ -12,6 +12,7 @@
         @auth
         <li><a href="/home">Dashboard</a></li>
         <li><a href="/exams">Examinations</a></li>
+        <li><a href="/account">Account</a></li>
         <li><a href="/logout">Logout</a></li>
         @endauth
     </ul>

@@ -12,8 +12,8 @@
                     <label for="" class="label">
                         <div class="label-text">
                             Question
-                            <a href="#" x-show="type" x-on:click.prevent="type=false" class="text-xs underline text-blue-500">upload image instead?</a>
-                            <a href="#" x-on:click.prevent="type=true"  x-show="!type" class="text-xs underline text-blue-500">type question instead?</a>
+                            <a href="#" x-show="type" x-on:click.prevent="type=false" class="underline text-blue-500">upload image instead?</a>
+                            <a href="#" x-on:click.prevent="type=true"  x-show="!type" class="underline text-blue-500">type question instead?</a>
                         </div>
                     </label>
                     <template x-if="type">
@@ -199,6 +199,9 @@
                     Student
                 </th>
                 <th>
+                    Strand
+                </th>
+                <th>
                     Score
                 </th>
                 <th>
@@ -215,7 +218,11 @@
                     {{$i->updated_at->format('m/d/y h:i a')}}
                 </td>
                 <td>
+                    <img src="#" alt="" class="w-10 h-10 border rounded-full object-fit">
                     {{$i->user->name}} - {{$i->user->number}}
+                </td>
+                <td>
+                    {{$i->user->strand}}
                 </td>
                 <td>
                     {{$i->score}}

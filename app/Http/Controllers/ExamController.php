@@ -39,10 +39,10 @@ class ExamController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|unique:exams,name',
+            'description' => 'required',
             'code' => '',
             'time_limit' => 'required',
             'opened_at' => 'required',
-            'closed_at' => 'required|after:opened_at',
             'is_manual_checking' => 'required',
             'level' => 'required',
             'strand' => 'required',
@@ -73,10 +73,11 @@ class ExamController extends Controller
     {
         $data = $request->validate([
             'name' => 'required',
+            'description' => 'required',
             'code' => '',
             'time_limit' => 'required',
-            'opened_at' => 'required|after:yesterday',
-            'closed_at' => 'required|after:opened_at',
+            'opened_at' => 'required',
+            'is_manual_checking' => 'required',
             'level' => 'required',
             'strand' => 'required',
         ]);

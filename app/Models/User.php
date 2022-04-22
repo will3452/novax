@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -19,6 +19,7 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
+        'picture',
         'name',
         'email',
         'password',
@@ -27,6 +28,11 @@ class User extends Authenticatable
         'type', // teacher, admin, student
         'strand',
     ];
+
+    public function isAdmin()
+    {
+        return $this->type === 'Admin';
+    }
 
     const LEVEL = [
         "Grade 11",

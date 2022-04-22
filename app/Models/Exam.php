@@ -18,12 +18,11 @@ class Exam extends Model
         'time_limit',
         'is_manual_checking',
         'opened_at',
-        'closed_at',
+        'description',
     ];
 
     protected $casts = [
         'opened_at' => 'date',
-        'closed_at' => 'date',
     ];
 
     protected $with = [
@@ -56,6 +55,9 @@ class Exam extends Model
         foreach ($this->records as $r) {
             $arr = explode('/', $r->score);
             $sum += $arr[0];
+        }
+        if (! $this->records()->count()) {
+            return 0;
         }
         return $sum / $this->records()->count();
     }
@@ -121,13 +123,6 @@ class Exam extends Model
 
     public function canTakeNow()
     {
-        $dates = \Carbon\CarbonPeriod::create($this->opened_at, $this->closed_at);
-        foreach ($dates as $date) {
-            if ($date->format('m-d-y') === now()->format('m-d-y')) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->opened_at->format('m-d-y') === now()->format('m-d-y');
     }
 }

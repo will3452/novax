@@ -18,28 +18,21 @@
                 </div>
                 <div class="form-control">
                     <div class="label">
-                        <div class="label-text">Description</div>
+                        <div class="label-text">Title</div>
                     </div>
                     <input type="text" name="name" class="input input-bordered w-full" required>
                 </div>
                 <div class="form-control">
                     <div class="label">
-                        <div class="label-text">Duration</div>
+                        <div class="label-text">Description</div>
                     </div>
-                    <div class="flex">
-                        <div class="p-1 w-1/2">
-                            <div class="text-xs">
-                                From
-                            </div>
-                            <input type="date" name="opened_at" class="input input-bordered w-full" required>
-                        </div>
-                        <div class="p-1 w-1/2">
-                            <div class="text-xs">
-                                To
-                            </div>
-                            <input type="date" name="closed_at" class="input input-bordered w-full" required>
-                        </div>
+                    <input type="text" name="description" class="input input-bordered w-full" required>
+                </div>
+                <div class="form-control">
+                    <div class="label">
+                        <div class="label-text">Date to open</div>
                     </div>
+                    <input type="date" name="opened_at" class="input input-bordered w-full" required>
                 </div>
                 <div class="form-control">
                     <div class="label">
@@ -122,7 +115,7 @@
                     </th>
                     @endteacher
                     <th>
-                        Duration
+                        Date
                     </th>
                     <th>
                         Time Limit (Minutes)
@@ -156,7 +149,7 @@
                         </td>
                         @endteacher
                         <td>
-                            {{$e->opened_at->format('m/d/y')}} - {{$e->closed_at->format('m/d/y')}}
+                            {{$e->opened_at->format('m/d/y')}}
                         </td>
                         <td>
                             {{$e->time_limit}}
@@ -176,28 +169,21 @@
                                         @method('PUT')
                                         <div class="form-control">
                                             <div class="label">
-                                                <div class="label-text">Description</div>
+                                                <div class="label-text">Title</div>
                                             </div>
                                             <input type="text" name="name" value="{{$e->name}}" class="input input-bordered w-full" required>
                                         </div>
                                         <div class="form-control">
                                             <div class="label">
-                                                <div class="label-text">Duration</div>
+                                                <div class="label-text">Description</div>
                                             </div>
-                                            <div class="flex">
-                                                <div class="p-1 w-1/2">
-                                                    <div class="text-xs">
-                                                        From
-                                                    </div>
-                                                    <input type="text" name="opened_at" value="{{$e->opened_at->format('m/d/Y')}}" class="input input-bordered w-full" required>
-                                                </div>
-                                                <div class="p-1 w-1/2">
-                                                    <div class="text-xs">
-                                                        To
-                                                    </div>
-                                                    <input type="text" name="closed_at" value="{{$e->closed_at->format('m/d/Y')}}" class="input input-bordered w-full" required>
-                                                </div>
+                                            <input type="text" name="description" value="{{$e->description}}" class="input input-bordered w-full" required>
+                                        </div>
+                                        <div class="form-control">
+                                            <div class="label">
+                                                <div class="label-text">Date to open</div>
                                             </div>
+                                            <input type="text" name="opened_at" value="{{$e->opened_at->format('m/d/Y')}}" class="input input-bordered w-full" required>
                                         </div>
                                         <div class="form-control">
                                             <div class="label">

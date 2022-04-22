@@ -86,5 +86,5 @@ class Question extends Model
     const TYPE_IDENTIFICATION = 'Identification';
     const TYPE_TRUE_OR_FALSE = 'True or False';
     const TYPE_ESSAY = 'Essay';
-    const TYPE_MULTIPLE_ANSWER = 'Multiple Answer';
+    const TYPE_MULTIPLE_ANSWER = 'Multiple Answer (Checkbox)';
 }

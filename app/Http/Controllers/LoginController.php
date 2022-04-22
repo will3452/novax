@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
-use Laravel\Nova\Http\Controllers\LoginController as ControllersLoginController;
 
-class LoginController extends ControllersLoginController
+class LoginController
 {
     public function showLoginForm()
     {
