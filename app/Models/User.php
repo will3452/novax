@@ -128,7 +128,7 @@ class User extends Authenticatable
     public function notFinished($year = null)
     {
         $year = $this->yearIsNull($year);
-        $records = Record::whereHas()->whereYear('created_at', '=', $year)->whereUserId($this->id)->count();
+        $records = Record::whereHas('exam')->whereYear('created_at', '=', $year)->whereUserId($this->id)->count();
         return ($this->totalExams() - $records) <= 0 ? 0 :($this->totalExams() - $records);
     }
 
