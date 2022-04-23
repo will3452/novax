@@ -6,8 +6,15 @@
             <a class="btn btn-warning ps-3  " href="{{route('admin.user.create')}}">create new user</a>
           </div>
         </div>
-        <div class="card-body px-0 pb-2">
+        <div class="card-body px-0 pb-2" id="users">
           <div class="table-responsive p-0">
+            <div class="p-2">
+                <div class="input-group input-group-outline mb-3">
+                    <label for="" class="form-label">Search by Name or Email</label>
+                    <input class="search form-control"/>
+                    <button class="sort btn-secondary" data-sort="name">Sort By Name</button>
+                </div>
+            </div>
             <table class="table align-items-center mb-0">
               <thead>
                 <tr>
@@ -19,7 +26,7 @@
                   <th class="text-secondary opacity-7"></th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody class="list">
                 @foreach (\App\Models\User::get() as $user)
                 <tr>
                     <td>
@@ -28,8 +35,8 @@
                           <img src="{{$user->getPicture()}}" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
                         </div>
                         <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm">{{$user->name}}</h6>
-                          <p class="text-xs text-secondary mb-0">{{$user->email}}</p>
+                          <h6 class="mb-0 text-sm name">{{$user->name}}</h6>
+                          <p class="text-xs text-secondary mb-0 email">{{$user->email}}</p>
                         </div>
                       </div>
                     </td>
@@ -57,4 +64,12 @@
           </div>
         </div>
       </div>
+      @push('scripts')
+        <script>
+            var options = {
+                valueNames: [ 'name', 'email' ]
+            };
+            var userList = new List('users', options);
+        </script>
+    @endpush
 </x-new-layout>
