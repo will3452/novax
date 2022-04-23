@@ -114,6 +114,9 @@ class User extends Authenticatable
 
     public function dashboardTurnedInStudents()
     {
+        if (! count($this->dashboardMyCreatedExams())) {
+            return 0;
+        }
         $students = $this->dashboardAssignedStudents();
         $result = [];
         foreach($students as $student) {
