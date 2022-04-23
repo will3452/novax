@@ -1,5 +1,5 @@
 @props(['id' => \Str::random(16), 'data' => [], 'title' => ''])
-<div id="calendar{{$id}}"></div>
+{{-- <div id="calendar{{$id}}"></div>
 <script type="text/javascript">
     google.charts.load("current", {packages:["calendar"]});
     google.charts.setOnLoadCallback(drawChartCalendar);
@@ -30,4 +30,4 @@
 
      chart{{$id}}.draw(dataTable{{$id}}, options{{$id}});
  }
-  </script>
+  </script> --}}
