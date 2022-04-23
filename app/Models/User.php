@@ -60,7 +60,7 @@ class User extends Authenticatable
     {
         $result = ['Strand' => 'Count'];
         foreach (self::STRAND as $strand) {
-            $result[$strand] = self::whereStrand($strand)->count();
+            $result[$strand] = self::whereType(self::TYPE_STUDENT)->whereStrand($strand)->count();
         }
         return $result;
     }
