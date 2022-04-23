@@ -125,10 +125,11 @@ class User extends Authenticatable
         return $result;
     }
 
-    public function notFinished()
+    public function notFinished($year = null)
     {
-        $records = Record::whereUserId($this->id)->count();
-        return ($this->totalExams() - $records) <= 0 ? 0 :$this->totalExams() - $records;
+        $year = $this->yearIsNull($year);
+        $records = Record::whereHas()->whereYear('created_at', '=', $year)->whereUserId($this->id)->count();
+        return ($this->totalExams() - $records) <= 0 ? 0 :($this->totalExams() - $records);
     }
 
     public function incomingExam()

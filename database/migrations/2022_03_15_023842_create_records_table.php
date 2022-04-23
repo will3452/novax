@@ -15,11 +15,9 @@ class CreateRecordsTable extends Migration
     {
         Schema::create('records', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('exam_id')
-                ->onDelete('cascade');
+            $table->foreignId('exam_id')->references('id')->on('exams')->onDelete('cascade');
             $table->string('exam_name');
-            $table->foreignId('user_id')
-                ->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('score')->default('0');
             $table->string('screen_record')->nullable();
             $table->timestamps();
