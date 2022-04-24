@@ -35,7 +35,7 @@ Route::get('result', function (Request $request) {
 
 Route::post('update-password', function(Request $request) {
     $data = $request->validate([
-        'password' => ['required', 'confirmed'],
+        'password' => ['confirmed'],
         'current_password' => '',
         'picture' => 'image',
     ]);
