@@ -78,7 +78,7 @@
 
         <script>
             const deleteUser = (userId) => {
-                let deleteConf = confirm('All records of this account are also madedelete. do you want to proceed?');
+                let deleteConf = confirm('All records of this account will also be erased. do you want to proceed?');
                 if (deleteConf) {
                     axios.post('/api/delete-user/' + userId)
                     .then(res => {
