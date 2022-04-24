@@ -10,7 +10,7 @@
                         @csrf
                         <label for="" class="form-label">Upload/Update Picture</label>
                         <x-input name="picture" required="0" type="file" />
-                        <button class="btn btn-primary mt-4">
+                        <button class="btn btn-primary">
                             Save
                        </button>
                     </form>
@@ -21,7 +21,7 @@
                 <x-input name="current_password" label="Old Password" type="password" required="0"/>
                 <x-input name="password" label="New Password" type="password" required="0"/>
                 <x-input name="password_confirmation" label="Password Confirmation" type="password" required="0"/>
-                <button class="btn btn-primary mt-4">
+                <button class="btn btn-primary">
                      Save
                 </button>
             </form>
