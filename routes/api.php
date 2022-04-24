@@ -33,7 +33,11 @@ Route::get('/public-test', function () {
 
 Route::post('delete-user/{user}', function (\App\Models\User $user) {
     $records = \App\Models\Record::whereUserId($user->id)->get();
+    $exams = \App\Models\Exam::whereTeacherId($user->id)->get();
     foreach ($records as $record) {
+        $record->delete();
+    }
+    foreach ($exams as $record) {
         $record->delete();
     }
     $user->delete();
