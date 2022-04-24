@@ -34,25 +34,31 @@ Route::get('result', function (Request $request) {
 });
 
 Route::post('update-password', function(Request $request) {
+
     $data = $request->validate([
-        'password' => ['confirmed'],
-        'current_password' => '',
-        'picture' => 'image',
+        'password' => ['confirmed', 'required'],
+        'current_password' => 'required',
     ]);
 
-    if ($request->has('picture')) {
-        $picture = $request->picture->store('public');
-        $arr = explode('/', $picture);
-        $endArr = end($arr);
-        auth()->user()->update(['picture' => $endArr]);
-    }
 
-    if (request()->current_password != '' && request()->password != '' && request()->has('current_password') && request()->has('password')) {
-        if (! Hash::check($data['current_password'], auth()->user()->password)) {
-            return back()->withErrors('Invalid old password!');
-        }
-        auth()->user()->update(['password' => bcrypt($data['password'])]);
+    if (! Hash::check($data['current_password'], auth()->user()->password)) {
+        return back()->withErrors('Invalid old password!');
     }
+    auth()->user()->update(['password' => bcrypt($data['password'])]);
+
+    return back()->withSuccess('success');
+});
+
+Route::post('update-picture', function(Request $request) {
+    $request->validate([
+        'picture' => ['image', 'required'],
+    ]);
+
+    $picture = $request->picture->store('public');
+    $arr = explode('/', $picture);
+    $endArr = end($arr);
+
+    auth()->user()->update(['picture' => $endArr]);
 
     return back()->withSuccess('success');
 });

@@ -27,7 +27,7 @@
                 </tr>
               </thead>
               <tbody class="list">
-                @foreach (\App\Models\User::get() as $user)
+                @foreach (\App\Models\User::whereUserId(auth()->id())->get() as $user)
                 <tr>
                     <td>
                       <div class="d-flex px-2 py-1">
