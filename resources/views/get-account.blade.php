@@ -10,9 +10,9 @@
                     <label for="" class="form-label">Upload/Update Picture</label>
                     <x-input name="picture" required="0" type="file" />
                 </div>
-                <x-input name="current_password" label="Old Password" type="password"/>
-                <x-input name="password" label="New Password" type="password"/>
-                <x-input name="password_confirmation" label="Password Confirmation" type="password"/>
+                <x-input name="current_password" label="Old Password" type="password" required="0"/>
+                <x-input name="password" label="New Password" type="password" required="0"/>
+                <x-input name="password_confirmation" label="Password Confirmation" type="password" required="0"/>
                 <button class="btn btn-primary mt-4">
                      Submit
                 </button>

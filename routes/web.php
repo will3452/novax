@@ -36,7 +36,7 @@ Route::get('result', function (Request $request) {
 Route::post('update-password', function(Request $request) {
     $data = $request->validate([
         'password' => ['required', 'confirmed'],
-        'current_password' => 'required',
+        'current_password' => '',
         'picture' => 'image',
     ]);
 
@@ -47,11 +47,12 @@ Route::post('update-password', function(Request $request) {
         auth()->user()->update(['picture' => $endArr]);
     }
 
-    if (! Hash::check($data['current_password'], auth()->user()->password)) {
-        return back()->withErrors('Invalid old password!');
+    if (request()->has('current_password') && request()->has('password')) {
+        if (! Hash::check($data['current_password'], auth()->user()->password)) {
+            return back()->withErrors('Invalid old password!');
+        }
+        auth()->user()->update(['password' => bcrypt($data['password'])]);
     }
-
-    auth()->user()->update(['password' => bcrypt($data['password'])]);
 
     return back()->withSuccess('success');
 });
