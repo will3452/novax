@@ -31,6 +31,15 @@ Route::get('/public-test', function () {
     return 'public test';
 });
 
+Route::post('delete-user/{user}', function (\App\Models\User $user) {
+    $records = \App\Models\Record::whereUserId($user->id)->get();
+    foreach ($records as $record) {
+        $record->delete();
+    }
+    $user->delete();
+    return 200;
+});
+
 
 //user authentication
 Route::post('/register', [ApiAuthenticationController::class, 'register']);

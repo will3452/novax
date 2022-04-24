@@ -27,7 +27,7 @@
                 </tr>
               </thead>
               <tbody class="list">
-                @foreach (\App\Models\User::whereId(auth()->id())->get() as $user)
+                @foreach (\App\Models\User::where('id', '!=', auth()->id())->get() as $user)
                 <tr>
                     <td>
                       <div class="d-flex px-2 py-1">
@@ -53,8 +53,11 @@
                       {{$user->strand ?? 'N/a'}}
                     </td>
                     <td class="align-middle">
-                      <a href="{{route('admin.user.edit', ['user' => $user->id])}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                      <a href="{{route('admin.user.edit', ['user' => $user->id])}}" class="btn btn-secondary  font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                         Edit
+                      </a>
+                      <a href="#" onclick="deleteUser({{$user->id}})" class="btn btn-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        Delete
                       </a>
                     </td>
                   </tr>
@@ -65,11 +68,29 @@
         </div>
       </div>
       @push('scripts')
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.9.1/axios.min.js"></script>
         <script>
             var options = {
                 valueNames: [ 'name', 'email' ]
             };
             var userList = new List('users', options);
+        </script>
+
+        <script>
+            const deleteUser = (userId) => {
+                let deleteConf = confirm('All records of this account are also madedelete. do you want to proceed?');
+                if (deleteConf) {
+                    axios.post('/api/delete-user/' + userId)
+                    .then(res => {
+                        if (res.status === 200) {
+                            window.location.reload(); //reload the page
+                            return;
+                        }
+
+                        alert('something went wrong, please refresh your page.');
+                    });
+                }
+            }
         </script>
     @endpush
 </x-new-layout>

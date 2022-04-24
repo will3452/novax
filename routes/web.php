@@ -63,6 +63,7 @@ Route::post('update-picture', function(Request $request) {
     return back()->withSuccess('success');
 });
 
+
 // Route::get('/register', [RegisterController::class, 'registrationPage']);
 // Route::post('/register', [RegisterController::class, 'postRegister']);
 
