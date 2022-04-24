@@ -17,7 +17,7 @@ class AdminSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name'=>'admin',
+            'name'=>'System Administrator',
             'email'=>'joylandschoolinc@gmail.com',
             'password'=> bcrypt('joylandadmin'),
             'type' => 'Admin',
