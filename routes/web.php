@@ -47,7 +47,7 @@ Route::post('update-password', function(Request $request) {
         auth()->user()->update(['picture' => $endArr]);
     }
 
-    if (request()->has('current_password') && request()->has('password')) {
+    if (request()->current_password != '' && request()->password != '' && request()->has('current_password') && request()->has('password')) {
         if (! Hash::check($data['current_password'], auth()->user()->password)) {
             return back()->withErrors('Invalid old password!');
         }
