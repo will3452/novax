@@ -135,7 +135,7 @@ Route::get('/artisan', function () {
     return $result;
 });
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::prefix('users')->name('user.')->group(function () {
         Route::get('/', [AdminUserController::class, 'index'])->name('index');
         Route::get('create', [AdminUserController::class, 'create'])->name('create');
