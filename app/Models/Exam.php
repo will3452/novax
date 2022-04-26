@@ -100,7 +100,7 @@ class Exam extends Model
         $init = explode('/', $this->records()->first()->score);
         $lowest = $init[0];
         foreach ($this->records as $r) {
-            $s = explode('/', $this->records()->first()->score);
+            $s = explode('/', $r->score);
             if ($lowest > $s[0]) {
                 $lowest = $s[0];
             }
