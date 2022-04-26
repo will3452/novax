@@ -4,17 +4,13 @@
             Account Setting
         </h1>
         <div class="card-body">
-            <form action="">
-                <div>
-                    <form action="update-picture" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <label for="" class="form-label">Upload/Update Picture</label>
-                        <x-input name="picture" required="0" type="file" />
-                        <button class="btn btn-primary">
-                            Save
-                       </button>
-                    </form>
-                </div>
+            <form action="update-picture" method="POST" enctype="multipart/form-data">
+                @csrf
+                <label for="" class="form-label">Upload/Update Picture</label>
+                <x-input name="picture" required="0" type="file" />
+                <button class="btn btn-primary">
+                    Save
+               </button>
             </form>
             <form action="update-password" method="POST" >
                 @csrf

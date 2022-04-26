@@ -142,9 +142,9 @@
                                                     <span class="font-bold block">
                                                         Question/Instruction:
                                                     </span>
-                                                    <span>
+                                                    <div class="text-wrap text-sm mt-3">
                                                         {{$a->question->question}}
-                                                    </span>
+                                                    </div>
                                                 </div>
                                                 <div class="bg-base-200 p-2 rounded">
                                                     <span class="font-bold block">Answer:</span>
@@ -272,9 +272,9 @@
                                                     <span class="font-bold block">
                                                         Question/Instruction:
                                                     </span>
-                                                    <span>
+                                                    <div class="text-wrap text-sm mt-3">
                                                         {{$a->question->question}}
-                                                    </span>
+                                                    </div>
                                                 </div>
                                                 <div class="bg-base-200 p-2 rounded">
                                                     <span class="font-bold block">Answer:</span>
