@@ -1,4 +1,4 @@
-<x-new-layout>
+`<x-new-layout>
     <x-page-title>
         {{$exam->name}}
     </x-page-title>
