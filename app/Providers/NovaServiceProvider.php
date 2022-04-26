@@ -5,6 +5,8 @@ namespace App\Providers;
 use Laravel\Nova\Nova;
 use Pdmfc\NovaCards\Info;
 use App\Models\Announcement;
+use App\Nova\Metrics\Ages;
+use App\Nova\Metrics\Genders;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
@@ -86,9 +88,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+            return true;
         });
     }
 
@@ -124,10 +124,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     return auth()->user()->not_admin;
                 }),
 
-            (new IsVaccinated())
-                ->canSee(function () {
-                    return auth()->user()->not_admin;
-                }),
+            // (new IsVaccinated())
+            //     ->canSee(function () {
+            //         return auth()->user()->not_admin;
+            //     }),
 
             (new TotalNumberOfAnnouncement())
                 ->canSee(function () {
@@ -149,7 +149,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ->canSee(function () {
                     return ! auth()->user()->not_admin;
                 }),
-            (new VaccinationSummary())
+            (new Ages())
+                ->canSee(function () {
+                    return ! auth()->user()->not_admin;
+                }),
+            (new Genders())
                 ->canSee(function () {
                     return ! auth()->user()->not_admin;
                 }),

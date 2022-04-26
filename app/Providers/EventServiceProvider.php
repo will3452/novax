@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use App\Models\UserRequest;
+use App\Observers\UserCreated;
 use App\Observers\UserRequestObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -30,5 +32,6 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         UserRequest::observe(UserRequestObserver::class);
+        User::observe(UserCreated::class);
     }
 }

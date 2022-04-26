@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -20,13 +21,29 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'middle_name',
         'email',
+        'age',
         'password',
         'approved_at',
         'valid_id',
         'is_vaccinated',
+        'gender',
+        'birthdate',
     ];
+
+    public function getMiAttribute()
+    {
+        return $this->middle_name[0];
+    }
+
+    public function getNameAttribute()
+    {
+        return "$this->first_name $this->last_name";
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,6 +63,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'approved_at' => 'datetime',
+        'birthdate' => 'date',
     ];
 
     public function requests(): HasMany

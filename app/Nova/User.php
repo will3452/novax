@@ -5,11 +5,13 @@ namespace App\Nova;
 use Pdmfc\NovaCards\Info;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
@@ -52,9 +54,32 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Name')
+            Text::make('First Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
+
+            Text::make('Middle Name')
+                ->sortable()
+                ->rules('required', 'max:255'),
+
+            Text::make('Last Name')
+                ->sortable()
+                ->rules('required', 'max:255'),
+
+            Text::make('Age')
+                ->sortable()
+                ->rules('required', 'max:255'),
+
+            Date::make('Birthdate')
+                ->hideFromIndex()
+                ->sortable()
+                ->rules(['required']),
+
+            Select::make('Gender')
+                ->options([
+                    'male' => 'male',
+                    'female' => 'female',
+                ])->rules(['required']),
 
             Text::make('Email')
                 ->sortable()
