@@ -306,7 +306,7 @@
     @if(route('exam.report', ['exam' => $exam->id]) == url()->current())
     <div class="flex">
         <x-card description="Average Score">
-            {{$exam->averageScore()}}
+            {{number_format($exam->averageScore(), 2)}}
         </x-card>
         <x-card description="Lowest Score">
             {{$exam->lowestScore()}}
