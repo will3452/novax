@@ -121,7 +121,7 @@
                                                     <a href="/take/{{$e->getRecordIdOf(auth()->id())}}" class="btn btn-primary btn-sm">continue</a>
                                                 @else
                                                     <span>
-                                                        {{$e->getRecordOf(auth()->id())->score}}
+                                                        {{-- {{$e->getRecordOf(auth()->id())->score}} --}}
                                                     </span>
                                             @endif
                                         @endif
