@@ -52,6 +52,12 @@
                             <th>
                                 Level
                             </th>
+                            @teacher
+                            @else
+                            <th>
+                                Score
+                            </th>
+                            @endteacher
                             <th>
 
                             </th>
@@ -86,6 +92,18 @@
                                 <td class="text-center">
                                     {{$e->level}}
                                 </td>
+                                @teacher
+                                @else
+                                    <td>
+                                        @if ($e->canTakeOf(auth()->id()))
+                                            ---
+                                        @else
+                                                <span>
+                                                    {{$e->getRecordOf(auth()->id())->score}}
+                                                </span>
+                                        @endif
+                                    </td>
+                                @endteacher
                                 <td class="text-center">
                                     @teacher
                                         <a href="/exams/{{$e->id}}" class="btn btn-primary btn-sm">view</a>
