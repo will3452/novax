@@ -55,4 +55,7 @@
         {{ __('Login') }}
     </button>
 </form>
+<div class="flex justify-center mt-2">
+    {!!nova_get_setting('yt')!!}
+</div>
 @endsection

@@ -15,6 +15,7 @@ use App\Nova\Metrics\IndividualCounselling;
 use App\Nova\Metrics\TotalNumberOfStudents;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Coroowicaksono\ChartJsIntegration\LineChart;
+use Laravel\Nova\Fields\Code;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use Yna\NovaSwatches\Swatches;
 
@@ -33,6 +34,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Code::make('Youtube: Embed Video Code', 'yt'),
             Text::make('Footer Text'),
             Text::make('Sidebar')
                 ->help('to get the value of your desired color, please go to https://colorpicker.me/#0ab23d'),
