@@ -10,7 +10,7 @@
 </head>
 <body class="p-4">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 p-2">
             <div class="card">
                 <div class="card-header">
                     Group Counselling
@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 p-2">
             <div class="card">
                 <div class="card-header">
                     Individual Counselling
@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 p-2">
             <div class="card">
                 <div class="card-header">
                     Total Number of Students
@@ -74,6 +74,11 @@
           document.getElementById('myChart'),
           config
         );
+      </script>
+      <script>
+          window.onload = function () {
+              window.print();
+          }
       </script>
 </body>
 </html>
