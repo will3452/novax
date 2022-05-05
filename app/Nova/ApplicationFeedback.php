@@ -2,18 +2,16 @@
 
 namespace App\Nova;
 
-use App\Models\JobApplication as ModelsJobApplication;
-use App\Nova\Actions\JobApplication\ChangeStatus;
-use App\Nova\Actions\SendApplicationFeedback;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class JobApplication extends Resource
+class ApplicationFeedback extends Resource
 {
+
     public function authorizedToDelete(Request $request)
     {
         return false;
@@ -32,28 +30,23 @@ class JobApplication extends Resource
         return false;
     }
 
-    public static function indexQuery(NovaRequest $request, $query)
+    public static function availableForNavigation(Request $request)
     {
-        if (!$request->user()->hasRole(\App\Models\Role::SUPERADMIN)) {
-            $ids = \App\Models\JobOffer::where('employer_id', auth()->id())->get()->pluck('id')->toArray();
-            return $query->whereIn('job_offer_id', $ids);
-        }
-        return $query;
+        return auth()->user()->hasRole(\App\Models\Role::SUPERADMIN);
     }
-
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\JobApplication::class;
+    public static $model = \App\Models\ApplicationFeedback::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'created_at';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -62,7 +55,6 @@ class JobApplication extends Resource
      */
     public static $search = [
         'id',
-        'created_at'
     ];
 
     /**
@@ -74,21 +66,12 @@ class JobApplication extends Resource
     public function fields(Request $request)
     {
         return [
-            Date::make('Date Submitted', 'created_at')
-                ->sortable()
-                ->exceptOnForms(),
-
-            BelongsTo::make('Job Offer', 'jobOffer', JobOffer::class),
-
+            Date::make('Date', 'created_at')
+                ->sortable(),
             BelongsTo::make('Applicant', 'applicant', User::class),
-
-            Badge::make('Status')
-                ->map([
-                    ModelsJobApplication::STATUS_ACCEPTED => 'success',
-                    ModelsJobApplication::STATUS_DECLINED => 'danger',
-                    ModelsJobApplication::STATUS_INTERVIEW => 'info',
-                    ModelsJobApplication::STATUS_PENDING => 'warning',
-                ]),
+            BelongsTo::make('Employer', 'employer', User::class),
+            BelongsTo::make('Application', 'application', JobApplication::class),
+            Textarea::make('Message')->alwaysShow(),
         ];
     }
 
@@ -133,9 +116,6 @@ class JobApplication extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            ChangeStatus::make(),
-            SendApplicationFeedback::make(),
-        ];
+        return [];
     }
 }

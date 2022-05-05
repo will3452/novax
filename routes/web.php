@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\ChatController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SkillController;
 use App\Http\Controllers\ResumeController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailVerifyController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SkillController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +24,15 @@ use App\Http\Controllers\SkillController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function (Request $request) {
+    $offers = [];
+    if ($request->has('search')) {
+        $keyword = $request->search;
+        $offers = \App\Models\JobOffer::where('description', 'LIKE', "%$keyword%")->orWhere('position', 'LIKE', "%$keyword%")->get();
+    } else {
+        $offers = \App\Models\JobOffer::get();
+    }
+    return view('welcome', compact('offers'));
 });
 
 Route::middleware('guest')->group(function () {

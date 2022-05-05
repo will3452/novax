@@ -28,8 +28,16 @@ class User extends Authenticatable
         'email',
         'password',
         'type',
-        'email_verified_at'
+        'email_verified_at',
+        'legal_document',
     ];
+
+    public function getPublicLegalDocumentAttribute()
+    {
+        $arr = explode("/", $this->legal_document);
+        $path = end($arr);
+        return "/storage/$path";
+    }
 
     /**
      * The attributes that should be hidden for serialization.

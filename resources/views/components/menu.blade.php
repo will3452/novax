@@ -1,19 +1,11 @@
 <div class="py-4 artboard artboard-demo bg-opacity-0 bg-base-200 lg:hidden fixed bottom-0">
     <ul class="menu px-3 shadow-lg bg-base-100 rounded-box horizontal">
         <li>
-        @if (auth()->user()->canApplyJob())
         <a href="/jobs">
             <span class="material-icons">
                 web
             </span>
         </a>
-        @else
-        <a href="#" >
-            <label for="no-resume" class="material-icons">
-                web
-            </label>
-        </a>
-        @endif
         </li>
         <li>
         <a href="/dashboard">

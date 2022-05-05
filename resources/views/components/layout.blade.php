@@ -11,7 +11,7 @@
     <script defer src="{{ mix('js/app.js') }}"></script>
 </head>
 <body>
-    <div class="p-2" id="app">
+    <div id="app">
         {{$slot}}
     </div>
 </body>

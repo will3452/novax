@@ -48,6 +48,9 @@
                         <div class="text-sm  py-2 font-bold">
                             Vacant Slot : {{$offer->available_number_of_slots}}
                         </div>
+                        <div class="text-sm  py-2 font-bold">
+                            Legal Documents : <a class="underline" href="{{$offer->employer->public_legal_document}}">Check</a>
+                        </div>
                         <div class="p-2 mt-2 text-sm rounded border-dashed border-2">
                             {{$offer->description}}
                         </div>

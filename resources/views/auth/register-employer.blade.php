@@ -1,7 +1,7 @@
 <x-layout>
 
     <div class="hero min-h-screen bg-base-200">
-        <form action="register-employer" method="POST" class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+        <form action="register-employer" enctype="multipart/form-data" method="POST" class="card flex-shrink-0 w-full max-w-md shadow-2xl bg-base-100">
             @csrf
             <div class="card-body">
             @if (session('success'))
@@ -48,6 +48,19 @@
                     <span class="label-text">Confirm Password</span>
                 </label>
                 <input type="password" placeholder="password" required name="password_confirmation" class="input input-bordered">
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Upload Legal Documents</span>
+                </label>
+                <input type="file" name="legal_document" required class="block">
+                <small class="text-green-900">Should include DTI or SEC registration. <i>(compile as PDF file)</i>.</small>
+                @error('email')
+
+                <x-form-error>
+                    {{$message}}
+                </x-form-error>
+                @enderror
             </div>
             <div class="form-control mt-6">
                 <input type="submit" value="Register" class="btn btn-primary">

@@ -29,14 +29,16 @@ class RegisterController extends Controller
         return back()->withSuccess('success');
     }
 
-    public function postEmployerRegister()
+    public function postEmployerRegister(Request $request)
     {
         $data = request()->validate([
             'name' => 'required',
             'email' => 'required|unique:users,email',
-            'password' => 'required|confirmed|min:6'
+            'password' => 'required|confirmed|min:6',
+            'legal_document' => ['required', 'max:5000'],
         ]);
 
+        $data['legal_document'] = $request->legal_document->store('public');
         $data['password'] = bcrypt($data['password']);
         $data['type'] = User::TYPE_EMPLOYER;
         $user = User::create($data);

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use Elezerk\Chat\Chat;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
@@ -31,6 +32,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             Image::make('Logo'),
             Text::make('Tagline'),
             Text::make('Footer Text'),
+            Image::make('Carousel Image 1', 'c1'),
+            Image::make('Carousel Image 2', 'c2'),
+            Image::make('Carousel Image 3', 'c3')
         ]);
     }
 
@@ -57,9 +61,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+            $acceptedUser = [User::TYPE_EMPLOYER, User::TYPE_ADMIN];
+            return in_array($user->type, $acceptedUser);
         });
     }
 

@@ -36,11 +36,11 @@
                     {{$message}}
                 </x-form-error>
                 @enderror
-                <label class="label">
+                {{-- <label class="label">
                   <a href="#" class="label-text-alt">Forgot password?</a>
-                </label>
+                </label> --}}
               </div>
-              <div class="form-control ">
+              <div class="form-control mt-2">
                 <input type="submit" value="Login" class="btn btn-primary">
               </div>
               <div class="mt-2 text-xs text-center">
