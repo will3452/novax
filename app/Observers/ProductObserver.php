@@ -3,8 +3,9 @@
 namespace App\Observers;
 
 use App\Models\Product;
-use App\Notifications\NewProductsHasBeenAdded;
 use Illuminate\Support\Facades\Notification;
+use App\Notifications\NewProductsHasBeenAdded;
+use App\Notifications\YourProductCountIsAlreadyLow;
 
 class ProductObserver
 {
@@ -14,6 +15,13 @@ class ProductObserver
         $storeFollowers = $store->followers;
         foreach ($storeFollowers as $f) {
             Notification::send($f->follower, new NewProductsHasBeenAdded($store));
+        }
+    }
+
+    public function updated(Product $p)
+    {
+        if ($p->quantity <= 5) {
+            $p->storeOwner->notify(new YourProductCountIsAlreadyLow($p));
         }
     }
 }

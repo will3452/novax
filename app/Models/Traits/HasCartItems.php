@@ -23,7 +23,6 @@ trait HasCartItems
             'quantity' => $quantity,
         ]);
     }
-
     public function removeToCart($productId, $processed = false)
     {
         if ($this->cartItems()->whereProductId($productId)->count()) {
