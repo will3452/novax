@@ -7,6 +7,7 @@ use App\Helpers\Dicom;
 use phpseclib3\Crypt\AES;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,9 @@ Route::post(Nova::path(). '/login', [LoginController::class, 'login'])->name('no
 
 Route::view('/about', 'about');
 Route::view('/contact', 'contact');
+Route::get('/key', function (Request $request) {
+    return $request->key;
+});
 //testing
 
 Route::get('/dcm-to-jpg', function () {
@@ -45,20 +49,74 @@ Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);
     return $result;
 });
+function createFileObject($url){
+
+    $path_parts = pathinfo($url);
+
+    $newPath = $path_parts['dirname'] . '/tmp-files/';
+    if(!is_dir ($newPath)){
+        mkdir($newPath, 0777);
+    }
+
+    $newUrl = $newPath . $path_parts['basename'];
+    copy($url, $newUrl);
+    $imgInfo = getimagesize($newUrl);
+
+    $file = new UploadedFile(
+        $newUrl,
+        $path_parts['basename'],
+        $imgInfo['mime'],
+        filesize($url),
+        true,
+        TRUE
+    );
+
+    return $file;
+}
+Route::get('/change-key', function (Request $request) {
+    $image = Image::findOrFail($request->model);
+    $key = $request->key;
+    try {
+        //decryption
+        $aes = new AES128($key);
+        $file = Storage::get('/public/' . $image->path);
+        $result = $aes->decrypt($file);
+
+        $img = @imagecreatefromstring($result);
+        $im = imagejpeg($img, public_path('ss.jpg'));
+        if ($im) {
+            [$key, $path] = AES128::storeFile(createFileObject(public_path('ss.jpg')));
+            return $path;
+            $image->update([
+                'path' => $path,
+            ]);
+            return response()->streamDownload(function () {
+                echo $key;
+            }, 'new-key.txt');
+        }
+
+    } catch(Exception  $e) {
+        echo $e->getMessage();
+    }
+});
 
 Route::get('/view-file', function (Request $request) {
     $image = Image::findOrFail($request->model);
     $key = $request->key;
 
-    //decryption
-    $aes = new AES128($key);
-    $file = Storage::get('/public/' . $image->path);
-    $result = $aes->decrypt($file);
+    try {
+        //decryption
+        $aes = new AES128($key);
+        $file = Storage::get('/public/' . $image->path);
+        $result = $aes->decrypt($file);
 
-    return response()->stream(function () use ($result) {
-        $img = @imagecreatefromstring($result);
-        imagejpeg($img);
-    }, 200, ['content-type' => 'image/jpeg']);
+        return response()->stream(function () use ($result) {
+            $img = @imagecreatefromstring($result);
+            imagejpeg($img);
+        }, 200, ['content-type' => 'image/jpeg']);
+    } catch(Exception  $e) {
+        echo 'Incorrect key!';
+    }
 });
 
 Route::get('/reports',  function () {

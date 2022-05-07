@@ -37,9 +37,9 @@ class AddXrayImage extends Action
                 'model_type' => get_class($model),
                 'model_id' => $model->id,
                 'path' => $path,
-                'key' => $key,
             ]);
         }
+        return Action::download("/key?key=$key", "key.txt");
     }
 
     /**

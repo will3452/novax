@@ -39,9 +39,10 @@ class Encrypt extends Action
         Transaction::create([
             'user_id' => auth()->id(),
             'content' => $path,
-            'key' => $key,
             'execution_time' => $execution_time,
         ]);
+
+        return Action::download("/key?key=$key", "key.txt");
     }
 
     /**

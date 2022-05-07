@@ -33,9 +33,10 @@ class AES128 extends Encrypter
 
     public static function storeFile($file) // key, filepath
     {
+        $content = $file;
         $key = bin2hex(random_bytes(8));
         $aes = new self($key);
-        $encrypted = $aes->encrypt(file_get_contents($file));
+        $encrypted = $aes->encrypt(file_get_contents($content));
         $filename = self::saveFile($encrypted);
         return [
             $key,

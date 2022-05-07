@@ -13,7 +13,6 @@ class Image extends Model
         'model_type',
         'path',
         'opened_at',
-        'key', // this will use to decrypts the content of the image
     ];
 
     public function model()

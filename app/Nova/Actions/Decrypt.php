@@ -42,10 +42,10 @@ class Decrypt extends Action
         Transaction::create([
             'user_id' => auth()->id(),
             'content' => $path,
-            'key' => $key,
             'type' => Transaction::TYPE_DECRYPT,
             'execution_time' => $execution_time,
         ]);
+        // return Action::download("/key?key=$key", "key.txt");
         // // $urlDownload = "data:image/jpeg;base64," . base64_encode(file_get_contents($img));
         // // return Action::redirect("/viewer?image=" . $urlDownload);
         // return response()->stream(function () use ($result) {

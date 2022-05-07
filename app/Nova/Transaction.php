@@ -80,7 +80,6 @@ class Transaction extends Resource
             Text::make('Type'),
             BelongsTo::make('Owner', 'user', User::class),
             File::make('Content'),
-            Text::make('Key'),
             Text::make('Execution Time (milliseconds)', 'execution_time'),
         ];
     }

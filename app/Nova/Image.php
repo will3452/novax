@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Models\Role;
+use App\Nova\Actions\ChangeKey;
 use App\Nova\Actions\DecryptImage;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -82,9 +83,6 @@ class Image extends Resource
             MorphTo::make('Model', 'model'),
             File::make('Image', 'path')
                 ->rules(['required']),
-            Text::make('Key')
-                ->exceptOnForms()
-                ->canSee($this->canSeeKey()),
             Badge::make('Status', fn () => ! is_null($this->opened_at) ? 'Seen' : 'Not Seen' )
                 ->map([
                     'Seen' => 'success',

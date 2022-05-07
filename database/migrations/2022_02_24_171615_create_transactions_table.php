@@ -20,7 +20,6 @@ class CreateTransactionsTable extends Migration
             $table->foreignId('user_id')
                 ->onDelete('cascade');
             $table->longText('content');
-            $table->string('key');
             $table->string('execution_time')->nullable();
             $table->timestamps();
         });

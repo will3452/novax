@@ -19,7 +19,6 @@ class CreateImagesTable extends Migration
             $table->foreignId('model_id')
                 ->onDelete('cascade');
             $table->longText('path');
-            $table->string('key');
             $table->timestamp('opened_at')->nullable();
             $table->timestamps();
         });

@@ -4,23 +4,16 @@ namespace App\Nova\Actions;
 
 use App\Models\Role;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Collection;
-use Laravel\Nova\Actions\Action;
-use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Actions\Action;
+use Illuminate\Support\Collection;
+use Laravel\Nova\Fields\ActionFields;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class DecryptImage extends Action
+class ChangeKey extends Action
 {
     use InteractsWithQueue, Queueable;
-
-    public $model;
-
-    public function __construct($model)
-    {
-        $this->model = $model;
-    }
 
     /**
      * Perform the action on the given models.
@@ -37,7 +30,7 @@ class DecryptImage extends Action
             if (! auth()->user()->hasRole(Role::SUPERADMIN)) {
                 $model->update(['opened_at' => now()]);
             }
-            return Action::openInNewTab("/view-file?model=$model->id&key=$key");
+            return Action::openInNewTab("/change-key?model=$model->id&key=$key");
         }
     }
 
@@ -50,8 +43,7 @@ class DecryptImage extends Action
     {
         return [
             Text::make('key')
-                ->default(fn () => optional($this->model)->key)
-                ->rules(['required']),
+            ->rules(['required']),
         ];
     }
 }

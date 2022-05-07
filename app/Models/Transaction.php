@@ -12,7 +12,6 @@ class Transaction extends Model
     protected $fillable = [
         'user_id', // the user who encrypt
         'content', // .dat file or ecrypted file
-        'key',
         'type',
         'execution_time', // in miliseconds
     ];
