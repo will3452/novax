@@ -2,10 +2,11 @@
 
 use App\Models\User;
 use App\Models\Product;
+use App\Models\OrderProduct;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\RegisterController;
-use App\Models\OrderProduct;
 
 Route::redirect('/', '/admin/login');
 
@@ -28,6 +29,12 @@ Route::get('/report', function () {
 
 Route::get('test', fn()=>'test7@! asdsd'); //
 
-Route::get('/verify-email', function (Request $request) {
-    $request->user()->hasVerifiedEmail();
+Route::get('/verify-email', function () {
+    $user = User::find(request()->id);
+    if ($user->hasVerifiedEmail()) {
+        return 'you email has been validated!';
+    }
+
+    $user->markEmailAsVerified();
+    return 'ok';
 })->name('verification.verify');
