@@ -63,8 +63,9 @@ class YourProductCountIsAlreadyLow extends Notification
 
     public function toDatabase($notifiable)
     {
+        $product = $this->product->name;
         return [
-            'message' => "Your product ($this->product) count is already low.",
+            'message' => "Your product ($product) count is already low.",
         ];
     }
 }
