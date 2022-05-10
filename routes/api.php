@@ -68,6 +68,8 @@ Route::get('/public-test', function () {
     return 'public test';
 });
 
+Route::post('/forgot-password', []);
+
 //get feedback of product
 Route::get('/feedback-products', [ApiFeedbackController::class, 'getFeedbacks']);
 

@@ -2,15 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Mail\YourTemporaryPassword;
+use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\ForgotpasswordRequest;
 
 class ApiProfileController extends Controller
 {
     public function myProfile()
     {
         return auth()->user();
+    }
+
+    public function forgotpassword(ForgotpasswordRequest $r)
+    {
+        $r->validated();
+
+        $user = \App\Models\User::whereEmail($r->email)->first();
+        $temPassword = Str::random(16);
+
+        $user->update([
+            'password' => bcrypt($temPassword),
+        ]);
+
+        Mail::to($user)->send(new YourTemporaryPassword($temPassword));
+        return 'ok';
     }
 
     public function updateProfile(UpdateProfileRequest $r)
