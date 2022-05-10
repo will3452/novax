@@ -59,6 +59,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/write-feedback', [ApiFeedbackController::class, 'storeFeedback']);
     Route::post('/update-quantity', [ApiProductController::class, 'updateQuantity']);
+    Route::post('/update-price', [ApiProductController::class, 'updatePrice']);
 
 
     Route::get('/store-master', [ApiProductController::class, 'master']);

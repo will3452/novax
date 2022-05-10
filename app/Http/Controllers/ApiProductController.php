@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductPriceUpdateRequest;
 use stdClass;
 use App\Models\User;
 use App\Models\Product;
@@ -21,11 +22,14 @@ class ApiProductController extends Controller
     {
         $p->validated();
 
-        $pd = Product::find($p->product_id)->update([
-            'quantity' => $p->quantity,
-        ]);
+        return Product::find($p->product_id)->update(['quantity' => $p->quantity]);
+    }
 
-        return $pd;
+    public function updatePrice(ProductPriceUpdateRequest $r)
+    {
+        $r->validate();
+
+        return Product::find($r->product_id)->update(['price' => $r->new_price]);
     }
 
     public function store(ProductStoreRequest $r)
