@@ -11,14 +11,16 @@ class YourTemporaryPassword extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $password;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $password)
     {
-        //
+        $this->password = $password;
     }
 
     /**
