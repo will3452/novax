@@ -1,19 +1,20 @@
 <?php
 
-use App\Http\Controllers\ApiApproveSellerController;
-use App\Http\Controllers\ApiAuthenticationController;
-use App\Http\Controllers\ApiCartController;
-use App\Http\Controllers\ApiFeedbackController;
-use App\Http\Controllers\ApiFollowController;
-use App\Http\Controllers\ApiNotificationController;
-use App\Http\Controllers\ApiOrderController;
-use App\Http\Controllers\ApiProductController;
-use App\Http\Controllers\ApiProfileController;
-use App\Http\Controllers\ApiSalesController;
-use App\Http\Controllers\ApiSearchProductController;
-use App\Http\Controllers\ApiWishlistController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiCartController;
+use App\Http\Controllers\ApiOrderController;
+use App\Http\Controllers\ApiSalesController;
+use App\Http\Controllers\ApiFollowController;
+use App\Http\Controllers\ApiProductController;
+use App\Http\Controllers\ApiProfileController;
+use App\Http\Controllers\ApiFeedbackController;
+use App\Http\Controllers\ApiWishlistController;
+use App\Http\Controllers\ApiNotificationController;
+use App\Http\Controllers\ApiApproveSellerController;
+use App\Http\Controllers\ApiSearchProductController;
+use App\Http\Controllers\ApiAuthenticationController;
 use Spatie\BackupTool\Http\Controllers\ApiController;
 
 //private access
@@ -62,13 +63,18 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/update-price', [ApiProductController::class, 'updatePrice']);
 
     Route::get('/store-master', [ApiProductController::class, 'master']);
+
+    Route::post('/send-email-verification-link', function () {
+        auth()->user()->sendEmailVerificationNotification();
+        return 'ok';
+    });
 });
 
 Route::get('/public-test', function () {
     return 'public test';
 });
 
-Route::post('/forgot-password', []);
+Route::post('/forgot-password', [ApiProfileController::class, 'forgotpassword']);
 
 //get feedback of product
 Route::get('/feedback-products', [ApiFeedbackController::class, 'getFeedbacks']);
