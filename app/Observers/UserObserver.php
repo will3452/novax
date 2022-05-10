@@ -17,4 +17,12 @@ class UserObserver
         $user->update(['cooperative' => $user->getCooperativeFromFarmersId()]); // this will assign cooperative automatically
 
     }
+
+    public function deleted(User $user)
+    {
+        $products = $user->products;
+        foreach ($products as $p) {
+            $p->delete();
+        }
+    }
 }
