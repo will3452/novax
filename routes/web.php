@@ -27,3 +27,7 @@ Route::get('/report', function () {
 })->name('report');
 
 Route::get('test', fn()=>'test7@! asdsd'); //
+
+Route::get('/verify-email', function (Request $request) {
+    $request->user()->hasVerifiedEmail();
+})->name('verification.verify');

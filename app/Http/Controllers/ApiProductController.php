@@ -27,7 +27,7 @@ class ApiProductController extends Controller
 
     public function updatePrice(ProductPriceUpdateRequest $r)
     {
-        $r->validate();
+        $r->validated();
 
         return Product::find($r->product_id)->update(['price' => $r->new_price]);
     }
