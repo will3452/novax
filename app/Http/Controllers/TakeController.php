@@ -78,6 +78,10 @@ class TakeController extends Controller
             }
         }
 
+        if (Record::whereExamId($exam->id)->whereUserId(auth()->id())->exists()) {
+            return 'you have already completed this exam.';
+        }
+
         $record = Record::create([
             'exam_id' => $exam->id,
             'user_id' => auth()->id(),

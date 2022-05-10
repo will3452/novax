@@ -1,22 +1,24 @@
 <?php
 
-use App\Http\Controllers\AccountController;
-use App\Http\Controllers\AdminUserController;
-use App\Http\Controllers\ExamController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PasswordController;
-use App\Http\Controllers\QuestionController;
+use App\Exports\StudentGradedExport;
+use App\Models\Exam;
+use App\Models\Record;
+use App\Models\Question;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ExamController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TakeController;
-use App\Models\Exam;
-use App\Models\Question;
-use App\Models\Record;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\AdminUserController;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -118,12 +120,17 @@ Route::post('/update-grade/{record}', function (Request $request, Record $record
 })->name('update.grade.of.record');
 
 Route::post('/questions', [QuestionController::class, 'store']);
-Route::get('/questions/delete/{question}', function (Question $question) {
-    $question->delete();
-    return back()->withSuccess('Deleted!');
-});
+Route::get('/questions/delete/{question}', [QuestionController::class, 'destroy']);
+Route::get('/questions/edit/{question}', [QuestionController::class, 'edit']);
 Route::get('/questions/create/{exam}', [QuestionController::class, 'create']);
+Route::put('/questions/{question}', [QuestionController::class, 'update']);
 Route::delete('/questions/{question}', [QuestionController::class, 'destroy']);
+Route::get('/print-q/{exam}', [QuestionController::class, 'printq']);
+
+Route::get('extract-excel/{exam}', function (Request $request, Exam $exam) {
+    $now = now()->format('m-d-y');
+    return Excel::download(new StudentGradedExport($exam), "$exam->name-student-report-$now.xlsx");
+});
 
 Route::post('take-now/{exam}', [TakeController::class, 'takeNow']);
 Route::get('take/{record}', [TakeController::class, 'take']);

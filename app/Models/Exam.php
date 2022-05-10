@@ -39,6 +39,12 @@ class Exam extends Model
         return $this->hasMany(Question::class, 'exam_id');
     }
 
+    public function getGraded()
+    {
+        $students = User::whereType(User::TYPE_STUDENT)->whereLevel($this->level)->whereStrand($this->strand)->get()->pluck('id');
+        return $this->records()->whereIn('user_id', $students)->where('score', '!=', 'Not yet checked')->get();
+    }
+
     public function records()
     {
         return $this->hasMany(Record::class, 'exam_id');

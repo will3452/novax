@@ -99,8 +99,7 @@ class ExamController extends Controller
 
     public function showGraded(Request $request, Exam $exam)
     {
-        $students = User::whereType(User::TYPE_STUDENT)->whereLevel($exam->level)->whereStrand($exam->strand)->get()->pluck('id');
-        $records = $exam->records()->whereIn('user_id', $students)->where('score', '!=', 'Not yet checked')->get();
+        $records = $exam->getGraded();
         return view('exam.show', compact('exam', 'records'));
     }
 

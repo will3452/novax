@@ -20,6 +20,7 @@
     @if (route('exam.show', ['exam' => $exam->id]) == url()->current())
     <div class="card card-body">
         <div class="table-responsive">
+            <a class="btn btn-sm btn-success" target="_blank" href="/print-q/{{$exam->id}}">Print/Download questionnaire</a>
             <table class="table">
                 <thead>
                     <tr>
@@ -77,6 +78,7 @@
                             </td>
                             <td>
                                 <a class="btn btn-danger" href="/questions/delete/{{$q->id}}">delete</a>
+                                <a class="btn btn-secondary" href="/questions/edit/{{$q->id}}">update</a>
                             </td>
                         </tr>
                     @endforeach
@@ -173,7 +175,11 @@
     @endif
 
     @if(route('exam.graded', ['exam' => $exam->id]) == url()->current())
+    @if (count($records) || true)
+        <a href="/extract-excel/{{$exam->id}}" class="btn btn-sm btn-success">Extract as Excel file</a>
+    @endif
     <div class="card card-body">
+
         <table class="table">
             <thead>
                 <tr>

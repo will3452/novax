@@ -42,8 +42,9 @@ class NewExamHasBeenCreatedNotification extends Notification
      */
     public function toMail($notifiable)
     {
+        $examOpenAt = $this->exam->opened_at->format('m-d-Y');
         return (new MailMessage)
-                    ->line("Dear $notifiable->name, New Examination has been created by your instructor ". $this->exam->teacher->name)
+                    ->line("Dear $notifiable->name, New Examination has been created by your instructor ". $this->exam->teacher->name.", and you can answer on $examOpenAt")
                     ->action('Go to App Now', url('/'))
                     ->line('Thank you for using our application!');
     }
