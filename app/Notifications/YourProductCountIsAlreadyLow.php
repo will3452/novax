@@ -20,7 +20,7 @@ class YourProductCountIsAlreadyLow extends Notification
      */
     public function __construct(Product $product)
     {
-        //
+        $this->product = $product;
     }
 
     /**
@@ -64,7 +64,7 @@ class YourProductCountIsAlreadyLow extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'message' => "Your product ($product) count is already low.",
+            'message' => "Your product ($this->product) count is already low.",
         ];
     }
 }
