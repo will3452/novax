@@ -68,6 +68,8 @@ Route::middleware('auth:sanctum')->group(function () {
         auth()->user()->sendEmailVerificationNotification();
         return 'ok';
     });
+
+    Route::post('/get-report',[ApiSalesController::class, 'report']);
 });
 
 Route::get('/public-test', function () {
