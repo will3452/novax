@@ -9,7 +9,10 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 
-class StudentGradedExport implements FromCollection, WithHeadings, WithColumnFormatting
+class StudentGradedExport implements
+    FromCollection,
+    WithHeadings,
+    WithColumnFormatting
 {
     public function columnFormats(): array
     {
