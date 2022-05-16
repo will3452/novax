@@ -6,10 +6,12 @@ use NumberFormatter;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 
 class StudentGradedExport implements
+    ShouldAutoSize,
     FromCollection,
     WithHeadings,
     WithColumnFormatting
