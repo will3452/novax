@@ -16,6 +16,7 @@ class StudentGradedExport implements
     WithHeadings,
     WithColumnFormatting
 {
+
     public function columnFormats(): array
     {
         return [
