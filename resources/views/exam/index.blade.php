@@ -26,39 +26,39 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>
+                            <th class="text-center">
                                 Date Created
                             </th>
-                            <th>
+                            <th class="text-center">
                                 Mode
                             </th>
-                            <th>
+                            <th class="text-center">
                                 Title
                             </th>
                             @teacher
-                            <th>
+                            <th class="text-center">
                                 Code
                             </th>
                             @endteacher
-                            <th>
+                            <th class="text-center">
                                 Date
                             </th>
-                            <th>
+                            <th class="text-center">
                                 Time Limit (Minutes)
                             </th>
-                            <th>
+                            <th class="text-center">
                                 Strand
                             </th>
-                            <th>
+                            <th class="text-center">
                                 Level
                             </th>
                             @teacher
                             @else
-                            <th>
+                            <th class="text-center">
                                 Score
                             </th>
                             @endteacher
-                            <th>
+                            <th class="text-center">
 
                             </th>
                         </tr>

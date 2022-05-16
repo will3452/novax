@@ -90,6 +90,9 @@ class Exam extends Model
         $highest = $init[0];
 
         foreach ($this->records as $r) {
+            if ($r->score === 'Not yet checked') {
+                continue;
+            }
             $s = explode('/', $r->score);
             if ($highest < $s[0]) {
                 $highest = $s[0];

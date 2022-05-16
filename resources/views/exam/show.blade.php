@@ -2,6 +2,8 @@
     <x-page-title>
         {{$exam->name}}
     </x-page-title>
+    <style>
+    </style>
     @teacher
     <div>
         <a href="/questions/create/{{$exam->id}}" class="btn btn-primary">Create New Question</a>
@@ -24,16 +26,16 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>
+                        <th class="long">
                             Question
                         </th>
-                        <th>
+                        <th class="long">
                             Correct Answer
                         </th>
-                        <th>
+                        <th class="long">
                             Type
                         </th>
-                        <th>
+                        <th class="long">
                             Choices
                         </th>
                         <th>
@@ -44,16 +46,16 @@
                 <tbody>
                     @foreach ($exam->questions as $q)
                         <tr>
-                            <td>
+                            <td class="long">
                                 @if ($q->question_image)
                                     <a target="_blank" href="{{$q->storage_question}}">
                                         <img src="{{$q->storage_question}}" alt="" style="width:50px !important;">
                                     </a>
                                 @else
-                                    {{$q->question}}
+                                    {{\Str::limit($q->question, 55)}}
                                 @endif
                             </td>
-                            <td>
+                            <td class="long">
                                 @if ($q->type === \App\Models\Question::TYPE_MULTIPLE_ANSWER)
                                     @foreach ($q->getAllChoice($q->answer) as $c)
                                         <span>{{$c}}</span>
@@ -61,14 +63,16 @@
                                             ,
                                         @endif
                                     @endforeach
+                                @elseif($q->type === \App\Models\Question::TYPE_TRUE_OR_FALSE)
+                                {{$q->answer ? 'true':'false'}}
                                 @else
-                                    {{$q->answer}}
+                                    {{\Str::limit($q->answer, 50)}}
                                 @endif
                             </td>
-                            <td>
+                            <td class="long">
                                 {{$q->type}}
                             </td>
-                            <td>
+                            <td >
                                 @foreach ($q->getAllChoice(null) as $c)
                                     <span>{{$c}}</span>
                                     @if (!$loop->last)
