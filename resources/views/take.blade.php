@@ -8,7 +8,7 @@
     <div>
         <form id="mainForm" action="/submit/{{$record->id}}" method="POST">
             @csrf
-            @foreach ($exam->questions as $q)
+            @foreach ($exam->questions()->inRandomOrder()->get() as $q)
                 <div class="my-6">
                     <div>
                         <span class="badge badge-primary font-bold text-white">
