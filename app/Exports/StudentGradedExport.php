@@ -2,12 +2,22 @@
 
 namespace App\Exports;
 
+use NumberFormatter;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 
-class StudentGradedExport implements FromCollection, WithHeadings
+class StudentGradedExport implements FromCollection, WithHeadings, WithColumnFormatting
 {
+    public function columnFormats(): array
+    {
+        return [
+            'C' => NumberFormat::FORMAT_TEXT,
+        ];
+    }
+
     public function headings(): array
     {
         return [
