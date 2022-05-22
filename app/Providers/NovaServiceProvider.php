@@ -24,7 +24,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         parent::boot();
 
         NovaSettings::addSettingsFields([
-            Image::make('Logo'),
+            Text::make('api key', 'api_key'),
         ]);
     }
 
