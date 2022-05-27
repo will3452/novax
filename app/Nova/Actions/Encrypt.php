@@ -14,11 +14,15 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Fields\ActionFields;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Crypt;
 
 class Encrypt extends Action
 {
     use InteractsWithQueue, Queueable;
-
+    public function getImageFromDICOM($file)
+    {
+        return Dicom::convertDicom($file);
+    }
     /**
      * Perform the action on the given models.
      *
@@ -30,19 +34,17 @@ class Encrypt extends Action
     {
         $startTime = microtime(true);
         $file = $fields['path'];
-        $time = time();
-        if ($fields['dicom']) {
-            $file = Dicom::convertDicom($file);
-        }
+        $file = $this->getImageFromDICOM($file);
         [$key, $path] = AES128::storeFile($file);
         $execution_time = microtime(true) - $startTime;
         Transaction::create([
             'user_id' => auth()->id(),
             'content' => $path,
             'execution_time' => $execution_time,
+            'key' => Crypt::encryptString($key),
         ]);
 
-        return Action::download("/key?key=$key", "key.txt");
+        // return Action::download("/key?key=$key", "key.txt");
     }
 
     /**
@@ -53,9 +55,7 @@ class Encrypt extends Action
     public function fields()
     {
         return [
-            File::make('File to encrypt', 'path')
-                ->help('maximum of 5mb only'),
-            Boolean::make('DICOM', 'dicom'),
+            File::make('DICOM File to encrypt', 'path'),
         ];
     }
 }

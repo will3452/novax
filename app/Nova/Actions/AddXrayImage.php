@@ -3,20 +3,26 @@
 namespace App\Nova\Actions;
 
 use App\AES128;
-use App\Helpers\Dicom;
 use App\Models\Image;
+use App\Helpers\Dicom;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Collection;
-use Laravel\Nova\Actions\Action;
-use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\File;
+use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Fields\Boolean;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Crypt;
+use Laravel\Nova\Fields\ActionFields;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class AddXrayImage extends Action
 {
     use InteractsWithQueue, Queueable;
+
+    public function getImageFromDICOM($file)
+    {
+        return Dicom::convertDicom($file);
+    }
 
     /**
      * Perform the action on the given models.
@@ -29,17 +35,16 @@ class AddXrayImage extends Action
     {
         foreach ($models as $model) {
             $file = $fields['path'];
-            if ($fields['dicom']) {
-                $file = Dicom::convertDicom($file);
-            }
+            $file = $this->getImageFromDICOM($file);
             [$key, $path] = AES128::storeFile($file);
             Image::create([
                 'model_type' => get_class($model),
                 'model_id' => $model->id,
                 'path' => $path,
+                'key' => Crypt::encryptString($key),
             ]);
         }
-        return Action::download("/key?key=$key", "key.txt");
+        // return Action::download("/key?key=$key", "key.txt");
     }
 
     /**
@@ -50,9 +55,7 @@ class AddXrayImage extends Action
     public function fields()
     {
         return [
-            File::make('File', 'path')
-                ->rules(['required']),
-            Boolean::make('DICOM', 'dicom'),
+            File::make('DICOM File to encrypt', 'path'),
         ];
     }
 }

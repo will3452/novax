@@ -81,6 +81,8 @@ class Image extends Resource
                 ->exceptOnForms()
                 ->sortable(),
             MorphTo::make('Model', 'model'),
+            Text::make('Key', fn () => $this->decryptKey($this->key) )
+                ->canSee(fn () => auth()->id() == $this->model->user_id || auth()->user()->hasRole(Role::SUPERADMIN)),
             File::make('Image', 'path')
                 ->rules(['required']),
             Badge::make('Status', fn () => ! is_null($this->opened_at) ? 'Seen' : 'Not Seen' )

@@ -62,7 +62,7 @@ class Record extends Resource
 
     public function authorizedToDelete(Request $request)
     {
-        return auth()->user()->hasRole(Role::SUPERADMIN);
+        return false;
     }
 
     /**

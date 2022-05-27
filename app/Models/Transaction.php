@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Traits\HasKey;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Transaction extends Model
 {
-    use HasFactory;
+    use HasFactory, HasKey;
 
     protected $fillable = [
         'user_id', // the user who encrypt
         'content', // .dat file or ecrypted file
         'type',
         'execution_time', // in miliseconds
+        'key'
     ];
 
     const TYPE_ENCRYPT = "Encrypted";

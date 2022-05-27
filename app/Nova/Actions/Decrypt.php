@@ -44,6 +44,7 @@ class Decrypt extends Action
             'content' => $path,
             'type' => Transaction::TYPE_DECRYPT,
             'execution_time' => $execution_time,
+            'key' => $key,
         ]);
         // return Action::download("/key?key=$key", "key.txt");
         // // $urlDownload = "data:image/jpeg;base64," . base64_encode(file_get_contents($img));

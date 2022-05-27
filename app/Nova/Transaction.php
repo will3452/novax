@@ -78,6 +78,8 @@ class Transaction extends Resource
             Date::make('Date', 'created_at')
                 ->exceptOnForms(),
             Text::make('Type'),
+            Text::make('Key', fn () => $this->type != \App\Models\Transaction::TYPE_ENCRYPT ?$this->key:$this->decryptKey($this->key) )
+                ->canSee(fn () => auth()->id() == $this->user_id || auth()->user()->hasRole(Role::SUPERADMIN)),
             BelongsTo::make('Owner', 'user', User::class),
             File::make('Content'),
             Text::make('Execution Time (milliseconds)', 'execution_time'),

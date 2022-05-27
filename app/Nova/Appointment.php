@@ -100,10 +100,10 @@ class Appointment extends Resource
                     ModelsAppointment::STATUS_PENDING => 'info',
                 ]),
             DateTime::make('Date And Time', 'datetime'),
-            Badge::make('Approval', fn () => is_null($this->approved_at) ? 'Not Approved' : 'Approved')
+            Badge::make('Approval', fn () => is_null($this->approved_at) ? '---' : 'Approved')
                 ->map([
                     'Approved' => 'success',
-                    'Not Approved' => 'danger',
+                    '---' => 'danger',
                 ]),
             BelongsTo::make('Patient', 'patient', User::class)
                 ->exceptOnForms(),
