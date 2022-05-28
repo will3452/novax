@@ -53,7 +53,7 @@ class AddStudent extends Action
             Select::make('Student')
                 ->help('Enter Student No.')
                 ->searchable()
-                ->options(Student::where('branch_id', $this->branch)->get()->pluck('student_number', 'id'))
+                ->options([123,234])
                 ->required(),
         ];
     }
