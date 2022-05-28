@@ -54,7 +54,7 @@ class AddStudent extends Action
                 ->help('Enter Student No.')
                 ->searchable()
                 ->options([123,234])
-                ->rules(['reauired'])
+                ->rules(['required'])
         ];
     }
 }
