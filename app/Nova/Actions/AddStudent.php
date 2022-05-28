@@ -22,6 +22,17 @@ class AddStudent extends Action
         $this->branch = $id;
     }
 
+    public function getOptions() {
+        $result = [];
+        $students = Student::whereBranchId($this->branch)->get();
+
+        foreach ($students as $s) {
+            $result[$s->full_name . ' - ' . $s->student_number] = $s->id;
+        }
+
+        return $result;
+    }
+
     /**
      * Perform the action on the given models.
      *
@@ -53,7 +64,7 @@ class AddStudent extends Action
             Select::make('Student')
                 ->help('Enter Student #.')
                 ->searchable()
-                ->options(Student::get()->pluck('student_number', 'id'))
+                ->options($this->getOptions())
                 ->rules(['required'])
         ];
     }
