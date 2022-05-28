@@ -49,20 +49,11 @@ class AddStudent extends Action
      */
     public function fields()
     {
-        $branch = $this->branch;
         return [
-            Select::make('Student 1', 'student')
+            Select::make('Student')
                 ->help('Enter Student No.')
                 ->searchable()
-                ->options( function () use ($branch) {
-                    $students = Student::where('branch_id', $branch)->get();
-                    $result = [];
-                    foreach ($students as $item) {
-                        $result[$item->full_name . ' - ' . $item->student_number] = $item->id;
-                    }
-
-                    return $result;
-                })
+                ->options(Student::where('branch_id', $this->branch)->get()->pluck('student_number', 'id'))
                 ->required(),
         ];
     }
