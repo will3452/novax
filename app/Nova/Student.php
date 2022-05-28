@@ -10,6 +10,8 @@ use Laravel\Nova\Fields\Select;
 use App\Nova\Actions\ImportExcel;
 use Laravel\Nova\Fields\BelongsTo;
 use App\Nova\Actions\DownloadTemplate;
+use App\Rules\BirthdayMustBeValid;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use SLASH2NL\NovaBackButton\NovaBackButton;
 
@@ -56,7 +58,7 @@ class Student extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Student Number')
+            Number::make('Student Number')
                 ->rules(['required']),
 
             Text::make('Full Name')
@@ -68,7 +70,6 @@ class Student extends Resource
                 ->onlyOnForms(),
 
             Text::make('Middle Name')
-                ->rules(['required'])
                 ->onlyOnForms(),
 
             Text::make('Last Name')
@@ -86,12 +87,15 @@ class Student extends Resource
                 ]),
 
             Text::make('Email')
+                ->rules(['required', 'email'])
                 ->sortable(),
 
-            Text::make('Mobile Number')
+            Number::make('Mobile Number')
+                ->rules(['max:12'])
                 ->sortable(),
 
-            Date::make('Birthdate'),
+            Date::make('Birthdate')
+                ->rules([new BirthdayMustBeValid()]),
 
             Text::make('Guardian Name', 'guardian'),
 
@@ -99,11 +103,9 @@ class Student extends Resource
 
             Text::make('Guardian Mobile Number', 'guardian_mobile_number'),
 
-            BelongsTo::make('Course', 'course', Course::class)
-                ->searchable(),
+            BelongsTo::make('Course', 'course', Course::class),
 
-            BelongsTo::make('Branch', 'branch', Branch::class)
-                ->searchable(),
+            BelongsTo::make('Branch', 'branch', Branch::class),
         ];
     }
 
