@@ -53,7 +53,7 @@ class AddStudent extends Action
             Select::make('Student')
                 ->help('Enter Student #.')
                 ->searchable()
-                ->options([123,234])
+                ->options(Student::get()->pluck('student_number', 'id'))
                 ->rules(['required'])
         ];
     }
