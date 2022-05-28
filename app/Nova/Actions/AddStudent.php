@@ -50,7 +50,7 @@ class AddStudent extends Action
     public function fields()
     {
         return [
-            Select::make('Student')
+            Select::make('Student 1', 'student')
                 ->help('Enter Student No.')
                 ->searchable()
                 ->options( function () {
