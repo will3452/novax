@@ -27,10 +27,13 @@ class AddStudent extends Action
         $students = Student::whereBranchId($this->branch)->get();
 
         foreach ($students as $s) {
-            $result[$s->full_name . ' - ' . $s->student_number] = $s->id;
+            $result[$s->id] = $s->full_name . ' - ' . $s->student_number;
         }
 
         return $result;
+        dd($result);
+        dd(Student::get()->pluck('first_name', 'id'));
+        return Student::get()->pluck('first_name', 'id');
     }
 
     /**
