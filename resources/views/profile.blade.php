@@ -16,10 +16,10 @@
             <about-updater userid="{{$user->id}}" about="{{$user->profile ? $user->profile->about : ''}}"></about-updater>
             <skills-adder userid="{{$user->id}}"></skills-adder>
             <div>
-                <h1>
+                <div class="text-center uppercase font-bold mt-4 mb-2">
                     Memorandum of Agreement (MOA)
-                </h1>
-                <a href="{{auth()->user()->getMoa()}}" >View</a>
+                </div>
+                <a href="{{auth()->user()->getMoa()}}" class="btn btn-sm btn-primary">View</a>
             </div>
         </div>
     </x-content>
