@@ -19,7 +19,9 @@
                 <div class="text-center uppercase font-bold mt-4 mb-2">
                     Memorandum of Agreement (MOA)
                 </div>
-                <a href="{{auth()->user()->getMoa()}}" class="btn btn-sm btn-primary">View</a>
+                <div class="text-center">
+                    <a href="{{auth()->user()->getMoa()}}" class="btn btn-sm btn-primary">View</a>
+                </div>
             </div>
         </div>
     </x-content>
