@@ -66,6 +66,21 @@ class User extends Authenticatable
         return $this->hasOne(Resume::class, 'applicant_id');
     }
 
+    public function moa()
+    {
+        return $this->hasOne(Moa::class, 'user_id');
+    }
+
+    public function getMoa()
+    {
+        $moa = auth()->user()->applications()->whereStatus('accepted')->latest()->first();
+        if ($moa) {
+            return "/storage/" . $moa->jobOffer->employer->moa->path;
+        }
+
+        return "javascript:alert('no accepted application yet!')";
+    }
+
     public function applications()
     {
         return $this->hasMany(JobApplication::class, 'applicant_id');

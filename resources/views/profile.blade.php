@@ -12,8 +12,15 @@
                 school="{{auth()->user()->school}}"
                 mobile-number="{{auth()->user()->mobile_number}}"
             ></profile-form>
+
             <about-updater userid="{{$user->id}}" about="{{$user->profile ? $user->profile->about : ''}}"></about-updater>
             <skills-adder userid="{{$user->id}}"></skills-adder>
+            <div>
+                <h1>
+                    Memorandum of Agreement (MOA)
+                </h1>
+                <a href="{{auth()->user()->getMoa()}}" >View</a>
+            </div>
         </div>
     </x-content>
 </x-layout>
