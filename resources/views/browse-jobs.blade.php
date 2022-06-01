@@ -7,7 +7,7 @@
                 <button class="p-2 bg-primary rounded text-white font-bold">SEARCH</button>
             </form>
         </div>
-        <div class="lg:flex">
+        <div class="lg:flex lg:flex-wrap">
             @foreach ($offers as $offer)
                 <div class="card lg:card-side bordered my-2 lg:w-1/3 mx-2 shadow">
                     <div class="card-body">
