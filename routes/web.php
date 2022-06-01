@@ -11,19 +11,10 @@ use App\Http\Controllers\EmailVerifyController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkillController;
+use App\Models\Moa;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -87,6 +78,21 @@ Route::post('/update-account', function () {
     }
 
     return auth()->user()->update($payload);
+});
+
+Route::get('/upload-moa', function (Request $request) {
+    return view('upload-moa');
+});
+
+Route::post('/upload-moa', function (Request $request) {
+    $request->validate([
+        'file' => ['file', 'max:2000', 'required'],
+    ]);
+    $path = $request->file->store('public');
+    $pathArray = explode('/', $path);
+
+    auth()->user()->moa()->create(['path' => end($pathArray)]);
+    return redirect()->to('/admin/resources/moas');
 });
 
 //artisan helper
