@@ -20,7 +20,7 @@
                     Memorandum of Agreement (MOA)
                 </div>
                 <div class="text-center">
-                    <a href="{{auth()->user()->getMoa()}}" class="btn btn-sm btn-primary">View</a>
+                    <a href="{{auth()->user()->getMoa()}}" download class="btn btn-sm btn-primary">DOWNLOAD</a>
                 </div>
             </div>
         </div>

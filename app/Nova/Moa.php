@@ -27,6 +27,11 @@ class Moa extends Resource
         return $query->whereUserId(auth()->id());
     }
 
+    public static function createButtonLabel ()
+    {
+        return "Upload MOA";
+    }
+
     public static function authorizedToCreate(Request $request)
     {
         return ! auth()->user()->moa()->exists();
