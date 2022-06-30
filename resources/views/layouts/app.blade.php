@@ -16,6 +16,35 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <style>
+        .dashboard-icon {
+            width:50px !important;
+        }
+        .dashboard-card {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center;
+            flex-direction: column;
+            background: white;
+            border: 1px solid #ddd;
+            padding: 1em;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .dashboard-card:hover {
+            background: #eee;
+        }
+        .dashboard-link {
+            text-decoration: none;
+            color: #222;
+            transition: all 50ms;
+        }
+        .dashboard-link:hover {
+            transform: scale(1.1);
+            color:#222;
+        }
+    </style>
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
