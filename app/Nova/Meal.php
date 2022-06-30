@@ -64,6 +64,15 @@ class Meal extends Resource
             Textarea::make('Allergen Information')
                 ->alwaysShow()
                 ->help('please use two dash ( -- ) to separate the following information. eg. wheat--peanut--milk'),
+
+            Select::make('Recommended for', 'recommended_for')
+                ->rules(['required'])
+                ->options([
+                    'All' => 'All',
+                    'Underweight' => 'Underweight',
+                    'Normal' => 'Normal',
+                    'Overweight' => 'Overweight',
+                ]),
             Image::make('Image')
                 ->rules(['max:2000', 'image']),
         ];

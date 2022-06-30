@@ -14,5 +14,6 @@ class Meal extends Model
         'foods',
         'allergen_information',
         'image',
+        'recommended_for',
     ];
 }
