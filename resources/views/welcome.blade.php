@@ -55,10 +55,10 @@
                   <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Register</a>
+                  <a class="nav-link" href="/register">Register</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
+                    <a class="nav-link" href="/login">Login</a>
                 </li>
               </ul>
             </div>
@@ -67,7 +67,7 @@
       </nav>
 
         <div class="bg-primary row text-white p-5 align-items-center">
-            <div class="col my-5">
+            <div class="col-12 col-md-6 my-5">
                 <h3 class="text-secondary">
                     Health is a bond between you and your body.
                 </h3>
@@ -76,12 +76,12 @@
                 </h1>
                 <h4>A food management that helps clients to have a proper weight and healthy body.</h4>
                 <div class="d-flex mt-3">
-                    <a href="#register" class="btn btn-dark m-2 bg-secondary btn-lg">Register</a>
-                    <a href="#register" class="btn btn-dark m-2 btn-lg">Login</a>
+                    <a href="/register" class="btn btn-dark m-2 bg-secondary btn-lg">Register</a>
+                    <a href="/login" class="btn btn-dark m-2 btn-lg">Login</a>
                 </div>
             </div>
-            <div class="col my-5">
-                <img src="/img/nutrition-banner-03.png" alt="">
+            <div class="col-12 col-md-6 my-5">
+                <img src="/img/nutrition-banner-03.png" class="w-100" alt="">
             </div>
           </div>
 
