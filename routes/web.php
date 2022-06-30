@@ -6,7 +6,7 @@ use App\Http\Controllers\RegisterController;
 
 
 Route::get('/', function () {
-    return redirect()->to('/admin');
+    return view('welcome');
 });
 
 Route::get('/register', [RegisterController::class, 'registrationPage']);
