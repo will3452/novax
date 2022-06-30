@@ -40,7 +40,7 @@
                                    </label>
                                 </div>
 
-                                @error('name')
+                                @error('gender')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -52,7 +52,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Date of Birth') }}</label>
 
                             <div class="col-md-6">
-                                <input id="birth_date" type="date" class="form-control @error('birth_date') is-invalid @enderror" birth_date="birth_date" value="{{ old('birth_date') }}" required autocomplete="birth_date" autofocus>
+                                <input id="birth_date" type="date" class="form-control @error('birth_date') is-invalid @enderror" name="birth_date" value="{{ old('birth_date') }}" required autocomplete="birth_date" autofocus>
 
                                 @error('birth_date')
                                     <span class="invalid-feedback" role="alert">
