@@ -47,6 +47,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="//unpkg.com/alpinejs" defer></script>
+
 </head>
 <body>
     <div id="app">
@@ -81,10 +83,14 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item">
+                                <a href="/home" class="nav-link">Dashboard</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
+
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -105,6 +111,11 @@
         </nav>
 
         <main class="py-4">
+            @if (session()->get('success'))
+                <div class=" mx-2 alert alert-success">
+                    {{session()->get('success')}}
+                </div>
+            @endif
             @yield('content')
         </main>
     </div>

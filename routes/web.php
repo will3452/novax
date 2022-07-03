@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BmiController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
@@ -23,3 +24,6 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home');
+
+Route::get('/bmi', [BmiController::class, 'index'])->name('bmi');
+Route::post('/bmi', [BmiController::class, 'save']);

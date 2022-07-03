@@ -21,7 +21,7 @@
                 Progress
             </div>
         </x-d-card>
-        <x-d-card>
+        <x-d-card href="{{route('bmi')}}">
             <img class="dashboard-icon" src="https://img.icons8.com/office/80/000000/estimate.png"/>
             <div class="text-center">
                 Calculator

@@ -26,6 +26,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'gender',
     ];
 
+    public function bmis () {
+        return $this->hasMany(Bmi::class, 'user_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
