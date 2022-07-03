@@ -19,6 +19,7 @@ class BmiController extends Controller
         ]);
 
         auth()->user()->bmis()->create($data);
+        auth()->user()->deleteMealToday();
         return back()->withSuccess('Record has been saved!');
     }
 }

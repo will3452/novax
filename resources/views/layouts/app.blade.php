@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -47,10 +47,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script src="//unpkg.com/alpinejs" defer></script>
-
+    <script src="https://unpkg.com/alpinejs" defer></script>
 </head>
 <body>
+    @include('sweetalert::alert')
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -119,5 +119,12 @@
             @yield('content')
         </main>
     </div>
+
+
+    <script>
+        $(function(){
+            $('#table').DataTable();
+        })
+    </script>
 </body>
 </html>

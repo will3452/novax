@@ -98,7 +98,8 @@
             Your BMI Records:
         </div>
         <div class="card-body">
-            <table class="table">
+            {{-- <zing-grid></zing-grid> --}}
+            <table class="table" id="table">
                 <thead>
                     <tr>
                         <th>
