@@ -54,6 +54,10 @@
                 OTHER MEAL
             </a>
         </form>
+        @else
+        <a class="btn btn-success" href="/generate-meal">
+            OTHER MEAL
+        </a>
         @endif
     </div>
 @endsection
