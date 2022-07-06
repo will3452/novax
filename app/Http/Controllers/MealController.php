@@ -24,7 +24,7 @@ class MealController extends Controller
                     $except .= 'OR';
                 }
             }
-            $query = DB::select(DB::raw("SELECT id FROM meals WHERE (type = '$i') AND (recommended_for = 'All' OR recommended_for = '$userBmi') $except )"));
+            $query = DB::select(DB::raw("SELECT id FROM meals WHERE (type = '$ix') AND (recommended_for = 'All' OR recommended_for = '$userBmi') $except )"));
 
             $data[$ix."_id"] = null;
 
