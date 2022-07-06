@@ -123,8 +123,8 @@
             <div class="row">
                 <div class="col-md-4">
                     <h5 class="mb-4">Contact</h5>
-                    <p>info@nutriserve.me</p>
-                    <p>+63 997 481 1185</p>
+                    <p>info@nutriserve.site</p>
+                    <p>09952250571</p>
                 </div>
                 <div class="col-md-4 d-flex justify-content-center">
                     <img src="/img/Nutri-1-150x150.png" alt="">
