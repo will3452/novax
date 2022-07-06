@@ -17,7 +17,7 @@ class MealController extends Controller
         foreach ($i as $ix) {
             // $bs = Meal::whereType($ix)->whereIn('recommended_for', ['All', \Str::title($userBmi)])->inRandomOrder()->get();
             $except = 'AND ( ';
-            $allergies = auth()->user()->allergies->pluck(['name'])->pluck()->all();
+            $allergies = auth()->user()->allergies->pluck(['name'])->all();
             foreach ($allergies as $key=>$val) {
                 $except .= " allergen_information LIKE '%$val%' ";
                 if ($key != (count($allergies)-1)) {
