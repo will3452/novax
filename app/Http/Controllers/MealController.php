@@ -16,15 +16,20 @@ class MealController extends Controller
         $i = ['breakfast', 'supper', 'lunch', 'dinner'];
         foreach ($i as $ix) {
             // $bs = Meal::whereType($ix)->whereIn('recommended_for', ['All', \Str::title($userBmi)])->inRandomOrder()->get();
-            $except = 'AND ( ';
+            $except = '';
             $allergies = auth()->user()->allergies->pluck(['name'])->all();
+            if (count($allergies)) {
+                $except = 'AND ( ';
+            }
             foreach ($allergies as $key=>$val) {
                 $except .= " allergen_information LIKE '%$val%' ";
                 if ($key != (count($allergies)-1)) {
                     $except .= 'OR';
+                } else {
+                    $except .= ' )';
                 }
             }
-            $query = DB::select(DB::raw("SELECT id FROM meals WHERE (type = '$ix') AND (recommended_for = 'All' OR recommended_for = '$userBmi') $except )"));
+            $query = DB::select(DB::raw("SELECT id FROM meals WHERE (type = '$ix') AND (recommended_for = 'All' OR recommended_for = '$userBmi') $except"));
 
             $data[$ix."_id"] = null;
 
