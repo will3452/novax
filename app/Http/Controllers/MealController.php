@@ -2,33 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use Str;
 use App\Models\Meal;
 use App\Models\MealToday;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MealController extends Controller
 {
     public function createTodayMeal () {
         $data = ['user_id' => auth()->id(),];
-        $userBmi = auth()->user()->getStatusBmi();
+        $userBmi = Str::title(auth()->user()->getStatusBmi());
         $i = ['breakfast', 'supper', 'lunch', 'dinner'];
         foreach ($i as $ix) {
-            $bs = Meal::whereType($ix)->whereIn('recommended_for', ['All', \Str::title($userBmi)])->inRandomOrder()->get();
-            $data[$ix."_id"] = null;
-            foreach ($bs as $item) {
-                $not = 0; // flag
-                $ai = explode('--', $item->allergen_information);
-                foreach ($ai as $aItem) {
-                    $aExists = auth()->user()->allergies()->where('name', 'LIKE', "%".$aItem."%")->exists();
-                    if($aExists) {
-                        $not++;
-                    }
+            // $bs = Meal::whereType($ix)->whereIn('recommended_for', ['All', \Str::title($userBmi)])->inRandomOrder()->get();
+            $except = 'AND ( ';
+            $allergies = auth()->user()->allergies->pluck('name')->pluck();
+            foreach ($allergies as $key=>$val) {
+                $except .= " allergen_information LIKE '%$val%' ";
+                if ($key != (count($allergies)-1)) {
+                    $except .= 'OR';
                 }
+            }
+            $query = DB::select(DB::raw("SELECT id FROM meals WHERE (type = '$i') AND (recommended_for = 'All' OR recommended_for = '$userBmi') $except )"));
 
-                if ($not == 0) {
-                    $data[$ix."_id"] = $item->id;
-                    break;
-                }
+            $data[$ix."_id"] = null;
+
+            if (count ($query)) {
+                $data[$ix.'_id'] = $query[rand(0, count($query) - 1)]->id;
             }
         }
 
