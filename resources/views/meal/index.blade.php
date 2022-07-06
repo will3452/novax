@@ -5,7 +5,7 @@
         @foreach (['breakfast', 'lunch', 'supper', 'dinner'] as $type)
         <div class="mt-4">
             <h3>{{\Str::title($type)}}</h3>
-            @if ($today->breakfast_id)
+            @if ($today[$type.'_id'])
             <div class="row">
                 @php
                     $meal = \App\Models\Meal::find($today[$type.'_id']);
@@ -18,10 +18,10 @@
                     <img src="/storage/{{$meal->image}}" alt="" style="width:300px !important;height:300px !important; object-fit:cover;">
                 </div>
                 <div class="col-md-8">
-                    @foreach (['nutrition', 'foods'] as $item)
+                    @foreach (['nutrition', 'foods', 'allergen information'] as $item)
                     <h5>{{\Str::plural(\Str::title($item))}}</h5>
                     <ul>
-                        @foreach (explode('--', $meal[$item]) as $xitem)
+                        @foreach (explode('--', $meal[implode('_', explode(' ',$item))]) as $xitem)
                             <li>{{$xitem}}</li>
                         @endforeach
                     </ul>

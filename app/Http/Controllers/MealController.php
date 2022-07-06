@@ -19,7 +19,7 @@ class MealController extends Controller
             $except = '';
             $allergies = auth()->user()->allergies->pluck(['name'])->all();
             if (count($allergies)) {
-                $except = 'AND ( ';
+                $except = 'AND NOT ( ';
             }
             foreach ($allergies as $key=>$val) {
                 $except .= " allergen_information LIKE '%$val%' ";
@@ -41,7 +41,7 @@ class MealController extends Controller
         MealToday::create($data);
     }
 
-    public function index (Request $request) {
+    public function index1 (Request $request) {
         $exists = MealToday::whereUserId(auth()->id())->whereDate('created_at', '=', \Carbon\Carbon::today()->format('Y-m-d'))->exists();
 
             if (! $exists) {
@@ -54,11 +54,12 @@ class MealController extends Controller
     }
 
 
-    public function index1 (Request $request) {
+    public function index (Request $request) {
         try {
             $exists = MealToday::whereUserId(auth()->id())->whereDate('created_at', '=', \Carbon\Carbon::today()->format('Y-m-d'))->exists();
 
             if (! $exists) {
+                auth()->user()->deleteMealToday();
                 $this->createTodayMeal();
             }
 

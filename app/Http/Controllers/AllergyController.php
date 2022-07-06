@@ -10,6 +10,7 @@ class AllergyController extends Controller
     public function deleteAllergies() {
         Allergy::whereUserId(auth()->id())->each(fn($e)=>$e->delete());
     }
+
     public function save (Request $request) {
         $this->deleteAllergies();
         foreach ($request->allergies as $item) {
