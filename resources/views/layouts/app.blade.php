@@ -52,7 +52,7 @@
 <body>
     @include('sweetalert::alert')
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light shadow-sm" style="background: #d3e8ff">
+        <nav class="navbar navbar-expand-md navbar-light shadow-sm" >
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="/img/logo.png" alt="" style="width:100px">
