@@ -37,6 +37,19 @@ class MealController extends Controller
     }
 
     public function index (Request $request) {
+        $exists = MealToday::whereUserId(auth()->id())->whereDate('created_at', '=', \Carbon\Carbon::today()->format('Y-m-d'))->exists();
+
+            if (! $exists) {
+                $this->createTodayMeal();
+            }
+
+            $today = MealToday::whereUserId(auth()->id())->whereDate('created_at', '=', \Carbon\Carbon::today()->format('Y-m-d'))->latest()->first();
+
+            return view('meal.index', compact('today'));
+    }
+
+
+    public function index1 (Request $request) {
         try {
             $exists = MealToday::whereUserId(auth()->id())->whereDate('created_at', '=', \Carbon\Carbon::today()->format('Y-m-d'))->exists();
 
