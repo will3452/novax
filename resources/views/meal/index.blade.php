@@ -40,8 +40,7 @@
             @endif
         </div>
         @endforeach
-        @if ($today->breakfast_id == null && $today->lunch_id == null && $today->supper_id == null && $today->dinner_id == null)
-        @else
+        @if(!($today->breakfast_id == null && $today->lunch_id == null && $today->supper_id == null && $today->dinner_id == null))
         <form action="{{route('progress')}}" class="mt-5" method="POST">
             @csrf
             <input type="hidden" value="MealToday" name="type">
