@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('content')
     <h1 class="text-center">Recommended food for you.</h1>
+    <div class="container">
+        <div class="alert alert-warning">
+            Remiders! if your allergy/allergies is still there in the given meal below, please press the button <strong>OTHER MEAL</strong> at the bottom of the page, to generate new meal.
+        </div>
+    </div>
     <div class="container mt-5">
         @foreach (['breakfast', 'lunch', 'supper', 'dinner'] as $type)
         <div class="mt-4">
