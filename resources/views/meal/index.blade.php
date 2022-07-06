@@ -9,6 +9,10 @@
             <div class="row">
                 @php
                     $meal = \App\Models\Meal::find($today[$type.'_id']);
+                    if (!$meal) {
+                        echo '<div class="alert alert-secondary">no data found.</div>';
+                        continue;
+                    }
                 @endphp
                 <div class="col-md-4">
                     <img src="/storage/{{$meal->image}}" alt="" style="width:300px !important;height:300px !important; object-fit:cover;">
