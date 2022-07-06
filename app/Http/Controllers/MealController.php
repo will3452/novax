@@ -19,7 +19,7 @@ class MealController extends Controller
                 $not = 0; // flag
                 $ai = explode('--', $item->allergen_information);
                 foreach ($ai as $aItem) {
-                    $aExists = auth()->user()->allergies()->where('name', 'LIKE', "%$aItem%")->exists();
+                    $aExists = auth()->user()->allergies()->where('name', 'LIKE', "%".$aItem."%")->exists();
                     if($aExists) {
                         $not++;
                     }
