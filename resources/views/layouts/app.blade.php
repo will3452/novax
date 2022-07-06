@@ -117,6 +117,29 @@
                 </div>
             @endif
             @yield('content')
+
+      <footer class="bg-primary text-white p-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5 class="mb-4">Contact</h5>
+                    <p>info@nutriserve.me</p>
+                    <p>+63 997 481 1185</p>
+                </div>
+                <div class="col-md-4 d-flex justify-content-center">
+                    <img src="/img/Nutri-1-150x150.png" alt="">
+                </div>
+                <div class="col-md-4 text-right">
+                    <h5 class="mb-4">Address</h5>
+                    <p>Tarlac State University</p>
+                    <p>Romulo Blvd Tarlac City, Tarlac</p>
+                </div>
+            </div>
+            <div class="text-sm text-center">
+                <small>Copyright © 2022 NutriServe</small>
+            </div>
+        </div>
+      </footer>
         </main>
     </div>
 

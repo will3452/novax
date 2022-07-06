@@ -41,6 +41,9 @@
             <button class="btn btn-primary">
                 TAKE MEAL
             </button>
+            <a class="btn btn-success" href="/generate-meal">
+                OTHER MEAL
+            </a>
         </form>
         @endif
     </div>
