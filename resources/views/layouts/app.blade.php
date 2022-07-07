@@ -87,6 +87,9 @@
                             <li class="nav-item">
                                 <a href="/home" class="nav-link">Dashboard</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="/profile" class="nav-link">Account Setting</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
