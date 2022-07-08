@@ -34,7 +34,7 @@ Route::get('/bmi', [BmiController::class, 'index'])->name('bmi');
 Route::post('/bmi', [BmiController::class, 'save']);
 
 Route::get('/exercises', [ExerciseController::class, 'index'])->name('exercises');
-// Route::get('/exercises/{e}', [ExerciseController::class, 'show'])->name('exercises.show');
+Route::get('/exercises/{e}', [ExerciseController::class, 'show'])->name('exercises.show');
 
 Route::get('/meals', [MealController::class, 'index'])->name('meal');
 Route::get('/generate-meal', [MealController::class, 'generate']);
