@@ -24,7 +24,11 @@
             },
             init () {
                 i = document.querySelector('#tagify')
-                new Tagify (i);
+                new Tagify (i, {whitelist: [
+                    @foreach(\App\Models\AllergyData::get() as $item)
+                    `{{$item->name}}`,
+                    @endforeach
+                ], userInput: false,});
                 this.al = `@foreach(auth()->user()->allergies()->get()->pluck('name') as $item) {{$item}} @if(! $loop->last) , @endif @endforeach`
                 i.addEventListener('change', (e) => {
                     this.al = e.target.value

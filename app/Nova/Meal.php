@@ -2,13 +2,14 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use OptimistDigital\MultiselectField\Multiselect;
 
 class Meal extends Resource
 {
@@ -61,9 +62,13 @@ class Meal extends Resource
                 ->alwaysShow()
                 ->rules(['required'])
                 ->help('please use two dash ( -- ) to separate the following foods. eg. 1 glass of water--3 fried chicken'),
-            Textarea::make('Allergen Information')
-                ->alwaysShow()
-                ->help('please use two dash ( -- ) to separate the following information. eg. wheat--peanut--milk'),
+            Multiselect::make('Allergen Information')
+                ->onlyOnForms()
+                ->options(fn () => \App\Models\AllergyData::get()->pluck('name', 'name'))
+                ->indexDelimiter('--'),
+
+            Textarea::make('Allergen Information')->alwaysShow()->exceptOnForms(),
+                // ->help('please use two dash ( -- ) to separate the following information. eg. wheat--peanut--milk'),
 
             Select::make('Recommended for', 'recommended_for')
                 ->rules(['required'])

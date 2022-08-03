@@ -25,6 +25,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
         "laravelwebdev/responsive": "^1.0",
+        "optimistdigital/nova-multiselect-field": "^2.4",
         "optimistdigital/nova-settings": "^3.2",
         "realrashid/sweet-alert": "^5.1",
         "richardkeep/nova-timenow": "^1.0",
