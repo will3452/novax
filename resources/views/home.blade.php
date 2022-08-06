@@ -28,7 +28,7 @@
                     @foreach(\App\Models\AllergyData::get() as $item)
                     `{{$item->name}}`,
                     @endforeach
-                ], enforceWhitelist: true,});
+                ], enforceWhitelist: true, dropdown: {maxItems: 9999, enabled: 0}});
                 this.al = `@foreach(auth()->user()->allergies()->get()->pluck('name') as $item) {{$item}} @if(! $loop->last) , @endif @endforeach`
                 i.addEventListener('change', (e) => {
                     this.al = e.target.value
