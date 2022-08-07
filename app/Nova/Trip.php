@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Trip extends Resource
@@ -49,6 +50,9 @@ class Trip extends Resource
                 ->rules(['required'])
                 ->options(fn () => \App\Models\Terminal::get()->pluck('name', 'name')),
             Currency::make('Fare')
+                ->rules(['required']),
+            Textarea::make('Remarks / Schedules ', 'remarks')
+                ->alwaysShow()
                 ->rules(['required'])
         ];
     }

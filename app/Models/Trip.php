@@ -12,5 +12,6 @@ class Trip extends Model
         'start',
         'end',
         'fare',
+        'remarks'
     ];
 }

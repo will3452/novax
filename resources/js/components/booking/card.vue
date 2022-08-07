@@ -2,7 +2,7 @@
     <div>
         <dashboard-card
         style="margin-right:1em; width: 300px;background-image: linear-gradient(to bottom, #3BC062 , #2DB15A);color:white; border: none;border-radius: 1em;"
-        icon="file-protect"
+        icon="pushpin"
         label="Booking"
         >
             <a-button type="ghost" block @click="viewForm" >
@@ -23,12 +23,14 @@
                 <a-form-model-item label="Date">
                     <a-date-picker :disabled-date="disabledDate" style="width:100%"></a-date-picker>
                 </a-form-model-item>
+                <a-alert v-if="getRemarks(payload.trip)" type="info" message="Other Info." :description="getRemarks(payload.trip)"></a-alert>
                 <a-descriptions>
                     <a-descriptions-item label="Fare">
                         <span style="font-size:32px">{{getFare(payload.trip) || '0.00'}}</span>
                     </a-descriptions-item>
                 </a-descriptions>
                 <a-button type="primary" size="large" :loading="loadingSubmit" @click="submit" block>Book now</a-button>
+                <a-alert style="margin-top: 1em;" type="warning" show-icon description="Your booking request is still required to be reviewed for admin approval."></a-alert>
             </a-form-model>
             <a-skeleton v-else></a-skeleton>
         </a-drawer>
@@ -55,8 +57,15 @@ export default {
         disabledDate(current) {
             return current && current < moment().endOf('day');
         },
+        getTripDetails(tripId) {
+            return this.trips.find( e => e.id == tripId)
+        },
+        getRemarks(tripId) {
+            let trip =  this.getTripDetails(tripId)
+            return trip ? trip.remarks : false
+        },
         getFare(tripId) {
-            let trip = this.trips.find( e => e.id == tripId)
+            let trip = this.getTripDetails(tripId)
             let fare = 0
             if (trip) {
                 fare = trip.fare

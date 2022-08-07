@@ -5,11 +5,11 @@
    <booking-card></booking-card>
     <dashboard-card
     style="margin-right:1em; width: 300px;background-image: linear-gradient(to bottom, #673DE6 , #673CE5);color:white; border: none;border-radius: 1em;"
-    icon="history"
-    label="History"
+    icon="profile"
+    label="Tickets"
     >
         <a-button type="ghost" block>
-            View History
+            View Tickets
         </a-button>
     </dashboard-card>
     <dashboard-card
