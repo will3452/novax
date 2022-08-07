@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\Notice;
+use App\Models\Trip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,3 +34,14 @@ Route::get('/public-test', function () {
 //user authentication
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
+
+Route::get('/latest-notices', function (Request $req) {
+    $notices = Notice::latest()->take(5)->get();
+    return $notices;
+});
+
+// trip
+Route::get('/trips', function (Request $req) {
+    $trip = Trip::get(); // get all trip
+    return $trip;
+});

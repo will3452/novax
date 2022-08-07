@@ -6,7 +6,7 @@ use App\Http\Controllers\RegisterController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->to('/login');
 });
 
 Route::get('/register', [RegisterController::class, 'registrationPage']);
@@ -18,3 +18,9 @@ Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);
     return $result;
 });
+Route::get('/logout', function () {
+    auth()->logout();
+    return redirect()->to('/');
+});
+Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
