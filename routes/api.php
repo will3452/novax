@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\FileImageController;
 use App\Models\Discount;
 use App\Models\Notice;
@@ -52,3 +53,6 @@ Route::get('/trips', function (Request $req) {
 Route::get('/discounts', fn (Request $request) => Discount::get());
 
 Route::post('/file-image-upload', [FileImageController::class, 'upload']);
+Route::post('/file-image-remove', [FileImageController::class, 'remove']);
+
+Route::post('/booking', [BookingController::class, 'store']);

@@ -9,8 +9,7 @@
                 Book Now
             </a-button>
         </dashboard-card>
-        <a-drawer title="Booking Form" :width="400" :visible="bookingFormVisible" @close="closeHandler">
-        {{payload}}
+        <a-drawer title="Booking Form" :width="500" :visible="bookingFormVisible" @close="closeHandler">
             <a-form-model v-if="!loading">
                 <a-form-model-item label="Select Trip">
                     <a-select v-model="payload.trip" allow-clear>
@@ -33,13 +32,15 @@
                         </a-select-option>
                     </a-select>
                 </a-form-model-item>
-                <div>
-                    <uploader/>
+                <div v-if="payload.discount_id">
+                    <uploader @uploaded="uploadedHandler">
+                        Upload the picture of your supporting docs, or ID.
+                    </uploader>
                 </div>
                 <a-alert v-if="getRemarks(payload.trip)" type="info" message="Other Info." :description="getRemarks(payload.trip)"></a-alert>
-                <a-descriptions>
+                <a-descriptions style="margin-top: 1em;">
                     <a-descriptions-item label="Fare">
-                        <span style="font-size:32px">{{getAbsoluteFare(payload.trip) - getDiscount() || '0.00'}}</span>
+                        <span style="font-size:32px">{{totalFare || '0.00'}}</span>
                     </a-descriptions-item>
                 </a-descriptions>
                 <a-button type="primary" size="large" :loading="loadingSubmit" @click="submit" block>Book now</a-button>
@@ -54,11 +55,13 @@
 import moment from 'moment'
 import uploader from '../utils/uploader.vue'
 export default {
+    props:['userId'],
     components: {
         uploader,
     },
     async created () {
         await this.loadDiscounts()
+        await this.loadUser()
     },
     data () {
         return {
@@ -70,10 +73,33 @@ export default {
             payload: {},
         }
     },
+    computed: {
+        totalFare() {
+            return this.formatNumber(this.getAbsoluteFare(this.payload.trip) - this.getDiscount())
+        }
+    },
     methods: {
         moment,
-        submit() {
-            this.loadingSubmit = true
+        async loadUser() {
+            this.payload.user_id = this.userId
+        },
+        uploadedHandler(file) {
+            this.payload.discount_image_proof = file
+        },
+        async submit() {
+            try {
+                this.loadingSubmit = true
+                this.payload.amount_payable = (this.getAbsoluteFare(this.payload.trip) - this.getDiscount())
+                let tripId = this.payload.trip
+                this.payload.trip_id = tripId
+                await window.axios.post('/api/booking', { ...this.payload })
+                this.$notification.success({message:'Success', description: 'Booked successfully!'})
+                this.bookingFormVisible = false
+            } catch(err) {
+                this.$notification.error({message:'Error', description: err.message})
+            } finally {
+                this.loadingSubmit = false
+            }
         },
         disabledDate(current) {
             return current && current < moment().endOf('day');

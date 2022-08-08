@@ -1,9 +1,13 @@
 <template>
     <a-upload-dragger
+        style="margin-bottom:1em"
+        :multiple="false"
+        accept="image/png"
         action="/api/file-image-upload"
         method="POST"
         name="file"
-        @change="fileChangeHandler">
+        @change="fileChangeHandler"
+        >
         <p class="ant-upload-drag-icon"><a-icon type="inbox" /></p>
         <slot/>
     </a-upload-dragger>
@@ -13,11 +17,12 @@
     export default {
         methods: {
             fileChangeHandler (info) {
+                let { file } = info
                 let status = info.file.status
                 if (status === 'done') {
                     this.$message.success(`file uploaded successfully.`)
-                    console.log('file uploaded >> ', info.file.response)
-                    this.$emit('uploaded', info.file.response)
+                    console.log('file uploaded >> ', file.response)
+                    this.$emit('uploaded', file.response)
                 } else if(status === 'error') {
                     this.$message.error(`file upload failed.`);
                 }
