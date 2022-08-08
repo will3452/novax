@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Http\Controllers\FileImageController;
+use App\Models\Discount;
 use App\Models\Notice;
 use App\Models\Trip;
 use Illuminate\Http\Request;
@@ -45,3 +47,8 @@ Route::get('/trips', function (Request $req) {
     $trip = Trip::get(); // get all trip
     return $trip;
 });
+
+//discounts
+Route::get('/discounts', fn (Request $request) => Discount::get());
+
+Route::post('/file-image-upload', [FileImageController::class, 'upload']);

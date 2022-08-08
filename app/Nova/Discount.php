@@ -5,6 +5,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -42,11 +43,14 @@ class Discount extends Resource
     public function fields(Request $request)
     {
         return [
-            Textarea::make('Discount')
+            Textarea::make('Description')
+                ->alwaysShow()
                 ->rules(['required']),
             Number::make('Rate')
+                ->onlyOnForms()
                 ->rules(['required'])
                 ->placeholder('eg. 10%'),
+            Text::make('Rate', fn () => $this->rate . ' %')
         ];
     }
 
