@@ -21,8 +21,7 @@
         "sass-loader": "^11.0.1",
         "vue": "^2.6.12",
         "vue-loader": "^15.9.8",
-        "vue-template-compiler": "^2.6.12",
-        "webpack-livereload-plugin": "^1.2.0"
+        "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
         "ant-design-vue": "^1.7.8",

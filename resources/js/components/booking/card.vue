@@ -10,6 +10,7 @@
             </a-button>
         </dashboard-card>
         <a-drawer title="Booking Form" :width="400" :visible="bookingFormVisible" @close="closeHandler">
+        {{payload}}
             <a-form-model v-if="!loading">
                 <a-form-model-item label="Select Trip">
                     <a-select v-model="payload.trip" allow-clear>
@@ -21,7 +22,7 @@
                     </a-select>
                 </a-form-model-item>
                 <a-form-model-item label="Date">
-                    <a-date-picker :disabled-date="disabledDate" style="width:100%"></a-date-picker>
+                    <a-date-picker v-model="payload.date" :disabled-date="disabledDate" style="width:100%"></a-date-picker>
                 </a-form-model-item>
                 <a-form-model-item label="Discount">
                     <a-select v-model="payload.discount_id" allow-clear>
@@ -32,7 +33,9 @@
                         </a-select-option>
                     </a-select>
                 </a-form-model-item>
-                <a-upload name="file"></a-upload>
+                <div>
+                    <uploader/>
+                </div>
                 <a-alert v-if="getRemarks(payload.trip)" type="info" message="Other Info." :description="getRemarks(payload.trip)"></a-alert>
                 <a-descriptions>
                     <a-descriptions-item label="Fare">
@@ -49,7 +52,11 @@
 
 <script>
 import moment from 'moment'
+import uploader from '../utils/uploader.vue'
 export default {
+    components: {
+        uploader,
+    },
     async created () {
         await this.loadDiscounts()
     },
