@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Bookings</h1>
+    <booking-card user-id="{{auth()->id()}}"></booking-card>
     <booking-list user-id="{{auth()->id()}}"></booking-list>
 @endsection

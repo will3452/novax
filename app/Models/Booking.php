@@ -6,11 +6,16 @@ use App\Models\Traits\BookingTrait;
 use App\Models\Traits\DiscountedTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\BelongsToUserTrait;
+use App\Models\Traits\TransactionableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Booking extends Model
 {
-    use HasFactory, BookingTrait, BelongsToUserTrait, DiscountedTrait;
+    use HasFactory, BookingTrait, BelongsToUserTrait, DiscountedTrait, TransactionableTrait;
+    protected $casts = [
+        'date' => 'date',
+        'paid_at' => 'date',
+    ];
     protected $fillable = [
         'trip_id',
         'trip_details',
@@ -27,7 +32,8 @@ class Booking extends Model
     protected $with = [
         'user',
         'discount',
-        'trip'
+        'trip',
+        'transaction',
     ];
 
     public function trip () {
@@ -37,4 +43,9 @@ class Booking extends Model
     const STATUS_FOR_REVIEW = 'FOR REVIEW';
     const STATUS_TO_PAY = 'TO PAY';
     const STATUS_BOOKED = 'BOOKED';
+    const STATUS_CANCELLED = 'CANCELLED';
+
+    public function approve () {
+        $this->update(['status' => self::STATUS_TO_PAY]);
+    }
 }

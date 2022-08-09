@@ -1,7 +1,7 @@
 <template>
     <div>
         <dashboard-card
-        style="margin-right:1em; width: 300px;background-image: linear-gradient(to bottom, #3BC062 , #2DB15A);color:white; border: none;border-radius: 1em;"
+        style="margin-right:1em;background-image: linear-gradient(to bottom, #3BC062 , #2DB15A);color:white; border: none;border-radius: 1em;"
         icon="pushpin"
         label="Booking"
         >
@@ -10,8 +10,9 @@
             </a-button>
         </dashboard-card>
         <a-drawer title="Booking Form" :width="500" :visible="bookingFormVisible" @close="closeHandler">
-            <a-form-model v-if="!loading">
-                <a-form-model-item label="Select Trip">
+            <errors :errors="errors"></errors>
+            <a-form-model v-if="!loading" :model="payload">
+                <a-form-model-item label="Select Trip" required prop="trip" >
                     <a-select v-model="payload.trip" allow-clear>
                         <a-select-option :key="trip" :value="trip.id" v-for="trip in trips">
                             <div>
@@ -20,10 +21,10 @@
                         </a-select-option>
                     </a-select>
                 </a-form-model-item>
-                <a-form-model-item label="Date">
+                <a-form-model-item label="Date" prop="date" required>
                     <a-date-picker v-model="payload.date" :disabled-date="disabledDate" style="width:100%"></a-date-picker>
                 </a-form-model-item>
-                <a-form-model-item label="Discount">
+                <a-form-model-item label="Discount" prop="discount_id">
                     <a-select v-model="payload.discount_id" allow-clear>
                         <a-select-option :key="discount.id" :value="discount.id" v-for="discount in discounts">
                             <span>
@@ -52,20 +53,22 @@
 </template>
 
 <script>
-import { moneyFormat } from '../../global.js'
+import { moneyFormat, deepCopy } from '../../global.js'
 import moment from 'moment'
 import uploader from '../utils/uploader.vue'
+import errors from '../utils/errors.vue';
 export default {
     props:['userId'],
     components: {
         uploader,
+        errors,
     },
     async created () {
         await this.loadDiscounts()
-        await this.loadUser()
     },
     data () {
         return {
+            errors: [],
             discounts: [],
             loading: true,
             loadingSubmit: false,
@@ -81,9 +84,7 @@ export default {
     },
     methods: {
         moment,
-        async loadUser() {
-            this.payload.user_id = this.userId
-        },
+        deepCopy,
         uploadedHandler(file) {
             this.payload.discount_image_proof = file
         },
@@ -93,13 +94,21 @@ export default {
                 this.payload.amount_payable = (this.getAbsoluteFare(this.payload.trip) - this.getDiscount())
                 let tripId = this.payload.trip
                 this.payload.trip_id = tripId
+                this.payload.user_id = this.deepCopy(this.userId)
                 await window.axios.post('/api/booking', { ...this.payload })
                 this.$notification.success({message:'Success', description: 'Booked successfully!'})
                 this.bookingFormVisible = false
             } catch(err) {
-                this.$notification.error({message:'Error', description: err.message})
+                let { response } = err
+                if (response.status == 422) {
+                    this.errors = Object.values(response.data.errors)
+                } else {
+                    this.$notification.error({message:'Error', description: err.message})
+                }
             } finally {
                 this.loadingSubmit = false
+                this.payload = {}
+                this.errors = []
             }
         },
         disabledDate(current) {

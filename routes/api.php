@@ -1,13 +1,15 @@
 <?php
 
-use App\Http\Controllers\ApiAuthenticationController;
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\FileImageController;
-use App\Models\Discount;
-use App\Models\Notice;
 use App\Models\Trip;
+use App\Models\User;
+use App\Models\Notice;
+use App\Models\Discount;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\FileImageController;
+use App\Http\Controllers\ApiAuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +31,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
 });
 
-Route::get('/public-test', function () {
-    return 'public test';
+Route::get('/get-user-details', function (Request $request) {
+    return User::find($request->user);
 });
 
 
@@ -47,6 +49,24 @@ Route::get('/latest-notices', function (Request $req) {
 Route::get('/trips', function (Request $req) {
     $trip = Trip::get(); // get all trip
     return $trip;
+});
+
+//payment option - gcash pkey
+Route::get('/pkey', function () {
+    return config('payment.gcash_pkey');
+});
+
+//transactions
+Route::post('/transaction', function (Request $request) {
+    $data = $request->validate([
+        'hash' => 'required',
+        'model_type' => 'required',
+        'model_id' => 'required',
+    ]);
+
+    $transaction = Transaction::create($data);
+
+    return $transaction;
 });
 
 //discounts

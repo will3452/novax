@@ -4,7 +4,7 @@
     <div style="display:flex; flex-wrap: wrap;">
    <booking-card user-id="{{auth()->id()}}" ></booking-card>
     <dashboard-card
-    style="margin-right:1em; width: 300px;background-image: linear-gradient(to bottom, #673DE6 , #673CE5);color:white; border: none;border-radius: 1em;"
+    style="margin-right:1em; background-image: linear-gradient(to bottom, #673DE6 , #673CE5);color:white; border: none;border-radius: 1em;"
     icon="profile"
     label="Tickets"
     >
@@ -13,7 +13,7 @@
         </a-button>
     </dashboard-card>
     <dashboard-card
-    style="margin-right:1em; width: 300px;background-image: linear-gradient(to bottom, #FF1D00 , #FF6700);color:white; border: none;border-radius: 1em;"
+    style="margin-right:1em; background-image: linear-gradient(to bottom, #FF1D00 , #FF6700);color:white; border: none;border-radius: 1em;"
     icon="environment"
     label="Map"
     >
