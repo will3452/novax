@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { moneyFormat } from '../../global.js'
 import moment from 'moment'
 import uploader from '../utils/uploader.vue'
 export default {
@@ -130,8 +131,7 @@ export default {
             return 0
         },
         formatNumber(fare) {
-            let formatter = new Intl.NumberFormat('en-Us', {style: 'currency', currency: 'PHP' })
-            return formatter.format(fare)
+            return moneyFormat(fare)
         },
         getFare(tripId) {
             let fare = (this.getAbsoluteFare(tripId) - this.getDiscount())

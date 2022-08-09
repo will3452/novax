@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\Models\Traits\BookingTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Traits\DiscountedTrait;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\BelongsToUserTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Booking extends Model
 {
-    use HasFactory, BookingTrait;
+    use HasFactory, BookingTrait, BelongsToUserTrait, DiscountedTrait;
     protected $fillable = [
         'trip_id',
         'trip_details',
@@ -21,6 +23,16 @@ class Booking extends Model
         'qty',
         'amount_payable',
     ];
+
+    protected $with = [
+        'user',
+        'discount',
+        'trip'
+    ];
+
+    public function trip () {
+        return $this->belongsTo(Trip::class, 'trip_id');
+    }
 
     const STATUS_FOR_REVIEW = 'FOR REVIEW';
     const STATUS_TO_PAY = 'TO PAY';

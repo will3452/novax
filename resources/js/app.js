@@ -29,6 +29,7 @@ Vue.component('dashboard-notices', require('./components/dashboard/notices.vue')
 
 //booking
 Vue.component('booking-card', require('./components/booking/card.vue').default);
+Vue.component('booking-list', require('./components/booking/list.vue').default);
 
 Vue.config.productionTip = false;
 Vue.use(Antd);

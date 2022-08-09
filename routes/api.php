@@ -56,3 +56,4 @@ Route::post('/file-image-upload', [FileImageController::class, 'upload']);
 Route::post('/file-image-remove', [FileImageController::class, 'remove']);
 
 Route::post('/booking', [BookingController::class, 'store']);
+Route::get('/booking', [BookingController::class, 'getUserBookings']);
