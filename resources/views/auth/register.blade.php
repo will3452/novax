@@ -35,6 +35,20 @@
             </div>
 
             <div>
+                <label for="email" class=" col-form-label text-md-end">{{ __('Mobile No.') }}</label>
+
+                <div class="">
+                    <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile">
+
+                    @error('mobile')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+            <div>
                 <label for="password" class=" col-form-label text-md-end">{{ __('Password') }}</label>
 
                 <div class="">
