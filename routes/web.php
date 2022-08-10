@@ -14,8 +14,8 @@ Route::get('/', function () {
     return redirect()->to('/login');
 });
 
-Route::get('/register', [RegisterController::class, 'registrationPage']);
-Route::post('/register', [RegisterController::class, 'postRegister']);
+// Route::get('/register', [RegisterController::class, 'registrationPage']);
+// Route::post('/register', [RegisterController::class, 'postRegister']);
 
 
 //artisan helper
