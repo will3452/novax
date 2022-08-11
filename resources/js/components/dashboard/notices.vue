@@ -45,7 +45,7 @@ export default {
         },
         async loadNotices() {
             try {
-                let { data } = await window.axios.get('/api/latest-notices')
+                let { data } = await window.axios.get('/api/latest-notices?limit=5')
                 this.notices = JSON.parse(JSON.stringify(data))
             } catch (err) {
                 this.$notification.error({message:'Error', description: error.message})

@@ -5,7 +5,6 @@
     <a-col :span="24">
         <form method="POST" action="{{ route('register') }}">
             @csrf
-
             <div>
                 <label for="name" class=" col-form-label text-md-end">{{ __('Name') }}</label>
 

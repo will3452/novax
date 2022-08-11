@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -30,6 +31,10 @@ Route::get('/logout', function () {
 
 Route::prefix('bookings')->name('bookings.')->middleware(['auth'])->group(function () {
     Route::get('/', [BookingController::class, 'index'])->name('index');
+});
+
+Route::prefix('notices')->name('notices.')->middleware(['auth'])->group(function () {
+    Route::get('/', [NoticeController::class, 'index']);
 });
 
 Route::post('pay', [PaymentController::class, 'pay']);

@@ -41,7 +41,12 @@ Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
 Route::get('/latest-notices', function (Request $req) {
-    $notices = Notice::latest()->take(5)->get();
+    $limit = $req->limit ?? 0;
+    if ($limit == 0) {
+        $notices = Notice::latest()->get();
+        return $notices;
+    }
+    $notices = Notice::latest()->take($limit)->get();
     return $notices;
 });
 

@@ -84,6 +84,7 @@
                  {label: 'Dashboard', icon: 'dashboard', 'link': '/home'},
                  {label: 'Booking', icon: 'pushpin', 'link': '/bookings'},
                  {label: 'Tickets', icon: 'profile', 'link': '#tickets'},
+                 {label: 'Notices', icon: 'notification', 'link': '/notices'},
                  {label: 'Map', icon: 'compass', 'link': '#location'},
                  {label: 'History', icon: 'history', 'link': '#history'},
                  {label: 'Profile', icon: 'user', link: '#user'},
