@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <a-alert message="Hello {{auth()->user()->name}}" type="success" closable> </a-alert>
     <div style="display:flex; flex-wrap: wrap;">
    <booking-card user-id="{{auth()->id()}}" ></booking-card>
     <dashboard-card

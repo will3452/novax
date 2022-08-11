@@ -8,6 +8,7 @@ class PaymentController extends Controller
 {
     public function pay(Request $request) {
         $curl = curl_init();
+        $webhook = url(config('payment.gcash_webhook'));
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://g.payx.ph/payment_request',
@@ -26,7 +27,7 @@ class PaymentController extends Controller
                 'customermobile' => $request->customermobile,
                 'customername' => $request->customername,
                 // 'redirectsuccessurl' => $request->redirectsuccessurl,
-                'webhooksuccessurl' => config('payment.gcash_webhook'),
+                'webhooksuccessurl' => $webhook,
             ),
         ));
 
