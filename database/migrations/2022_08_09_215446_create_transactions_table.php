@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->morphs('model');
             $table->string('hash');
             $table->boolean('verified')->default(false);
+            $table->json('aggregate_payload')->nullable();
             $table->timestamps();
         });
     }

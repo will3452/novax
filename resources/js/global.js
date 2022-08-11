@@ -7,3 +7,7 @@ export const moneyFormat = (amount) => {
 export const deepCopy = (value)  => {
     return JSON.parse(JSON.stringify(value))
 }
+
+export const formatDate = (item) => {
+    return window.moment(item).format('MMM Do YY')
+}

@@ -28,4 +28,9 @@ class BookingController extends Controller
     public function getUserBookings (Request $request) {
         return Booking::whereUserId($request->user)->latest()->get();
     }
+
+    public function cancelBooking (Request $request) {
+        $booking = Booking::find($request->booking_id);
+        return $booking->cancel();
+    }
 }

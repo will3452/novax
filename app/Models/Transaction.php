@@ -13,6 +13,7 @@ class Transaction extends Model
         'model_id',
         'hash',
         'verified',
+        'aggregate_payload',
     ];
 
     public function model () {

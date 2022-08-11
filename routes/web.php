@@ -31,6 +31,8 @@ Route::get('/logout', function () {
 
 Route::prefix('bookings')->name('bookings.')->middleware(['auth'])->group(function () {
     Route::get('/', [BookingController::class, 'index'])->name('index');
+
+Route::post('/cancel', [BookingController::class, 'cancelBooking'])->name('cancel');
 });
 
 Route::prefix('notices')->name('notices.')->middleware(['auth'])->group(function () {

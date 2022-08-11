@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\FileImageController;
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Notifications\PaymentStatusUpdate;
+use Illuminate\Support\Facades\Notification;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +61,23 @@ Route::get('/trips', function (Request $req) {
 //payment option - gcash pkey
 Route::get('/pkey', function () {
     return config('payment.gcash_pkey');
+});
+
+Route::get('/webhook-link', function () {
+    $uri = config('payment.gcash_webhook');
+    return url($uri);
+});
+
+Route::post('/payment/webhook', function (Request $request) {
+    $payload = $request->all();
+    $verified = $request->success;
+    $txn = Transaction::whereHash($request->request_id)->first();
+    $txn->update(['verified' => $verified, 'aggregate_payload' => json_encode($payload)]);
+    $user = $txn->model->user;
+    Notification::send($user, new PaymentStatusUpdate($txn)); //send notif
+    if ($verified) {
+        $txn->model()->booked();
+    }
 });
 
 //transactions

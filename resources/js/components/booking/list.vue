@@ -24,7 +24,8 @@
             <template slot="action" slot-scope="fare, record">
                 <div>
                     <a-button size="small" type="primary" v-if="record.status === 'TO PAY' " @click="payNow(record)">Pay now</a-button>
-                    <a-button size="small" type="danger" v-if="record.status === 'FOR REVIEW' ">Cancel</a-button>
+                    <a-button size="small" type="danger" v-if="record.status === 'FOR REVIEW' " @click="cancelNow(record)">Cancel</a-button>
+                    <a-button size="small" disabled type="danger" v-if="record.status === 'CANCELLED' " @click="cancelNow(record)">Cancel</a-button>
                 </div>
             </template>
         </a-table>
@@ -95,6 +96,23 @@ export default {
         moneyFormat,
         getDate(item) {
             return window.moment(item).format('MMM Do YY')
+        },
+        cancelNow({ id }, confirm = false) {
+
+            if (! confirm) {
+                this.$confirm({
+                    title: 'Cancel Confirmation',
+                    content: 'Are you sure you want to cancel ?',
+                    onOk: async () => {
+                       try {
+                             await window.axios.post('/bookings/cancel', {booking_id: id})
+                             this.$notification.success({message: 'Success', description: 'Cancelled Successfully.'})
+                       } catch (err) {
+                            this.$notification.error({message: 'Error', description: err.message})
+                       }
+                    }
+                })
+            }
         },
         payNow( {amount_payable, id} ) {
             this.recordId = id

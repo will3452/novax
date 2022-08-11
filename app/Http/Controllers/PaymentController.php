@@ -25,7 +25,8 @@ class PaymentController extends Controller
                 'customeremail' => $request->customeremail,
                 'customermobile' => $request->customermobile,
                 'customername' => $request->customername,
-                'redirectsuccessurl' => $request->redirectsuccessurl,
+                // 'redirectsuccessurl' => $request->redirectsuccessurl,
+                'webhooksuccessurl' => config('payment.gcash_webhook'),
             ),
         ));
 

@@ -48,4 +48,12 @@ class Booking extends Model
     public function approve () {
         $this->update(['status' => self::STATUS_TO_PAY]);
     }
+
+    public function cancel () {
+        $this->update(['status' => self::STATUS_CANCELLED]);
+    }
+
+    public function booked() {
+        $this->update(['status' => self::STATUS_BOOKED]);
+    }
 }
