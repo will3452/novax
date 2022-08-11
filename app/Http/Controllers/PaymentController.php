@@ -28,6 +28,7 @@ class PaymentController extends Controller
                 'customername' => $request->customername,
                 // 'redirectsuccessurl' => $request->redirectsuccessurl,
                 'webhooksuccessurl' => $webhook,
+                'webhookfailurl' => $webhook,
             ),
         ));
 

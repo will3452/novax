@@ -58,6 +58,12 @@ Route::get('/trips', function (Request $req) {
     return $trip;
 });
 
+// notifications
+Route::get('/notifications', function (Request $request) {
+    $notifications = Notification::whereUserId($request->user)->latest()->get();
+    return $notifications;
+});
+
 //payment option - gcash pkey
 Route::get('/pkey', function () {
     return config('payment.gcash_pkey');
@@ -76,7 +82,7 @@ Route::post('/payment/webhook', function (Request $request) {
     $user = $txn->model->user;
     Notification::send($user, new PaymentStatusUpdate($txn)); //send notif
     if ($verified) {
-        $txn->model()->booked();
+        $txn->model->booked(json_encode($payload));
     }
 });
 

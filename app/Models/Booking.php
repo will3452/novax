@@ -40,6 +40,10 @@ class Booking extends Model
         return $this->belongsTo(Trip::class, 'trip_id');
     }
 
+    public function ticket () {
+        return $this->hasOne(Ticket::class, 'booking_id');
+    }
+
     const STATUS_FOR_REVIEW = 'FOR REVIEW';
     const STATUS_TO_PAY = 'TO PAY';
     const STATUS_BOOKED = 'BOOKED';
@@ -53,7 +57,11 @@ class Booking extends Model
         $this->update(['status' => self::STATUS_CANCELLED]);
     }
 
-    public function booked() {
+    public function booked($payload = "{}") {
         $this->update(['status' => self::STATUS_BOOKED]);
+        $this->ticket()->create([
+            'user_id' => $this->user_id,
+            'data' => $payload,
+        ]);
     }
 }

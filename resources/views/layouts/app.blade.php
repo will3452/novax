@@ -56,6 +56,14 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item">
+
+                                <a href="/notifications" class="nav-link">
+                                    <a-badge :dot="true" size="small">
+                                        <a-icon type="bell"></a-icon>
+                                    </a-badge>
+                                </a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}

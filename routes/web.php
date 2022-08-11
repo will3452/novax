@@ -39,4 +39,8 @@ Route::prefix('notices')->name('notices.')->middleware(['auth'])->group(function
     Route::get('/', [NoticeController::class, 'index']);
 });
 
+Route::get('/notifications', function () {
+    return view('notifications');
+});
+
 Route::post('pay', [PaymentController::class, 'pay']);
