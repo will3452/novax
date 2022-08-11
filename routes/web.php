@@ -6,7 +6,7 @@ use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
-
+use App\Http\Controllers\TicketController;
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -37,6 +37,11 @@ Route::post('/cancel', [BookingController::class, 'cancelBooking'])->name('cance
 
 Route::prefix('notices')->name('notices.')->middleware(['auth'])->group(function () {
     Route::get('/', [NoticeController::class, 'index']);
+});
+
+Route::prefix('tickets')->name('tickets.')->middleware(['auth'])->group(function () {
+    Route::get('/', [TicketController::class, 'index']);
+    Route::get('/me', [TicketController::class, 'getTickets']);
 });
 
 Route::get('/notifications', function () {

@@ -37,6 +37,9 @@ Vue.component('notice-list', require('./components/notices/list.vue').default)
 //notifications
 Vue.component('notifications', require('./components/notifications.vue').default)
 
+// ticket
+Vue.component('ticket-list', require('./components/ticket/list.vue').default)
+
 Vue.config.productionTip = false;
 Vue.use(Antd);
 /**
