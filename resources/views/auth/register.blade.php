@@ -2,7 +2,7 @@
 
 @section('content')
 <a-row align="center">
-    <a-col :span="8">
+    <a-col :span="24">
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
