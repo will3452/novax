@@ -5,7 +5,7 @@
         <a-list-item-meta
             :description="item.message"
         >
-            <a slot="title" href="https://www.antdv.com/">{{ formatDate(item.created_at) }}</a>
+            <a slot="title" href="#">{{ formatDate(item.created_at) }}</a>
             <div slot="avatar">
                 <a-icon type="bell"></a-icon>
             </div>

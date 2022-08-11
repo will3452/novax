@@ -66,8 +66,8 @@ class PaymentStatusUpdate extends Notification
     {
         $payload = json_decode($this->transaction->aggregate_payload);
         return [
-            'success' => $payload->success,
-            'message' => $payload->response_message,
+            'success' => optional($payload)->success,
+            'message' => optional($payload)->response_message,
             'data' => $payload,
         ];
     }
