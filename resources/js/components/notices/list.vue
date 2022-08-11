@@ -33,14 +33,19 @@ export default {
         }
     },
     async mounted () {
-        try {
-                 let { data } = await window.axios.get('/api/latest-notices?limit=5')
-                this.noticeData = await JSON.parse(JSON.stringify(data))
-                console.log(typeof this.noticeData)
-        } catch (err) {
-            console.log("Error >> ", err)
-        } finally {
-            this.tableLoading = false
+        await this.loadNotices()
+    },
+    methods: {
+        async loadNotices () {
+            try {
+                    let { data } = await window.axios.get('/api/latest-notices')
+                    this.noticeData = await JSON.parse(JSON.stringify(data))
+                    console.log(typeof this.noticeData)
+            } catch (err) {
+                console.log("Error >> ", err)
+            } finally {
+                this.tableLoading = false
+            }
         }
     }
 }
