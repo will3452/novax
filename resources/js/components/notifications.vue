@@ -3,12 +3,11 @@
         <a-list item-layout="horizontal" :data-source="notifications">
         <a-list-item slot="renderItem" slot-scope="item, index">
         <a-list-item-meta
-            :description="item.message"
+            :description="item.data.message || 'No details.'"
         >
+        <a-icon type="bell" slot="avatar"/>
             <a slot="title" href="#">{{ formatDate(item.created_at) }}</a>
-            <div slot="avatar">
-                <a-icon type="bell"></a-icon>
-            </div>
+
         </a-list-item-meta>
         </a-list-item>
     </a-list>
