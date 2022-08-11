@@ -60,8 +60,8 @@ Route::get('/trips', function (Request $req) {
 
 // notifications
 Route::get('/notifications', function (Request $request) {
-    $notifications = Notification::whereUserId($request->user)->latest()->get();
-    return $notifications;
+    $user = User::find($request->user);
+    return $user->notifications;
 });
 
 //payment option - gcash pkey
