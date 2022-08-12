@@ -2,12 +2,15 @@
     <a-card :loading="loading" title="Location">
         <l-map style="height: 400px" :zoom="zoom" :center="center">
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-            <l-marker :lat-lang="center"></l-marker>
+            <l-marker :lat-lng="center" :icon="icon">
+                <l-popup>You</l-popup>
+            </l-marker>
         </l-map>
     </a-card>
 </template>
-<script>
-import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
+<script scoped>
+import 'leaflet/dist/leaflet.css';
+import { LMap, LTileLayer, LMarker, LPopup } from 'vue2-leaflet';
 export default {
     async mounted () {
         await this.getCurrentLocation()
@@ -16,10 +19,12 @@ export default {
         LMap,
         LTileLayer,
         LMarker,
+        LPopup,
     },
     methods: {
         async getCurrentLocation () {
             try {
+                this.loading = true
                 await navigator.geolocation.getCurrentPosition( (position) => {
                     let { coords } = position
                     this.center = []
@@ -35,12 +40,17 @@ export default {
     },
     data () {
         return {
-            url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            // url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            url: 'https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=CgyD1wN4YHJXmmA2syOT',
             attribution:
-                '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-            zoom: 20,
+                '&copy; bms',
+            zoom: 32,
             center: [47.313220, -1.319482],
             loading: true,
+            icon: L.icon({
+                iconUrl: '/images/vendor/leaflet/dist/marker-icon.png',
+                iconSize: [26, 38],
+            }),
         }
     }
 }

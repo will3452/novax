@@ -93,7 +93,7 @@
                  {label: 'Booking', icon: 'pushpin', 'link': '/bookings'},
                  {label: 'Tickets', icon: 'profile', 'link': '/tickets'},
                  {label: 'Notices', icon: 'notification', 'link': '/notices'},
-                 {label: 'Map', icon: 'compass', 'link': '#location'},
+                 {label: 'Map', icon: 'compass', 'link': '/map'},
                  {label: 'History', icon: 'history', 'link': '#history'},
                  {label: 'Profile', icon: 'user', link: '#user'},
                  {label: 'Sign out', icon: 'logout', link: '/logout'}

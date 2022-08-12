@@ -6,7 +6,6 @@
 
 require('./bootstrap');
 import Antd from 'ant-design-vue';
-import 'leaflet/dist/leaflet.css';
 import 'ant-design-vue/dist/antd.css';
 import moment from 'moment'
 
