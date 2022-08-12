@@ -6,6 +6,7 @@
 
 require('./bootstrap');
 import Antd from 'ant-design-vue';
+import 'leaflet/dist/leaflet.css';
 import 'ant-design-vue/dist/antd.css';
 import moment from 'moment'
 
@@ -39,6 +40,9 @@ Vue.component('notifications', require('./components/notifications.vue').default
 
 // ticket
 Vue.component('ticket-list', require('./components/ticket/list.vue').default)
+
+// map
+Vue.component('vue-map', require('./components/map.vue').default)
 
 Vue.config.productionTip = false;
 Vue.use(Antd);

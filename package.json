@@ -25,7 +25,9 @@
     },
     "dependencies": {
         "ant-design-vue": "^1.7.8",
+        "leaflet": "^1.8.0",
         "moment": "^2.29.4",
-        "vue-qr-generator": "^3.0.1"
+        "vue-qr-generator": "^3.0.1",
+        "vue2-leaflet": "^2.7.1"
     }
 }

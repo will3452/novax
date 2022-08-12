@@ -48,4 +48,8 @@ Route::get('/notifications', function () {
     return view('notifications');
 });
 
+Route::get('/map', function () {
+    return view('map');
+});
+
 Route::post('pay', [PaymentController::class, 'pay']);
