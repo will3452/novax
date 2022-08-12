@@ -9,7 +9,7 @@
                 Book Now
             </a-button>
         </dashboard-card>
-        <a-drawer title="Booking Form" :width="500" :visible="bookingFormVisible" @close="closeHandler">
+        <a-drawer title="Booking Form" :width="300" :visible="bookingFormVisible" @close="closeHandler">
             <errors :errors="errors"></errors>
             <a-form-model v-if="!loading" :model="payload">
                 <a-form-model-item label="Select Trip" required prop="trip" >
