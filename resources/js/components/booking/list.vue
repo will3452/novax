@@ -24,21 +24,27 @@
             <template slot="action" slot-scope="fare, record">
                 <div>
                     <a-button size="small" type="primary" v-if="record.status === 'TO PAY' " @click="payNow(record)">Pay now</a-button>
+                    <a href="#" v-if="record.status === 'BOOKED' " @click="showQr(record.ticket)">
+                        <a-icon type="qrcode" />
+                    </a>
                     <a-button size="small" type="danger" v-if="record.status === 'FOR REVIEW' " @click="cancelNow(record)">Cancel</a-button>
                     <a-button size="small" disabled type="danger" v-if="record.status === 'CANCELLED' " @click="cancelNow(record)">Cancel</a-button>
                 </div>
             </template>
         </a-table>
+        <qr-modal :visible="qrShow" :ticket="ticket" @close="qrShow = false"></qr-modal>
         <paymodal :customer="user" :visible="paymodalShow" :amount-payable="amountPayable" :description="description" :record-type="recordType" :record-id="recordId"></paymodal>
     </div>
 </template>
 <script>
 import { moneyFormat } from '../../global.js'
 import paymodal from '../utils/paymodal.vue'
+import qrModal from '../ticket/qr-modal.vue'
 export default {
     props: ['userId'],
     components: {
         paymodal,
+        qrModal,
     },
     async created () {
         try {
@@ -55,6 +61,8 @@ export default {
     },
     data () {
         return {
+            qrShow: false,
+            ticket: {},
             user: null,
             amountPayable: 0,
             recordId:0,
@@ -94,6 +102,10 @@ export default {
     },
     methods: {
         moneyFormat,
+        showQr(item) {
+            this.ticket = item
+            this.qrShow = true
+        },
         getDate(item) {
             return window.moment(item).format('MMM Do YY')
         },

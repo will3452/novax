@@ -7,7 +7,7 @@
                         <a href="#" slot="actions" @click="showQr(item)">
                             <a-icon type="qrcode" />
                         </a>
-                        <a-list-item-meta :description="item.booking.trip.start + ' - ' + item.booking.trip.end + ' | ' + formatDate(item.booking.created_at)">
+                        <a-list-item-meta :description="item.booking.trip.start + ' - ' + item.booking.trip.end + ' | ' + formatDate(item.booking.date)">
                             <a href="#" slot="title">Ref# - {{getData(item, 'reference')}}</a>
                         </a-list-item-meta>
                     </a-list-item>
@@ -26,17 +26,17 @@
                 </a-list>
             </a-tab-pane>
         </a-tabs>
-        <a-modal title="QR code" v-model="qrShow">
-            <vue-qr :text="getQrValue(ticket)"></vue-qr>
-        </a-modal>
+        <qr-modal :visible="qrShow" :ticket="ticket" @close="qrShow = false"></qr-modal>
     </a-card>
 </template>
 
 <script>
-import vueQr from 'vue-qr-generator'
+import qrModal from './qr-modal.vue'
 import { formatDate } from '../../global.js'
     export default {
-        components: {vueQr},
+        components: {
+            qrModal,
+        },
         async mounted () {
             try {
                 let { data } = await window.axios.get('/tickets/me')
@@ -49,9 +49,6 @@ import { formatDate } from '../../global.js'
         },
         methods: {
             formatDate,
-            getQrValue(item) {
-                return "https://bus.projet.space/tickets/" + item.id
-            },
             getData ({ data }, key) {
                 return JSON.parse(data)[key]
             },
