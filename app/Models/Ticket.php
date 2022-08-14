@@ -13,9 +13,14 @@ class Ticket extends Model
         'user_id',
         'booking_id',
         'data',
+        'used',
     ];
 
     public function booking () {
         return $this->belongsTo(Booking::class);
+    }
+
+    public function markAsUsed () {
+        $this->update(['used' => true]);
     }
 }

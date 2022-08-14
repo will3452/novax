@@ -1,8 +1,8 @@
 <template>
-    <a-card :loading="loading" title="tickets">
+    <a-card :loading="loading" title="Tickets">
         <a-tabs default-active-key="1">
             <a-tab-pane key="1" tab="Not yet used.">
-                <a-list :data-source="tickets" bordered>
+                <a-list :data-source="availableTickets" bordered>
                     <a-list-item slot="renderItem" slot-scope="item, index">
                         <a href="#" slot="actions" @click="showQr(item)">
                             <a-icon type="qrcode" />
@@ -14,7 +14,7 @@
                 </a-list>
             </a-tab-pane>
             <a-tab-pane key="2" tab="Already used.">
-                <a-list :data-source="tickets" bordered>
+                <a-list :data-source="usedTickets" bordered>
                     <a-list-item slot="renderItem" slot-scope="item, index">
                         <!-- <a href="#" slot="actions">
                             <a-icon type="qrcode" />
@@ -45,6 +45,14 @@ import { formatDate } from '../../global.js'
                 this.$notification.error({message: 'Error', description: 'Something went wrong contact the administrator.'})
             } finally {
                 this.loading = false
+            }
+        },
+        computed: {
+            availableTickets () {
+                return this.tickets.filter( e => ! e.used)
+            },
+            usedTickets () {
+                return this.tickets.filter( e => e.used)
             }
         },
         methods: {

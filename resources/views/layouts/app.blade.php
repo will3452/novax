@@ -94,8 +94,8 @@
                  {label: 'Tickets', icon: 'profile', 'link': '/tickets'},
                  {label: 'Notices', icon: 'notification', 'link': '/notices'},
                  {label: 'Map', icon: 'compass', 'link': '/map'},
-                 {label: 'History', icon: 'history', 'link': '#history'},
-                 {label: 'Profile', icon: 'user', link: '#user'},
+                //  {label: 'History', icon: 'history', 'link': '#history'},
+                 {label: 'Account', icon: 'user', link: '/profile'},
                  {label: 'Sign out', icon: 'logout', link: '/logout'}
                  ]"></layout-menu>
             @endauth

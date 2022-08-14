@@ -107,3 +107,6 @@ Route::post('/file-image-remove', [FileImageController::class, 'remove']);
 
 Route::post('/booking', [BookingController::class, 'store']);
 Route::get('/booking', [BookingController::class, 'getUserBookings']);
+Route::post('/user-location-update', function (Request $request) {
+    return User::find($request->user)->update(['lat_lng' => $request->lat_lng]);
+});

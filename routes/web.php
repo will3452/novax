@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TicketController;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -50,6 +52,21 @@ Route::get('/notifications', function () {
 
 Route::get('/map', function () {
     return view('map');
+});
+
+Route::get('/profile', function () {
+    return view('profile');
+})->middleware(['auth']);
+
+Route::post('/profile', function (Request $request) {
+    $data = $request->validate([
+        'name' => "required",
+        'mobile' => 'required',
+        'password' => ['password', 'min:8', 'confirmed'],
+    ]);
+    $data['password'] = bcrypt($request->password);
+    User::find(auth()->id())->update($data);
+    return back()->withSuccess(1);
 });
 
 Route::post('pay', [PaymentController::class, 'pay']);
