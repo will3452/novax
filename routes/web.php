@@ -6,6 +6,7 @@ use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ScanController;
 use App\Http\Controllers\TicketController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -70,3 +71,7 @@ Route::post('/profile', function (Request $request) {
 });
 
 Route::post('pay', [PaymentController::class, 'pay']);
+
+Route::prefix('scan')->name('scan.')->middleware(['auth'])->group(function () {
+    Route::get('/', [ScanController::class, 'scan'])->name('index');
+});

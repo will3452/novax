@@ -24,7 +24,12 @@ class User extends Authenticatable
         'password',
         'mobile',
         'lat_lng',
+        'type',
     ];
+
+    const TYPE_CLIENT = 'CLIENT';
+    const TYPE_CONDUCTOR = 'CONDUCTOR';
+    const TYPE_ADMIN = 'ADMIN';
 
     /**
      * The attributes that should be hidden for serialization.

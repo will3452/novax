@@ -5,6 +5,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -43,9 +44,13 @@ class Terminal extends Resource
     {
         return [
              Text::make('Name')
-                ->rules(['required', 'unique:terminals,name,{resourceId}']),
+                ->rules(['required', 'unique:terminals,name,{{resourceId}']),
             Image::make('Image'),
             Text::make('Address')
+                ->rules(['required']),
+            Text::make('Latitude', 'lat')
+                ->rules(['required']),
+            Text::make('Longitude', 'lng')
                 ->rules(['required']),
         ];
     }

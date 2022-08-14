@@ -43,6 +43,9 @@ Vue.component('ticket-list', require('./components/ticket/list.vue').default)
 // map
 Vue.component('vue-map', require('./components/map.vue').default)
 
+//qrCore reader
+Vue.component('qr-code-reader', require('./components/qrReader.vue').default)
+
 Vue.config.productionTip = false;
 Vue.use(Antd);
 /**

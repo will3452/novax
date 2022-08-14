@@ -88,16 +88,30 @@
         </nav>
         <layout>
             @auth
-            <layout-menu :items="[
-                 {label: 'Dashboard', icon: 'dashboard', 'link': '/home'},
-                 {label: 'Booking', icon: 'pushpin', 'link': '/bookings'},
-                 {label: 'Tickets', icon: 'profile', 'link': '/tickets'},
-                 {label: 'Notices', icon: 'notification', 'link': '/notices'},
-                 {label: 'Map', icon: 'compass', 'link': '/map'},
-                //  {label: 'History', icon: 'history', 'link': '#history'},
-                 {label: 'Account', icon: 'user', link: '/profile'},
-                 {label: 'Sign out', icon: 'logout', link: '/logout'}
-                 ]"></layout-menu>
+                @if (auth()->user()->type === \App\Models\User::TYPE_CLIENT)
+                <layout-menu :items="[
+                    {label: 'Dashboard', icon: 'dashboard', 'link': '/home'},
+                    {label: 'Booking', icon: 'pushpin', 'link': '/bookings'},
+                    {label: 'Tickets', icon: 'profile', 'link': '/tickets'},
+                    {label: 'Notices', icon: 'notification', 'link': '/notices'},
+                    {label: 'Map', icon: 'compass', 'link': '/map'},
+                   //  {label: 'History', icon: 'history', 'link': '#history'},
+                    {label: 'Account', icon: 'user', link: '/profile'},
+                    {label: 'Sign out', icon: 'logout', link: '/logout'}
+                    ]"></layout-menu>
+                @elseif(auth()->user()->type === \App\Models\User::TYPE_CONDUCTOR)
+                <layout-menu :items="[
+                    {label: 'Dashboard', icon: 'dashboard', 'link': '/home'},
+                    // {label: 'Booking', icon: 'pushpin', 'link': '/bookings'},
+                    // {label: 'Tickets', icon: 'profile', 'link': '/tickets'},
+                    {label: 'Scan', icon: 'qrcode', link: '/scan'},
+                    {label: 'Notices', icon: 'notification', 'link': '/notices'},
+                    {label: 'Map', icon: 'compass', 'link': '/map'},
+                   //  {label: 'History', icon: 'history', 'link': '#history'},
+                    {label: 'Account', icon: 'user', link: '/profile'},
+                    {label: 'Sign out', icon: 'logout', link: '/logout'}
+                    ]"></layout-menu>
+                @endif
             @endauth
              <layout-content>
                  @yield('content')

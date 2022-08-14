@@ -26,7 +26,7 @@ export default {
     },
     methods: {
         getQrValue(item) {
-            return "https://bus.projet.space/tickets/" + item.id
+            return "/" + item.id
         },
         closeHandler(item) {
             this.$emit('close')

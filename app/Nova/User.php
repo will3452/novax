@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
@@ -52,6 +53,13 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
+            Select::make('Type', 'type')
+                ->options([
+                    \App\Models\User::TYPE_CLIENT => \App\Models\User::TYPE_CLIENT,
+                    \App\Models\User::TYPE_CONDUCTOR => \App\Models\User::TYPE_CONDUCTOR,
+                    \App\Models\User::TYPE_ADMIN => \App\Models\User::TYPE_ADMIN,
+                ]),
+
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
@@ -67,8 +75,8 @@ class User extends Resource
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
 
-            MorphToMany::make('Roles', 'roles', Role::class)
-                ->canSee(fn () => config('novax.role_enabled')),
+            // MorphToMany::make('Roles', 'roles', Role::class)
+            //     ->canSee(fn () => config('novax.role_enabled')),
         ];
     }
 
