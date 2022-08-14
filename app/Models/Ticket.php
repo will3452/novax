@@ -14,6 +14,7 @@ class Ticket extends Model
         'booking_id',
         'data',
         'used',
+        'updated_by_id',
     ];
 
     public function booking () {
@@ -22,5 +23,9 @@ class Ticket extends Model
 
     public function markAsUsed () {
         $this->update(['used' => true]);
+    }
+
+    public function updatedBy () {
+        return $this->belongsTo(User::class, 'updated_by_id');
     }
 }

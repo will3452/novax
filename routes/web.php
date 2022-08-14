@@ -45,6 +45,8 @@ Route::prefix('notices')->name('notices.')->middleware(['auth'])->group(function
 Route::prefix('tickets')->name('tickets.')->middleware(['auth'])->group(function () {
     Route::get('/', [TicketController::class, 'index']);
     Route::get('/me', [TicketController::class, 'getTickets']);
+    Route::get('/{ticket}', [TicketController::class, 'getDetails']);
+    Route::post('/{ticket}', [TicketController::class, 'markAsUsed']);
 });
 
 Route::get('/notifications', function () {

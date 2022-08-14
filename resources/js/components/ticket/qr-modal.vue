@@ -26,7 +26,7 @@ export default {
     },
     methods: {
         getQrValue(item) {
-            return "/" + item.id
+            return "/tickets/" + item.id
         },
         closeHandler(item) {
             this.$emit('close')
