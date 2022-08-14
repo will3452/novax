@@ -58,7 +58,7 @@ class Booking extends Model
     }
 
     public function booked($payload = "{}") {
-        $this->update(['status' => self::STATUS_BOOKED]);
+        $this->update(['status' => self::STATUS_BOOKED, 'paid_at' => now()]);
         $this->ticket()->create([
             'user_id' => $this->user_id,
             'data' => $payload,
