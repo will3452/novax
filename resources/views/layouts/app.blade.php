@@ -59,17 +59,44 @@
                             <li class="nav-item">
 
                                 <a href="/notifications" class="nav-link">
-                                    <a-badge :dot="true" size="small">
-                                        <a-icon type="bell"></a-icon>
-                                    </a-badge>
+                                    Notifications
                                 </a>
                             </li>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
+                                    <a href="/home" class="dropdown-item">
+                                        Dashboard
+                                    </a>
+                                    @if (auth()->user()->type === \App\Models\User::TYPE_CLIENT)
+                                        <a href="/bookings" class="dropdown-item">
+                                            Bookings
+                                        </a>
+                                        <a href="/tickets" class="dropdown-item">
+                                            Tickets
+                                        </a>
+                                        <a href="/notices" class="dropdown-item">
+                                            Notices
+                                        </a>
+                                        <a href="/profile" class="dropdown-item">
+                                            Profile
+                                        </a>
+                                    @else
+                                        <a href="/scan" class="dropdown-item">
+                                            Scan
+                                        </a>
+                                        <a href="/notices" class="dropdown-item">
+                                            Notices
+                                        </a>
+                                        <a href="/profile" class="dropdown-item">
+                                            Profile
+                                        </a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

@@ -86,6 +86,10 @@ Route::post('/payment/webhook', function (Request $request) {
     }
 });
 
+Route::get('/conductors', function (Request $request) {
+    return User::whereNotNull('lat_lng')->whereType(User::TYPE_CONDUCTOR)->get();
+});
+
 //transactions
 Route::post('/transaction', function (Request $request) {
     $data = $request->validate([

@@ -1,5 +1,5 @@
 <template>
-    <a-col :span="20" style="padding: 1em">
+    <a-col :xs="24" :md="20" style="padding: 1em">
         <div v-if="! loading">
             <slot></slot>
         </div>

@@ -1,5 +1,5 @@
 <template>
-    <a-card :style="style" :loading="loading" class="card">
+    <a-card :style="style" :loading="loading" class="card" >
         <div style="display:flex; justify-content:space-between; align-items:center;margin-bottom: 1em;">
             <h1 style="color:#fff !important; text-transform: uppercase;">{{label}}</h1>
             <a-icon :type="icon" style="font-size: 24px"></a-icon>
@@ -24,14 +24,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.card {
+    margin: .5em;
+    width: 300px;
+}
+@media screen and (max-width: 600px){
     .card {
-        margin:0.5em;
-        width: 300px
+        width: 100%;
     }
-    @media only screen and (max-width: 520px) {
-        .card {
-            width: 350px;
-        }
-    }
+}
 </style>

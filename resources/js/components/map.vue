@@ -9,10 +9,12 @@
                 <l-marker :lat-lng="center" :icon="icon">
                     <l-popup>You</l-popup>
                 </l-marker>
+                <l-marker :lat-lng="JSON.parse(bus.lat_lng)" :icon="iconBus" v-for="bus in conductors" :key="bus.id">
+                    <l-popup>{{bus.buses[0].company_name + ' - ' + bus.buses[0].plate_number}}</l-popup>
+                </l-marker>
+
             </l-map>
         </a-card>
-        <a-icon type="refresh"></a-icon>
-         Refresh map </a-button>
     </div>
 </template>
 <script scoped>
@@ -22,6 +24,7 @@ export default {
     props: ['userId'],
     async mounted () {
         await this.getCurrentLocation()
+        await this.loadConductors()
     },
     components: {
         LMap,
@@ -30,6 +33,15 @@ export default {
         LPopup,
     },
     methods: {
+        async loadConductors () {
+            try {
+                this.$message.info('fetching data...please wait')
+                let response = await window.axios.get('/api/conductors')
+                this.conductors = response.data
+            } catch (err) {
+                this.$message.error('fetching data error.')
+            }
+        },
         async getCurrentLocation () {
             try {
                 this.loading = true
@@ -58,6 +70,7 @@ export default {
     },
     data () {
         return {
+            conductors: [],
             // url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             url: 'https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=CgyD1wN4YHJXmmA2syOT',
             attribution:
@@ -69,6 +82,10 @@ export default {
                 iconUrl: '/images/vendor/leaflet/dist/marker-icon.png',
                 iconSize: [26, 38],
             }),
+           iconBus: L.icon({
+            iconUrl: '/bus.png',
+            iconSize: [38, 38],
+           })
         }
     }
 }

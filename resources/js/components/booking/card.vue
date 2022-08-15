@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <dashboard-card
+    <dashboard-card
         style="margin-right:1em;background-image: linear-gradient(to bottom, #3BC062 , #2DB15A);color:white; border: none;border-radius: 1em;"
         icon="pushpin"
         label="Booking"
@@ -8,8 +7,7 @@
             <a-button type="ghost" block @click="viewForm" >
                 Book Now
             </a-button>
-        </dashboard-card>
-        <a-drawer title="Booking Form" :width="300" :visible="bookingFormVisible" @close="closeHandler">
+            <a-drawer title="Booking Form" :width="300" :visible="bookingFormVisible" @close="closeHandler">
             <errors :errors="errors"></errors>
             <a-form-model v-if="!loading" :model="payload">
                 <a-form-model-item label="Select Trip" required prop="trip" >
@@ -49,7 +47,7 @@
             </a-form-model>
             <a-skeleton v-else></a-skeleton>
         </a-drawer>
-    </div>
+        </dashboard-card>
 </template>
 
 <script>

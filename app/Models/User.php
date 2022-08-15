@@ -27,9 +27,17 @@ class User extends Authenticatable
         'type',
     ];
 
+    protected $with = [
+        'buses',
+    ];
+
     const TYPE_CLIENT = 'CLIENT';
     const TYPE_CONDUCTOR = 'CONDUCTOR';
     const TYPE_ADMIN = 'ADMIN';
+
+    public function buses () {
+        return $this->belongsToMany(Bus::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

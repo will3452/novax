@@ -1,5 +1,5 @@
 <template>
-  <a-col :span="4" style="position: relative; ">
+  <a-col :md="4" :xs="0" style="position: relative; ">
     <a-affix>
         <a-button style="position: absolute; bottom: 10px;" type="link" @click="collapse = ! collapse">
             <a-icon :type="collapse ? 'menu-fold' : 'menu-unfold'"></a-icon>

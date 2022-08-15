@@ -23,7 +23,9 @@ class Bus extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public function title () {
+        return "$this->plate_number - $this->company_name";
+    }
 
     /**
      * The columns that should be searched.

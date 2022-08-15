@@ -28,6 +28,7 @@ Route::get('/artisan', function () {
     return $result;
 });
 Route::get('/logout', function () {
+    auth()->user()->update(['lat_lng' => null]);
     auth()->logout();
     return redirect()->to('/');
 });

@@ -13,4 +13,7 @@ class Bus extends Model
         'plate_number',
         'company_name',
     ];
+    public function users () {
+        return $this->belongsToMany(User::class);
+    }
 }

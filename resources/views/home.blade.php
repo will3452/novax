@@ -2,23 +2,35 @@
 
 @section('content')
     <a-alert message="Hello {{auth()->user()->name}} !" type="success" closable> </a-alert>
-    <div style="display:flex; flex-wrap: wrap;">
-   <booking-card user-id="{{auth()->id()}}" ></booking-card>
+    <div style="display:flex; flex-wrap: wrap;justify-content:center;">
+   @if (auth()->user()->type == \App\Models\User::TYPE_CLIENT)
+    <booking-card user-id="{{auth()->id()}}" ></booking-card>
     <dashboard-card
     style="margin-right:1em; background-image: linear-gradient(to bottom, #673DE6 , #673CE5);color:white; border: none;border-radius: 1em;"
     icon="profile"
     label="Tickets"
     >
-        <a-button type="ghost" block>
+        <a-button type="ghost" block onclick="window.location.href = '/tickets'">
             View Tickets
         </a-button>
     </dashboard-card>
+    @else
+    <dashboard-card
+    style="margin-right:1em; background-image: linear-gradient(to bottom, #673DE6 , #673CE5);color:white; border: none;border-radius: 1em;"
+    icon="qrcode"
+    label="Scan"
+    >
+        <a-button type="ghost" block onclick="window.location.href = '/scan'">
+            View Tickets
+        </a-button>
+    </dashboard-card>
+   @endif
     <dashboard-card
     style="margin-right:1em; background-image: linear-gradient(to bottom, #FF1D00 , #FF6700);color:white; border: none;border-radius: 1em;"
     icon="environment"
     label="Map"
     >
-        <a-button type="ghost" block>
+        <a-button type="ghost" block onclick="window.location.href = '/map'">
             View Location
         </a-button>
     </dashboard-card>
