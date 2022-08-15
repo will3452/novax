@@ -21,7 +21,7 @@
     label="Scan"
     >
         <a-button type="ghost" block onclick="window.location.href = '/scan'">
-            View Tickets
+            Scan tickets
         </a-button>
     </dashboard-card>
    @endif
