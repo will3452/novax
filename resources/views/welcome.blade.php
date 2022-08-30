@@ -11,7 +11,7 @@
                         Admin Creds
                     </div>
                     <div>
-                        email: superadmin
+                        email: super@admin.com
                     </div>
                     <div>
                         password: password
