@@ -1,7 +1,6 @@
 <?php
 
-
-
+use Elezerk\Rhu\ThemeServiceProvider;
 
 return [
 
@@ -165,6 +164,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         \App\Providers\NovaServiceProvider::class,
+        ThemeServiceProvider::class,
 
         /*
          * Package Service Providers...

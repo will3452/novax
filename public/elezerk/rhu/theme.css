@@ -1,0 +1,40 @@
+:root {
+  --primary: #83BD75;
+  --primary-dark: #4E944F;
+  --primary-70: #B4E197;
+  --primary-50: #E9EFC0;
+  --primary-30: #E9EFC0;
+  --primary-10: #E9EFC0;
+  --logo: #83BD75;
+  --sidebar-icon: #fff;
+}
+
+.bg-grad-sidebar {
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    from(#83BD75),
+    to(#4E944F)
+  );
+
+  background-image: linear-gradient(
+    0deg,
+    #83BD75,
+    #4E944F
+  );
+}
+.bg-40  {
+    background: #E9EFC0 !important;
+}
+
+.h-header {
+    background: #83BD75 !important;
+}
+
+.dark-mode-toggle {
+    background: #83BD75 !important;
+}
+button[dusk='create-and-add-another-button'] {
+    display:none !important;
+}
