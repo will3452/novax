@@ -28,6 +28,8 @@
     "require": {
         "php": "^7.3|^8.0",
         "coreproc/nova-permissions-field": "*",
+        "elezerk/chat": "*",
+        "elezerk/rhu": "*",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.65",
@@ -36,13 +38,12 @@
         "laravel/tinker": "^2.5",
         "laravelwebdev/responsive": "^1.0",
         "optimistdigital/nova-settings": "^3.2",
+        "radwanic/resource-listing": "^1.0",
         "richardkeep/nova-timenow": "^1.0",
         "runlinenl/nova-profile-tool": "^1.1",
         "spatie/laravel-backup": "^6.16",
         "spatie/laravel-permission": "^5.3",
-        "spatie/nova-backup-tool": "^4.1",
-        "elezerk/rhu": "*",
-        "elezerk/chat": "*"
+        "spatie/nova-backup-tool": "^4.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

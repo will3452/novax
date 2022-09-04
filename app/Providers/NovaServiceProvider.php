@@ -2,18 +2,21 @@
 
 namespace App\Providers;
 
+use Elezerk\Chat\Chat;
 use Laravel\Nova\Nova;
+use Laravel\Nova\Panel;
 use App\Nova\Metrics\User;
 use Laravel\Nova\Cards\Help;
+use App\Nova\Metrics\Symptom;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use App\Nova\Metrics\Diagnosis;
-use App\Nova\Metrics\Symptom;
-use Elezerk\Chat\Chat;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Textarea;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
-use Laravel\Nova\Fields\Currency;
 use Runline\ProfileTool\ProfileTool;
+use Radwanic\ResourceListing\ResourceListing;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -29,8 +32,22 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         parent::boot();
 
         NovaSettings::addSettingsFields([
-            Image::make('Logo'),
-            Currency::make('Appointment Fee'),
+            new Panel('Application Setting', [
+                Text::make('App Name')->rules(['required']),
+                Text::make('GCASH API key')->rules(['required']),
+                Image::make('Logo'),
+            ]),
+
+            new Panel('Landing Page', [
+                Textarea::make('Introduction'),
+                Text::make('Youtube Introduction Link'),
+            ]),
+
+            new Panel('Administrator', [
+                Text::make('Admin Email')->rules(['required']),
+                Text::make('Admin Mobile')->rules(['required']),
+                Currency::make('Appointment Fee')
+            ]),
         ]);
     }
 
@@ -83,6 +100,14 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return config('novax.time_enabled');
             }),
             (new User()),
+            (new ResourceListing())
+                ->cardTitle('New Appointments')
+                ->orderBy('updated_at')
+                ->readableDate(true)
+                ->limit(5)
+                ->resource(\App\Models\Appointment::class)
+                ->resourceUri('/resources/appointments/')
+                ->resourceTitleColumn('user_name'),
         ];
     }
 

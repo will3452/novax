@@ -38,6 +38,6 @@
 button[dusk='create-and-add-another-button'] {
     display:none !important;
 }
-* {
+/* * {
     border-radius: 0px !important;
-}
+} */

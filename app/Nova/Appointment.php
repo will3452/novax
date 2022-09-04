@@ -30,7 +30,9 @@ class Appointment extends Resource
      *
      * @var string
      */
-    public static $title = 'date';
+    public function title () {
+        return $this->date;
+    }
 
     /**
      * The columns that should be searched.

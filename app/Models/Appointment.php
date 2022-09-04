@@ -34,4 +34,9 @@ class Appointment extends Model
     public function paid () {
         $this->update(['paid_at' => now()]);
     }
+
+    // getters
+    public function getUserNameAttribute() {
+        return $this->user->name;
+    }
 }

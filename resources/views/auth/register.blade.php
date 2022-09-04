@@ -51,7 +51,7 @@
         </div>
         <div class="form-control mt-6">
             <input type="submit" value="Register" class="btn btn-primary">
-            <a class="block text-center text-xs mt-4 underline" href="#">Already have an account?</a>
+            <a class="block text-center text-xs mt-4 underline" href="/app/login">Already have an account?</a>
         </div>
         </div>
     </form>

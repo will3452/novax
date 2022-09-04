@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "73415a4247fda8f01471da9a516ef100",
+    "content-hash": "bf21a93b21e7eca8c9c4a63761336c66",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3873,6 +3873,55 @@
                 "source": "https://github.com/bobthecow/psysh/tree/v0.11.8"
             },
             "time": "2022-07-28T14:25:11+00:00"
+        },
+        {
+            "name": "radwanic/resource-listing",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/radwanic/resource-listing.git",
+                "reference": "2182c0d292e6dc350af6e662a96f9aa74965cde9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/radwanic/resource-listing/zipball/2182c0d292e6dc350af6e662a96f9aa74965cde9",
+                "reference": "2182c0d292e6dc350af6e662a96f9aa74965cde9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Radwanic\\ResourceListing\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Radwanic\\ResourceListing\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova card.",
+            "keywords": [
+                "card",
+                "dashboard",
+                "laravel",
+                "listing",
+                "nova",
+                "resources"
+            ],
+            "support": {
+                "issues": "https://github.com/radwanic/resource-listing/issues",
+                "source": "https://github.com/radwanic/resource-listing/tree/1.0.4"
+            },
+            "time": "2019-08-08T02:03:33+00:00"
         },
         {
             "name": "ralouphie/getallheaders",

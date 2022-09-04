@@ -7,7 +7,7 @@ class Payment
 {
     public function __construct()
     {
-        $this->key = 'pk_0bb2b3dc69995ca960daa40a5f1b759d';
+        $this->key = nova_get_setting('gcash_api_key', 'pk_0bb2b3dc69995ca960daa40a5f1b759d');
     }
 
     public static function make () {
