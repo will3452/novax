@@ -22,7 +22,8 @@ Route::get('/artisan', function () {
 });
 
 Route::get('paynow', function (Request $request) {
-    $payment =  Payment::make()
+    try {
+        $payment =  Payment::make()
         ->setAmount(nova_get_setting('appointment_fee', 100))
         ->setDescription('Pay appointment')
         ->gcash();
@@ -31,4 +32,7 @@ Route::get('paynow', function (Request $request) {
         $url = $obj->data->checkouturl;
 
         return redirect($url);
+    } catch(Exception $error) {
+        return $error->getMessage();
+    }
 });
