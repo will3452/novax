@@ -37,5 +37,8 @@ Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
 Route::post('/gcash', function (Request $request) {
     $app = Appointment::whereRequestId($request->request_id)->first();
-    $app->paid();
+    if ($app) {
+        $app->paid();
+    }
+
 });

@@ -34,6 +34,8 @@ class Payment
 
         $curl = curl_init();
 
+        $url = url('/api/gcash');
+
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://g.payx.ph/payment_request',
             CURLOPT_RETURNTRANSFER => true,
@@ -47,7 +49,7 @@ class Payment
                 'x-public-key' => $this->key,
                 'amount' => $this->amount,
                 'description' => $this->description,
-                'webhooksuccessurl' => url('/api/gcash'),
+                'webhooksuccessurl' => $url,
             ),
         ));
 

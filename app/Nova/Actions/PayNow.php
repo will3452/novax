@@ -23,8 +23,12 @@ class PayNow extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        if ($models[0]->approved_at == null) {
+        if (is_null($models[0]->approved_at)) {
             return Action::danger('Appointment is not yet approved!');
+        }
+
+        if (! is_null($models[0]->paid_at)) {
+            return Action::danger('Appointment is paid!');
         }
         return Action::redirect('/paynow?appointment=' . $models[0]->id);
     }

@@ -76,9 +76,19 @@ class Appointment extends Resource
 
             Textarea::make('Description')
                 ->alwaysShow(),
-            Badge::make('Status', fn () => $this->approved_at == null ? 'Not yet approved': $this->paid_at != null ? 'Paid' : 'Approved')->map([
-                'Not yet approved' => 'warning',
-                'Approved' => 'success',
+            Badge::make('Status', function () {
+                if (is_null($this->approved_at)) {
+                    return 'Not yet approved';
+                }
+
+                if (! is_null($this->paid_at)) {
+                    return 'Paid';
+                }
+
+                return 'Approved';
+            })->map([
+                'Not yet approved' => 'danger',
+                'Approved' => 'warning',
                 'Paid' => 'success',
             ]),
         ];
