@@ -3,26 +3,29 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Symptom extends Resource
+class Timeslot extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return $request->user === 1;
+    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Symptom::class;
+    public static $model = \App\Models\Timeslot::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'description';
+    public static $title = 'time';
 
     /**
      * The columns that should be searched.
@@ -30,8 +33,7 @@ class Symptom extends Resource
      * @var array
      */
     public static $search = [
-        'id',
-        'description',
+        'time',
     ];
 
     /**
@@ -43,10 +45,8 @@ class Symptom extends Resource
     public function fields(Request $request)
     {
         return [
-            Date::make('Date', 'created_at')
-                ->exceptOnForms()
-                ->sortable(),
-            Textarea::make('Description')->alwaysShow(),
+            Text::make('time')
+                ->help('eg. 12:00 pm, 1:00 pm')
         ];
     }
 

@@ -3,8 +3,8 @@
   --primary-dark: #4E944F;
   --primary-70: #B4E197;
   --primary-50: #E9EFC0;
-  --primary-30: #E9EFC0;
-  --primary-10: #E9EFC0;
+  --primary-30: #E9EFC9;
+  --primary-10: #E9EFC1;
   --logo: #83BD75;
   --sidebar-icon: #fff;
 }
@@ -37,4 +37,7 @@
 }
 button[dusk='create-and-add-another-button'] {
     display:none !important;
+}
+* {
+    border-radius: 0px !important;
 }

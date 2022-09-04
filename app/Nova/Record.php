@@ -3,27 +3,27 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Diagnosis extends Resource
+class Record extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Diagnosis::class;
+    public static $model = \App\Models\Record::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'created_at';
 
     /**
      * The columns that should be searched.
@@ -31,10 +31,22 @@ class Diagnosis extends Resource
      * @var array
      */
     public static $search = [
-        // 'id',
-        'name',
-        'description'
+        'created_at',
+        'description',
     ];
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (auth()->id() != 1) {
+            return $query->whereUserId(auth()->id());
+        }
+        return $query;
+    }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return auth()->id() === 1;
+    }
 
     /**
      * Get the fields displayed by the resource.
@@ -46,12 +58,10 @@ class Diagnosis extends Resource
     {
         return [
             Date::make('Date', 'created_at')
-                ->exceptOnForms()
-                ->sortable(),
-            Text::make('Name')
                 ->sortable()
-                ->rules(['required', 'unique:diagnoses,name,{resourceId}']),
-            Textarea::make('Description')
+                ->exceptOnForms(),
+            BelongsTo::make('Patient', 'user', User::class),
+            Trix::make('Description')
                 ->alwaysShow(),
         ];
     }

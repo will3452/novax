@@ -9,8 +9,10 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use App\Nova\Metrics\Diagnosis;
 use App\Nova\Metrics\Symptom;
+use Elezerk\Chat\Chat;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Fields\Currency;
 use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -28,6 +30,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Currency::make('Appointment Fee'),
         ]);
     }
 
@@ -80,8 +83,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return config('novax.time_enabled');
             }),
             (new User()),
-            (new Diagnosis()),
-            (new Symptom()),
         ];
     }
 
@@ -103,6 +104,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
+            (new Chat),
             (new ProfileTool)->canSee(function () {
                 return config('novax.profile_enabled');
             }),

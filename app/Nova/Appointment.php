@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\Approve;
+use App\Nova\Actions\PayNow;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
@@ -11,6 +13,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BooleanGroup;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Appointment extends Resource
@@ -41,6 +44,16 @@ class Appointment extends Resource
         'description'
     ];
 
+
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (auth()->id() != 1) {
+            return $query->whereUserId(auth()->id());
+        }
+        return $query;
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -58,13 +71,15 @@ class Appointment extends Resource
             Date::make('Appointment Date', 'date')
                 ->sortable(),
 
-            Text::make('Time'),
+            Select::make('Time')
+                ->options(fn () => \App\Models\Timeslot::get()->pluck('time', 'time')),
 
             Textarea::make('Description')
                 ->alwaysShow(),
-            Badge::make('Status', fn () => $this->approved_at == null ? 'Not yet approved': 'Approved')->map([
+            Badge::make('Status', fn () => $this->approved_at == null ? 'Not yet approved': $this->paid_at != null ? 'Paid' : 'Approved')->map([
                 'Not yet approved' => 'warning',
                 'Approved' => 'success',
+                'Paid' => 'success',
             ]),
         ];
     }
@@ -110,6 +125,9 @@ class Appointment extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new Approve)->canSee( fn () => auth()->id() == 1 && $this->approved_at == null)->showOnTableRow(fn () => auth()->id() == 1),
+            (new PayNow)->showOnTableRow(fn () => auth()->id() == $this->user_id),
+        ];
     }
 }
