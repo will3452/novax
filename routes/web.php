@@ -28,7 +28,6 @@ Route::get('paynow', function (Request $request) {
         ->gcash();
         $obj = json_decode($payment);
 
-        return $obj;
         $url = $obj->data->checkouturl;
 
         return redirect($url);
