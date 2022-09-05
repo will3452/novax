@@ -11,7 +11,7 @@ class Timeslot extends Resource
 {
     public static function availableForNavigation(Request $request)
     {
-        return $request->user === 1;
+        return auth()->id() == 1;
     }
     /**
      * The model the resource corresponds to.
