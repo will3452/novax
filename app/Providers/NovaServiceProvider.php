@@ -87,7 +87,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
-        return [
+        $cards = [
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
                 'America/Mexico_City',
@@ -99,7 +99,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
-            (new User()),
+        ];
+
+        if (auth()->id() == 1) {
+            $cards = array_merge($cards, [(new User()),
             (new ResourceListing())
                 ->cardTitle('New Appointments')
                 ->orderBy('updated_at')
@@ -107,8 +110,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ->limit(5)
                 ->resource(\App\Models\Appointment::class)
                 ->resourceUri('/resources/appointments/')
-                ->resourceTitleColumn('user_name'),
-        ];
+                ->resourceTitleColumn('user_name')]);
+        }
+
+        return $cards;
     }
 
     /**
