@@ -21,6 +21,11 @@
                 <input type="hidden" name="category" value="{{request()->category}}">
             @endif
         </form>
+      <div class=" mx-2 ">
+        <a href="/orders" class="btn btn-ghost btn-circle">
+            <svg class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9l2 2l4-4"/></svg>
+        </a>
+      </div>
       <div class="dropdown dropdown-end mx-2 ">
         <label tabindex="0" class="btn btn-ghost btn-circle">
           <div class="indicator">
@@ -45,18 +50,25 @@
       <div class="dropdown dropdown-end mx-2">
         <label tabindex="0" class="btn btn-ghost btn-circle avatar">
           <div class="w-10 rounded-full">
-            <img src="https://placeimg.com/80/80/people" />
+            <img src="/empty_user.jpg" />
           </div>
         </label>
         <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-          <li>
-            <a class="justify-between">
-              Profile
-              <span class="badge">New</span>
-            </a>
-          </li>
-          <li><a>Settings</a></li>
-          <li><a>Logout</a></li>
+          @auth
+            <li>
+                <a href="/app" class="justify-between">
+                Dashboard
+                </a>
+            </li>
+            <li><a href="/logout" >Logout</a></li>
+         @else
+         <li>
+            <a href="/app/login">Login</a>
+         </li>
+         <li>
+            <a href="/register">Register</a>
+         </li>
+          @endauth
         </ul>
       </div>
     </div>

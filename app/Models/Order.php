@@ -14,6 +14,7 @@ class Order extends Model
         'paid_at',
         'amount_payable',
         'status',
+        'hash',
         'promo', // json
     ];
     protected $casts = [
@@ -28,5 +29,9 @@ class Order extends Model
     //users
     public function user () {
         return $this->belongsTo(User::class);
+    }
+
+    public function setHash($hash) {
+        return $this->update(['hash' => $hash]);
     }
 }

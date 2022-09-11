@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->timestamp('paid_at')->nullable();
             $table->string('status')->default(Order::STATUS_PENDING);
             $table->json('promo')->nullable();
+            $table->string('amount_payable');
             $table->timestamps();
         });
     }

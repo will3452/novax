@@ -1,7 +1,7 @@
 <x-layout>
 
 <div class="hero min-h-screen bg-base-200">
-    <form action="register" method="POST" class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+    <form action="register" method="POST" class=" flex-shrink-0 w-full shadow-2xl bg-base-100">
         @csrf
         <div class="card-body">
         @if (session('success'))
@@ -20,6 +20,14 @@
                 {{$message}}
             </x-form-error>
             @enderror
+        </div>
+        <div class="form-control">
+            <label for="address" class="label">
+                <span class="label-text">
+                    Address
+                </span>
+            </label>
+            <input type="text" class="input input-bordered" name="address" required>
         </div>
         <div class="form-control">
             <label class="label">
@@ -51,7 +59,7 @@
         </div>
         <div class="form-control mt-6">
             <input type="submit" value="Register" class="btn btn-primary">
-            <a class="block text-center text-xs mt-4 underline" href="#">Already have an account?</a>
+            <a class="block text-center text-xs mt-4 underline" href="/login">Already have an account?</a>
         </div>
         </div>
     </form>

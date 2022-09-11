@@ -8,8 +8,11 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Status;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Order extends Resource
@@ -26,7 +29,7 @@ class Order extends Resource
      *
      * @var string
      */
-    public static $title = 'products';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -58,7 +61,7 @@ class Order extends Resource
             Date::make('Paid Date', 'paid_at'),
             Currency::make('Amount Payable'),
             BelongsTo::make('User'),
-            Json::make('Products'),
+            Code::make('products')
 
         ];
     }

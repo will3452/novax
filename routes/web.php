@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
@@ -26,12 +27,20 @@ Route::redirect('/login', '/app/login')->name('login');
 
 // cart
 Route::post('/add-to-cart/{id}', [CartController::class, 'addToCart']);
+Route::put('/update-cart/{item}', [CartController::class, 'updateCart']);
 Route::post('/remove-to-cart/{id}', [CartController::class, 'removeToCart']);
 Route::get('/carts', [CartController::class, 'index']);
+Route::post('/checkout', [CartController::class, 'checkout']);
+
+
+Route::get('/orders', [OrderController::class, 'index']);
 
 
 Route::get('/register', [RegisterController::class, 'registrationPage']);
 Route::post('/register', [RegisterController::class, 'postRegister']);
+Route::get('/logout', function () {
+    auth()->logout();
+});
 
 
 //artisan helper

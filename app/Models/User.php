@@ -57,12 +57,18 @@ class User extends Authenticatable
         return $this->cartItems()->whereProductId($id)->exists();
     }
 
-    public function subTotal() {
+    public function subTotal($withVat = false) {
         $total = 0;
         foreach ($this->cartItems as $item) {
             $total+= ($item->product->price * $item->quantity);
         }
 
-        return $total;
+        if (! $withVat) {
+            return $total;
+        }
+
+
+        return $total + ($total * .12);
+
     }
 }

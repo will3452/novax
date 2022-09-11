@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c50626e377c5c6d8ab94b767fba9f7d1",
+    "content-hash": "87c95239c4e289c77d3fd15ca02540f8",
     "packages": [
         {
             "name": "armincms/json",
@@ -1505,6 +1505,51 @@
                 }
             ],
             "time": "2021-10-06T17:43:30+00:00"
+        },
+        {
+            "name": "jubeki/nova-card-linkable",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Jubeki/Nova-Card-Linkable.git",
+                "reference": "2b71925efe1cab207bcc235ffc8214d1a383ecbe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Jubeki/Nova-Card-Linkable/zipball/2b71925efe1cab207bcc235ffc8214d1a383ecbe",
+                "reference": "2b71925efe1cab207bcc235ffc8214d1a383ecbe",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Jubeki\\Nova\\Cards\\Linkable\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Jubeki\\Nova\\Cards\\Linkable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova card, which has a link",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/Jubeki/Nova-Card-Linkable/issues",
+                "source": "https://github.com/Jubeki/Nova-Card-Linkable/tree/master"
+            },
+            "time": "2020-02-14T10:20:16+00:00"
         },
         {
             "name": "laravel/framework",
