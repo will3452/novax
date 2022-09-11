@@ -4,8 +4,56 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17cb8e37b3e20aedf36d15dfdfd5ef87",
+    "content-hash": "c50626e377c5c6d8ab94b767fba9f7d1",
     "packages": [
+        {
+            "name": "armincms/json",
+            "version": "0.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/armincms/json.git",
+                "reference": "fd3544f88bbf5dd9d21952861ca6297bec7d6d51"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/armincms/json/zipball/fd3544f88bbf5dd9d21952861ca6297bec7d6d51",
+                "reference": "fd3544f88bbf5dd9d21952861ca6297bec7d6d51",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Armincms\\Json\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "armincms",
+                "array",
+                "collection",
+                "field",
+                "json",
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/armincms/json/issues",
+                "source": "https://github.com/armincms/json/tree/master"
+            },
+            "time": "2020-03-12T08:52:25+00:00"
+        },
         {
             "name": "asm89/stack-cors",
             "version": "v2.1.1",
@@ -244,7 +292,7 @@
         },
         {
             "name": "coreproc/nova-permissions-field",
-            "version": "dev-main",
+            "version": "dev-Official-Website-for-Dagupan-Tipid-Center",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/NovaPermissionsField",
@@ -9688,5 +9736,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }

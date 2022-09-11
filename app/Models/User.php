@@ -22,7 +22,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
+        'address',
     ];
+
+    const TYPE_CARRIER = 'Carrier';
+    const TYPE_CUSTOMER = 'Customer';
+    const TYPE_ADMIN = 'Admin';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -42,4 +48,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function cartItems () {
+        return $this->hasMany(CartItem::class);
+    }
+
+    public function isInTheCart($id) {
+        return $this->cartItems()->whereProductId($id)->exists();
+    }
+
+    public function subTotal() {
+        $total = 0;
+        foreach ($this->cartItems as $item) {
+            $total+= ($item->product->price * $item->quantity);
+        }
+
+        return $total;
+    }
 }

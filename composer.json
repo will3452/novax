@@ -16,6 +16,7 @@
     ],
     "require": {
         "php": "^7.3|^8.0",
+        "armincms/json": "^0.5.2",
         "coreproc/nova-permissions-field": "*",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",

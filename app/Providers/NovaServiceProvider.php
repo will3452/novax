@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -101,11 +102,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return config('novax.profile_enabled');
             }),
             (new BackupTool)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
+                return $request->user()->type === User::TYPE_ADMIN &&
                 config('novax.back_up_enabled');
             }),
             (new NovaSettings)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
+                return $request->user()->type === User::TYPE_ADMIN &&
                 config('novax.setting_enabled');
             }),
         ];
