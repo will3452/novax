@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CartItem;
 use App\Models\Order;
+use App\Models\Promo;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -100,12 +101,24 @@ class CartController extends Controller
             $item->delete();
         }
 
-        //create order
-        $order = Order::create([
+        // total payable
+        $amountPayable = auth()->user()->subTotal(true);
+
+        $orderData = [
             'user_id' => auth()->id(),
             'products' => json_encode($products),
-            'amount_payable' => auth()->user()->subTotal(true),
-        ]);
+            'amount_payable' => $amountPayable,
+        ];
+
+        if ($request->has('promo_id')) {
+            $promo = Promo::find($request->promo_id);
+            if($promo) {
+                $orderData['promo'] = json_encode($promo);
+                $orderData['amount_payable'] = $amountPayable - ($amountPayable * ($promo->discount_rate / 100));
+            }
+        }
+        //create order
+        $order = Order::create($orderData);
 
         // checkout with gcash
         $result = $this->processToGcash($order);

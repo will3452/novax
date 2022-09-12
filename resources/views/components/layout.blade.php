@@ -9,6 +9,11 @@
     <script defer src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js"></script>
 </head>
 <body>
+    @if (session()->has('error'))
+        <div class="alert alert-warning rounded-none">
+            {{session()->get('error')}}
+        </div>
+    @endif
     {{$slot}}
 </body>
 </html>

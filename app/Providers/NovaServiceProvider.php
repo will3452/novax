@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\CartItem;
+use App\Models\Delivery;
 use App\Models\Order;
 use App\Models\User;
 use Laravel\Nova\Nova;
@@ -83,25 +84,32 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             }),
             (new LinkableAway)
             ->canSee(function () {
-                return auth()->user()->type != 'Admin';
+                return auth()->user()->type == 'Customer';
             })
             ->title('Shop now')
             ->url('/')
             ->subtitle('go to shop now'),
             (new LinkableAway)
             ->canSee(function () {
-                return auth()->user()->type != 'Admin';
+                return auth()->user()->type == 'Customer';
             })
             ->title('My Cart')
             ->url('/carts')
             ->subtitle(CartItem::whereUserId(auth()->id())->count()),
             (new LinkableAway)
             ->canSee(function () {
-                return auth()->user()->type != 'Admin';
+                return auth()->user()->type == 'Customer';
             })
             ->title('My Orders')
             ->url('/orders')
             ->subtitle(Order::whereNotNull('paid_at')->whereUserId(auth()->id())->count()),
+            (new Linkable)
+            ->canSee(function () {
+                return auth()->user()->type == 'Carrier';
+            })
+            ->url('/resources/deliveries')
+            ->title('My Deliveries')
+            ->subtitle(Delivery::whereUserId(auth()->id())->whereStatus('Pending')->count()),
         ];
     }
 

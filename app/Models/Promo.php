@@ -14,4 +14,6 @@ class Promo extends Model
         'discount_rate',
         'expired_at',
     ];
+
+    protected $casts = ['expired_at' => 'date'];
 }

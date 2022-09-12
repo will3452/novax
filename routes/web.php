@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PromoController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
@@ -34,6 +35,8 @@ Route::post('/checkout', [CartController::class, 'checkout']);
 
 
 Route::get('/orders', [OrderController::class, 'index']);
+
+Route::get('/get-discount', [PromoController::class, 'getDiscount']);
 
 
 Route::get('/register', [RegisterController::class, 'registrationPage']);

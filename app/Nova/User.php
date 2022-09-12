@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
@@ -27,7 +28,9 @@ class User extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public function title() {
+        return "$this->name - $this->type";
+    }
 
     /**
      * The columns that should be searched.
@@ -47,8 +50,12 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
+            Select::make('Type')
+                ->options([
+                    'Carrier' => 'Carrier',
+                    'Customer' => 'Customer',
+                    'Admin' => 'Admin',
+                ]),
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),

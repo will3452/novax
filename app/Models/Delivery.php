@@ -17,4 +17,12 @@ class Delivery extends Model
     ];
     const STATUS_PENDING = 'Pending';
     const STATUS_DELIVERED = 'Delivered';
+
+    public function order () {
+        return $this->belongsTo(Order::class, 'order_id');
+    }
+
+    public function user () {
+        return $this->belongsTo(User::class, 'user_id'); // delivery boi
+    }
 }

@@ -59,19 +59,40 @@
                     <td class="bg-gray-200"></td>
                     <td class="bg-gray-200">VAT (12 %) </td>
                     <td class="bg-gray-200">  {{number_format((auth()->user()->subTotal() * .12), 2)}} </td>
-                    <td class="bg-gray-200"></td>
+                    <td class="bg-gray-200">
+                        <form action="/get-discount">
+                            <input name="code" required type="text" value="{{request()->code}}" class="input input-sm" placeholder="Enter Discount Code">
+                            <button class="btn btn-secondary btn-sm">Apply</button>
+                        </form>
+                    </td>
                 </tr>
                 <tr class="text-xl">
                     <td class="bg-gray-200"></td>
                     <td class="font-bold bg-gray-200">Total</td>
+                    @if (request()->has('promo_discount'))
+                        <td class="bg-gray-200">
+                            <div>
+                                ₱ {{number_format(
+                                    (auth()->user()->subTotal() + (auth()->user()->subTotal() * .12)) - ((auth()->user()->subTotal() + (auth()->user()->subTotal() * .12)) * (request()->promo_discount / 100)), 2
+                                    )}}
+                            </div>
+                            <div class="text-sm line-through font-bold text-red-600">
+                                ₱ {{(auth()->user()->subTotal() + (auth()->user()->subTotal() * .12))}}
+                            </div>
+                        </td>
+                    @else
                     <td class="bg-gray-200">
-                        ₱ {{number_format(auth()->user()->subTotal() + (auth()->user()->subTotal() * .12), 2)}}
+                        ₱ {{number_format(
+                            (auth()->user()->subTotal() + (auth()->user()->subTotal() * .12)), 2
+                            )}}
                     </td>
+                    @endif
                     <td class="bg-gray-200" >
                        @if (auth()->user()->cartItems()->count())
 
                        <form action="/checkout" method="POST">
                             @csrf
+                            <input type="hidden" name="promo_id" value="{{request()->promo_id}}">
                             <button class="btn btn-primary btn-lg flex">
                                 Pay now
                                 <img class="w-24 mx-2" src="https://getpaid.gcash.com/assets/img/logo@3x.png" alt="">

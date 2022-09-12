@@ -2,42 +2,28 @@
 
 namespace App\Nova;
 
-use Armincms\Json\Json;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Code;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Status;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Order extends Resource
+class Promo extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Order::class;
+    public static $model = \App\Models\Promo::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public function title () {
-        $name = $this->user->name;
-        $date = 'UNPAID';
-        if ($this->paid_at != null) {
-            $date = $this->paid_at->format('m-d-y');
-        }
-
-        return "Order-$date ($name)";
-    }
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -45,8 +31,7 @@ class Order extends Resource
      * @var array
      */
     public static $search = [
-        'products',
-        'paid_at'
+        'id',
     ];
 
     /**
@@ -58,19 +43,12 @@ class Order extends Resource
     public function fields(Request $request)
     {
         return [
-            Select::make('Status')
-                ->options([
-                    'Pending' => 'Pending',
-                    'To Deliver' => 'To Deliver',
-                    'To Received' => 'To Received',
-                    'To Pay' => 'To Pay',
-                    'Received' => 'Received',
-                ]),
-            Date::make('Paid Date', 'paid_at'),
-            Currency::make('Amount Payable'),
-            BelongsTo::make('User'),
-            Code::make('products')
-
+            Date::make('Date Expired', 'expired_at')->rules(['required']),
+            Text::make('Name'),
+            Text::make('Code'),
+            Number::make('Discount Rate')
+                ->rules(['required'])
+                ->help('eg. 12 for 12%')
         ];
     }
 
