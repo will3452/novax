@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
 use Jubeki\Nova\Cards\Linkable\Linkable;
 use Jubeki\Nova\Cards\Linkable\LinkableAway;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Textarea;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -31,6 +33,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Number::make('Phone'),
+            Text::make('Email'),
+            Textarea::make('Announcement'),
         ]);
     }
 

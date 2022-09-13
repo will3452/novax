@@ -1,0 +1,18 @@
+:root {
+  --primary: #A1E633;
+  --primary-dark: #14532D;
+  --primary-70: #rgb(22,100,52);
+  --primary-50: #145350;
+  --primary-30: #145330;
+  --primary-10: #145310;
+  --logo: #A1E633;
+  --sidebar-icon: #fff;
+}
+
+.bg-grad-sidebar {
+   background: #14532D;
+}
+
+button[dusk="create-and-add-another-button"], button[dusk="update-and-continue-editing-button"] {
+    display: none !important;
+}

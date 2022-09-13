@@ -1,7 +1,7 @@
 @props(['product'])
 <div class="shadow p-2 w-44 rounded m-4">
     <div class="flex justify-center mb-4">
-        <img src="{{$product->image != 0 ? $product->image : 'https://via.placeholder.com/150?text=No+image'}}" alt="" class="h-32 w-32 border">
+        <img src="{{$product->image ? '/storage/'.$product->image : 'https://via.placeholder.com/150?text=No+image'}}" alt="" class="cover h-32 w-32 border">
     </div>
     <div class="text-center">
         <h3 class="font-bold text-center uppercase text-xs">{{$product->name}}</h3>

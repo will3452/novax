@@ -1,30 +1,15 @@
+@if (\App\Models\Banner::count())
 <div class="carousel w-full">
-    <div id="slide1" class="carousel-item relative w-full">
-      <img src="https://placeimg.com/800/200/arch" class="w-full" />
-      <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-        <a href="#slide4" class="btn btn-circle">❮</a>
-        <a href="#slide2" class="btn btn-circle">❯</a>
+    @foreach (\App\Models\Banner::get() as $item)
+    <div id="slide{{$loop->index + 1}}" class="carousel-item relative w-full">
+        <img src="/storage/{{$item->image}}" class="w-full" style="height: 400px !important;object-fit:cover;"/>
+        <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+          <a href="#slide{{$loop->count - ($loop->index)}}" class="btn btn-circle">❮</a>
+          <a href="#slide{{$loop->index+2}}" class="btn btn-circle">❯</a>
+        </div>
       </div>
-    </div>
-    <div id="slide2" class="carousel-item relative w-full">
-      <img src="https://placeimg.com/800/200/arch" class="w-full" />
-      <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-        <a href="#slide1" class="btn btn-circle">❮</a>
-        <a href="#slide3" class="btn btn-circle">❯</a>
-      </div>
-    </div>
-    <div id="slide3" class="carousel-item relative w-full">
-      <img src="https://placeimg.com/800/200/arch" class="w-full" />
-      <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-        <a href="#slide2" class="btn btn-circle">❮</a>
-        <a href="#slide4" class="btn btn-circle">❯</a>
-      </div>
-    </div>
-    <div id="slide4" class="carousel-item relative w-full">
-      <img src="https://placeimg.com/800/200/arch" class="w-full" />
-      <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-        <a href="#slide3" class="btn btn-circle">❮</a>
-        <a href="#slide1" class="btn btn-circle">❯</a>
-      </div>
-    </div>
+    @endforeach
+
   </div>
+
+@endif
