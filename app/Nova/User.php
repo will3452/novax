@@ -16,8 +16,6 @@ class User extends Resource
     {
         return $query->where('email', '!=', 'super@admin.com');
     }
-
-    public static $group = 'Data';
     /**
      * The model the resource corresponds to.
      *
@@ -67,8 +65,8 @@ class User extends Resource
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
 
-            MorphToMany::make('Roles', 'roles', Role::class)
-                ->canSee(fn () => config('novax.role_enabled')),
+            // MorphToMany::make('Roles', 'roles', Role::class)
+            //     ->canSee(fn () => config('novax.role_enabled')),
         ];
     }
 
