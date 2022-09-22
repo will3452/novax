@@ -244,7 +244,7 @@
         },
         {
             "name": "coreproc/nova-permissions-field",
-            "version": "dev-main",
+            "version": "dev-Cloud-Storage-Folder-and-Files-Trapdoor-System",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/NovaPermissionsField",
@@ -9688,5 +9688,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }

@@ -2,29 +2,34 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
+use App\Nova\Actions\AddNewFile;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\File;
+use Laravel\Nova\Fields\Hidden;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Item extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
+    public static function label() {
+        return 'Files';
+    }
+    public static function authorizedToCreate(Request $request)
     {
-        return $query->where('email', '!=', 'super@admin.com');
+        return false;
     }
 
-    public static $group = 'Data';
+    public function authorizedToUpdate(Request $request)
+    {
+        return false;
+    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Item::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -39,7 +44,8 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'name',
     ];
 
     /**
@@ -51,36 +57,16 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
-            Select::male('Account Type', 'type')
-                ->sortable()
-                ->options([
-                    \App\Models\User::TYPE_BASIC => App\Models\User::TYPE_BASIC,
-                    \App\Models\User::TYPE_ADMIN => App\Models\User::TYPE_ADMIN,
-                ])->rules(['required']),
-
+            Hidden::make('user_id')->default(fn () => auth()->id()),
             Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules(['required']),
+            File::make('File')
+                ->rules(['required', 'max:' . nova_get_setting('max_upload', 10000)]),
+            Text::make('Size', fn () => number_format(0.000001 * $this->size, 2) . ' mb')
+                ->hideWhenCreating(),
+            Text::make('Type')
+                ->hideWhenCreating(),
 
-            Text::make('Phone')
-                ->sortable()
-                ->rules('required', 'max:11'),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
-
-            MorphToMany::make('Roles', 'roles', Role::class)
-                ->canSee(fn () => config('novax.role_enabled')),
         ];
     }
 
@@ -125,6 +111,8 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            AddNewFile::make()->standalone(),
+        ];
     }
 }

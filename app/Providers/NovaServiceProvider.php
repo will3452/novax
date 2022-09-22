@@ -6,9 +6,12 @@ use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Number;
 use Spatie\BackupTool\BackupTool;
+use App\Nova\Metrics\FilesUploaded;
 use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
+use Infinety\Filemanager\FilemanagerTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -25,6 +28,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Number::make('Max Upload'),
         ]);
     }
 
@@ -76,6 +80,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
+            (FilesUploaded::make()),
         ];
     }
 
@@ -100,12 +105,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             (new ProfileTool)->canSee(function () {
                 return config('novax.profile_enabled');
             }),
-            (new BackupTool)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
-                config('novax.back_up_enabled');
-            }),
             (new NovaSettings)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
+                return $request->user()->is_admin &&
                 config('novax.setting_enabled');
             }),
         ];
