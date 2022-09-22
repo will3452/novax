@@ -2,12 +2,13 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\AddNewFile;
+use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\File;
-use Laravel\Nova\Fields\Hidden;
-use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Hidden;
+use App\Nova\Actions\AddNewFile;
+use App\Nova\Metrics\FilesUploaded;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Item extends Resource
@@ -78,7 +79,9 @@ class Item extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            FilesUploaded::make()
+        ];
     }
 
     /**
