@@ -2,11 +2,12 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Text;
+use GeneaLabs\NovaMapMarkerField\MapMarker;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Terminal extends Resource
@@ -48,10 +49,9 @@ class Terminal extends Resource
             Image::make('Image'),
             Text::make('Address')
                 ->rules(['required']),
-            Text::make('Latitude', 'lat')
-                ->rules(['required']),
-            Text::make('Longitude', 'lng')
-                ->rules(['required']),
+            MapMarker::make('Location')
+                ->latitude('lat')
+                ->longitude('lng'),
         ];
     }
 
