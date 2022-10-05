@@ -51,4 +51,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function generateOtp() {
+        $otp = OtpLog::create(['user_id' => $this->id, 'code' => random_int(123456, 456789)]);
+        return $otp->code;
+    }
 }

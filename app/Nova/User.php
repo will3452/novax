@@ -18,7 +18,11 @@ class User extends Resource
         return $query->where('email', '!=', 'super@admin.com');
     }
 
-    public static $group = 'Data';
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->is_admin;
+    }
+
     /**
      * The model the resource corresponds to.
      *
@@ -53,11 +57,11 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Select::male('Account Type', 'type')
+            Select::make('Account Type', 'type')
                 ->sortable()
                 ->options([
-                    \App\Models\User::TYPE_BASIC => App\Models\User::TYPE_BASIC,
-                    \App\Models\User::TYPE_ADMIN => App\Models\User::TYPE_ADMIN,
+                    \App\Models\User::TYPE_BASIC => \App\Models\User::TYPE_BASIC,
+                    \App\Models\User::TYPE_ADMIN => \App\Models\User::TYPE_ADMIN,
                 ])->rules(['required']),
 
             Text::make('Name')
@@ -66,7 +70,8 @@ class User extends Resource
 
             Text::make('Phone')
                 ->sortable()
-                ->rules('required', 'max:11'),
+                ->rules('required', 'max:11')
+                ->help('can be use for authentication.'),
 
             Text::make('Email')
                 ->sortable()

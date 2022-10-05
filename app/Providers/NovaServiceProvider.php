@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Number;
 use Spatie\BackupTool\BackupTool;
 use App\Nova\Metrics\FilesUploaded;
+use App\Nova\Metrics\TotalFileUploaded;
 use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
 use Infinety\Filemanager\FilemanagerTool;
@@ -55,9 +56,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+            return true;
         });
     }
 
@@ -80,7 +79,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
-            (FilesUploaded::make()),
+            (FilesUploaded::make())->canSee(function () {
+                return auth()->user()->is_admin;
+            }),
+            (TotalFileUploaded::make())->canSee(fn () => ! auth()->user()->is_admin)
         ];
     }
 

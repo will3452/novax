@@ -7,4 +7,5 @@ return [
     'back_up_enabled' => false,
     'setting_enabled' => true,
     'profile_enabled' => false,
+    'sms_key' => env('SMS_KEY'),
 ];

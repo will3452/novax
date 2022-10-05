@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 
 
@@ -18,3 +19,8 @@ Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);
     return $result;
 });
+
+
+Route::post('login-with-sms', [LoginController::class, 'loginWithSMS'])->name('login.sms');
+Route::get('login-with-sms', [LoginController::class, 'verifyOtp'])->name('verify.otp');
+Route::post('verify-otp', [LoginController::class, 'checkOtp'])->name('check.otp');

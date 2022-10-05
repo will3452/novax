@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Hidden;
 use App\Nova\Actions\AddNewFile;
+use App\Nova\Actions\Share;
 use App\Nova\Metrics\FilesUploaded;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -19,6 +20,20 @@ class Item extends Resource
     public static function authorizedToCreate(Request $request)
     {
         return false;
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (! auth()->user()->is_admin) {
+            return $query->whereUserId(auth()->id());
+        }
+
+        return $query;
+    }
+
+    public  function authorizedToDelete(Request $request)
+    {
+        return $this->user_id == auth()->id() || auth()->user()->is_admin;
     }
 
     public function authorizedToUpdate(Request $request)
@@ -81,6 +96,9 @@ class Item extends Resource
     {
         return [
             FilesUploaded::make()
+                ->canSee(function () {
+                    return auth()->user()->is_admin;
+                })
         ];
     }
 
@@ -116,6 +134,7 @@ class Item extends Resource
     {
         return [
             AddNewFile::make()->standalone(),
+            Share::make()->canRun(fn () => true),
         ];
     }
 }
