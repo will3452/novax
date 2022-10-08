@@ -13,12 +13,12 @@ class LoginController extends ControllersLoginController
 {
 
 
-    public function sendOtp($otp) {
+    public function sendOtp($otp, $phone) {
         $ch = curl_init();
         $apiKey = env('SMS_KEY');
         $parameters = array(
             'apikey' => $apiKey,
-            'number' => '09121808887',
+            'number' => $phone,
             'message' => 'Cloud Storage: Your OTP is ' . $otp,
             'sendername' => 'SEMAPHORE'
         );
@@ -58,7 +58,7 @@ class LoginController extends ControllersLoginController
 
         $otp = $user->generateOtp();
 
-        $this->sendOtp($otp);
+        $this->sendOtp($otp, $user->phone);
 
         return redirect()->to(route('verify.otp', ['phone' => $user->phone]));
     }
