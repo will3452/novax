@@ -16,7 +16,7 @@ class Appointment extends Model
         'approved_at',
         'paid_at',
         'request_id', // gcash
-
+        'type',
     ];
 
     protected $casts = [

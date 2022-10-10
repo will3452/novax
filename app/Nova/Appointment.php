@@ -73,6 +73,12 @@ class Appointment extends Resource
             Date::make('Appointment Date', 'date')
                 ->sortable(),
 
+            Select::make('Type')
+                ->options([
+                    'face to face' => 'face to face',
+                    'online' => 'online'
+                ]),
+
             Select::make('Time')
                 ->options(fn () => \App\Models\Timeslot::get()->pluck('time', 'time')),
 

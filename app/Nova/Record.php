@@ -62,6 +62,7 @@ class Record extends Resource
                 ->exceptOnForms(),
             BelongsTo::make('Patient', 'user', User::class),
             Trix::make('Description')
+                ->withFiles('public')
                 ->alwaysShow(),
         ];
     }

@@ -11,6 +11,7 @@ use App\Nova\Metrics\Symptom;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use App\Nova\Metrics\Diagnosis;
+use Elezerk\Calendar\Calendar;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Textarea;
 use Spatie\BackupTool\BackupTool;
@@ -40,7 +41,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
             new Panel('Landing Page', [
                 Textarea::make('Introduction'),
-                Text::make('Youtube Introduction Link'),
+                Text::make('Youtube Introduction Link', 'yt_link'),
             ]),
 
             new Panel('Administrator', [
@@ -74,9 +75,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+            return true;
         });
     }
 
@@ -102,15 +101,24 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         ];
 
         if (auth()->id() == 1) {
-            $cards = array_merge($cards, [(new User()),
-            (new ResourceListing())
+            $cards = array_merge($cards,
+                [
+                (new ResourceListing())
                 ->cardTitle('New Appointments')
                 ->orderBy('updated_at')
                 ->readableDate(true)
                 ->limit(5)
                 ->resource(\App\Models\Appointment::class)
                 ->resourceUri('/resources/appointments/')
-                ->resourceTitleColumn('user_name')]);
+                ->resourceTitleColumn('user_name')
+                ->width('2/3'),
+
+                (new Calendar())->width('2/3')->withMeta([
+                    'appointments' => \App\Models\Appointment::with('user')->whereNotNull('paid_at')->get(),
+                ]),
+                (new User()),
+            ]);
+
         }
 
         return $cards;

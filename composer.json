@@ -23,6 +23,10 @@
         {
             "type": "path",
             "url": "./nova-components/Chat"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/Calendar"
         }
     ],
     "require": {
@@ -43,7 +47,8 @@
         "runlinenl/nova-profile-tool": "^1.1",
         "spatie/laravel-backup": "^6.16",
         "spatie/laravel-permission": "^5.3",
-        "spatie/nova-backup-tool": "^4.1"
+        "spatie/nova-backup-tool": "^4.1",
+        "elezerk/calendar": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

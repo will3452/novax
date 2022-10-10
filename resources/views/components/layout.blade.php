@@ -39,24 +39,7 @@
     </style>
 </head>
 <body>
-    <canvas class="background">
-
-    </canvas>
 
     {{$slot}}
-
-    <script>
-        window.
-            onload
-            = function() {
-            Particles.
-            init
-            ({
-                selector:'.background',
-                color: '#529B03'
-            });
-        };
-
-    </script>
 </body>
 </html>
