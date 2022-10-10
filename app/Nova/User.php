@@ -4,10 +4,13 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
@@ -53,6 +56,18 @@ class User extends Resource
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
+
+            Select::make('Sex')
+                ->options(['Male' => 'Male', 'Female' => 'Female']),
+
+
+            Date::make('Bithdate')
+                ->rules(['required']),
+
+            Text::make('Address'),
+
+            Text::make('Contact Number', 'contact_no')
+                ->rules(['required', 'max:11']),
 
             Text::make('Email')
                 ->sortable()
