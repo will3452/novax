@@ -4,11 +4,12 @@
             <div class="mb-2">
                 <a href="/register" class="border-1 py-1 px-2 rounded-full bg-gray-800 text-blue-200 font-bold">Sign Up</a>
             </div>
+
             <div class="mb-2">
-                <a href="#add-story" class="border-1 py-1 px-2 rounded-full bg-gray-800 text-blue-200 font-bold">Add Story </a>
+                <a href="/admin" class="border-1 py-1 px-2 rounded-full bg-gray-800 text-blue-200 font-bold">Sign in</a>
             </div>
             <div class="mb-2">
-                <a href="#languages" class="border-1 py-1 px-2 rounded-full bg-gray-800 text-blue-200 font-bold">Languages</a>
+                <a href="#add-story" class="border-1 py-1 px-2 rounded-full bg-gray-800 text-blue-200 font-bold">Add Story </a>
             </div>
         </div>
         <div class="mx-4 cursor-pointer hover:bg-blue-200 p-4 rounded">
@@ -23,7 +24,7 @@
                 Game Mode
             </h2>
         </div>
-        <a href="/admin/resources/galleries" class="mx-4 cursor-pointer hover:bg-blue-200 p-4 rounded block">
+        <a href="/gallery" class="mx-4 cursor-pointer hover:bg-blue-200 p-4 rounded block">
             <img src="/frame.png" alt="" class="block w-32 h-32">
             <h2 class="text-center font-bold uppercase">
                 Gallery
