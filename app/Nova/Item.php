@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Models\Shared;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\File;
@@ -30,7 +31,9 @@ class Item extends Resource
 
         // return $query;
 
-        return $query->whereUserId(auth()->id());
+        $shared = Shared::whereUserId(auth()->id())->whereNotNull('confirmed_at')->get()->pluck('item_id')->all();
+
+        return $query->whereIn('id', $shared)->OrWhere(['user_id' => auth()->id()]);
     }
 
     public  function authorizedToDelete(Request $request)
@@ -75,6 +78,7 @@ class Item extends Resource
     public function fields(Request $request)
     {
         return [
+            Text::make('Owner', fn () => $this->user_id == auth()->id() ? 'You': $this->user->name)->showOnIndex(),
             Hidden::make('user_id')->default(fn () => auth()->id()),
             Text::make('Name')
                 ->rules(['required']),

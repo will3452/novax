@@ -6,6 +6,7 @@ use Exception;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\Shared;
+use App\Services\SmsCredit;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -14,30 +15,11 @@ class ShareController extends Controller
 
 
     public function sendApproval(User $requestor, Item $item, User $approver, $sharedId) {
-        $ch = curl_init();
-        $apiKey = env('SMS_KEY');
         $requestorName = Str::limit($requestor->name, 20);
         $fileName = $item->name;
         $link = route('accept.request', ['w' => $item->key, 'k' => $requestor->id, 's' => $sharedId]);
         $message = "$requestorName, want to see your file [$fileName]. If you to continue and allow it, please go to this link; $link";
-        $parameters = array(
-            'apikey' => $apiKey,
-            'number' => $approver->phone,
-            'message' => $message,
-            'sendername' => 'SEMAPHORE'
-        );
-        curl_setopt( $ch, CURLOPT_URL,'https://semaphore.co/api/v4/messages');
-        curl_setopt( $ch, CURLOPT_POST, 1 );
-
-        //Send the parameters set above with the request
-        curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query( $parameters ) );
-
-        // Receive response from server
-        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-        $output = curl_exec( $ch );
-        curl_close ($ch);
-
-        error_log('OUTPUT >> ' . $output);
+        $this->sendMessage($approver->phone, $message);
     }
 
     public function accessConfirm (Request $request) {
@@ -80,7 +62,11 @@ class ShareController extends Controller
                 'message' => $data['message'],
             ]);
 
-            $this->sendApproval($user, $item, User::find($item->user_id), $shared->id);
+            if (SmsCredit::canSend()) {
+                $this->sendApproval($user, $item, User::find($item->user_id), $shared->id);
+            } else {
+                throw new Exception('Insufficient load balance.');
+            }
 
             return 'Your request has been sent to the owner.';
         } catch(Exception $e) {
@@ -89,7 +75,65 @@ class ShareController extends Controller
     }
 
     public function acceptRequest(Request $request) {
-        $item = Item::find($request->k)
-        return view('accept_confirm', compact('item'));
+        try {
+
+            $item = Item::where(['key' => $request->w])->first();
+
+
+            if (! $item) throw new Exception('File not found.');
+
+            $requestor = User::find($request->k);
+
+            if (! $requestor) throw new Exception('Requestor not found.');
+
+            $sharedRequest = Shared::whereUserId($requestor->id)->whereItemId($item->id)->first();
+
+            if(! $sharedRequest) throw new Exception('Request not found.');
+
+            return view('accept_confirm', compact('item', 'sharedRequest', 'requestor'));
+
+        } catch (Exception $error) {
+            return $error->getMessage();
+        }
+    }
+
+    public function sendMessage($phone, $message) {
+        $ch = curl_init();
+        $apiKey = env('SMS_KEY');
+
+        $parameters = array(
+            'apikey' => $apiKey,
+            'number' => $phone,
+            'message' => $message,
+            'sendername' => 'SEMAPHORE'
+        );
+        curl_setopt( $ch, CURLOPT_URL,'https://semaphore.co/api/v4/messages');
+        curl_setopt( $ch, CURLOPT_POST, 1 );
+
+        //Send the parameters set above with the request
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query( $parameters ) );
+
+        // Receive response from server
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $output = curl_exec( $ch );
+        curl_close ($ch);
+
+        error_log('OUTPUT >> ' . $output);
+    }
+
+    public function confirmRequest(Request $request) {
+        $request->validate([
+            'id' => ['required', 'exists:shareds,id'],
+        ]);
+
+        $shared = Shared::find($request->id);
+        $shared->update(['confirmed_at' => now()]);
+
+        if (SmsCredit::canSend()) {
+            $this->sendMessage($shared->user->phone, "Your request has been approved!");
+        }
+
+
+        return 'Approved request!';
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AuditLog;
 use App\Models\OtpLog;
 use App\Models\User;
+use App\Services\SmsCredit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Nova\Http\Controllers\LoginController as ControllersLoginController;
@@ -22,6 +23,7 @@ class LoginController extends ControllersLoginController
             'message' => 'Cloud Storage: Your OTP is ' . $otp,
             'sendername' => 'SEMAPHORE'
         );
+
         curl_setopt( $ch, CURLOPT_URL,'https://semaphore.co/api/v4/messages' );
         curl_setopt( $ch, CURLOPT_POST, 1 );
 
@@ -58,7 +60,11 @@ class LoginController extends ControllersLoginController
 
         $otp = $user->generateOtp();
 
-        $this->sendOtp($otp, $user->phone);
+        if (SmsCredit::canSend()) {
+            $this->sendOtp($otp, $user->phone);
+        } else {
+            return 'Insufficient load balance.';
+        }
 
         return redirect()->to(route('verify.otp', ['phone' => $user->phone]));
     }

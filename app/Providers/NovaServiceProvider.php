@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Number;
 use Spatie\BackupTool\BackupTool;
 use App\Nova\Metrics\FilesUploaded;
+use App\Nova\Metrics\LoadCredit;
 use App\Nova\Metrics\TotalFileUploaded;
 use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
@@ -82,7 +83,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             (FilesUploaded::make())->canSee(function () {
                 return auth()->user()->is_admin;
             }),
-            (TotalFileUploaded::make())->canSee(fn () => ! auth()->user()->is_admin)
+            (TotalFileUploaded::make())->canSee(fn () => ! auth()->user()->is_admin),
+            (LoadCredit::make())->canSee(fn () => auth()->user()->is_admin),
         ];
     }
 

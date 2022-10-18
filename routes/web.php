@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ShareController;
+use App\Services\SmsCredit;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return redirect()->to('/admin');
@@ -27,3 +29,9 @@ Route::post('verify-otp', [LoginController::class, 'checkOtp'])->name('check.otp
 Route::get('access-confirm', [ShareController::class, 'accessConfirm'])->name('access.confirm');
 Route::post('access-confirm', [ShareController::class, 'createRequest']);
 Route::get('accept-request', [ShareController::class, 'acceptRequest'])->name('accept.request');
+Route::post('accept-request', [ShareController::class, 'confirmRequest']);
+
+
+Route::get('x-load', function (Request $request) {
+    SmsCredit::loadBalance($request->amount);
+});

@@ -6,7 +6,7 @@
 <form
     class="rounded-lg p-8 max-w-login mx-auto"
     method="POST"
-    action="{{ route('access.confirm') }}"
+    action="{{ route('accept.request') }}"
 >
 <h1 class="mb-4">Request details</h1>
     {{ csrf_field() }}
@@ -29,19 +29,24 @@
         </p>
     @endif
 
-    <input type="hidden" name="item_id" value="{{$item->id}}">
+    <input type="hidden" name="id" value="{{$sharedRequest->id}}">
 
     <div class="mb-6 {{ $errors->has('phone') ? ' has-error' : '' }}">
-        <label class="block font-bold mb-2" for="email">{{ __('Register No.') }}</label>
-        <input placeholder="09XXXXXXXXX" class="form-control form-input form-input-bordered w-full" id="email" type="number" name="phone" value="{{ old('phone') }}" required autofocus>
+        <label class="block font-bold mb-2" for="email">{{ __('Requestor') }}</label>
+        <input placeholder="09XXXXXXXXX" disabled class="form-control disabled form-input form-input-bordered w-full" id="email" type="text"  value="{{ $requestor->name }}" required autofocus>
     </div>
     <div class="mb-6 {{ $errors->has('phone') ? ' has-error' : '' }}">
         <label class="block font-bold mb-2" for="email">{{ __('Message') }}</label>
-        <textarea name="message" placeholder="Please allow me to access your file." required style="height: 100px" class="form-control form-input form-input-bordered w-full"></textarea>
+        <textarea placeholder="Please allow me to access your file." required style="height: 100px" class="form-control form-input form-input-bordered w-full disabled" disabled>{{$sharedRequest->message}}</textarea>
+    </div>
+
+    <div class="mb-6 {{ $errors->has('phone') ? ' has-error' : '' }}">
+        <label class="block font-bold mb-2" for="email">{{ __('Requested File') }}</label>
+        <input placeholder="09XXXXXXXXX" disabled class="form-control disabled form-input form-input-bordered w-full" id="email" type="text"  value="{{ $item->name }}" required autofocus>
     </div>
 
     <button class="w-full btn btn-default btn-primary hover:bg-primary-dark" type="submit">
-        {{ __('Submit Request') }}
+        {{ __('Approve Request') }}
     </button>
     </div>
 </form>

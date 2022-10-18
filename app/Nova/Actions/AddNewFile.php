@@ -3,6 +3,7 @@
 namespace App\Nova\Actions;
 
 use App\Models\Item;
+use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Text;
@@ -30,6 +31,7 @@ class AddNewFile extends Action
         $fileArray = explode('/', $file);
         // error_log($file);
         Item::create([
+            'key' => Str::random(64),
             'file' => $fileArray[1],
             'name' => $fields->name,
             'size' => $fields->file->getSize(),
