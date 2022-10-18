@@ -14,6 +14,7 @@ class Item extends Model
         'size',
         'type',
         'user_id',
+        'key',
     ];
 
     public function user () {

@@ -24,11 +24,13 @@ class Item extends Resource
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if (! auth()->user()->is_admin) {
-            return $query->whereUserId(auth()->id());
-        }
+        // if (! auth()->user()->is_admin) {
+        //     return $query->whereUserId(auth()->id());
+        // }
 
-        return $query;
+        // return $query;
+
+        return $query->whereUserId(auth()->id());
     }
 
     public  function authorizedToDelete(Request $request)
@@ -82,6 +84,10 @@ class Item extends Resource
                 ->hideWhenCreating(),
             Text::make('Type')
                 ->hideWhenCreating(),
+            Text::make('Shared Link', function () {
+                $url = route('access.confirm', ['w' => $this->key]);
+                return "<span class='block p-2 text-xs rounded text-white font-bold bg-black'>$url</span>";
+            })->asHtml()->onlyOnDetail(),
 
         ];
     }
@@ -134,7 +140,6 @@ class Item extends Resource
     {
         return [
             AddNewFile::make()->standalone(),
-            Share::make()->canRun(fn () => true),
         ];
     }
 }

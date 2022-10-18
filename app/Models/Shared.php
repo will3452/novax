@@ -5,25 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SharedFile extends Model
+class Shared extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'item_id',
-        'expired_at',
-        'code',
-        'user_id',
-    ];
 
-    protected $casts = [
-        'expired_at' => 'date'
+    protected $fillable = [
+        'user_id',
+        'item_id',
+        'message',
+        'confirmed_at',
     ];
 
     public function user () {
         return $this->belongsTo(User::class);
     }
 
-    public function item () {
-        return $this->belongsTo(Item::class);
-    }
+    protected $casts = ['confirmed_at' => 'datetime'];
 }

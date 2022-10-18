@@ -20,7 +20,8 @@ class AdminSeeder extends Seeder
             'name'=>'superadmin',
             'email'=>'super@admin.com',
             'password'=> bcrypt('password'),
-            'phone' => '09058656526',
+            'phone' => '09121808887',
+            // 'phone' => '09058656526',
             'type' => User::TYPE_ADMIN,
         ]);
     }

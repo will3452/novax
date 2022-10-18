@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSharedFilesTable extends Migration
+class CreateSharedsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateSharedFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('shared_files', function (Blueprint $table) {
+        Schema::create('shareds', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->nullable();
-            $table->timestamp('expired_at')->nullable();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('item_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id');
+            $table->foreignId('item_id');
+            $table->text('message');
+            $table->timestamp('confirmed_at')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateSharedFilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shared_files');
+        Schema::dropIfExists('shareds');
     }
 }
