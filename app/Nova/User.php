@@ -55,7 +55,7 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            // ID::make()->sortable(),
 
             Select::make('Account Type', 'type')
                 ->sortable()
