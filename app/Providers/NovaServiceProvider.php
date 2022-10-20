@@ -14,6 +14,7 @@ use App\Nova\Metrics\TotalFileUploaded;
 use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
 use Infinety\Filemanager\FilemanagerTool;
+use Laravel\Nova\Fields\Boolean;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -31,6 +32,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
             Number::make('Max Upload'),
+            Boolean::make('Show Registration', 'show_registration'),
         ]);
     }
 

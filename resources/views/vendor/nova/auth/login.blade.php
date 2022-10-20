@@ -33,6 +33,11 @@
     <button class="w-full btn btn-default btn-primary hover:bg-primary-dark" type="submit">
         {{ __('Login') }}
     </button>
+    @if (nova_get_setting('show_registration'))
+    <div class="mt-2 text-center">
+        <a href="/register">Create new user</a>
+    </div>
+    @endif
     </div>
 </form>
 @endsection
