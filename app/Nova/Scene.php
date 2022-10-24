@@ -3,26 +3,25 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Story extends Resource
+class Scene extends Resource
 {
+
     public static function icon () {
         return '
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book-open"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>';
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
     }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Story::class;
+    public static $model = \App\Models\Scene::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -49,12 +48,10 @@ class Story extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('User', fn () => $this->user_id ? $this->user->name : 'Unknown'),
-            Image::make('Cover')->rules(['required', 'max:2000', 'image']),
-            Text::make('Title')->rules(['required']),
-            File::make('Content')->rules(['required', 'max:10000']),
-            Hidden::make('user_id')->default(fn () => auth()->id()),
-            HasMany::make('Questions', 'questions'),
+            Text::make('Title'),
+            Image::make('Background')
+                ->rules(['required']),
+            HasMany::make('Objects', 'objects', SceneObject::class),
         ];
     }
 

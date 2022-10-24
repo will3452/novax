@@ -9,7 +9,7 @@
                 <a href="/admin" class="border-1 py-1 px-2 rounded-full bg-gray-800 text-blue-200 font-bold">Sign in</a>
             </div>
             <div class="mb-2">
-                <a href="#add-story" class="border-1 py-1 px-2 rounded-full bg-gray-800 text-blue-200 font-bold">Add Story </a>
+                {{-- <a href="#add-story" class="border-1 py-1 px-2 rounded-full bg-gray-800 text-blue-200 font-bold">Add Story </a> --}}
             </div>
         </div>
         <a href="/story-mode" class="block mx-4 cursor-pointer hover:bg-blue-200 p-4 rounded">
@@ -18,12 +18,12 @@
                 Story Mode
             </h2>
         </a>
-        <div class="mx-4 cursor-pointer hover:bg-blue-200 p-4 rounded">
+        <a href="/puzzle" class="mx-4 cursor-pointer hover:bg-blue-200 p-4 rounded">
             <img src="/box.png" alt="" class="block w-32 h-32">
             <h2 class="text-center font-bold uppercase">
                 Game Mode
             </h2>
-        </div>
+        </a>
         <a href="/gallery" class="mx-4 cursor-pointer hover:bg-blue-200 p-4 rounded block">
             <img src="/frame.png" alt="" class="block w-32 h-32">
             <h2 class="text-center font-bold uppercase">

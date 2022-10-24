@@ -1,5 +1,5 @@
 <x-layout>
-    <h1 class="text-2xl font-bold text-center bg-gradient-to-r from-green-400 to-blue-500 py-4">
+    <h1 class="text-2xl font-bold text-center bg-gradient-to-r from-green-400 to-blue-500 py-2">
         STORY MODE
         <div class="text-center">
             <a href="/" class="btn btn-sm">back to home</a>
@@ -9,6 +9,11 @@
             <button class="btn btn-primary rounded-md mx-2">SEARCH</button>
         </form>
     </h1>
+
+    <div class="text-center bg-gradient-to-r from-green-400 to-blue-500 ">
+        <a href="">STORIES</a> |
+        <a href="">AUTHORS STORIES</a>
+    </div>
 
     <div class="bg-gradient-to-r from-green-400 to-blue-500 p-4">
         {{$stories->links()}}

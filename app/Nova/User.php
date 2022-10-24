@@ -78,6 +78,12 @@ class User extends Resource
         ];
     }
 
+    public static function createButtonLabel()
+    {
+        return __('Create :resource', ['resource' => static::singularLabel()]);
+    }
+
+
     /**
      * Get the cards available for the request.
      *

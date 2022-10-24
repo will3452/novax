@@ -32,6 +32,7 @@
         "laravel/nova": "*",
         "laravel/sanctum": "^2.12",
         "laravel/tinker": "^2.5",
+        "laravel/ui": "^3.4",
         "laravelwebdev/responsive": "^1.0",
         "optimistdigital/nova-settings": "^3.2",
         "pishran/nova-rtl-theme": "^1.5",
