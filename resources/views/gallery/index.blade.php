@@ -13,16 +13,18 @@
                 {{request()->alert}}
             </x-alert-success>
         @endif
-        <div class="flex flex-wrap justify-center">
-            @foreach ($images as $img)
-                <x-card proceed-text="Remove" :title="$img->title" img="/storage/{{$img->path}}" href="{{route('gallery')}}/remove/{{$img->id}}">
-                    {{$img->caption}} <small class="kbd">{{$img->created_at->format('m d, Y')}}</small>
-                </x-card>
-            @endforeach
+        <div class="h-screen overflow-y-scroll">
+            <div class="flex flex-wrap justify-center">
+                @foreach ($images as $img)
+                    <x-card proceed-text="Remove" :title="$img->title" img="/storage/{{$img->path}}" href="{{route('gallery')}}/remove/{{$img->id}}">
+                        {{$img->caption}} <small class="kbd">{{$img->created_at->format('m d, Y')}}</small>
+                    </x-card>
+                @endforeach
+            </div>
+            {{$images}}
+            @if (count($images) === 0)
+                <x-alert-info>No image(s) Uploaded.</x-alert-info>
+            @endif
         </div>
-        {{$images}}
-        @if (count($images) === 0)
-            <x-alert-info>No image(s) Uploaded.</x-alert-info>
-        @endif
     </div>
 </x-layout>

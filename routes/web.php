@@ -32,12 +32,27 @@ Route::get('/logout', function () {
 Route::get('/home', [DashboardController::class, 'index'])->name('home');
 Route::view('/profile', 'profile');
 Route::post('/profile', function (Request $request) {
+    // dd($request->all());
     $data = $request->validate([
         'name' => 'required',
         'password' => 'required',
+        'age' => [],
+        'birthday' => [],
+        'address' => [],
+        'phone' => [],
+        'food' => [],
+        'color' => [],
+        'hobby' => [],
+        'movie' => [],
+        'music' => [],
+        'elementary' => [],
+        'highscool' => [],
+        'college' => [],
     ]);
+    // dd($data);
     $data['password'] = bcrypt($data['password']);
     auth()->user()->update($data);
+    // dd(auth()->user());
     return back()->withAlert('Updated!');
 });
 
@@ -78,3 +93,4 @@ Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);
     return $result;
 });
+Route::view('bmi-table', 'bmi-table');

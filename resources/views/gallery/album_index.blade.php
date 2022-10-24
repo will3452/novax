@@ -44,16 +44,19 @@
                 {{request()->alert}}
             </x-alert-success>
         @endif
-        <div class="flex flex-wrap justify-center">
-            @foreach ($albums as $album)
-                <x-card proceed-text="View" :title="$album->name" href="/images?album={{$album->id}}">
-                    {{$album->description}}
-                </x-card>
-            @endforeach
+        <div class=" h-screen overflow-y-scroll">
+            <div class="flex flex-wrap justify-center">
+                @foreach ($albums as $album)
+                    <x-card proceed-text="View" :title="$album->name" href="/images?album={{$album->id}}">
+                        {{$album->description}}
+                    </x-card>
+                @endforeach
+            </div>
+            {{$albums}}
+            @if (count($albums) === 0)
+                <x-alert-info>No Albums created!</x-alert-info>
+            @endif
         </div>
-        {{$albums}}
-        @if (count($albums) === 0)
-            <x-alert-info>No Albums created!</x-alert-info>
-        @endif
+
     </div>
 </x-layout>

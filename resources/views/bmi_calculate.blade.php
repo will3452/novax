@@ -41,7 +41,7 @@
                 "
             >
             <div class="text-right">
-                <a target="_blank" href="/ae03935e-2a5d-4488-aeba-c1fc41174b3b.png">View BMI table</a>
+                <a target="_blank" href="/bmi-table">View BMI table</a>
             </div>
                 <div class="form-control">
                     <div class="label">
@@ -63,14 +63,14 @@
                     </div>
                     <input type="text" readonly class="input input-bordered w-full" x-model="result">
                 </div>
-                <div class="form-control">
+                {{-- <div class="form-control">
                     <div class="label">
                         <div class="label-text">
                             Nutritional Status:
                         </div>
                     </div>
                     <input type="text" readonly class="input input-bordered w-full" x-model="remarks">
-                </div>
+                </div> --}}
                 <div class="my-4">
                     <button type="button" x-on:click="calculate()" class="btn btn-primary">
                         Calculate

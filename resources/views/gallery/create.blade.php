@@ -8,15 +8,15 @@
                 {{request()->alert}}
             </x-alert-success>
         @endif
-        <div class="flex flex-wrap justify-center">
+        <div class="flex flex-wrap justify-center h-screen overflow-y-auto">
             <form action="{{route('gallery')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="album_id" value="{{request()->album}}">
                 <div class="mb-4">
-                    <input type="text" required placeholder="Title" class="input input-bordered w-full max-w-xs" name="title" required>
+                    <input type="text" required placeholder="Title" class="input input-bordered w-full" name="title" required>
                 </div>
                 <div class="mb-4">
-                    <textarea class="textarea textarea-bordered" placeholder="Caption" name="caption" required></textarea>
+                    <textarea class=" w-full textarea textarea-bordered" placeholder="Caption" name="caption" required></textarea>
                 </div>
                 <div class="mb-4">
                     <input type="file" name="file" required>
