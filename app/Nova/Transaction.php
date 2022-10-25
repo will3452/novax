@@ -2,33 +2,44 @@
 
 namespace App\Nova;
 
+use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Transaction extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
+    public static function authorizedToCreate(Request $request)
     {
-        return $query->where('email', '!=', 'super@admin.com');
+        return false;
+    }
+
+    public function authorizedToUpdate(Request $request) {
+        return false;
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return false;
     }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Transaction::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -36,7 +47,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
     ];
 
     /**
@@ -48,22 +59,16 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
 
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
+            Text::make('Ref #', fn () =>  "REF".Str::padLeft($this->id, 6, '0'))->exceptOnForms(),
+            BelongsTo::make('User', 'user', User::class),
+            Date::make('Date', 'created_at')->exceptOnForms()->sortable(),
+            Text::make('Type'),
+            Text::make('Bound'),
+            Text::make('Status'),
+            Textarea::make('Purpose')->alwaysShow(),
+            Currency::make('Amount')->exceptOnForms()->sortable(),
 
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
         ];
     }
 
