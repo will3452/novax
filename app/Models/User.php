@@ -45,4 +45,38 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function transactions () {
+        return $this->hasMany(Transaction::class, 'user_id');
+    }
+
+
+    public function createTransaction($bound = Transaction::BOUND_IN, $type = Transaction::TYPE_PAY, $amount = 1, $purpose = '',  $status = Transaction::STATUS_DONE, $fromId = null) {
+        return $this->transactions()->create([
+            'bound' => $bound,
+            'type' => $type,
+            'amount' => $amount,
+            'purpose' => $purpose,
+            'status' => $status,
+            'from_id' => $fromId,
+        ]);
+    }
+
+
+    public function deduct($amount) {
+        if ($amount > $this->balance) return false;
+        $newBalance = $this->balance - $amount;
+
+        $this->update(['balance' => $newBalance]);
+
+        return $amount;
+    }
+
+    public function add($amount) {
+        $newBalance = $this->balance + $amount;
+
+        $this->update(['balance' => $newBalance]);
+
+        return $newBalance;
+    }
 }

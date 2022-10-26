@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "31e83c3f1acf50b26dd6d6bc2150834a",
+    "content-hash": "a2e61bc7d8817f6d77b5e1c1c770de99",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1007,6 +1007,42 @@
             "autoload": {
                 "psr-4": {
                     "Elezerk\\CurrentBalance\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova card.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "elezerk/qr-generator",
+            "version": "dev-fare-collection-system",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/QrGenerator",
+                "reference": "a55f34067d401261c108969be154ca6b79564a2b"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Elezerk\\QrGenerator\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Elezerk\\QrGenerator\\": "src/"
                 }
             },
             "license": [

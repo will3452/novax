@@ -9,7 +9,9 @@
         "prod": "npm run production",
         "production": "mix --production",
         "build-current-balance": "cd nova-components/CurrentBalance && npm run dev",
-        "build-current-balance-prod": "cd nova-components/CurrentBalance && npm run prod"
+        "build-current-balance-prod": "cd nova-components/CurrentBalance && npm run prod",
+        "build-qr-generator": "cd nova-components/QrGenerator && npm run dev",
+        "build-qr-generator-prod": "cd nova-components/QrGenerator && npm run prod"
     },
     "devDependencies": {
         "axios": "^0.21",

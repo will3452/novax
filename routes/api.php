@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApiAuthenticationController;
 use App\Http\Controllers\LoadController;
+use App\Http\Controllers\PayController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,5 @@ Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
 Route::post('load', [LoadController::class, 'load']);
+Route::post('pay', [PayController::class, 'pay']);
+Route::get('get-code', [PayController::class, 'getCode']);

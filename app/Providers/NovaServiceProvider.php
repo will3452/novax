@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Nova\Metrics\Balance;
 use Elezerk\CurrentBalance\CurrentBalance;
+use Elezerk\QrGenerator\QrGenerator;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -26,6 +27,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         parent::boot();
 
         NovaSettings::addSettingsFields([
+            Text::make('GCASH API KEY', 'gcash_api'),
+            Text::make('Footer')
         ]);
     }
 
@@ -67,6 +70,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             (new CurrentBalance())->withMeta(['balance' => auth()->user()->balance, 'postUrl' => '/api/load', 'userId' => auth()->id()]),
+            (new QrGenerator())->withMeta(['user_id' => auth()->id()]),
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
                 'America/Mexico_City',
