@@ -361,7 +361,7 @@ var render = function () {
                       ]),
                     ]),
                     _vm._v(" "),
-                    _vm.amount
+                    _vm.toggleSet
                       ? _c(
                           "qr-code-stream",
                           {
@@ -370,7 +370,13 @@ var render = function () {
                           },
                           [
                             _c("b", { staticClass: "text-white p-2" }, [
-                              _vm._v(_vm._s(new Date())),
+                              _vm._v(
+                                "Current Location: " +
+                                  _vm._s(
+                                    "Lat: " + _vm.lat + " Lng: " + _vm.lng ||
+                                      0
+                                  )
+                              ),
                             ]),
                           ]
                         )
@@ -712,44 +718,46 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context3.prev = 0;
                 payload = JSON.parse(decoded);
                 if (!("code" in payload && "user_id" in payload)) {
-                  _context3.next = 15;
+                  _context3.next = 17;
                   break;
                 }
                 payload.auth_id = _this3.card.user_id;
                 payload.amount = _this3.amount;
                 payload.purpose = _this3.purpose;
+                payload.lat = _this3.lat;
+                payload.lng = _this3.lng;
                 if (_this3.amount) {
-                  _context3.next = 8;
+                  _context3.next = 10;
                   break;
                 }
                 throw new Error('Please set amount');
-              case 8:
-                _context3.next = 10;
-                return _this3.axios.post('/api/pay', payload);
               case 10:
+                _context3.next = 12;
+                return _this3.axios.post('/api/pay', payload);
+              case 12:
                 _yield$_this3$axios$p = _context3.sent;
                 data = _yield$_this3$axios$p.data;
                 if (data.pay) {
-                  _context3.next = 14;
+                  _context3.next = 16;
                   break;
                 }
                 throw new Error(data.message);
-              case 14:
+              case 16:
                 _this3.$toasted.success('Success!');
-              case 15:
-                _context3.next = 21;
-                break;
               case 17:
-                _context3.prev = 17;
+                _context3.next = 23;
+                break;
+              case 19:
+                _context3.prev = 19;
                 _context3.t0 = _context3["catch"](0);
                 _this3.$toasted.error(_context3.t0);
                 console.log("onDecode error >> ", _context3.t0);
-              case 21:
+              case 23:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[0, 17]]);
+        }, _callee3, null, [[0, 19]]);
       }))();
     },
     paintOutline: function paintOutline(detectedCodes, ctx) {
@@ -787,19 +795,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } finally {
         _iterator.f();
       }
+    },
+    showPosition: function showPosition(_ref) {
+      var coords = _ref.coords;
+      this.lat = coords.latitude;
+      this.lng = coords.longitude;
+    },
+    loadAddress: function loadAddress() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(this.showPosition);
+      }
     }
   },
   data: function data() {
     return {
+      currentLocation: '',
       axios: axios__WEBPACK_IMPORTED_MODULE_0__["default"],
       code: null,
       showScanner: false,
       amount: null,
       purpose: null,
-      toggleSet: false
+      toggleSet: false,
+      lat: 0,
+      lng: 0
     };
   },
-  mounted: function mounted() {}
+  mounted: function mounted() {
+    this.loadAddress();
+  }
 });
 
 /***/ }),

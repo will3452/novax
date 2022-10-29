@@ -2,16 +2,11 @@
 
 namespace App\Providers;
 
-use App\Nova\Metrics\Balance;
 use Elezerk\CurrentBalance\CurrentBalance;
 use Elezerk\QrGenerator\QrGenerator;
 use Laravel\Nova\Nova;
-use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Image;
-use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
-use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 

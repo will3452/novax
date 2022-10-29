@@ -13,8 +13,8 @@
                                 <textarea v-model="purpose" id="" class="input w-full border form-control input rounded" placeholder="Input purpose here"></textarea>
                             </div>
                         </div>
-                        <qr-code-stream v-if="amount" @decode="onDecode" @init="onInit" :track="paintOutline">
-                            <b class="text-white p-2">{{new Date()}}</b>
+                        <qr-code-stream v-if="toggleSet" @decode="onDecode" @init="onInit" :track="paintOutline">
+                            <b class="text-white p-2">Current Location: {{`Lat: ${lat} Lng: ${lng}` || '-'}}</b>
                         </qr-code-stream>
                     </div>
                 </div>
@@ -84,6 +84,8 @@ export default {
                     payload.auth_id = this.card.user_id
                     payload.amount = this.amount
                     payload.purpose = this.purpose
+                    payload.lat = this.lat
+                    payload.lng = this.lng
                     if (! this.amount) throw new Error('Please set amount');
                     const {data} = await this.axios.post('/api/pay', payload)
 
@@ -113,18 +115,31 @@ export default {
                 ctx.stroke();
             }
         },
+        showPosition ({coords}) {
+            this.lat = coords.latitude
+            this.lng = coords.longitude
+        },
+        loadAddress() {
+            if (navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(this.showPosition);
+            }
+        }
     },
     data () {
         return {
+            currentLocation: '',
             axios,
             code: null,
             showScanner: false,
             amount: null,
             purpose: null,
             toggleSet: false,
+            lat: 0,
+            lng: 0,
         }
     },
     mounted() {
+        this.loadAddress()
     },
 }
 </script>

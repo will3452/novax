@@ -4,12 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Code;
 use App\Models\Transaction;
+use App\Models\TravelHistory;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 
 class PayController extends Controller
 {
+    public function checkLocation(Request $request) {
+        if ($request->has('lat') && $request->has('lng')) {
+            TravelHistory::create([
+                'lat' => $request->lat,
+                'lng' => $request->lng,
+                'user_id' => $request->user_id
+            ]);
+        }
+    }
+
     public function pay (Request $request) {
         try {
             $data = $request->validate([
@@ -33,6 +44,9 @@ class PayController extends Controller
             $code = Code::whereUserId($sender->id)->whereCode($data['code'])->whereNull('used_at')->first();
 
             if (! $code) throw new Exception('Code invalid!');
+
+            // check if has lat
+            $this->checkLocation($request);
 
             $code->update(['used_at' => now()]);
 
