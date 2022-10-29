@@ -16,6 +16,8 @@ class CreateScenesTable extends Migration
         Schema::create('scenes', function (Blueprint $table) {
             $table->id();
             $table->string('title')->default('Untitled - ' . now()->valueOf());
+            $table->string('cover');
+            $table->foreignId('user_id');
             $table->string('background');
             $table->timestamps();
         });

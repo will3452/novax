@@ -5,17 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Scene extends Model
+class PairedThing extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'title',
-        'background',
-        'cover',
         'user_id',
+        'item_1',
+        'item_2',
     ];
-
-    public function objects () {
-        return $this->hasMany(SceneObject::class, 'scene_id');
-    }
 }

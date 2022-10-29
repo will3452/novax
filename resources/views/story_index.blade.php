@@ -10,20 +10,39 @@
         </form>
     </h1>
 
-    <div class="text-center bg-gradient-to-r from-green-400 to-blue-500 ">
-        <a href="">STORIES</a> |
-        <a href="">AUTHORS STORIES</a>
-    </div>
+    <div x-data="{storyMode:1}">
+        <div class="text-center bg-gradient-to-r from-green-400 to-blue-500 ">
+            <a href="#" x-on:click="storyMode = 1" x-bind:class="{'underline': storyMode == 1}">STORIES</a> |
+            <a href="#" x-on:click="storyMode = 2" x-bind:class="{'underline': storyMode == 2}">OTHER STORIES</a>
+        </div>
 
-    <div class="bg-gradient-to-r from-green-400 to-blue-500 p-4">
-        {{$stories->links()}}
-    </div>
-    <div class="pb-24 overflow-y-auto w-screen h-screen flex justify-center items-center bg-gradient-to-r from-green-400 to-blue-500 relative flex-wrap">
-        @foreach ($stories as $story)
-            <a class="w-1/2 md:w-2/12 h-60 border-2 mx-2 mb-8 block" href="/story-mode/{{$story->id}}">
-                <img src="/storage/{{$story->cover}}" alt="" class="h-full w-full object-fit">
-                <h2 class="text-center font-bold uppercase">{{$story->title}}</h2>
-            </a>
-        @endforeach
+        <div x-show="storyMode == 1" class="pb-24 overflow-y-auto w-screen h-screen flex justify-center items-center bg-gradient-to-r from-green-400 to-blue-500 relative flex-wrap">
+            @foreach ($adminStories as $story)
+                <a class="w-1/2 md:w-2/12 h-60 border-2 mx-2 mb-8 block" href="/story-mode/{{$story->id}}">
+                    <img src="/storage/{{$story->cover}}" alt="" class="h-full w-full object-fit">
+                    <h2 class="text-center font-bold uppercase">{{$story->title}}</h2>
+                </a>
+            @endforeach
+            @foreach ($adminScenes as $story)
+                <a class="w-1/2 md:w-2/12 h-60 border-2 mx-2 mb-8 block" href="/scene/{{$story->id}}">
+                    <img src="/storage/{{$story->cover}}" alt="" class="h-full w-full object-fit">
+                    <h2 class="text-center font-bold uppercase">{{$story->title}}</h2>
+                </a>
+            @endforeach
+        </div>
+        <div x-show="storyMode == 2" class="pb-24 overflow-y-auto w-screen h-screen flex justify-center items-center bg-gradient-to-r from-green-400 to-blue-500 relative flex-wrap">
+            @foreach ($otherStories as $story)
+                <a class="w-1/2 md:w-2/12 h-60 border-2 mx-2 mb-8 block" href="/story-mode/{{$story->id}}">
+                    <img src="/storage/{{$story->cover}}" alt="" class="h-full w-full object-fit">
+                    <h2 class="text-center font-bold uppercase">{{$story->title}}</h2>
+                </a>
+            @endforeach
+            @foreach ($otherScenes as $story)
+                <a class="w-1/2 md:w-2/12 h-60 border-2 mx-2 mb-8 block" href="/scene/{{$story->id}}">
+                    <img src="/storage/{{$story->cover}}" alt="" class="h-full w-full object-fit">
+                    <h2 class="text-center font-bold uppercase">{{$story->title}}</h2>
+                </a>
+            @endforeach
+        </div>
     </div>
 </x-layout>

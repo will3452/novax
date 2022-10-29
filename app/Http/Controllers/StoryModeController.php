@@ -2,16 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Question;
+use App\Models\User;
 use App\Models\Story;
+use App\Models\Question;
+use App\Models\Scene;
 use Illuminate\Http\Request;
 
 class StoryModeController extends Controller
 {
     public function index (Request $request) {
         $title = $request->keyword;
-        $stories = Story::where('title', 'LIKE', "%$title%")->latest()->simplePaginate(10);
-        return view('story_index', compact('stories'));
+        $userAdmins = User::whereType('ADMIN')->get()->pluck('id')->all();
+
+        $adminStories = Story::whereIn('id', $userAdmins)->where('title', 'LIKE', "%$title%")->latest()->get();
+        $otherStories = Story::whereNotIn('id', $userAdmins)->where('title', 'LIKE', "%$title%")->latest()->get();
+        $adminScenes = Scene::whereIn('id', $userAdmins)->where('title', 'LIKE', "%$title%")->latest()->get();
+        $otherScenes = Scene::whereNotIn('id', $userAdmins)->where('title', 'LIKE', "%$title%")->latest()->get();
+
+        return view('story_index', compact('adminStories', 'otherStories', 'adminScenes', 'otherScenes'));
     }
 
     public function show(Story $story) {

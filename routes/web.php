@@ -27,4 +27,6 @@ Route::get('/story-mode', [StoryModeController::class, 'index']);
 Route::get('/story-mode/{story}', [StoryModeController::class, 'show']);
 Route::get('quiz-now/{story}', [StoryModeController::class, 'quiz']);
 Route::get('/puzzle', [PuzzleController::class, 'index']);
+Route::view('/game-index', 'game_index');
+Route::get('/matching', [PuzzleController::class, 'matching']);
 Route::get('/scene/{scene}', [SceneController::class, 'show']);
