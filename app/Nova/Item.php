@@ -25,15 +25,8 @@ class Item extends Resource
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        // if (! auth()->user()->is_admin) {
-        //     return $query->whereUserId(auth()->id());
-        // }
 
-        // return $query;
-
-        $shared = Shared::whereUserId(auth()->id())->whereNotNull('confirmed_at')->get()->pluck('item_id')->all();
-
-        return $query->whereIn('id', $shared)->OrWhere(['user_id' => auth()->id()]);
+        return $query->where(['user_id' => auth()->id()]);
     }
 
     public  function authorizedToDelete(Request $request)

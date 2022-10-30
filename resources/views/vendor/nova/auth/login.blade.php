@@ -16,18 +16,24 @@
 >
     {{ csrf_field() }}
 
-    <div>
-        @if ($errors->any())
+    @if ($errors->any())
     <p class="text-center font-semibold text-danger my-3">
-        @if ($errors->has('phone'))
-            {{ $errors->first('phone') }}
+        @if ($errors->has('email'))
+            {{ $errors->first('email') }}
+        @else
+            {{ $errors->first('password') }}
         @endif
         </p>
     @endif
 
-    <div class="mb-6 {{ $errors->has('phone') ? ' has-error' : '' }}">
-        <label class="block font-bold mb-2" for="email">{{ __('Register Mobile #') }}</label>
-        <input placeholder="09" class="form-control form-input form-input-bordered w-full" id="email" type="number" name="phone" value="{{ old('phone') }}" required autofocus>
+    <div class="mb-6 {{ $errors->has('email') ? ' has-error' : '' }}">
+        <label class="block font-bold mb-2" for="email">{{ __('Email Address') }}</label>
+        <input class="form-control form-input form-input-bordered w-full" id="email" type="email" name="email" value="{{ old('email') }}" required autofocus>
+    </div>
+
+    <div class="mb-6 {{ $errors->has('password') ? ' has-error' : '' }}">
+        <label class="block font-bold mb-2" for="password">{{ __('Password') }}</label>
+        <input class="form-control form-input form-input-bordered w-full" id="password" type="password" name="password" required>
     </div>
 
     <button class="w-full btn btn-default btn-primary hover:bg-primary-dark" type="submit">

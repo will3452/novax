@@ -46,16 +46,16 @@ class LoginController extends ControllersLoginController
         // send otp
 
 
-        $request->validate(['phone' => ['required', 'max:11', 'exists:users,phone']]);
+        $request->validate(['email' => ['required', 'email', 'exists:users,email'], 'password' => ['required']]);
 
-        $exists = User::wherePhone($request->phone)->exists();
+        $exists = User::whereEmail($request->email)->exists();
 
         if (! $exists) {
             return back()->withError('Record not found!');
         }
 
 
-        $user = User::wherePhone($request->phone)->first();
+        $user = User::whereEmail($request->email)->first();
 
 
         $otp = $user->generateOtp();
