@@ -18,7 +18,7 @@
 
         <div x-show="storyMode == 1" class="pb-24 overflow-y-auto w-screen h-screen flex justify-center items-center bg-gradient-to-r from-green-400 to-blue-500 relative flex-wrap">
             @foreach ($adminStories as $story)
-                <a class="w-1/2 md:w-2/12 h-60 border-2 mx-2 mb-8 block" href="/story-mode/{{$story->id}}">
+                <a class="w-1/2 md:w-2/12 h-60 border-2 mx-2 mb-8 block" href="{{$story->link}}">
                     <img src="/storage/{{$story->cover}}" alt="" class="h-full w-full object-fit">
                     <h2 class="text-center font-bold uppercase">{{$story->title}}</h2>
                 </a>
@@ -32,7 +32,7 @@
         </div>
         <div x-show="storyMode == 2" class="pb-24 overflow-y-auto w-screen h-screen flex justify-center items-center bg-gradient-to-r from-green-400 to-blue-500 relative flex-wrap">
             @foreach ($otherStories as $story)
-                <a class="w-1/2 md:w-2/12 h-60 border-2 mx-2 mb-8 block" href="/story-mode/{{$story->id}}">
+                <a class="w-1/2 md:w-2/12 h-60 border-2 mx-2 mb-8 block" href="{{$story->link}}">
                     <img src="/storage/{{$story->cover}}" alt="" class="h-full w-full object-fit">
                     <h2 class="text-center font-bold uppercase">{{$story->title}}</h2>
                 </a>

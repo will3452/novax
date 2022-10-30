@@ -13,9 +13,14 @@ class Scene extends Model
         'background',
         'cover',
         'user_id',
+        'scene_id',
     ];
 
     public function objects () {
         return $this->hasMany(SceneObject::class, 'scene_id');
+    }
+
+    public function story() {
+        return $this->belongsTo(Story::class);
     }
 }

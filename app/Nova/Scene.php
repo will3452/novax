@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
@@ -55,6 +56,7 @@ class Scene extends Resource
     public function fields(Request $request)
     {
         return [
+            BelongsTo::make('Story', 'story', Story::class),
             Text::make('Title'),
             Hidden::make('user_id')->default(fn () => auth()->id()),
             Image::make('Cover')

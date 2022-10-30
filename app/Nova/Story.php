@@ -3,8 +3,10 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
@@ -60,6 +62,8 @@ class Story extends Resource
             Text::make('Title')->rules(['required']),
             File::make('Content')->rules(['required', 'max:10000']),
             Hidden::make('user_id')->default(fn () => auth()->id()),
+            File::make('Audio'),
+            HasOne::make('Scene', 'scene', Scene::class),
             HasMany::make('Questions', 'questions'),
         ];
     }

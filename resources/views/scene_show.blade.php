@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="/css/app.css"/>
 </head>
 <body>
+    <div class="text-center">
+        <a href="/story-mode/{{$scene->story_id}}" class="btn btn-primary m-2">
+            READ STORY
+        </a>
+    </div>
     <div id="app">
         <example-component :scene="{{$scene}}" ></example-component>
     </div>

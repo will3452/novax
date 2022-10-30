@@ -53,7 +53,8 @@
 <body>
     <div style="position: absolute; z-index:9999; top: 1em;right: 1em;">
 
-        <a href="/quiz-now/{{$story->id}}" class="bg-blue-900 text-white p-2 rounded-lg text-lg font-bold">TAKE QUIZ</a>
+        <a href="/quiz-now/{{$story->id}}" class="btn btn-primary">TAKE QUIZ</a>
+        <a href="/storage/{{$story->audio}}" class="btn btn-secondary">PLAY AUDIO VERSION</a>
     </div>
 	<!-- Add your site or application content here -->
 	<div class='book_container'>
