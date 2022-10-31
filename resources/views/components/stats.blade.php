@@ -2,7 +2,7 @@
 
     <div class="stat">
         <div class="stat-title">Date Today</div>
-        <div class="stat-value">{{now()->format('M d, Y')}}</div>
+        <div class="stat-value">{{now()->format('F d, Y')}}</div>
     </div>
 
     <div class="stat">
