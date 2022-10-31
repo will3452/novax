@@ -32,14 +32,6 @@
                     </div>
                     <input type="text" disabled value="{{auth()->user()->email}}" name="email" class="input w-full input-bordered">
                 </div>
-                <div class="form-control">
-                    <div class="label">
-                        <div class="label-text">
-                            New Password
-                        </div>
-                    </div>
-                    <input type="password" value="" name="password" class="input w-full input-bordered">
-                </div>
                 <h1 class="font-bold">Bio</h1>
                 <div class="form-control">
                     <div class="label">

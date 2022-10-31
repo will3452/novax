@@ -35,7 +35,6 @@ Route::post('/profile', function (Request $request) {
     // dd($request->all());
     $data = $request->validate([
         'name' => 'required',
-        'password' => 'required',
         'age' => [],
         'birthday' => [],
         'address' => [],
@@ -49,8 +48,6 @@ Route::post('/profile', function (Request $request) {
         'highscool' => [],
         'college' => [],
     ]);
-    // dd($data);
-    $data['password'] = bcrypt($data['password']);
     auth()->user()->update($data);
     // dd(auth()->user());
     return back()->withAlert('Updated!');
