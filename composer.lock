@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17cb8e37b3e20aedf36d15dfdfd5ef87",
+    "content-hash": "e9efcc0c84954c9e80e8b5a7f5f33dce",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -243,8 +243,61 @@
             "time": "2021-10-17T02:44:05+00:00"
         },
         {
+            "name": "comodolab/nova-help",
+            "version": "0.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Comodolab/nova-help.git",
+                "reference": "3b4f1ce6efb562087fd08d90d7ece302aa99d95d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Comodolab/nova-help/zipball/3b4f1ce6efb562087fd08d90d7ece302aa99d95d",
+                "reference": "3b4f1ce6efb562087fd08d90d7ece302aa99d95d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5.0|^6.0|^7.0|^8.0|^9.0",
+                "php": ">=7.2.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Comodolab\\Nova\\Fields\\Help\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Comodolab\\Nova\\Fields\\Help\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alessandro Benoit",
+                    "email": "alessandro@comodolab.it"
+                }
+            ],
+            "description": "A Laravel Nova help field.",
+            "keywords": [
+                "help",
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/Comodolab/nova-help/issues",
+                "source": "https://github.com/Comodolab/nova-help/tree/0.5.0"
+            },
+            "time": "2022-02-14T14:00:04+00:00"
+        },
+        {
             "name": "coreproc/nova-permissions-field",
-            "version": "dev-main",
+            "version": "dev-pausys",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/NovaPermissionsField",
@@ -352,6 +405,60 @@
                 "source": "https://github.com/dflydev/dflydev-dot-access-data/tree/v3.0.1"
             },
             "time": "2021-08-13T13:06:58+00:00"
+        },
+        {
+            "name": "digital-creative/resource-navigation-tab",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dcasia/resource-navigation-tab.git",
+                "reference": "4c6e11012eabf602d6212a84c3a7b4b1c15e4cb1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dcasia/resource-navigation-tab/zipball/4c6e11012eabf602d6212a84c3a7b4b1c15e4cb1",
+                "reference": "4c6e11012eabf602d6212a84c3a7b4b1c15e4cb1",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": "^3.12.0",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "DigitalCreative\\ResourceNavigationTab\\ResourceNavigationTabServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DigitalCreative\\ResourceNavigationTab\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rafael Milewski"
+                }
+            ],
+            "description": "Organize your long pile of tables and relationships into structured pages.",
+            "keywords": [
+                "card",
+                "field",
+                "laravel",
+                "nova",
+                "tabs"
+            ],
+            "support": {
+                "issues": "https://github.com/dcasia/resource-navigation-tab/issues",
+                "source": "https://github.com/dcasia/resource-navigation-tab/tree/v1.1.1"
+            },
+            "time": "2021-04-07T11:58:00+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -1457,6 +1564,105 @@
                 }
             ],
             "time": "2021-10-06T17:43:30+00:00"
+        },
+        {
+            "name": "khalin/nova-link-field",
+            "version": "v1.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oleghalin/nova-link-field.git",
+                "reference": "3179ee3b573d8911598ec09219d531fc45734c1b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oleghalin/nova-link-field/zipball/3179ee3b573d8911598ec09219d531fc45734c1b",
+                "reference": "3179ee3b573d8911598ec09219d531fc45734c1b",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": ">=2.1",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Khalin\\Nova\\Field\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Khalin\\Nova\\Field\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova Link field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/oleghalin/nova-link-field/issues",
+                "source": "https://github.com/oleghalin/nova-link-field/tree/v1.2.4"
+            },
+            "time": "2020-08-24T16:40:40+00:00"
+        },
+        {
+            "name": "kirschbaum-development/nova-comments",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kirschbaum-development/nova-comments.git",
+                "reference": "f4f0f6927aa81884fd9c8cc11da7a4d0133d4a37"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kirschbaum-development/nova-comments/zipball/f4f0f6927aa81884fd9c8cc11da7a4d0133d4a37",
+                "reference": "f4f0f6927aa81884fd9c8cc11da7a4d0133d4a37",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "KirschbaumDevelopment\\NovaComments\\NovaCommentsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KirschbaumDevelopment\\NovaComments\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brandon Ferens",
+                    "email": "brandon@kirschbaumdevelopment.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel Nova resource for commenting on model.",
+            "homepage": "https://github.com/kirschbaum-development/nova-comments",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/kirschbaum-development/nova-comments/issues",
+                "source": "https://github.com/kirschbaum-development/nova-comments/tree/master"
+            },
+            "time": "2019-12-04T22:27:54+00:00"
         },
         {
             "name": "laravel/framework",
@@ -3107,6 +3313,60 @@
                 "source": "https://github.com/paragonie/random_compat"
             },
             "time": "2020-10-15T08:29:30+00:00"
+        },
+        {
+            "name": "pdmfc/nova-info-card",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pdmfc/nova-info-card.git",
+                "reference": "d7620798551f9b932aad61f06315cf18c639d9df"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pdmfc/nova-info-card/zipball/d7620798551f9b932aad61f06315cf18c639d9df",
+                "reference": "d7620798551f9b932aad61f06315cf18c639d9df",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Pdmfc\\NovaCards\\InfoCardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pdmfc\\NovaCards\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "João Santos",
+                    "email": "joao.santos@pdmfc.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel Nova info card.",
+            "homepage": "https://github.com/pdmfc/nova-info-card",
+            "keywords": [
+                "laravel",
+                "nova",
+                "package"
+            ],
+            "support": {
+                "issues": "https://github.com/pdmfc/nova-info-card/issues",
+                "source": "https://github.com/pdmfc/nova-info-card/tree/v0.1.5"
+            },
+            "time": "2020-04-27T13:09:57+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -9688,5 +9948,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }

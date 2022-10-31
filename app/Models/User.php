@@ -13,6 +13,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
+
+    const TYPE_ADMINISTRATOR = 'ADMINISTRATOR';
+    const TYPE_BASIC = 'BASIC';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -22,6 +26,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
     ];
 
     /**
@@ -42,4 +47,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function participantDocuments() {
+        return $this->belongsToMany(Document::class);
+    }
 }
