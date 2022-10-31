@@ -14,8 +14,8 @@ class StoryModeController extends Controller
         $title = $request->keyword;
         $userAdmins = User::whereType('ADMIN')->get()->pluck('id')->all();
 
-        $adminStories = Story::whereIn('id', $userAdmins)->where('title', 'LIKE', "%$title%")->latest()->get();
-        $otherStories = Story::whereNotIn('id', $userAdmins)->where('title', 'LIKE', "%$title%")->latest()->get();
+        $adminStories = Story::whereIn('user_id', $userAdmins)->where('title', 'LIKE', "%$title%")->latest()->get();
+        $otherStories = Story::whereNotIn('user_id', $userAdmins)->where('title', 'LIKE', "%$title%")->latest()->get();
         // $adminScenes = Scene::whereIn('id', $userAdmins)->where('title', 'LIKE', "%$title%")->latest()->get();
         // $otherScenes = Scene::whereNotIn('id', $userAdmins)->where('title', 'LIKE', "%$title%")->latest()->get();
 
