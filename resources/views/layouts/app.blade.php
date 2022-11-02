@@ -24,7 +24,7 @@
     @endif
 </head>
 <body>
-    <div id="app">
+    <div id="app" style="background: url('/bg-client.jpg'); height:100vh; overflow-y: auto; background-size: cover;">
         <nav class="navbar navbar-expand-md navbar-dark bg-white shadow-sm" style="background: #1890FF !important;">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
