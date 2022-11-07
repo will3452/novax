@@ -39,6 +39,11 @@ class AuditLog extends Resource
         return false;
     }
 
+    public function authorizedToUpdate(Request $request)
+    {
+        return false;
+    }
+
     public static function indexQuery(NovaRequest $request, $query)
     {
         if (! auth()->user()->is_admin) {
