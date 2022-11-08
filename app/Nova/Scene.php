@@ -59,8 +59,7 @@ class Scene extends Resource
             BelongsTo::make('Story', 'story', Story::class),
             Text::make('Title'),
             Hidden::make('user_id')->default(fn () => auth()->id()),
-            Image::make('Cover')
-                ->rules(['required', 'max:2000']),
+            Hidden::make('Cover')->default(fn () => '123'),
             Image::make('Background')
                 ->rules(['required']),
             HasMany::make('Objects', 'objects', SceneObject::class),
