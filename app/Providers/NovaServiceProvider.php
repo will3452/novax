@@ -27,7 +27,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
-            Text::make('App Name'),
             Text::make('App Version'),
             Text::make('App Footer'),
         ]);
