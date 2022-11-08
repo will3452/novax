@@ -1,5 +1,4 @@
 <dropdown-trigger class="h-9 flex items-center">
-
     <span class="text-90">
         {{ $user->name ?? $user->email ?? __('Nova User') }}
     </span>
