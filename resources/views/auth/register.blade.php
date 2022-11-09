@@ -1,7 +1,7 @@
 <x-layout>
 
 <div class="hero min-h-screen bg-base-200">
-    <form action="register" method="POST" class="card flex-shrink-0 w-full shadow-2xl bg-base-100">
+    <form action="register" method="POST" class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
         @csrf
         <div class="card-body">
         @if (session('success'))
