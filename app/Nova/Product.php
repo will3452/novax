@@ -2,34 +2,33 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
-{
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'super@admin.com');
-    }
+use function PHPSTORM_META\map;
 
+class Product extends Resource
+{
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Product::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -37,7 +36,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'name',
     ];
 
     /**
@@ -49,34 +48,14 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            Select::make('Type')
-                ->options([
-                    'Administrator' => 'Administrator',
-                    'Rider' => 'Rider',
-                    'Customer' => 'Customer',
-                ]),
-
             Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Address'),
-
-            Number::make('Phone')
-                ->rules(['max:11']),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
-
-        ];
+                ->rules(['required']),
+            Textarea::make('Description')->rules(['required'])->alwaysShow(),
+            Currency::make('Price')->rules(['required']),
+            Image::make('Image')
+                ->rules(['required', 'max:2000']),
+            BelongsTo::make('Category', 'category', Category::class),
+       ];
     }
 
     /**

@@ -2,34 +2,28 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Discount extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'super@admin.com');
-    }
-
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Discount::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'code';
 
     /**
      * The columns that should be searched.
@@ -37,7 +31,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'code',
     ];
 
     /**
@@ -49,32 +43,19 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            Select::make('Type')
-                ->options([
-                    'Administrator' => 'Administrator',
-                    'Rider' => 'Rider',
-                    'Customer' => 'Customer',
-                ]),
+            Date::make('Date', 'created_at')
+                ->exceptOnForms()
+                ->sortable(),
 
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
+            Text::make('Code')
+                ->rules(['required', 'min:6', 'unique:discounts,code']),
 
-            Text::make('Address'),
+            Number::make('Rate')
+                ->placeholder('%')
+                ->rules(['required']),
 
-            Number::make('Phone')
-                ->rules(['max:11']),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+            Number::make('Credit')
+                ->rules(['required']),
 
         ];
     }
