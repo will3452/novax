@@ -29,7 +29,7 @@
             <x-slides></x-slides>
             <x-search></x-search>
         @endif
-        <main>
+        <main class="py-2">
             @yield('content')
         </main>
     </div>

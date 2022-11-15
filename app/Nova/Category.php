@@ -36,6 +36,9 @@ class Category extends Resource
         'name',
     ];
 
+
+    public static $group = 'Reference';
+
     /**
      * Get the fields displayed by the resource.
      *

@@ -12,6 +12,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
 {
+
+
+    public static $group = 'Manage';
+
     public static function indexQuery(NovaRequest $request, $query)
     {
         return $query->where('email', '!=', 'super@admin.com');

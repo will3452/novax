@@ -4,6 +4,7 @@ namespace App\Models\Traits;
 
 use App\Models\Item;
 use App\Models\ShippingAddress;
+use App\Models\WishList;
 
 trait CustomerTrait {
 
@@ -56,5 +57,23 @@ trait CustomerTrait {
         $total =  $this->total_amount_payable;
 
         return $total - ($total * ($discountRate / 100));
+    }
+
+    // wishlist
+
+    public function wishlists() {
+        return $this->hasMany(WishList::class);
+    }
+
+    public function checkWishlist($productId) {
+        return $this->wishlists()->whereProductId($productId)->exists();
+    }
+
+    public function addToWishlist($productId) {
+        $this->wishlists()->create(['product_id' => $productId]);
+    }
+
+    public function removeToWishlist($productId) {
+        $this->wishlists()->whereProductId($productId)->first()->delete();
     }
 }

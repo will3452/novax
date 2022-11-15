@@ -22,8 +22,8 @@
             <button class="btn btn-sm btn-success mx-1">
                 Add to cart
             </button>
-        {{-- <button class="btn btn-sm btn-secondary mx-1">
+        <a class="btn btn-sm btn-secondary mx-1" href="{{route('products.to-wishlist', ['product_id' => $product->id])}}">
             Add to wishlist
-        </button> --}}
+        </a>
     </form>
 @endsection

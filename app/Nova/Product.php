@@ -28,7 +28,9 @@ class Product extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
+
+    public static $group = 'Reference';
 
     /**
      * The columns that should be searched.

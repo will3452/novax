@@ -1,4 +1,9 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<marquee id="discount" class="d-flex justify-content-center bg-warning fw-bolder text-uppercase">
+    @foreach (\App\Models\Discount::where('credit', '>', 0)->get() as $item)
+        ****DISCOUNT****{{$item->rate}}%***CODE:{{$item->code}}***
+    @endforeach
+</marquee>
+<nav class="navbar navbar-expand-md navbar-light shadow-sm" style="background:#98c83b ">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
@@ -10,6 +15,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Shop</a>
+                </li>
                 @foreach (\App\Models\Category::whereNull('category_id')->with('categories')->get() as $item)
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -31,9 +39,9 @@
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ms-auto">
-                {{-- <li class="nav-item">
-                    <a href="/wishlist" class="nav-link">Wishlist</a>
-                </li> --}}
+                <li class="nav-item">
+                    <a href="{{route('products.wishlist')}}" class="nav-link">Wishlist</a>
+                </li>
                 <li class="nav-item">
                     <a href="{{route('products.cart')}}" class="nav-link">
                         Cart
@@ -63,6 +71,9 @@
 
 
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{route('home')}}">
+                                Dashboard
+                            </a>
                             <a class="dropdown-item" href="{{route('orders.index')}}">
                                 Orders
                                 @if (auth()->user()->has('orders'))

@@ -35,6 +35,12 @@ Route::name('products.')->middleware(['auth'])->prefix('/products')->group(funct
     Route::post('/add-cart/{product}', [ProductController::class, 'addToCart'])->name('to-cart');
     Route::delete('/remove-to-cart/{product}', [ProductController::class, 'removeToCart'])->name('remove-to-cart');
 
+    //wishlist
+    Route::get('/add-to-wishlist', [ProductController::class, 'addToWishlist'])->name('to-wishlist');
+    Route::get('/wish', [ProductController::class, 'wishlist'])->name('wishlist');
+    Route::get('/remove-to-wishlist/{product}', [ProductController::class, 'removeToWishlist'])->name('remove-to-wishlist');
+
+
     Route::get('/{product}', [ProductController::class, 'show'])->name('show');
 });
 

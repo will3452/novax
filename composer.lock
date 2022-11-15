@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5a9a7026c20fda6d0e451c45516f8818",
+    "content-hash": "b01a58f7fbc7943a0c4b27fc218bf1e6",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -6994,6 +6994,53 @@
                 }
             ],
             "time": "2022-03-02T12:42:23+00:00"
+        },
+        {
+            "name": "tanmuhittin/nova-collapsible-groups",
+            "version": "0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tanmuhittin/nova-collapsible-groups.git",
+                "reference": "8f19269064118cebd6f044156410657a97ad1ed3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tanmuhittin/nova-collapsible-groups/zipball/8f19269064118cebd6f044156410657a97ad1ed3",
+                "reference": "8f19269064118cebd6f044156410657a97ad1ed3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "TanMuhittin\\NovaCollapsibleGroups\\CollapsibleGroupsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TanMuhittin\\NovaCollapsibleGroups\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Muhittin Tan",
+                    "email": "tanmuhittin@gmail.com"
+                }
+            ],
+            "description": "Makes nova core theme navigation collapsible",
+            "support": {
+                "issues": "https://github.com/tanmuhittin/nova-collapsible-groups/issues",
+                "source": "https://github.com/tanmuhittin/nova-collapsible-groups/tree/0.2"
+            },
+            "time": "2019-03-18T07:29:55+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

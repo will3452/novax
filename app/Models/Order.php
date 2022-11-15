@@ -34,4 +34,14 @@ class Order extends Model
     public function discount() {
         return $this->belongsTo(Discount::class);
     }
+
+    public function orderItems () {
+        return $this->hasMany(Item::class, 'order_id');
+    }
+
+    public function delivery() {
+        return $this->hasOne(Delivery::class);
+    }
+
+    protected $casts = ['paid_at' => 'date'];
 }

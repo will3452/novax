@@ -3,27 +3,50 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class ShippingAddress extends Resource
+class Item extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return false;
+    }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToView(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return false;
+    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\ShippingAddress::class;
+    public static $model = \App\Models\Item::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'address';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -31,11 +54,8 @@ class ShippingAddress extends Resource
      * @var array
      */
     public static $search = [
-        'address',
+        'id',
     ];
-
-
-    public static $group = 'Reference';
 
     /**
      * Get the fields displayed by the resource.
@@ -46,10 +66,8 @@ class ShippingAddress extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Address')
-                ->rules(['required']),
-            Currency::make('Fee')->rules(['required']),
-            Boolean::make('Default'),
+            BelongsTo::make('Product', 'product', Product::class),
+            Number::make('Quantity'),
         ];
     }
 

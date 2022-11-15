@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Discount;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\WishList;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -65,5 +66,34 @@ class ProductController extends Controller
 
     public function cart(Request $request) {
         return view('cart');
+    }
+
+    public function addToWishlist(Request $request) {
+        if (auth()->user()->checkWishlist($request->product_id)) {
+            alert()->error('Item is already in your wishlist.');
+
+            return back();
+        }
+
+        auth()->user()->addToWishlist($request->product_id);
+        alert()->success('Item has been added to your wishlist.');
+        return back();
+    }
+
+    public function removeToWishlist(Request $request, $product) {
+        if (! auth()->user()->checkWishlist($product)) {
+            alert()->error('No item found!');
+
+            return back();
+        }
+
+        auth()->user()->removeToWishlist($product);
+        alert()->success('Item has been removed to your wishlist.');
+        return back();
+    }
+
+    public function wishlist(Request $request) {
+        $list = WishList::whereUserId(auth()->id())->with('product')->get();
+        return view('wishlist', compact('list'));
     }
 }
