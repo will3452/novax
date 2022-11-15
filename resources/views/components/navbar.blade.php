@@ -16,11 +16,11 @@
                         {{$item->name}}
                     </a>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="/?category={{$item->id}}">
                             {{$item->name}}
                         </a>
                     @foreach ($item->categories as $itemCategory)
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="/?category={{$itemCategory->id}}">
                                 {{$itemCategory->name}}
                             </a>
                     @endforeach

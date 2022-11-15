@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
@@ -8,9 +9,7 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
 
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('landing');
+Route::get('/', [LandingController::class, 'index'])->name('landing');
 
 Route::get('/register', [RegisterController::class, 'registrationPage']);
 Route::post('/register', [RegisterController::class, 'postRegister']);
