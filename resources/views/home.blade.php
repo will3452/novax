@@ -19,7 +19,7 @@
                 WISHLIST
             </div>
             <div class="card-body text-center fs-2">
-                {{\App\Models\Wishlist::whereUserId(auth()->id())->count()}}
+                {{\App\Models\WishList::whereUserId(auth()->id())->count()}}
             </div>
         </div>
        </div>
