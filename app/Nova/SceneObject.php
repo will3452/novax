@@ -58,6 +58,7 @@ class SceneObject extends Resource
             Image::make('Image')
                 ->rules(['required', 'max:5000']),
             File::make('Sound')
+                ->acceptedTypes(['audio/mp4', 'audio/ogg', 'audio/wav'])
                 ->rules(['required']),
             Textarea::make('Dialog')->alwaysShow(),
         ];

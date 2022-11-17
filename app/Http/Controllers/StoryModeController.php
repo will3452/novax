@@ -32,6 +32,6 @@ class StoryModeController extends Controller
 
     public function quiz(Story $story) {
         $questions = Question::whereStoryId($story->id)->get();
-        return view('quiz_index', compact('questions'));
+        return view('quiz_index', compact('questions', 'story'));
     }
 }

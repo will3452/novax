@@ -62,7 +62,7 @@ class Story extends Resource
             Text::make('Title')->rules(['required']),
             File::make('Content')->rules(['required', 'max:10000']),
             Hidden::make('user_id')->default(fn () => auth()->id()),
-            File::make('Audio'),
+            File::make('Audio')->acceptedTypes(['audio/mp4', 'audio/ogg', 'audio/wav']),
             HasOne::make('Scene', 'scene', Scene::class),
             HasMany::make('Questions', 'questions'),
         ];

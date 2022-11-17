@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SceneController;
 use App\Http\Controllers\StoryModeController;
+use App\Models\Story;
 use App\Models\UnVerifiedUser;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -24,7 +25,21 @@ Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);
     return $result;
 });
+Route::post('/score/{story}', function (Request $request, Story $story){
+    $q = $story->questions;
 
+    // return $q;
+    $score = 0;
+    $total = 0;
+    foreach ($q as $index => $item) {
+        if ($item->answer == $request->answer[$index]) {
+            $score ++;
+        }
+        $total ++;
+    }
+
+    return view('score', compact('score', 'total'));
+});
 Route::get('/gallery', [GalleryController::class, 'index']);
 Route::get('/story-mode', [StoryModeController::class, 'index']);
 Route::get('/story-mode/{story}', [StoryModeController::class, 'show']);
