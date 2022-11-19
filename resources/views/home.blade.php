@@ -8,10 +8,10 @@
     <dashboard-card
     style="margin-right:1em; background-image: linear-gradient(to bottom, #673DE6 , #673CE5);color:white; border: none;border-radius: 1em;"
     icon="profile"
-    label="Tickets"
+    label="schedules"
     >
-        <a-button type="ghost" block onclick="window.location.href = '/tickets'">
-            View Tickets
+        <a-button type="ghost" block onclick="window.location.href = '/schedules'">
+            View Schedule
         </a-button>
     </dashboard-card>
     @else

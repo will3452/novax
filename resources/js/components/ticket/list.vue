@@ -4,11 +4,9 @@
             <a-tab-pane key="1" tab="Not yet used.">
                 <a-list :data-source="availableTickets" bordered>
                     <a-list-item slot="renderItem" slot-scope="item, index">
-                        <a href="#" slot="actions" @click="showQr(item)">
-                            <a-icon type="qrcode" />
-                        </a>
+
                         <a-list-item-meta :description="item.booking.trip.start + ' - ' + item.booking.trip.end + ' | ' + formatDate(item.booking.date)">
-                            <a href="#" slot="title">Ref# - {{getData(item, 'reference')}}</a>
+
                         </a-list-item-meta>
                     </a-list-item>
                 </a-list>
@@ -20,7 +18,7 @@
                             <a-icon type="qrcode" />
                         </a> -->
                         <a-list-item-meta :description="item.booking.trip.start + ' - ' + item.booking.trip.end + ' | ' + formatDate(item.booking.created_at)">
-                            <a href="#" slot="title">Ref# - {{getData(item, 'reference')}}</a>
+
                         </a-list-item-meta>
                     </a-list-item>
                 </a-list>
@@ -49,7 +47,7 @@ import { formatDate } from '../../global.js'
         },
         computed: {
             availableTickets () {
-                return this.tickets.filter( e => ! e.used)
+                return this.tickets.filter( e => e.used == '0')
             },
             usedTickets () {
                 return this.tickets.filter( e => e.used)

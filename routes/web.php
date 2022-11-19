@@ -1,15 +1,19 @@
 <?php
 
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\NoticeController;
-use App\Http\Controllers\PaymentController;
+use Carbon\Carbon;
+use App\Models\Bus;
+use App\Models\User;
+use App\Models\Booking;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ScanController;
+use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\TicketController;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\RegisterController;
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -73,8 +77,34 @@ Route::post('/profile', function (Request $request) {
     return back()->withSuccess(1);
 });
 
+Route::get('/schedules', function () {
+    $bus = Bus::with(['trip', 'time'])->get();
+    foreach ($bus as $d) {
+        $d['trips'] = $d->trip->start . ' - ' . $d->trip->end;
+        $d['timex'] = Carbon::parse($d->time->time)->format('h:m a');
+    }
+    return view('schedules', ['bus' => $bus]);
+});
+
+
 Route::post('pay', [PaymentController::class, 'pay']);
+Route::get('/pay/{booking}', [PaymentController::class, 'choosePay']);
 
 Route::prefix('scan')->name('scan.')->middleware(['auth'])->group(function () {
     Route::get('/', [ScanController::class, 'scan'])->name('index');
+});
+
+// paypal
+Route::get('/paypal/{booking}', function (Request $request, Booking $booking) {
+    try {
+        $hashed = $request->hashed;
+        $value = $request->value;
+        if (! Hash::check($value, $hashed)) {
+            return 'Invalid request';
+        }
+        $booking->booked();
+        return redirect()->to('/bookings');
+    } catch (Exception $error) {
+        return $error->getMessage();
+    }
 });

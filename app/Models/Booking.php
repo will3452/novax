@@ -40,10 +40,15 @@ class Booking extends Model
         'discount',
         'trip',
         'transaction',
+        'bus',
     ];
 
     public function trip () {
         return $this->belongsTo(Trip::class, 'trip_id');
+    }
+
+    public function bus () {
+        return $this->belongsTo(Bus::class, 'bus_id');
     }
 
     public function ticket () {

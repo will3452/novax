@@ -79,9 +79,9 @@
                                         <a href="/bookings" class="dropdown-item">
                                             Bookings
                                         </a>
-                                        <a href="/tickets" class="dropdown-item">
+                                        {{-- <a href="/tickets" class="dropdown-item">
                                             Tickets
-                                        </a>
+                                        </a> --}}
                                         <a href="/notices" class="dropdown-item">
                                             Notices
                                         </a>
@@ -121,7 +121,7 @@
                 <layout-menu :items="[
                     {label: 'Dashboard', icon: 'dashboard', 'link': '/home'},
                     {label: 'Booking', icon: 'pushpin', 'link': '/bookings'},
-                    {label: 'Tickets', icon: 'profile', 'link': '/tickets'},
+                    // {label: 'Tickets', icon: 'profile', 'link': '/tickets'},
                     {label: 'Notices', icon: 'notification', 'link': '/notices'},
                     {label: 'Map', icon: 'compass', 'link': '/map'},
                    //  {label: 'History', icon: 'history', 'link': '#history'},

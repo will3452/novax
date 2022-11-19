@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Bus;
+use App\Models\SeatLogger;
 use App\Models\Trip;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -16,6 +18,14 @@ class BookingController extends Controller
        return Bus::whereTripId($tripId)->whereTimeId($timeId)->first();
     }
 
+    public function fetchSlots( Request $request) {
+        $timeId = $request->time_id;
+        $busId = $request->bus_id;
+        $date = $request->date; // filtering
+
+        return SeatLogger::whereBusId($busId)->whereTimeId($timeId)->whereDate('date', Carbon::parse($date)->format('Y-m-d'))->get();
+    }
+
     public function store(Request $request) {
 
         $data = $request->validate([
@@ -23,6 +33,7 @@ class BookingController extends Controller
             'time_id' => 'required',
             'trip_id' => 'required',
             'type' => 'required',
+            'bus_id' => 'required',
             'amount_payable' => 'required',
             'discount_id' => '',
             'date' => 'required',

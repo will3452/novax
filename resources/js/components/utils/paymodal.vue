@@ -8,6 +8,7 @@
 
 <script>
 import axios from 'axios'
+import { loadScript } from '@paypal/paypal-js'
 export default {
     props: ['visible', 'amountPayable', 'description', 'customer', 'recordType', 'recordId'],
     data () {
@@ -17,8 +18,43 @@ export default {
     },
     async created() {
         let { data } = await axios.get('/api/pkey')
+
+    },
+    mounted: function() {
+        const script = document.createElement("script");
+        script.src =
+        "https://www.paypal.com/sdk/js?client-id=ARv4l18z2mbrbhTZSXSBYkwm-FB6B_JsqnxjLPx4YucjAWXJyTYiZ0piB1Tst7HfDtMtowx5zajuOatI";
+        script.addEventListener("load", this.setLoaded);
+        document.body.appendChild(script);
     },
     methods: {
+        setLoaded: function() {
+            window.paypal
+                .Buttons({
+                createOrder: (data, actions) => {
+                    return actions.order.create({
+                    purchase_units: [
+                        {
+                        description: this.product.description,
+                        amount: {
+                            currency_code: "PHP",
+                            value: 100
+                        }
+                        }
+                    ]
+                    });
+                },
+                onApprove: async (data, actions) => {
+                    const order = await actions.order.capture();
+                    console.log(order);
+                },
+                onError: err => {
+                    console.log(err);
+                }
+                })
+                .render(this.$refs.paypal);
+            },
+        loadScript,
         async submit () {
             try {
                 this.gcashButtonLoading = true

@@ -109,6 +109,7 @@ Route::get('/discounts', fn (Request $request) => Discount::get());
 
 
 Route::post('/fetch-bus', [BookingController::class, 'fetchBus']);
+Route::post('/fetch-slot', [BookingController::class, 'fetchSlots']);
 
 Route::get('/times', fn (Request $request) => Time::get());
 

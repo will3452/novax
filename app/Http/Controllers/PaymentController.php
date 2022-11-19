@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -36,5 +37,9 @@ class PaymentController extends Controller
 
         curl_close($curl);
         return $response;
+    }
+
+    public function choosePay(Request $request, Booking $booking) {
+        return view('payment', compact('booking'));
     }
 }

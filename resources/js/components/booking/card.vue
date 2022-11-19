@@ -7,7 +7,7 @@
             <a-button type="ghost" block @click="viewForm" >
                 Book Now
             </a-button>
-            <a-drawer title="Booking Form" placement="bottom" :height="500" :visible="bookingFormVisible" @close="closeHandler">
+            <a-drawer title="Booking Form" placement="top" :height="500" :visible="bookingFormVisible" @close="closeHandler">
             <errors :errors="errors"></errors>
             <a-form-model v-if="!loading" :model="payload">
                 <a-row type="flex" justify="center" v-if="step == 0">
@@ -18,7 +18,7 @@
                 <a-div v-if="step == 1">
                     <a-form-model-item label="Select Trip" required prop="trip">
                         <a-select v-model="payload.trip">
-                            <a-select-option :key="trip" :value="trip.id" v-for="trip in trips">
+                            <a-select-option :key="'trip123' + trip.id" :value="trip.id" v-for="trip in trips">
                                 <div>
                                     {{trip.start}} - {{trip.end}}
                                 </div>
@@ -30,7 +30,7 @@
                     </a-form-model-item>
                     <a-form-model-item label="Time" prop="time" required>
                         <a-select v-model="payload.time">
-                            <a-select-option v-for="time in times" :value="time.id" :key="time.id">
+                            <a-select-option v-for="time in times" :value="time.id" :key="'to123' + time.id">
                                 {{moment(time.time).format('hh:mm a')}}
                             </a-select-option>
                         </a-select>
@@ -44,7 +44,7 @@
                     <a-result v-if="! bus" status="404" title="No Bus Available."></a-result>
                     <div v-else>
                         <a-row type="flex" justify="center">
-                            <img style="max-height: 300px;" :src="`storage/${bus.seat_image}`" alt="seat"></img>
+                            <img style="max-height: 300px;" :src="`storage/${bus.seat_image}`" alt="seat"/>
                         </a-row>
                     </div>
                     <a-row type="flex" justify="center">
@@ -60,14 +60,14 @@
                             <div v-if="! isGroup">
                                 <a-form-model-item label="Select type of passenger" required prop="type">
                                     <a-select v-model="payload.type">
-                                        <a-select-option v-for="item in ['kids', 'adult', 'senior']" :key="item" :value="item">
+                                        <a-select-option v-for="item in ['kids', 'adult', 'senior']" :key="'reds' + item" :value="item">
                                             {{item}}
                                         </a-select-option>
                                     </a-select>
                                 </a-form-model-item>
                                 <a-form-model-item label="Select preferred seat" required prop="seat">
                                     <a-select v-model="payload.seat">
-                                        <a-select-option v-for="i in parseInt(bus.capacity)" :key="i" :value="i">
+                                        <a-select-option v-for="i in parseInt(bus.capacity)" :key="'cap' + i" :value="i" :disabled="notAvailable.includes(`${i}`)">
                                             {{i}}
                                         </a-select-option>
                                     </a-select>
@@ -89,7 +89,7 @@
                                         <a-col :span='12'>
                                             <a-form-model-item label="Type">
                                                 <a-select   v-model="members[index].type">
-                                                    <a-select-option v-for="item in ['kids', 'adult', 'senior']" :key="item" :value="item">
+                                                    <a-select-option v-for="item in ['kids', 'adult', 'senior']" :key="'red' + item" :value="item">
                                                         {{item}}
                                                     </a-select-option>
                                                 </a-select>
@@ -98,7 +98,7 @@
                                         <a-col :span='12'>
                                             <a-form-model-item label="Seat"  >
                                                 <a-select  v-model="members[index].seat">
-                                                    <a-select-option v-for="i in parseInt(bus.capacity)" :key="i" :value="i">
+                                                    <a-select-option v-for="i in parseInt(bus.capacity)" :key="'capasd' + i" :value="i" :disabled="notAvailable.includes(`${i}`)">
                                                         {{i}}
                                                     </a-select-option>
                                                 </a-select>
@@ -128,7 +128,7 @@
                             {{moment(payload.date).format('YYYY-MM-DD')}}
                         </a-descriptions-item>
                         <a-descriptions-item label="Time">
-                            {{ moment(times.find(e => e.id == payload.time).time).format('hh:mm a')}}
+                            {{ payload.time && moment(times.find(e => e.id == payload.time).time).format('hh:mm a')}}
                         </a-descriptions-item>
                         <a-descriptions-item label="Bus No.">
                             {{bus.plate_number}}
@@ -180,6 +180,7 @@ export default {
             bookingFormVisible: false,
             trips: [],
             times:[],
+            notAvailable: [],
             payload: {},
         }
     },
@@ -206,12 +207,25 @@ export default {
         review() {
             this.step ++;
         },
+        async fetchSlots() {
+            try {
+                let {date, time: time_id} = this.payload
+                let { data } = await window.axios.post('/api/fetch-slot', {date, time_id, bus_id: this.bus.id})
+                console.log('fetchSlots >> ', data)
+                this.notAvailable = data.map( x => x.seat);
+            } catch (error) {
+                console.log("fetch slot error ", error)
+            }
+        },
         async fetchBus() {
             try {
                 this.loading =  true
                 let {trip: trip_id, time: time_id} = this.payload
                 let { data } = await window.axios.post('/api/fetch-bus', {trip_id, time_id});
                 this.bus = data
+                if (this.bus) {
+                    this.fetchSlots();
+                }
                 this.step ++
             } catch (err) {
                 console.log('Discount error >> ', err)
@@ -241,13 +255,13 @@ export default {
                 this.payload.user_id = this.deepCopy(this.userId)
                 await window.axios.post('/api/booking', { ...this.payload })
                 this.$notification.success({message:'Success', description: 'Booked successfully!'})
-                this.bookingFormVisible = false
             } catch(err) {
                 this.$notification.error({message:'Error', description: err.message})
             } finally {
                 this.loadingSubmit = false
                 this.payload = {}
                 this.errors = []
+                window.location.reload()
             }
         },
         disabledDate(current) {

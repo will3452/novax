@@ -24,7 +24,7 @@
             <template slot="action" slot-scope="fare, record">
                 <div>
                     <a-button size="small" type="primary" v-if="record.status === 'TO PAY' " @click="payNow(record)">Pay now</a-button>
-                    <a href="#" v-if="record.status === 'BOOKED' " @click="showQr(record.ticket)">
+                    <a href="#" v-if="record.status === 'BOOKED' " @click="showQr(record.ticket, record)">
                         <a-icon type="qrcode" />
                     </a>
                     <a-button size="small" type="danger" v-if="record.status === 'FOR REVIEW' " @click="cancelNow(record)">Cancel</a-button>
@@ -32,18 +32,18 @@
                 </div>
             </template>
         </a-table>
-        <qr-modal :visible="qrShow" :ticket="ticket" @close="qrShow = false"></qr-modal>
-        <paymodal :customer="user" :visible="paymodalShow" :amount-payable="amountPayable" :description="description" :record-type="recordType" :record-id="recordId"></paymodal>
+        <qr-modal :visible="qrShow" :record="record" :ticket="ticket" @close="qrShow = false"></qr-modal>
+        <!-- <paymodal :customer="user" :visible="paymodalShow" :amount-payable="amountPayable" :description="description" :record-type="recordType" :record-id="recordId"></paymodal> -->
     </div>
 </template>
 <script>
 import { moneyFormat } from '../../global.js'
-import paymodal from '../utils/paymodal.vue'
+// import paymodal from '../utils/paymodal.vue'
 import qrModal from '../ticket/qr-modal.vue'
 export default {
     props: ['userId'],
     components: {
-        paymodal,
+        // paymodal,
         qrModal,
     },
     async created () {
@@ -66,6 +66,7 @@ export default {
             user: null,
             amountPayable: 0,
             recordId:0,
+            record:{},
             recordType: null,
             description: '',
             paymodalShow: false,
@@ -75,21 +76,19 @@ export default {
                 {
                     dataIndex: 'date',
                     title: 'Date',
-                    scopedSlots: {customRender: 'date'}
+                    scopedSlots: {customRender: 'date'},
+                    key: 'date',
                 },
                 {
                     dataIndex: 'status',
                     title: 'Status',
+                    key: 'status'
                 },
                 {
                     dataIndex: 'trip',
                     title: 'Trip',
+                    key: 'trip',
                     scopedSlots: {customRender: 'trip'}
-                },
-                {
-                    dataIndex: 'trip',
-                    title: 'Discount',
-                    scopedSlots: {customRender: 'discount'}
                 },
                 {
                     dataIndex: 'amount_payable',
@@ -102,8 +101,9 @@ export default {
     },
     methods: {
         moneyFormat,
-        showQr(item) {
+        showQr(item, record) {
             this.ticket = item
+            this.record = record
             this.qrShow = true
         },
         getDate(item) {
@@ -132,6 +132,7 @@ export default {
             this.amountPayable = amount_payable
             this.description = `pay book with id of ${id}`;
             this.paymodalShow = true
+            window.location.href = `/pay/${id}`;
         }
     }
 
