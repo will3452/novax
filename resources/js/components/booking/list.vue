@@ -1,6 +1,7 @@
 <template>
     <div>
-        <a-table :columns="columns" :loading="loading" :data-source="sourceData">
+        <a-card>
+            <a-table :columns="columns" :loading="loading" :data-source="sourceData">
             <template slot="date" slot-scope="item">
                 <span>
                     {{getDate(item)}}
@@ -32,6 +33,7 @@
                 </div>
             </template>
         </a-table>
+        </a-card>
         <qr-modal :visible="qrShow" :record="record" :ticket="ticket" @close="qrShow = false"></qr-modal>
         <!-- <paymodal :customer="user" :visible="paymodalShow" :amount-payable="amountPayable" :description="description" :record-type="recordType" :record-id="recordId"></paymodal> -->
     </div>

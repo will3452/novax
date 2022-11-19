@@ -37,7 +37,9 @@
     </div>
     <a-row :gutter="16" style="margin-top:1em">
         <a-col :md="10" :xs="24">
-            <dashboard-calendar></dashboard-calendar>
+            <a-card>
+                <dashboard-calendar></dashboard-calendar>
+            </a-card>
         </a-col>
         <a-col :md="14" :xs="24">
             <dashboard-notices></dashboard-notices>
