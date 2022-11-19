@@ -19,6 +19,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <link rel="stylesheet" href="//unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+
     @if(config('app.env') == 'local')
         <script src="http://localhost:35729/livereload.js"></script>
     @endif

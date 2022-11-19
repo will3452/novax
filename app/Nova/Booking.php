@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Status;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Booking extends Resource
@@ -48,6 +49,7 @@ class Booking extends Resource
     {
         return [
             Date::make('Date', 'date')->sortable(),
+            BelongsTo::make('Time', 'Time', Time::class),
             Date::make('Paid date', 'paid_at')->sortable(),
             BelongsTo::make('Requestor', 'user', User::class),
             BelongsTo::make('Trip', 'trip', Trip::class),

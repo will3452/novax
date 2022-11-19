@@ -3,7 +3,9 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
@@ -50,8 +52,11 @@ class Bus extends Resource
                 ->rules(['required']),
             Text::make('Plate Number')
                 ->rules(['required']),
+            Image::make('Seat Image', 'seat_image')->rules(['required', 'max:2000']),
             Number::make('Capacity')
-                ->rules(['required'])
+                ->rules(['required']),
+            BelongsTo::make('Time schedule', 'time', Time::class),
+            BelongsTo::make('Trip', 'trip', Trip::class),
         ];
     }
 

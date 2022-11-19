@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\FileImageController;
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\Time;
 use App\Notifications\PaymentStatusUpdate;
 use Illuminate\Support\Facades\Notification;
 
@@ -105,6 +106,11 @@ Route::post('/transaction', function (Request $request) {
 
 //discounts
 Route::get('/discounts', fn (Request $request) => Discount::get());
+
+
+Route::post('/fetch-bus', [BookingController::class, 'fetchBus']);
+
+Route::get('/times', fn (Request $request) => Time::get());
 
 Route::post('/file-image-upload', [FileImageController::class, 'upload']);
 Route::post('/file-image-remove', [FileImageController::class, 'remove']);

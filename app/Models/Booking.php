@@ -27,6 +27,12 @@ class Booking extends Model
         'paid_at',
         'qty',
         'amount_payable',
+        // additional
+        'time_id',
+        'member',
+        'seat',
+        'type',
+        'bus_id',
     ];
 
     protected $with = [
@@ -59,9 +65,23 @@ class Booking extends Model
 
     public function booked($payload = "{}") {
         $this->update(['status' => self::STATUS_BOOKED, 'paid_at' => now()]);
+        $seats = explode(",", $this->seat);
+        foreach ($seats as $seat) {
+            SeatLogger::create([
+                'time_id' => $this->time_id,
+                'seat' => $seat,
+                'booking_id' => $this->id,
+                'bus_id' => $this->bus_id,
+                'date' => $this->date,
+            ]);
+        }
         $this->ticket()->create([
             'user_id' => $this->user_id,
             'data' => $payload,
         ]);
+    }
+
+    public function time() {
+        return $this->belongsTo(Time::class);
     }
 }
