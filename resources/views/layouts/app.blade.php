@@ -26,8 +26,8 @@
     @endif
 </head>
 <body>
-    <div id="app" style="background: url('/bg-client.jpg'); height:100vh; overflow-y: auto; background-size: cover;">
-        <nav class="navbar navbar-expand-md navbar-dark bg-white shadow-sm" style="background: #1890FF !important;">
+    <div id="app" style="background: url('/bg.jpeg'); height:100vh; overflow-y: auto; background-size: cover;background-opacity:0.5">
+        <nav class="navbar navbar-expand-md navbar-dark bg-white shadow-sm" style="background: #d84f4b !important;">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}

@@ -44,7 +44,7 @@
                     <a-result v-if="! bus" status="404" title="No Bus Available."></a-result>
                     <div v-else>
                         <a-row type="flex" justify="center">
-                            <img style="max-height: 300px;" :src="`storage/${bus.seat_image}`" alt="seat"/>
+                            <img style="max-height: 300px;" :src="`/storage/${bus.seat_image}`" alt="seat"/>
                         </a-row>
                     </div>
                     <a-row type="flex" justify="center">
@@ -166,8 +166,10 @@ export default {
     data () {
         return {
             typeOfPassengers: [
-                'kids',
+                'child',
                 'adult',
+                'pwd',
+                'pregnant'
             ],
             step: 0,
             bus: {},

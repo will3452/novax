@@ -7,12 +7,9 @@
                 </div>
             </template>
             <vue-qr :text="getQrValue(ticket)"></vue-qr>
-            <a-descriptions title="Ticket details" bordered size="small">
+            <a-descriptions title="Ticket details" bordered size="small" :columns="1">
                 <a-descriptions-item label="Trip">
                     {{record.trip.start}} - {{record.trip.end}}
-                </a-descriptions-item>
-                <a-descriptions-item label="Seats">
-                    {{record.seat}}
                 </a-descriptions-item>
                 <a-descriptions-item label="Seats">
                     {{record.seat}}

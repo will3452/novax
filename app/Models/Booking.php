@@ -13,8 +13,8 @@ class Booking extends Model
 {
     use HasFactory, BookingTrait, BelongsToUserTrait, DiscountedTrait, TransactionableTrait;
     protected $casts = [
-        'date' => 'date',
-        'paid_at' => 'date',
+        'date' => 'datetime',
+        'paid_at' => 'datetime',
     ];
     protected $fillable = [
         'trip_id',
