@@ -1,7 +1,9 @@
 <x-layout>
     <div class="hero min-h-screen"style="background:url('/storage/{{nova_get_setting('landing_background')}}'); background-size:cover; background-position:center;" >
         <div class="flex-col hero-content lg:flex-row backdrop-blur-sm">
-          <x-illustration></x-illustration>
+          <div class="hidden md:block">
+            <x-illustration></x-illustration>
+          </div>
           {{nova_get_setting('landing_image')}}
           <div>
             <h1 class="text-5xl font-bold">Memory Virtual and Health Related Application</h1>

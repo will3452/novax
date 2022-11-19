@@ -107,9 +107,6 @@
                             <th>
                                 BMI
                             </th>
-                            <th>
-                                Nutritional Status
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -126,9 +123,6 @@
                             </td>
                             <td>
                                 {{number_format(($item->kg/($item->m * $item->m)), 2)}}
-                            </td>
-                            <td>
-                                {{$item->remarks}}
                             </td>
                         </tr>
                         @endforeach
