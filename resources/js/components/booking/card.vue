@@ -212,7 +212,7 @@ export default {
         async fetchSlots() {
             try {
                 let {date, time: time_id} = this.payload
-                let { data } = await window.axios.post('/api/fetch-slot', {date, time_id, bus_id: this.bus.id})
+                let { data } = await window.axios.post('/api/fetch-slot', {date: window.moment(date).format('YYYY-MM-DD'), time_id, bus_id: this.bus.id})
                 console.log('fetchSlots >> ', data)
                 this.notAvailable = data.map( x => x.seat);
             } catch (error) {
@@ -251,6 +251,7 @@ export default {
                 this.payload.trip_id = tripId
                 this.payload.member = this.isGroup ? this.members.length : 1;
                 this.payload.time_id = this.payload.time
+                this.payload.date = window.moment(this.payload.date).format('YYYY-MM-DD')
                 this.payload.bus_id = this.bus.id
                 this.payload.seat = this.isGroup ? this.members.map(e => e.seat).join(',') : this.payload.seat;
                 this.payload.type = this.isGroup ? this.members.map(e => e.type).join(',') : this.payload.type;

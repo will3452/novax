@@ -18,7 +18,7 @@ class CreateBookingsTable extends Migration
             $table->id();
             $table->foreignId('trip_id');
             $table->json('trip_details');
-            $table->timestamp('date');
+            $table->dateTime('date');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('status')->default(Booking::STATUS_FOR_REVIEW);
             $table->string('amount_payable');

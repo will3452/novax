@@ -109,7 +109,7 @@ export default {
             this.qrShow = true
         },
         getDate(item) {
-            return window.moment(item).format('MMM Do YY')
+            return window.moment(item).format('MM/DD/YYYY');
         },
         cancelNow({ id }, confirm = false) {
 

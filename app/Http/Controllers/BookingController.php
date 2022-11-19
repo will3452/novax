@@ -40,6 +40,7 @@ class BookingController extends Controller
             'user_id' => 'required',
             'discount_image_proof' => '',
         ]);
+
         $data['status'] =  Booking::STATUS_TO_PAY;
         $data['trip_details'] = json_encode(Trip::find($data['trip_id']));
         return Booking::create($data);
