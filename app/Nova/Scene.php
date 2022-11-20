@@ -61,7 +61,7 @@ class Scene extends Resource
             Hidden::make('user_id')->default(fn () => auth()->id()),
             Hidden::make('Cover')->default(fn () => '123'),
             Image::make('Background')
-                ->rules(['required']),
+                ->rules(['required', 'image']),
             HasMany::make('Objects', 'objects', SceneObject::class),
         ];
     }

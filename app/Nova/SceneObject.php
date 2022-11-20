@@ -59,7 +59,7 @@ class SceneObject extends Resource
                 ->rules(['required', 'max:5000']),
             File::make('Sound')
                 ->acceptedTypes(['audio/mp4', 'audio/ogg', 'audio/wav'])
-                ->rules(['required']),
+                ->rules(['required', 'mimetypes:audio/mp4,audio/ogg,audio/wav']),
             Textarea::make('Dialog')->alwaysShow(),
         ];
     }
