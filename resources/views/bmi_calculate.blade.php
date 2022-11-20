@@ -108,7 +108,7 @@
                                 BMI
                             </th>
                             <th>
-                                Nutritional Status
+
                             </th>
                         </tr>
                     </thead>
