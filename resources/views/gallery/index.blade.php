@@ -21,7 +21,6 @@
                     </x-card>
                 @endforeach
             </div>
-            {{$images}}
             @if (count($images) === 0)
                 <x-alert-info>No image(s) Uploaded.</x-alert-info>
             @endif

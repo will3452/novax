@@ -52,7 +52,6 @@
                     </x-card>
                 @endforeach
             </div>
-            {{$albums}}
             @if (count($albums) === 0)
                 <x-alert-info>No Albums created!</x-alert-info>
             @endif
