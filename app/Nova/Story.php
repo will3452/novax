@@ -64,8 +64,8 @@ class Story extends Resource
                 ->acceptedTypes(['application/pdf']),
             Hidden::make('user_id')->default(fn () => auth()->id()),
             File::make('Audio')
-                ->rules(['mimetypes:audio/mpeg', 'max:2000'])
-                ->acceptedTypes(['audio/mpeg']),
+                ->rules(['mimes:wav,mp3', 'required'])
+                ->acceptedTypes(['audio/mpeg', 'audio/wav']),
             HasOne::make('Scene', 'scene', Scene::class),
             HasMany::make('Questions', 'questions'),
         ];
