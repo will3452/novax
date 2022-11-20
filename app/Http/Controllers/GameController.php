@@ -18,6 +18,6 @@ class GameController extends Controller
     public function flipCard()
     {
         $images = auth()->user()->images()->inRandomOrder()->limit(6)->get();
-        return view('flipCard', compact('images'));
+        return view('flip-card', compact('images'));
     }
 }

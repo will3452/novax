@@ -9,13 +9,13 @@ class GalleryController extends Controller
 {
     public function index()
     {
-        $albums = auth()->user()->albums()->latest()->simplePaginate(5);
+        $albums = auth()->user()->albums()->get();
         return view('gallery.album_index', compact('albums'));
     }
 
     public function imageIndex()
     {
-        $images = auth()->user()->images()->whereAlbumId(request()->album)->latest()->simplePaginate(5);
+        $images = auth()->user()->images()->whereAlbumId(request()->album)->latest()->get();
         return view('gallery.index', compact('images'));
     }
 
