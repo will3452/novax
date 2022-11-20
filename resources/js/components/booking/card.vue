@@ -60,7 +60,7 @@
                             <div v-if="! isGroup">
                                 <a-form-model-item label="Select type of passenger" required prop="type">
                                     <a-select v-model="payload.type">
-                                        <a-select-option v-for="item in ['kids', 'adult', 'senior']" :key="'reds' + item" :value="item">
+                                        <a-select-option v-for="item in typeOfPassengers" :key="'reds' + item" :value="item">
                                             {{item}}
                                         </a-select-option>
                                     </a-select>
@@ -89,7 +89,7 @@
                                         <a-col :span='12'>
                                             <a-form-model-item label="Type">
                                                 <a-select   v-model="members[index].type">
-                                                    <a-select-option v-for="item in ['kids', 'adult', 'senior']" :key="'red' + item" :value="item">
+                                                    <a-select-option v-for="item in typeOfPassengers" :key="'red' + item" :value="item">
                                                         {{item}}
                                                     </a-select-option>
                                                 </a-select>
