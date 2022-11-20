@@ -60,7 +60,7 @@ class Story extends Resource
             Text::make('User', fn () => $this->user_id ? $this->user->name : 'Unknown'),
             Image::make('Cover')->rules(['required', 'max:2000', 'image']),
             Text::make('Title')->rules(['required']),
-            File::make('Content')->rules(['required', 'max:10000', 'mimetypes:application/mp4'])
+            File::make('Content')->rules(['required', 'max:10000', 'mimetypes:application/pdf'])
                 ->acceptedTypes(['application/pdf']),
             Hidden::make('user_id')->default(fn () => auth()->id()),
             File::make('Audio')
