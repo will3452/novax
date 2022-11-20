@@ -169,6 +169,7 @@ export default {
                 'child',
                 'adult',
                 'pwd',
+                'senior',
                 'pregnant'
             ],
             step: 0,

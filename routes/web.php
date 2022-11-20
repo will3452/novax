@@ -81,7 +81,7 @@ Route::get('/schedules', function () {
     $bus = Bus::with(['trip', 'time'])->get();
     foreach ($bus as $d) {
         $d['trips'] = $d->trip->start . ' - ' . $d->trip->end;
-        $d['timex'] = Carbon::parse($d->time->time)->format('h:m a');
+        $d['timex'] = Carbon::parse($d->time->time)->format('H:i a');
     }
     return view('schedules', ['bus' => $bus]);
 });
