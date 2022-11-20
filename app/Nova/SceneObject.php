@@ -56,10 +56,10 @@ class SceneObject extends Resource
         return [
             BelongsTo::make('Scene', 'scene', Scene::class),
             Image::make('Image')
-                ->rules(['required', 'max:5000']),
+                ->rules(['required', 'max:5000', 'image']),
             File::make('Sound')
-                ->acceptedTypes(['audio/mp4', 'audio/ogg', 'audio/wav'])
-                ->rules(['required', 'mimetypes:audio/mp4,audio/ogg,audio/wav']),
+                ->acceptedTypes(['audio/mpeg'])
+                ->rules(['mimetypes:audio/mpeg', 'max:2000', 'required']),
             Textarea::make('Dialog')->alwaysShow(),
         ];
     }
