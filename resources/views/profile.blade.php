@@ -17,8 +17,9 @@
                     <div class="mb-2">
                         <label for="">Current Program</label>
                         <select name="program_id" id="" class="form-select">
+
+                            <option value="" disabled selected>--</option>
                             @foreach ($programs as $program)
-                                <option value="" disabled selected>--</option>
                                 <option value="{{$program->id}}" {{ $program->id == auth()->user()->program_id ? 'selected': ''}}>
                                     {{$program->name}}
                                 </option>
