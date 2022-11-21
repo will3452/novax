@@ -22,6 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'gender',
+        'birthdate',
+        'workout_reminder',
+        'program_id',
     ];
 
     /**
@@ -41,5 +45,10 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'birthdate' => 'datetime',
     ];
+
+    public function records() {
+        return $this->hasMany(Record::class);
+    }
 }
