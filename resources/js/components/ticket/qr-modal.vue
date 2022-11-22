@@ -1,13 +1,13 @@
 <template>
     <div>
-        <a-modal title="QR code" :visible="visible" :closable="false" :centered="true">
+        <a-modal title="QR code" :visible="visible" :closable="false" :centered="true" style="background: #fff !important;">
             <template slot="footer">
                 <div>
                     <a-button @click="closeHandler">close</a-button>
                 </div>
             </template>
             <vue-qr :text="getQrValue(ticket)"></vue-qr>
-            <a-descriptions title="Ticket details" bordered size="small" :columns="1">
+            <a-descriptions title="Ticket details" bordered size="small" :columns="1" style="background: #fff !important;">
                 <a-descriptions-item label="Trip">
                     {{record.trip.start}} - {{record.trip.end}}
                 </a-descriptions-item>

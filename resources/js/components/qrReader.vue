@@ -4,7 +4,7 @@
         <!-- <p>Result : <code>{{result}}</code></p> -->
         <no-ssr>
             <qr-reader @code-scanned="showResult"></qr-reader>
-            <div  v-if="responseResult">
+            <div  v-if="responseResult" style="background: #fff; !important;">
                 <a-descriptions :bordered="true" :column="1" size="small">
                     <a-descriptions-item label="Status">
                         {{responseResult.used ? 'Used.' : 'Not used.'}}
