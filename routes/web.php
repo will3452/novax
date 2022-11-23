@@ -93,3 +93,7 @@ Route::prefix('/house-hold-profile')->name('hh.')->group(function () {
 
 
 Route::get('/search', [SearchController::class, 'index'])->name('search');
+
+Route::get('/test', function () {
+    return 'test';
+});

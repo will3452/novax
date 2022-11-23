@@ -18,14 +18,12 @@ class AdminSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            'email'=>'super@admin.com',
+            'email'=>'paulafelix0017@gmail.com',
             'password'=> bcrypt('password'),
             'profile_id' => null,
             'role' => 'ADMIN',
         ]);
 
         SMSCredit::create(['credit' => 500]);
-
-        info('Superadmin created!, email: super@admin.com');
     }
 }
