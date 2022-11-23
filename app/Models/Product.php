@@ -19,6 +19,7 @@ class Product extends Model
         "product_cost",
         "selling_price",
         "user_id",
+        "branding",
     ];
 
     const CATEGORY_NONFOOD = 'NON-FOOD';

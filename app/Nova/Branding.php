@@ -2,21 +2,12 @@
 
 namespace App\Nova;
 
-use App\Models\Product as ModelsProduct;
-use App\Models\Branding as ModelsBranding;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Image;
-use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Symfony\Component\Intl\Currencies;
 
-class Product extends Resource
+class Branding extends Resource
 {
     public static $group = 'Library';
     /**
@@ -24,14 +15,14 @@ class Product extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\Product::class;
+    public static $model = \App\Models\Branding::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'description';
 
     /**
      * The columns that should be searched.
@@ -39,7 +30,7 @@ class Product extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'description',
     ];
 
     /**
@@ -51,27 +42,7 @@ class Product extends Resource
     public function fields(Request $request)
     {
         return [
-            Select::make('Category')
-                ->options([
-                    ModelsProduct::CATEGORY_FOOD => ModelsProduct::CATEGORY_FOOD,
-                    ModelsProduct::CATEGORY_NONFOOD => ModelsProduct::CATEGORY_NONFOOD,
-                ]),
-            Select::make('Branding')
-                ->options(ModelsBranding::get()->pluck('description', 'description')),
-            Text::make('Product ID', 'product_id')
-                ->rules(['required', 'unique:products,product_id,{{resourceId}}']),
-            Textarea::make('Description')
-                ->rules(['required', 'max:255'])
-                ->alwaysShow(),
-            Image::make('Image')
-                ->rules(['image', 'max:2000', 'required']),
-            Text::make('Unit of Measurement', 'uom')
-                ->rules(['required']),
-            Number::make('quantity')->rules(['required']),
-            Currency::make('Unit cost')->rules(['required']),
-            Currency::make('Product cost')->rules(['required']),
-            Currency::make('Selling price')->rules(['required']),
-            Hidden::make('user_id')->default(fn () => auth()->id()),
+            Text::make('Description')->rules(['required']),
         ];
     }
 
