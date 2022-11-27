@@ -19,10 +19,15 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
         'email',
         'password',
+        'type',
+        'disabled_at',
     ];
+
+    const TYPE_INSTRUCTOR = 'INSTRUCTOR';
+    const TYPE_STUDENT = 'STUDENT';
+    const TYPE_ADMIN = 'ADMINISTRATOR';
 
     /**
      * The attributes that should be hidden for serialization.
