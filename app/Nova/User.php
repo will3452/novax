@@ -8,7 +8,6 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
@@ -18,7 +17,7 @@ class User extends Resource
         return $query->where('email', '!=', 'super@admin.com');
     }
 
-    public static $group = 'Security';
+    public static $group = 'Data';
     /**
      * The model the resource corresponds to.
      *
@@ -31,7 +30,7 @@ class User extends Resource
      *
      * @var string
      */
-    public static $title = 'email';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -53,11 +52,9 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Select::make('Type')
-                ->options([
-                    'STUDENT' => 'STUDENT',
-                    'INSTRUCTOR' => 'INSTRUCTOR',
-                ]),
+            Text::make('Name')
+                ->sortable()
+                ->rules('required', 'max:255'),
 
             Text::make('Email')
                 ->sortable()
@@ -69,6 +66,9 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
+
+            MorphToMany::make('Roles', 'roles', Role::class)
+                ->canSee(fn () => config('novax.role_enabled')),
         ];
     }
 

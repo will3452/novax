@@ -19,8 +19,6 @@ abstract class Resource extends NovaResource
         return $query;
     }
 
-    public static $tableStyle = 'tight';
-
     /**
      * Build a Scout search query for the given resource.
      *

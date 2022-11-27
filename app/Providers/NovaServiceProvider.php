@@ -4,10 +4,8 @@ namespace App\Providers;
 
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
-use App\Nova\Metrics\Section;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
-use App\Nova\Metrics\Instructor;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
@@ -78,8 +76,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
-            Instructor::make(),
-            Section::make(),
         ];
     }
 
