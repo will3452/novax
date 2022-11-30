@@ -2,35 +2,27 @@
 
 namespace App\Nova;
 
-use App\Models\User as ModelsUser;
-use Laravel\Nova\Fields\ID;
+use App\Models\TransactionType as ModelsTransactionType;
+use App\Models\User as UserModel;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class TransactionType extends Resource
 {
     public static function availableForNavigation(Request $request)
     {
-        return auth()->user()->type == ModelsUser::TYPE_ADMIN;
+        return auth()->user()->type == UserModel::TYPE_ADMIN;
     }
-
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'super@admin.com');
-    }
-
-    public static $group = 'Security';
+    public static $group = 'Reference';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\TransactionType::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -45,7 +37,8 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'name',
+        'type'
     ];
 
     /**
@@ -57,34 +50,13 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-
-            Select::make('Type')->rules(['required'])->options([
-                ModelsUser::TYPE_ADMIN => ModelsUser::TYPE_ADMIN,
-                ModelsUser::TYPE_EMPLOYEE => ModelsUser::TYPE_EMPLOYEE,
-            ]),
-
-            Text::make('First Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Last Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Middle Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+            Text::make('Name')
+                ->rules(['required']),
+            Select::make('Type')
+                ->options([
+                    ModelsTransactionType::TYPE_EXPENSES => ModelsTransactionType::TYPE_EXPENSES,
+                    ModelsTransactionType::TYPE_INCOME => ModelsTransactionType::TYPE_INCOME,
+                ]),
         ];
     }
 

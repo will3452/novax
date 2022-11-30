@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "repositories": [
         {
@@ -12,10 +15,16 @@
         {
             "type": "path",
             "url": "./nova-components/NovaPermissionsField"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/Theme"
         }
     ],
     "require": {
         "php": "^7.3|^8.0",
+        "altel/theme": "*",
+        "chris-ware/nova-breadcrumbs": "^2.3",
         "coreproc/nova-permissions-field": "*",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -24,6 +33,7 @@
         "laravel/sanctum": "^2.12",
         "laravel/tinker": "^2.5",
         "laravelwebdev/responsive": "^1.0",
+        "maatwebsite/laravel-nova-excel": "*",
         "optimistdigital/nova-settings": "^3.2",
         "richardkeep/nova-timenow": "^1.0",
         "runlinenl/nova-profile-tool": "^1.1",

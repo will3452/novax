@@ -1,7 +1,6 @@
 <?php
 
-
-
+use Altel\Theme\ThemeServiceProvider;
 
 return [
 
@@ -169,6 +168,8 @@ return [
         /*
          * Package Service Providers...
          */
+
+         ThemeServiceProvider::class,
 
         /*
          * Application Service Providers...

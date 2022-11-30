@@ -2,13 +2,21 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\Nova\Metrics\ClientPerPackage;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
+use App\Nova\Metrics\Clients;
+use App\Nova\Metrics\Expenses;
+use App\Nova\Metrics\Income;
 use Laravel\Nova\Fields\Text;
+use App\Nova\Metrics\Packages;
 use Laravel\Nova\Fields\Image;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
+use ChrisWare\NovaBreadcrumbs\NovaBreadcrumbs;
+use Laravel\Nova\Fields\Textarea;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -25,6 +33,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Textarea::make('About'),
+            Textarea::make('Contacts')
+                ->help('Please Separated each contact by comma (,)'),
+            Textarea::make('Landing Welcome'),
+            Textarea::make('Landing Greeting', 'landing_greeting')
         ]);
     }
 
@@ -65,6 +78,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
+            (new Clients()),
+            (new Packages()),
+            (new ClientPerPackage()),
+            (new Expenses()),
+            (new Income()),
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
                 'America/Mexico_City',
@@ -105,9 +123,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 config('novax.back_up_enabled');
             }),
             (new NovaSettings)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
+                return $request->user()->type === User::TYPE_ADMIN &&
                 config('novax.setting_enabled');
             }),
+            NovaBreadcrumbs::make(),
         ];
     }
 
