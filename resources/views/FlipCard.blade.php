@@ -66,6 +66,9 @@
             background-size: cover;
         }
     </style>
+    <script>
+        alert('Uncover two matching picture from gallery  at once to eliminate them from the game. Eliminate all cards as fast as you can to win the game.');
+    </script>
   </head>
   <body>
     <x-navbar></x-navbar>
