@@ -41,7 +41,7 @@
                 "
             >
             <div class="text-right">
-                <a target="_blank" href="/BODY-MASS-INDEX.pdf">View BMI table</a>
+                <a target="_blank" href="/bmi-table">View BMI table</a>
             </div>
                 <div class="form-control">
                     <div class="label">
