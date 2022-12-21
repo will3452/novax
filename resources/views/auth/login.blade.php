@@ -1,9 +1,9 @@
 <x-layout>
-<div class="hero min-h-screen bg-base-200">
+<div class="hero min-h-screen bg-base-200" style="background:url('/storage/{{nova_get_setting('landing_background')}}'); background-size:cover; background-position:center;">
     <form action="{{route('login')}}" method="POST" class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
         @csrf
         <div class="card-body">
-        <h1 class="uppercase text-center font-bold text-gray-700 text-2xl">Login</h1>
+        <h1 class="uppercase text-center font-bold text-gray-700 text-2xl">SIGN IN</h1>
         <div class="form-control">
             <label class="label">
                 <span class="label-text">Email</span>

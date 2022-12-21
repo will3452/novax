@@ -1,6 +1,6 @@
 <x-layout>
 
-<div class="hero min-h-screen bg-base-200">
+<div class="hero min-h-screen bg-base-200" style="background:url('/storage/{{nova_get_setting('landing_background')}}'); background-size:cover; background-position:center;">
     <form action="register" method="POST" class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
         @csrf
         <div class="card-body">

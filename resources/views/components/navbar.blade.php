@@ -1,18 +1,14 @@
-<div class="navbar bg-base-100">
-    <div class="flex-1">
-      <a href="/" class="btn btn-ghost normal-case text-xl">{{config('app.name', 'My-App')}}</a>
-    </div>
-    <div class="flex-none">
-      <ul class="menu menu-horizontal p-0">
-        @if (! Auth::check())
-            <li><a href="/register">Register</a></li>
-            <li><a href="/login">Login</a></li>
+<div class="text-center text-2xl font-bold my-4">
+    Memory Enhancer with Health Monitoring
+</div>
+<ul class=" bg-base-100 items-center flex justify-center">
+    @if (! Auth::check())
+            <li><a class="btn btn-sm mx-2 btn-link" href="/register">Register</a></li>
+            <li><a class="btn btn-sm mx-2 btn-link" href="/login">Login</a></li>
         @else
-            <li><a href="/home">Home</a></li>
-            <li><a href="/games">Games</a></li>
-            <li><a href="/profile">Profile</a></li>
-            <li><a href="/logout">Logout</a></li>
+            <li><a class="btn btn-sm mx-2 btn-link" href="/home">Home</a></li>
+            <li><a class="btn btn-sm mx-2 btn-link" href="/games">Games</a></li>
+            <li><a class="btn btn-sm mx-2 btn-link" href="/profile">Profile</a></li>
+            <li><a class="btn btn-sm mx-2 btn-link" href="/logout">Logout</a></li>
         @endif
-      </ul>
-    </div>
-  </div>
+  </ul>

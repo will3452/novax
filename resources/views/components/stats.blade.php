@@ -1,6 +1,6 @@
-<div class="stats bg-primary text-primary-content">
+<div class="mx-auto stats bg-primary text-primary-content stats-vertical md:stats-horizontal">
 
-    <div class="stat">
+    <div class="stat ">
         <div class="stat-title">Date Today</div>
         <div class="stat-value">{{now()->format('F d, Y')}}</div>
     </div>
