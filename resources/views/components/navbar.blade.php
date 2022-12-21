@@ -1,4 +1,4 @@
-<div class="text-center text-2xl font-bold my-4">
+<div class=" bg-base-100 text-center text-2xl font-bold my-4">
     Memory Enhancer with Health Monitoring
 </div>
 <ul class=" bg-base-100 items-center flex justify-center">
