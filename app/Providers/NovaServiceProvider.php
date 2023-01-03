@@ -3,10 +3,13 @@
 namespace App\Providers;
 
 use Laravel\Nova\Nova;
+use App\Nova\Metrics\Users;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Number;
 use Spatie\BackupTool\BackupTool;
+use App\Nova\Metrics\Applications;
 use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
@@ -25,6 +28,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Number::make('Interest Rate (%)', 'ir')->default(fn () => 5)->placeholder('5 %'),
+            Number::make('No. of months to pay', 'nmp')->default(fn () => 6)->placeholder('6'),
         ]);
     }
 
@@ -65,6 +70,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
+            (new Users),
+            (new Applications),
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
                 'America/Mexico_City',
@@ -97,13 +104,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            (new ProfileTool)->canSee(function () {
-                return config('novax.profile_enabled');
-            }),
-            (new BackupTool)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
-                config('novax.back_up_enabled');
-            }),
             (new NovaSettings)->canSee(function ($request) {
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
                 config('novax.setting_enabled');

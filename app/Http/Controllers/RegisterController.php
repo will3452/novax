@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
     public function registrationPage()
     {
-        return view('auth.register');
+        return view('register');
     }
 
     public function postRegister()
@@ -21,6 +22,9 @@ class RegisterController extends Controller
         ]);
         $data['password'] = bcrypt($data['password']);
         $user = User::create($data);
-        return back()->withSuccess('success');
+
+        Auth::loginUsingId($user->id);
+
+        return redirect('/admin/');
     }
 }

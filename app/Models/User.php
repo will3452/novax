@@ -22,7 +22,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
     ];
+
+    public function profile () {
+        return $this->hasOne(Profile::class, 'user_id');
+    }
+
+    const TYPE_STUDENT = 'Student';
+    const TYPE_ADMIN = 'Administrator';
 
     /**
      * The attributes that should be hidden for serialization.

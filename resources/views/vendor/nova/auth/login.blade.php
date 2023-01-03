@@ -12,7 +12,7 @@
     {{ csrf_field() }}
 
     @component('nova::auth.partials.heading')
-        {{ __('Welcome Back!') }}
+        {{ __('STUDENT LOAN MANAGEMENT SYSTEM') }}
     @endcomponent
 
     @if ($errors->any())
@@ -36,11 +36,10 @@
     </div>
 
     <div class="flex mb-6">
-        <div class="mr-auto">
-            <a class="text-primary dim font-bold no-underline" href="{{ route('register') }}">
-                {{ __('No Account? create one') }}
-            </a>
-        </div>
+        <label class="flex items-center text-xl font-bold">
+            <input class="" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+            <span class="text-base ml-2">{{ __('Remember Me') }}</span>
+        </label>
 
 
         @if (\Laravel\Nova\Nova::resetsPasswords())
@@ -55,5 +54,10 @@
     <button class="w-full btn btn-default btn-primary hover:bg-primary-dark" type="submit">
         {{ __('Login') }}
     </button>
+    <div class="text-center mt-4">
+        <a style="color: #777;" class=" dim font-bold no-underline" href="{{ route('register') }}">
+            {{ __('Create new account') }}
+        </a>
+    </div>
 </form>
 @endsection
