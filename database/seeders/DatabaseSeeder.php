@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\DiseaseSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,6 +16,6 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        $this->call(AdminSeeder::class);
+        $this->call([AdminSeeder::class, DiseaseSeeder::class]);
     }
 }
