@@ -50,7 +50,9 @@
                     </td>
                     <td>
                         @if (auth()->user()->role == 'ADMIN')
-                        <a href="{{route('generals.edit', ['general' => $g->id])}}" class="btn btn-default btn btn-sm"> <i class="fa fa-edit"></i> Update</a>
+                        <x-delete model="General" :id="$g->id">
+                            <a href="{{route('generals.edit', ['general' => $g->id])}}" class="btn btn-default btn btn-sm"> <i class="fa fa-edit"></i> Update</a>
+                        </x-delete>
                         @endif
                         <a href="{{route('generals.show' , ['general' => $g->id])}}" class="btn btn-default btn btn-sm"> <i class="fa fa-eye"></i> View</a>
                     </td>

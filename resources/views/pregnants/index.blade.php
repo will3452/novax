@@ -34,7 +34,9 @@
                     </td>
                     <td>
                         @if (auth()->user()->role == 'ADMIN')
-                        <a href="{{route('pregnants.edit', ['pregnant' => $g->id])}}" class="btn btn-default btn btn-sm"> <i class="fa fa-edit"></i> Update</a>
+                        <x-delete model="Pregnant" :id="$g->id">
+                            <a href="{{route('pregnants.edit', ['pregnant' => $g->id])}}" class="btn btn-default btn btn-sm"> <i class="fa fa-edit"></i> Update</a>
+                        </x-delete>
                         @endif
                         <a href="{{route('pregnants.show' , ['pregnant' => $g->id])}}" class="btn btn-default btn btn-sm"> <i class="fa fa-eye"></i> View</a>
                     </td>

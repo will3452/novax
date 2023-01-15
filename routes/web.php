@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\AnnouncementController;
-use App\Http\Controllers\ChildrenController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\GeneralController;
-use App\Http\Controllers\HouseHoldProfileController;
-use App\Http\Controllers\PregnantController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ChildrenController;
+use App\Http\Controllers\PregnantController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\HouseHoldProfileController;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -93,6 +94,15 @@ Route::prefix('/house-hold-profile')->name('hh.')->group(function () {
 
 
 Route::get('/search', [SearchController::class, 'index'])->name('search');
+
+Route::delete('/destroy/{id}', function (Request $request, $id) {
+    $model = $request->model;
+    ("\\App\\Models\\$model")::find($id)->delete();
+
+    alert()->success('Resource has been deleted!');
+
+    return back();
+})->name('destroy');
 
 Route::get('/test', function () {
     return 'test';

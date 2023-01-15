@@ -53,7 +53,7 @@
                 </button>
 
                 <ul class="nav navbar-nav navbar-left navbar-top-links">
-                    <li><a href="#"><i class="fa fa-home fa-fw"></i> Website</a></li>
+                    {{-- <li><a href="#"><i class="fa fa-home fa-fw"></i> Website</a></li> --}}
                     <li><a href="#"><i class="fa fa-calendar fa-fw"></i> Date: {{now()->format('M d, Y')}}</a></li>
                 </ul>
 

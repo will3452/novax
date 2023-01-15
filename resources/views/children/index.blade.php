@@ -36,7 +36,9 @@
                     </td>
                     <td>
                         @if (auth()->user()->role == 'ADMIN')
-                        <a href="{{route('children.edit', ['children' => $g->id])}}" class="btn btn-default btn btn-sm"> <i class="fa fa-edit"></i> Update</a>
+                        <x-delete model="Children" :id="$g->id">
+                            <a href="{{route('children.edit', ['children' => $g->id])}}" class="btn btn-default btn btn-sm"> <i class="fa fa-edit"></i> Update</a>
+                        </x-delete>
                         @endif
                         <a href="{{route('children.show' , ['children' => $g->id])}}" class="btn btn-default btn btn-sm"> <i class="fa fa-eye"></i> View</a>
                     </td>

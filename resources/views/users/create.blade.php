@@ -9,7 +9,11 @@
             </div>
             @csrf
             <div class="panel-body">
-                <x-select name="role" label="Role" :option-value="['ADMIN', 'BASIC']" :option-label="['Administrator', 'Basic']" required="1"></x-select>
+                <input type="hidden" name="role" value="BASIC" />
+                <x-input required="1" name="name" label="Name"></x-input>
+                <x-input required="1" name="mobile" label="Cellphone #"></x-input>
+                <x-input required="1" name="address" label="Address"></x-input>
+                {{-- <x-select name="role" label="Role" :option-value="['ADMIN', 'BASIC']" :option-label="['Administrator', 'Basic']" required="1"></x-select> --}}
                 <x-input name="email" type="email" required="1" label="Email address" help="Make sure the email is valid, for email verification."></x-input>
                 <x-input name="password" type="password" required="1" label="Password"></x-input>
                 <button class="btn btn-primary">

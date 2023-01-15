@@ -40,7 +40,9 @@
                     </td>
                     <td>
                         @if (auth()->user()->role == 'ADMIN')
-                        <a href="{{route('profiles.edit', ['profile' => $p->id])}}" class="btn btn-default btn btn-sm"> <i class="fa fa-edit"></i> Update</a>
+                            <x-delete model="Profile" :id="$p->id">
+                                <a href="{{route('profiles.edit', ['profile' => $p->id])}}" class="btn btn-default btn btn-sm"> <i class="fa fa-edit"></i> Update</a>
+                            </x-delete>
                         @endif
                         <a href="{{route('profiles.show' , ['profile' => $p->id])}}" class="btn btn-default btn btn-sm"> <i class="fa fa-eye"></i> View</a>
                     </td>
