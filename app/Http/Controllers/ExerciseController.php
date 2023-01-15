@@ -15,7 +15,9 @@ class ExerciseController extends Controller
             $filters['type'] = $request->type;
         }
 
-        $exercises = Exercise::where($filters)->get();
+        $scaleFilter = auth()->user()->records()->latest()->first()->scale;
+
+        $exercises = Exercise::whereScale($scaleFilter)->where($filters)->get();
         return view('exercises.index', compact('exercises'));
     }
 }

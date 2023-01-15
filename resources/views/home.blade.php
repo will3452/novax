@@ -42,6 +42,15 @@
     <div class="col-md-4 col-12">
         <div class="card " >
             <div class="card-body">
+                <h4 class="card-title">Activities / Progress</h4>
+                <p class="card-text">Check your daily progress here.</p>
+                <a href="{{route('activities.index')}}" class="btn btn-primary">VIEW</a>
+            </div>
+            </div>
+    </div>
+    <div class="col-md-4 col-12">
+        <div class="card " >
+            <div class="card-body">
                 <h4 class="card-title">Profile</h4>
                 <p class="card-text">Organize or change your profile.</p>
                 <a href="{{route('profiles.show', ['user' => auth()->id()])}}" class="btn btn-primary">VIEW</a>

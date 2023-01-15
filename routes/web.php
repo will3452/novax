@@ -49,4 +49,5 @@ Route::prefix('exercises')->name('exercises.')->group(function () {
 
 Route::prefix('activities')->name('activities.')->group(function () {
     Route::post('/add-activity', [ActivityController::class, 'addActivity'])->name('add');
+    Route::get('/', [ActivityController::class, 'index'])->name('index');
 });

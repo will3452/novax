@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class ActivityController extends Controller
 {
+    public function index (Request $request) {
+        $activities = auth()->user()->activities()->latest()->get();
+        return view('progress.index', compact('activities'));
+    }
     public function addActivity(Request $request) {
         $data = ['user_id' => auth()->id()];
 

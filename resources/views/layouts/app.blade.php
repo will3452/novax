@@ -77,7 +77,10 @@
             </div>
         </nav>
 
-        <main class="py-4 container">
+        <main class="py-4 container mb-2">
+            <div class="" style="text-align: right">
+                <a href="{{url()->previous()}}" class="btn btn-sm">BACK</a>
+            </div>
             @yield('content')
         </main>
 

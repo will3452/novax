@@ -12,14 +12,14 @@
             <option value="" {{request()->type == '' ? 'selected': ''}}>
                 All
             </option>
-            <option value="Breakfast" {{request()->type == 'Breakfast' ? 'selected': ''}}>
-                Breakfast
+            <option value="Flexibility" {{request()->type == 'Flexibility' ? 'selected': ''}}>
+                Flexibility
             </option>
-            <option value="Lunch" {{request()->type == 'Lunch' ? 'selected': ''}}>
-                Lunch
+            <option value="Aerobic" {{request()->type == 'Aerobic' ? 'selected': ''}}>
+                Aerobic
             </option>
-            <option value="Dinner" {{request()->type == 'Dinner' ? 'selected': ''}}>
-                Dinner
+            <option value="Strength" {{request()->type == 'Strength' ? 'selected': ''}}>
+                Strength
             </option>
         </select>
         <button class="btn btn-primary btn-sm">
