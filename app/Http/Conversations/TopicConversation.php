@@ -123,8 +123,10 @@ class TopicConversation extends Conversation {
     }
 
     public function saveConvo() {
-        $cons = implode(ModelsConversation::SP, $this->cons);
-        ModelsConversation::create(['messages' => $cons, 'user_id' => auth()->id()]);
+        if (auth()->check()) {
+            $cons = implode(ModelsConversation::SP, $this->cons);
+            ModelsConversation::create(['messages' => $cons, 'user_id' => auth()->id()]);
+        }
     }
 
     public function run () {
