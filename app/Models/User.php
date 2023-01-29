@@ -9,7 +9,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
@@ -22,7 +22,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'student_number',
+        'type',
     ];
+
+
+    const TYPE_ADMIN = 'Administrator';
+    const TYPE_STUDENT = 'Student';
+    const TYPE_FACULTY = 'Faculty';
 
     /**
      * The attributes that should be hidden for serialization.

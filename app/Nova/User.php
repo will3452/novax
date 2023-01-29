@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
@@ -16,8 +17,6 @@ class User extends Resource
     {
         return $query->where('email', '!=', 'super@admin.com');
     }
-
-    public static $group = 'Data';
     /**
      * The model the resource corresponds to.
      *
@@ -50,11 +49,24 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
 
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
+
+            Select::make('Type')
+                ->rules(['required'])
+                ->options([
+                    \App\Models\User::TYPE_ADMIN => \App\Models\User::TYPE_ADMIN,
+                    \App\Models\User::TYPE_FACULTY => \App\Models\User::TYPE_FACULTY,
+                    \App\Models\User::TYPE_STUDENT => \App\Models\User::TYPE_STUDENT,
+                ]),
+
+
+            Text::make('Student No.', 'student_number')
+                ->sortable()
+                ->help('For student only.')
+                ->rules('max:255'),
 
             Text::make('Email')
                 ->sortable()
@@ -66,9 +78,6 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
-
-            MorphToMany::make('Roles', 'roles', Role::class)
-                ->canSee(fn () => config('novax.role_enabled')),
         ];
     }
 
