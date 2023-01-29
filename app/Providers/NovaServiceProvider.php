@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\Departments;
+use App\Nova\Metrics\Faculties;
+use App\Nova\Metrics\Topics;
+use App\Nova\Metrics\Users;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -65,6 +69,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
+            (new Users()),
+            (new Departments()),
+            (new Faculties()),
+            (new Topics()),
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
                 'America/Mexico_City',

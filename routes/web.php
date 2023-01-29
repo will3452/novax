@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\BotManController;
+use App\Models\Conversation;
+use App\Models\Faculty;
+use App\Models\MessageRequest;
+use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +22,7 @@ Route::get('/artisan', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::middleware(['verified'])->group(function () {
+Route::middleware(['verified', 'auth'])->group(function () {
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -35,6 +39,41 @@ Route::middleware(['verified'])->group(function () {
         return back();
     });
 
+
+    Route::get('/topics', function () {
+        $topics = Topic::get();
+
+        return view('topics', compact('topics'));
+    });
+
+    Route::get('/faculties', function () {
+        $f = Faculty::get();
+
+        return view('faculties', compact('f'));
+    });
+
+    Route::get('/conversations', function () {
+        $conversation = Conversation::whereUserId(auth()->id())->get();
+
+        return view('conversations', compact('conversation'));
+    });
+
+    Route::get('/mr', function () {
+        $mr = MessageRequest::whereFacultyId(auth()->user()->faculty->id)->latest()->get();
+        return view('mr', compact('mr'));
+    });
+
+    Route::get('/chat', function (Request $request) {
+        $user = null;
+
+        if ($request->user) {
+            $user = User::find($request->user);
+        }
+        return view('chat', compact('user'));
+    });
+
 });
+
+
 
 Route::match(['get', 'post'], '/botman', [BotManController::class, 'handle']);

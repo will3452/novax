@@ -31,6 +31,9 @@ class User extends Authenticatable implements MustVerifyEmail
     const TYPE_STUDENT = 'Student';
     const TYPE_FACULTY = 'Faculty';
 
+    public function faculty () {
+        return $this->hasOne(Faculty::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -34,6 +34,35 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card card-body text-center">
+                        <h2>Topics</h2>
+                        <a class="btn btn-primary btn-sm" href="/topics">
+                            View
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-body text-center">
+                        <h2>Faculties</h2>
+                        <a class="btn btn-primary btn-sm" href="/faculties">
+                            View
+                        </a>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-body text-center">
+                        <h2>Conversations</h2>
+                        <a class="btn btn-primary btn-sm" href="/conversations">
+                            View
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

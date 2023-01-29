@@ -18,6 +18,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    @stack('styles')
 </head>
 <body>
     <div id="app">
@@ -53,6 +55,19 @@
                                 </li>
                             @endif
                         @else
+                             <li class="nav-item">
+                                <a href="/home" class="nav-link">Dashboard</a>
+                             </li>
+                             @if (auth()->user()->type == \App\Models\User::TYPE_FACULTY)
+                                <li class="nav-item">
+                                    <a href="/mr" class="nav-link">Message Requests</a>
+                                </li>
+                             @endif
+
+                             <li class="nav-item">
+                                <a href="/chat" target="_blank" class="nav-link">Chat</a>
+                            </li>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} - {{ auth()->user()->type }}
@@ -79,6 +94,9 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+    </div>
+    <div>
         @auth
             <script>
                 var botmanWidget = {
@@ -94,14 +112,14 @@
 
 
 
-                setTimeout(() => {
-                    botmanChatWidget.say('list of topics');
-                    botmanChatWidget.open();
-                }, 5000);
+                // setTimeout(() => {
+                //     botmanChatWidget.open();
+                // }, 5000);
             </script>
 
             <script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>
         @endauth
     </div>
+    @stack('scripts')
 </body>
 </html>
