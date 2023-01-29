@@ -105,7 +105,9 @@
                 introMessage: "✋ Hi there! How can I help you",
                 mainColor: 'blue',
                 bubbleBackground: 'blue',
-                userId: {{ auth()->id() }}
+                @auth
+                    userId: {{ auth()->id() }}
+                @endauth
             };
 
 
