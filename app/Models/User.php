@@ -26,7 +26,10 @@ class User extends Authenticatable
         'birthdate',
         'workout_reminder',
         'program_id',
+        'verified_at',
+        'phone',
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.

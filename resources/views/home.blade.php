@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+@if (auth()->user()->verified_at == null)
+    <x-verify-account></x-verify-account>
+@endif
 <ol class="breadcrumb">
     <li class="breadcrumb-item active">Home</li>
 </ol>
