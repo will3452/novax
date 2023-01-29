@@ -97,28 +97,26 @@
 
     </div>
     <div>
-        @auth
-            <script>
-                var botmanWidget = {
-                    title: 'NCST Chatbot',
-                    aboutText: 'NCST Chatbot',
-                    aboutLink: '#',
-                    introMessage: "✋ Hi there! How can I help you",
-                    mainColor: 'blue',
-                    bubbleBackground: 'blue',
-                    userId: {{ auth()->id() }}
-                };
+        <script>
+            var botmanWidget = {
+                title: 'NCST Chatbot',
+                aboutText: 'NCST Chatbot',
+                aboutLink: '#',
+                introMessage: "✋ Hi there! How can I help you",
+                mainColor: 'blue',
+                bubbleBackground: 'blue',
+                userId: {{ auth()->id() }}
+            };
 
 
 
 
-                // setTimeout(() => {
-                //     botmanChatWidget.open();
-                // }, 5000);
-            </script>
+            // setTimeout(() => {
+            //     botmanChatWidget.open();
+            // }, 5000);
+        </script>
 
-            <script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>
-        @endauth
+        <script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>
     </div>
     @stack('scripts')
 </body>
