@@ -22,7 +22,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'gcash_key',
     ];
+
+    public function accessTokens () {
+        return $this->hasMany(AccessToken::class, 'user_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
