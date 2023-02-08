@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17cb8e37b3e20aedf36d15dfdfd5ef87",
+    "content-hash": "42749274e3bc9035429477b34ee6d610",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1457,6 +1457,51 @@
                 }
             ],
             "time": "2021-10-06T17:43:30+00:00"
+        },
+        {
+            "name": "jameslkingsley/nova-stripe-theme",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jameslkingsley/nova-stripe-theme.git",
+                "reference": "8b9414eb6a77a104bf2b831c295fa0181e6f44ef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jameslkingsley/nova-stripe-theme/zipball/8b9414eb6a77a104bf2b831c295fa0181e6f44ef",
+                "reference": "8b9414eb6a77a104bf2b831c295fa0181e6f44ef",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Kingsley\\NovaStripeTheme\\NovaStripeThemeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kingsley\\NovaStripeTheme\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova theme closely resembling Stripe.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/jameslkingsley/nova-stripe-theme/issues",
+                "source": "https://github.com/jameslkingsley/nova-stripe-theme/tree/master"
+            },
+            "time": "2018-11-28T08:55:47+00:00"
         },
         {
             "name": "laravel/framework",
@@ -9688,5 +9733,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
