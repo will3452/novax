@@ -29,12 +29,18 @@
     @foreach(\Laravel\Nova\Nova::themeStyles() as $publicPath)
         <link rel="stylesheet" href="{{ $publicPath }}">
     @endforeach
+
+    <style>
+        body, html {
+            background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+        }
+    </style>
 </head>
 <body class="min-w-site bg-40 text-90 font-medium min-h-full">
     <div id="nova">
         <div v-cloak class="flex min-h-screen">
             <!-- Sidebar -->
-            <div class="flex-none pt-header min-h-screen w-sidebar bg-grad-sidebar px-6">
+            <div class="flex-none pt-header min-h-screen w-sidebar bg-grad-sidebar px-6" style="background:#fff">
                 <a href="{{ \Laravel\Nova\Nova::path() }}">
                     <div class="absolute pin-t pin-l pin-r bg-logo flex items-center w-sidebar h-header px-6 text-white">
                        @include('nova::partials.logo')
@@ -54,7 +60,7 @@
                     </a>
 
                     @if (count(\Laravel\Nova\Nova::globallySearchableResources(request())) > 0)
-                        <global-search dusk="global-search-component"></global-search>
+                        <global-search class="ml-auto" dusk="global-search-component"></global-search>
                     @endif
 
                     <dropdown class="ml-auto h-9 flex items-center dropdown-right">

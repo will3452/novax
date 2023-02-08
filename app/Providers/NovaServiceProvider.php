@@ -52,9 +52,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+            return true;
         });
     }
 
@@ -66,18 +64,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            (new Users()),
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
-                'Africa/Nairobi',
-                'America/Mexico_City',
-                'Australia/Sydney',
-                'Europe/Paris',
                 'Asia/Manila',
-                'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila')
+            ])->defaultTimezone('Asia/Manila')
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
+            (new Users()),
         ];
     }
 
@@ -99,16 +92,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            (new ProfileTool)->canSee(function () {
-                return config('novax.profile_enabled');
-            }),
-            (new BackupTool)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
-                config('novax.back_up_enabled');
-            }),
             (new NovaSettings)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
-                config('novax.setting_enabled');
+                return $request->user()->type == \App\Models\User::TYPE_ADMIN;
             }),
         ];
     }

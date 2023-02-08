@@ -11,10 +11,6 @@
 >
     {{ csrf_field() }}
 
-    @component('nova::auth.partials.heading')
-        {{ __('Welcome Back!') }}
-    @endcomponent
-
     @if ($errors->any())
     <p class="text-center font-semibold text-danger my-3">
         @if ($errors->has('email'))
@@ -35,7 +31,7 @@
         <input class="form-control form-input form-input-bordered w-full" id="password" type="password" name="password" required>
     </div>
 
-    <div class="flex mb-6">
+    {{-- <div class="flex mb-6">
         <label class="flex items-center text-xl font-bold">
             <input class="" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
             <span class="text-base ml-2">{{ __('Remember Me') }}</span>
@@ -49,7 +45,7 @@
             </a>
         </div>
         @endif
-    </div>
+    </div> --}}
 
     <button class="w-full btn btn-default btn-primary hover:bg-primary-dark" type="submit">
         {{ __('Login') }}

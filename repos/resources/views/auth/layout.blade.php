@@ -20,6 +20,11 @@
     @foreach(\Laravel\Nova\Nova::themeStyles() as $publicPath)
         <link rel="stylesheet" href="{{ $publicPath }}">
     @endforeach
+    <style>
+        body, html {
+            background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+        }
+    </style>
 </head>
 <body class="bg-40 text-black h-full">
     <div class="h-full">
