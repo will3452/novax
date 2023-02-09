@@ -28,6 +28,7 @@
         "laravel/tinker": "^2.5",
         "laravelwebdev/responsive": "^1.0",
         "optimistdigital/nova-settings": "^3.2",
+        "pdmfc/nova-info-card": "^1.0",
         "richardkeep/nova-timenow": "^1.0"
     },
     "require-dev": {

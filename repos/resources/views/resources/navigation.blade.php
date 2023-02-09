@@ -7,10 +7,10 @@
                 params: {
                     resourceName: '{{ $resource::uriKey() }}'
                 }
-            }" class="text-white text-justify no-underline dim items-center" style="margin:0px;" dusk="{{ $resource::uriKey() }}-resource-link">
-                {!!$resource::icon()!!}
+            }" class="text-white text-justify no-underline dim items-center flex" style="margin:0px;" dusk="{{ $resource::uriKey() }}-resource-link">
+               <span class="mb-2 mr-2"> {!!$resource::icon()!!} </span>
 
-                {{ $resource::label() }}
+               {{ $resource::label() }}
             </router-link>
         </div>
         @endforeach
