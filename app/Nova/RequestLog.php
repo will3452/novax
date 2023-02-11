@@ -2,12 +2,15 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rules\Unique;
-use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Metrics\RequestsLogs;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\BelongsTo;
+use Illuminate\Validation\Rules\Unique;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class RequestLog extends Resource
 {
@@ -17,6 +20,16 @@ class RequestLog extends Resource
         <path fill-rule="evenodd" d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 013 20.625V9.375zM6 12a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H6.75a.75.75 0 01-.75-.75V12zm2.25 0a.75.75 0 01.75-.75h3.75a.75.75 0 010 1.5H9a.75.75 0 01-.75-.75zM6 15a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H6.75a.75.75 0 01-.75-.75V15zm2.25 0a.75.75 0 01.75-.75h3.75a.75.75 0 010 1.5H9a.75.75 0 01-.75-.75zM6 18a.75.75 0 01.75-.75h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H6.75a.75.75 0 01-.75-.75V18zm2.25 0a.75.75 0 01.75-.75h3.75a.75.75 0 010 1.5H9a.75.75 0 01-.75-.75z" clip-rule="evenodd" />
       </svg>
       ';
+    }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return false;
     }
     /**
      * The model the resource corresponds to.
@@ -50,6 +63,9 @@ class RequestLog extends Resource
     public function fields(Request $request)
     {
         return [
+            Date::make('Date', 'created_at'),
+            Text::make('Document'),
+            BelongsTo::make('Requestor', 'profile', Profile::class),
             Text::make('Reference')
                 ->sortable(),
             BelongsTo::make('Processor', 'user', User::class),
@@ -64,7 +80,9 @@ class RequestLog extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new RequestsLogs(false))->width('full'),
+        ];
     }
 
     /**
@@ -97,6 +115,8 @@ class RequestLog extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new DownloadExcel
+        ];
     }
 }

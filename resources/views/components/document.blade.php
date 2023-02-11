@@ -25,5 +25,8 @@
         <img src="/logo/r.png"  style="width:100px;" alt="">
     </header>
     {{$slot}}
+    <script>
+        window.print()
+    </script>
 </body>
 </html>

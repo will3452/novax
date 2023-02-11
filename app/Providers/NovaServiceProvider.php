@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\Genders;
+use App\Nova\Metrics\ProfilesPerPurok;
+use App\Nova\Metrics\RequestsLogs;
 use App\Nova\Metrics\Users;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
@@ -26,6 +29,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Text::make('Barangay Email'),
+            Text::make('Captain'),
+            Text::make('Secretary')
         ]);
     }
 
@@ -71,6 +77,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return config('novax.time_enabled');
             }),
             (new Users()),
+            (new RequestsLogs()),
+            (new ProfilesPerPurok()),
+            (new Genders()),
         ];
     }
 

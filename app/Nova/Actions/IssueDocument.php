@@ -42,7 +42,7 @@ class IssueDocument extends Action
                 ->rules(['required'])
                 ->options([
                     'CLEARANCE' => 'CLEARANCE',
-                    'DEED OF SALE' => 'DEED OF SALE',
+                    // 'DEED OF SALE' => 'DEED OF SALE',
                     'BUSINESS PERMIT' => 'BUSINESS PERMIT',
                     'INDEGENT CERTIFICATE' => 'INDEGENT CERTIFICATE'
                 ])

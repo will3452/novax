@@ -3,6 +3,9 @@
 namespace App\Nova;
 
 use App\Nova\Actions\IssueDocument;
+use App\Nova\Metrics\Genders;
+use App\Nova\Metrics\ProfilesPerPurok;
+use App\Nova\Metrics\RequestedDocuments;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Date;
@@ -106,7 +109,11 @@ class Profile extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            Genders::make()->width('1/2'),
+            ProfilesPerPurok::make()->width('1/2'),
+            RequestedDocuments::make($request->resourceId)->width('full')->onlyOnDetail(),
+        ];
     }
 
     /**

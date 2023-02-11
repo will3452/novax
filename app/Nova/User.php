@@ -22,7 +22,23 @@ class User extends Resource
 
     public static function availableForNavigation(Request $request)
     {
+        // return auth()->check() && auth()->user()->type == ModelsUser::TYPE_ADMIN;
+        return true;
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
         return auth()->check() && auth()->user()->type == ModelsUser::TYPE_ADMIN;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return auth()->check() && auth()->user()->type == ModelsUser::TYPE_ADMIN;
+    }
+
+    public function authorizedToView(Request $request)
+    {
+        return false;
     }
     /**
      * The model the resource corresponds to.

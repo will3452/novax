@@ -4,23 +4,24 @@
             OFFICE OF THE PUNONG BARANGAY
         </h1>
         <h1 class="text-center text-green-500 font-bold text-3xl mt-4" style="font-family: bodoni; font-style: italic;">
-            Indigent Certificate
+            Barangay Clearance
         </h1>
         <div class="font-bold mt-4" style="font-family: forte;">
             TO WHOM IT MAY CONCERN:
         </div>
         <div>
             <p class="par">
-                THIS IS TO CERTIFY THAT;  {{$profile->first_name}} {{$profile->last_name}}, {{$profile->civil_status}}  Filipino citizen of legal age and a bonafide resident of Barangay Gucab Echague Isabela.
-
-                  THIS IS TO CERTIFY THAT; he/she belongs to the indigent families of this barangay.
+                THIS IS TO CERTIFY; {{$profile->first_name}} {{$profile->last_name}},  single/married Filipino citizen of legal age and a bonafide resident of barangay Gucab, Echague, Isabela. Known to be a person of good moral character, peaceful and a law abiding citizen of this barangay.
             </p>
             <p class="par">
-                This certification is being issued upon the request of the above person for whatever legal purpose it may serve.
+                CERTIFIES FURTHER, that the above mention-named has no degoratory record as of this date.
 
             </p>
             <p>
-                Given this {{ now()->day }} day of {{ now()->format('M')}}, {{ now()->year }} at Barangay Gucab, Echague, Isabela.
+                This certification is being issued upon his/her request for whatever legal purpose it may serve.
+
+	   Issued this {{ now()->day }} day of {{ now()->format('M')}}, {{ now()->year }} at Barangay Gucab, Echague, Isabela.
+
             </p>
         </div>
         <div class="mt-10">
@@ -36,7 +37,7 @@
             <div class="text-right">
                 APPROVED BY;
                 <div class="font-bold">
-                    HON.{{ nova_get_setting('captain', '--') }}
+                    HON. {{ nova_get_setting('captain', '--') }}
                 </div>
                 <div class="text-xs">
                     Barangay Captain

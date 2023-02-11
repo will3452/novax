@@ -27,6 +27,7 @@
         "laravel/sanctum": "^2.12",
         "laravel/tinker": "^2.5",
         "laravelwebdev/responsive": "^1.0",
+        "maatwebsite/laravel-nova-excel": "*",
         "optimistdigital/nova-settings": "^3.2",
         "pdmfc/nova-info-card": "^1.0",
         "richardkeep/nova-timenow": "^1.0"

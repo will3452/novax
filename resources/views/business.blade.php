@@ -11,9 +11,7 @@
         </div>
         <div>
             <p class="par">
-                THIS IS TO CERTIFY THAT;  {{$profile->first_name}} {{$profile->last_name}}, {{$profile->civil_status}}  Filipino citizen of legal age and a bonafide resident of Barangay Gucab Echague Isabela.
-
-                  THIS IS TO CERTIFY THAT; he/she belongs to the indigent families of this barangay.
+                This is certtfy that; {{ $profile->first_name }} {{$profile->last_name}} single/married of legal age and a bonafied resident of  barangay Gucab, Echague, Isabela. to established /operates a business of _____________ located at barangay Gucab Echague, Isabela. provided that they will comply with the existing municipal and barangay ordinance.
             </p>
             <p class="par">
                 This certification is being issued upon the request of the above person for whatever legal purpose it may serve.
@@ -25,7 +23,7 @@
         </div>
         <div class="mt-10">
             <div>
-                PREPARED BY;
+                CERTIFIED CORRECT;
                 <div class="font-bold">
                     {{ nova_get_setting('secretary', '--') }}
                 </div>
