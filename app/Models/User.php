@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -22,7 +22,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
     ];
+
+
+    const TYPE_ADMIN = 'Administrator';
+    const TYPE_LANDLORD = 'Landlord';
+    const TYPE_STUDENT = 'Student';
+
 
     /**
      * The attributes that should be hidden for serialization.

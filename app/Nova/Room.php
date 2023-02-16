@@ -2,22 +2,24 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Hidden;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Room extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Room::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -32,7 +34,8 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'name',
+        'description',
     ];
 
     /**
@@ -44,21 +47,23 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-
             Text::make('Name')
                 ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+                ->rules(['required']),
+            Select::make('Category')
+                ->options(fn () => \App\Models\RoomCategory::get()->pluck('name', 'name')),
+            Number::make('Slot')
+                ->rules(['required', 'min:1']),
+            Text::make('Type')->rules(['required']),
+            Hidden::make('owner_id', fn () => auth()->id()),
+            Currency::make('Monthly')
+                ->rules(['required']),
+            Text::make('Description')
+                ->rules(['required']),
+            Text::make('Address')
+                ->rules(['required']),
+            HasMany::make('Images', 'images', RoomImage::class)
+                ->rules(['required']),
         ];
     }
 
