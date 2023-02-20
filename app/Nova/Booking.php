@@ -12,6 +12,11 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Booking extends Resource
 {
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        $rooms = \App\Models\Room::whereOwnerId(auth()->id())->get()->pluck('id');
+        return $query->whereIn('room_id', $rooms);
+    }
     /**
      * The model the resource corresponds to.
      *

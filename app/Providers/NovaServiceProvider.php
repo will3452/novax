@@ -2,12 +2,17 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\Bookings;
+use App\Nova\Metrics\Earnings;
+use App\Nova\Metrics\Rooms;
+use App\Nova\Metrics\Students;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Fields\Textarea;
 use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -25,6 +30,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Textarea::make('About'),
+            Text::make('Email'),
+            Text::make('Phone'),
         ]);
     }
 
@@ -63,17 +71,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
-                'Africa/Nairobi',
-                'America/Mexico_City',
-                'Australia/Sydney',
-                'Europe/Paris',
-                'Asia/Manila',
-                'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila')
-            ->canSee(function () {
-                return config('novax.time_enabled');
-            }),
+            Bookings::make(),
+            Rooms::make(),
+            Students::make(),
+            Earnings::make(),
         ];
     }
 

@@ -18,6 +18,10 @@ class Booking extends Model
         'room_id',
     ];
 
+    protected $casts = [
+        'date' => 'date',
+    ];
+
     const STATUS_DONE = 'Done';
     const STATUS_PENDING = 'Pending';
 

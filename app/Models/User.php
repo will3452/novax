@@ -49,4 +49,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getDormAttribute() {
+        $dorm = RoomStudent::whereStudentId(auth()->id())->latest()->first();
+
+        if ($dorm) {
+            return $dorm->room;
+        }
+
+        return null;
+    }
 }

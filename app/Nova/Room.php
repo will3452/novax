@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\AddStudent;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\HasMany;
@@ -14,6 +15,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Room extends Resource
 {
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        return $query->whereOwnerId(auth()->id());
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -55,7 +60,8 @@ class Room extends Resource
             Number::make('Slot')
                 ->rules(['required', 'min:1']),
             Text::make('Type')->rules(['required']),
-            Hidden::make('owner_id', fn () => auth()->id()),
+            Hidden::make('owner_id')
+                ->default(fn () => auth()->id()),
             Currency::make('Monthly')
                 ->rules(['required']),
             Text::make('Description')
@@ -108,6 +114,8 @@ class Room extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            AddStudent::make()->showOnTableRow(),
+        ];
     }
 }

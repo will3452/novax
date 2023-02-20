@@ -2,12 +2,14 @@
 
 namespace App\Nova;
 
+use App\Models\User as ModelsUser;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
@@ -44,6 +46,13 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
+            Select::make('Type')
+                ->rules(['required'])
+                ->options([
+                    ModelsUser::TYPE_LANDLORD => ModelsUser::TYPE_LANDLORD,
+                    ModelsUser::TYPE_STUDENT => ModelsUser::TYPE_STUDENT,
+                    ModelsUser::TYPE_ADMIN => ModelsUser::TYPE_ADMIN,
+                ]),
 
             Text::make('Name')
                 ->sortable()

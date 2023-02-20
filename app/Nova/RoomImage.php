@@ -10,6 +10,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class RoomImage extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return false;
+    }
     /**
      * The model the resource corresponds to.
      *
