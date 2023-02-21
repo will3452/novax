@@ -18,6 +18,7 @@ use App\Http\Controllers\PregnantController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\HouseHoldProfileController;
+use App\Http\Controllers\PwdController;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -59,6 +60,15 @@ Route::prefix('/profiles')->name('profiles.')->group(function () {
     Route::get('/{profile}', [ProfileController::class, 'show'])->name('show');
     Route::put('/{profile}', [ProfileController::class, 'update'])->name('update');
     Route::post('/', [ProfileController::class, 'store']);
+});
+
+Route::prefix('/pwd')->name('pwd.')->group(function () {
+    Route::get('/', [PwdController::class, 'index'])->name('index');
+    Route::get('/create', [PwdController::class, 'create'])->name('create');
+    Route::get('/{pwd}/edit', [PwdController::class, 'edit'])->name('edit');
+    Route::get('/{pwd}', [PwdController::class, 'show'])->name('show');
+    Route::put('/{pwd}', [PwdController::class, 'update'])->name('update');
+    Route::post('/', [PwdController::class, 'store']);
 });
 
 Route::prefix('/generals')->name('generals.')->group(function () {

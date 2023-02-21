@@ -5,9 +5,9 @@
     </h1>
 
 
-    <div>
+    {{-- <div>
         <div class="ct-chart"></div>
-    </div>
+    </div> --}}
 
     <form action="/reports">
         <label for="">

@@ -177,6 +177,9 @@
                                     <li>
                                         <a href="{{route('hh.index')}}">Family Household</a>
                                     </li>
+                                    <li>
+                                        <a href="{{route('pwd.index')}}">PWD</a>
+                                    </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
