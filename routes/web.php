@@ -1,7 +1,13 @@
 <?php
 
+use Carbon\Carbon;
+use App\Models\General;
+use App\Models\Children;
+use App\Models\Pregnant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use App\Models\FamilyHouseholdProfile;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SearchController;
@@ -106,4 +112,61 @@ Route::delete('/destroy/{id}', function (Request $request, $id) {
 
 Route::get('/test', function () {
     return 'test';
+});
+
+
+Route::get('/archive', function (Request $request) {
+    $model = $request->type;
+    $id = $request->id;
+    ("\\App\\Models\\$model")::find($id)->delete();
+
+    alert()->success('Resource has been deleted!');
+
+    return back();
+});
+
+
+function formatReport($records, $currentYear = null) {
+    if ($currentYear == null) {
+        $currentYear = now()->year;
+    }
+    $formattedRecords = [];
+    foreach ($records as $record) {
+        $monthName = Carbon::createFromDate($currentYear, $record->month, 1)->format('F');
+        $formattedRecords[$monthName] = $record->count;
+    }
+
+    return $formattedRecords;
+}
+
+function getReports($model) {
+    $reports = ($model)::select(DB::raw('MONTH(created_at) month, COUNT(*) count'))
+    ->whereYear('created_at', now()->year)
+    ->groupBy('month')
+    ->orderBy('month')
+    ->get();
+    return formatReport($reports);
+}
+
+Route::get('/reports', function (Request $request) {
+
+    $patients = [];
+    $pregnants = [];
+    $children = [];
+    $household = [];
+
+    $patientReport = getReports(General::class);
+    $pregnantReport = getReports(Pregnant::class);
+    $childrenReport = getReports(Children::class);
+    $householdReport = getReports(FamilyHouseholdProfile::class);
+
+    if ($request->from && $request->to) {
+        $patients = General::whereBetween('created_at', [$request->from, $request->to])->get();
+        $pregnants = Pregnant::whereBetween('created_at', [$request->from, $request->to])->get();
+        $children = Children::whereBetween('created_at', [$request->from, $request->to])->get();
+        $household = FamilyHouseholdProfile::whereBetween('created_at', [$request->from, $request->to])->get();
+    }
+
+
+    return view('reports', compact('patients', 'pregnants', 'children', 'householdReport','patientReport', 'pregnantReport', 'childrenReport', 'householdReport'));
 });

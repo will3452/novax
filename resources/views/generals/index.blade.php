@@ -1,6 +1,6 @@
 <x-layouts.main>
     <h1 class="page-header">
-        Generic
+        Patient's Information
     </h1>
     @if (auth()->user()->role == 'ADMIN')
     <div >

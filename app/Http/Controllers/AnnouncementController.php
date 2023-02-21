@@ -12,6 +12,10 @@ class AnnouncementController extends Controller
 {
     public function index (Request $request) {
         $announcements = Announcement::get();
+        if ($request->has('archive')) {
+            $announcements = Announcement::onlyTrashed()->get();
+        }
+
         return view('announcements', compact('announcements'));
     }
 

@@ -1,4 +1,5 @@
 <x-layouts.auth>
+    <h3 class="text-center">Barangay Health Information System</h3>
     <div class="login-panel panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Please Sign In</h3>
@@ -19,6 +20,9 @@
                             <small class="text-danger">{{$message}}</small>
                         @enderror
                     </div>
+                    <img src="{{captcha_src()}}" alt="" style="display:block; margin-bottom:1em;">
+                    <input type="text" name="captcha" required class="form-control" style="margin-bottom:1em;" placeholder="Enter captcha here">
+
                     <div class="checkbox">
                         <label>
                             <input name="remember" type="checkbox" value="Remember Me">Remember Me

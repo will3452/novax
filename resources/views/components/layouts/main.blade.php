@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>{{env('APP_NAME')}}</title>
+        <title>Secure Access Control for Barangay Health Information System with SMS alert</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -34,6 +34,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.4/chartist.min.css" integrity="sha512-V0+DPzYyLzIiMiWCg3nNdY+NyIiK9bED/T1xNBj08CaIUyK3sXRpB26OUCIzujMevxY9TRJFHQIxTwgzb0jVLg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.4/chartist.min.js" integrity="sha512-9rxMbTkN9JcgG5euudGbdIbhFZ7KGyAuVomdQDI9qXfPply9BJh0iqA7E/moLCatH2JD4xBGHwV6ezBkCpnjRQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </head>
     <body>
         @include('sweetalert::alert')
@@ -42,7 +44,7 @@
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{{route('home')}}">{{env('APP_NAME')}}</a>
+                    <a class="navbar-brand" href="{{route('home')}}">Barangay Health Information System</a>
                 </div>
 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -164,7 +166,7 @@
                                 <a href="#"><i class="fa  fa-wpforms fa-fw"></i> Records <span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="{{route('generals.index')}}">General</a>
+                                        <a href="{{route('generals.index')}}">Patient's Information</a>
                                     </li>
                                     <li>
                                         <a href="{{route('pregnants.index')}}">Pregnant</a>
@@ -178,6 +180,10 @@
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
+                            <li>
+                                {{-- <a href="{{route('users.index')}}"><i class="fa  fa-users fa-fw"></i> Users</a> --}}
+                                <a href="/reports"><i class="fa  fa-table fa-fw"></i> Reports</a>
+                            </li>
                         </ul>
                     </div>
                     <!-- /.sidebar-collapse -->
@@ -187,7 +193,9 @@
 
             <!-- Page Content -->
             <div id="page-wrapper">
+
                 <div class="container-fluid">
+
                     <div class="row">
                         <div class="col-lg-12">
                             {{$slot}}

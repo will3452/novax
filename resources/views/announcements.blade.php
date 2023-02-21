@@ -13,14 +13,15 @@
 
             <x-textarea required="1" label="Details" name="details"></x-textarea>
 
-            <x-boolean name="with_sms" label="With SMS" required="1"></x-boolean>
+            {{-- <x-boolean name="with_sms" label="With SMS" required="1"></x-boolean> --}}
+            <input type="hidden" name="with_sms" required="1">
             <button class="btn btn-primary">Broadcast</button>
         </div>
     </form>
     @endif
     <br/>
     <div class="table-responsive ">
-        <h2>Announcements</h2>
+        <h2>{{ request()->has('archive') ? 'Archives' : 'Announcements'}}</h2>
         <table class="table table-striped table-bordered table-hover" id="dataTables-example">
             <thead>
                 <tr>
@@ -33,6 +34,11 @@
                     <th>
                         Details
                     </th>
+                    @if (! request()->has('archive'))
+                    <th>
+
+                    </th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -47,9 +53,21 @@
                     <td>
                         {{$item->details}}
                     </td>
+                    @if (! request()->has('archive'))
+                        <th>
+                            <form action="/archive">
+                                <input type="hidden" name="type" value="Announcement">
+                                <input type="hidden" name="id" value="{{$item->id}}">
+                                <button>Delete</button>
+                            </form>
+                        </th>
+                    @endif
                 </tr>
                 @endforeach
             </tbody>
         </table>
+        <a href="?">Announcements</a> |
+        <a href="?archive=true">Archived</a>
     </div>
+
 </x-layouts.main>
