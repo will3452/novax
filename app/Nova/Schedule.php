@@ -2,14 +2,14 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\BelongsTo;
+use Laraning\NovaTimeField\TimeField;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Program extends Resource
+class Schedule extends Resource
 {
     public static $group = 'Management';
     /**
@@ -17,14 +17,14 @@ class Program extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\Program::class;
+    public static $model = \App\Models\Schedule::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'day';
 
     /**
      * The columns that should be searched.
@@ -32,8 +32,8 @@ class Program extends Resource
      * @var array
      */
     public static $search = [
-        'name',
-        'description'
+        'day',
+        'time',
     ];
 
     /**
@@ -45,12 +45,21 @@ class Program extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Name')
-                ->rules(['required']),
-            Textarea::make('Description')
+            BelongsTo::make('Program', 'program', Program::class),
+            Select::make('Day')
+                ->displayUsingLabels()
+                ->options([
+                    1 => 'Monday',
+                    2 => 'Tuesday',
+                    3 => 'Wednesday',
+                    4 => 'Thursday',
+                    5 => 'Friday',
+                    6 => 'Saturday',
+                    7 => 'Sunday',
+                ])->rules(['required']),
+            TimeField::make('Time')
+                ->withTwelveHourTime()
                 ->rules(['required'])
-                ->alwaysShow(),
-            HasMany::make('Schedules', 'schedules', Schedule::class),
         ];
     }
 

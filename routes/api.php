@@ -1,8 +1,11 @@
 <?php
 
-use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\User;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiAuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,5 +39,25 @@ Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
 
 Route::get('/workout-reminder', function (Request $request) {
-    return ['message' => 'ok!'];
+    try {
+
+        $day = now()->dayOfWeekIso;
+
+        $schedules = Schedule::where('day', $day)->get();
+
+        $users = User::where('workout_reminder', 0)->whereIn('program_id', $schedules->pluck('program_id')->toArray())->get();
+
+
+        foreach ($users as $user) {
+            $email = $user->email;
+            Mail::raw( "Good day, I want you to know that you have a schedule today based on your chosen program from San Fabian Gym Center. " , function($message) use ($email) {
+                $message->to($email)->subject('Workout reminder');
+            });
+        }
+
+        return 1;
+
+    } catch (Exception $e) {
+        return 0;
+    }
 });

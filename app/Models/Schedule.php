@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Program extends Model
+class Schedule extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'name',
-        'description',
+        'day',
+        'time',
+        'program_id'
     ];
 
-    public function schedules () {
-        return $this->hasMany(Schedule::class);
+    public function program () {
+        return $this->belongsTo(Program::class);
     }
 }
