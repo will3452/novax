@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="gender" class="col-md-4 col-form-label text-md-end">{{ __('gender') }}</label>
+                            <label for="sex" class="col-md-4 col-form-label text-md-end">{{ __('Sex') }}</label>
 
                             <div class="col-md-6">
                                 <select id="gender" type="date" class="form-select @error('gender') is-invalid @enderror" name="gender" value="{{ old('gender') }}" required autocomplete="gender" autofocus>
@@ -83,12 +83,12 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
+                        <div class="row mb-3" x-data="{showPassword:false}">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
+                                <input id="password" x-bind:type="showPassword ? 'text': 'password'" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <a href="#" x-on:click.prevent="showPassword = !showPassword"><span x-text="showPassword ? 'hide': 'show'"></span> password</a>
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -97,11 +97,12 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
+                        <div class="row mb-3"  x-data="{showPassword:false}">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <input id="password-confirm" x-bind:type="showPassword ? 'text': 'password'" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <a href="#" x-on:click.prevent="showPassword = !showPassword"><span x-text="showPassword ? 'hide': 'show'"></span> password</a>
                             </div>
                         </div>
 

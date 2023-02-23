@@ -3,7 +3,8 @@
 @section('content')
 @if (auth()->user()->verified_at == null)
     <x-verify-account></x-verify-account>
-@endif
+@else
+
 <ol class="breadcrumb">
     <li class="breadcrumb-item active">Home</li>
 </ol>
@@ -61,4 +62,5 @@
             </div>
     </div>
 </div>
+@endif
 @endsection

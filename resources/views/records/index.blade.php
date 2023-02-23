@@ -41,6 +41,10 @@
                 </div>
             </div>
         </div>
+        <div class="my-2">
+            <svg class="sparkline" width="300" height="70" stroke-width="2"></svg>
+            <span id="sp-selected"></span>
+        </div>
     @endif
 
     <div class="card">
@@ -101,6 +105,24 @@
     @endpush
 
     @push('body')
+
+    <script >
+        window.onload = function () {
+            sparkline(document.querySelector(".sparkline"), [
+                @foreach($records as $record)
+                {date: "{{$record->created_at->format('m-d-Y')}}", value: {{ $record->result }} },
+                @endforeach
+            ], {
+                spotRadius: 4,
+                onmousemove: function (event, datapoint) {
+                    document.querySelector("#sp-selected").innerHTML = `<span class="font-bold">RESULT: ${datapoint.value} | DATE: ${datapoint.date}</span>`;
+                },
+                onmouseout: function () {
+                    document.querySelector("#sp-selected").innerHTML = ''
+                }
+            });
+        }
+    </script>
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>

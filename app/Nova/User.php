@@ -2,12 +2,15 @@
 
 namespace App\Nova;
 
+use App\Nova\Metrics\UserProgress;
+use Exception;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Sparkline;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
@@ -15,6 +18,10 @@ class User extends Resource
     public static function indexQuery(NovaRequest $request, $query)
     {
         return $query->where('email', '!=', 'super@admin.com');
+    }
+
+    public static function label () {
+        return "Clients";
     }
 
     public static $group = 'Account';
@@ -50,8 +57,6 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
@@ -66,6 +71,23 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
+            Sparkline::make('BMI RECORDS')->data(function() {
+                return \App\Models\Record::whereUserId($this->id)->get()->pluck('result')->toArray();
+            }),
+            Text::make('Latest Remarks', function () {
+                try {
+                    return \App\Models\Record::whereUserId($this->id)->latest()->first()->scale;
+                } catch (Exception $e) {
+                    return '---';
+                }
+            }),
+            Text::make('Latest BMI', function () {
+                try {
+                    return \App\Models\Record::whereUserId($this->id)->latest()->first()->result;
+                } catch (Exception $e) {
+                    return '---';
+                }
+            }),
         ];
     }
 
@@ -77,7 +99,9 @@ class User extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new UserProgress($request->resourceId))->onlyOnDetail()
+        ];
     }
 
     /**

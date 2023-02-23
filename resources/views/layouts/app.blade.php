@@ -18,6 +18,40 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        /* just the line */
+        .sparkline {
+        stroke: red;
+            fill: none;
+            }
+
+            /* line with highlight area */
+            .sparkline {
+            stroke: green;
+            fill: rgba(0, 255, 0, .3);
+            }
+
+            /* change the spot color */
+            .sparkline--spot {
+            stroke: green;
+            fill: blue;
+            }
+
+            /* change the cursor color */
+            .sparkline--cursor {
+            stroke: green;
+            }
+
+            /* style fill area and line colors using specific class name */
+            .sparkline--fill {
+            fill: rgba(0, 255, 0, .3);
+            }
+
+            .sparkline--line {
+            stroke: green;
+        }
+    </style>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @stack('head')
 </head>
 <body>
@@ -26,7 +60,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    San Fabian Gym Center
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -78,13 +112,16 @@
         </nav>
 
         <main class="py-4 container mb-2">
+            @auth
             <div class="" style="text-align: right">
                 <a href="{{url()->previous()}}" class="btn btn-sm">BACK</a>
             </div>
+            @endauth
             @yield('content')
         </main>
-
-        @stack('body')
     </div>
+
+
+    @stack('body')
 </body>
 </html>

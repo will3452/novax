@@ -32,3 +32,9 @@ Route::get('/public-test', function () {
 //user authentication
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
+
+
+
+Route::get('/workout-reminder', function (Request $request) {
+    return ['message' => 'ok!'];
+});

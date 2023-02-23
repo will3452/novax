@@ -6,6 +6,7 @@
 
 require('./bootstrap');
 
+window.sparkline = require('@fnando/sparkline').sparkline;
 window.Vue = require('vue').default;
 
 /**
