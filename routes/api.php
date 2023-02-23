@@ -45,7 +45,7 @@ Route::get('/workout-reminder', function (Request $request) {
 
         $schedules = Schedule::where('day', $day)->get();
 
-        $users = User::where('workout_reminder', 0)->whereIn('program_id', $schedules->pluck('program_id')->toArray())->get();
+        $users = User::where('workout_reminder', 1)->whereIn('program_id', $schedules->pluck('program_id')->toArray())->get();
 
 
         foreach ($users as $user) {
