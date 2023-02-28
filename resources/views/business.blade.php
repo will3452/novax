@@ -4,7 +4,7 @@
             OFFICE OF THE PUNONG BARANGAY
         </h1>
         <h1 class="text-center text-green-500 font-bold text-3xl mt-4" style="font-family: bodoni; font-style: italic;">
-            Indigent Certificate
+            BARANGAY BUSINESS PERMIT
         </h1>
         <div class="font-bold mt-4" style="font-family: forte;">
             TO WHOM IT MAY CONCERN:
