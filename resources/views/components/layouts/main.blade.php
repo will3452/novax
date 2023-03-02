@@ -180,6 +180,10 @@
                                     <li>
                                         <a href="{{route('pwd.index')}}">PWD</a>
                                     </li>
+                                    <li>
+                                        <a href="{{route('headOfTheFamilies.index')}}">Head of the family</a>
+                                        <a href="{{route('healthProblems.index')}}">Health problems</a>
+                                    </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>

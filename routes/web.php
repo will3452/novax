@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Models\FamilyHouseholdProfile;
+use App\Http\Controllers\PwdController;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SearchController;
@@ -17,8 +18,12 @@ use App\Http\Controllers\ChildrenController;
 use App\Http\Controllers\PregnantController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\HealthProblemController;
+use App\Http\Controllers\HeadOfTheFamilyController;
 use App\Http\Controllers\HouseHoldProfileController;
-use App\Http\Controllers\PwdController;
+use App\Models\HeadOfTheFamily;
+use App\Models\HealthProblem;
+use App\Models\Pwd;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -87,6 +92,24 @@ Route::prefix('/pregnants')->name('pregnants.')->group(function () {
     Route::get('/{pregnant}', [PregnantController::class, 'show'])->name('show');
     Route::put('/{pregnant}', [PregnantController::class, 'update'])->name('update');
     Route::post('/', [PregnantController::class, 'store']);
+});
+
+Route::prefix('/head-of-the-family')->name('headOfTheFamilies.')->group(function () {
+    Route::get('/', [HeadOfTheFamilyController::class, 'index'])->name('index');
+    Route::get('/create', [HeadOfTheFamilyController::class, 'create'])->name('create');
+    Route::get('/{headOfTheFamily}/edit', [HeadOfTheFamilyController::class, 'edit'])->name('edit');
+    Route::get('/{headOfTheFamily}', [HeadOfTheFamilyController::class, 'show'])->name('show');
+    Route::put('/{headOfTheFamily}', [HeadOfTheFamilyController::class, 'update'])->name('update');
+    Route::post('/', [HeadOfTheFamilyController::class, 'store']);
+});
+
+Route::prefix('/health-problems')->name('healthProblems.')->group(function () {
+    Route::get('/', [HealthProblemController::class, 'index'])->name('index');
+    Route::get('/create', [HealthProblemController::class, 'create'])->name('create');
+    Route::get('/{healthProblem}/edit', [HealthProblemController::class, 'edit'])->name('edit');
+    Route::get('/{healthProblem}', [HealthProblemController::class, 'show'])->name('show');
+    Route::put('/{healthProblem}', [HealthProblemController::class, 'update'])->name('update');
+    Route::post('/', [HealthProblemController::class, 'store']);
 });
 
 Route::prefix('/children')->name('children.')->group(function () {
@@ -164,6 +187,10 @@ Route::get('/reports', function (Request $request) {
     $pregnants = [];
     $children = [];
     $household = [];
+    $pwds = [];
+    $headOfTheFamilies = [];
+    $healthProblems = [];
+
 
     $patientReport = getReports(General::class);
     $pregnantReport = getReports(Pregnant::class);
@@ -175,8 +202,11 @@ Route::get('/reports', function (Request $request) {
         $pregnants = Pregnant::whereBetween('created_at', [$request->from, $request->to])->get();
         $children = Children::whereBetween('created_at', [$request->from, $request->to])->get();
         $household = FamilyHouseholdProfile::whereBetween('created_at', [$request->from, $request->to])->get();
+        $pwds = Pwd::whereBetween('created_at', [$request->from, $request->to])->get();
+        $headOfTheFamilies = HeadOfTheFamily::whereBetween('created_at', [$request->from, $request->to])->get();
+        $healthProblems = HealthProblem::whereBetween('created_at', [$request->from, $request->to])->get();
     }
 
 
-    return view('reports', compact('patients', 'pregnants', 'children', 'household','patientReport', 'pregnantReport', 'childrenReport', 'householdReport'));
+    return view('reports', compact('pwds', 'headOfTheFamilies', 'healthProblems', 'patients', 'pregnants', 'children', 'household','patientReport', 'pregnantReport', 'childrenReport', 'householdReport'));
 });

@@ -58,6 +58,30 @@
                             {{count($household)}}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            No. of PWD
+                        </th>
+                        <td>
+                            {{count($pwds)}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            No. of Head of the family
+                        </th>
+                        <td>
+                            {{count($headOfTheFamilies)}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            No. of Health Problems
+                        </th>
+                        <td>
+                            {{count($healthProblems)}}
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>
