@@ -178,5 +178,5 @@ Route::get('/reports', function (Request $request) {
     }
 
 
-    return view('reports', compact('patients', 'pregnants', 'children', 'householdReport','patientReport', 'pregnantReport', 'childrenReport', 'householdReport'));
+    return view('reports', compact('patients', 'pregnants', 'children', 'household','patientReport', 'pregnantReport', 'childrenReport', 'householdReport'));
 });
