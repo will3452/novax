@@ -1,4 +1,4 @@
-<x-layouts.main>
+<x-.main>
     <h1 class="page-header">
         Family House Hold Profile
     </h1>
@@ -69,4 +69,4 @@
             </tbody>
         </table>
     </div>
-</x-layouts.main>
+</x-.main>

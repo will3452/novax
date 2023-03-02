@@ -1,4 +1,4 @@
-<x-layouts.main>
+<x-.main>
     <h1 class="page-header">
         Pregnant
     </h1>
@@ -16,4 +16,4 @@
             <x-description label="Wt" :value="$pregnant->wt"></x-description>
         </div>
     </div>
-</x-layouts.main>
+</x-.main>

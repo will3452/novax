@@ -1,4 +1,4 @@
-<x-layouts.auth>
+<x-.auth>
     <h3 class="text-center">Barangay Health Information System</h3>
     <div class="login-panel panel panel-default">
         <div class="panel-heading">
@@ -33,4 +33,4 @@
             </form>
         </div>
     </div>
-</x-layouts.auth>
+</x-.auth>

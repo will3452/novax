@@ -1,4 +1,4 @@
-<x-layouts.main>
+<x-.main>
     <h1 class="page-header">
         Dashboard
     </h1>
@@ -165,4 +165,4 @@
             </div>
         </div>
     </div>
-</x-layouts.main>
+</x-.main>

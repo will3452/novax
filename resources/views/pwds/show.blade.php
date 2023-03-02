@@ -1,4 +1,4 @@
-<x-layouts.main>
+<x-.main>
     <h1 class="page-header">
         PWD
     </h1>
@@ -15,4 +15,4 @@
 
         </div>
     </div>
-</x-layouts.main>
+</x-.main>

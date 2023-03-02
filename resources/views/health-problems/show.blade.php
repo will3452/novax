@@ -1,4 +1,4 @@
-<x-layouts.main>
+<x-.main>
     <h1 class="page-header">
         Health problems
     </h1>
@@ -18,4 +18,4 @@
             <x-description label="others" value="{{$healthProblem->others }}"></x-description>
         </div>
     </div>
-</x-layouts.main>
+</x-.main>

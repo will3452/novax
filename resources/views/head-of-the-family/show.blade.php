@@ -1,4 +1,4 @@
-<x-layouts.main>
+<x-.main>
     <h1 class="page-header">
         Head of the family
     </h1>
@@ -10,4 +10,4 @@
             </x-description>
         </div>
     </div>
-</x-layouts.main>
+</x-.main>

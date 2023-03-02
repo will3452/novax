@@ -1,4 +1,4 @@
-<x-layouts.main>
+<x-.main>
     <h1 class="page-header">
         Patient's Information
     </h1>
@@ -61,4 +61,4 @@
             </tbody>
         </table>
     </div>
-</x-layouts.main>
+</x-.main>

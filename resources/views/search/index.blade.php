@@ -1,4 +1,4 @@
-<x-layouts.main>
+<x-.main>
     <h1 class="page-header">
         Search Results : {{request()->keyword}}
     </h1>
@@ -15,4 +15,4 @@
             </div>
         @endforelse
     </ul>
-</x-layouts.main>
+</x-.main>

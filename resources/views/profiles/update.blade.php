@@ -1,4 +1,4 @@
-<x-layouts.main>
+<x-.main>
     <h1 class="page-header">
         Profile
     </h1>
@@ -41,4 +41,4 @@
             </div>
         </form>
     </div>
-</x-layouts.main>
+</x-.main>

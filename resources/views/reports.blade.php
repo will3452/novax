@@ -1,4 +1,4 @@
-<x-layouts.main>
+<x-.main>
 
     <h1 class="page-header">
        REPORTS
@@ -101,4 +101,4 @@
             }
             });
     </script>
-</x-layouts.main>
+</x-.main>

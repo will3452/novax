@@ -1,4 +1,4 @@
-<x-layouts.main>
+<x-.main>
     <h1 class="page-header">
        Announcements
     </h1>
@@ -70,4 +70,4 @@
         <a href="?archive=true">Archived</a>
     </div>
 
-</x-layouts.main>
+</x-.main>

@@ -1,4 +1,4 @@
-<x-layouts.main>
+<x-.main>
     <h1 class="page-header">
         General
     </h1>
@@ -17,4 +17,4 @@
             <x-description label="Treatment/Management" :value="$general->treatment_management"></x-description>
         </div>
     </div>
-</x-layouts.main>
+</x-.main>

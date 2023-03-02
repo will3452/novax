@@ -1,4 +1,4 @@
-<x-layouts.main>
+<x-.main>
     <h1 class="page-header">
         Children
     </h1>
@@ -15,4 +15,4 @@
             <x-description label="Wt" :value="$children->wt"></x-description>
         </div>
     </div>
-</x-layouts.main>
+</x-.main>

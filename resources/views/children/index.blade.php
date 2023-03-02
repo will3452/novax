@@ -1,4 +1,4 @@
-<x-layouts.main>
+<x-.main>
     <h1 class="page-header">
         Children
     </h1>
@@ -47,4 +47,4 @@
             </tbody>
         </table>
     </div>
-</x-layouts.main>
+</x-.main>
