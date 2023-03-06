@@ -26,10 +26,10 @@ class NameRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        $exists = Profile::whereFirstName(request()->first_name)->whereLastName(request()->last_name)->exists();
+        $exists = Profile::whereFirstName(request()->first_name)->whereMiddleName(request()->middle_name)->whereLastName(request()->last_name)->exists();
 
 
-        return $exists;
+        return ! $exists;
     }
 
     /**
