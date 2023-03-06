@@ -2,17 +2,18 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\IssueDocument;
+use App\Rules\NameRule;
+use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
 use App\Nova\Metrics\Genders;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Avatar;
+use Laravel\Nova\Fields\Select;
+use App\Nova\Actions\IssueDocument;
 use App\Nova\Metrics\ProfilesPerPurok;
 use App\Nova\Metrics\RequestedDocuments;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Avatar;
-use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Image;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Profile extends Resource
@@ -68,12 +69,12 @@ class Profile extends Resource
                 ->exceptOnForms(),
             Text::make('First Name')
                 ->hideFromIndex()
-                ->rules(['required']),
+                ->rules(['required', new NameRule]),
             Text::make('Middle Name')
                 ->hideFromIndex(),
             Text::make('Last Name')
                 ->hideFromIndex()
-                ->rules(['required']),
+                ->rules(['required', new NameRule]),
             Text::make('Purok')
                 ->rules(['required']),
             Select::make('Gender')
