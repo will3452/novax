@@ -55,7 +55,7 @@ Route::get('/workout-reminder', function (Request $request) {
             });
         }
 
-        return 1;
+        return response()->json(['message' => 'ok']);
 
     } catch (Exception $e) {
         return 0;
