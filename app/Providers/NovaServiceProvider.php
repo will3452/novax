@@ -51,6 +51,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
+            return true;
             return in_array($user->email, [
                 //
             ]);
@@ -101,12 +102,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return config('novax.profile_enabled');
             }),
             (new BackupTool)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
-                config('novax.back_up_enabled');
+                return config('novax.back_up_enabled');
             }),
             (new NovaSettings)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
-                config('novax.setting_enabled');
+                return config('novax.setting_enabled');
             }),
         ];
     }

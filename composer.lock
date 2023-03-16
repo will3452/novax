@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17cb8e37b3e20aedf36d15dfdfd5ef87",
+    "content-hash": "8c7ac13b3e3d5c1495be857fbbd14756",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -61,6 +61,63 @@
                 "source": "https://github.com/asm89/stack-cors/tree/v2.1.1"
             },
             "time": "2022-01-18T09:12:03+00:00"
+        },
+        {
+            "name": "binarcode/nova-chat",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BinarCode/laravel-nova-chat.git",
+                "reference": "fd61aced7f9279af3eae2b671c14e8dbf369c397"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BinarCode/laravel-nova-chat/zipball/fd61aced7f9279af3eae2b671c14e8dbf369c397",
+                "reference": "fd61aced7f9279af3eae2b671c14e8dbf369c397",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "illuminate/support": "^7.7",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Binarcode\\NovaChat\\NovaChatServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Binarcode\\NovaChat\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eduard Lupacescu",
+                    "email": "eduard.lupacescu@binarcode.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A realtime chat implementation for laravel nova.",
+            "homepage": "https://github.com/binarcode/nova-chat",
+            "keywords": [
+                "binarcode",
+                "nova-chat"
+            ],
+            "support": {
+                "issues": "https://github.com/BinarCode/laravel-nova-chat/issues",
+                "source": "https://github.com/BinarCode/laravel-nova-chat/tree/1.2.0"
+            },
+            "time": "2021-05-13T12:23:48+00:00"
         },
         {
             "name": "brick/math",
@@ -241,42 +298,6 @@
                 "source": "https://github.com/cakephp/chronos"
             },
             "time": "2021-10-17T02:44:05+00:00"
-        },
-        {
-            "name": "coreproc/nova-permissions-field",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "./nova-components/NovaPermissionsField",
-                "reference": "28acde79e69fc2d44408d3e836f6577fa22f282e"
-            },
-            "require": {
-                "php": ">=7.1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Coreproc\\NovaPermissionsField\\FieldServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Coreproc\\NovaPermissionsField\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "A Laravel Nova field.",
-            "keywords": [
-                "laravel",
-                "nova"
-            ],
-            "transport-options": {
-                "relative": true
-            }
         },
         {
             "name": "dflydev/dot-access-data",
@@ -1457,6 +1478,51 @@
                 }
             ],
             "time": "2021-10-06T17:43:30+00:00"
+        },
+        {
+            "name": "jameslkingsley/nova-stripe-theme",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jameslkingsley/nova-stripe-theme.git",
+                "reference": "8b9414eb6a77a104bf2b831c295fa0181e6f44ef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jameslkingsley/nova-stripe-theme/zipball/8b9414eb6a77a104bf2b831c295fa0181e6f44ef",
+                "reference": "8b9414eb6a77a104bf2b831c295fa0181e6f44ef",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Kingsley\\NovaStripeTheme\\NovaStripeThemeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kingsley\\NovaStripeTheme\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova theme closely resembling Stripe.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/jameslkingsley/nova-stripe-theme/issues",
+                "source": "https://github.com/jameslkingsley/nova-stripe-theme/tree/master"
+            },
+            "time": "2018-11-28T08:55:47+00:00"
         },
         {
             "name": "laravel/framework",
@@ -9688,5 +9754,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
