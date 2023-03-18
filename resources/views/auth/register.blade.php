@@ -1,110 +1,75 @@
-<x-layout>
+@extends('auth.layout')
 
-<div class="hero min-h-screen bg-base-200">
-    <form action="register" method="POST" class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-        @csrf
-        <div class="card-body">
-        @if (session('success'))
-            <x-alert-success>
-                Registered Succesfully!
-            </x-alert-success>
-        @endif
-        <h1 class="uppercase text-center font-bold text-gray-700 text-2xl">Register</h1>
-        <div class="form-control">
-            <label class="label">
-            <span class="label-text">Name</span>
-            </label>
-            <input type="text" value="{{old('name')}}" name="name" required placeholder="name" class="input input-bordered">
-            @error('name')
-            <x-form-error>
-                {{$message}}
-            </x-form-error>
-            @enderror
-        </div>
-        <div class="form-control">
-            <label class="label">
-            <span class="label-text">Birthdate</span>
-            </label>
-            <input type="date" value="{{old('birthdate')}}" name="birthdate" required placeholder="birthdate" class="input input-bordered">
-            @error('birthdate')
-            <x-form-error>
-                {{$message}}
-            </x-form-error>
-            @enderror
-        </div>
-        <div class="form-control">
-            <label class="label">
-            <span class="label-text">Sex</span>
-            </label>
-            <select name="sex" id="sex" name="select" class="select select-bordered">
-                <option value="Male">
-                    Male
-                </option>
-                <option value="Female">
-                    Female
-                </option>
-            </select>
-            @error('sex')
-            <x-form-error>
-                {{$message}}
-            </x-form-error>
-            @enderror
-        </div>
-        <div class="form-control">
-            <label class="label">
-            <span class="label-text">Address</span>
-            </label>
-            <input type="text" value="{{old('address')}}" name="address" required placeholder="address" class="input input-bordered">
-            @error('address')
-            <x-form-error>
-                {{$message}}
-            </x-form-error>
-            @enderror
-        </div>
-        <div class="form-control">
-            <label class="label">
-            <span class="label-text">Contact No.</span>
-            </label>
-            <input type="number" max-length="11" value="{{old('contact_no')}}" name="contact_no" required placeholder="0912..." class="input input-bordered">
-            @error('contact_no')
-            <x-form-error>
-                {{$message}}
-            </x-form-error>
-            @enderror
-        </div>
-        <div class="form-control">
-            <label class="label">
-                <span class="label-text">Email</span>
-            </label>
-            <input type="text" value="{{old('email')}}" name="email" required placeholder="email" class="input input-bordered">
-            @error('email')
-            <x-form-error>
-                {{$message}}
-            </x-form-error>
-            @enderror
+@section('content')
+<h1 class="text-center mb-4">Create new account</h1>
+<form
+    class=" max-w-login mx-auto"
+    method="POST"
+    action="/register"
+>
+    {{ csrf_field() }}
+
+    @if ($errors->any())
+        @foreach ($errors->all() as $item)
+            <div class="text-red-200">
+                {{$item}}
             </div>
-        <div class="form-control">
-            <label class="label">
-            <span class="label-text">Password</span>
-            </label>
-            <input type="password" name="password" required placeholder="password" class="input input-bordered">
-            @error('password')
-            <x-form-error>
-                {{$message}}
-            </x-form-error>
-            @enderror
+        @endforeach
+    @endif
+
+
+    @if (session()->get('succes'))
+        <div class="p-2 bg-success rounded text-white text-center">
+            Registration Success!
         </div>
-        <div class="form-control">
-            <label class="label">
-                <span class="label-text">Confirm Password</span>
-            </label>
-            <input type="password" placeholder="password" required name="password_confirmation" class="input input-bordered">
-        </div>
-        <div class="form-control mt-6">
-            <input type="submit" value="Register" class="btn btn-primary">
-            <a class="block text-center text-xs mt-4 underline" href="/app/login">Already have an account?</a>
-        </div>
-        </div>
-    </form>
-</div>
-</x-layout>
+    @endif
+
+
+    <div class="mb-6 {{ $errors->has('name') ? ' has-error' : '' }}">
+        <label class="block font-bold mb-2" for="name">{{ __('Name') }}</label>
+        <input class="form-control form-input form-input-bordered w-full" id="name" type="text" name="name" value="{{ old('name') }}" required autofocus>
+    </div>
+
+    <div class="mb-6 {{ $errors->has('address') ? ' has-error' : '' }}">
+        <label class="block font-bold mb-2" for="address">{{ __('Address') }}</label>
+        <input class="form-control form-input form-input-bordered w-full" id="address" type="text" name="address" value="{{ old('address') }}" required autofocus>
+    </div>
+
+    <div class="mb-6 {{ $errors->has('birthdate') ? ' has-error' : '' }}">
+        <label class="block font-bold mb-2" for="birthdate">{{ __('Birhtday') }}</label>
+        <input class="form-control form-input form-input-bordered w-full" id="birthdate" type="date" name="birthdate" value="{{ old('birthdate') }}" required autofocus>
+    </div>
+
+    <div class="mb-6 {{ $errors->has('sex') ? ' has-error' : '' }}">
+        <label class="block font-bold mb-2" for="sex">{{ __('Sex') }}</label>
+        <select class="form-control form-input form-input-bordered w-full" id="sex" type="text" name="sex" value="{{ old('sex') }}" required>
+            <option value="male">male</option>
+            <option value="female">female</option>
+        </select>
+    </div>
+
+    <div class="mb-6 {{ $errors->has('contact_no') ? ' has-error' : '' }}">
+        <label class="block font-bold mb-2" for="contact_no">{{ __('Mobile No.') }}</label>
+        <input class="form-control form-input form-input-bordered w-full" id="contact_no" type="text" name="contact_no" value="{{ old('contact_no') }}" required autofocus>
+    </div>
+
+    <div class="mb-6 {{ $errors->has('email') ? ' has-error' : '' }}">
+        <label class="block font-bold mb-2" for="email">{{ __('Email Address') }}</label>
+        <input class="form-control form-input form-input-bordered w-full" id="email" type="email" name="email" value="{{ old('email') }}" required>
+    </div>
+
+    <div class="mb-6 {{ $errors->has('password') ? ' has-error' : '' }}">
+        <label class="block font-bold mb-2" for="password">{{ __('Password') }}</label>
+        <input class="form-control form-input form-input-bordered w-full" id="password" type="password" name="password" required>
+    </div>
+
+    <div class="mb-6 {{ $errors->has('password') ? ' has-error' : '' }}">
+        <label class="block font-bold mb-2" for="password">{{ __('Confirm Password') }}</label>
+        <input class="form-control form-input form-input-bordered w-full" id="password" type="password" name="password_confirmation" required>
+    </div>
+
+    <button class="w-full btn btn-default btn-primary hover:bg-primary-dark" type="submit">
+        {{ __('Register') }}
+    </button>
+</form>
+@endsection
