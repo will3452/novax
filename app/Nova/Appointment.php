@@ -2,18 +2,20 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\Approve;
-use App\Nova\Actions\PayNow;
 use Laravel\Nova\Fields\ID;
+use App\Nova\Actions\PayNow;
 use Illuminate\Http\Request;
+use App\Nova\Actions\Approve;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Badge;
-use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BooleanGroup;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Appointment extends Resource
@@ -64,13 +66,24 @@ class Appointment extends Resource
      */
     public function fields(Request $request)
     {
-        return [
+         $fields = [
             BelongsTo::make('Created By', 'user', User::class)->exceptOnForms(),
+
+            Image::make('Proof of Payment', 'proof_of_payment')->rules(['required']),
+
+            Text::make('Conference Link', function() {
+                if (is_null($this->approved_at)) {
+                    return "<a href='javascript:alert('you appointment is not yet approved.');' class='btn btn-link' disabled> Join In</a>";
+                }
+                return "<a href='$this->link' class='btn btn-link'> Join In</a>";
+            })->asHtml(),
+
             Date::make('Requested Date', 'created_at')
                 ->sortable()
                 ->exceptOnForms(),
 
             Date::make('Appointment Date', 'date')
+                ->rules(['required', 'date', 'after:today'])
                 ->sortable(),
 
             Select::make('Type')
@@ -100,6 +113,8 @@ class Appointment extends Resource
                 'Paid' => 'success',
             ]),
         ];
+
+        return $fields;
     }
 
     /**
@@ -145,7 +160,6 @@ class Appointment extends Resource
     {
         return [
             (new Approve)->canSee( fn () => auth()->id() == 1 && $this->approved_at == null)->showOnTableRow(fn () => auth()->id() == 1),
-            (new PayNow)->showOnTableRow(fn () => auth()->id() == $this->user_id),
         ];
     }
 }

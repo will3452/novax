@@ -14,6 +14,8 @@ class Appointment extends Model
         'time',
         'description',
         'approved_at',
+        'link',
+        'proof_of_payment',
         'paid_at',
         'request_id', // gcash
         'type',

@@ -25,6 +25,6 @@ class RegisterController extends Controller
         ]);
         $data['password'] = bcrypt($data['password']);
         $user = User::create($data);
-        return back()->withSuccess('success');
+        return "You're registered successfully!";
     }
 }
