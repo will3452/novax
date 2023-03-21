@@ -21,6 +21,9 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class Appointment extends Resource
 {
     public static function availableForNavigation(Request $request) {
+        if (auth()->user()->email == 'superadmin@mail.com') {
+            return true;
+        }
         return auth()->user()->email_verified_at != null;
     }
     /**
