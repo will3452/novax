@@ -1,11 +1,14 @@
 <?php
 
+use App\Models\User;
 use App\Services\Payment;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
+use App\Mail\EmailVerification;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
-use App\Models\Appointment;
 
 Route::get('/', function () {
     return view('welcome');
@@ -45,3 +48,22 @@ Route::get('paynow', function (Request $request) {
         return $error->getMessage();
     }
 });
+
+Route::get('/send-verification', function() {
+    Mail::to(auth()->user())->send(new EmailVerification(auth()->user()));
+    return "please click on the verification link we have sent to your email address. If you have not received the email, please check your spam or junk folder.";
+})->name('send-link');
+
+Route::get('/verify-account', function() {
+
+    if (request()->hasValidSignature()) {
+        $user = User::find(request()->id);
+        $user->update(['email_verified_at' => now()]);
+        auth()->loginUsingId(request()->id);
+
+        return redirect('/app');
+    } else {
+        abort(403, 'Unauthorized access');
+    }
+
+})->name('account_verify');

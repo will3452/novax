@@ -5,13 +5,14 @@ namespace App\Providers;
 use Elezerk\Chat\Chat;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Panel;
+use Pdmfc\NovaCards\Info;
 use App\Nova\Metrics\User;
 use Laravel\Nova\Cards\Help;
 use App\Nova\Metrics\Symptom;
 use Laravel\Nova\Fields\Text;
+use Elezerk\Calendar\Calendar;
 use Laravel\Nova\Fields\Image;
 use App\Nova\Metrics\Diagnosis;
-use Elezerk\Calendar\Calendar;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Textarea;
 use Spatie\BackupTool\BackupTool;
@@ -35,7 +36,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         NovaSettings::addSettingsFields([
             new Panel('Application Setting', [
                 Text::make('App Name')->rules(['required']),
-                Text::make('GCASH API key')->rules(['required']),
+                // Text::make('GCASH API key')->rules(['required']),
                 Image::make('Logo'),
             ]),
 
@@ -87,6 +88,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         $cards = [
+            (new Info())->danger('Your account is not verified! <a href="/send-verification">resend verification link</a?')
+                ->canSee(fn () => auth()->user()->email_verified_at == null && auth()->user()->email == 'superadmin@mail.com')
+                ->asHtml(),
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
                 'America/Mexico_City',

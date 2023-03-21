@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b271b636e88e2d781e8b3830bdf77ee9",
+    "content-hash": "02c952abe165df2f5eae1b4d2e4aa6f6",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3227,6 +3227,60 @@
                 "source": "https://github.com/paragonie/random_compat"
             },
             "time": "2020-10-15T08:29:30+00:00"
+        },
+        {
+            "name": "pdmfc/nova-info-card",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pdmfc/nova-info-card.git",
+                "reference": "d7620798551f9b932aad61f06315cf18c639d9df"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pdmfc/nova-info-card/zipball/d7620798551f9b932aad61f06315cf18c639d9df",
+                "reference": "d7620798551f9b932aad61f06315cf18c639d9df",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Pdmfc\\NovaCards\\InfoCardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pdmfc\\NovaCards\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "João Santos",
+                    "email": "joao.santos@pdmfc.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel Nova info card.",
+            "homepage": "https://github.com/pdmfc/nova-info-card",
+            "keywords": [
+                "laravel",
+                "nova",
+                "package"
+            ],
+            "support": {
+                "issues": "https://github.com/pdmfc/nova-info-card/issues",
+                "source": "https://github.com/pdmfc/nova-info-card/tree/v0.1.5"
+            },
+            "time": "2020-04-27T13:09:57+00:00"
         },
         {
             "name": "phpoption/phpoption",

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\EmailVerification;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -25,6 +27,7 @@ class RegisterController extends Controller
         ]);
         $data['password'] = bcrypt($data['password']);
         $user = User::create($data);
-        return "You're registered successfully!";
+        Mail::to($user)->send(new EmailVerification($user));
+        return "Thank you for signing up for our service. To complete your registration, please click on the verification link we have sent to your email address. If you have not received the email, please check your spam or junk folder.";
     }
 }

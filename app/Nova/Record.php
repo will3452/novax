@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
@@ -11,6 +12,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Record extends Resource
 {
+    use SoftDeletes;
     /**
      * The model the resource corresponds to.
      *
