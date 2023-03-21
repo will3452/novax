@@ -89,7 +89,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         $cards = [
             (new Info())->danger('Your account is not verified! <a href="/send-verification">resend verification link</a?')
-                ->canSee(fn () => auth()->user()->email_verified_at == null && auth()->user()->email != 'superadmin@mail.com')
+                ->canSee(fn () => auth()->user()->email_verified_at == null && auth()->user()->email != 'super@admin.com')
                 ->asHtml(),
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
