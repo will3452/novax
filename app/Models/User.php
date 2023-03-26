@@ -19,7 +19,10 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'middle_name',
+        'suffix',
         'email',
         'password',
         'email_verified_at',
@@ -28,6 +31,10 @@ class User extends Authenticatable
         'contact_no',
         'address',
     ];
+
+    public function getNameAttribute() {
+        return "$this->first_name $this->middle_name $this->last_name $this->suffix";
+    }
 
     /**
      * The attributes that should be hidden for serialization.

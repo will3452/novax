@@ -25,9 +25,21 @@
     @endif
 
 
-    <div class="mb-6 {{ $errors->has('name') ? ' has-error' : '' }}">
-        <label class="block font-bold mb-2" for="name">{{ __('Name') }}</label>
-        <input class="form-control form-input form-input-bordered w-full" id="name" type="text" name="name" value="{{ old('name') }}" required autofocus>
+    <div class="mb-6 {{ $errors->has('first_name') ? ' has-error' : '' }}">
+        <label class="block font-bold mb-2" for="name">{{ __('First Name') }}</label>
+        <input class="form-control form-input form-input-bordered w-full" id="name" type="text" name="first_name" value="{{ old('first_name') }}" required autofocus>
+    </div>
+    <div class="mb-6 {{ $errors->has('middle_name') ? ' has-error' : '' }}">
+        <label class="block font-bold mb-2" for="middle_name">{{ __('Middle Name') }}</label>
+        <input class="form-control form-input form-input-bordered w-full" id="name" type="text" name="middle_name" value="{{ old('middle_name') }}" required autofocus>
+    </div>
+    <div class="mb-6 {{ $errors->has('last_name') ? ' has-error' : '' }}">
+        <label class="block font-bold mb-2" for="last_name">{{ __('Last Name') }}</label>
+        <input class="form-control form-input form-input-bordered w-full" id="last_name" type="text" name="last_name" value="{{ old('last_name') }}" required autofocus>
+    </div>
+    <div class="mb-6 {{ $errors->has('suffix') ? ' has-error' : '' }}">
+        <label class="block font-bold mb-2" for="suffix">{{ __('Suffix') }}</label>
+        <input class="form-control form-input form-input-bordered w-full" id="name" type="text" name="suffix" value="{{ old('suffix') }}"  autofocus>
     </div>
 
     <div class="mb-6 {{ $errors->has('address') ? ' has-error' : '' }}">

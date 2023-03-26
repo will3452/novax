@@ -29,6 +29,26 @@
     @foreach(\Laravel\Nova\Nova::themeStyles() as $publicPath)
         <link rel="stylesheet" href="{{ $publicPath }}">
     @endforeach
+
+    <script>
+        (async () => {
+            let notifPermission = await Notification.requestPermission()
+            if (notifPermission === 'granted') {
+                @auth
+                    setInterval(() => {
+                        console.log('check notification')
+                        fetch("{{route('notifications')}}")
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.message != '') {
+                                    let n = new Notification(data.message)
+                                }
+                            })
+                    }, 1000 * 120);
+                @endauth
+            }
+        })()
+    </script>
 </head>
 <body class="min-w-site bg-40 text-90 font-medium min-h-full">
     <div id="nova">
