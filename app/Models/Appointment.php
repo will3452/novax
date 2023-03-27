@@ -26,6 +26,7 @@ class Appointment extends Model
 
     protected $casts = [
         'date' => 'date',
+        'symptoms' => 'array',
     ];
 
     public function user () {

@@ -6,18 +6,19 @@ use Laravel\Nova\Fields\ID;
 use App\Nova\Actions\PayNow;
 use Illuminate\Http\Request;
 use App\Nova\Actions\Approve;
-use App\Nova\Actions\Notifify;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Text;
+use App\Nova\Actions\Notifify;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BooleanGroup;
+use Fourstacks\NovaCheckboxes\Checkboxes;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Appointment extends Resource
@@ -74,6 +75,7 @@ class Appointment extends Resource
      */
     public function fields(Request $request)
     {
+        $sOptions = \App\Models\Symptom::get()->pluck('name', 'name');
          $fields = [
             Boolean::make('Alert')->canSee(fn () => auth()->user()->email == 'super@admin.com')->exceptOnForms(),
 
@@ -105,10 +107,8 @@ class Appointment extends Resource
                 ->help('Your appointment will start based on the time you choose.')
                 ->options(fn () => \App\Models\Timeslot::get()->pluck('time', 'time')),
 
-            Select::make('Symptoms')
-                ->options(function () {
-                    return \App\Models\Symptom::get()->pluck('name', 'name');
-                }),
+            Checkboxes::make('Symptoms')
+                ->options($sOptions),
 
             Textarea::make('Description')
                 ->alwaysShow(),
