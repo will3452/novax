@@ -3,21 +3,19 @@
 namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
+use App\Nova\Actions\Notify;
 use App\Nova\Actions\PayNow;
 use Illuminate\Http\Request;
 use App\Nova\Actions\Approve;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Text;
-use App\Nova\Actions\Notifify;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\BooleanGroup;
 use Fourstacks\NovaCheckboxes\Checkboxes;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -180,7 +178,7 @@ class Appointment extends Resource
     public function actions(Request $request)
     {
         return [
-            (new Notifify)->canSee( fn () => auth()->id() == 1 && $this->approved_at == null)->showOnTableRow(fn () => auth()->id() == 1),
+            (new Notify)->canSee( fn () => auth()->id() == 1 && $this->approved_at == null)->showOnTableRow(fn () => auth()->id() == 1),
             (new Approve)->canSee( fn () => auth()->id() == 1 && $this->approved_at == null)->showOnTableRow(fn () => auth()->id() == 1),
         ];
     }

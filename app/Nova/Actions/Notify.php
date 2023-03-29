@@ -12,7 +12,7 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Textarea;
 
-class Notifify extends Action
+class Notify extends Action
 {
     use InteractsWithQueue, Queueable;
 
