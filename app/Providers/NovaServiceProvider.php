@@ -38,6 +38,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 Text::make('App Name')->rules(['required']),
                 // Text::make('GCASH API key')->rules(['required']),
                 Image::make('Logo'),
+                Image::make('GCASH QR', 'qr'),
             ]),
 
             new Panel('Landing Page', [

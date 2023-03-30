@@ -83,7 +83,7 @@ Route::get('/redirect-link', function () {
     $app = Appointment::findOrFail(request()->link);
 
     if ($app->user_id == auth()->id()) {
-        $app->update(['alert' => 0]);
+        $app->update(['alert' => 0, 'doneAt' => now()]);
     } else if (auth()->id() != 1) {
         return abort(401);
     }

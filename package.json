@@ -11,7 +11,9 @@
         "build-chat": "cd nova-components/Chat && npm run dev",
         "build-chat-prod": "cd nova-components/Chat && npm run prod",
         "build-calendar": "cd nova-components/Calendar && npm run dev",
-        "build-calendar-prod": "cd nova-components/Calendar && npm run prod"
+        "build-calendar-prod": "cd nova-components/Calendar && npm run prod",
+        "build-qrcode": "cd nova-components/Qrcode && npm run dev",
+        "build-qrcode-prod": "cd nova-components/Qrcode && npm run prod"
     },
     "devDependencies": {
         "axios": "^0.21",

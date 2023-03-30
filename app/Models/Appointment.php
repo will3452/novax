@@ -22,6 +22,7 @@ class Appointment extends Model
         'paid_at',
         'request_id', // gcash
         'type',
+        'doneAt',
     ];
 
     protected $casts = [

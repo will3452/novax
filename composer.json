@@ -27,6 +27,10 @@
         {
             "type": "path",
             "url": "./nova-components/Calendar"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/Qrcode"
         }
     ],
     "require": {
@@ -34,6 +38,7 @@
         "coreproc/nova-permissions-field": "*",
         "elezerk/calendar": "*",
         "elezerk/chat": "*",
+        "elezerk/qrcode": "*",
         "elezerk/rhu": "*",
         "fourstacks/nova-checkboxes": "^0.1.7",
         "fruitcake/laravel-cors": "^2.0",

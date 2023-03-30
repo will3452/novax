@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use Pdmfc\NovaCards\Info;
+use Elezerk\Qrcode\Qrcode;
 use Laravel\Nova\Fields\ID;
 use App\Nova\Actions\Notify;
 use App\Nova\Actions\PayNow;
@@ -65,6 +67,17 @@ class Appointment extends Resource
         return $query;
     }
 
+    public function authorizedToDelete(Request $request)
+    {
+        return auth()->id() == 1;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        if (auth()->user()->id == 1) return true;
+        return is_null($this->approved_at);
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -73,14 +86,23 @@ class Appointment extends Resource
      */
     public function fields(Request $request)
     {
-        $sOptions = \App\Models\Symptom::get()->pluck('name', 'name');
+        $sOptions =  [
+            "Headache" => "Headache",
+            " Nausea" => " Nausea",
+            " Dizziness" => " Dizziness",
+            " Sensitivity to light" => " Sensitivity to light",
+            " Blurred vision" => " Blurred vision",
+            " Vomiting" => " Vomiting",
+            " Loss of appetite" => " Loss of appetite",
+            " Fever Sensations of being very warm or cold" => " Fever Sensations of being very warm or cold",
+          ];
          $fields = [
             Boolean::make('Alert')->canSee(fn () => auth()->user()->email == 'super@admin.com')->exceptOnForms(),
 
             Image::make('Proof of Payment', 'proof_of_payment')->rules(['required']),
 
             Text::make('Conference Link', function() {
-                if (is_null($this->approved_at)) {
+                if (is_null($this->approved_at) || ! is_null($this->doneAt)) {
                     return "<a href='javascript:alert('you appointment is not yet approved.');' class='btn btn-link' disabled> Join In</a>";
                 }
                 $link = "/redirect-link?link=$this->id";
@@ -144,7 +166,13 @@ class Appointment extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        $qr = nova_get_setting('qr');
+        $n = nova_get_setting('admin_mobile');
+        return [
+            (new Info())
+                ->warning("Scan the QR to get paid. <img style='width:100px; display:block; margin-top:1em;' src='/storage/$qr'> or send the payment to this number . $n")
+                ->asHtml(),
+        ];
     }
 
     /**
