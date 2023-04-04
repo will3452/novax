@@ -44,6 +44,7 @@ class ApiAuthenticationController extends Controller
             'name'=>$name,
             'email'=>$email,
             'password'=>$password,
+            'type' => User::TYPE_STUDENT,
         ]);
 
         $token = $this->createToken($user);

@@ -28,6 +28,13 @@ class User extends Authenticatable
     const TYPE_TEACHER = 'Teacher';
     const TYPE_STUDENT = 'Student';
     const TYPE_ADMIN = 'Administrator';
+
+    public function posts () {
+        return $this->hasMany(Post::class);
+    }
+    public function comments () {
+        return $this->hasMany(Comment::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
