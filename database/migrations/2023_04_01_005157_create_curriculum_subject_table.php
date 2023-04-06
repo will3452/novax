@@ -16,6 +16,7 @@ class CreateCurriculumSubjectTable extends Migration
         Schema::create('curriculum_subject', function (Blueprint $table) {
             $table->id();
             $table->foreignId('curriculum_id');
+            $table->foreignId('semester_id');
             $table->foreignId('subject_id');
             $table->timestamps();
         });

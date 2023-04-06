@@ -15,6 +15,7 @@ class GradeSystem extends Model
         'recitation',
         'assignment',
         'long_test',
+        'laboratory',
         'major_exam',
         'quiz',
     ];

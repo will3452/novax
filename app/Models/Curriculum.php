@@ -18,7 +18,11 @@ class Curriculum extends Model
         return $this->belongsTo(AcademicYear::class, 'academic_year_id');
     }
 
-    public function subjects () {
-        return $this->belongsToMany(Curriculum::class, 'curriculum_subject', 'curriculum_id', 'subject_id');
+    // public function subjects () {
+    //     return $this->belongsToMany(Curriculum::class, 'curriculum_subject', 'subject_id', );
+    // }
+
+    public function curriculumSubjects () {
+        return $this->hasMany(CurriculumSubject::class, 'curriculum_id');
     }
 }

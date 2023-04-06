@@ -22,7 +22,7 @@ class GradeSystem extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -47,6 +47,7 @@ class GradeSystem extends Resource
                 ->rules(['required']),
             Number::make('Attendance'),
             Number::make('Recitation'),
+            Number::make('Laboratory'),
             Number::make('Assignment'),
             Number::make('Long Test'),
             Number::make('Major Exam'),

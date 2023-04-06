@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -45,10 +46,13 @@ class Subject extends Resource
     public function fields(Request $request)
     {
         return [
+            Image::make('Image')
+                ->rules(['required', 'image', 'max:5000']),
             Text::make('Name')
                 ->rules(['required'])
                 ->sortable(),
             Text::make('Code')
+                ->hideFromIndex()
                 ->rules(['required'])
                 ->sortable(),
             Textarea::make('Description')

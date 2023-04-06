@@ -14,4 +14,8 @@ class Subject extends Model
         'code',
         'description'
     ];
+
+    public function curriculumSubjects () {
+        return $this->hasMany(CurriculumSubject::class, 'subject_id');
+    }
 }

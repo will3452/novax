@@ -35,6 +35,10 @@ class User extends Authenticatable
     public function comments () {
         return $this->hasMany(Comment::class);
     }
+
+    public function teachingLoads () {
+        return $this->hasMany(TeachingLoad::class, 'teacher_id');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

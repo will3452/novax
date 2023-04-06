@@ -21,7 +21,7 @@ class Semester extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'semester';
 
     /**
      * The columns that should be searched.

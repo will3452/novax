@@ -14,4 +14,8 @@ class AcademicYear extends Model
         'is_active',
     ];
 
+    public static function active() {
+        return self::latest()->whereIsActive(true)->first();
+    }
+
 }

@@ -12,4 +12,8 @@ class Semester extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function curriculumSubjects () {
+        return $this->hasMany(CurriculumSubject::class, 'semester_id');
+    }
 }

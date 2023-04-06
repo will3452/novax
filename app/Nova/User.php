@@ -5,8 +5,10 @@ namespace App\Nova;
 use App\Models\User as ModelsUser;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Select;
@@ -26,7 +28,9 @@ class User extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public function title() {
+        return "$this->name - $this->type";
+    }
 
     /**
      * The columns that should be searched.
@@ -76,6 +80,7 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
+            HasMany::make('Teaching Loads', 'teachingLoads', TeachingLoad::class),
         ];
     }
 
