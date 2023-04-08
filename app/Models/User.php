@@ -42,4 +42,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function diaries () {
+        return $this->hasMany(Diary::class, 'user_id');
+    }
 }
