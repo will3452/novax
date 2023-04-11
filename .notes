@@ -1,0 +1,19 @@
+1. check if the initial grade is valid.
+
+ - greater than zero or not negative
+2. round the initial grade into decimal place
+
+3. check if the grade is passed or failed
+- if >= 60 "passed"
+- if < 60 "failed"
+
+for passing
+ - subtract 60 for initial grade
+ - divide the result by 1.6
+ - add 75 to the result
+ - round  the result to whole number by rounding DOWN
+
+for failing
+ - divide the initial grade by 4
+ - add 60 to the result
+ - round  the result to whole number by rounding DOWN
