@@ -10,7 +10,7 @@ class Semester extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'semester',
     ];
 
     public function curriculumSubjects () {

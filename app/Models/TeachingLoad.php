@@ -11,7 +11,7 @@ class TeachingLoad extends Model
 
     protected $fillable = [
         'teacher_id',
-        'grade_system_id',
+        // 'grade_system_id',
         'subject_id',
         'academic_year_id',
         'semester_id'
@@ -21,9 +21,9 @@ class TeachingLoad extends Model
         return $this->belongsTo(User::class, 'teacher_id');
     }
 
-    public function gradeSystem() {
-        return $this->belongsTo(GradeSystem::class);
-    }
+    // public function gradeSystem() {
+    //     return $this->belongsTo(GradeSystem::class);
+    // }
 
     public function subject() {
         return $this->belongsTo(Subject::class);

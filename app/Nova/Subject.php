@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
@@ -57,6 +58,7 @@ class Subject extends Resource
                 ->sortable(),
             Textarea::make('Description')
                 ->rules(['required']),
+            Boolean::make('With Laboratory', 'has_lab')->default(fn () => false),
         ];
     }
 

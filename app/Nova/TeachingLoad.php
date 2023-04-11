@@ -44,7 +44,7 @@ class TeachingLoad extends Resource
     {
         return [
             BelongsTo::make('Teacher', 'teacher', User::class)->searchable(),
-            BelongsTo::make('Grade System', 'gradeSystem', GradeSystem::class),
+            // BelongsTo::make('Grade System', 'gradeSystem', GradeSystem::class),
             BelongsTo::make('Subject', 'subject', Subject::class),
             BelongsTo::make('Academic Year', 'academicYear', AcademicYear::class),
             BelongsTo::make('Semester', 'semester', Semester::class),
