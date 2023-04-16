@@ -47,6 +47,15 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="alert alert-info">
+                            <div>
+                                <b>Instruction: </b>"Please note that if you want to input your height in feet and inches, please use the format 'feet.inches'. For example, if you are 5 feet 6 inches tall, please input '5.6' in the height field."
+                            </div>
+                            <div>
+                                <b>Notes: </b> "Please remember that 1 foot is equivalent to 12 inches. When inputting your height in feet and inches, please use the format 'feet.inches' and input the total number of inches. For example, if you are 5 feet 6 inches tall, please input '5.6', where the decimal point separates feet and inches and the total number of inches is 66 (5 x 12 + 6 = 66)."
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

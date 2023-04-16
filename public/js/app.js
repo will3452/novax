@@ -5389,6 +5389,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -28619,6 +28628,8 @@ var render = function () {
                     ]),
                   ])
                 : _vm._e(),
+              _vm._v(" "),
+              _vm._m(1),
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "modal-footer" }, [
@@ -28670,6 +28681,26 @@ var staticRenderFns = [
           "aria-label": "Close",
         },
       }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "alert alert-info" }, [
+      _c("div", [
+        _c("b", [_vm._v("Instruction: ")]),
+        _vm._v(
+          "\"Please note that if you want to input your height in feet and inches, please use the format 'feet.inches'. For example, if you are 5 feet 6 inches tall, please input '5.6' in the height field.\"\n                        "
+        ),
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _c("b", [_vm._v("Notes: ")]),
+        _vm._v(
+          " \"Please remember that 1 foot is equivalent to 12 inches. When inputting your height in feet and inches, please use the format 'feet.inches' and input the total number of inches. For example, if you are 5 feet 6 inches tall, please input '5.6', where the decimal point separates feet and inches and the total number of inches is 66 (5 x 12 + 6 = 66).\"\n                        "
+        ),
+      ]),
     ])
   },
 ]

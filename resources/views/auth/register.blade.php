@@ -89,6 +89,11 @@
                             <div class="col-md-6">
                                 <input id="password" x-bind:type="showPassword ? 'text': 'password'" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                                 <a href="#" x-on:click.prevent="showPassword = !showPassword"><span x-text="showPassword ? 'hide': 'show'"></span> password</a>
+                                <div>
+                                    <small style="font-size: 12px;" class="text-warning">
+                                        Password must be 8 characters long with 1 uppercase letter.
+                                    </small>
+                                </div>
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
