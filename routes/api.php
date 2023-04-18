@@ -4,6 +4,7 @@ use App\Http\Controllers\ApiAuthenticationController;
 use App\Models\Collection;
 use App\Models\Faq;
 use App\Models\Plant;
+use App\Models\Tip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -76,6 +77,20 @@ Route::get('/faq', function (Request $request) {
     return Faq::latest()->get();
 });
 
-Route::get('/plants', function () {
+Route::get('/plants', function (Request $request) {
+    if ($request->search) {
+        $props = explode(',', $request->search);
+        $where = [];
+        foreach ($props as $prop) {
+            $arr = explode(':', $prop);
+            $where[$arr[0]] = $arr[1];
+        }
+
+        return Plant::where($where)->get();
+    }
     return Plant::latest()->get();
+});
+
+Route::get('/tips', function(Request $request) {
+    return Tip::latest()->get();
 });

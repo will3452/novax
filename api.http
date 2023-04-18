@@ -1,0 +1,4 @@
+GET http://localhost:8000/api/plants?search=type:D
+
+### TIP
+GET http://localhost:8000/api/tips
