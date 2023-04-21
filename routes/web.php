@@ -1,20 +1,19 @@
 <?php
 
-use App\Models\Comment;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\NewsfeedController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TeachingLoadController;
+use App\Models\Comment;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->to('/admin/login');
 });
 
 Route::get('/register', [RegisterController::class, 'registrationPage']);
 Route::post('/register', [RegisterController::class, 'postRegister']);
-
 
 //artisan helper
 Route::get('/artisan', function () {

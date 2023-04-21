@@ -2,16 +2,17 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\Faculties;
+use App\Nova\Metrics\Students;
+use App\Nova\Metrics\Subjects;
+use App\Nova\Metrics\TotalSections;
 use App\Nova\Metrics\Users;
-use Laravel\Nova\Nova;
-use Laravel\Nova\Cards\Help;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Image;
-use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
-use Runline\ProfileTool\ProfileTool;
-use OptimistDigital\NovaSettings\NovaSettings;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use OptimistDigital\NovaSettings\NovaSettings;
+use Spatie\BackupTool\BackupTool;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -37,9 +38,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function routes()
     {
         Nova::routes()
-                ->withAuthenticationRoutes()
-                ->withPasswordResetRoutes()
-                ->register();
+            ->withAuthenticationRoutes()
+            ->withPasswordResetRoutes()
+            ->register();
     }
 
     /**
@@ -65,6 +66,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             Users::make(),
+            Subjects::make(),
+            TotalSections::make(),
+            Faculties::make(),
+            Students::make(),
         ];
     }
 

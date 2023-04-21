@@ -7,7 +7,9 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "mix --production",
+        "build-nsct-my-sections": "cd nova-components/NsctMySections && npm run dev",
+        "build-nsct-my-sections-prod": "cd nova-components/NsctMySections && npm run prod"
     },
     "devDependencies": {
         "@popperjs/core": "^2.10.2",

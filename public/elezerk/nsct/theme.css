@@ -1,0 +1,14 @@
+:root {
+    --primary: #203176;
+    --primary-dark: #4e5fa3;
+    --primary-70: #3e52a2;
+    --primary-50: #5264ad;
+    --primary-30: #8695d3;
+    --primary-10: #96a4dd;
+    --logo: #f2c800;
+    --sidebar-icon: #f2c800;
+}
+
+.bg-grad-sidebar {
+    background: #203176;
+}
