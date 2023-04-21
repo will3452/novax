@@ -27,7 +27,15 @@ class RegisterController extends Controller
             'address' => ['required'],
             'birthdate' => ['required'],
             'contact_no' => ['required', 'max:11'],
+            'valid_id' => ['required', 'image', 'max:5000'],
         ]);
+
+        $path = $data['valid_id']->store('public');
+
+        $pathArray = explode('/', $path);
+
+        $data['valid_id'] = end($pathArray);
+
         $data['password'] = bcrypt($data['password']);
         $user = User::create($data);
         Mail::to($user)->send(new EmailVerification($user));

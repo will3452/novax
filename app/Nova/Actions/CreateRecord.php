@@ -2,16 +2,15 @@
 
 namespace App\Nova\Actions;
 
-use App\Models\Appointment;
-use Carbon\Carbon;
+use App\Models\Record;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Mail;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Textarea;
 
-class Approve extends Action
+class CreateRecord extends Action
 {
     use InteractsWithQueue, Queueable;
 
@@ -24,15 +23,14 @@ class Approve extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        // Notifications TODO
         foreach ($models as $model) {
-            $queue = Appointment::whereDate('date', Carbon::parse($model->date))->whereNotNull('approved_at')->count() + 1;
-            $model->approved();
-            $userName = $model->user->first_name;
-            Mail::raw("Hello $userName, your appointment is approved your queue number is $queue ", function ($message) use ($model) {
-                $message->to($model->user->email)->subject('Appointment Updates!');
-            });
+            Record::create([
+                'user_id' => $model->user_id,
+                'description' => $fields['description'],
+            ]);
         }
+
+        return Action::message("Success");
     }
 
     /**
@@ -42,6 +40,8 @@ class Approve extends Action
      */
     public function fields()
     {
-        return [];
+        return [
+            Textarea::make('Description'),
+        ];
     }
 }

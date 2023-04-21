@@ -6,6 +6,7 @@
     class=" max-w-login mx-auto"
     method="POST"
     action="/register"
+    enctype="multipart/form-data"
 >
     {{ csrf_field() }}
 
@@ -78,6 +79,11 @@
     <div class="mb-6 {{ $errors->has('password') ? ' has-error' : '' }}">
         <label class="block font-bold mb-2" for="password">{{ __('Confirm Password') }}</label>
         <input class="form-control form-input form-input-bordered w-full" id="password" type="password" name="password_confirmation" required>
+    </div>
+
+    <div class="mb-6 {{ $errors->has('valid_id') ? ' has-error' : '' }}">
+        <label class="block font-bold mb-2" for="valid_id">{{ __('Valid ID:  ') }} <a href="https://www.gsis.gov.ph/ginhawa-for-all/list-of-acceptable-valid-ids/" target="_blank">click here to show list of accepted IDs.</a></label>
+        <input id="valid_id" type="file" name="valid_id" required>
     </div>
 
     <button class="w-full btn btn-default btn-primary hover:bg-primary-dark" type="submit">

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Number;
@@ -52,7 +53,7 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-
+            Image::make('Valid ID', 'valid_id'),
             Text::make('First Name')
                 ->sortable()
                 ->rules('required', 'max:255'),

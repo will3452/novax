@@ -30,6 +30,8 @@ class User extends Authenticatable
         'sex',
         'contact_no',
         'address',
+        'approved_at',
+        'valid_id',
     ];
 
     public function getNameAttribute() {
@@ -44,6 +46,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'valid_id',
     ];
 
     /**
@@ -54,5 +57,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'birthdate' => 'date',
+        'approved_at' => 'datetime',
     ];
 }

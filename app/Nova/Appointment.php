@@ -2,28 +2,27 @@
 
 namespace App\Nova;
 
-use Pdmfc\NovaCards\Info;
-use Elezerk\Qrcode\Qrcode;
-use Laravel\Nova\Fields\ID;
-use App\Nova\Actions\Notify;
-use App\Nova\Actions\PayNow;
-use Illuminate\Http\Request;
 use App\Nova\Actions\Approve;
-use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\File;
-use Laravel\Nova\Fields\Text;
+use App\Nova\Actions\CreateRecord;
+use App\Nova\Actions\Notify;
+use Fourstacks\NovaCheckboxes\Checkboxes;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Fields\BelongsTo;
-use Fourstacks\NovaCheckboxes\Checkboxes;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Pdmfc\NovaCards\Info;
 
 class Appointment extends Resource
 {
-    public static function availableForNavigation(Request $request) {
+    public static function availableForNavigation(Request $request)
+    {
         if (auth()->user()->email == 'super@admin.com') {
             return true;
         }
@@ -41,7 +40,8 @@ class Appointment extends Resource
      *
      * @var string
      */
-    public function title () {
+    public function title()
+    {
         return $this->date;
     }
 
@@ -54,10 +54,8 @@ class Appointment extends Resource
         // 'id',
         'date',
         'time',
-        'description'
+        'description',
     ];
-
-
 
     public static function indexQuery(NovaRequest $request, $query)
     {
@@ -74,7 +72,10 @@ class Appointment extends Resource
 
     public function authorizedToUpdate(Request $request)
     {
-        if (auth()->user()->id == 1) return true;
+        if (auth()->user()->id == 1) {
+            return true;
+        }
+
         return is_null($this->approved_at);
     }
 
@@ -86,7 +87,7 @@ class Appointment extends Resource
      */
     public function fields(Request $request)
     {
-        $sOptions =  [
+        $sOptions = [
             "Headache" => "Headache",
             " Nausea" => " Nausea",
             " Dizziness" => " Dizziness",
@@ -95,14 +96,14 @@ class Appointment extends Resource
             " Vomiting" => " Vomiting",
             " Loss of appetite" => " Loss of appetite",
             " Fever Sensations of being very warm or cold" => " Fever Sensations of being very warm or cold",
-          ];
-         $fields = [
-            Boolean::make('Alert')->canSee(fn () => auth()->user()->email == 'super@admin.com')->exceptOnForms(),
+        ];
+        $fields = [
+            Boolean::make('Alert')->canSee(fn() => auth()->user()->email == 'super@admin.com')->exceptOnForms(),
 
             Image::make('Proof of Payment', 'proof_of_payment')->rules(['required']),
 
-            Text::make('Conference Link', function() {
-                if (is_null($this->approved_at) || ! is_null($this->doneAt)) {
+            Text::make('Conference Link', function () {
+                if (is_null($this->approved_at) || !is_null($this->doneAt)) {
                     return "<a href='javascript:alert('you appointment is not yet approved.');' class='btn btn-link' disabled> Join In</a>";
                 }
                 $link = "/redirect-link?link=$this->id";
@@ -120,24 +121,24 @@ class Appointment extends Resource
             Select::make('Type')
                 ->options([
                     'face to face' => 'face to face',
-                    'online' => 'online'
+                    'online' => 'online',
                 ]),
 
             Select::make('Time')
                 ->help('Your appointment will start based on the time you choose.')
-                ->options(fn () => \App\Models\Timeslot::get()->pluck('time', 'time')),
+                ->options(fn() => \App\Models\Timeslot::get()->pluck('time', 'time')),
 
             Checkboxes::make('Symptoms')
                 ->options($sOptions),
 
-            Textarea::make('Description')
+            Textarea::make('Others', 'description')
                 ->alwaysShow(),
             Badge::make('Status', function () {
                 if (is_null($this->approved_at)) {
                     return 'Not yet approved';
                 }
 
-                if (! is_null($this->paid_at)) {
+                if (!is_null($this->paid_at)) {
                     return 'Paid';
                 }
 
@@ -170,7 +171,7 @@ class Appointment extends Resource
         $n = nova_get_setting('admin_mobile');
         return [
             (new Info())
-                ->warning("Scan the QR to get paid. <img style='width:100px; display:block; margin-top:1em;' src='/storage/$qr'> or send the payment to this number . $n")
+                ->warning("Scan the QR to pay. <img style='width:100px; display:block; margin-top:1em;' src='/storage/$qr'> or send the payment to this number . $n")
                 ->asHtml(),
         ];
     }
@@ -206,8 +207,9 @@ class Appointment extends Resource
     public function actions(Request $request)
     {
         return [
-            (new Notify)->canSee( fn () => auth()->id() == 1 && $this->approved_at == null)->showOnTableRow(fn () => auth()->id() == 1),
-            (new Approve)->canSee( fn () => auth()->id() == 1 && $this->approved_at == null)->showOnTableRow(fn () => auth()->id() == 1),
+            (new CreateRecord)->showOnTableRow(fn() => auth()->id() == 1),
+            (new Notify)->canSee(fn() => auth()->id() == 1 && $this->approved_at == null)->showOnTableRow(fn() => auth()->id() == 1),
+            (new Approve)->canSee(fn() => auth()->id() == 1 && $this->approved_at == null)->showOnTableRow(fn() => auth()->id() == 1),
         ];
     }
 }
