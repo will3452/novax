@@ -2,3 +2,28 @@ GET http://localhost:8000/api/plants?search=type:D
 
 ### TIP
 GET http://localhost:8000/api/tips
+
+###
+POST http://localhost:8000/api/login
+content-type: application/json
+
+{
+    "email": "super@admin.com",
+    "password": "password"
+}
+
+###
+POST http://localhost:8000/api/tasks
+Authorization: Bearer 1|BdNnPo28qY8kS8zIbFcdk44Upjx6U7SLmePa6Ub4
+content-type: application/json
+
+{
+    "description": "First Task",
+    "from": "2000-03-04",
+    "to": "2000-03-20",
+    "time": "12:00:00"
+}
+
+###
+GET http://localhost:8000/api/tasks
+Authorization: Bearer 1|BdNnPo28qY8kS8zIbFcdk44Upjx6U7SLmePa6Ub4

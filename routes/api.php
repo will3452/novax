@@ -4,35 +4,56 @@ use App\Http\Controllers\ApiAuthenticationController;
 use App\Models\Collection;
 use App\Models\Faq;
 use App\Models\Plant;
+use App\Models\Task;
 use App\Models\Tip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-
 
 //private access
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
 
-     // DIARIES
-     Route::prefix('/diary')->group(function () {
+    // Tasks
+    Route::prefix('/tasks')->group(function () {
+        Route::get('/', function (Request $request) {
+            return auth()->user()->tasks()->latest()->get();
+        });
+
+        Route::post('/', function (Request $request) {
+            $data = $request->validate([
+                'description' => 'required',
+                'from' => 'required',
+                'to' => 'required',
+                'time' => 'required',
+            ]);
+
+            return auth()->user()->tasks()->create($data);
+        });
+
+        Route::delete('/{task}', function (Request $request, Task $task) {
+            return $task->delete();
+        });
+    });
+
+    // DIARIES
+    Route::prefix('/diary')->group(function () {
         Route::get('/', function (Request $request) {
             return auth()->user()->diaries()->latest()->get();
-         });
+        });
 
         Route::post('/', function (Request $request) {
             $data = $request->validate([
                 'title' => 'required',
-                'body' => 'required'
+                'body' => 'required',
             ]);
 
             return auth()->user()->diaries()->create($data);
         });
-     });
+    });
 
-     // Collections
+    // Collections
 
-     Route::prefix('/collections')->group(function () {
+    Route::prefix('/collections')->group(function () {
         Route::get('/', function () {
             return Collection::with('plant')->whereUserId(auth()->id())->latest()->get();
         });
@@ -50,7 +71,7 @@ Route::middleware('auth:sanctum')->group(function () {
             return Collection::create($data);
         });
 
-        Route::delete('/{plant}', function (Request $request,Plant $plant) {
+        Route::delete('/{plant}', function (Request $request, Plant $plant) {
 
             $exists = Collection::whereUserId(auth()->id())->wherePlantId($plant->id)->exists();
 
@@ -62,11 +83,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
             return $result;
         });
-     });
-
+    });
 
 });
-
 
 //user authentication
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
@@ -91,6 +110,6 @@ Route::get('/plants', function (Request $request) {
     return Plant::latest()->get();
 });
 
-Route::get('/tips', function(Request $request) {
+Route::get('/tips', function (Request $request) {
     return Tip::latest()->get();
 });
