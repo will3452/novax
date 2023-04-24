@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Task::class);
     }
+
+    public function suggestedPlants()
+    {
+        return $this->hasMany(SuggestedPlant::class);
+    }
 }

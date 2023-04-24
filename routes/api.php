@@ -13,6 +13,28 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
 
+    Route::prefix('/suggested-plants')->group(function () {
+        Route::get('/', function (Request $request) {
+            return auth()->user()->suggestedPlants()->latest()->get();
+        });
+
+        Route::post('/', function (Request $request) {
+            $data = $request->validate([
+                'common_name' => 'required',
+                'scientific_name' => 'required',
+                'image' => 'image',
+            ]);
+
+            $path = $data['image']->store('public');
+
+            $arrayPath = explode('/', $path);
+
+            $data['image'] = end($arrayPath);
+
+            return auth()->user()->suggestedPlants()->create($data);
+        });
+    });
+
     // Tasks
     Route::prefix('/tasks')->group(function () {
         Route::get('/', function (Request $request) {
@@ -45,7 +67,14 @@ Route::middleware('auth:sanctum')->group(function () {
             $data = $request->validate([
                 'title' => 'required',
                 'body' => 'required',
+                'image' => 'image',
             ]);
+
+            $path = $data['image']->store('public');
+
+            $arrayPath = explode('/', $path);
+
+            $data['image'] = end($arrayPath);
 
             return auth()->user()->diaries()->create($data);
         });

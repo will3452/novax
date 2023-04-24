@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Diary extends Model
+class SuggestedPlant extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'user_id',
-        'title',
-        'body',
+        'common_name',
+        'scientific_name',
         'image',
+        'status',
+        'user_id',
     ];
 
     public function user()
