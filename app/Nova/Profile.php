@@ -7,10 +7,14 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Profile extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->id() == 1;
+    }
+
     /**
      * The model the resource corresponds to.
      *
@@ -32,7 +36,7 @@ class Profile extends Resource
      */
     public static $search = [
         'id',
-        'number'
+        'number',
     ];
 
     /**

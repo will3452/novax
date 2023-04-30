@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use App\Nova\Metrics\Faculties;
 use App\Nova\Metrics\Students;
 use App\Nova\Metrics\Subjects;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Nsct\Sections\Sections;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Spatie\BackupTool\BackupTool;
 
@@ -53,7 +55,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return $user->id == 1;
+            return true;
         });
     }
 
@@ -64,13 +66,16 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
-        return [
-            Users::make(),
-            Subjects::make(),
-            TotalSections::make(),
-            Faculties::make(),
-            Students::make(),
-        ];
+        if (auth()->user()->type == User::TYPE_ADMIN) {
+            return [
+                Users::make(),
+                Subjects::make(),
+                TotalSections::make(),
+                Faculties::make(),
+                Students::make(),
+            ];
+        }
+        return [];
     }
 
     /**
@@ -90,12 +95,17 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function tools()
     {
+        if (auth()->user()->type == User::TYPE_TEACHER) {
+            return [
+                Sections::make(),
+            ];
+        }
         return [
             (new BackupTool)->canSee(function ($request) {
                 return config('novax.back_up_enabled');
             }),
             (new NovaSettings)->canSee(function ($request) {
-                return config('novax.setting_enabled');
+                return config('novax.setting_enabled') && auth()->id() == 1;
             }),
         ];
     }

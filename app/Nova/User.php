@@ -3,19 +3,19 @@
 namespace App\Nova;
 
 use App\Models\User as ModelsUser;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\Text;
 
 class User extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->id() == 1;
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -28,7 +28,8 @@ class User extends Resource
      *
      * @var string
      */
-    public function title() {
+    public function title()
+    {
         return "$this->name - $this->type";
     }
 

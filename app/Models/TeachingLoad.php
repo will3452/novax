@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Nova\Metrics\Students;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,10 +15,21 @@ class TeachingLoad extends Model
         // 'grade_system_id',
         'subject_id',
         'academic_year_id',
-        'semester_id'
+        'semester_id',
     ];
 
-    public function teacher () {
+    protected $with = [
+        'subject',
+        'academicYear',
+        'semester',
+        'announcements',
+        'students.profile',
+        'studentRecords',
+        'activities',
+    ];
+
+    public function teacher()
+    {
         return $this->belongsTo(User::class, 'teacher_id');
     }
 
@@ -25,15 +37,38 @@ class TeachingLoad extends Model
     //     return $this->belongsTo(GradeSystem::class);
     // }
 
-    public function subject() {
+    public function subject()
+    {
         return $this->belongsTo(Subject::class);
     }
 
-    public function academicYear() {
+    public function academicYear()
+    {
         return $this->belongsTo(AcademicYear::class);
     }
 
-    public function semester() {
+    public function semester()
+    {
         return $this->belongsTo(Semester::class);
+    }
+
+    public function announcements()
+    {
+        return $this->hasMany(Announcement::class);
+    }
+
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'student_records', 'teaching_load_id', 'student_id');
+    }
+
+    public function studentRecords()
+    {
+        return $this->hasMany(StudentRecord::class, 'teaching_load_id');
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
     }
 }

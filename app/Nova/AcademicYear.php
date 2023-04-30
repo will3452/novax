@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class AcademicYear extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->id() == 1;
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -45,7 +48,7 @@ class AcademicYear extends Resource
             Text::make('Year')
                 ->rules(['required']),
             Boolean::make('Active', 'is_active')
-                ->rules('required')
+                ->rules('required'),
         ];
     }
 

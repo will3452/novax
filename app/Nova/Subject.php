@@ -8,10 +8,13 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Subject extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->id() == 1;
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -25,9 +28,10 @@ class Subject extends Resource
      * @var string
      */
 
-     public function title () {
+    public function title()
+    {
         return "$this->name - $this->code";
-     }
+    }
 
     /**
      * The columns that should be searched.
@@ -58,7 +62,7 @@ class Subject extends Resource
                 ->sortable(),
             Textarea::make('Description')
                 ->rules(['required']),
-            Boolean::make('With Laboratory', 'has_lab')->default(fn () => false),
+            Boolean::make('With Laboratory', 'has_lab')->default(fn() => false),
         ];
     }
 

@@ -5,12 +5,13 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Http\Requests\NovaRequest;
-
 
 class TeachingLoad extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->id() == 1;
+    }
     /**
      * The model the resource corresponds to.
      *

@@ -14,11 +14,11 @@ class Subject extends Model
         'code',
         'description',
         'has_lab',
+        'image',
     ];
 
-
-
-    public function curriculumSubjects () {
+    public function curriculumSubjects()
+    {
         return $this->hasMany(CurriculumSubject::class, 'subject_id');
     }
 }
