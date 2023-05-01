@@ -1,18 +1,18 @@
 <?php
 
-use App\Models\Post;
+use App\Http\Controllers\ApiAuthenticationController;
+use App\Imports\GradeImport;
 use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ApiAuthenticationController;
-
-
+use Maatwebsite\Excel\Facades\Excel;
 
 //private access
 Route::middleware('auth:sanctum')->group(function () {
 
     // posts
-    Route::get('/posts', fn () => Post::with('user')->latest()->get());
+    Route::get('/posts', fn() => Post::with('user')->latest()->get());
     Route::post('/posts', function (Request $request) {
         return auth()->user()->posts()->create($request->all());
     });
@@ -38,7 +38,16 @@ Route::get('/public-test', function () {
     return 'public test';
 });
 
-
 //user authentication
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
+
+Route::post('/upload', function (Request $request) {
+    // Excel::import(new GradeImport, $request->file('template'));
+    return $request->template->store('public');
+});
+
+Route::post('/import', function (Request $request) {
+    Excel::import(new GradeImport, storage_path("app/$request->template"));
+    return ['message' => 'ok'];
+});

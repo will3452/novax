@@ -17,11 +17,12 @@ class CreateStudentRecordsTable extends Migration
             $table->id();
             $table->integer('student_id');
             $table->integer('subject_id');
-            $table->integer('teacher_id');
-            $table->integer('academic_year_id');
-            $table->integer('semester_id');
+            $table->integer('teacher_id')->nullable();
+            $table->integer('academic_year_id')->nullable();
+            $table->integer('semester_id')->nullable();
             $table->integer('teaching_load_id')->nullable();
             $table->string('final_grade')->nullable();
+            $table->boolean('legacy')->default(false);
             $table->string('remarks')->nullable();
             $table->timestamps();
         });
