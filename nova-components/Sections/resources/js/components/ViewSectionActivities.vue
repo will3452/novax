@@ -37,7 +37,8 @@
                     New Activity
                 </a-button>
             </div>
-            <a-table :columns="columns" :data-source="load.activities">
+            <a-table :columns="columns" :data-source="load.activities.filter(e => e.category != 'Attendance')"
+                :scroll="{ x: true }">
                 <template slot="action" slot-scope="item, record">
                     <a-popover placement="leftBottom">
                         <div slot="content">
@@ -47,9 +48,14 @@
                                 </a-button>
                             </div>
                             <div>
-                                <a-button type="link">
-                                    <a-icon type="delete"></a-icon> Delete
-                                </a-button>
+                                <a-popconfirm placement="topLeft" ok-text="Yes" cancel-text="No"
+                                    @confirm="deleteActivity(record)">
+                                    <div slot="title">
+                                        Are you sure you want to delete this activity?
+                                    </div>
+                                    <a-button type="link">
+                                        <a-icon type="delete"></a-icon>Delete</a-button>
+                                </a-popconfirm>
                             </div>
                         </div>
                         <a-icon type="more"></a-icon>
@@ -134,6 +140,11 @@ export default {
         }
     },
     methods: {
+        async deleteActivity(a) {
+            let { data } = await axios.post('/nova-vendor/sections/remove-activity/' + a.id);
+            this.$notification.success({ message: 'Success', description: 'Activity has been deleted successfully' });
+            this.$emit('reload');
+        },
         edit(a) {
             this.payload = { ...a };
             this.showForm = true;

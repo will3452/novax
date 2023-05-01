@@ -9,7 +9,13 @@
         "prod": "npm run production",
         "production": "mix --production",
         "build-sections": "cd nova-components/Sections && npm run dev",
-        "build-sections-prod": "cd nova-components/Sections && npm run prod"
+        "build-sections-prod": "cd nova-components/Sections && npm run prod",
+        "build-ImportAndExport": "cd nova-components/ImportAndExport && npm run dev",
+        "build-ImportAndExport-prod": "cd nova-components/ImportAndExport && npm run prod",
+        "build-Import-and-export": "cd nova-components/ImportAndExport && npm run dev",
+        "build-Import-and-export-prod": "cd nova-components/ImportAndExport && npm run prod",
+        "build-Importandexport": "cd nova-components/Importandexport && npm run dev",
+        "build-Importandexport-prod": "cd nova-components/Importandexport && npm run prod"
     },
     "devDependencies": {
         "@popperjs/core": "^2.10.2",

@@ -20,7 +20,7 @@ class CreateStudentRecordsTable extends Migration
             $table->integer('teacher_id');
             $table->integer('academic_year_id');
             $table->integer('semester_id');
-            $table->integer('teaching_load_id');
+            $table->integer('teaching_load_id')->nullable();
             $table->string('final_grade')->nullable();
             $table->string('remarks')->nullable();
             $table->timestamps();

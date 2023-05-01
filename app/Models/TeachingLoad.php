@@ -26,6 +26,7 @@ class TeachingLoad extends Model
         'students.profile',
         'studentRecords',
         'activities',
+        'scores',
     ];
 
     public function teacher()
@@ -70,5 +71,10 @@ class TeachingLoad extends Model
     public function activities()
     {
         return $this->hasMany(Activity::class);
+    }
+
+    public function scores()
+    {
+        return $this->hasMany(Score::class);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Activity;
+use App\Models\Score;
 use App\Models\StudentRecord;
 use App\Models\TeachingLoad;
 use App\Models\User;
@@ -50,6 +51,27 @@ Route::post('/new-student', function (Request $request) {
     return StudentRecord::create($data);
 });
 
+Route::post('/update-record/{record}', function (Request $request, StudentRecord $record) {
+    $record->update($request->all());
+});
+
+Route::post('/generate-grade/{load}', function (Request $request, TeachingLoad $load) {
+
+    foreach ($load->studentRecords as $sr) {
+        $student = User::find($sr->student_id);
+        $sr->update([
+            'total_grade' => $student->getFinalGrade($load->id),
+            'final_grade' => $student->getTermGrade($load->id, 'Final'),
+            'pre_final_grade' => $student->getTermGrade($load->id, 'Pre-Final'),
+            'midterm_grade' => $student->getTermGrade($load->id, 'Midterm'),
+            'prelim_grade' => $student->getTermGrade($load->id, 'Prelim'),
+            'remarks' => $student->getFinalGrade($load->id) >= 75 ? 'PASSED' : 'FAILED',
+        ]);
+    }
+
+    return 1;
+});
+
 Route::post('/remove-student', function (Request $request) {
     return StudentRecord::where(['student_id' => $request->student_id, 'teaching_load_id' => $request->teaching_load_id])->delete();
 
@@ -86,4 +108,23 @@ Route::post('/update-activity/{a}', function (Request $request, Activity $a) {
         'type' => 'required',
     ]);
     return $a->update($data);
+});
+
+Route::post('/update-score', function (Request $request) {
+    $activity = Activity::find($request->activity_id);
+    $exists = Score::where(['activity_id' => $request->activity_id, 'student_id' => $request->student_id])->exists();
+
+    $data = [
+        'activity_id' => $activity->id,
+        'student_id' => $request->student_id,
+        'teaching_load_id' => $request->teaching_load_id,
+        'score' => $request->score,
+        'max_score' => $activity->max_score,
+    ];
+
+    if (!$exists) {
+        return Score::create($data);
+    }
+
+    return Score::where(['activity_id' => $request->activity_id, 'student_id' => $request->student_id])->update($data);
 });

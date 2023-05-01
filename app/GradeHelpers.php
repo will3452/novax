@@ -6,7 +6,8 @@ use Exception;
 
 const LIMIT = 70; // don't know the term for not make it limit muna XD
 
-class GradeHelpers {
+class GradeHelpers
+{
     /**
      *  get TransmutedValue
      *
@@ -15,7 +16,8 @@ class GradeHelpers {
      * @param int $number_of_items
      * @return int
      */
-    static function getTransmutedValue($initial_value, $number_of_items) {
+    public static function getTransmutedValue($initial_value, $number_of_items)
+    {
         try {
             if ($number_of_items < $initial_value) {
                 throw new Exception("Initial Grade is not valid.");
@@ -27,14 +29,15 @@ class GradeHelpers {
             $result = null;
 
             if ($isPassed) {
-                $result = $initial_value/$number_of_items*50+50;
+                $result = $initial_value / $number_of_items * 50 + 50;
             } else {
-                $result = ((($initial_value/$number_of_items*50+50) - 50)/4) + 65;
+                $result = ((($initial_value / $number_of_items * 50 + 50) - 50) / 4) + 65;
             }
 
             return intval(floor($result)); // FLOOR use to round down the result eg. 65.9 -> 65
         } catch (Exception $e) {
-            return $e->getMessage();
+            return 0;
         }
     }
+
 }
