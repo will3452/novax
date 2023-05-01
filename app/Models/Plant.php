@@ -21,5 +21,6 @@ class Plant extends Model
         'air',
         'light',
         'image',
+        'planting_methods',
     ];
 }

@@ -2,13 +2,12 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Plant extends Resource
 {
@@ -43,7 +42,7 @@ class Plant extends Resource
      */
     public function fields(Request $request)
     {
-        return[
+        return [
             ID::make()->sortable(),
 
             Select::make('Type')
@@ -67,12 +66,13 @@ class Plant extends Resource
                 ->rules('max:255'),
 
             Textarea::make('Description')
-                ->nullable()
-                ->rules('max:500'),
+                ->nullable(),
+
+            Textarea::make('Planting Method', 'planting_method')
+                ->nullable(),
 
             Textarea::make('Tips')
-                ->nullable()
-                ->rules('max:500'),
+                ->nullable(),
 
             Text::make('Temp')
                 ->nullable()
