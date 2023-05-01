@@ -39,6 +39,10 @@
         {
             "type": "path",
             "url": "./nova-components/Sections"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/ImportAndExport"
         }
     ],
     "require": {
@@ -61,7 +65,8 @@
         "spatie/nova-backup-tool": "^4.1",
         "elezerk/nsct": "*",
         "elezerk/nsct-my-sections": "*",
-        "nsct/sections": "*"
+        "nsct/sections": "*",
+        "nsct/import-and-export": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

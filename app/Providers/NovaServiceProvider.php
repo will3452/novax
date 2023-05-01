@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Nsct\ImportAndExport\ImportAndExport;
 use Nsct\Sections\Sections;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Spatie\BackupTool\BackupTool;
@@ -98,6 +99,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         if (auth()->user()->type == User::TYPE_TEACHER) {
             return [
                 Sections::make(),
+                ImportAndExport::make(),
             ];
         }
         return [

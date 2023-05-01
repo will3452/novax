@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4ecf80c6240be10d987d7a60c54dbd1b",
+    "content-hash": "45a12e347371c583c75b18717f5a5056",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2898,6 +2898,42 @@
                 "source": "https://github.com/nikic/PHP-Parser/tree/v4.15.4"
             },
             "time": "2023-03-05T19:49:14+00:00"
+        },
+        {
+            "name": "nsct/import-and-export",
+            "version": "dev-college-grade-management-system",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/ImportAndExport",
+                "reference": "0870ff4b821ba6cfc441875b55d19e5b93ceefe8"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Nsct\\ImportAndExport\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nsct\\ImportAndExport\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova tool.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "nsct/sections",
