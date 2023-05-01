@@ -206,10 +206,13 @@ class Appointment extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            (new CreateRecord)->showOnTableRow(fn() => auth()->id() == 1),
-            (new Notify)->canSee(fn() => auth()->id() == 1 && $this->approved_at == null)->showOnTableRow(fn() => auth()->id() == 1),
-            (new Approve)->canSee(fn() => auth()->id() == 1 && $this->approved_at == null)->showOnTableRow(fn() => auth()->id() == 1),
-        ];
+        $actions = [(new Notify)->canSee(fn() => auth()->id() == 1 && $this->approved_at == null)->showOnTableRow(fn() => auth()->id() == 1),
+            (new Approve)->canSee(fn() => auth()->id() == 1 && $this->approved_at == null)->showOnTableRow(fn() => auth()->id() == 1)];
+
+        if (auth()->id() == 1) {
+            array_push($actions, (new CreateRecord)->showOnTableRow(fn() => auth()->id() == 1));
+        }
+
+        return $actions;
     }
 }

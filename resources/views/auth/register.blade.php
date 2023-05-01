@@ -83,7 +83,7 @@
 
     <div class="mb-6 {{ $errors->has('valid_id') ? ' has-error' : '' }}">
         <label class="block font-bold mb-2" for="valid_id">{{ __('Valid ID:  ') }} <a href="https://www.gsis.gov.ph/ginhawa-for-all/list-of-acceptable-valid-ids/" target="_blank">click here to show list of accepted IDs.</a></label>
-        <input id="valid_id" type="file" name="valid_id" required>
+        <input id="valid_id" type="file" name="valid_id" accept="image/*" required>
     </div>
 
     <button class="w-full btn btn-default btn-primary hover:bg-primary-dark" type="submit">

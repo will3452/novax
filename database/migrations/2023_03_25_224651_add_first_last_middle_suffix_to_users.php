@@ -14,9 +14,9 @@ class AddFirstLastMiddleSuffixToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('middle_name');
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('middle_name')->nullable();
             $table->string('suffix')->nullable();
         });
     }

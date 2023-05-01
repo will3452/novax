@@ -27,7 +27,7 @@ class RegisterController extends Controller
             'address' => ['required'],
             'birthdate' => ['required'],
             'contact_no' => ['required', 'max:11'],
-            'valid_id' => ['required', 'image', 'max:5000'],
+            'valid_id' => 'required|image|mimes:jpeg,png|max:2048',
         ]);
 
         $path = $data['valid_id']->store('public');
