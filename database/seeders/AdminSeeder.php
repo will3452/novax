@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Log;
 
 class AdminSeeder extends Seeder
 {
@@ -16,11 +15,12 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        $superadmin = Role::create(['name'=>Role::SUPERADMIN]);
+        $superadmin = Role::create(['name' => Role::SUPERADMIN]);
         $user = User::create([
-            'name'=>'superadmin',
-            'email'=>'super@admin.com',
-            'password'=> bcrypt('password')
+            'name' => 'admin',
+            'email' => 'admin@erp.com',
+            'password' => bcrypt('password'),
+            'type' => User::TYPE_ADMIN,
         ]);
 
         $user->assignRole($superadmin);

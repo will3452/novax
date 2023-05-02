@@ -4,10 +4,10 @@ namespace App\Nova;
 
 use App\Models\Permission;
 use App\Models\Role as ModelsRole;
+use Coreproc\NovaPermissionsField\NovaPermissionsField;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Coreproc\NovaPermissionsField\NovaPermissionsField;
 
 class Role extends Resource
 {
@@ -21,7 +21,6 @@ class Role extends Resource
         return config('novax.role_enabled', false);
     }
 
-    public static $group = 'access Control';
     /**
      * The model the resource corresponds to.
      *
