@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect()->to('/admin/login');
+    // return view('welcome');
+});
+
+Route::get('/about', function () {
+    // return redirect()->to('/admin/login');
+    return view('welcome');
 });
 
 Route::get('/register', [RegisterController::class, 'registrationPage']);
