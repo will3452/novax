@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Models\User as ModelsUser;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Select;
@@ -81,6 +82,7 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
+            HasOne::make("Profile", 'profile', Profile::class),
             HasMany::make('Teaching Loads', 'teachingLoads', TeachingLoad::class),
         ];
     }

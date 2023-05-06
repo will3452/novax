@@ -43,3 +43,8 @@ Route::prefix('ajax')->group(function () {
         return auth()->user()->comments()->create($request->all());
     });
 });
+
+Route::get('/logout', function (Request $request) {
+    auth()->user()->update(['last_login_at' => now()]);
+    return redirect()->to(route('nova.logout'));
+});

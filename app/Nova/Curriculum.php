@@ -2,17 +2,38 @@
 
 namespace App\Nova;
 
+use App\Models\User as ModelUser;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 
 class Curriculum extends Resource
 {
 
+    // public static function availableForNavigation(Request $request)
+    // {
+    //     return auth()->id() == 1;
+    // }
+
     public static function availableForNavigation(Request $request)
     {
-        return auth()->id() == 1;
+        return auth()->user()->type == ModelUser::TYPE_TEACHER || auth()->user()->type == ModelUser::TYPE_ADMIN;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return auth()->user()->type == ModelUser::TYPE_ADMIN;
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return auth()->user()->type == ModelUser::TYPE_ADMIN;
+    }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return auth()->user()->type == ModelUser::TYPE_ADMIN;
     }
     /**
      * The model the resource corresponds to.
@@ -48,7 +69,7 @@ class Curriculum extends Resource
         return [
             Text::make('Name'),
             BelongsTo::make('Academic Year', 'academicYear', AcademicYear::class),
-
+            HasMany::make('Curriculum Subject', 'curriculumSubjects', CurriculumSubject::class),
         ];
     }
 

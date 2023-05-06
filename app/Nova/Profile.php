@@ -2,9 +2,9 @@
 
 namespace App\Nova;
 
+use App\Models\User as ModelUser;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 
@@ -12,7 +12,22 @@ class Profile extends Resource
 {
     public static function availableForNavigation(Request $request)
     {
-        return auth()->id() == 1;
+        return auth()->user()->type == ModelUser::TYPE_ADMIN;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return auth()->user()->type == ModelUser::TYPE_ADMIN;
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return auth()->user()->type == ModelUser::TYPE_ADMIN;
+    }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return auth()->user()->type == ModelUser::TYPE_ADMIN;
     }
 
     /**
@@ -63,7 +78,10 @@ class Profile extends Resource
             Text::make('Address'),
             Text::make('Mobile'),
             BelongsTo::make('User', 'user', User::class)
+                ->hideFromDetail(auth()->user()->type != ModelUser::TYPE_ADMIN)
+                ->hideFromIndex(auth()->user()->type != ModelUser::TYPE_ADMIN)
                 ->showCreateRelationButton(),
+            BelongsTo::make('Curriculum', 'curriculum', Curriculum::class),
         ];
     }
 

@@ -14,15 +14,13 @@ class Curriculum extends Model
         'academic_year_id',
     ];
 
-    public function academicYear() {
+    public function academicYear()
+    {
         return $this->belongsTo(AcademicYear::class, 'academic_year_id');
     }
 
-    // public function subjects () {
-    //     return $this->belongsToMany(Curriculum::class, 'curriculum_subject', 'subject_id', );
-    // }
-
-    public function curriculumSubjects () {
+    public function curriculumSubjects()
+    {
         return $this->hasMany(CurriculumSubject::class, 'curriculum_id');
     }
 }

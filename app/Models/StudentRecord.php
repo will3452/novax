@@ -32,4 +32,19 @@ class StudentRecord extends Model
     {
         return $this->belongsTo(User::class, 'student_id');
     }
+
+    public function teachingLoad()
+    {
+        return $this->belongsTo(TeachingLoad::class, 'teaching_load_id');
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
+
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class);
+    }
 }

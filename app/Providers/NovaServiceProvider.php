@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\User;
 use App\Nova\Metrics\Faculties;
+use App\Nova\Metrics\Sections as MySections;
 use App\Nova\Metrics\Students;
 use App\Nova\Metrics\Subjects;
 use App\Nova\Metrics\TotalSections;
@@ -67,16 +68,21 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
+        $cards = [];
         if (auth()->user()->type == User::TYPE_ADMIN) {
-            return [
-                Users::make(),
-                Subjects::make(),
-                TotalSections::make(),
-                Faculties::make(),
-                Students::make(),
-            ];
+            $cards[] = Users::make();
+            $cards[] = Subjects::make();
+            $cards[] = TotalSections::make();
+            $cards[] = Faculties::make();
+            $cards[] = Students::make();
         }
-        return [];
+
+        if (auth()->user()->type == User::TYPE_TEACHER) {
+            $cards[] = Students::make();
+            $cards[] = MySections::make();
+        }
+
+        return $cards;
     }
 
     /**
@@ -102,6 +108,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ImportAndExport::make(),
             ];
         }
+
+        if (auth()->user()->type == User::TYPE_STUDENT) {
+            return [
+                Sections::make(),
+            ];
+        }
+
         return [
             (new BackupTool)->canSee(function ($request) {
                 return config('novax.back_up_enabled');
@@ -109,6 +122,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             (new NovaSettings)->canSee(function ($request) {
                 return config('novax.setting_enabled') && auth()->id() == 1;
             }),
+
         ];
     }
 

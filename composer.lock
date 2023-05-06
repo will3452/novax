@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e9991e2b5105469411782c3b7c27cd1",
+    "content-hash": "0712449534c9f8da97591b1ace07b7d5",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1067,6 +1067,78 @@
             "time": "2020-12-29T14:50:06+00:00"
         },
         {
+            "name": "elezerk/about",
+            "version": "dev-college-grade-management-system",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/About",
+                "reference": "e81d88795760c5f6bad136a1b7af553718a17e56"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Elezerk\\About\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Elezerk\\About\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova tool.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "elezerk/my-section",
+            "version": "dev-college-grade-management-system",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/MySection",
+                "reference": "3c31d84067f79b09503e5ba95729809f97d275ce"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Elezerk\\MySection\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Elezerk\\MySection\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova tool.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "elezerk/nsct",
             "version": "dev-college-grade-management-system",
             "dist": {
@@ -1162,6 +1234,66 @@
                 "source": "https://github.com/ezyang/htmlpurifier/tree/v4.16.0"
             },
             "time": "2022-09-18T07:06:19+00:00"
+        },
+        {
+            "name": "flatroy/nova-progressbar-field",
+            "version": "0.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Flatroy/nova-progressbar-field.git",
+                "reference": "ff8716a3aec11eb1014489bd789079a5def582f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Flatroy/nova-progressbar-field/zipball/ff8716a3aec11eb1014489bd789079a5def582f1",
+                "reference": "ff8716a3aec11eb1014489bd789079a5def582f1",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Flatroy\\FieldProgressbar\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Flatroy\\FieldProgressbar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "George Daneke",
+                    "email": "hi@daneke.ge",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Ro Kleine Sonne",
+                    "email": "ro@signifly.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel Nova progress bar field.",
+            "keywords": [
+                "fields",
+                "laravel",
+                "nova",
+                "progress",
+                "progressbar"
+            ],
+            "support": {
+                "issues": "https://github.com/Flatroy/nova-progressbar-field/issues",
+                "source": "https://github.com/Flatroy/nova-progressbar-field/tree/0.0.6"
+            },
+            "time": "2022-12-11T15:35:21+00:00"
         },
         {
             "name": "fruitcake/laravel-cors",
@@ -4410,16 +4542,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.11.16",
+            "version": "v0.11.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "151b145906804eea8e5d71fea23bfb470c904bfb"
+                "reference": "3dc5d4018dabd80bceb8fe1e3191ba8460569f0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/151b145906804eea8e5d71fea23bfb470c904bfb",
-                "reference": "151b145906804eea8e5d71fea23bfb470c904bfb",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/3dc5d4018dabd80bceb8fe1e3191ba8460569f0a",
+                "reference": "3dc5d4018dabd80bceb8fe1e3191ba8460569f0a",
                 "shasum": ""
             },
             "require": {
@@ -4480,9 +4612,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.11.16"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.11.17"
             },
-            "time": "2023-04-26T12:53:57+00:00"
+            "time": "2023-05-05T20:02:42+00:00"
         },
         {
             "name": "ralouphie/getallheaders",

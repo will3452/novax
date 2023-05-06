@@ -11,7 +11,7 @@
                     </a-form-model-item>
                 </a-form-model>
             </a-modal>
-            <a-card>
+            <a-card v-if="user.type != 'Student'">
                 <div slot="title">
                     <a-icon type="notification" />
                     ANNOUNCEMENTS
@@ -42,27 +42,26 @@
                             <a-row :gutter="[16, 16]">
                                 <a-col :span="20">
                                     <a-form-model-item prop="comment">
-                                        <a-textarea v-model="comment.comment"></a-textarea>
+                                        <a-textarea :ref="`a${a.id}`"></a-textarea>
                                     </a-form-model-item>
                                 </a-col>
                                 <a-col :span="4">
-                                    <a-button>
+                                    <a-button @click="submitComment(a.id, `a${a.id}`)">
                                         Submit
                                     </a-button>
                                 </a-col>
                             </a-row>
                         </a-form-model>
                         <a-row :gutter="[16, 16]">
-                            <a-col>
+                            <a-col v-for="c in a.comments" :key="c.id">
                                 <a-comment>
-
-                                    <a slot="author">Han Solo</a>
+                                    <a slot="author">{{ c.user.name }}</a>
                                     <a-avatar slot="avatar"
-                                        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                                        :src="'https://ui-avatars.com/api/?background=random&name=' + c.user.name"
                                         alt="Han Solo" />
-                                    <p slot="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi quas,
+                                    <p slot="content">{{ c.content }}
                                     </p>
-                                    <a-tooltip slot="datetime" :title="moment().format('YYYY-MM-DD HH:mm:ss')">
+                                    <a-tooltip slot="datetime" :title="moment(c.created_at).format('YYYY-MM-DD HH:mm:ss')">
                                         <span>{{ moment().fromNow() }}</span>
                                     </a-tooltip>
                                 </a-comment>
@@ -88,7 +87,7 @@ export default {
     components: {
         SectionCardItem
     },
-    props: ['load'],
+    props: ['load', 'user'],
     data() {
         return {
             showModal: false,
@@ -111,6 +110,22 @@ export default {
     },
     methods: {
         moment,
+        async submitComment(aId, box) {
+            try {
+
+                let { data } = axios.post('/api/comments', {
+                    content: this.$refs[box][0].$el.value,
+                    user_id: this.user.id,
+                    commentable_id: aId
+                });
+
+                this.$refs[box][0].setValue('')
+
+                this.$emit('reload');
+            } catch (error) {
+                this.$notification.error('Submit comment error')
+            }
+        },
         submit() {
             this.$refs.form.validate((valid) => {
                 if (valid) {

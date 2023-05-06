@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\GradeHelpers;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -22,6 +23,8 @@ class User extends Authenticatable
         'email',
         'password',
         'type',
+        'last_login_at',
+        'remark',
     ];
 
     const TYPE_TEACHER = 'Teacher';
@@ -35,7 +38,7 @@ class User extends Authenticatable
 
     public function profile()
     {
-        return $this->hasOne(Profile::class);
+        return $this->hasOne(Profile::class, 'user_id');
     }
 
     public function comments()
@@ -52,6 +55,76 @@ class User extends Authenticatable
     {
         return $this->hasMany(Announcement::class);
     }
+
+    public function subjects()
+    {
+        return $this->profile->curriculum->curriculumSubjects;
+    }
+
+    public function progress()
+    {
+        $subjects = $this->subjects();
+        $withGrades = StudentRecord::where([
+            'student_id' => $this->id,
+        ])->whereIn('subject_id', $subjects->pluck('id')->all())->get()->pluck('subject_id')->all();
+        $withoutGrades = array_values(array_diff($subjects->pluck('id')->all(), $withGrades));
+        // $withoutGrades = [];
+
+        $subjectCount = count($subjects);
+
+        return [
+            'total_subject' => $subjectCount,
+            'subjects' => $subjects->pluck('id')->all(),
+            'with_grades' => $withGrades,
+            'without_grades' => $withoutGrades,
+            'progress_rate' => (($subjectCount - count($withoutGrades)) / $subjectCount) * 100,
+        ];
+    }
+
+    public function lessThan($less, $arr)
+    {
+        return count(array_filter($arr, function ($number) use ($less) {
+            return $number < $less;
+        })) != 0;
+    }
+
+    public function calculateGPA()
+    {
+        try {
+            $remarks = null;
+            $progressRate = $this->progress()['progress_rate'];
+            if ($progressRate == 100) {
+                $subjects = $this->subjects();
+                $totalGrade = 0;
+                $grades = [];
+                $n = 0;
+                foreach ($subjects as $subject) {
+                    $grade = StudentRecord::whereStudentId($this->id)->latest()->first()->total_grade;
+                    $grades[] = $grade;
+                    $totalGrade += $grade;
+                    $n++;
+                }
+
+                $gradeAverage = $totalGrade / $n;
+
+                if ($gradeAverage >= 94 && !$this->lessThan(94, $grades)) {
+                    $remarks = 'SUMMA CUM LAUDE';
+                } else if ($gradeAverage >= 88 && !$this->lessThan(88, $grades)) {
+                    $remarks = 'MAGNA CUM LAUDE';
+                } else if ($gradeAverage >= 85 && !$this->lessThan(85, $grades)) {
+                    $remarks = 'CUM LAUDE';
+                } else if ($gradeAverage >= 85 && !$this->lessThan(85, $grades)) {
+                    $remarks = 'WITH DISTINCTION';
+                }
+                $this->update(['remark' => $remarks]);
+            }
+        } catch (Exception $e) {
+
+            return $e->getMessage();
+            return null;
+        }
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -127,5 +200,17 @@ class User extends Authenticatable
         $final = $this->getTermGrade($loadId, 'Final') * .3;
         return ($prelim + $midterm + $preFinal + $final);
         // return GradeHelpers::getTransmutedValue($prelim + $midterm + $preFinal + $final, 100);
+    }
+
+    // scopes
+
+    public function scopeStudent($query)
+    {
+        return $query->whereType(User::TYPE_STUDENT);
+    }
+
+    public function studentRecords()
+    {
+        return $this->hasMany(StudentRecord::class, 'student_id');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Models\User as ModelUser;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
@@ -12,6 +13,21 @@ class AcademicYear extends Resource
     public static function availableForNavigation(Request $request)
     {
         return auth()->id() == 1;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return auth()->user()->type == ModelUser::TYPE_ADMIN;
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return auth()->user()->type == ModelUser::TYPE_ADMIN;
+    }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return auth()->user()->type == ModelUser::TYPE_ADMIN;
     }
     /**
      * The model the resource corresponds to.

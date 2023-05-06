@@ -27,12 +27,27 @@
         {
             "type": "path",
             "url": "./nova-components/ImportAndExport"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/MySection"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/About"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/About"
         }
     ],
     "require": {
         "php": "^7.3|^8.0",
         "coreproc/nova-permissions-field": "*",
+        "elezerk/about": "*",
+        "elezerk/my-section": "*",
         "elezerk/nsct": "*",
+        "flatroy/nova-progressbar-field": "^0.0.6",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.65",

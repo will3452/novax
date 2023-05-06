@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/user', function (Request $request) {
     $user = auth()->user();
-    $user->load(['teachingLoads']);
+    $user->load(['teachingLoads', 'studentRecords']);
     return $user;
 });
 
@@ -29,6 +29,10 @@ Route::get('/teaching-loads/{load}', function (Request $request, TeachingLoad $l
         return $query->latest();
     }]);
     return $load;
+});
+
+Route::post('/get-loads', function (Request $request) {
+    return TeachingLoad::whereIn('id', $request->loads)->get();
 });
 
 Route::post('/new-student', function (Request $request) {
@@ -59,6 +63,7 @@ Route::post('/generate-grade/{load}', function (Request $request, TeachingLoad $
 
     foreach ($load->studentRecords as $sr) {
         $student = User::find($sr->student_id);
+        $student->calculateGPA();
         $sr->update([
             'total_grade' => $student->getFinalGrade($load->id),
             'final_grade' => $student->getTermGrade($load->id, 'Final'),
