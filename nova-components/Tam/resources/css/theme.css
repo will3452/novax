@@ -1,22 +1,21 @@
 :root {
-    --primary: #4e89ae;
-    --primary-dark: #2a4e6e;
-    --primary-70: rgba(78, 137, 174, 0.7);
-    --primary-50: rgba(78, 137, 174, 0.5);
-    --primary-30: rgba(78, 137, 174, 0.3);
-    --primary-10: rgba(78, 137, 174, 0.1);
-    --logo: #430051;
-    --sidebar-icon: #db34de;
+    --primary: #007acc;
+    --primary-dark: #004a7c;
+    --primary-70: rgba(0, 122, 204, 0.7);
+    --primary-50: rgba(0, 122, 204, 0.5);
+    --primary-30: rgba(0, 122, 204, 0.3);
+    --primary-10: rgba(0, 122, 204, 0.1);
+    --logo: #1f1f1f;
+    --sidebar-icon: #1f1f1f;
 }
 
 .bg-grad-sidebar {
     background-image: -webkit-gradient(linear,
             left bottom,
             left top,
-            from(#4e89ae),
-            to(#2a4e6e));
-
+            from(#007acc),
+            to(#004a7c));
     background-image: linear-gradient(0deg,
-            #4e89ae,
-            #2a4e6e);
+            #007acc,
+            #004a7c);
 }

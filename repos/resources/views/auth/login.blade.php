@@ -35,6 +35,22 @@
         <input class="form-control form-input form-input-bordered w-full" id="password" type="password" name="password" required>
     </div>
 
+    <div class="flex mb-6">
+        <label class="flex items-center text-xl font-bold">
+            <input class="" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+            <span class="text-base ml-2">{{ __('Remember Me') }}</span>
+        </label>
+
+
+        @if (\Laravel\Nova\Nova::resetsPasswords())
+        <div class="ml-auto">
+            <a class="text-primary dim font-bold no-underline" href="{{ route('nova.password.request') }}">
+                {{ __('Forgot Your Password?') }}
+            </a>
+        </div>
+        @endif
+    </div>
+
 
     <button class="w-full btn btn-default btn-primary hover:bg-primary-dark" type="submit">
         {{ __('LOGIN NOW') }}

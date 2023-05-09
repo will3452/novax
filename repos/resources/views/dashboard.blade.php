@@ -1,5 +1,5 @@
 @extends('nova::layout')
 
 @section('content')
-Dashboard Content
+hello world
 @endsection

@@ -30,9 +30,12 @@
         <link rel="stylesheet" href="{{ $publicPath }}">
     @endforeach
 </head>
-<body class="min-w-site  text-90 font-medium min-h-full">
+<body class="min-w-site bg-40 text-90 font-medium min-h-full">
     <div id="nova">
         <div v-cloak class="flex min-h-screen">
+
+
+
             <!-- Sidebar -->
             <div class="flex-none pt-header min-h-screen w-sidebar bg-grad-sidebar px-6">
                 <a href="{{ \Laravel\Nova\Nova::path() }}">
@@ -53,9 +56,9 @@
                         {{ \Laravel\Nova\Nova::name() }}
                     </a>
 
-                    @if (count(\Laravel\Nova\Nova::globallySearchableResources(request())) > 0)
+                    {{-- @if (count(\Laravel\Nova\Nova::globallySearchableResources(request())) > 0)
                         <global-search dusk="global-search-component"></global-search>
-                    @endif
+                    @endif --}}
 
                     <dropdown class="ml-auto h-9 flex items-center dropdown-right">
                         @include('nova::partials.user')
