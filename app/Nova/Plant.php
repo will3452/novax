@@ -68,7 +68,7 @@ class Plant extends Resource
             Textarea::make('Description')
                 ->nullable(),
 
-            Textarea::make('Planting Method', 'planting_method')
+            Textarea::make('Planting Method', 'planting_methods')
                 ->nullable(),
 
             Textarea::make('Tips')
