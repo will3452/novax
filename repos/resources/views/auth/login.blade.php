@@ -12,7 +12,7 @@
     {{ csrf_field() }}
 
     @component('nova::auth.partials.heading')
-        {{ __('Welcome Back!') }}
+        {{ __('Ticketing management system') }}
     @endcomponent
 
     @if ($errors->any())
