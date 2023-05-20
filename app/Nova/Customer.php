@@ -7,6 +7,10 @@ use Laravel\Nova\Fields\Text;
 
 class Customer extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->isAdmin();
+    }
     /**
      * The model the resource corresponds to.
      *

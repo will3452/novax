@@ -4,7 +4,6 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 
 class Product extends Resource
@@ -45,12 +44,10 @@ class Product extends Resource
             Text::make('Name')
                 ->rules(['required'])
                 ->sortable(),
-            Currency::make('Price')
-                ->sortable()
-                ->rules(['required']),
-            Number::make('Quantity', 'qty')
+            Text::make('Category')
                 ->rules(['required'])
                 ->sortable(),
+            Currency::make('Price')->rules(['required']),
         ];
     }
 

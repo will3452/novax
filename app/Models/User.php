@@ -22,10 +22,16 @@ class User extends Authenticatable
         'email',
         'password',
         'type',
+        'position_id',
     ];
 
     const TYPE_ADMIN = 'Administrator';
     const TYPE_STAFF = 'Staff';
+
+    public function isAdmin()
+    {
+        return self::TYPE_ADMIN == $this->type;
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -45,4 +51,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function position()
+    {
+        return $this->belongsTo(Position::class);
+    }
 }

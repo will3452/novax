@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Models\User as ModelsUser;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
@@ -45,9 +46,11 @@ class User extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
+
     public function fields(Request $request)
     {
         return [
+            BelongsTo::make('Position'),
             Select::make('Type')
                 ->options([
                     ModelsUser::TYPE_ADMIN => ModelsUser::TYPE_ADMIN,
