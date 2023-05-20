@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\NewClients;
+use App\Nova\Metrics\Tasks;
 use App\Nova\Metrics\Users;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Fields\Image;
@@ -10,6 +12,7 @@ use Laravel\Nova\NovaApplicationServiceProvider;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Runline\ProfileTool\ProfileTool;
 use Spatie\BackupTool\BackupTool;
+use TicketingManagementSystem\TaskBoard\TaskBoard;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -76,6 +79,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     return config('novax.time_enabled');
                 }),
             Users::make(),
+            NewClients::make(),
+            Tasks::make(),
         ];
     }
 
@@ -97,6 +102,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
+            (new TaskBoard),
             (new ProfileTool)->canSee(function () {
                 return config('novax.profile_enabled');
             }),

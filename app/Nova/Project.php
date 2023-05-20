@@ -2,11 +2,14 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\AssignToDepartment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Country;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\File;
+use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\Text;
 
 class Project extends Resource
@@ -23,7 +26,7 @@ class Project extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -43,11 +46,14 @@ class Project extends Resource
     public function fields(Request $request)
     {
         return [
+
+            BelongsTo::make('Classification'),
+
             Text::make('Name')->sortable(),
 
             Text::make('Description'),
 
-            Text::make('Country'),
+            Country::make('Country')->searchable(),
 
             Text::make('Address'),
 
@@ -60,6 +66,8 @@ class Project extends Resource
             Date::make('End Date'),
 
             Currency::make('Revenue'),
+
+            HasOne::make('Task'),
         ];
     }
 
@@ -104,6 +112,8 @@ class Project extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            AssignToDepartment::make(),
+        ];
     }
 }

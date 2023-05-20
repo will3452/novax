@@ -23,7 +23,7 @@ class Ticket extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -43,6 +43,8 @@ class Ticket extends Resource
     public function fields(Request $request)
     {
         return [
+
+            BelongsTo::make('Classification'),
 
             Text::make('Name')->sortable(),
 

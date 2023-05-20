@@ -31,4 +31,9 @@ class Ticket extends Model
     {
         return $this->belongsTo(Project::class, 'project_id');
     }
+
+    public function classification()
+    {
+        return $this->belongsTo(Classification::class, 'classification_id');
+    }
 }

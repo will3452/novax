@@ -9,6 +9,11 @@ class Project extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
+    ];
+
     protected $fillable = [
         'name',
         'description',
@@ -19,11 +24,22 @@ class Project extends Model
         'start_date',
         'end_date',
         'revenue',
+        'classification_id',
         'status_id',
     ];
 
     public function client()
     {
         return $this->belongsTo(Client::class, 'client_id');
+    }
+
+    public function classification()
+    {
+        return $this->belongsTo(Classification::class, 'classification_id');
+    }
+
+    public function task()
+    {
+        return $this->hasOne(Task::class, 'project_id');
     }
 }
