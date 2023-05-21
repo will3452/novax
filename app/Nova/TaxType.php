@@ -9,6 +9,10 @@ use Laravel\Nova\Fields\Textarea;
 
 class TaxType extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return false;
+    }
     /**
      * The model the resource corresponds to.
      *

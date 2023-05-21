@@ -17,10 +17,8 @@ class CreateTaxPayerAccountsTable extends Migration
             $table->id();
             $table->string('tax_id')->nullable();
             $table->string('taxpayer_name')->nullable();
-            $table->string('taxpayer_address')->nullable();
-            $table->string('taxpayer_city')->nullable();
-            $table->string('taxpayer_state')->nullable();
-            $table->string('taxpayer_zip')->nullable();
+            $table->string('taxpayer_lat')->nullable();
+            $table->string('taxpayer_lng')->nullable();
             $table->timestamps();
         });
     }

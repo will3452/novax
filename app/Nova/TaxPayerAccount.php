@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use GeneaLabs\NovaMapMarkerField\MapMarker;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -49,20 +50,9 @@ class TaxPayerAccount extends Resource
                 ->sortable()
                 ->rules('required'),
 
-            Text::make('Taxpayer Address')
-                ->sortable()
-                ->rules('required'),
-
-            Text::make('Taxpayer City')
-                ->sortable()
-                ->rules('required'),
-
-            Text::make('Taxpayer State')
-                ->sortable()
-                ->rules('required'),
-
-            Text::make('Taxpayer ZIP')
-                ->sortable()
+            MapMarker::make('Taxpayer Address')
+                ->latitude('taxpayer_lat')
+                ->longitude('taxpayer_lng')
                 ->rules('required'),
         ];
     }

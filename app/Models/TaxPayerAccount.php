@@ -12,9 +12,7 @@ class TaxPayerAccount extends Model
     protected $fillable = [
         'tax_id',
         'taxpayer_name',
-        'taxpayer_address',
-        'taxpayer_city',
-        'taxpayer_state',
-        'taxpayer_zip',
+        'taxpayer_lat',
+        'taxpayer_lng',
     ];
 }
