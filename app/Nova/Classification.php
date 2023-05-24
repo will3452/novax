@@ -2,12 +2,17 @@
 
 namespace App\Nova;
 
+use App\Nova\Category;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Text;
 
 class Classification extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->role == 'Administrator';
+    }
     /**
      * The model the resource corresponds to.
      *

@@ -7,7 +7,7 @@
                 <a-icon type="loading" slot="indicator"></a-icon>
                 <drag style="margin-bottom: 0.5em; " @dragend="dragendHandler" v-for="item in filteredItems" :key="item.id"
                     :data="item">
-                    <a-card hoverable>
+                    <a-card @click='$emit("show-details", item)' hoverable>
                         <a-row align="top" slot="title" :gutter="[5, 5]" type="flex">
                             <a-icon type="align-left" class="mr-2" />
                             <div>
@@ -34,7 +34,6 @@
 
 <script>
 
-import { thisExpression } from '@babel/types';
 import { Drag, Drop } from 'vue-easy-dnd';
 
 export default {
@@ -49,6 +48,7 @@ export default {
             items: [],
             loading: true,
             keyword: '',
+            showDrawer: false,
         }
     },
     async mounted() {

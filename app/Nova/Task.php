@@ -9,6 +9,10 @@ use Laravel\Nova\Fields\Text;
 
 class Task extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->role == 'Administrator';
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -45,6 +49,7 @@ class Task extends Resource
             BelongsTo::make('Project'),
             BelongsTo::make('Ticket'),
             BelongsTo::make('Department'),
+            BelongsTo::make('Person InCharge', 'user', User::class),
             BelongsTo::make('Created By', 'createdBy', User::class),
             Text::make('Status')->readonly(),
         ];

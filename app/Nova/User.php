@@ -44,6 +44,7 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
+            BelongsTo::make('Department'),
             Select::make('Role')
                 ->rules(['required'])
                 ->options([

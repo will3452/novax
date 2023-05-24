@@ -7,6 +7,10 @@ use Laravel\Nova\Fields\Text;
 
 class Position extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->role == 'Administrator';
+    }
     /**
      * The model the resource corresponds to.
      *

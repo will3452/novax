@@ -4,6 +4,7 @@ namespace App\Nova\Actions;
 
 use App\Models\Department;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
@@ -24,6 +25,26 @@ class AssignToDepartment extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
+        // get the department member
+        $userDepartments = User::where('department_id', $fields['department'])->get();
+
+        $user = null;
+        $min = null;
+        foreach ($userDepartments as $u) {
+            $userTask = $u->tasks()->where('status', '!=', 'DONE')->count();
+
+            if ($min == null) {
+                $min = $userTask;
+                $user = $u->id;
+                continue;
+            }
+
+            if ($min < $userTask) {
+                $min = $userTask;
+                $user = $u->id;
+            }
+
+        }
         $modelType = explode('\\', get_class($models[0]))[2];
         $field = strtolower($modelType) . '_id';
         foreach ($models as $model) {
@@ -34,6 +55,7 @@ class AssignToDepartment extends Action
                 Task::create([
                     $field => $model->id,
                     'department_id' => $fields['department'],
+                    'user_id' => $user,
                     'status' => Task::STATUS_FOR_APPROVAL,
                     'created_by' => auth()->id(),
                 ]);

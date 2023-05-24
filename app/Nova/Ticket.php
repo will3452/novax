@@ -2,8 +2,10 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\AssignToDepartment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Country;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\File;
@@ -11,6 +13,10 @@ use Laravel\Nova\Fields\Text;
 
 class Ticket extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->role == 'Administrator';
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -50,7 +56,7 @@ class Ticket extends Resource
 
             Text::make('Description'),
 
-            Text::make('Country'),
+            Country::make('Country'),
 
             Text::make('Address'),
 
@@ -109,6 +115,8 @@ class Ticket extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            AssignToDepartment::make(),
+        ];
     }
 }

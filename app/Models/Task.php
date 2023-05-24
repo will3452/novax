@@ -51,4 +51,9 @@ class Task extends Model
     {
         return $this->belongsTo(Project::class, 'project_id');
     }
+
+    public function taskActivities()
+    {
+        return $this->hasMany(TaskActivity::class);
+    }
 }

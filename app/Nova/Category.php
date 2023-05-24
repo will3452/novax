@@ -3,11 +3,14 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 
 class Category extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->role == 'Administrator';
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -42,7 +45,6 @@ class Category extends Resource
     {
         return [
             Text::make('Category')->rules(['required']),
-            HasMany::make('Classifications', 'classifications', Classification::class),
         ];
     }
 
