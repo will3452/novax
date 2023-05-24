@@ -27,7 +27,7 @@ class GeneratePayroll extends Action
     {
         $users = User::whereHas('position')->with('position')->get();
         foreach ($users as $user) {
-            $attendances = Attendance::whereBetween('created_at', [$fields['from'], $fields['to']])->get();
+            $attendances = Attendance::whereUserId($user->id)->whereBetween('created_at', [$fields['from'], $fields['to']])->get();
 
             $compensation = $user->position->daily_rate * count($attendances);
 

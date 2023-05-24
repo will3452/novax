@@ -1,22 +1,14 @@
 :root {
-    --primary: #34495e;
-    --primary-dark: #2c3e50;
-    --primary-70: rgba(52, 73, 94, 0.7);
-    --primary-50: rgba(52, 73, 94, 0.5);
-    --primary-30: rgba(52, 73, 94, 0.3);
-    --primary-10: rgba(52, 73, 94, 0.1);
-    --logo: #2c3e50;
+    --primary: darkred;
+    --primary-dark: brown;
+    --primary-70: rgba(153, 0, 18, 0.7);
+    --primary-50: rgba(153, 0, 18, 0.5);
+    --primary-30: rgba(153, 0, 18, 0.3);
+    --primary-10: rgba(153, 0, 18, 0.1);
+    --logo: #brown;
     --sidebar-icon: #fff;
 }
 
 .bg-grad-sidebar {
-    background-image: -webkit-gradient(linear,
-            left bottom,
-            left top,
-            from(#34495e),
-            to(#3c4655));
-
-    background-image: linear-gradient(0deg,
-            #34495e,
-            #1e2c3a);
+    background: darkred;
 }
