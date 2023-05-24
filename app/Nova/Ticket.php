@@ -60,8 +60,6 @@ class Ticket extends Resource
 
             Text::make('Address'),
 
-            BelongsTo::make('Project'),
-
             BelongsTo::make('Client'),
 
             File::make('Attachments'),

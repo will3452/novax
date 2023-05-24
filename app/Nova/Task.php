@@ -13,6 +13,11 @@ class Task extends Resource
     {
         return auth()->user()->role == 'Administrator';
     }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -46,8 +51,8 @@ class Task extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            BelongsTo::make('Project'),
-            BelongsTo::make('Ticket'),
+            BelongsTo::make('Project')->exceptOnForms(),
+            BelongsTo::make('Ticket')->exceptOnForms(),
             BelongsTo::make('Department'),
             BelongsTo::make('Person InCharge', 'user', User::class),
             BelongsTo::make('Created By', 'createdBy', User::class),
