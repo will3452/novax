@@ -39,7 +39,7 @@ class AssignToDepartment extends Action
                 continue;
             }
 
-            if ($min < $userTask) {
+            if ($min > $userTask) {
                 $min = $userTask;
                 $user = $u->id;
             }
