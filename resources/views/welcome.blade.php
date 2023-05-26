@@ -107,7 +107,7 @@
                             <h6 class="position-relative text-primary ps-4" >About Us</h6>
 
                         </div>
-                        <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo justo et tempor eirmod magna dolore erat amet</p>
+                        <p class="mb-4">CRM (Customer Relationship Management) and ERP (Enterprise Resource Planning) software are powerful tools for a business or enterprise to use. CRM handles the sales, marketing, and customer service information</p>
 
 
                     </div>
