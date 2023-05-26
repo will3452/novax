@@ -22,6 +22,7 @@ Route::post('/fb', function (Request $request) {
         'name' => 'required',
         'profession' => 'required',
         'message' => 'required',
+        'star' => 'required',
     ]);
 
     Feedback::create($data);

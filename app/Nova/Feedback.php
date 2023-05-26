@@ -14,6 +14,10 @@ class Feedback extends Resource
      */
     public static $model = \App\Models\Feedback::class;
 
+    public static $polling = true;
+
+    public static $pollingInterval = 5;
+
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
@@ -40,6 +44,7 @@ class Feedback extends Resource
     {
         return [
             Text::make('Name'),
+            Text::make('Star'),
             Text::make('Profession'),
             Text::make('Message'),
         ];

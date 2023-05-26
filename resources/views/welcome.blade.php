@@ -16,7 +16,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -61,7 +61,7 @@
         <div class="container-xxl position-relative p-0">
             <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
                 <a href="" class="navbar-brand p-0">
-                    <h1 class="m-0">{{env('APP_NAME')}}</h1>
+                    <h1 class="m-0" >{{env('APP_NAME')}}</h1>
                     <!-- <img src="img/logo.png" alt="Logo"> -->
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -83,7 +83,7 @@
                     <div class="row g-5 py-5">
                         <div class="col-lg-6 text-center text-lg-start">
                             <h1 class="text-white mb-4 animated zoomIn">Welcome to {{env('APP_NAME')}}</h1>
-                            <p class="text-white pb-3 animated zoomIn">Tempor rebum no at dolore lorem clita rebum rebum ipsum rebum stet dolor sed justo kasd. Ut dolor sed magna dolor sea diam. Sit diam sit justo amet ipsum vero ipsum clita lorem</p>
+                            <p class="text-white pb-3 animated zoomIn"></p>
                             <a href="#about" class="btn btn-light py-sm-3 px-sm-5 rounded-pill me-3 animated slideInLeft">ABOUT US</a>
                         </div>
                         <div class="col-lg-6 text-center text-lg-start">
@@ -181,6 +181,14 @@
         <div class="container py-5  ">
             <h1>Write a feedback</h1>
             <form action="/fb" method="POST">
+                <div x-data="{star:0, }" class="mb-4">
+                    <input type="hidden" name="star" x-model="star">
+                    <img x-bind:src="star <= 0 ? '/icons/empty.svg': 'icons/filled.svg'" alt="" x-on:click="star = 1" style="width:50px;cursor:pointer;">
+                    <img x-bind:src="star <= 1 ? '/icons/empty.svg': 'icons/filled.svg'" alt="" x-on:click="star = 2" style="width:50px;cursor:pointer;">
+                    <img x-bind:src="star <= 2 ? '/icons/empty.svg': 'icons/filled.svg'" alt="" x-on:click="star = 3" style="width:50px;cursor:pointer;">
+                    <img x-bind:src="star <= 3 ? '/icons/empty.svg': 'icons/filled.svg'" alt="" x-on:click="star = 4" style="width:50px;cursor:pointer;">
+                    <img x-bind:src="star <= 4 ? '/icons/empty.svg': 'icons/filled.svg'" alt="" x-on:click="star = 5" style="width:50px;cursor:pointer;">
+                </div>
                 @csrf
                 <input type="text" required placeholder="Your Name" name="name" class="form-control">
                 <div class="my-2">
