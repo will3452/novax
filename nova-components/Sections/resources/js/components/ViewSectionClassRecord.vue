@@ -1,62 +1,111 @@
 <template>
-    <a-card title="CLASS RECORD">
-        <div slot="extra">
-            <a-form-model layout="inline">
-                <a-form-model-item label="Type">
-                    <a-select style="width:150px;" v-model="type">
-                        <a-select-option :key="option" v-for="option in typeOptions" :value="option">{{ option
-                        }}</a-select-option>
-                    </a-select>
-                </a-form-model-item>
-                <a-form-model-item label="Term">
-                    <a-select style="width:150px; " v-model="term">
-                        <a-select-option :key="option" v-for="option in ['Prelim', 'Midterm', 'Pre-Final', 'Final']"
-                            :value="option">{{ option }}</a-select-option>
-                    </a-select>
-                </a-form-model-item>
-                <a-form-model-item label="Category">
-                    <a-select style="width:150px; " v-model="category">
-                        <a-select-option :key="option" v-for="option in categoryOptions" :value="option">{{ option
-                        }}</a-select-option>
-                    </a-select>
-                </a-form-model-item>
-                <a-form-model-item>
-                    <a-button type="primary" @click="loadData"> <a-icon type="reload"></a-icon> Load</a-button>
-                </a-form-model-item>
-            </a-form-model>
-        </div>
+    <div>
+        <Header :load="load" />
+        <a-card :tab-list="tabList" :active-tab-key="activeTab" @tabChange="(e) => activeTab = e">
 
-        <a-table :columns="columns" :data-source="dataSource" size="small" :scroll="{ x: true }" :pagination="false"
-            bordered>
-            <div slot="no" slot-scope="item, record, index">
-                {{ index + 1 }}
+            <div v-if="activeTab === 'Class Record'">
+                <a-card :bordered="false">
+                    <a-form-model layout="inline" slot="title">
+                        <a-form-model-item label="Type">
+                            <a-select style="width:150px;" v-model="type">
+                                <a-select-option :key="option" v-for="option in typeOptions" :value="option">{{ option
+                                }}</a-select-option>
+                            </a-select>
+                        </a-form-model-item>
+                        <a-form-model-item label="Term">
+                            <a-select style="width:150px; " v-model="term">
+                                <a-select-option :key="option" v-for="option in ['Prelim', 'Midterm', 'Pre-Final', 'Final']"
+                                    :value="option">{{ option }}</a-select-option>
+                            </a-select>
+                        </a-form-model-item>
+                        <a-form-model-item label="Category">
+                            <a-select style="width:150px; " v-model="category">
+                                <a-select-option :key="option" v-for="option in categoryOptions" :value="option">{{ option
+                                }}</a-select-option>
+                            </a-select>
+                        </a-form-model-item>
+                        <a-form-model-item>
+                            <a-button type="primary" @click="loadData"> <a-icon type="reload"></a-icon> Load</a-button>
+                        </a-form-model-item>
+                    </a-form-model>
+                    <div slot="extra" v-if="dataSource.length">
+                        <a-button type="secondary" @click="editAll">
+                            Edit All
+                        </a-button>
+                        <a-button type="primary" @click="saveAll">
+                            Save All
+                        </a-button>
+                    </div>
+                </a-card>
+                <a-table :columns="columns" :data-source="dataSource" size="small" :scroll="{ x: true }" :pagination="false"
+                    bordered>
+                    <div slot="no" slot-scope="item, record, index">
+                        {{ index + 1 }}
+                    </div>
+                    <editable-cell slot="editable" slot-scope="item, record, index" :text="item.score"
+                        @change="cellChange(item, $event)" :ref="`cel-${item.activity_id}-${index}`"></editable-cell>
+                </a-table>
             </div>
-            <div slot="editable" slot-scope="item, record">
-                <editable-cell :text="item.score" @change="cellChange(item, $event)"></editable-cell>
+            <div v-else>
+                <view-section-activities :load="load" :key="'activity' + aKey" @reload="aKey++"></view-section-activities>
             </div>
-        </a-table>
-    </a-card>
+        </a-card>
+    </div>
 </template>
 
 
 <script>
+import Header from './Header.vue';
+import ViewSectionActivities from './ViewSectionActivities.vue';
 import EditableCell from './EditableCell.vue';
 export default {
     components: {
-        EditableCell
+        EditableCell,
+        ViewSectionActivities,
+        Header,
     },
     props: ['load'],
     data() {
         return {
+            aKey: 0,
+            activeTab: 'Class Record',
             columns: [],
             dataSource: [],
             type: null,
             term: null,
             category: null,
+            tabList: [
+                {
+                    key: 'Class Record',
+                    tab: 'Class Record',
+                },
+                {
+                    key: 'Activities',
+                    tab: 'Activities',
+                }
+            ]
         }
     },
 
     methods: {
+        editAll() {
+            let keys = Object.keys(this.$refs);
+            console.log('keys >>', keys);
+            for (let key of keys) {
+                if (key.includes('cel')) {
+                    this.$refs[key].edit();
+                }
+            }
+        },
+        saveAll() {
+            let keys = Object.keys(this.$refs);
+            console.log('keys >>', keys);
+            for (let key of keys) {
+                if (key.includes('cel')) {
+                    this.$refs[key].check();
+                }
+            }
+        },
         getTransmutedValue(initialValue, numberOfItems) {
             try {
                 if (numberOfItems < initialValue) {

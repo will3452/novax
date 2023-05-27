@@ -37,8 +37,8 @@
                     New Activity
                 </a-button>
             </div>
-            <a-table :columns="columns" :data-source="load.activities.filter(e => e.category != 'Attendance')"
-                :scroll="{ x: true }">
+            <a-table :key="tableKey" :columns="columns"
+                :data-source="load.activities.filter(e => e.category != 'Attendance')" :scroll="{ x: true }">
                 <template slot="action" slot-scope="item, record">
                     <a-popover placement="leftBottom">
                         <div slot="content">
@@ -72,6 +72,7 @@ export default {
     props: ['load'],
     data() {
         return {
+            tableKey: 0,
             payload: {},
             showForm: false,
             columns: [
@@ -162,6 +163,7 @@ export default {
                     }
                     this.showForm = false;
                     this.payload = {};
+                    this.tableKey++;
                     this.$emit('reload');
                 }
             })

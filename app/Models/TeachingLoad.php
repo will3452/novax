@@ -16,6 +16,7 @@ class TeachingLoad extends Model
         'subject_id',
         'academic_year_id',
         'semester_id',
+        'description',
     ];
 
     protected $with = [
@@ -27,7 +28,13 @@ class TeachingLoad extends Model
         'studentRecords',
         'activities',
         'scores',
+        'teacher',
     ];
+
+    public function getTeacherNameAttribute()
+    {
+        return $this->teacher->name;
+    }
 
     public function teacher()
     {

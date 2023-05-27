@@ -10,6 +10,14 @@
                 <view-section-feed :user="user" :load="load" :key="'feed' + cKey"
                     @reload="loadTeachingLoads"></view-section-feed>
             </a-tab-pane>
+            <a-tab-pane key="student" v-if="user.type != 'Student'">
+                <div slot="tab">
+                    <a-icon type="usergroup-add" />
+                    STUDENTS
+                </div>
+                <view-section-students :load="load" :key="'student' + cKey"
+                    @reload="loadTeachingLoads"></view-section-students>
+            </a-tab-pane>
             <a-tab-pane key="attendance" v-if="user.type != 'Student'">
                 <div slot="tab">
                     <a-icon type="calendar" />
@@ -34,22 +42,15 @@
                 <view-section-final-grade :load="load" :key="'final_grade' + cKey"
                     @reload="loadTeachingLoads"></view-section-final-grade>
             </a-tab-pane>
-            <a-tab-pane key="activity" v-if="user.type != 'Student'">
+            <!-- <a-tab-pane key="activity" v-if="user.type != 'Student'">
                 <div slot="tab">
                     <a-icon type="file-add" />
                     ACTIVITIES
                 </div>
                 <view-section-activities :load="load" :key="'activity' + cKey"
                     @reload="loadTeachingLoads"></view-section-activities>
-            </a-tab-pane>
-            <a-tab-pane key="student" v-if="user.type != 'Student'">
-                <div slot="tab">
-                    <a-icon type="usergroup-add" />
-                    STUDENTS
-                </div>
-                <view-section-students :load="load" :key="'student' + cKey"
-                    @reload="loadTeachingLoads"></view-section-students>
-            </a-tab-pane>
+            </a-tab-pane> -->
+
         </a-tabs>
     </a-spin>
 </template>

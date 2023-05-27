@@ -5,6 +5,7 @@ use App\Imports\GradeImport;
 use App\Models\Announcement;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\TeachingLoad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
@@ -54,4 +55,12 @@ Route::post('/comments', function (Request $request) {
     $data = $request->all();
     $data['commentable_type'] = Announcement::class;
     return Comment::create($data);
+});
+
+Route::post('/load/{load}', function (Request $request, TeachingLoad $load) {
+    $data = $request->validate([
+        'description' => '',
+    ]);
+    $load->update($data);
+    return 1;
 });
