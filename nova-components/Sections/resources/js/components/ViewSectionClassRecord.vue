@@ -27,16 +27,25 @@
                         <a-form-model-item>
                             <a-button type="primary" @click="loadData"> <a-icon type="reload"></a-icon> Load</a-button>
                         </a-form-model-item>
+                        <a-form-model-item>
+                            <download-excel
+                                :header="[` Subject : ${load.subject.name}`, `Instructor:  ${load.teacher.name}`]"
+                                ref="download" :name="`${type} - ${term}.xls`" v-show="false" :data="downloableDataSource">
+                            </download-excel>
+                            <a-button type="secondary" @click="download"> <a-icon type="download"></a-icon>
+                                Download</a-button>
+                        </a-form-model-item>
                     </a-form-model>
-                    <div slot="extra" v-if="dataSource.length">
-                        <a-button type="secondary" @click="editAll">
-                            Edit All
-                        </a-button>
-                        <a-button type="primary" @click="saveAll">
-                            Save All
-                        </a-button>
-                    </div>
+
                 </a-card>
+                <div v-if="dataSource.length" style="margin: 1em 0px; ">
+                    <a-button size="small" type="secondary" @click="editAll">
+                        Edit All
+                    </a-button>
+                    <a-button size="small" type="primary" @click="saveAll">
+                        Save All
+                    </a-button>
+                </div>
                 <a-table :columns="columns" :data-source="dataSource" size="small" :scroll="{ x: true }" :pagination="false"
                     bordered>
                     <div slot="no" slot-scope="item, record, index">
@@ -88,6 +97,10 @@ export default {
     },
 
     methods: {
+        download() {
+            console.log("data source >> ", this.dataSource);
+            this.$refs.download.generate()
+        },
         editAll() {
             let keys = Object.keys(this.$refs);
             console.log('keys >>', keys);
@@ -228,6 +241,20 @@ export default {
     },
 
     computed: {
+        downloableDataSource() {
+            return this.dataSource.map(data => {
+                let newForm = {};
+                Object.keys(data).forEach((key, index) => {
+                    if (typeof data[key] == 'object') {
+                        newForm['Activity ' + (index + 1)] = data[key].score;
+                    } else {
+                        newForm[key] = data[key];
+                    }
+                })
+
+                return newForm;
+            });
+        },
         typeOptions() {
             try {
                 if (!this.load.subject.has_lab) return ['Lecture'];

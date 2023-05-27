@@ -55,6 +55,7 @@ class Subject extends Resource
      */
     public static $search = [
         'id',
+        'name',
     ];
 
     /**

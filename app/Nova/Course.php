@@ -35,6 +35,7 @@ class Course extends Resource
      */
     public static $search = [
         'id',
+        'name',
     ];
 
     /**

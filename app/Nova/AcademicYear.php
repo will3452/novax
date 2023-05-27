@@ -50,6 +50,7 @@ class AcademicYear extends Resource
      */
     public static $search = [
         'id',
+        'year',
     ];
 
     /**

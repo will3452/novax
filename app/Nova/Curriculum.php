@@ -56,6 +56,7 @@ class Curriculum extends Resource
      */
     public static $search = [
         'id',
+        'name',
     ];
 
     /**

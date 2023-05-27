@@ -18,6 +18,15 @@
                     <a-icon type="thunderbolt" />
                     GENERATE
                 </a-button>
+                <download-excel :header="[` Subject : ${load.subject.name}`, `Instructor:  ${load.teacher.name}`]"
+                    ref="download" :fields='{
+                        "Student": "student.name", "Student #": "student.profile.number", "Prelim": "prelim_grade"
+                        , "Midterm": "midterm_grade", "Pre Final": "pre_final_grade", "Final": "final_grade"
+                        , "Final Grade": "total_grade", "Remarks": "remarks"
+                    }' :name="`final-grade.xls`" v-show="false" :data="load.student_records">
+                </download-excel>
+                <a-button type="secondary" @click="download"> <a-icon type="download"></a-icon>
+                    Download</a-button>
             </div>
             <a-table :key="tableKey" bordered :scroll="{ x: true }" size="small" :columns="columns"
                 :data-source="load.student_records">
@@ -59,6 +68,10 @@ export default {
     },
     props: ['load'],
     methods: {
+        download() {
+            console.log("ds", this.load.student_records);
+            this.$refs.download.generate();
+        },
         async cellChange(record, newValue, prop) {
             record[prop] = newValue;
             await axios.post('/nova-vendor/sections/update-record/' + record.id, { ...record });

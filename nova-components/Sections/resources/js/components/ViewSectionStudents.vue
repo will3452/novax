@@ -29,8 +29,9 @@
             <a-form-model :rules="rules" :model="newStudent" ref="form">
                 <a-form-model-item prop="student_id" label="Select Student" layout="horizontal" :wrapper-col="{ span: 16 }"
                     :label-col="{ span: 8 }">
-                    <a-select style="width:100%; " v-model="newStudent.student_id">
-                        <a-select-option v-for="s in students.filter(e => e.profile != null)" :key="s.id" :value="s.id">
+                    <a-select allowClear style="width:100%; " v-model="newStudent.student_id" optionFilterProp="key"
+                        show-search>
+                        <a-select-option v-for="s in students.filter(e => e.profile != null)" :key="s.name" :value="s.id">
                             {{ s.name }} - {{ s.profile.number }}
                         </a-select-option>
                     </a-select>
