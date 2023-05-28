@@ -55,8 +55,33 @@
                         @change="cellChange(item, $event)" :ref="`cel-${item.activity_id}-${index}`"></editable-cell>
                 </a-table>
             </div>
-            <div v-else>
+            <div v-if="activeTab === 'Activities'">
                 <view-section-activities :load="load" :key="'activity' + aKey" @reload="aKey++"></view-section-activities>
+            </div>
+            <div v-if="activeTab === 'misc'">
+
+                <a-button dowload type="primary" href="/class record template.xlsx">
+                    <a-icon type="download"></a-icon>
+                    Download Excel Template
+                </a-button>
+                <a-button @click="uploadModal = true">
+                    <a-icon type="upload"></a-icon>
+                    Upload Record
+                </a-button>
+                <a-modal :visible="uploadModal" @cancel="uploadModal = false" ok-text="Upload" @ok="uploadHandler">
+                    <a-form-model slot="title">
+                        <a-form-model-item label="Type">
+                            <a-select style="width:100%;" v-model="activity_id">
+                                <a-select-option :key="option.id" v-for="option in load.activities" :value="option.id">
+                                    {{ option.description }}
+                                </a-select-option>
+                            </a-select>
+                        </a-form-model-item>
+                        <a-upload :file-list="fileList" :remove="handleRemove" :before-upload="beforeUpload">
+                            <a-button> <a-icon type="upload" /> Select File </a-button>
+                        </a-upload>
+                    </a-form-model>
+                </a-modal>
             </div>
         </a-card>
     </div>
@@ -76,6 +101,9 @@ export default {
     props: ['load'],
     data() {
         return {
+            activity_id: null,
+            fileList: [],
+            uploadModal: false,
             aKey: 0,
             activeTab: 'Class Record',
             columns: [],
@@ -83,6 +111,9 @@ export default {
             type: null,
             term: null,
             category: null,
+            uploadType: null,
+            uploadTerm: null,
+            uploadCategory: null,
             tabList: [
                 {
                     key: 'Class Record',
@@ -91,12 +122,39 @@ export default {
                 {
                     key: 'Activities',
                     tab: 'Activities',
+                },
+                {
+                    key: 'misc',
+                    tab: 'Miscellaneous ',
                 }
             ]
         }
     },
 
     methods: {
+        uploadHandler() {
+            let payload = {
+                activity_id: this.activity_id,
+            };
+
+            let fd = new FormData();
+
+            this.fileList.forEach(file => fd.append('files', file));
+
+            fd.append('data', JSON.stringify(payload));
+
+            window.axios.post('/api/upload-record', fd);
+        },
+        beforeUpload(file) {
+            this.fileList = [...this.fileList, file];
+            return false;
+        },
+        handleRemove(file) {
+            const index = this.fileList.indexOf(file);
+            const newFileList = this.fileList.slice();
+            newFileList.splice(index, 1);
+            this.fileList = newFileList;
+        },
         download() {
             console.log("data source >> ", this.dataSource);
             this.$refs.download.generate()

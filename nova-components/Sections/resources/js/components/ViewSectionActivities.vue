@@ -1,9 +1,11 @@
 <template>
     <div>
-        <a-modal title="Activity" @ok="submit" :visible="showForm" @cancel="showForm = false">
+        <a-modal title="Activity" @ok="submit" :visible="showForm" @cancel="showForm = false; isEdit = false">
             <a-form-model ref="form" :rules="rules" layout="horizontal" :model="payload" :wrapper-col="{ span: 18 }"
                 :label-col="{ span: 6 }">
-
+                <a-form-model-item label="Copy" prop="copy" v-if="!isEdit">
+                    <a-input-number v-model="payload.copy" :min="1" style="width:100%" :default-value="1"></a-input-number>
+                </a-form-model-item>
                 <a-form-model-item label="Type" prop="type">
                     <a-select class="w-full" v-model="payload.type">
                         <a-select-option :key="option" v-for="option in typeOptions" :value="option">{{ option
@@ -72,6 +74,7 @@ export default {
     props: ['load'],
     data() {
         return {
+            isEdit: false,
             tableKey: 0,
             payload: {},
             showForm: false,
@@ -108,6 +111,9 @@ export default {
                 },
             ],
             rules: {
+                copy: [
+                    { required: true }
+                ],
                 type: [
                     { required: true, }
                 ],
@@ -148,6 +154,7 @@ export default {
         },
         edit(a) {
             this.payload = { ...a };
+            this.isEdit = true;
             this.showForm = true;
         },
         submit() {
@@ -164,6 +171,7 @@ export default {
                     this.showForm = false;
                     this.payload = {};
                     this.tableKey++;
+                    this.isEdit = false;
                     this.$emit('reload');
                 }
             })

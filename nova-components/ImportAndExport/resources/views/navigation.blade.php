@@ -4,6 +4,6 @@
       </svg>
 
     <span class="sidebar-label">
-        Excel
+        Miscellaneous
     </span>
 </router-link>

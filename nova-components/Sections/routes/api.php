@@ -95,8 +95,9 @@ Route::post('/new-activity', function (Request $request) {
         'teaching_load_id' => 'required',
         'type' => 'required',
     ]);
-
-    return Activity::create($data);
+    for ($i = 0; $i < $request->copy; $i++) {
+        Activity::create($data);
+    }
 });
 
 Route::post('/remove-activity/{a}', function (Request $request, Activity $a) {

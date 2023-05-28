@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ApiAuthenticationController;
 use App\Imports\GradeImport;
+use App\Imports\ScoreImport;
+use App\Models\Activity;
 use App\Models\Announcement;
 use App\Models\Comment;
 use App\Models\Post;
@@ -63,4 +65,27 @@ Route::post('/load/{load}', function (Request $request, TeachingLoad $load) {
     ]);
     $load->update($data);
     return 1;
+});
+
+Route::post('/upload-record', function (Request $request) {
+    $data = json_decode($request->data);
+    $activity = Activity::find($data->activity_id);
+    // Retrieve the FileBag instance from the request
+    $fileBag = $request->files;
+    $files = [];
+
+    // Check if the FileBag has any files
+    if ($fileBag->count() > 0) {
+        // Iterate through each uploaded file
+        foreach ($fileBag as $file) {
+            // Access file properties and perform operations
+            $fileName = $file->getClientOriginalName();
+            $fileSize = $file->getSize();
+            $fileExtension = $file->getClientOriginalExtension();
+            $file->move('storage', $fileName);
+            Excel::import(new ScoreImport($activity), storage_path("app/public/$fileName"));
+        }
+    }
+
+    return $files;
 });
