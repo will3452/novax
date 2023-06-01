@@ -3,11 +3,17 @@
 use App\Http\Controllers\ApiAuthenticationController;
 use App\Imports\GradeImport;
 use App\Imports\ScoreImport;
+use App\Models\AcademicYear;
 use App\Models\Activity;
 use App\Models\Announcement;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\Semester;
+use App\Models\Student;
+use App\Models\StudentRecord;
+use App\Models\Subject;
 use App\Models\TeachingLoad;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
@@ -88,4 +94,46 @@ Route::post('/upload-record', function (Request $request) {
     }
 
     return $files;
+});
+
+Route::get('/students', function (Request $request) {
+    return User::whereType(User::TYPE_STUDENT)->with('profile')->get();
+});
+
+Route::get('/semester', function (Request $request) {
+    return Semester::get();
+});
+
+Route::post('/submit-grade-of-student', function (Request $request) {
+    $student = Student::find($request->student_id);
+    if (!$student) {
+        return response('error', '400');
+    }
+    $added = 0;
+    $semester = Semester::find($request->semester_id);
+    if (!$semester) {
+        return response('error', '400');
+    }
+    foreach ($request->grades as $grade) {
+        if (array_key_exists('code', $grade)) {
+            $subject = Subject::whereCode($grade['code'])->first();
+
+            if (!$subject) {
+                return response('error', '400');
+            }
+
+            StudentRecord::create([
+                'subject_id' => $subject->id,
+                'student_id' => $student->id,
+                'academic_year_id' => AcademicYear::active()->id ?? null,
+                'semester_id' => $semester->id,
+                'teacher_id' => auth()->id(),
+                'total_grade' => $grade['grade'],
+            ]);
+
+            $added++;
+        }
+    }
+
+    return response($added, '200');
 });

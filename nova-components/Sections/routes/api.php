@@ -95,7 +95,9 @@ Route::post('/new-activity', function (Request $request) {
         'teaching_load_id' => 'required',
         'type' => 'required',
     ]);
-    for ($i = 0; $i < $request->copy; $i++) {
+
+    $copy = $request->copy ?? 1;
+    for ($i = 0; $i < $copy; $i++) {
         Activity::create($data);
     }
 });

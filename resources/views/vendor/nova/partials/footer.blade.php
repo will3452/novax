@@ -1,4 +1,7 @@
 <p class="mt-8 text-center text-xs text-80">
+    <a href="/about">ABOUT {{env('APP_NAME')}}</a>
+</p>
+<p class="mt-8 text-center text-xs text-80">
     {{env('APP_NAME')}} - {{now()->year}}
 </p>
 {{-- <nova-dark-theme-toggle></nova-dark-theme-toggle> --}}

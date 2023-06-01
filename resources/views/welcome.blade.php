@@ -91,6 +91,58 @@
         </div>
       </div>
     </div>
+
+    <div  class="text-xl mb-4 ">
+        The team of programmers also deserves special recognition for their hard work and dedication in making the NCST E-Grading System a success. The team is composed of:
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            <div class="bg-white shadow rounded-lg overflow-hidden">
+                <img src="/images/Roque Jerico Turingan.jpg" alt="Team Member 2" class="w-full h-64 object-cover object-center">
+                <div class="p-6">
+                <h2 class="text-2xl font-bold mb-2">Roque Jerico Turingan</h2>
+                <p class="text-gray-700 text-lg mb-4">Team leader and main programmer</p>
+                <p class="text-gray-600">who led the project from its inception to its completion, including both the front-end and back-end development.</p>
+                </div>
+            </div>
+            <div class="bg-white shadow rounded-lg overflow-hidden">
+                <img src="/images/Charl Eduard Narvaez.jpg" alt="Team Member 2" class="w-full h-64 object-cover object-center">
+                <div class="p-6">
+                <h2 class="text-2xl font-bold mb-2">Charl Eduard Narvaez</h2>
+                <p class="text-gray-700 text-lg mb-4">Assistant leader</p>
+                <p class="text-gray-600"> who helps Turingan for the development of the server's back-end.</p>
+                </div>
+            </div>
+            <div class="bg-white shadow rounded-lg overflow-hidden">
+                <img src="/images/Robby Guile Ponesto.jpg" alt="Team Member 2" class="w-full h-64 object-cover object-center">
+                <div class="p-6">
+                <h2 class="text-2xl font-bold mb-2">Robby Guile Ponesto</h2>
+                <p class="text-gray-700 text-lg mb-4">Member</p>
+                <p class="text-gray-600"> who took care and responsible for the database and also managed the back-end side of the system.</p>
+                </div>
+            </div>
+            <div class="bg-white shadow rounded-lg overflow-hidden">
+                <img src="/images/Marthin Klein Obias.jpg" alt="Team Member 2" class="w-full h-64 object-cover object-center">
+                <div class="p-6">
+                <h2 class="text-2xl font-bold mb-2">Klein Obias</h2>
+                <p class="text-gray-700 text-lg mb-4">Member</p>
+                <p class="text-gray-600"> the front-end programmer, who led the development of the system's front-end.</p>
+                </div>
+            </div>
+            <div class="bg-white shadow rounded-lg overflow-hidden">
+                <img src="/images/Cyrick Ashly Ronquillo.jpg" alt="Team Member 2" class="w-full h-64 object-cover object-center">
+                <div class="p-6">
+                <h2 class="text-2xl font-bold mb-2">Cyrick Ashley Ronquillo</h2>
+                <p class="text-gray-700 text-lg mb-4">Member</p>
+                <p class="text-gray-600"> the co-front-end programmer, who provided assistance to Obias' in the development of the system's front-end</p>
+                </div>
+            </div>
+    </div>
+    <div  class="text-xl mb-4 ">
+        The team would also like to extend their special gratitude to Mr. William Gls, who provided valuable technical support and expertise in areas such as web hosting and code optimization, which helped the team overcome technical difficulties and complete the project successfully.
+    </div>
+    <div class="text-xl mb-4 mt-2">
+        Thanks to the hard work and dedication of these individuals, the NCST E-Grading System has become a reality and will benefit students and instructors alike for years to come.
+    </div>
   </div>
 </body>
 </html>
