@@ -1,0 +1,21 @@
+http://localhost:8000/api/pets
+Content-Type: application/json
+Authorization: Bearer 1|ZrDGUSeKjh8EocbBzUVVqowzQq1oLslCzXd4qaAM
+
+###
+POST http://localhost:8000/api/pets/add-to-fav
+Content-Type: application/json
+Authorization: Bearer 1|ZrDGUSeKjh8EocbBzUVVqowzQq1oLslCzXd4qaAM
+
+{
+    "pet_id": 1
+}
+
+###
+POST http://localhost:8000/api/login
+Content-Type: application/json
+
+{
+    "email": "super@admin.com",
+    "password": "password"
+}
