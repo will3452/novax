@@ -47,7 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
             //join admin
             ConversationUser::create(['conversation_id' => $conversation->id, 'user_id' => 1]); // 1 will be the admin
 
-            Message::create(['conversation_id' => $conversation->id, 'content' => 'Hello, I want to adopt the pet.']);
+            Message::create(['conversation_id' => $conversation->id, 'content' => 'Hello, I want to adopt the pet.', 'user_id' => auth()->id()]);
 
             $conversation->load('messages');
             return $conversation;
