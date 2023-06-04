@@ -35,7 +35,11 @@ Route::middleware('auth:sanctum')->group(function () {
                 'name' => 'required',
             ]);
 
-            $exists = Conversation::where($data)->first();
+            $userId = auth()->id();
+
+            $exists = Conversation::where($data)->whereHas('users', function ($q) use ($userId) {
+                $q->whereId($userId);
+            })->first();
 
             if ($exists) {
                 return $exists;
