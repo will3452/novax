@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\Conversation;
+use App\Models\ConversationUser;
 use App\Models\Favorite;
+use App\Models\Message;
 use App\Models\Pet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +23,36 @@ use Illuminate\Support\Facades\Route;
 //private access
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
+
+    Route::prefix('conversations')->group(function () {
+
+        Route::get('/me', function () {
+            return auth()->user()->conversations()->latest()->get();
+        });
+
+        Route::post('/', function (Request $request) {
+            $data = $request->validate([
+                'name' => 'required',
+            ]);
+
+            $exists = Conversation::where($data)->first();
+
+            if ($exists) {
+                return $exists;
+            }
+
+            $conversation = Conversation::create($data);
+            //join user
+            ConversationUser::create(['conversation_id' => $conversation->id, 'user_id' => auth()->id()]);
+            //join admin
+            ConversationUser::create(['conversation_id' => $conversation->id, 'user_id' => 1]); // 1 will be the admin
+
+            Message::create(['conversation_id' => $conversation->id, 'content' => 'Hello, I want to adopt the pet.']);
+
+            $conversation->load('message');
+            return $conversation;
+        });
+    });
 
     Route::prefix('pets')->group(function () {
         Route::get('/', function (Request $request) {

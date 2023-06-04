@@ -12,4 +12,11 @@ class Conversation extends Model
     protected $fillable = [
         'name',
     ];
+
+    protected $with = ['messages'];
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
 }

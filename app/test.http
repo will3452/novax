@@ -16,6 +16,20 @@ POST http://localhost:8000/api/login
 Content-Type: application/json
 
 {
-    "email": "super@admin.com",
+    "email": "williamgalas2@gmail.com",
     "password": "password"
+}
+
+###
+http://localhost:8000/api/conversations/me
+Content-Type: application/json
+Authorization: Bearer 1|ZrDGUSeKjh8EocbBzUVVqowzQq1oLslCzXd4qaAM
+
+###
+POST http://localhost:8000/api/conversations/
+Content-Type: application/json
+Authorization: Bearer 1|ZrDGUSeKjh8EocbBzUVVqowzQq1oLslCzXd4qaAM
+
+{
+    "name": "Adopt Bente"
 }
