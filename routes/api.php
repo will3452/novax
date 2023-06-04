@@ -49,7 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
             Message::create(['conversation_id' => $conversation->id, 'content' => 'Hello, I want to adopt the pet.']);
 
-            $conversation->load('message');
+            $conversation->load('messages');
             return $conversation;
         });
     });
