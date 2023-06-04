@@ -12,7 +12,7 @@ Authorization: Bearer 1|ZrDGUSeKjh8EocbBzUVVqowzQq1oLslCzXd4qaAM
 }
 
 ###
-POST https://secaspi.elezerk.net/api/login
+POST http://localhost:8000/api/login
 Content-Type: application/json
 
 {
@@ -26,9 +26,9 @@ Content-Type: application/json
 Authorization: Bearer 1|ZrDGUSeKjh8EocbBzUVVqowzQq1oLslCzXd4qaAM
 
 ###
-POST https://secaspi.elezerk.net/api/conversations
+POST http://localhost:8000/api/conversations
 Content-Type: application/json
-Authorization: Bearer 25|OSCDtUYMYLczJHwH1DkfOUiveyEns1MmR3J6Q0zs
+Authorization: Bearer 6|LdCtaHjsRTDax1WbEu5HsxYvwZwbhp6vAi7yxPFI
 
 {
     "name": "Adopt Bentexx"
