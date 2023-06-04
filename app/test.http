@@ -33,3 +33,13 @@ Authorization: Bearer 6|LdCtaHjsRTDax1WbEu5HsxYvwZwbhp6vAi7yxPFI
 {
     "name": "Adopt Bentexx"
 }
+
+###
+POST http://localhost:8000/api/messages
+Content-Type: application/json
+Authorization: Bearer 7|hZ4YAH2HiGjGrI2vOgLXpx9WKKY2FFCLK8A51JpO
+
+{
+    "conversation_id": 1,
+    "content": "this is the content of the convesaton!"
+}

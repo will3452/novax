@@ -24,10 +24,28 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
 
+    Route::prefix('messages')->group(function () {
+        Route::post('/', function (Request $request) {
+
+            $data = $request->validate([
+                'conversation_id' => 'required',
+                'content' => 'required',
+            ]);
+
+            $data['user_id'] = auth()->id();
+
+            return Message::create($data);
+        });
+    });
+
     Route::prefix('conversations')->group(function () {
 
         Route::get('/me', function () {
             return auth()->user()->conversations()->latest()->get();
+        });
+
+        Route::get('/:conversation', function (Request $request, Conversation $conversation) {
+            return $conversation;
         });
 
         Route::post('/', function (Request $request) {
