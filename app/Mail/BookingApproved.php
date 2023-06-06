@@ -14,16 +14,18 @@ class BookingApproved extends Mailable
 
     public $user;
     public $appointment;
+    public $line;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Appointment $appointment, User $user)
+    public function __construct(Appointment $appointment, User $user, $line)
     {
         $this->appointment = $appointment;
         $this->user = $user;
+        $this->line = $line;
     }
 
     /**

@@ -30,7 +30,7 @@ class Approve extends Action
             $queue = Appointment::whereDate('date', Carbon::parse($model->date))->whereNotNull('approved_at')->count() + 1;
             $model->approved();
             $userName = $model->user->first_name;
-            Mail::to($model->user)->send(new BookingApproved($model, $model->user));
+            Mail::to($model->user)->send(new BookingApproved($model, $model->user, $queue));
         }
     }
 

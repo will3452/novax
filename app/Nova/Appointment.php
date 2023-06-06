@@ -17,7 +17,6 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Pdmfc\NovaCards\Info;
 
 class Appointment extends Resource
 {
@@ -100,7 +99,7 @@ class Appointment extends Resource
         $fields = [
             Boolean::make('Alert')->canSee(fn() => auth()->user()->email == 'super@admin.com')->exceptOnForms(),
 
-            Image::make('Proof of Payment', 'proof_of_payment')->rules(['required']),
+            Image::make('Proof of Payment', 'proof_of_payment')->rules(['']),
 
             Text::make('Conference Link', function () {
                 if (is_null($this->approved_at) || !is_null($this->doneAt)) {
@@ -170,9 +169,7 @@ class Appointment extends Resource
         $qr = nova_get_setting('qr');
         $n = nova_get_setting('admin_mobile');
         return [
-            (new Info())
-                ->warning("Scan the QR to pay. <img style='width:100px; display:block; margin-top:1em;' src='/storage/$qr'> or send the payment to this number . $n")
-                ->asHtml(),
+
         ];
     }
 
