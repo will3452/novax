@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions;
 
+use App\Mail\BookingApproved;
 use App\Models\Appointment;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -29,9 +30,7 @@ class Approve extends Action
             $queue = Appointment::whereDate('date', Carbon::parse($model->date))->whereNotNull('approved_at')->count() + 1;
             $model->approved();
             $userName = $model->user->first_name;
-            Mail::raw("Hello $userName, your appointment is approved your queue number is $queue ", function ($message) use ($model) {
-                $message->to($model->user->email)->subject('Appointment Updates!');
-            });
+            Mail::to($model->user)->send(new BookingApproved($model, $model->user));
         }
     }
 
