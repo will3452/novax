@@ -26,4 +26,7 @@ class AssetLog extends Model
     {
         return $this->belongsTo(Asset::class);
     }
+    protected $casts = [
+        'activity_date' => 'datetime',
+    ];
 }
