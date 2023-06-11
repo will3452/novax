@@ -9,10 +9,8 @@ use Laravel\Nova\Fields\Text;
 
 class Student extends Resource
 {
-    public static function searchable()
-    {
-        return [];
-    }
+    public static $searchable = false;
+
     public static $label = 'Grades';
     public static function availableForNavigation(Request $request)
     {
