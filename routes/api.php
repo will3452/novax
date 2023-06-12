@@ -74,7 +74,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('pets')->group(function () {
         Route::get('/', function (Request $request) {
-            return Pet::whereDoesntHave('adopt')->get();
+            return Pet::whereDoesntHave('adopt')->inRandomOrder()->get();
         });
 
         Route::post('/add-to-fav', function (Request $request) {
