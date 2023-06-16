@@ -15,6 +15,11 @@ class StudentRecord extends Resource
         return "Grades";
     }
 
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->type == ModelUser::TYPE_STUDENT;
+    }
+
     public static function indexQuery(NovaRequest $request, $query)
     {
         if (auth()->user()->type == ModelUser::TYPE_STUDENT) {
@@ -77,7 +82,6 @@ class StudentRecord extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('Student', 'student'),
 
             BelongsTo::make('Subject', 'subject'),
 

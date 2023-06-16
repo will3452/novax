@@ -71,13 +71,19 @@ class User extends Authenticatable
         // $withoutGrades = [];
 
         $subjectCount = count($subjects);
+        $progressRate = 0;
+        try {
+            $progressRate = (($subjectCount - count($withoutGrades)) / $subjectCount) * 100;
+        } catch (Exception $e) {
+            $progressRate = 0;
+        }
 
         return [
             'total_subject' => $subjectCount,
             'subjects' => $subjects->pluck('id')->all(),
             'with_grades' => $withGrades,
             'without_grades' => $withoutGrades,
-            'progress_rate' => (($subjectCount - count($withoutGrades)) / $subjectCount) * 100,
+            'progress_rate' => $progressRate,
         ];
     }
 

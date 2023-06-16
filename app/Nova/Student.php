@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Models\User as ModelsUser;
+use Exception;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\Text;
@@ -82,11 +83,17 @@ class Student extends Resource
         return [
             Text::make('Name')->sortable(),
             Text::make('Student Number', function () {
-                return $this->profile->number;
+                try {
+                    return $this->profile->number;
+                } catch (Exception $e) {
+                    return '-';
+                }
             }),
             Text::make('Curriculum Progress', function () {
-                $userProgressRate = ModelsUser::find($this->id)->progress()['progress_rate'];
-                return "<div><progress max='100' value='$userProgressRate'></progress> <span>$userProgressRate %</span></div>";
+                $userProgressRate = ModelsUser::find($this->id)->progress();
+                $with = count($userProgressRate['with_grades']);
+                $total = $userProgressRate['total_subject'];
+                return "$with/$total";
             })->asHtml(),
             HasOne::make("Profile", 'profile', Profile::class),
             Text::make('Email'),

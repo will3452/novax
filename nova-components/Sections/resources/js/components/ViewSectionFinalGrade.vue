@@ -34,22 +34,22 @@
                     {{ index + 1 }}
                 </div>
                 <div slot="prelim" slot-scope="item, record">
-                    <editable-cell :text="item" @change="cellChange(record, $event, 'prelim_grade')"></editable-cell>
+                    {{ item }}
                 </div>
                 <div slot="midterm" slot-scope="item, record">
-                    <editable-cell :text="item" @change="cellChange(record, $event, 'midterm_grade')"></editable-cell>
+                    {{ item }}
                 </div>
                 <div slot="prefinal" slot-scope="item, record">
-                    <editable-cell :text="item" @change="cellChange(record, $event, 'pre_final_grade')"></editable-cell>
+                    {{ item }}
                 </div>
                 <div slot="final" slot-scope="item, record">
-                    <editable-cell :text="item" @change="cellChange(record, $event, 'final_grade')"></editable-cell>
+                    {{ item }}
                 </div>
                 <div slot="total" slot-scope="item, record">
-                    <editable-cell :text="item" @change="cellChange(record, $event, 'total_grade')"></editable-cell>
+                    {{ item }}
                 </div>
                 <div slot="remark" slot-scope="item, record">
-                    <editable-cell :text="item" @change="cellChange(record, $event, 'remarks')"></editable-cell>
+                    {{ item }}
                 </div>
 
             </a-table>

@@ -46,13 +46,17 @@
                         Save All
                     </a-button>
                 </div>
-                <a-table :columns="columns" :data-source="dataSource" size="small" :scroll="{ x: true }" :pagination="false"
+                <a-table v-if="category != 'All'" :columns="columns" :data-source="dataSource" size="small" :scroll="{ x: true }" :pagination="false"
                     bordered>
                     <div slot="no" slot-scope="item, record, index">
                         {{ index + 1 }}
                     </div>
                     <editable-cell slot="editable" slot-scope="item, record, index" :text="item.score"
                         @change="cellChange(item, $event)" :ref="`cel-${item.activity_id}-${index}`"></editable-cell>
+                </a-table>
+
+                <a-table v-else bordered :pagination="false" :columns="allColumns" :data-source="this.load.students">
+
                 </a-table>
             </div>
             <div v-if="activeTab === 'Activities'">
@@ -244,7 +248,7 @@ export default {
 
                 let _activities = this.load.activities.filter(a => a.type == this.type && a.term == this.term && a.category == this.category);
 
-                if (_activities.length == 0) {
+                if (_activities.length == 0 && this.category != 'All') {
                     this.$notification.info({ message: 'No Activity Found.', description: 'Please add activity.' });
                     return;
                 }
@@ -293,12 +297,78 @@ export default {
 
 
             } catch (error) {
+                if (this.category == 'All') return;
                 console.log(error)
             }
         },
     },
 
     computed: {
+        allData() {
+            let activities = Object.freeze(this.load.activities);
+            return activities;
+        },
+        allColumns() {
+            try {
+                let _col = [
+                    {
+                        title:'Student',
+                        key: 'student',
+                        customRender: (text, record, index) => {
+                            return text.name;
+                        }
+                    }
+                ];
+                let activities = Object.freeze(this.load.activities);
+                let scores = Object.freeze(this.load.scores);
+                let studentRecords = Object.freeze(this.load.student_records);
+
+                for (let act of activities.filter( e => e.term == this.term && e.type == this.type)) {
+                    let exists = _col.find(e => e.title == act.category)
+
+                    if (! exists) {
+                        let _newCol = {
+                            title: act.category,
+                            key: act.category,
+                            children: [],
+                        }
+
+                        _newCol.children.push({
+                            title: _newCol.children.length + 1,
+                            key: act.category +_newCol.children.length + 1,
+                            customRender: (text, record, index ) => {
+
+                                let score = scores.find(s => s.activity_id == act.id && record.id == s.student_id);
+                                return score ? score.score : '-';
+                            }
+                        })
+
+                        _col.push(_newCol);
+                    } else {
+                        exists.children.push({
+                            title: exists.children.length + 1,
+                            key: act.category +exists.children.length + 1,
+                            customRender: (text, record, index ) => {
+                                let score = scores.find(s => s.activity_id == act.id && record.id == s.student_id);
+                                return score ? score.score : '-';
+                            }
+                        })
+                    }
+                }
+
+                _col.push({
+                    title: 'Final Grade',
+                    customRender: (text, record, index ) => {
+                        return studentRecords.find( s => s.student_id == text.id).total_grade;
+                    }
+                })
+
+                return _col;
+            } catch(error) {
+                console.log('allColumns >> error ', error);
+                return [];
+            }
+        },
         downloableDataSource() {
             return this.dataSource.map(data => {
                 let newForm = {};
@@ -322,8 +392,8 @@ export default {
             }
         },
         categoryOptions() {
-            if (this.type == 'Lecture') return ['Quizzes/Seatwork/Assignment', 'Long Quiz', 'Recitation', 'Exam'];
-            return ['Lab Activities', 'Exam'];
+            if (this.type == 'Lecture') return ['Quizzes/Seatwork/Assignment', 'Long Quiz', 'Recitation', 'Exam', 'All'];
+            return ['Lab Activities', 'Exam', 'All'];
         }
     }
 }
