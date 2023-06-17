@@ -357,9 +357,27 @@ export default {
                 }
 
                 _col.push({
-                    title: 'Final Grade',
+                    title: this.term + ' Grade',
                     customRender: (text, record, index ) => {
-                        return studentRecords.find( s => s.student_id == text.id).total_grade;
+                        let grade = studentRecords.find( s => s.student_id == text.id)
+                        let key = 'total_grade';
+                        if (this.term == 'Prelim') {
+                            key = 'prelim_grade';
+                        }
+
+                        if (this.term == 'Midterm') {
+                            key = 'midterm_grade';
+                        }
+
+                        if (this.term == 'Pre-Final') {
+                            key = 'pre_final_grade';
+                        }
+
+                        if (this.term == 'Final') {
+                            key = 'final_grade';
+                        }
+
+                        return grade[key];
                     }
                 })
 
