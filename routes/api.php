@@ -44,6 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', function (Request $request) {
             $data = $request->validate([
                 'description' => 'required',
+                'remarks' => '',
                 'from' => 'required',
                 'to' => 'required',
                 'time' => 'required',
@@ -97,6 +98,7 @@ Route::middleware('auth:sanctum')->group(function () {
                 return response()->json(['message' => 'Plant was already in your collection list.'], 400);
             }
             $data['user_id'] = auth()->id();
+            $data['status'] = 'Planted';
             return Collection::create($data);
         });
 
@@ -111,6 +113,13 @@ Route::middleware('auth:sanctum')->group(function () {
             $result = Collection::whereUserId(auth()->id())->wherePlantId($plant->id)->first()->delete();
 
             return $result;
+        });
+
+        Route::put('/{plant}', function (Request $request, Plant $plant) {
+
+            $updated = Collection::whereUserId(auth()->id())->wherePlantId($plant->id)->update(['status' => $request->status]);
+
+            return $updated;
         });
     });
 
