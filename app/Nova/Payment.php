@@ -2,37 +2,31 @@
 
 namespace App\Nova;
 
-use App\Models\Client;
+use App\Nova\Actions\ApprovePayment;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Hidden;
-use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
 
-class Transaction extends Resource
+class Payment extends Resource
 {
-    public static function availableForNavigation(Request $request)
-    {
-        return auth()->user()->type != 'Client';
-    }
-    public static $group = 'Management';
+    public static $group = 'Client';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Transaction::class;
+    public static $model = \App\Models\Payment::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'reference';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -40,8 +34,26 @@ class Transaction extends Resource
      * @var array
      */
     public static $search = [
-        'reference',
+        'id',
+        'approved_at',
+        'amount',
+        'pay_for_month',
     ];
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return auth()->user()->client != null;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return auth()->user()->type == \App\Models\User::TYPE_ADMIN || auth()->user()->type == \App\Models\User::TYPE_EMPLOYEE;
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return auth()->user()->type == \App\Models\User::TYPE_ADMIN;
+    }
 
     /**
      * Get the fields displayed by the resource.
@@ -52,38 +64,33 @@ class Transaction extends Resource
     public function fields(Request $request)
     {
         return [
+            Text::make('Status', function () {
+                if ($this->approved_at != null) {
+                    return 'Approved';
+                }
+
+                return 'Pending';
+            })
+                ->exceptOnForms(),
             Date::make('Date', 'created_at')
                 ->sortable()
                 ->exceptOnForms(),
-
-            Text::make('Reference')
-                ->exceptOnForms(),
-
-            Select::make('Account Number', 'client_id')
-                ->searchable()
-                ->options(Client::get()->pluck('account_number', 'id')),
-            Hidden::make("user_id")
-                ->default(fn() => auth()->id()),
-
-            BelongsTo::make('Transaction Name', 'type', TransactionType::class)
-                ->rules(['required']),
-
+            Hidden::make('client_id')->default(function () {
+                return auth()->user()->client;
+            }),
+            Select::make('Method')->options([
+                'Over-the-counter' => 'Over-the-counter',
+                'GCASH' => 'GCASH',
+                'MAYA' => 'MAYA',
+                'BANK' => 'BANK',
+            ])->rules(['required']),
             Currency::make('Amount')
                 ->rules(['required']),
-
-            Currency::make('Balance')
-                ->exceptOnForms(),
-
-            Textarea::make('Description')
-                ->rules(['required']),
-
+            Image::make('Proof of Payment', 'proof')->rules(['required']),
             Date::make('Pay for the Month', 'pay_for_month')
                 ->rules(['required'])
                 ->pickerDisplayFormat('M')
                 ->format('MMM'),
-
-            BelongsTo::make('Created By', 'user', User::class)
-                ->exceptOnForms(),
         ];
     }
 
@@ -128,6 +135,10 @@ class Transaction extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            ApprovePayment::make()->canSee(function () {
+                return auth()->user()->type != \App\Models\User::TYPE_CLIENT;
+            }),
+        ];
     }
 }

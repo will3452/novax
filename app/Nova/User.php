@@ -3,13 +3,9 @@
 namespace App\Nova;
 
 use App\Models\User as ModelsUser;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
@@ -58,11 +54,6 @@ class User extends Resource
     {
         return [
 
-            Select::make('Type')->rules(['required'])->options([
-                ModelsUser::TYPE_ADMIN => ModelsUser::TYPE_ADMIN,
-                ModelsUser::TYPE_EMPLOYEE => ModelsUser::TYPE_EMPLOYEE,
-            ]),
-
             Text::make('First Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
@@ -73,7 +64,8 @@ class User extends Resource
 
             Text::make('Middle Name')
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->help('If no middle name, plese input N/a')
+                ->rules('max:255'),
 
             Text::make('Email')
                 ->sortable()

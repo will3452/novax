@@ -20,13 +20,15 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
             <div class="container">
-                <a class="navbar-brand" href="#page-top"><img src="/storage/{{nova_get_setting('logo')}}" alt="..." /></a>
+                <a class="navbar-brand" href="#page-top"><img src="/storage/{{nova_get_setting('logo')}}" alt="..." style="width: 50px; height:50px;  " /></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars ms-1"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="/admin/login">LOGIN</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/register">REGISTER</a></li>
                         <li class="nav-item"><a class="nav-link" href="#services">Pricing</a></li>
                         <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
@@ -51,7 +53,7 @@
                 </div>
                 <div class="row text-center">
                     @foreach (\App\Models\Package::get() as $item)
-                        <div class="col-md-4">
+                        <div class="col-md-4" onclick="window.location.href = '/register?package={{$item->id}}'">
                             <span class="fa-stack fa-4x">
                                 <i class="fas fa-circle fa-stack-2x text-primary"></i>
                                 <i class="fas fa-cube fa-stack-1x fa-inverse"></i>
@@ -282,6 +284,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div>
+            {!! nova_get_setting('map') !!}
         </div>
         <!-- Portfolio item 6 modal popup-->
         <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">

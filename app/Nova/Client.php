@@ -9,10 +9,13 @@ use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Client extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->type != 'Client';
+    }
     public static $group = "Management";
     /**
      * The model the resource corresponds to.
@@ -56,7 +59,8 @@ class Client extends Resource
             Text::make('Last Name')
                 ->rules(['required']),
             Text::make('Middle Name')
-                ->rules(['required']),
+                ->help('If no middle name, plese input N/a')
+                ->rules('max:255'),
             Date::make('Birthday')
                 ->rules(['required']),
             Text::make('Email')
@@ -65,8 +69,9 @@ class Client extends Resource
                 ->rules(['required']),
             Text::make('Address')
                 ->rules(['required']),
+            BelongsTo::make('Representative', 'createdByUser', User::class),
             Hidden::make('created_by_user_id')
-                ->default(fn () => auth()->id()),
+                ->default(fn() => auth()->id()),
         ];
     }
 

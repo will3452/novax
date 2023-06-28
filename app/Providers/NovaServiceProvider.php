@@ -4,21 +4,22 @@ namespace App\Providers;
 
 use App\Models\User;
 use App\Nova\Metrics\ClientPerPackage;
-use Laravel\Nova\Nova;
-use Laravel\Nova\Cards\Help;
 use App\Nova\Metrics\Clients;
 use App\Nova\Metrics\Expenses;
 use App\Nova\Metrics\Income;
-use Laravel\Nova\Fields\Text;
 use App\Nova\Metrics\Packages;
-use Laravel\Nova\Fields\Image;
-use Spatie\BackupTool\BackupTool;
-use Illuminate\Support\Facades\Gate;
-use Runline\ProfileTool\ProfileTool;
+use App\Nova\Metrics\Payments;
 use ChrisWare\NovaBreadcrumbs\NovaBreadcrumbs;
+use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Cards\Help;
+use Laravel\Nova\Fields\Code;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Textarea;
-use OptimistDigital\NovaSettings\NovaSettings;
+use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use OptimistDigital\NovaSettings\NovaSettings;
+use Runline\ProfileTool\ProfileTool;
+use Spatie\BackupTool\BackupTool;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -37,7 +38,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             Textarea::make('Contacts')
                 ->help('Please Separated each contact by comma (,)'),
             Textarea::make('Landing Welcome'),
-            Textarea::make('Landing Greeting', 'landing_greeting')
+            Code::make('Map'),
+            Textarea::make('Landing Greeting', 'landing_greeting'),
         ]);
     }
 
@@ -49,9 +51,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function routes()
     {
         Nova::routes()
-                ->withAuthenticationRoutes()
-                ->withPasswordResetRoutes()
-                ->register();
+            ->withAuthenticationRoutes()
+            ->withPasswordResetRoutes()
+            ->register();
     }
 
     /**
@@ -78,11 +80,24 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            (new Clients()),
-            (new Packages()),
-            (new ClientPerPackage()),
-            (new Expenses()),
-            (new Income()),
+            (new Clients())->canSee(function () {
+                return auth()->user()->type != 'Client';
+            }),
+            (new Packages())->canSee(function () {
+                return auth()->user()->type != 'Client';
+            }),
+            (new ClientPerPackage())->canSee(function () {
+                return auth()->user()->type != 'Client';
+            }),
+            (new Expenses())->canSee(function () {
+                return auth()->user()->type != 'Client';
+            }),
+            (new Income())->canSee(function () {
+                return auth()->user()->type != 'Client';
+            }),
+            (new Payments())->canSee(function () {
+                return auth()->user()->client != null;
+            }),
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
                 'America/Mexico_City',
@@ -91,9 +106,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'Asia/Manila',
                 'Asia/Tokyo',
             ])->defaultTimezone('Africa/Manila')
-            ->canSee(function () {
-                return config('novax.time_enabled');
-            }),
+                ->canSee(function () {
+                    return config('novax.time_enabled');
+                }),
         ];
     }
 

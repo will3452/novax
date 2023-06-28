@@ -4,10 +4,8 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Package extends Resource
 {
@@ -34,7 +32,7 @@ class Package extends Resource
      */
     public static $search = [
         'name',
-        'price'
+        'price',
     ];
 
     /**
@@ -57,6 +55,11 @@ class Package extends Resource
                 ->rules(['required'])
                 ->alwaysShow(),
         ];
+    }
+
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->type != 'Client';
     }
 
     /**

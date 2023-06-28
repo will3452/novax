@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -29,8 +29,19 @@ class User extends Authenticatable
 
     const TYPE_EMPLOYEE = 'Employee';
     const TYPE_ADMIN = 'Admin';
+    const TYPE_CLIENT = 'Client';
 
-    public function getNameAttribute() {
+    public function getClientAttribute()
+    {
+        try {
+            return Client::whereEmail($this->email)->first()->id;
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+    public function getNameAttribute()
+    {
         return "$this->last_name, $this->first_name";
     }
 
