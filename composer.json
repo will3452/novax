@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "repositories": [
         {
@@ -12,12 +15,17 @@
         {
             "type": "path",
             "url": "./nova-components/NovaPermissionsField"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/Theme"
         }
     ],
     "require": {
         "php": "^7.3|^8.0",
         "coreproc/nova-permissions-field": "*",
         "fruitcake/laravel-cors": "^2.0",
+        "genealabs/nova-map-marker-field": "*",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.65",
         "laravel/nova": "*",
@@ -29,7 +37,8 @@
         "runlinenl/nova-profile-tool": "^1.1",
         "spatie/laravel-backup": "^6.16",
         "spatie/laravel-permission": "^5.3",
-        "spatie/nova-backup-tool": "^4.1"
+        "spatie/nova-backup-tool": "^4.1",
+        "sos/theme": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -74,7 +83,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/thanks": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
