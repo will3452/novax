@@ -27,6 +27,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "genealabs/nova-map-marker-field": "*",
         "guzzlehttp/guzzle": "^7.0.1",
+        "kreait/laravel-firebase": "*",
         "laravel/framework": "^8.65",
         "laravel/nova": "*",
         "laravel/sanctum": "^2.12",
@@ -35,10 +36,10 @@
         "optimistdigital/nova-settings": "^3.2",
         "richardkeep/nova-timenow": "^1.0",
         "runlinenl/nova-profile-tool": "^1.1",
+        "sos/theme": "*",
         "spatie/laravel-backup": "^6.16",
         "spatie/laravel-permission": "^5.3",
-        "spatie/nova-backup-tool": "^4.1",
-        "sos/theme": "*"
+        "spatie/nova-backup-tool": "^4.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
