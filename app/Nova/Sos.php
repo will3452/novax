@@ -4,7 +4,9 @@ namespace App\Nova;
 
 use GeneaLabs\NovaMapMarkerField\MapMarker;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
@@ -62,6 +64,11 @@ class Sos extends Resource
             MapMarker::make('Location')
                 ->latitude('lat')
                 ->longitude('lng'),
+            Hidden::make('user_id')
+                ->default(function () {
+                    return auth()->id();
+                }),
+            BelongsTo::make('User', 'user', User::class)->exceptOnForms(),
         ];
     }
 

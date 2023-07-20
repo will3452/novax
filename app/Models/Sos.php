@@ -17,4 +17,9 @@ class Sos extends Model
         'lng',
         'status',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
