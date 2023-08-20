@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17cb8e37b3e20aedf36d15dfdfd5ef87",
+    "content-hash": "0394e68d9630baad5c9b84cdd999e1c6",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -244,7 +244,7 @@
         },
         {
             "name": "coreproc/nova-permissions-field",
-            "version": "dev-main",
+            "version": "dev-bus-ticketing-app",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/NovaPermissionsField",
@@ -1457,6 +1457,51 @@
                 }
             ],
             "time": "2021-10-06T17:43:30+00:00"
+        },
+        {
+            "name": "laraning/nova-time-field",
+            "version": "v1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laraning/nova-time-field.git",
+                "reference": "f12fd7ebf172279f0838b05f965161e75e42f823"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laraning/nova-time-field/zipball/f12fd7ebf172279f0838b05f965161e75e42f823",
+                "reference": "f12fd7ebf172279f0838b05f965161e75e42f823",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laraning\\NovaTimeField\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laraning\\NovaTimeField\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/laraning/nova-time-field/issues",
+                "source": "https://github.com/laraning/nova-time-field/tree/v1.2"
+            },
+            "time": "2020-11-29T17:27:34+00:00"
         },
         {
             "name": "laravel/framework",
@@ -9688,5 +9733,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }

@@ -3,31 +3,26 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laraning\NovaTimeField\TimeField;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\Select;
 
-class User extends Resource
+class Schedule extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'super@admin.com');
-    }
-
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Schedule::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -35,7 +30,9 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'day',
+        'departure',
     ];
 
     /**
@@ -47,22 +44,21 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            ID::make(__('ID'), 'id')->sortable(),
+            Select::make('Day')
+                ->options([
+                    'M' => 'M',
+                    'T' => 'T',
+                    'W' => 'W',
+                    'TH' => 'TH',
+                    'F' => 'F',
+                    'ST' => 'ST',
+                    'SN' => 'SN',
+                ]),
 
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
+            TimeField::make('Departure'),
 
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+            BelongsTo::make('Bus', 'bus', Bus::class),
 
         ];
     }
