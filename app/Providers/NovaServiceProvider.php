@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\Bookings;
+use App\Nova\Metrics\BookingTrend;
+use App\Nova\Metrics\Buses;
+use App\Nova\Metrics\Profiles;
+use App\Nova\Metrics\Terminals;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Nova;
@@ -72,6 +77,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ->canSee(function () {
                     return config('novax.time_enabled');
                 }),
+            Profiles::make(),
+            Bookings::make(),
+            Buses::make(),
+            Terminals::make(),
+            BookingTrend::make(),
         ];
     }
 
@@ -82,7 +92,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function dashboards()
     {
-        return [];
+        return [
+        ];
     }
 
     /**
