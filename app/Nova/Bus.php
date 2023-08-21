@@ -50,7 +50,7 @@ class Bus extends Resource
                     'FIRST CLASS' => 'FIRST CLASS',
                     'REGULAR AIRCON' => 'REGULAR AIRCON',
                 ]),
-            Text::make('Status')
+            Select::make('Status')
                 ->options([
                     'AVAILABLE' => 'AVAILABLE',
                     'NOT AVAILABLE' => 'NOT AVAILABLE',
