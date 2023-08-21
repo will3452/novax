@@ -3,26 +3,29 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 
-class Bus extends Resource
+class FareMatrix extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Bus::class;
+    public static $model = \App\Models\FareMatrix::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'number';
+    public function title()
+    {
+        return "$this->from - $this->to ($this->fare)";
+    }
 
     /**
      * The columns that should be searched.
@@ -31,8 +34,8 @@ class Bus extends Resource
      */
     public static $search = [
         'id',
-        'number',
-        'plate_number',
+        'from',
+        'to',
     ];
 
     /**
@@ -45,23 +48,15 @@ class Bus extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Select::make('type')
+            Select::make('Bus Type')
                 ->options([
                     'FIRST CLASS' => 'FIRST CLASS',
                     'REGULAR AIRCON' => 'REGULAR AIRCON',
-                ]),
-            Text::make('Status')
-                ->options([
-                    'AVAILABLE' => 'AVAILABLE',
-                    'NOT AVAILABLE' => 'NOT AVAILABLE',
-                ]),
-            Text::make('Plate Number')
+                ])
                 ->rules(['required']),
-            Text::make('Bus Number', 'number')
-                ->rules(['required']),
-            Number::make('Capacity')
-                ->rules(['required']),
-
+            Text::make('From')->rules(['required']),
+            Text::make('To')->rules(['required']),
+            Currency::make('Fare')->rules(['required']),
         ];
     }
 

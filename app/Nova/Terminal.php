@@ -2,27 +2,26 @@
 
 namespace App\Nova;
 
+use GeneaLabs\NovaMapMarkerField\MapMarker;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 
-class Bus extends Resource
+class Terminal extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Bus::class;
+    public static $model = \App\Models\Terminal::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'number';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -31,8 +30,8 @@ class Bus extends Resource
      */
     public static $search = [
         'id',
-        'number',
-        'plate_number',
+        'name',
+        'address',
     ];
 
     /**
@@ -45,22 +44,12 @@ class Bus extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Select::make('type')
-                ->options([
-                    'FIRST CLASS' => 'FIRST CLASS',
-                    'REGULAR AIRCON' => 'REGULAR AIRCON',
-                ]),
-            Text::make('Status')
-                ->options([
-                    'AVAILABLE' => 'AVAILABLE',
-                    'NOT AVAILABLE' => 'NOT AVAILABLE',
-                ]),
-            Text::make('Plate Number')
-                ->rules(['required']),
-            Text::make('Bus Number', 'number')
-                ->rules(['required']),
-            Number::make('Capacity')
-                ->rules(['required']),
+            Text::make('Name')->rules(['required']),
+            Text::make('Address'),
+            MapMarker::make('Pin Location')
+                ->latitude('lat')
+                ->longitude('lng'),
+            Text::make('Category'),
 
         ];
     }
