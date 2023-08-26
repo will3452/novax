@@ -21,4 +21,9 @@ class Injury extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function steps()
+    {
+        return $this->belongsTo(Step::class, 'injury_id');
+    }
 }
