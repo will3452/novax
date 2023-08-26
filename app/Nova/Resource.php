@@ -2,11 +2,13 @@
 
 namespace App\Nova;
 
+use ChrisWare\NovaBreadcrumbs\Traits\Breadcrumbs;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource as NovaResource;
 
 abstract class Resource extends NovaResource
 {
+    use Breadcrumbs;
     /**
      * Build an "index" query for the given resource.
      *

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17cb8e37b3e20aedf36d15dfdfd5ef87",
+    "content-hash": "b691a74e3c93a2aedde2ebf11897db8b",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -61,6 +61,54 @@
                 "source": "https://github.com/asm89/stack-cors/tree/v2.1.1"
             },
             "time": "2022-01-18T09:12:03+00:00"
+        },
+        {
+            "name": "bolechen/nova-activitylog",
+            "version": "v0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bolechen/nova-activitylog.git",
+                "reference": "8c4cff0a10699e1c1173b618f0e5a0782d9ea909"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bolechen/nova-activitylog/zipball/8c4cff0a10699e1c1173b618f0e5a0782d9ea909",
+                "reference": "8c4cff0a10699e1c1173b618f0e5a0782d9ea909",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": "^2.0|^3.0",
+                "spatie/laravel-activitylog": "^3.9|^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Bolechen\\NovaActivitylog\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bolechen\\NovaActivitylog\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A tool to activity logger to monitor the users of your Laravel Nova.",
+            "keywords": [
+                "activity",
+                "laravel",
+                "log",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/bolechen/nova-activitylog/issues",
+                "source": "https://github.com/bolechen/nova-activitylog/tree/v0.3.0"
+            },
+            "time": "2021-11-11T08:16:48+00:00"
         },
         {
             "name": "brick/math",
@@ -243,8 +291,148 @@
             "time": "2021-10-17T02:44:05+00:00"
         },
         {
+            "name": "chris-ware/nova-breadcrumbs",
+            "version": "2.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chris-ware/nova-breadcrumbs.git",
+                "reference": "140769704cf1dd89ea2a12ef07609c9bb321eb52"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chris-ware/nova-breadcrumbs/zipball/140769704cf1dd89ea2a12ef07609c9bb321eb52",
+                "reference": "140769704cf1dd89ea2a12ef07609c9bb321eb52",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": ">=3",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ChrisWare\\NovaBreadcrumbs\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ChrisWare\\NovaBreadcrumbs\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova tool.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/chris-ware/nova-breadcrumbs/issues",
+                "source": "https://github.com/chris-ware/nova-breadcrumbs/tree/2.3.1"
+            },
+            "abandoned": "laravel/nova",
+            "time": "2021-07-19T17:38:52+00:00"
+        },
+        {
+            "name": "cloudcake/nova-fixed-bars",
+            "version": "v1.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cloudcake/nova-fixed-bars.git",
+                "reference": "8e8da9fbf5df21d0fd87984e4f2bbc2018986128"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cloudcake/nova-fixed-bars/zipball/8e8da9fbf5df21d0fd87984e4f2bbc2018986128",
+                "reference": "8e8da9fbf5df21d0fd87984e4f2bbc2018986128",
+                "shasum": ""
+            },
+            "require": {
+                "gregoriohc/laravel-nova-theme-responsive": "~0.6",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "NovaFixedBars\\NovaFixedBarsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "NovaFixedBars\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova package to add a responsive and/or fixed sidebar and navigation bar to the Nova admin UI.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/cloudcake/nova-fixed-bars/issues",
+                "source": "https://github.com/cloudcake/nova-fixed-bars/tree/v1.1.4"
+            },
+            "time": "2020-01-10T22:36:36+00:00"
+        },
+        {
+            "name": "cloudcake/nova-snowball",
+            "version": "v1.2.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cloudcake/nova-snowball.git",
+                "reference": "1b809e2d33cd0589b850d00b618c280f88ce2725"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cloudcake/nova-snowball/zipball/1b809e2d33cd0589b850d00b618c280f88ce2725",
+                "reference": "1b809e2d33cd0589b850d00b618c280f88ce2725",
+                "shasum": ""
+            },
+            "require": {
+                "cloudcake/nova-fixed-bars": "^1.0.6",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "NovaSnowball\\ThemeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "NovaSnowball\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A beautiful contrast of dark blue and white packaged for Laravel Nova as a theme.",
+            "keywords": [
+                "laravel",
+                "nova",
+                "theme"
+            ],
+            "support": {
+                "issues": "https://github.com/cloudcake/nova-snowball/issues",
+                "source": "https://github.com/cloudcake/nova-snowball/tree/v1.2.8"
+            },
+            "time": "2020-12-31T07:31:42+00:00"
+        },
+        {
             "name": "coreproc/nova-permissions-field",
-            "version": "dev-main",
+            "version": "dev-expense-tracking-system",
             "dist": {
                 "type": "path",
                 "url": "./nova-components/NovaPermissionsField",
@@ -1134,6 +1322,61 @@
                 }
             ],
             "time": "2021-11-21T21:41:47+00:00"
+        },
+        {
+            "name": "gregoriohc/laravel-nova-theme-responsive",
+            "version": "v0.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gregoriohc/laravel-nova-theme-responsive.git",
+                "reference": "a37f8162872ea7483d2dec7091d29e49376df273"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gregoriohc/laravel-nova-theme-responsive/zipball/a37f8162872ea7483d2dec7091d29e49376df273",
+                "reference": "a37f8162872ea7483d2dec7091d29e49376df273",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Gregoriohc\\LaravelNovaThemeResponsive\\ThemeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Gregoriohc\\LaravelNovaThemeResponsive\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gregorio Hernández Caso",
+                    "email": "gregoriohc@gmail.com",
+                    "homepage": "https://github.com/gregoriohc",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel Nova responsive theme.",
+            "homepage": "https://github.com/gregoriohc/laravel-nova-theme-responsive",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/gregoriohc/laravel-nova-theme-responsive/issues",
+                "source": "https://github.com/gregoriohc/laravel-nova-theme-responsive/tree/master"
+            },
+            "abandoned": true,
+            "time": "2020-03-08T16:15:03+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -4186,6 +4429,96 @@
                 }
             ],
             "time": "2021-02-24T14:56:42+00:00"
+        },
+        {
+            "name": "spatie/laravel-activitylog",
+            "version": "3.17.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-activitylog.git",
+                "reference": "bdc44862aaca39ecbd824133b80dbd7c8017ed7f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/bdc44862aaca39ecbd824133b80dbd7c8017ed7f",
+                "reference": "bdc44862aaca39ecbd824133b80dbd7c8017ed7f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "^6.0 || ^7.0 || ^8.0",
+                "illuminate/database": "^6.0 || ^7.0 || ^8.0",
+                "illuminate/support": "^6.0 || ^7.0 || ^8.0",
+                "php": "^7.3 || ^8.0"
+            },
+            "require-dev": {
+                "ext-json": "*",
+                "orchestra/testbench": "^4.0 || ^5.0 || ^6.0",
+                "phpunit/phpunit": "^9.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Activitylog\\ActivitylogServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Spatie\\Activitylog\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Sebastian De Deyne",
+                    "email": "sebastian@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Tom Witkowski",
+                    "email": "dev.gummibeer@gmail.com",
+                    "homepage": "https://gummibeer.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A very simple activity logger to monitor the users of your website or application",
+            "homepage": "https://github.com/spatie/activitylog",
+            "keywords": [
+                "activity",
+                "laravel",
+                "log",
+                "spatie",
+                "user"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-activitylog/issues",
+                "source": "https://github.com/spatie/laravel-activitylog/tree/3.17.0"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-03-02T16:49:06+00:00"
         },
         {
             "name": "spatie/laravel-backup",
@@ -9688,5 +10021,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }

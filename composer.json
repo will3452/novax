@@ -16,6 +16,9 @@
     ],
     "require": {
         "php": "^7.3|^8.0",
+        "bolechen/nova-activitylog": "*",
+        "chris-ware/nova-breadcrumbs": "^2.3",
+        "cloudcake/nova-snowball": "^1.2",
         "coreproc/nova-permissions-field": "*",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
