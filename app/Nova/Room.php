@@ -2,37 +2,33 @@
 
 namespace App\Nova;
 
-use App\Models\Permission;
-use App\Models\Role as ModelsRole;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Hidden;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Coreproc\NovaPermissionsField\NovaPermissionsField;
 
-class Role extends Resource
+class Room extends Resource
 {
     public static function indexQuery(NovaRequest $request, $query)
     {
-        return $query->where('name', '!=', ModelsRole::SUPERADMIN);
+        return $query->whereUserId(auth()->id());
     }
 
     public static function availableForNavigation(Request $request)
     {
-        return config('novax.role_enabled', false);
+        return auth()->user()->type == User::TYPE_TEACHER;
     }
-
-    public static $group = 'access Control';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Role::class;
-
-    public function authorizeToDelete(Request $request)
-    {
-        return false;
-    }
+    public static $model = \App\Models\Room::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -60,36 +56,11 @@ class Role extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make(__('Name'), 'name')
-                ->readonly(function () {
-                    /** @phpstan-ignore-next-line */
-                    if ($this->name === \App\Models\Role::SUPERADMIN) {
-                        return true;
-                    }
-                    return false;
-                })
-                ->rules(['required', 'string', 'max:125'])
-                ->creationRules('unique:' . config('permission.table_names.roles'))
-                ->updateRules('unique:' . config('permission.table_names.roles') . ',name,{{resourceId}}'),
-
-            NovaPermissionsField::make(__('Permissions'), 'prepared_permissions')
-                ->canSee(function () {
-                    /** @phpstan-ignore-next-line */
-                    if ($this->name === \App\Models\Role::SUPERADMIN) {
-                        return false;
-                    }
-                    return true;
-                })
-                ->hideFromIndex()
-                ->withGroups()
-                ->options(Permission::all()->map(function ($permission, $key) {
-                    return [
-                        'group' => __(ucfirst($permission->group)),
-                        'option' => $permission->name,
-                        'label' => __($permission->name),
-                    ];
-                })->groupBy('group')->toArray()),
-
+            Text::make('Name')->sortable(),
+            Trix::make('Description')->alwaysShow(),
+            Hidden::make('user_id')->default(fn() => auth()->id()),
+            Password::make('Code'),
+            HasMany::make('Lectures', 'lectures', Lecture::class),
         ];
     }
 

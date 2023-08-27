@@ -2,37 +2,31 @@
 
 namespace App\Nova;
 
-use App\Models\User as ModelsUser;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Lecture extends Resource
 {
     public static function availableForNavigation(Request $request)
     {
-        return auth()->user()->type == ModelsUser::TYPE_TEACHER;
-    }
-
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'super@admin.com');
+        return auth()->user()->type == User::TYPE_TEACHER;
     }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Lecture::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'title';
 
     /**
      * The columns that should be searched.
@@ -40,7 +34,8 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'title',
     ];
 
     /**
@@ -52,27 +47,12 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-
-            Select::make('Type')
-                ->options([
-                    ModelsUser::TYPE_STUDENT => ModelsUser::TYPE_STUDENT,
-                    ModelsUser::TYPE_TEACHER => ModelsUser::TYPE_TEACHER,
-                ]),
-
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+            BelongsTo::make('Room', 'room', Room::class),
+            Text::make('Title')
+                ->rules(['required']),
+            File::make('File')
+                ->rules(['required'])
+                ->acceptedTypes('.pdf'),
         ];
     }
 

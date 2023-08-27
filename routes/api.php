@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ApiAuthenticationController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,8 +12,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
-
+ */
 
 //private access
 Route::middleware('auth:sanctum')->group(function () {
@@ -27,7 +25,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/public-test', function () {
     return 'public test';
 });
-
 
 //user authentication
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
