@@ -25,11 +25,13 @@ Route::middleware('auth:sanctum')->group(function () {
         $model = $request->model;
         $method = $request->method;
         $payload = $request->payload;
-        $model = "\App\Models\$model";
 
-        return ($model)::$method($payload);
-        // TODO reviver: a method that can format result
+        $model = "\\App\\Models\\$model";
+        if ($payload) {
 
+            return ($model)::$method($payload);
+        }
+        return ($model)::$method();
     });
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
 });
@@ -45,8 +47,12 @@ Route::post('/login', [ApiAuthenticationController::class, 'login']);
 Route::get('/test', function (Request $request) {
     $model = $request->model;
     $method = $request->method;
-    $payload = $request->payload ?? [];
-    $model = "\\App\\Models\\$model";
+    $payload = $request->payload;
 
-    return ($model)::$method($payload);
+    $model = "\\App\\Models\\$model";
+    if ($payload) {
+
+        return ($model)::$method($payload);
+    }
+    return ($model)::$method();
 });
