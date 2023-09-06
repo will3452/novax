@@ -33,6 +33,19 @@ Route::middleware('auth:sanctum')->group(function () {
         }
         return ($model)::$method();
     });
+
+    Route::get('/resource', function (Request $request) {
+        $model = $request->model;
+        $method = $request->method;
+        $payload = $request->payload;
+
+        $model = "\\App\\Models\\$model";
+        if ($payload) {
+
+            return ($model)::$method($payload);
+        }
+        return ($model)::$method();
+    });
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
 });
 
