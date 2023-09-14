@@ -2,15 +2,14 @@
 
 namespace App\Providers;
 
-use Laravel\Nova\Nova;
-use Laravel\Nova\Cards\Help;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Image;
-use Spatie\BackupTool\BackupTool;
+use App\Nova\Metrics\Bookings;
 use Illuminate\Support\Facades\Gate;
-use Runline\ProfileTool\ProfileTool;
-use OptimistDigital\NovaSettings\NovaSettings;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use OptimistDigital\NovaSettings\NovaSettings;
+use Runline\ProfileTool\ProfileTool;
+use Spatie\BackupTool\BackupTool;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -36,9 +35,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function routes()
     {
         Nova::routes()
-                ->withAuthenticationRoutes()
-                ->withPasswordResetRoutes()
-                ->register();
+            ->withAuthenticationRoutes()
+            ->withPasswordResetRoutes()
+            ->register();
     }
 
     /**
@@ -65,6 +64,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
+            (Bookings::make()),
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
                 'America/Mexico_City',
@@ -73,9 +73,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'Asia/Manila',
                 'Asia/Tokyo',
             ])->defaultTimezone('Africa/Manila')
-            ->canSee(function () {
-                return config('novax.time_enabled');
-            }),
+                ->canSee(function () {
+                    return config('novax.time_enabled');
+                }),
         ];
     }
 

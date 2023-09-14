@@ -13,6 +13,16 @@
         "axios": "^0.21",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "postcss": "^8.1.14"
+        "postcss": "^8.1.14",
+        "vue-loader": "^15.9.8",
+        "vue-template-compiler": "^2.7.14"
+    },
+    "dependencies": {
+        "@inertiajs/inertia": "^0.11.1",
+        "@inertiajs/inertia-vue": "^0.8.0",
+        "ant-design-vue": "*1.7.8",
+        "leaflet": "^1.9.4",
+        "vue": "^2.7.14",
+        "vue2-leaflet": "^2.7.1"
     }
 }

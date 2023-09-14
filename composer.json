@@ -18,7 +18,9 @@
         "php": "^7.3|^8.0",
         "coreproc/nova-permissions-field": "*",
         "fruitcake/laravel-cors": "^2.0",
+        "genealabs/nova-map-marker-field": "*",
         "guzzlehttp/guzzle": "^7.0.1",
+        "inertiajs/inertia-laravel": "^0.6.10",
         "laravel/framework": "^8.65",
         "laravel/nova": "*",
         "laravel/sanctum": "^2.12",
@@ -74,7 +76,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/thanks": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
