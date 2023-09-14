@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -42,16 +43,32 @@ Route::post('/login', function (Request $request) {
     return back()->withErrors(['authentication' => 'Your email/password does not match to our record.']);
 });
 
-// Route::get('/register', function () {
-//     return Inertia::render('Register');
-// });
+Route::get('/register', function () {
+    return Inertia::render('Register');
+});
+
+Route::post('/register', function (Request $request) {
+    $data = $request->validate([
+        'email' => ['email', 'unique:users,email', 'required'],
+        'password' => ['required'],
+        'name' => ['required'],
+    ]);
+
+    $data['password'] = bcrypt($data['password']);
+    $user = User::create($data);
+
+    // login with id
+    Auth::loginUsingId($user->id);
+
+    return redirect('/dashboard');
+});
 
 Route::get('/', function () {
     return 'U-VAN EXPRESS';
 });
 
-Route::get('/register', [RegisterController::class, 'registrationPage']);
-Route::post('/register', [RegisterController::class, 'postRegister']);
+// Route::get('/register', [RegisterController::class, 'registrationPage']);
+// Route::post('/register', [RegisterController::class, 'postRegister']);
 
 //artisan helper
 Route::get('/artisan', function () {
