@@ -2,9 +2,10 @@
 
 namespace App\Nova;
 
+use App\Models\User as ModelsUser;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -46,7 +47,13 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+
+            Select::make('Type')
+                ->default(fn() => ModelsUser::TYPE_DRIVER)
+                ->options([
+                    ModelsUser::TYPE_DRIVER => ModelsUser::TYPE_DRIVER,
+                    ModelsUser::TYPE_CLIENT => ModelsUser::TYPE_CLIENT,
+                ]),
 
             Text::make('Name')
                 ->sortable()

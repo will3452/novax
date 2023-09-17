@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Booking;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -21,6 +22,33 @@ Route::middleware(['auth'])->group(function () {
         return Inertia::render('BookingForm');
     });
 
+    Route::post('/booking', function (Request $request) {
+        $request->validate([
+            'driver' => ['required'],
+            'fee' => ['required'],
+            'distance' => ['required'],
+        ]);
+
+        $data = [
+            'client_id' => auth()->id(),
+            'server_id' => $request->driverId,
+            'amount' => $request->fee,
+            'from_address' => $request->steps[0]['address'],
+            'from_lat' => $request->steps[0]['lat'],
+            'from_lng' => $request->steps[0]['lng'],
+            'to_address' => $request->steps[0]['address'],
+            'to_lat' => $request->steps[0]['lat'],
+            'to_lng' => $request->steps[0]['lng'],
+            'landmark' => '---',
+            'mop' => 'CASH',
+            'status' => 'PENDING',
+        ];
+
+        Booking::create($data);
+        Inertia::share('message', fn() => "Your booking request has been sent to the selected provider. the system will notify you once your request approved.");
+        return redirect()->to('/dashboard');
+    });
+
     Route::get('/notifications', function () {
         return Inertia::render('Notifications');
     });
@@ -28,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/login', function () {
     return Inertia::render('Login');
-});
+})->name('login')->middleware(['guest']);
 
 Route::post('/login', function (Request $request) {
     $data = $request->validate([
@@ -36,11 +64,10 @@ Route::post('/login', function (Request $request) {
         'password' => ['required'],
     ]);
 
-    if (Auth::attempt($data)) {
-        return redirect('/dashboard');
+    if (!Auth::attempt($data)) {
+        return back()->withErrors(['authentication' => 'Your email/password does not match to our record.']);
     }
-
-    return back()->withErrors(['authentication' => 'Your email/password does not match to our record.']);
+    return Inertia::render('Dashboard');
 });
 
 Route::get('/register', function () {
@@ -64,7 +91,7 @@ Route::post('/register', function (Request $request) {
 });
 
 Route::get('/', function () {
-    return 'U-VAN EXPRESS';
+    return redirect()->to('/login');
 });
 
 // Route::get('/register', [RegisterController::class, 'registrationPage']);

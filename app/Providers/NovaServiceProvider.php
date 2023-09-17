@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Nova\Metrics\Bookings;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use OptimistDigital\NovaSettings\NovaSettings;
@@ -24,6 +25,17 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Text::make('Flag-Down Rate', 'FD')->rules(['required']),
+            Text::make('Additional Fare', 'AF')
+                ->rules(['required'])
+                ->help(' for every succeeding kilometer'),
+
+            /**
+             * If d <= 4:
+            fare = Php 9.00
+            Else:
+            fare = Php 9.00 + Php 1.50 * (d - 4)
+             */
         ]);
     }
 

@@ -25,7 +25,7 @@ class User extends Authenticatable
     ];
 
     const TYPE_ADMIN = 'Administrator';
-    const TYPE_RIDER = 'Rider';
+    const TYPE_DRIVER = 'Driver';
     const TYPE_CLIENT = 'Client';
     /**
      * The attributes that should be hidden for serialization.

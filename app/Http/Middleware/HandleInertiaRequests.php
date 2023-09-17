@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Booking;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -37,7 +39,11 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            //
+            'user' => fn() => $request->user(),
+            'drivers' => fn() => User::whereType(User::TYPE_DRIVER)->latest()->get(),
+            'fd' => fn() => nova_get_setting('FD', 12),
+            'af' => fn() => nova_get_setting('AF', 5),
+            'bookings' => fn() => Booking::whereClientId(auth()->id())->get(),
         ]);
     }
 }

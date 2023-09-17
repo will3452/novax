@@ -1,3 +1,5 @@
+window.moment = require('moment');
+window.axios = require('axios');
 import Vue from 'vue';
 import { createInertiaApp } from '@inertiajs/inertia-vue';
 import { LMap, LTileLayer, LMarker, LIcon } from 'vue2-leaflet';
