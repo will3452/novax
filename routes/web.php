@@ -17,6 +17,16 @@ Route::middleware(['auth'])->group(function () {
         return Inertia::render('Dashboard');
     });
 
+    // approve bookings
+    Route::post('/approve/{booking}', function (Request $request, Booking $booking) {
+        $booking->update(['status' => 'APPROVED']);
+        return redirect()->to('/dashboard');
+    });
+    Route::post('/reject/{booking}', function (Request $request, Booking $booking) {
+        $booking->update(['status' => 'REJECTED']);
+        return redirect()->to('/dashboard');
+    });
+
     // booking steps
     Route::get('/booking', function () {
         return Inertia::render('BookingForm');
@@ -36,9 +46,9 @@ Route::middleware(['auth'])->group(function () {
             'from_address' => $request->steps[0]['address'],
             'from_lat' => $request->steps[0]['lat'],
             'from_lng' => $request->steps[0]['lng'],
-            'to_address' => $request->steps[0]['address'],
-            'to_lat' => $request->steps[0]['lat'],
-            'to_lng' => $request->steps[0]['lng'],
+            'to_address' => $request->steps[1]['address'],
+            'to_lat' => $request->steps[1]['lat'],
+            'to_lng' => $request->steps[1]['lng'],
             'landmark' => '---',
             'mop' => 'CASH',
             'status' => 'PENDING',

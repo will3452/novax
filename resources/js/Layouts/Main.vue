@@ -20,7 +20,7 @@
             </a-menu>
         </a-layout-header>
       <a-layout>
-        <a-layout-content style="height: 100vh !important; ">
+        <a-layout-content style="minHeight: 100vh !important; ">
           <slot></slot>
         </a-layout-content>
       </a-layout>

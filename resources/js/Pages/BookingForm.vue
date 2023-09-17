@@ -72,7 +72,7 @@
                         <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                         <l-marker draggable :lat-lng="[lat, lng]" @update:lat-lng="markerChange">
                             <l-icon>
-                                <img src="../pin.png" style="width:25px;" class="blink">
+                                <img :src="currentStep == 0 ? '/pin.png' : '/flag.png'" style="width:25px;" class="blink">
                             </l-icon>
                         </l-marker>
                     </l-map>

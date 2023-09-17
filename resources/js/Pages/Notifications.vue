@@ -1,6 +1,6 @@
 <template>
     <div>
-        {{$page.url}} goes here. under development
+        <a-table></a-table>
     </div>
 </template>
 

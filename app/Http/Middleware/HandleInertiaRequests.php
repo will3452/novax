@@ -43,7 +43,8 @@ class HandleInertiaRequests extends Middleware
             'drivers' => fn() => User::whereType(User::TYPE_DRIVER)->latest()->get(),
             'fd' => fn() => nova_get_setting('FD', 12),
             'af' => fn() => nova_get_setting('AF', 5),
-            'bookings' => fn() => Booking::whereClientId(auth()->id())->get(),
+            'bookings' => fn() => Booking::with(['server'])->whereClientId(auth()->id())->latest()->get(),
+            'requests' => fn() => Booking::with(['client'])->whereServerId(auth()->id())->latest()->get(),
         ]);
     }
 }
