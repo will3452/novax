@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\Booking;
+use App\Models\Route as ModelsRoute;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +22,39 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/auth-test', function () {
         return 'authentication test';
+    });
+
+    Route::post('/booking', function (Request $request) {
+        $data = $request->validate([
+            'fare' => ['required'],
+            'time' => ['required'],
+            'date' => ['required'],
+            'route_id' => ['required'],
+            'qty' => ['required'],
+        ]);
+        $route = ModelsRoute::find($request->route_id);
+
+        $data['from'] = $route->from->name;
+        $data['to'] = $route->to->name;
+        $data['seat_numbers'] = 'TDF'; // to be follow
+        $data['discount'] = 0;
+        $data['user_id'] = auth()->id();
+        $data['status'] = 'PAID';
+
+        // add transaction
+        Transaction::create([
+            'type' => 'PAYMENT',
+            'bound' => 'OUT',
+            'amount' => $data['fare'] * $data['qty'],
+            'user_id' => auth()->id(),
+            'status' => 'APPROVED',
+        ]);
+
+        $booking = Booking::create($data);
+
+        return [
+            'booking' => $booking,
+        ];
     });
 
     Route::post('/resource', function (Request $request) {
