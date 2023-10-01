@@ -2,11 +2,13 @@
 
 namespace App\Nova;
 
+use App\Models\Project as ProjectModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Trix;
 
 class Expense extends Resource
@@ -44,7 +46,10 @@ class Expense extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('Project', 'project', Project::class),
+            Select::make('Project', 'project_id')
+                ->options(ProjectModel::get()->pluck('name', 'id'))
+                ->displayUsingLabels(),
+            // BelongsTo::make('Project', 'project', Project::class),
             BelongsTo::make('Category', 'category', Category::class),
             Date::make('Date')
                 ->rules(['required']),

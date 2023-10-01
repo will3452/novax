@@ -2,13 +2,9 @@
 
 namespace App\Providers;
 
-use App\Nova\Metrics\Expenses;
-use App\Nova\Metrics\ExpensesPerDay;
-use App\Nova\Metrics\ProjectPerCategory;
-use App\Nova\Metrics\Projects;
-use App\Nova\Metrics\Users;
 use Bolechen\NovaActivitylog\NovaActivitylog;
 use ChrisWare\NovaBreadcrumbs\NovaBreadcrumbs;
+use Elezerk\Expensesdashboard\Expensesdashboard;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Nova;
@@ -68,19 +64,20 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
-                'Africa/Nairobi',
-                'America/Mexico_City',
-                'Australia/Sydney',
-                'Europe/Paris',
-                'Asia/Manila',
-                'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila'),
-            Users::make(),
-            Projects::make(),
-            ProjectPerCategory::make(),
-            Expenses::make(),
-            ExpensesPerDay::make(),
+            Expensesdashboard::make(),
+            // (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
+            //     'Africa/Nairobi',
+            //     'America/Mexico_City',
+            //     'Australia/Sydney',
+            //     'Europe/Paris',
+            //     'Asia/Manila',
+            //     'Asia/Tokyo',
+            // ])->defaultTimezone('Africa/Manila'),
+            // Users::make(),
+            // Projects::make(),
+            // ProjectPerCategory::make(),
+            // Expenses::make(),
+            // ExpensesPerDay::make(),
         ];
     }
 

@@ -7,7 +7,13 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "mix --production",
+        "build-ExpensesDashboard": "cd nova-components/ExpensesDashboard && npm run dev",
+        "build-ExpensesDashboard-prod": "cd nova-components/ExpensesDashboard && npm run prod",
+        "build-expenses-dashboard": "cd nova-components/ExpensesDashboard && npm run dev",
+        "build-expenses-dashboard-prod": "cd nova-components/ExpensesDashboard && npm run prod",
+        "build-expensesdashboard": "cd nova-components/Expensesdashboard && npm run dev",
+        "build-expensesdashboard-prod": "cd nova-components/Expensesdashboard && npm run prod"
     },
     "devDependencies": {
         "axios": "^0.21",

@@ -17,4 +17,9 @@ class Category extends Model
     protected $logAttributes = [
         'name',
     ];
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class, 'category_id');
+    }
 }

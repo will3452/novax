@@ -35,4 +35,9 @@ class Project extends Model
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class, 'project_id');
+    }
 }
