@@ -24,6 +24,6 @@ class Injury extends Model
 
     public function steps()
     {
-        return $this->belongsTo(Step::class, 'injury_id');
+        return $this->hasMany(Step::class, 'injury_id');
     }
 }

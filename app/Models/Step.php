@@ -17,6 +17,6 @@ class Step extends Model
 
     public function injury()
     {
-        return $this->belongsTo(Injury::class);
+        return $this->belongsTo(Injury::class, 'injury_id');
     }
 }
