@@ -40,6 +40,10 @@ Route::get('/public-test', function () {
     return 'public test';
 });
 
+Route::get('/users', function () {
+    return User::get();
+});
+
 //user authentication
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
