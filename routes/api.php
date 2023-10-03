@@ -44,6 +44,10 @@ Route::get('/users', function () {
     return User::get();
 });
 
+Route::get('/logo', function () {
+    return nova_get_setting('logo');
+});
+
 //user authentication
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
