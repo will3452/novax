@@ -105,8 +105,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             (new NovaSettings)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
-                config('novax.setting_enabled');
+                return auth()->user()->type == 'ADMIN';
             }),
         ];
     }
