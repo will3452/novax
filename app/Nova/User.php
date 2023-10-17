@@ -3,8 +3,10 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -52,6 +54,25 @@ class User extends Resource
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
+
+            Select::make('Type')
+                ->rules(['required'])
+                ->options([
+                    'CONDUCTOR' => 'CONDUCTOR',
+                    'DRIVER' => 'DRIVER',
+                    'CUSTOMER' => 'CUSTOMER',
+                    'ADMIN' => 'ADMIN',
+                ]),
+
+            Select::make('Gender')
+                ->rules(['required'])
+                ->options([
+                    'FEMALE' => 'FEMALE',
+                    'MALE' => 'MALE',
+                ]),
+
+            Avatar::make('Image')
+                ->rules(['required']),
 
             Text::make('Email')
                 ->sortable()
