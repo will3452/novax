@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Api\ErrorHelper;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -25,6 +25,7 @@ class ApiAuthenticationController extends Controller
         $name = $request->name;
         $email = $request->email;
         $password = $request->password;
+        $userType = 'CUSTOMER';
 
         if (is_null($name) || is_null($email) || is_null($password)) {
             return ErrorHelper::sendError(400, 'field(s) are required!');
@@ -41,16 +42,17 @@ class ApiAuthenticationController extends Controller
         }
 
         $user = $this->createUser([
-            'name'=>$name,
-            'email'=>$email,
-            'password'=>$password,
+            'name' => $name,
+            'email' => $email,
+            'password' => $password,
+            'type' => $userType,
         ]);
 
         $token = $this->createToken($user);
 
         return response([
-            'user'=>$user,
-            'token'=>$token,
+            'user' => $user,
+            'token' => $token,
         ], 200);
     }
 
@@ -58,7 +60,6 @@ class ApiAuthenticationController extends Controller
     {
         $email = $request->email;
         $password = $request->password;
-
 
         if (is_null($email) || is_null($password)) {
             return ErrorHelper::sendError(400, 'field(s) are required!');
@@ -75,8 +76,8 @@ class ApiAuthenticationController extends Controller
         }
         $token = $this->createToken($user);
         return response([
-            'user'=>$user,
-            'token'=>$token,
+            'user' => $user,
+            'token' => $token,
         ], 200);
     }
 
@@ -84,7 +85,7 @@ class ApiAuthenticationController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
         return response([
-            'message'=>"LOGOUT SUCCESS!",
+            'message' => "LOGOUT SUCCESS!",
         ], 200);
     }
 }
