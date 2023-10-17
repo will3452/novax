@@ -9,6 +9,12 @@ use Laravel\Nova\Fields\Text;
 
 class Feedback extends Resource
 {
+
+    public static function label()
+    {
+        return "Feedback / Reports";
+    }
+
     /**
      * The model the resource corresponds to.
      *

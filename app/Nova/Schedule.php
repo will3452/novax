@@ -47,18 +47,18 @@ class Schedule extends Resource
             ID::make(__('ID'), 'id')->sortable(),
             Select::make('Day')
                 ->options([
-                    'M' => 'M',
-                    'T' => 'T',
-                    'W' => 'W',
-                    'TH' => 'TH',
-                    'F' => 'F',
-                    'ST' => 'ST',
-                    'SN' => 'SN',
+                    'Monday' => 'Monday',
+                    'Tuesday' => 'Tuesday',
+                    'Wednesday' => 'Wednesday',
+                    'Thursday' => 'Thursday',
+                    'Friday' => 'Friday',
+                    'Saturday' => 'Saturday',
+                    'Sunday' => 'Sunday',
                 ]),
 
-            TimeField::make('Departure'),
+            TimeField::make('Departure')->help('The time format is in miltary.'),
 
-            BelongsTo::make('Bus', 'bus', Bus::class),
+            BelongsTo::make('Bus Number', 'bus', Bus::class),
 
         ];
     }

@@ -46,20 +46,26 @@ class Bus extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
             Select::make('type')
+                ->hideWhenUpdating()
                 ->options([
                     'FIRST CLASS' => 'FIRST CLASS',
                     'REGULAR AIRCON' => 'REGULAR AIRCON',
                 ]),
             Select::make('Status')
+                ->hideWhenCreating()
+                ->default(fn() => 'AVAILABLE')
                 ->options([
                     'AVAILABLE' => 'AVAILABLE',
                     'NOT AVAILABLE' => 'NOT AVAILABLE',
                 ]),
             Text::make('Plate Number')
+                ->hideWhenUpdating()
                 ->rules(['required']),
             Text::make('Bus Number', 'number')
+                ->hideWhenUpdating()
                 ->rules(['required']),
             Number::make('Capacity')
+                ->hideWhenUpdating()
                 ->rules(['required']),
 
         ];

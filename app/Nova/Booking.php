@@ -34,6 +34,11 @@ class Booking extends Resource
         'id',
     ];
 
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -55,6 +60,9 @@ class Booking extends Resource
             Currency::make('Fare'),
             Text::make('Discount'),
             Text::make('Qty'),
+            Text::make('Total Price', function () {
+                return ($this->qty * $this->fare) - (($this->qty * $this->fare) * $this->discount);
+            }),
             Text::make('Date'),
             Text::make('Seat Numbers'),
             BelongsTo::make('Route', 'route', Route::class),

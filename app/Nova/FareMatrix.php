@@ -56,6 +56,7 @@ class FareMatrix extends Resource
                 ->rules(['required']),
             Text::make('From')->rules(['required']),
             Text::make('To')->rules(['required']),
+            Text::make('Km', 'km'),
             Currency::make('Fare')->rules(['required']),
         ];
     }

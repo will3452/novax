@@ -14,5 +14,6 @@ class FareMatrix extends Model
         'from',
         'to',
         'fare',
+        'km',
     ];
 }
