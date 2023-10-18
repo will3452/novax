@@ -105,7 +105,7 @@ export default {
 
             await window.axios.post('/save', fd);
 
-        }, 60000 * 5); // 5 mins
+        }, 60 * 3); // 3 mins
     },
 
     computed: {
