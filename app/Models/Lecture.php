@@ -19,4 +19,9 @@ class Lecture extends Model
     {
         return $this->belongsTo(Room::class, 'room_id');
     }
+
+    public function visitLogs()
+    {
+        return $this->hasMany(Record::class, 'lecture_id');
+    }
 }

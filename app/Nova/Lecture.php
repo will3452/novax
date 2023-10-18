@@ -2,17 +2,17 @@
 
 namespace App\Nova;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\File;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 
 class Lecture extends Resource
 {
     public static function availableForNavigation(Request $request)
     {
-        return auth()->user()->type == User::TYPE_TEACHER;
+        return false;
     }
     /**
      * The model the resource corresponds to.
@@ -53,6 +53,7 @@ class Lecture extends Resource
             File::make('File')
                 ->rules(['required'])
                 ->acceptedTypes('.pdf'),
+            HasMany::make('Logs', 'visitLogs', Record::class),
         ];
     }
 

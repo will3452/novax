@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\UsersPerDay;
 use Elezerk\VirtualRoom\VirtualRoom;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Fields\Image;
@@ -67,10 +68,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'Europe/Paris',
                 'Asia/Manila',
                 'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila')
-                ->canSee(function () {
-                    return config('novax.time_enabled');
-                }),
+            ])->defaultTimezone('Africa/Manila'),
+            (new UsersPerDay()),
         ];
     }
 
