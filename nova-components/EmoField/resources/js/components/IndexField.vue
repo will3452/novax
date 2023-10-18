@@ -21,10 +21,7 @@ export default {
                     }
                 })
 
-                await window.axios.get('/api/update/', {
-                    emotion: data[0].emotion.value,
-                    file: this.field.value,
-                })
+                await window.axios.get(`/api/update?emotion=${data[0].emotion.value}&file=${this.field.value}`)
 
                 this.field.value = data[0].emotion.value;
 
