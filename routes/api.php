@@ -32,6 +32,6 @@ Route::get('/public-test', function () {
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
-Route::post('/update/', function (Request $request) {
+Route::get('/update', function (Request $request) {
     return Record::whereFile($request->file)->first()->update(['file' => $request->emotion]);
 });
