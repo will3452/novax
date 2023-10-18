@@ -5,7 +5,7 @@ namespace App\Nova;
 use Elezerk\EmoField\EmoField;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\DateTime;
 
 class Record extends Resource
 {
@@ -50,7 +50,7 @@ class Record extends Resource
     public function fields(Request $request)
     {
         return [
-            Date::make('Date', 'created_at')
+            DateTime::make('Date', 'created_at')
                 ->sortable()
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),

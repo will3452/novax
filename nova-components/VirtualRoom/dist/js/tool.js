@@ -1109,7 +1109,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             return _context4.stop();
         }
       }, _callee4);
-    })), 5000); // 10 mins
+    })), 60000 * 5); // 5 mins
   },
 
   computed: {

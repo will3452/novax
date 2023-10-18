@@ -10,7 +10,7 @@ export default {
     methods: {
         async setup() {
             try {
-                if (this.field.value.includes('storage') || this.fields.value.includes('http')) throw new error('pull to the api!');
+                if (this.field.value.includes('storage')) throw new error('pull to the api!');
             } catch (error) {
                 let { data } = await window.axios.post('https://zylalabs.com/api/116/emotion+detection+api/167/detect+emotion', {
                     url: window.location.origin  + this.field.value,

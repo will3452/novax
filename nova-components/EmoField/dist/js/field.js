@@ -555,7 +555,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) switch (_context.prev = _context.next) {
             case 0:
               _context.prev = 0;
-              if (!(_this.field.value.includes('storage') || _this.fields.value.includes('http'))) {
+              if (!_this.field.value.includes('storage')) {
                 _context.next = 3;
                 break;
               }
