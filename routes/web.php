@@ -37,6 +37,10 @@ Route::post('/save', function (Request $request) {
     return Record::create($data);
 });
 
-Route::post('update/', function (Request $request) {
+Route::post('/update/', function (Request $request) {
+    return Record::whereFile($request->file)->first()->update(['file' => $request->emotion]);
+});
+
+Route::get('/update/', function (Request $request) {
     return Record::whereFile($request->file)->first()->update(['file' => $request->emotion]);
 });
