@@ -579,7 +579,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _yield$window$axios$p = _context.sent;
               data = _yield$window$axios$p.data;
               _context.next = 13;
-              return window.axios.post('/update/', {
+              return window.axios.post('/api/update/', {
                 emotion: data[0].emotion.value,
                 file: _this.field.value
               });

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\Record;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,3 +31,7 @@ Route::get('/public-test', function () {
 //user authentication
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
+
+Route::post('/update/', function (Request $request) {
+    return Record::whereFile($request->file)->first()->update(['file' => $request->emotion]);
+});

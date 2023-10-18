@@ -21,7 +21,7 @@ export default {
                     }
                 })
 
-                await window.axios.post('/update/', {
+                await window.axios.post('/api/update/', {
                     emotion: data[0].emotion.value,
                     file: this.field.value,
                 })
