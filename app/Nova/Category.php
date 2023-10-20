@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Text;
 
 class Category extends Resource
@@ -43,6 +44,9 @@ class Category extends Resource
             Text::make('Name')
                 ->rules(['required'])
                 ->sortable(),
+            File::make('Video')
+                ->help('Max video size 5mb')
+                ->rules(['max:5000']),
         ];
     }
 

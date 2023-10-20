@@ -64,6 +64,12 @@ class Sos extends Resource
             MapMarker::make('Location')
                 ->latitude('lat')
                 ->longitude('lng'),
+            Text::make('View Routes', function () {
+                $lat = $this->lat;
+                $lng = $this->lng;
+                return "<a target='_blank' href='/routing/$lat/$lng'>View Routes</a>";
+            })
+                ->asHtml(),
             Hidden::make('user_id')
                 ->default(function () {
                     return auth()->id();
