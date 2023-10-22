@@ -33,4 +33,9 @@ class Booking extends Model
     {
         return $this->belongsTo(User::class, 'server_id');
     }
+
+    public function feedback()
+    {
+        return $this->hasMany(Feedback::class, 'booking_id');
+    }
 }

@@ -1,12 +1,15 @@
 window.moment = require('moment');
 window.axios = require('axios');
 import Vue from 'vue';
+import VueApexCharts from 'vue-apexcharts'
 import { createInertiaApp } from '@inertiajs/inertia-vue';
 import { LMap, LTileLayer, LMarker, LIcon } from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
+
 Vue.config.productionTip = false;
+
 
 createInertiaApp({
   resolve: name => {
@@ -14,6 +17,8 @@ createInertiaApp({
     return page;
   },
   setup({ el, App, props, plugin }) {
+    Vue.use(VueApexCharts)
+    Vue.component('apexchart', VueApexCharts)
     Vue.use(plugin)
     Vue.use(Antd);
     Vue.component('l-map', LMap);

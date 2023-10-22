@@ -38,9 +38,16 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $drivers = [];
+
+        foreach (User::with(['vans', 'feedback.user'])->whereType(User::TYPE_DRIVER)->whereHas('vans')->latest()->get() as $driver) {
+            $driver['totalFeedback'] = $driver->totalFeedback;
+            array_push($drivers, $driver);
+        }
+
         return array_merge(parent::share($request), [
             'user' => fn() => $request->user(),
-            'drivers' => fn() => User::whereType(User::TYPE_DRIVER)->latest()->get(),
+            'drivers' => fn() => $drivers,
             'fd' => fn() => nova_get_setting('FD', 12),
             'af' => fn() => nova_get_setting('AF', 5),
             'bookings' => fn() => Booking::with(['server'])->whereClientId(auth()->id())->latest()->get(),

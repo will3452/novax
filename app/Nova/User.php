@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Models\User as ModelsUser;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
@@ -47,7 +48,7 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-
+            Avatar::make('Image', 'image'),
             Select::make('Type')
                 ->default(fn() => ModelsUser::TYPE_DRIVER)
                 ->options([
@@ -56,6 +57,10 @@ class User extends Resource
                 ]),
 
             Text::make('Name')
+                ->sortable()
+                ->rules('required', 'max:255'),
+
+            Text::make('Mobile')
                 ->sortable()
                 ->rules('required', 'max:255'),
 

@@ -33,12 +33,24 @@
             </a-descriptions>
             <div style="margin-top: 1em; " v-if="details.status == 'PENDING'">
                 <a-button type="primary" @click="$inertia.post('/approve/' + details.id, {}, {onSuccess: () => viewDetail = false})">APPROVE</a-button>
-                <a-button @click="$inertia.post('/reject/' + details.id, {}, {onSuccess: () => viewDetail = false})">REJECT</a-button>
+                <a-button type="danger" @click="$inertia.post('/reject/' + details.id, {}, {onSuccess: () => viewDetail = false})">REJECT</a-button>
             </div>
         </a-drawer>
         <br>
        <a-row :gutter="[12, 12]" type="flex" justify="center">
-        <a-col :md="16" :xs="24">
+        <a-col :md="24" :xs="24">
+            <a-row type="flex">
+                <a-col :span="8">
+                    <apexchart type="bar" :options="options" :series="series"></apexchart>
+                </a-col>
+                <a-col :span="8">
+                    <apexchart  type="line" :options="options" :series="series"></apexchart>
+                </a-col>
+
+                <a-col :span="8">
+                    <apexchart type="area" :options="options" :series="series"></apexchart>
+                </a-col>
+            </a-row>
             <a-card title="BOOKINGS" v-if="$page.props.user.type == 'Client'">
                 <div class="ct-chart"></div>
                 <a-row type="flex" :gutter="[12, 12]">
@@ -46,7 +58,7 @@
                         <a-button size="large" block type="primary" icon="select" @click="$inertia.visit('/booking')">BOOK NOW</a-button>
                     </a-col>
                     <a-col :span="12">
-                        <a-button size="large" block type="secondary" icon="ordered-list">VIEW LIST</a-button>
+                        <a-button size="large" block type="secondary" icon="ordered-list" @click="$inertia.visit('/bookings')">VIEW LIST</a-button>
                     </a-col>
                 </a-row>
             </a-card>
@@ -66,15 +78,12 @@
 
             </a-card>
             <br>
-            <a-card title="FEEDBACK">
-                <a-button size="large" block type="primary" icon="message">VIEW FEEDBACK</a-button>
-            </a-card>
         </a-col>
-        <a-col :md="6" :xs="24">
+        <!-- <a-col :md="8" :xs="24">
             <a-card title="ACTIVITY LOGS">
                 <a-button size="large" block type="primary" icon="align-left">VIEW ALL</a-button>
             </a-card>
-        </a-col>
+        </a-col> -->
        </a-row>
 
     </div>
@@ -138,6 +147,18 @@ export default {
     },
     data() {
         return {
+            options: {
+                chart: {
+                id: 'vuechart-example'
+                },
+                xaxis: {
+                categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+                }
+            },
+            series: [{
+                name: 'series-1',
+                data: [30, 40, 45, 50, 49, 60, 70, 91]
+            }],
             details:{},
             viewDetail: false,
             moment,

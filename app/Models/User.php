@@ -22,6 +22,10 @@ class User extends Authenticatable
         'email',
         'password',
         'type',
+        'image',
+        'code',
+        'code_verified',
+        'mobile',
     ];
 
     const TYPE_ADMIN = 'Administrator';
@@ -45,4 +49,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function vans()
+    {
+        return $this->hasMany(Van::class, 'driver_id');
+    }
+
+    public function feedback()
+    {
+        return $this->hasMany(Feedback::class, 'driver_id');
+    }
+
+    public function getTotalFeedbackAttribute()
+    {
+        return Feedback::whereDriverId($this->id)->avg('star');
+    }
 }

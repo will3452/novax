@@ -5,7 +5,6 @@
             <a-menu
                 mode="horizontal"
                 theme="dark"
-                :default-selected-keys="['1']"
                 :style="{ lineHeight: '64px' }"
             >
                 <a-menu-item key="1"  @click="$inertia.visit('/dashboard')">
@@ -20,7 +19,7 @@
             </a-menu>
         </a-layout-header>
       <a-layout>
-        <a-layout-content style="minHeight: 100vh !important; ">
+        <a-layout-content style="minHeight: 100vh !important; padding: 1em; ">
           <slot></slot>
         </a-layout-content>
       </a-layout>

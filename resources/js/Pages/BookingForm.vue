@@ -1,7 +1,59 @@
 <template>
     <a-spin :spinning="payload.processing || loading">
-        <a-drawer title="feedback" :visible="viewFeedback" :width="450" @close="viewFeedback = false">
-            <a-empty></a-empty>
+        <a-drawer title="Driver Information" :visible="viewDetails" :width="500" @close="viewDetails = false">
+            <a-tabs default-active-key="1">
+                <a-tab-pane key="1" tab="Driver's info">
+                    <a-descriptions :column="1" bordered>
+                        <a-descriptions-item label="Image">
+                            <a-avatar :src="'/storage/' + driver.image" :size="32"></a-avatar>
+                        </a-descriptions-item>
+                        <a-descriptions-item label="Name">
+                            {{driver.name}}
+                        </a-descriptions-item>
+                        <a-descriptions-item label="Email">
+                            {{driver.email}}
+                        </a-descriptions-item>
+                        <a-descriptions-item label="Van's Color">
+                            <div v-if="driver" style="width: 25px; height: 25px;border-radius: 50%; " :style="{background: driver ? driver.vans ?  driver.vans[0].color: '#ddd': '#ddd'}">
+                            </div>
+                        </a-descriptions-item>
+                        <a-descriptions-item label="Van's Plate #">
+                            {{driver ? driver.vans ? driver.vans[0].p_number: '' : ''}}
+                        </a-descriptions-item>
+                        <a-descriptions-item label="Van's Capacity">
+                            {{driver ? driver.vans ? driver.vans[0].capacity: '' : ''}}
+                        </a-descriptions-item>
+                        <!-- <a-descriptions-item label="Available">
+                            {{driver ? driver.vans ? driver.vans[0].capacity: '' : ''}}
+                        </a-descriptions-item> -->
+                        <a-descriptions-item label="Date joined">
+                            {{driver.created_at}}
+                        </a-descriptions-item>
+                    </a-descriptions>
+                </a-tab-pane>
+                <a-tab-pane key="2" tab="Feedback" force-render>
+                    <h3 style="display:flex; justify-content:space-between; align-items:center; ">
+                        <div>Total Feedback:</div> <a-rate size="large" disabled v-model="driver.totalFeedback"></a-rate>
+                    </h3>
+                    <a-card v-for="f in driver.feedback" :key="f.id" style="margin-top: 1em;">
+                        <a-row type="flex" :gutter="[16, 16]">
+                           <a-col>
+                            <a-avatar>
+                                {{f.user.name[0]}}
+                            </a-avatar>
+                           </a-col>
+                            <a-col >
+                                <div>
+                                    <a-rate size="small" v-model="f.star" disabled></a-rate>
+                                    <div>
+                                        {{f.message}}
+                                    </div>
+                                </div>
+                            </a-col>
+                        </a-row>
+                    </a-card>
+                </a-tab-pane>
+            </a-tabs>
         </a-drawer>
         <a-row>
             <a-col :md="24">
@@ -43,18 +95,18 @@
                     </div>
 
                     <a-list item-layout="horizontal" :data-source="$page.props.drivers"  style="padding: 2em; ">
-                        <a-list-item slot="renderItem" slot-scope="item, index" style="background: #fff; padding: 1em; ">
+                        <a-list-item slot="renderItem" slot-scope="item, index" style="background: #fff; padding: 2em; ">
                         <a-list-item-meta
                         >
-                        <a-rate size="small" value="3" slot="description"></a-rate>
+                        <a-rate size="small" :value="item.totalFeedback" slot="description"></a-rate>
                             <a slot="title" href="https://www.antdv.com/">{{ item.name }}</a>
                             <a-avatar
                                 slot="avatar"
-                                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png">
+                                :src="'/storage/' + item.image">
                                 </a-avatar>
                         </a-list-item-meta>
-                            <a-button icon="star" style="margin-right: .5em;" @click="selectFeedback(item)">
-                                View feedback
+                            <a-button icon="star"  ghost type="primary" style="margin-right: .5em;" @click="selectDetails(item)">
+                                View info
                             </a-button>
                             <a-button @click="selectDriver(item)" icon="select" :type="item.id == payload.driverId ? 'primary': 'secondary'">
                                 Select
@@ -171,9 +223,9 @@ export default {
             this.payload.driverId = driver.id;
             this.payload.driver = driver;
         },
-        selectFeedback(driver) {
+        selectDetails(driver) {
             this.driver = driver;
-            this.viewFeedback = true;
+            this.viewDetails = true;
         }
 
     },
@@ -190,7 +242,7 @@ export default {
             loading: true,
             distance: {},
             address: '',
-            viewFeedback: false,
+            viewDetails: false,
             driver: {},
             currentStep: 0,
             lat: 0,
