@@ -24,6 +24,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "coreproc/nova-permissions-field": "*",
+        "elezerk/brave": "*",
         "fruitcake/laravel-cors": "^2.0",
         "genealabs/nova-map-marker-field": "^0.3.1",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -31,14 +32,14 @@
         "laravel/nova": "*",
         "laravel/sanctum": "^2.12",
         "laravel/tinker": "^2.5",
+        "laravel/ui": "^3.4",
         "laravelwebdev/responsive": "^1.0",
         "optimistdigital/nova-settings": "^3.2",
         "richardkeep/nova-timenow": "^1.0",
         "runlinenl/nova-profile-tool": "^1.1",
         "spatie/laravel-backup": "^6.16",
         "spatie/laravel-permission": "^5.3",
-        "spatie/nova-backup-tool": "^4.1",
-        "elezerk/brave": "*"
+        "spatie/nova-backup-tool": "^4.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
