@@ -42,6 +42,7 @@ class HandleInertiaRequests extends Middleware
 
         foreach (User::with(['vans', 'feedback.user'])->whereType(User::TYPE_DRIVER)->whereHas('vans')->latest()->get() as $driver) {
             $driver['totalFeedback'] = $driver->totalFeedback;
+            $driver['booked'] = Booking::whereServerId($driver->id)->whereStatus('APPROVED')->whereDate('created_at', today())->sum('qty');
             array_push($drivers, $driver);
         }
 

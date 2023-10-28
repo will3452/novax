@@ -4,7 +4,7 @@
             <a-col :span="8">
                 <a-card  title="Welcome to U-VAN Express, Please register as client.">
                     <a-alert v-for="error in payload.errors" :key="error" :message="error" type="warning" size="small"></a-alert>
-                    <a-row>
+                    <!-- <a-row>
                             <a-form-model-item label="Mobile No." prop="mobile">
                                 <a-row type="flex" :gutter="[6 , 6]">
                                     <a-col :span="20">
@@ -27,9 +27,11 @@
                                     </a-col>
                                 </a-row>
                             </a-form-model-item>
-                        </a-row>
-                    <a-form-model :model="payload" :rules="rules" v-if="isVerified">
-
+                        </a-row> -->
+                    <a-form-model :model="payload" :rules="rules" v-if="!isVerified">
+                        <a-form-model-item label="Mobile No." prop="mobile">
+                            <a-input type="number" v-model="payload.mobile"></a-input>
+                        </a-form-model-item>
                         <a-form-model-item label="Name" prop="name">
                             <a-input type="email" v-model="payload.name"></a-input>
                         </a-form-model-item>
@@ -70,6 +72,7 @@ export default {
                 email: '',
                 name: '',
                 password: '',
+                mobile: '',
             }),
 
             rules: {

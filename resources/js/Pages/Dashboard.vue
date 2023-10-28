@@ -1,6 +1,14 @@
 <template>
     <div>
-        <a-drawer :visible="viewDetail" @close="viewDetail = false" :width="700" title="Booking details">
+        <div v-if="$page.props.user.code_verified == '0'">
+            <p>Your account is not yet verified, Please enter the SMS verification sent to your Mobile No.</p>
+            <a-popover content="Resend OTP">
+                <a-button icon="redo" @click="sendOtp"></a-button>
+            </a-popover>
+            <a-input placeholder="Please enter Verification code."  v-model="code" style="max-width: 300px;"></a-input> <a-button icon="check" type="primary" @click="verified">SUBMIT</a-button>
+        </div>
+        <div v-else>
+            <a-drawer :visible="viewDetail" @close="viewDetail = false" :width="700" title="Booking details">
             <l-map ref="map" style="height:150px; " zoom="15" :center="[details.from_lat, details.from_lng]">
                 <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 <l-marker draggable :lat-lng="[details.from_lat, details.from_lng]" >
@@ -39,7 +47,7 @@
         <br>
        <a-row :gutter="[12, 12]" type="flex" justify="center">
         <a-col :md="24" :xs="24">
-            <a-row type="flex">
+            <!-- <a-row type="flex">
                 <a-col :span="8">
                     <apexchart type="bar" :options="options" :series="series"></apexchart>
                 </a-col>
@@ -50,7 +58,7 @@
                 <a-col :span="8">
                     <apexchart type="area" :options="options" :series="series"></apexchart>
                 </a-col>
-            </a-row>
+            </a-row> -->
             <a-card title="BOOKINGS" v-if="$page.props.user.type == 'Client'">
                 <div class="ct-chart"></div>
                 <a-row type="flex" :gutter="[12, 12]">
@@ -74,6 +82,11 @@
                     <template slot="action" slot-scope="text, record">
                         <a-button icon="eye" @click="showDetails(record)">view</a-button>
                     </template>
+                    <template slot="amount" slot-scope="text, record">
+                        <div>
+                            {{parseInt(record.qty) * text}}
+                        </div>
+                    </template>
                 </a-table>
 
             </a-card>
@@ -85,7 +98,7 @@
             </a-card>
         </a-col> -->
        </a-row>
-
+        </div>
     </div>
 </template>
 
@@ -131,6 +144,22 @@ export default {
 });
     },
     methods: {
+        async verified () {
+            try {
+                this.isLoading = true;
+                await window.axios.post('/verified', {code: this.code});
+                this.$notification.success({message:'success', description: 'Verified successfully!'})
+                window.location.reload();
+            } catch (error) {
+                this.$notification.error({message:'error', description: 'Incorrect code!'});
+            }
+        },
+        async sendOtp() {
+            this.isLoading = true;
+            await window.axios.post('/send-otp', {mobile: this.$page.props.user.mobile});
+            this.isLoading = false;
+            this.$notification.success({message:'Success', description: 'OTP sent to your register no.'})
+        },
         clickHandler(event) {
             console.log(event)
         },
@@ -147,6 +176,7 @@ export default {
     },
     data() {
         return {
+            code: '',
             options: {
                 chart: {
                 id: 'vuechart-example'
@@ -188,6 +218,17 @@ export default {
                         title: 'Fee',
                         key: 'fee',
                         dataIndex: 'amount',
+                    },
+                    {
+                        title: 'Total Fee',
+                        key: 'fee',
+                        dataIndex: 'amount',
+                        scopedSlots: { customRender: 'amount' },
+                    },
+                    {
+                        title: 'Qty',
+                        key: 'qty',
+                        dataIndex: 'qty',
                     },
                     {
                         title: 'Action',

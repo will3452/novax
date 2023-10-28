@@ -22,6 +22,7 @@ class Booking extends Model
         'landmark',
         'mop',
         'status',
+        'qty',
     ];
 
     public function client()

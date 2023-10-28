@@ -86,6 +86,7 @@ Route::middleware(['auth'])->group(function () {
             'landmark' => '---',
             'mop' => 'CASH',
             'status' => 'PENDING',
+            'qty' => $request->qty,
         ];
 
         Booking::create($data);
@@ -143,10 +144,25 @@ function sendCode($code, $number)
     echo $output;
 }
 
+Route::post('/verified', function (Request $request) {
+    $data = $request->validate([
+        'code' => 'required',
+    ]);
+
+    if ($data['code'] == auth()->user()->code) {
+        auth()->user()->update(['code_verified' => 1]);
+        return response()->status(200);
+    }
+
+    return response()->status(402);
+});
+
 Route::post('/send-otp', function (Request $request) {
     $code = Str::random(8);
     $number = $request->mobile;
     sendCode($code, $number);
+
+    auth()->user()->update(['code' => $code]);
 
     return Code::create(['code' => $code, 'mobile' => $number]);
 });
@@ -156,7 +172,7 @@ Route::post('/register', function (Request $request) {
         'email' => ['email', 'unique:users,email', 'required'],
         'password' => ['required'],
         'name' => ['required'],
-        'mobile' => ['required'],
+        'mobile' => ['required', 'max:11', 'min:11'],
     ]);
 
     $data['password'] = bcrypt($data['password']);
@@ -164,6 +180,10 @@ Route::post('/register', function (Request $request) {
 
     // login with id
     Auth::loginUsingId($user->id);
+
+    $code = Str::random(8);
+    $number = $request->mobile;
+    sendCode($code, $number);
 
     return redirect('/dashboard');
 });

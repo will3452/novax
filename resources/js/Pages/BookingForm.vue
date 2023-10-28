@@ -13,6 +13,9 @@
                         <a-descriptions-item label="Email">
                             {{driver.email}}
                         </a-descriptions-item>
+                        <a-descriptions-item label="Phone">
+                            {{driver.mobile}}
+                        </a-descriptions-item>
                         <a-descriptions-item label="Van's Color">
                             <div v-if="driver" style="width: 25px; height: 25px;border-radius: 50%; " :style="{background: driver ? driver.vans ?  driver.vans[0].color: '#ddd': '#ddd'}">
                             </div>
@@ -22,6 +25,9 @@
                         </a-descriptions-item>
                         <a-descriptions-item label="Van's Capacity">
                             {{driver ? driver.vans ? driver.vans[0].capacity: '' : ''}}
+                        </a-descriptions-item>
+                        <a-descriptions-item label="Booked today">
+                            {{driver ? driver.booked : 0 }}
                         </a-descriptions-item>
                         <!-- <a-descriptions-item label="Available">
                             {{driver ? driver.vans ? driver.vans[0].capacity: '' : ''}}
@@ -84,7 +90,10 @@
                             {{ _distance && _distance.text}}
                         </a-descriptions-item>
                         <a-descriptions-item label="Total">
-                            PHP {{fee}}
+                            PHP {{fee * payload.qty}}
+                        </a-descriptions-item>
+                        <a-descriptions-item label="Quantity">
+                            <a-input-number v-model="payload.qty" :min="1"></a-input-number>
                         </a-descriptions-item>
                     </a-descriptions>
                 </div>
@@ -108,7 +117,7 @@
                             <a-button icon="star"  ghost type="primary" style="margin-right: .5em;" @click="selectDetails(item)">
                                 View info
                             </a-button>
-                            <a-button @click="selectDriver(item)" icon="select" :type="item.id == payload.driverId ? 'primary': 'secondary'">
+                            <a-button @click="selectDriver(item)" icon="select"  :type="item.id == payload.driverId ? 'primary': 'secondary'">
                                 Select
                             </a-button>
                         </a-list-item>
@@ -255,6 +264,7 @@ export default {
                 distance: {},
                 fee: 0,
                 driverId: null,
+                qty: 1,
             }),
         }
     }
