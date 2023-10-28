@@ -2,15 +2,18 @@
 
 namespace App\Providers;
 
-use Laravel\Nova\Nova;
-use Laravel\Nova\Cards\Help;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Image;
-use Spatie\BackupTool\BackupTool;
+use App\Nova\Metrics\NewsPerDay;
+use App\Nova\Metrics\Organizations;
+use App\Nova\Metrics\Reports;
+use App\Nova\Metrics\ReportsTrend;
+use App\Nova\Metrics\UsersPerDay;
 use Illuminate\Support\Facades\Gate;
-use Runline\ProfileTool\ProfileTool;
-use OptimistDigital\NovaSettings\NovaSettings;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use OptimistDigital\NovaSettings\NovaSettings;
+use Runline\ProfileTool\ProfileTool;
+use Spatie\BackupTool\BackupTool;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -36,9 +39,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function routes()
     {
         Nova::routes()
-                ->withAuthenticationRoutes()
-                ->withPasswordResetRoutes()
-                ->register();
+            ->withAuthenticationRoutes()
+            ->withPasswordResetRoutes()
+            ->register();
     }
 
     /**
@@ -72,10 +75,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'Europe/Paris',
                 'Asia/Manila',
                 'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila')
-            ->canSee(function () {
-                return config('novax.time_enabled');
-            }),
+            ])->defaultTimezone('Africa/Manila'),
+            UsersPerDay::make(),
+            Reports::make(),
+            ReportsTrend::make(),
+            NewsPerDay::make(),
+            Organizations::make(),
         ];
     }
 

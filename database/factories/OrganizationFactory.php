@@ -1,0 +1,23 @@
+<?php
+
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class OrganizationFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->userName(),
+            'position' => $this->faker->jobTitle(),
+            'designation' => $this->faker->titleMale(),
+            'image' => $this->faker->image(storage_path('app/public')),
+        ];
+    }
+}

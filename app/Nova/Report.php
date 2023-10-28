@@ -2,31 +2,32 @@
 
 namespace App\Nova;
 
+use App\Models\Report as ModelsReport;
+use App\Nova\Metrics\Reports;
+use App\Nova\Metrics\ReportsTrend;
+use GeneaLabs\NovaMapMarkerField\MapMarker;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Textarea;
 
-class User extends Resource
+class Report extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'super@admin.com');
-    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Report::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -34,7 +35,9 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'status',
+        'description',
     ];
 
     /**
@@ -46,22 +49,20 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+            Date::make('Date Reported', 'created_at')->sortable()->exceptOnForms(),
+            BelongsTo::make('Category', 'category', ReportCategory::class),
+            Textarea::make('Description'),
+            Badge::make('Status')->map(
+                [
+                    ModelsReport::STATUS_DONE => 'success',
+                    ModelsReport::STATUS_NEW => 'warning',
+                ]
+            ),
+            Image::make('Image'),
+            BelongsTo::make('User', 'user'),
+            MapMarker::make('Location')
+                ->longitude('lng')
+                ->latitude('lat'),
         ];
     }
 
@@ -73,7 +74,10 @@ class User extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            Reports::make(),
+            ReportsTrend::make(),
+        ];
     }
 
     /**

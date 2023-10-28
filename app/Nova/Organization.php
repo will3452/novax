@@ -2,24 +2,19 @@
 
 namespace App\Nova;
 
+use App\Nova\Metrics\Organizations;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Organization extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'super@admin.com');
-    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Organization::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -34,7 +29,8 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'name',
     ];
 
     /**
@@ -46,22 +42,10 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+            Avatar::make('Image'),
+            Text::make('Name'),
+            Text::make('Position'),
+            Text::make('Designation'),
         ];
     }
 
@@ -73,7 +57,9 @@ class User extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            Organizations::make(),
+        ];
     }
 
     /**
