@@ -22,7 +22,7 @@
             <h4 class="font-thin md:text-xl">
                 Instant Aid, Anytime, Anywhere: Your Lifesaving Web Application
             </h4>
-            <a href="" class="bg-red-500 px-4 py-2 md:inline-block block rounded-full mt-4 hover:bg-red-700 text-white font-bold border-red-800 border-4">
+            <a href="/home" class="bg-red-500 px-4 py-2 md:inline-block block rounded-full mt-4 hover:bg-red-700 text-white font-bold border-red-800 border-4">
                 REPORT
             </a>
         </div>

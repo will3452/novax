@@ -1,23 +1,10 @@
-@extends('layouts.app')
+<x-layout>
+    <x-topbar></x-topbar>
+    <h1 class="text-center font-bold text-2xl mt-4 uppercase font-mono text-gray-700">Send Report</h1>
+    <form action="">
+        <select name="" id="">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+        </select>
+    </form>
+    <x-bottombar></x-bottombar>
+</x-layout>

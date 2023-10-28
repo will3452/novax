@@ -1,17 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\RegisterController;
-
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/register', [RegisterController::class, 'registrationPage']);
-Route::post('/register', [RegisterController::class, 'postRegister']);
-
 
 //artisan helper
 Route::get('/artisan', function () {
@@ -22,3 +16,8 @@ Route::get('/artisan', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/logout', function () {
+    auth()->logout();
+    return redirect('/register');
+})->middleware(['auth']);
