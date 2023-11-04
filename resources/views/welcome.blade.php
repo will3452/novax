@@ -7,7 +7,7 @@
             <img src="/alarm.png" class="hidden md:block w-20 h-20 mr-10" alt="">
             <a href="#" class="md:text-2xl font-mono mx-4 border-b-2">Home</a>
             <a href="/news" class="md:text-2xl font-mono mx-4">News</a>
-            <a href="/officers" class="md:text-2xl font-mono mx-4">Officers</a>
+            <a href="/organization" class="md:text-2xl font-mono mx-4">Officers</a>
             <a href="/register" class="md:text-2xl font-mono mx-4">Account</a>
         </nav>
         <div class="hidden md:block w-screen h-screen bg-red-500 absolute rotate-45 opacity-90" style="right: -50vw; top: -150vh; height: 100vw; "></div>

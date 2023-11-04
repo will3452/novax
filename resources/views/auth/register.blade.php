@@ -18,7 +18,7 @@
                             </span>
                         @enderror
 
-                        <input id="password" type="password" class="w-full p-4 rounded mb-4 bg-white block placeholder-red-500 @error('password') is-invalid @enderror" name="password" required >
+                        <input id="password" type="password" class="w-full p-4 rounded mb-4 bg-white block placeholder-red-500 @error('password') is-invalid @enderror" name="password" required placeholder="Enter your password." >
 
                         @error('password')
                             <span class="invalid-feedback" role="alert">
