@@ -22,7 +22,17 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
+        'van_no',
+        'van_color',
+        'is_active',
+        'capacity', 
+        'phone',
     ];
+
+    const TYPE_DRIVER = 'Driver';
+    const TYPE_CUSTOMER = 'Customer';
+    const TYPE_ADMINISTRATOR = 'Administrator'; 
 
     /**
      * The attributes that should be hidden for serialization.

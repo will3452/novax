@@ -1,59 +1,47 @@
 <x-layout>
-
-<div class="hero min-h-screen bg-base-200">
-    <form action="register" method="POST" class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-        @csrf
-        <div class="card-body">
-        @if (session('success'))
-            <x-alert-success>
-                Registered Succesfully!
-            </x-alert-success>
-        @endif
-        <h1 class="uppercase text-center font-bold text-gray-700 text-2xl">Register</h1>
-        <div class="form-control">
-            <label class="label">
-            <span class="label-text">Name</span>
-            </label>
-            <input type="text" value="{{old('name')}}" name="name" required placeholder="name" class="input input-bordered">
-            @error('name')
-            <x-form-error>
-                {{$message}}
-            </x-form-error>
-            @enderror
+    <div class="flex justify-center items-center h-screen w-screen bg-gray-300">
+        <div class=" w-screen px-2 md:w-1/3">
+            <form action="{{route('register')}}" method="POST" class="bg-yellow-400 p-4 rounded-xl">
+                @csrf 
+                <div class="flex justify-center">
+                    <img src="/logo.png" alt="" class="w-20 h-20 rounded-full mb-2">
+                </div>
+                <div class="mb-2">
+                    <x-label>
+                        Name
+                    </x-label>
+                    <input type="text" required name="name" class="p-2 w-full rounded-xl mt-2">
+                </div>
+                <div class="mb-2">
+                    <x-label>
+                        Mobile No.
+                    </x-label>
+                    <input type="number" required name="phone" class="p-2 w-full rounded-xl mt-2">
+                </div>
+                <div class="mb-2">
+                    <x-label>
+                        Email
+                    </x-label>
+                    <input type="email" required name="email" class="p-2 w-full rounded-xl mt-2">
+                </div>
+                <div class="mb-2">
+                    <x-label>
+                        Password
+                    </x-label>
+                    <input type="password" required name="password" class="p-2 w-full rounded-xl mt-2">
+                </div>
+                <div class="mb-2">
+                    <x-label>
+                        Confirm  Password
+                    </x-label>
+                    <input type="password" required name="password_confirmation" class="p-2 w-full rounded-xl mt-2">
+                </div>
+                <button type="submit" class="p-2 w-full bg-teal-400 rounded-xl font-bold">
+                    Register
+                </button>
+                <div class="text-center my-2">OR</div>
+                <div class="text-center"><a href="/login" class="underline">Login</a></div>
+            </form>
         </div>
-        <div class="form-control">
-            <label class="label">
-                <span class="label-text">Email</span>
-            </label>
-            <input type="text" value="{{old('email')}}" name="email" required placeholder="email" class="input input-bordered">
-            @error('email')
-            <x-form-error>
-                {{$message}}
-            </x-form-error>
-            @enderror
-            </div>
-        <div class="form-control">
-            <label class="label">
-            <span class="label-text">Password</span>
-            </label>
-            <input type="password" name="password" required placeholder="password" class="input input-bordered">
-            @error('password')
-            <x-form-error>
-                {{$message}}
-            </x-form-error>
-            @enderror
-        </div>
-        <div class="form-control">
-            <label class="label">
-                <span class="label-text">Confirm Password</span>
-            </label>
-            <input type="password" placeholder="password" required name="password_confirmation" class="input input-bordered">
-        </div>
-        <div class="form-control mt-6">
-            <input type="submit" value="Register" class="btn btn-primary">
-            <a class="block text-center text-xs mt-4 underline" href="#">Already have an account?</a>
-        </div>
-        </div>
-    </form>
-</div>
+    </div>
 </x-layout>

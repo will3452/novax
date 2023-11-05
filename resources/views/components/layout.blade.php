@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="cupcake">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{config('app.name', 'Nuwang')}}</title>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.16.2/dist/full.css" rel="stylesheet" type="text/css" />
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ env('APP_NAME') }}</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="{{asset('/css/app.css')}}">
 </head>
 <body>
+    @include('sweetalert::alert')
     {{$slot}}
 </body>
 </html>
