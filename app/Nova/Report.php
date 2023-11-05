@@ -58,6 +58,11 @@ class Report extends Resource
                     ModelsReport::STATUS_NEW => 'warning',
                 ]
             ),
+            Select::make('Status')
+                ->options([
+                    'Done' => 'Done',
+                    'New' => 'New'
+                ]), 
             Image::make('Image'),
             BelongsTo::make('User', 'user'),
             MapMarker::make('Location')
