@@ -2,16 +2,17 @@
 
 namespace App\Nova;
 
-use App\Models\Report as ModelsReport;
-use App\Nova\Metrics\Reports;
-use App\Nova\Metrics\ReportsTrend;
-use GeneaLabs\NovaMapMarkerField\MapMarker;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Badge;
-use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Metrics\Reports;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Textarea;
+use App\Nova\Metrics\ReportsTrend;
+use Laravel\Nova\Fields\BelongsTo;
+use App\Models\Report as ModelsReport;
+use GeneaLabs\NovaMapMarkerField\MapMarker;
 
 class Report extends Resource
 {
