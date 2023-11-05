@@ -1,0 +1,14 @@
+:root {
+  --primary: rgb(255,206,0);
+  --primary-dark: rgb(206, 171, 32);
+  --primary-70: rgb(255,206,0, .7);
+  --primary-50: rgb(255,206,0, .5);
+  --primary-30: rgb(255,206,0, .3);
+  --primary-10: rgb(255,206,0, .1);
+  --logo: #07a0a4;
+  --sidebar-icon: #07a0a4;
+}
+
+.bg-grad-sidebar {
+  background: rgb(255,206,0);
+}
