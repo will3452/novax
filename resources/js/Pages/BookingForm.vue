@@ -86,9 +86,9 @@
                         <a-descriptions-item label="Driver">
                             {{ payload.driver ? payload.driver.name: '---' }}
                         </a-descriptions-item>
-                        <a-descriptions-item label="Distance">
+                        <!-- <a-descriptions-item label="Distance">
                             {{ _distance && _distance.text}}
-                        </a-descriptions-item>
+                        </a-descriptions-item> -->
                         <a-descriptions-item label="Total">
                             PHP {{fee * payload.qty}}
                         </a-descriptions-item>
@@ -283,7 +283,7 @@ export default {
     }
 
     .next {
-        background: green;
+        background: gold;
         color: white;
     }
     ._button {
