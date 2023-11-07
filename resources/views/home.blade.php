@@ -1,7 +1,7 @@
 <x-layout>
     
     <x-topbar></x-topbar>
-    <div class="w-screen flex overflow-auto" style="height: 90vh; ">
+    <div class="w-screen flex overflow-auto justify-center" style="height: 90vh; ">
         <div class="md:w-2/3 w-full h-screen overflow-y-auto">
             <h1 class="p-4 bg-red-400  font-bold text-2xl uppercase font-mono text-white text-center md:text-left flex items-center">
                 <span class="material-symbols-outlined">
@@ -87,7 +87,7 @@
                 </table>
             </div>
         </div>
-        <x-latest-news></x-latest-news>
+        {{-- <x-latest-news></x-latest-news> --}}
     </div>
     <x-bottombar></x-bottombar>
 </x-layout>
