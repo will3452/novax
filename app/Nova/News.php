@@ -50,7 +50,8 @@ class News extends Resource
             Text::make('Title')->rules(['required']),
             Text::make('Tags')->rules(['required']),
             Trix::make('Body')->rules(['required']),
-            Hidden::make('user_id', fn() => auth()->id()),
+            Hidden::make('user_id')
+                ->default(fn() => auth()->id() ), 
         ];
     }
 
