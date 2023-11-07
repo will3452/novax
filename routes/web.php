@@ -177,15 +177,18 @@ Route::post('/register', function (Request $request) {
 
     $data['password'] = bcrypt($data['password']);
 
-    // login with id
-    Auth::loginUsingId($user->id);
-
     $code = Str::random(8);
     $number = $request->mobile;
     sendCode($code, $number);
 
     $data['code'] = $code; 
     $user = User::create($data);
+
+    
+
+    // login with id
+    Auth::loginUsingId($user->id);
+    
     return redirect('/dashboard');
 });
 
