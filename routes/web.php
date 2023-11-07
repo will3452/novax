@@ -151,10 +151,10 @@ Route::post('/verified', function (Request $request) {
 
     if ($data['code'] == auth()->user()->code) {
         auth()->user()->update(['code_verified' => 1]);
-        return response()->status(200);
+        return response(['message' => 'success'], 200);
     }
 
-    return response()->status(402);
+    return response(['message' => 'error'], 422);
 });
 
 Route::post('/send-otp', function (Request $request) {
@@ -176,7 +176,6 @@ Route::post('/register', function (Request $request) {
     ]);
 
     $data['password'] = bcrypt($data['password']);
-    $user = User::create($data);
 
     // login with id
     Auth::loginUsingId($user->id);
@@ -185,6 +184,8 @@ Route::post('/register', function (Request $request) {
     $number = $request->mobile;
     sendCode($code, $number);
 
+    $data['code'] = $code; 
+    $user = User::create($data);
     return redirect('/dashboard');
 });
 

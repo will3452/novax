@@ -152,6 +152,7 @@ export default {
                 window.location.reload();
             } catch (error) {
                 this.$notification.error({message:'error', description: 'Incorrect code!'});
+                console.log(error)
             }
         },
         async sendOtp() {
