@@ -26,6 +26,8 @@ class User extends Authenticatable
         'code',
         'code_verified',
         'mobile',
+        'lat',
+        'lng', 
     ];
 
     const TYPE_ADMIN = 'Administrator';

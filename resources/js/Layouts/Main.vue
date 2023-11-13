@@ -40,5 +40,25 @@
         collapsed: true,
       };
     },
+    mounted() {
+      
+
+      setInterval(() => {
+
+        navigator.geolocation.getCurrentPosition(({coords}) => {
+          let { latitude, longitude } = coords;
+          
+        window.axios.post('/location-update', {lat: latitude, lng: longitude, user_id: this.$page.props.user.id});
+        }, () => {
+          this.$notification.error({message:'Failed to get current position.'})
+        })
+
+      }, 1000*2); // 30 seconds
+      
+
+      
+    }
+
+    
   };
   </script>

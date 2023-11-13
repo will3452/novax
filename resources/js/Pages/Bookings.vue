@@ -47,6 +47,12 @@
                 scopedSlots: { customRender: 'status' }
             },
             {
+                title: 'Location',
+                dataIndex: 'status',
+                key: 'location',
+                scopedSlots: { customRender: 'location' }
+            },
+            {
                 title: 'Action',
                 dataIndex: 'status',
                 key: 'action',
@@ -58,6 +64,10 @@
                 <a-button :disabled="status == 'PENDING' || record.feedback.find( f => f.user_id == $page.props.user.id)" @click="writeFeedback(record)">
                     Send Feedback
                 </a-button>
+            </div>
+            <div slot="location" slot-scope="location, record">
+                {{ record.server }}
+                <a href="#location" target="_blank">View Location</a>
             </div>
             <div  slot="status" slot-scope="status">
                 <a-tag :color="status == 'PENDING' ? 'blue': status == 'APPROVED' ? 'green': 'red'">

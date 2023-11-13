@@ -61,7 +61,7 @@ Route::middleware(['auth'])->group(function () {
         if ($isDriver) {
             $bookings = Booking::with('feedback')->whereServerId(auth()->id())->latest()->get();
         } else {
-            $bookings = Booking::with('feedback')->whereClientId(auth()->id())->latest()->get();
+            $bookings = Booking::with(['feedback', 'server'])->whereClientId(auth()->id())->latest()->get();
         }
         return Inertia::render('Bookings', compact('bookings'));
     });
@@ -204,3 +204,7 @@ Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);
     return $result;
 });
+
+Route::post('/location-update', function (Request $request) {
+    return User::find($request->user_id)->update(['lat' => $request->lat, 'lng' => $request->lng]); 
+}); 
