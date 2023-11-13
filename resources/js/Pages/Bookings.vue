@@ -66,8 +66,7 @@
                 </a-button>
             </div>
             <div slot="location" slot-scope="location, record">
-                {{ record.server }}
-                <a href="#location" target="_blank">View Location</a>
+                <a :href="`/map/${record.server.id}`" target="_blank">View Location</a>
             </div>
             <div  slot="status" slot-scope="status">
                 <a-tag :color="status == 'PENDING' ? 'blue': status == 'APPROVED' ? 'green': 'red'">

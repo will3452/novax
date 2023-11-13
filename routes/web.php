@@ -208,3 +208,7 @@ Route::get('/artisan', function () {
 Route::post('/location-update', function (Request $request) {
     return User::find($request->user_id)->update(['lat' => $request->lat, 'lng' => $request->lng]); 
 }); 
+
+Route::get('/map/{user}', function (User $user) {
+    return view('map', compact('user')); 
+});
