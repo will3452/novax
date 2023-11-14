@@ -1,5 +1,4 @@
 <x-layout>
-    
     <x-topbar></x-topbar>
     <div class="w-screen flex overflow-auto justify-center" style="height: 90vh; ">
         <div class="md:w-2/3 w-full h-screen overflow-y-auto">

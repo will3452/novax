@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\User;
+use App\Models\Report;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\NewsController;
@@ -40,4 +43,46 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('organization')->name('organizations.')->group(function () {
         Route::view('/', 'organization');
     }); 
+});
+
+
+Route::view('anonymous', 'anonymous'); 
+
+Route::post('anonymous', function (Request $request) {
+    $data = $request->validate([
+        'category_id' => ['required'],
+        'description' => ['required'],
+        'image' => ['image', 'required', 'max:5000'],
+        'lat' => ['required'],
+        'lng' => ['required'], 
+    ]);
+
+    if ($request->token == null) {
+        alert()->error('Error', 'Invalid token'); 
+        return back(); 
+    }
+
+    $user = User::whereToken($request->token)->first();
+
+    if (! $user) {
+        alert()->error('Error', 'invalid token!'); 
+        return back(); 
+    }
+
+    // save the image 
+    $full_image_path = $request->image->store('public'); 
+    
+    $array_image_path = explode('/', $full_image_path);
+
+    $data['image'] = end($array_image_path); 
+
+    // attach some props 
+    $data['user_id'] = $user->id; 
+
+
+    Report::create($data); 
+    
+    alert()->success('Success', 'Report has been submitted!'); 
+
+    return back(); 
 });

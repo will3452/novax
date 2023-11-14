@@ -12,7 +12,7 @@
         </nav>
         <div class="hidden md:block w-screen h-screen bg-red-500 absolute rotate-45 opacity-90" style="right: -50vw; top: -150vh; height: 100vw; "></div>
         <div class="z-10 hidden md:block w-screen h-screen bg-red-500 absolute rotate-45 opacity-90" style="bottom: -100vh; left: -50vw;"></div>
-        <div class="px-4 md:p-8 text-center md:text-left text-red-100 z-10 relative">
+        <div x-data="{token: null}" x-init="token = localStorage.getItem('police-emerge-token')" class="px-4 md:p-8 text-center md:text-left text-red-100 z-10 relative">
             <h3 class="text-xl  md:text-4xl font-thin mt-8 md:mb-4">
                 Welcome to
             </h3>
@@ -22,7 +22,7 @@
             <h4 class="font-thin md:text-xl">
                 Instant Aid, Anytime, Anywhere: Your Lifesaving Web Application
             </h4>
-            <a href="/home" class="bg-red-500 px-4 py-2 md:inline-block block rounded-full mt-4 hover:bg-red-700 text-white font-bold border-red-800 border-4">
+            <a :href="token == null || token == '' ? '/home': '/anonymous'" class="bg-red-500 px-4 py-2 md:inline-block block rounded-full mt-4 hover:bg-red-700 text-white font-bold border-red-800 border-4">
                 REPORT
             </a>
         </div>
