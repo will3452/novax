@@ -21,7 +21,7 @@ class AdminSeeder extends Seeder
             'email' => 'police@admin.com',
             'type' => User::TYPE_ADMINISTRATOR,
             'password' => bcrypt('password'),
-            'phone' => '09121808887'
+            'phone' => '09668862633'
         ]);
 
         $user->assignRole($superadmin);
