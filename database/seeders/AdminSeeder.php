@@ -17,10 +17,11 @@ class AdminSeeder extends Seeder
     {
         $superadmin = Role::create(['name' => Role::SUPERADMIN]);
         $user = User::create([
-            'name' => 'superadmin',
-            'email' => 'super@admin.com',
+            'name' => 'police admin',
+            'email' => 'police@admin.com',
             'type' => User::TYPE_ADMINISTRATOR,
             'password' => bcrypt('password'),
+            'phone' => '09121808887'
         ]);
 
         $user->assignRole($superadmin);

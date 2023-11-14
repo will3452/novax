@@ -23,6 +23,9 @@ class User extends Authenticatable
         'password',
         'type',
         'token', 
+        'phone', 
+        'phone_verified',
+        'code', 
     ];
 
     const TYPE_ADMINISTRATOR = 'Administrator';

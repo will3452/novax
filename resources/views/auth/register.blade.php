@@ -10,6 +10,7 @@
                     <h1 class="font-bold text-4xl mx-4 font-mono">Police Emerge!</h1>
                 </div>
                 <h1 class="my-4 font-bold text-4xl mt-10 text-gray-800">LOGIN</h1>
+                     
                         <input id="email" type="email" class="w-full p-4 rounded mb-4 bg-white block placeholder-red-500  @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Enter your email." required autofocus>
 
                         @error('email')
@@ -52,6 +53,13 @@
                     Lifesaving Web Application
                 </p>
                 <h1 class="my-4 font-bold text-4xl text-red-100">SIGN UP</h1>
+                <input id="phone" type="phone" class="w-full p-4 rounded mb-4 bg-red-100 block placeholder-red-500  @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" placeholder="Enter your Mobile No." required autofocus>
+
+                        @error('phone')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                 <input id="name"  type="text" class=" w-full p-4 rounded mb-4 bg-red-100 block placeholder-red-500 @error('name') is-invalid @enderror" name="name" placeholder="Enter your name." value="{{ old('name') }}" required  autofocus>
 
                         @error('name')

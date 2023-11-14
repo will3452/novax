@@ -65,6 +65,9 @@ class User extends Resource
 
             Text::make('Token', 'token')
                 ->rules(['required']), 
+
+            Text::make('Phone', 'phone')
+                ->rules(['required']), 
         ];
     }
 
