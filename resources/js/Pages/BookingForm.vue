@@ -17,7 +17,9 @@
                             {{driver.mobile}}
                         </a-descriptions-item>
                         <a-descriptions-item label="Van's Color">
-                            <div v-if="driver" style="width: 25px; height: 25px;border-radius: 50%; " :style="{background: driver ? driver.vans ?  driver.vans[0].color: '#ddd': '#ddd'}">
+                            <div style="text-align: center; font-family: monospace; padding: 2px;">{{ driver ? driver.vans ?  driver.vans[0].color: '#ddd': '#ddd' }}</div>
+                            <div  style="background:#aaa; display:flex; justify-content: center; align-items:center;">
+                                <Van v-if="driver" width="50" :bg-color="driver ? driver.vans ?  driver.vans[0].color: '#ddd': '#ddd'"/>
                             </div>
                         </a-descriptions-item>
                         <a-descriptions-item label="Van's Plate #">
@@ -155,8 +157,10 @@
 
 <script>
 import MainVue from '../Layouts/Main.vue'
+import Van from '../Van.vue'; 
 export default {
     layout: MainVue,
+    components: {Van}, 
     computed: {
         _distance() {
             try {
