@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\ApiAuthenticationController;
 use App\Models\Booking;
-use App\Models\Route as ModelsRoute;
+use App\Models\Receipt;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Models\Route as ModelsRoute;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiAuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,6 +84,24 @@ Route::middleware('auth:sanctum')->group(function () {
         return ($model)::$method();
     });
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
+
+    Route::post('/upload-receipt', function (Request $request) {
+        $data = $request->validate([
+            'reference' => 'required',
+        ]);
+
+        if ($request->hasFile('file')) {
+            $filePath = $request->file->store('public'); 
+
+            $filePathArray = explode('/', $filePath); 
+            $data['image'] = end($filePathArray); 
+        }
+
+        $data['user_id'] = auth()->id(); 
+
+        return Receipt::create($data); 
+    
+    });
 });
 
 Route::get('/public-test', function () {
