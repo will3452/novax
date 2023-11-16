@@ -15,4 +15,8 @@ class Receipt extends Model
         'reference', 
         'status', 
     ]; 
+
+    public function user () {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
