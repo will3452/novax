@@ -52,8 +52,10 @@ class Receipt extends Resource
                     'REJECTED' => 'REJECTED',
                 ]),
             Image::make('Image')
+                ->hideWhenUpdating()
                 ->rules(['required']), 
             Text::make('Reference')
+                ->hideWhenUpdating()
                 ->rules(['required']),
             BelongsTo::make('User', 'user', User::class), 
         ];
