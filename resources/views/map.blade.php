@@ -36,7 +36,7 @@
                     L.Routing.control({
                         waypoints: [
                             L.latLng(position.coords.latitude, position.coords.longitude),
-                            L.latLng({{$user->lat ?? false}} position.coords.latitude, {{$user->lng ?? false}} ||  position.coords.longitude)
+                            L.latLng({{$user->lat ?? 0}} , {{$user->lng ?? 0}})
                         ],
                         routeWhileDragging: true
                     }).addTo(map);
