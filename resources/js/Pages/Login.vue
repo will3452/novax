@@ -1,7 +1,7 @@
 <template>
     <div>
         <a-row type="flex"  align="middle" style="height:100vh; " :gutter="[18, 18]">
-            <a-col v-if="bp.breakpoint != 'xs' && bp.breakpoint != 'sm'" style="background: url('/login.png'); height: 100%; background-position: center;background-size: cover;" >
+            <a-col  :md="12"  :sm="24" v-if="bp.breakpoint != 'xs' && bp.breakpoint != 'sm'" style="background: url('/login.png'); height: 100%; background-position: center;background-size: cover;" >
             </a-col>
             <a-col :md="12" style="padding: 2em;" :sm="24">
                 <h1>Welcome to U-Van express! </h1>
