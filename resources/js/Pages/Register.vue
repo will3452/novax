@@ -1,7 +1,7 @@
 <template>
     <div>
         <a-row type="flex" justify="center" align="middle" style="height:100vh; ">
-            <a-col :span="8">
+            <a-col :span="8" :xs="24" :sm="24">
                 <a-card  title="Welcome to U-VAN Express, Please register as client.">
                     <a-alert v-for="error in payload.errors" :key="error" :message="error" type="warning" size="small"></a-alert>
                     <!-- <a-row>

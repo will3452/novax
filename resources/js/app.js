@@ -7,6 +7,7 @@ import { LMap, LTileLayer, LMarker, LIcon } from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
+import VueBreakpoints from '@apility/vue-breakpoints'
 
 Vue.config.productionTip = false;
 
@@ -21,6 +22,7 @@ createInertiaApp({
     Vue.component('apexchart', VueApexCharts)
     Vue.use(plugin)
     Vue.use(Antd);
+    Vue.use(VueBreakpoints)
     Vue.component('l-map', LMap);
     Vue.component('l-tile-layer', LTileLayer);
     Vue.component('l-marker', LMarker);
