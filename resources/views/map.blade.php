@@ -5,7 +5,7 @@
     <title>Leaflet Routing Machine Example</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
     <link rel="stylesheet" href="/leaflet-routing-machine.css" />
-    <meta http-equiv="refresh" content="5" >
+    <meta http-equiv="refresh" content="30" >
     <style>
         .map {
             position: absolute;
