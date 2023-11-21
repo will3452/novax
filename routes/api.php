@@ -29,10 +29,12 @@ Route::middleware('auth:sanctum')->group(function () {
         $data = $request->validate([
             'route_id' => 'required',
             'date' => 'required',
-            'time' => 'required', 
         ]); 
-
-        return Booking::with(['route.buses'])
+        $scheduleId = $request->time; 
+        return Booking::with(['route.schedules'])
+            ->whereHas('schedules', function($query) use ($scheduleId) {
+                $query->where(['id' => $scheduleId]);
+            })
             ->where($data)
             ->get(); 
     });
