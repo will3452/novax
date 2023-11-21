@@ -31,7 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
             'date' => 'required',
         ]); 
         $scheduleId = $request->time; 
-        return Booking::with(['route.schedules'])
+        return Booking::with(['route.schedules', 'user'])
             ->whereHas('route', function($query) use ($scheduleId) {
                 $query->whereHas('schedules', function ($q) use ($scheduleId) {
                     $q->whereId($scheduleId);
