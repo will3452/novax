@@ -5,6 +5,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 
 class Route extends Resource
@@ -46,6 +47,7 @@ class Route extends Resource
             Currency::make('Fare'),
             BelongsTo::make('From', 'from', Terminal::class),
             BelongsTo::make('To', 'to', Terminal::class),
+            HasMany::make('Schedules', 'schedules', Schedule::class), 
         ];
     }
 

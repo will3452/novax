@@ -26,4 +26,12 @@ class Route extends Model
         return $this->belongsTo(Terminal::class, 'to_id');
     }
 
+    public function schedules () {
+        return $this->hasMany(Schedule::class, 'route_id'); 
+    }
+
+    public function buses () {
+        return $this->belongsToMany(Bus::class, 'schedules', 'route_id', 'bus_id'); 
+    }
+
 }

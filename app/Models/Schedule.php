@@ -13,10 +13,15 @@ class Schedule extends Model
         'day',
         'departure',
         'bus_id',
+        'route_id', 
     ];
 
     public function bus()
     {
         return $this->belongsTo(Bus::class, 'bus_id');
+    }
+
+    public function route() {
+        return $this->belongsTo(Route::class, 'route_id'); 
     }
 }

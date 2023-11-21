@@ -59,6 +59,7 @@ class Schedule extends Resource
             TimeField::make('Departure')->help('The time format is in miltary.'),
 
             BelongsTo::make('Bus Number', 'bus', Bus::class),
+            BelongsTo::make('Route', 'route', Route::class), 
 
         ];
     }
