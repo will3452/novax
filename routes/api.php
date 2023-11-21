@@ -25,6 +25,18 @@ Route::middleware('auth:sanctum')->group(function () {
         return 'authentication test';
     });
 
+    Route::get('/booking-filter', function(Request $request) {
+        $data = $request->validate([
+            'route_id' => 'required',
+            'date' => 'required',
+            'time' => 'required', 
+        ]); 
+
+        return Booking::with(['route.buses'])
+            ->where($data)
+            ->get(); 
+    });
+
     Route::post('/booking', function (Request $request) {
         $data = $request->validate([
             'fare' => ['required'],
@@ -71,6 +83,7 @@ Route::middleware('auth:sanctum')->group(function () {
         return ($model)::$method();
     });
 
+
     Route::get('/resource', function (Request $request) {
         $model = $request->model;
         $method = $request->method;
@@ -78,7 +91,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
         $model = "\\App\\Models\\$model";
         if ($payload) {
-
             return ($model)::$method($payload);
         }
         return ($model)::$method();
