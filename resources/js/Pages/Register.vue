@@ -2,8 +2,13 @@
     <div>
         <a-row type="flex" justify="center" align="middle" style="height:100vh; ">
             <a-col :md="8" :xs="24" :sm="24">
-                <a-card  title="Welcome to U-VAN Express, Please register as client.">
-                    <a-alert v-for="error in payload.errors" :key="error" :message="error" type="warning" size="small"></a-alert>
+                <a-row type="flex" justify="center">
+                    <a-col>
+                        <img src="/login.png" style="width:100px; height: 100px; border-radius: 50%;" alt="">
+                    </a-col>
+                </a-row>
+                <h1>Registration</h1>
+                <a-alert v-for="error in payload.errors" :key="error" :message="error" type="warning" size="small"></a-alert>
                     <!-- <a-row>
                             <a-form-model-item label="Mobile No." prop="mobile">
                                 <a-row type="flex" :gutter="[6 , 6]">
@@ -45,7 +50,6 @@
                         <a-divider>or</a-divider>
                         <a-button type="secondary" block  @click="$inertia.visit('/login')">Already Have An Account?</a-button>
                     </a-form-model>
-                </a-card>
             </a-col>
         </a-row>
     </div>

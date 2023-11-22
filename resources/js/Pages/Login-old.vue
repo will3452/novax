@@ -1,14 +1,10 @@
 <template>
     <div>
-        <a-row type="flex"  justify="center" align="middle" style="height:100vh; " :gutter="[18, 18]">
-            
-            <a-col :md="8" style="padding: 2em;" :sm="24">
-                <a-row type="flex" justify="center">
-                    <a-col>
-                        <img src="/login.png" style="width:100px; height: 100px; border-radius: 50%;" alt="">
-                    </a-col>
-                </a-row>
-                <h1>Login</h1>
+        <a-row type="flex"  align="middle" style="height:100vh; " :gutter="[18, 18]">
+            <a-col  :md="12"  :sm="24" v-if="bp.breakpoint != 'xs' && bp.breakpoint != 'sm'" style="background: url('/login.png'); height: 100%; background-position: center;background-size: cover;" >
+            </a-col>
+            <a-col :md="12" style="padding: 2em;" :sm="24">
+                <h1>Welcome to U-Van express! </h1>
                 <a-alert v-for="error in payload.errors" :key="error" :message="error" type="warning" size="small"></a-alert>
                     <a-form-model ref="login" :rules="rules" :model="payload">
                         <a-form-model-item label="Email" prop="email">
