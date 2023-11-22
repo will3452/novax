@@ -10,8 +10,10 @@ class TravelHistory extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
-        'lng',
+        'lng', // origin
         'lat',
+        'destination_lat',
+        'destination_lng', 
     ];
 
     public function user () {

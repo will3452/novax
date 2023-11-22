@@ -14,6 +14,11 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Transaction extends Resource
 {
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        return $query->whereUserId(auth()->id());
+    }
     public static function authorizedToCreate(Request $request)
     {
         return false;

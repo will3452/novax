@@ -7,6 +7,7 @@ use Elezerk\QrGenerator\QrGenerator;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Fields\Text;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Fields\Currency;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -23,7 +24,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Text::make('GCASH API KEY', 'gcash_api'),
-            Text::make('Footer')
+            Text::make('Footer'),
+            Text::make('Regular Fare', 'reg_fare')->default(fn () => 11), 
+            Text::make('Additional Fare', 'ad_fare')
+                ->help('For Every succeeding Kilometer. ')
         ]);
     }
 
@@ -65,7 +69,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             (new CurrentBalance())->withMeta(['balance' => auth()->user()->balance, 'postUrl' => '/api/load', 'userId' => auth()->id()]),
-            (new QrGenerator())->withMeta(['user_id' => auth()->id()]),
+            (new QrGenerator())->withMeta(['user_id' => auth()->id(), 'ads_fare' => auth()->user()->current_fare, 'status' => auth()->user()->status]),
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
                 'America/Mexico_City',
@@ -73,10 +77,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'Europe/Paris',
                 'Asia/Manila',
                 'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila')
-            ->canSee(function () {
-                return config('novax.time_enabled');
-            }),
+            ])->defaultTimezone('Africa/Manila'), 
         ];
     }
 

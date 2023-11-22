@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\DateTime;
 use GeneaLabs\NovaMapMarkerField\MapMarker;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class TravelHistory extends Resource
@@ -47,9 +48,12 @@ class TravelHistory extends Resource
         return [
             DateTime::make('Date and Time', 'created_at'),
             BelongsTo::make('User', 'user', User::class),
-            MapMarker::make("Location")
-                ->latitude('lat')
-                ->longitude('lng'),
+            Text::make('Routes', function () {
+                $link = "https://map.project-osrm.org/?z=9&center=$this->lat%2C$this->lng&loc=$this->lat%2C$this->lng&loc=$this->destination_lat%2C$this->destination_lng&hl=en&alt=0&srv=1"; 
+                return "<a href='$link' target='_blank' >view Route</a>"; 
+            })->asHtml(), 
+            Text::make('Origin', fn () => "$this->lat - $this->lng"),
+            Text::make('Destination', fn () => "$this->destination_lat - $this->destination_lng")
         ];
     }
 

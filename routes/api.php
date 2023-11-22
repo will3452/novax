@@ -37,4 +37,5 @@ Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
 Route::post('load', [LoadController::class, 'load']);
 Route::post('pay', [PayController::class, 'pay']);
+Route::post('/update-location', [PayController::class, 'updateCurrentFare']); 
 Route::get('get-code', [PayController::class, 'getCode']);

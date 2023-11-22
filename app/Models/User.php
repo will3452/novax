@@ -24,6 +24,8 @@ class User extends Authenticatable
         'password',
         'balance',
         'mobile',
+        'current_fare', 
+        'status', 
     ];
 
     /**

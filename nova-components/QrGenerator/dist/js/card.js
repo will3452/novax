@@ -261,108 +261,54 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "card",
-    { staticClass: "flex flex-col items-center justify-center h-auto" },
+    "div",
     [
+      _c("card", { staticClass: "mb-2" }, [
+        _c("div", { staticClass: "text-center p-4" }, [
+          _c("p", { staticClass: "text-md flex justify-between" }, [
+            _c("span", [_vm._v("Additional Fare:")]),
+            _vm._v(" "),
+            _c("span", [_vm._v(_vm._s(_vm.card.ads_fare))]),
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-md flex justify-between" }, [
+            _c("span", [_vm._v("Status:")]),
+            _vm._v(" "),
+            _c("span", [
+              _vm._v(
+                " " + _vm._s(_vm.card.status.split("_").join(" ").toLowerCase())
+              ),
+            ]),
+          ]),
+        ]),
+      ]),
+      _vm._v(" "),
       _c(
-        "vue-final-modal",
-        {
-          attrs: { "esc-to-close": true },
-          model: {
-            value: _vm.showScanner,
-            callback: function ($$v) {
-              _vm.showScanner = $$v
-            },
-            expression: "showScanner",
-          },
-        },
+        "card",
+        { staticClass: "flex flex-col items-center justify-center h-auto" },
         [
           _c(
-            "div",
-            { staticClass: "flex justify-center items-center h-screen" },
+            "vue-final-modal",
+            {
+              attrs: { "esc-to-close": true },
+              model: {
+                value: _vm.showScanner,
+                callback: function ($$v) {
+                  _vm.showScanner = $$v
+                },
+                expression: "showScanner",
+              },
+            },
             [
-              _c("div", { staticClass: "bg-white p-4 inline-block" }, [
-                _c(
-                  "div",
-                  [
-                    _c("div", [
-                      _c("div", { staticClass: "flex" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.amount,
-                              expression: "amount",
-                            },
-                          ],
-                          staticClass:
-                            "mb-2 border-2 form-control input rounded block",
-                          attrs: {
-                            disabled: _vm.toggleSet,
-                            type: "number",
-                            min: "1",
-                            placeholder: "₱ 100.00",
-                          },
-                          domProps: { value: _vm.amount },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.amount = $event.target.value
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex justify-center items-center h-screen" },
+                [
+                  _c("div", { staticClass: "bg-white p-4 inline-block" }, [
+                    _c(
+                      "div",
+                      [
                         _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-default btn-primary mx-2",
-                            on: {
-                              click: function ($event) {
-                                _vm.toggleSet = !_vm.toggleSet
-                              },
-                            },
-                          },
-                          [
-                            _vm._v(
-                              _vm._s(
-                                _vm.toggleSet ? "CHANGE AMOUNT" : "SET AMOUNT"
-                              )
-                            ),
-                          ]
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c("textarea", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.purpose,
-                              expression: "purpose",
-                            },
-                          ],
-                          staticClass:
-                            "input w-full border form-control input rounded",
-                          attrs: { id: "", placeholder: "Input purpose here" },
-                          domProps: { value: _vm.purpose },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.purpose = $event.target.value
-                            },
-                          },
-                        }),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _vm.toggleSet
-                      ? _c(
                           "qr-code-stream",
                           {
                             attrs: { track: _vm.paintOutline },
@@ -379,55 +325,59 @@ var render = function () {
                               ),
                             ]),
                           ]
-                        )
-                      : _vm._e(),
-                  ],
-                  1
-                ),
-              ]),
+                        ),
+                      ],
+                      1
+                    ),
+                  ]),
+                ]
+              ),
             ]
           ),
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "px-3 py-3" },
-        [
-          _c("h1", { staticClass: "text-sm text-center" }, [_vm._v("Qr Code")]),
           _vm._v(" "),
-          _vm.code
-            ? _c("qr-code", {
-                staticClass: "my-4",
-                attrs: {
-                  text: JSON.stringify({
-                    code: _vm.code,
-                    user_id: _vm.card.user_id,
-                  }),
-                  "error-level": "L",
-                },
-              })
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "text-center mt-4" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-default btn-primary",
-                on: { click: _vm.generateCode },
-              },
-              [_vm._v("GENERATE")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-default btn-primary",
-                on: { click: _vm.scan },
-              },
-              [_vm._v("SCAN")]
-            ),
-          ]),
+          _c(
+            "div",
+            { staticClass: "px-3 py-3" },
+            [
+              _c("h1", { staticClass: "text-sm text-center" }, [
+                _vm._v("Qr Code"),
+              ]),
+              _vm._v(" "),
+              _vm.code
+                ? _c("qr-code", {
+                    staticClass: "my-4",
+                    attrs: {
+                      text: JSON.stringify({
+                        code: _vm.code,
+                        user_id: _vm.card.user_id,
+                      }),
+                      "error-level": "L",
+                    },
+                  })
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "text-center mt-4" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default btn-primary",
+                    on: { click: _vm.generateCode },
+                  },
+                  [_vm._v("GENERATE")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default btn-primary",
+                    on: { click: _vm.scan },
+                  },
+                  [_vm._v("SCAN")]
+                ),
+              ]),
+            ],
+            1
+          ),
         ],
         1
       ),
@@ -622,6 +572,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -718,46 +677,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context3.prev = 0;
                 payload = JSON.parse(decoded);
                 if (!("code" in payload && "user_id" in payload)) {
-                  _context3.next = 17;
+                  _context3.next = 13;
                   break;
                 }
                 payload.auth_id = _this3.card.user_id;
-                payload.amount = _this3.amount;
-                payload.purpose = _this3.purpose;
                 payload.lat = _this3.lat;
                 payload.lng = _this3.lng;
-                if (_this3.amount) {
-                  _context3.next = 10;
-                  break;
-                }
-                throw new Error('Please set amount');
-              case 10:
-                _context3.next = 12;
+                _context3.next = 8;
                 return _this3.axios.post('/api/pay', payload);
-              case 12:
+              case 8:
                 _yield$_this3$axios$p = _context3.sent;
                 data = _yield$_this3$axios$p.data;
                 if (data.pay) {
-                  _context3.next = 16;
+                  _context3.next = 12;
                   break;
                 }
                 throw new Error(data.message);
-              case 16:
+              case 12:
                 _this3.$toasted.success('Success!');
-              case 17:
-                _context3.next = 23;
+              case 13:
+                _context3.next = 19;
                 break;
-              case 19:
-                _context3.prev = 19;
+              case 15:
+                _context3.prev = 15;
                 _context3.t0 = _context3["catch"](0);
                 _this3.$toasted.error(_context3.t0);
                 console.log("onDecode error >> ", _context3.t0);
-              case 23:
+              case 19:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[0, 19]]);
+        }, _callee3, null, [[0, 15]]);
       }))();
     },
     paintOutline: function paintOutline(detectedCodes, ctx) {
@@ -815,13 +766,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       showScanner: false,
       amount: null,
       purpose: null,
-      toggleSet: false,
       lat: 0,
       lng: 0
     };
   },
   mounted: function mounted() {
+    var _this4 = this;
     this.loadAddress();
+    setInterval( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+      var payload;
+      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              payload = {};
+              payload.lat = _this4.lat;
+              payload.lng = _this4.lng;
+              payload.userId = _this4.card.user_id;
+              _context4.next = 6;
+              return _this4.axios.post('/api/update-location', payload);
+            case 6:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    })), 5000);
   }
 });
 
