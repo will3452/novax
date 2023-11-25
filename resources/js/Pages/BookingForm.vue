@@ -1,6 +1,6 @@
 <template>
     <a-spin :spinning="payload.processing || loading">
-        <a-drawer title="Driver Information" :visible="viewDetails" :width="500" @close="viewDetails = false">
+        <a-drawer title="Driver Information" :visible="viewDetails" @close="viewDetails = false">
             <a-tabs default-active-key="1">
                 <a-tab-pane key="1" tab="Driver's info">
                     <a-descriptions :column="1" bordered>
