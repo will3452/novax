@@ -1,6 +1,6 @@
 <template>
     <a-spin :spinning="payload.processing || loading">
-        <a-drawer title="Driver Information" :visible="viewDetails" @close="viewDetails = false">
+        <a-drawer title="Driver Information" :visible="viewDetails" :width="screenWidth" @close="viewDetails = false">
             <a-tabs default-active-key="1">
                 <a-tab-pane key="1" tab="Driver's info">
                     <a-descriptions :column="1" bordered>
@@ -162,6 +162,13 @@ export default {
     layout: MainVue,
     components: {Van}, 
     computed: {
+        screenWidth() {
+            try {
+                return window.innerWidth; 
+            } catch (error) {
+                return 400; 
+            }
+        },
         _distance() {
             try {
                 return this.distance && this.distance.rows && this.distance.rows[0] && this.distance.rows[0].elements &&  this.distance.rows[0].elements[0] && this.distance.rows[0].elements[0].distance;
