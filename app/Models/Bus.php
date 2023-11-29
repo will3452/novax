@@ -15,6 +15,7 @@ class Bus extends Model
         'plate_number',
         'type',
         'status',
+        'additional_fee', 
     ];
 
     public function schedules()

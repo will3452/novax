@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
@@ -72,7 +73,8 @@ class Bus extends Resource
             Number::make('Capacity')
                 ->hideWhenUpdating()
                 ->rules(['required']),
-
+            Currency::make('Additional Fee')
+                ->default(fn () => 0), 
         ];
     }
 
