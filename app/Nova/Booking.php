@@ -67,6 +67,7 @@ class Booking extends Resource
             Text::make('Seat Numbers'),
             BelongsTo::make('Route', 'route', Route::class),
             BelongsTo::make('User', 'user', User::class),
+            BelongsTo::make('Schedule', 'schedule', Schedule::class), 
         ];
     }
 

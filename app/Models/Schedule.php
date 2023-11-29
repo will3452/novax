@@ -24,4 +24,8 @@ class Schedule extends Model
     public function route() {
         return $this->belongsTo(Route::class, 'route_id'); 
     }
+
+    public function bookings () {
+        return $this->hasMany(Booking::class, 'schedule_id'); 
+    }
 }

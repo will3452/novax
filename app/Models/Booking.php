@@ -21,6 +21,7 @@ class Booking extends Model
         'seat_numbers',
         'route_id',
         'time',
+        'schedule_id', 
     ];
 
     public function user()
@@ -31,5 +32,9 @@ class Booking extends Model
     public function route()
     {
         return $this->belongsTo(Route::class, 'route_id');
+    }
+
+    public function schedule () {
+        return $this->belongsTo(Schedule::class, 'schedule_id'); 
     }
 }

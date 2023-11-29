@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Route as ModelsRoute;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\Schedule;
 
 /*
 |--------------------------------------------------------------------------
@@ -140,3 +141,9 @@ Route::get('/test', function (Request $request) {
     }
     return ($model)::$method();
 });
+
+
+Route::get('/get-offers', function (Request $request) {
+    $query = ['day' => $request->day, 'route_id' => $request->route_id];
+    return Schedule::with('bookings')->where($query)->get(); 
+}); 
