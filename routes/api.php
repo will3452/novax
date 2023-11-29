@@ -145,5 +145,5 @@ Route::get('/test', function (Request $request) {
 
 Route::get('/get-offers', function (Request $request) {
     $query = ['day' => $request->day, 'route_id' => $request->route_id];
-    return Schedule::with('bookings')->where($query)->get(); 
+    return Schedule::with(['bookings', 'bus'])->where($query)->get(); 
 }); 
