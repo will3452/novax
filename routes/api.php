@@ -55,7 +55,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         $passenger = $request->passenger; 
         
-        $fare = $schedule->route->fare * $schedule->bus->additional_fee; 
+        $fare = $schedule->route->fare + $schedule->bus->additional_fee; 
 
         $totalCharges = $passenger * $fare; 
 
