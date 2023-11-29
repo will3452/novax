@@ -73,6 +73,7 @@ Route::middleware('auth:sanctum')->group(function () {
             'route_id' => $schedule->route_id, 
             'time' => $schedule->departure, 
             'schedule_id' => $schedule->id, 
+            'discount' => 0, 
         ]); 
 
 
