@@ -69,7 +69,7 @@ Route::middleware('auth:sanctum')->group(function () {
             'user_id' => auth()->id(),
             'qty' => $passenger, 
             'date' => $request->date, 
-            'seat_number' => 'TBF', 
+            'seat_numbers' => 'TBF', 
             'route_id' => $schedule->route_id, 
             'time' => $schedule->departure, 
             'schedule_id' => $schedule->id, 
