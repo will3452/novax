@@ -43,6 +43,52 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::post('/booking', function (Request $request) {
+        // check if has balance 
+        $inTransactions = auth()->user()->transactions()->whereBound('IN')->sum('amount'); 
+        $outTransactions = auth()->user()->transactions()->whereBound('OUT')->sum('amount'); 
+
+        $totalBalance = $inTransactions - $outTransactions; 
+        
+        if ($inTransactions - $outTransactions <= 0) return ['message' => 'no balance']; 
+
+        $schedule = Schedule::find($request->schedule_id);
+
+        $passenger = $request->passenger; 
+        
+        $fare = $schedule->route->fare * $schedule->bus->additional_fee; 
+
+        $totalCharges = $passenger * $fare; 
+
+        if ($totalCharges > $totalBalance) return ['message' => 'not enough balance']; 
+
+        $booking = Booking::create([
+            'status' => 'APPROVED', 
+            'from' => $schedule->route->from->name, 
+            'to' => $schedule->route->to->name, 
+            'fare' => $fare,
+            'user_id' => auth()->id(),
+            'qty' => $passenger, 
+            'date' => $request->date, 
+            'seat_number' => 'TBF', 
+            'route_id' => $schedule->route_id, 
+            'time' => $schedule->departure, 
+            'schedule_id' => $schedule->id, 
+        ]); 
+
+
+        // add transaction
+        Transaction::create([
+            'type' => 'PAYMENT',
+            'bound' => 'OUT',
+            'amount' => $totalCharges,
+            'user_id' => auth()->id(),
+            'status' => 'APPROVED',
+        ]);
+
+        return ['message' => 'success', 'booking' => $booking]; 
+    }); 
+
+    Route::post('/booking-old', function (Request $request) {
         $data = $request->validate([
             'fare' => ['required'],
             'time' => ['required'],
