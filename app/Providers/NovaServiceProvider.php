@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use OptimistDigital\NovaSettings\NovaSettings;
+use Spatie\BackupTool\BackupTool;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -107,6 +108,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
                 config('novax.setting_enabled');
             }),
+            // BackupTool::make(), 
         ];
     }
 

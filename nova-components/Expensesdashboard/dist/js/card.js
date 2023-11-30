@@ -40,6 +40,162 @@ component.options.__file = "resources/js/components/Card.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/ExpensesChart.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/components/ExpensesChart.vue ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ExpensesChart_vue_vue_type_template_id_2e92ffa8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ExpensesChart.vue?vue&type=template&id=2e92ffa8& */ "./resources/js/components/ExpensesChart.vue?vue&type=template&id=2e92ffa8&");
+/* harmony import */ var _ExpensesChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ExpensesChart.vue?vue&type=script&lang=js& */ "./resources/js/components/ExpensesChart.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ExpensesChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ExpensesChart_vue_vue_type_template_id_2e92ffa8___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ExpensesChart_vue_vue_type_template_id_2e92ffa8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ExpensesChart.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ExpensesPerCategoryChart.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/ExpensesPerCategoryChart.vue ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ExpensesPerCategoryChart_vue_vue_type_template_id_a8c7ddee___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ExpensesPerCategoryChart.vue?vue&type=template&id=a8c7ddee& */ "./resources/js/components/ExpensesPerCategoryChart.vue?vue&type=template&id=a8c7ddee&");
+/* harmony import */ var _ExpensesPerCategoryChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ExpensesPerCategoryChart.vue?vue&type=script&lang=js& */ "./resources/js/components/ExpensesPerCategoryChart.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ExpensesPerCategoryChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ExpensesPerCategoryChart_vue_vue_type_template_id_a8c7ddee___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ExpensesPerCategoryChart_vue_vue_type_template_id_a8c7ddee___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ExpensesPerCategoryChart.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/IncomeChart.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/IncomeChart.vue ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _IncomeChart_vue_vue_type_template_id_01a5001a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IncomeChart.vue?vue&type=template&id=01a5001a& */ "./resources/js/components/IncomeChart.vue?vue&type=template&id=01a5001a&");
+/* harmony import */ var _IncomeChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./IncomeChart.vue?vue&type=script&lang=js& */ "./resources/js/components/IncomeChart.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _IncomeChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _IncomeChart_vue_vue_type_template_id_01a5001a___WEBPACK_IMPORTED_MODULE_0__.render,
+  _IncomeChart_vue_vue_type_template_id_01a5001a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/IncomeChart.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ProjectExpensesChart.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/ProjectExpensesChart.vue ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ProjectExpensesChart_vue_vue_type_template_id_7545bed5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProjectExpensesChart.vue?vue&type=template&id=7545bed5& */ "./resources/js/components/ProjectExpensesChart.vue?vue&type=template&id=7545bed5&");
+/* harmony import */ var _ProjectExpensesChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProjectExpensesChart.vue?vue&type=script&lang=js& */ "./resources/js/components/ProjectExpensesChart.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "../../node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ProjectExpensesChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ProjectExpensesChart_vue_vue_type_template_id_7545bed5___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ProjectExpensesChart_vue_vue_type_template_id_7545bed5___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ProjectExpensesChart.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Card.vue?vue&type=template&id=b9bc2c0a&":
 /*!*************************************************************************!*\
   !*** ./resources/js/components/Card.vue?vue&type=template&id=b9bc2c0a& ***!
@@ -53,6 +209,74 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Card_vue_vue_type_template_id_b9bc2c0a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Card_vue_vue_type_template_id_b9bc2c0a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Card.vue?vue&type=template&id=b9bc2c0a& */ "../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Card.vue?vue&type=template&id=b9bc2c0a&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ExpensesChart.vue?vue&type=template&id=2e92ffa8&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/ExpensesChart.vue?vue&type=template&id=2e92ffa8& ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExpensesChart_vue_vue_type_template_id_2e92ffa8___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExpensesChart_vue_vue_type_template_id_2e92ffa8___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExpensesChart_vue_vue_type_template_id_2e92ffa8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ExpensesChart.vue?vue&type=template&id=2e92ffa8& */ "../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExpensesChart.vue?vue&type=template&id=2e92ffa8&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ExpensesPerCategoryChart.vue?vue&type=template&id=a8c7ddee&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/ExpensesPerCategoryChart.vue?vue&type=template&id=a8c7ddee& ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExpensesPerCategoryChart_vue_vue_type_template_id_a8c7ddee___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExpensesPerCategoryChart_vue_vue_type_template_id_a8c7ddee___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExpensesPerCategoryChart_vue_vue_type_template_id_a8c7ddee___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ExpensesPerCategoryChart.vue?vue&type=template&id=a8c7ddee& */ "../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExpensesPerCategoryChart.vue?vue&type=template&id=a8c7ddee&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/IncomeChart.vue?vue&type=template&id=01a5001a&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/IncomeChart.vue?vue&type=template&id=01a5001a& ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_IncomeChart_vue_vue_type_template_id_01a5001a___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_IncomeChart_vue_vue_type_template_id_01a5001a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_IncomeChart_vue_vue_type_template_id_01a5001a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./IncomeChart.vue?vue&type=template&id=01a5001a& */ "../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/IncomeChart.vue?vue&type=template&id=01a5001a&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ProjectExpensesChart.vue?vue&type=template&id=7545bed5&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/ProjectExpensesChart.vue?vue&type=template&id=7545bed5& ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProjectExpensesChart_vue_vue_type_template_id_7545bed5___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProjectExpensesChart_vue_vue_type_template_id_7545bed5___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProjectExpensesChart_vue_vue_type_template_id_7545bed5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ProjectExpensesChart.vue?vue&type=template&id=7545bed5& */ "../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ProjectExpensesChart.vue?vue&type=template&id=7545bed5&");
 
 
 /***/ }),
@@ -73,6 +297,70 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/ExpensesChart.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/ExpensesChart.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExpensesChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ExpensesChart.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExpensesChart.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExpensesChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ExpensesPerCategoryChart.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/ExpensesPerCategoryChart.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExpensesPerCategoryChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ExpensesPerCategoryChart.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExpensesPerCategoryChart.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExpensesPerCategoryChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/IncomeChart.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/IncomeChart.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_IncomeChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./IncomeChart.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/IncomeChart.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_IncomeChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ProjectExpensesChart.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/ProjectExpensesChart.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProjectExpensesChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ProjectExpensesChart.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ProjectExpensesChart.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProjectExpensesChart_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Card.vue?vue&type=template&id=b9bc2c0a&":
 /*!************************************************************************************************************************************************************************************************************************!*\
   !*** ../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Card.vue?vue&type=template&id=b9bc2c0a& ***!
@@ -89,123 +377,281 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "h-screen" }, [
-    _c("div", { staticClass: "flex" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "h-1/3 w-1/3 border border-grey-300 m-1 rounded" },
-        [
-          _c("div", { staticClass: "p-2 font-bold" }, [
-            _vm._v("\n                Expenses per day\n            "),
-          ]),
-          _vm._v(" "),
-          _vm.loaded
-            ? _c("apexcharts", {
-                staticClass: "w-full h-full",
-                attrs: {
-                  type: "line",
-                  options: _vm.expensesPerDay.chartOptions,
-                  series: _vm.expensesPerDay.series,
-                },
-              })
-            : _vm._e(),
+  return _c("div", [
+    _c(
+      "select",
+      {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.expensesDashboardFilter,
+            expression: "expensesDashboardFilter",
+          },
         ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "h-1/3 w-1/3 border border-grey-300 m-1 rounded" },
-        [
-          _c("div", { staticClass: "p-2 font-bold" }, [
-            _vm._v("\n                Expenses per Category\n            "),
-          ]),
-          _vm._v(" "),
-          _vm.loaded
-            ? _c("apexcharts", {
-                staticClass: "w-full h-full",
-                attrs: {
-                  type: "bar",
-                  options: _vm.expensesPerCategory.chartOptions,
-                  series: _vm.expensesPerCategory.series,
-                },
+        staticClass: "mb-2",
+        attrs: { name: "", id: "" },
+        on: {
+          change: function ($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function (o) {
+                return o.selected
               })
-            : _vm._e(),
-        ],
-        1
-      ),
-    ]),
+              .map(function (o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.expensesDashboardFilter = $event.target.multiple
+              ? $$selectedVal
+              : $$selectedVal[0]
+          },
+        },
+      },
+      [
+        _c("option", { attrs: { value: "day" } }, [_vm._v("Day")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "week" } }, [_vm._v("Week")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "month" } }, [_vm._v("Month")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "year" } }, [_vm._v("Year")]),
+      ]
+    ),
     _vm._v(" "),
-    _c("div", { staticClass: "flex" }, [
-      _c(
-        "div",
-        { staticClass: "h-1/3 w-1/2 border border-grey-300 m-1 rounded" },
-        [
-          _c("div", { staticClass: "p-2 font-bold" }, [
-            _vm._v("\n                Expenses per Project\n            "),
-          ]),
-          _vm._v(" "),
-          _vm.loaded
-            ? _c("apexcharts", {
-                attrs: {
-                  width: "500",
-                  height: "350",
-                  type: "donut",
-                  options: _vm.projectOptions,
-                  series: _vm.projectSeries,
-                },
-              })
-            : _vm._e(),
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "h-1/3 w-1/2 border border-grey-300 m-1 rounded" },
-        [
-          _c("div", { staticClass: "p-2 font-bold" }, [
-            _vm._v(
-              "\n                Expenses per Day, Project and Categories\n            "
-            ),
-          ]),
-          _vm._v(" "),
-          _vm.loaded
-            ? _c("apexcharts", {
-                staticClass: "w-full h-full",
-                attrs: {
-                  type: "line",
-                  options: _vm.chartOptions,
-                  series: _vm.series,
-                },
-              })
-            : _vm._e(),
-        ],
-        1
-      ),
-    ]),
+    _c(
+      "div",
+      { staticClass: "flex" },
+      [
+        _c("card", { staticClass: "p-2 mx-2" }, [
+          _vm._v("\n            Total Expenses: "),
+          _c("b", [_vm._v(_vm._s(_vm.totalExpenses))]),
+        ]),
+        _vm._v(" "),
+        _c("card", { staticClass: "p-2 mx-2" }, [
+          _vm._v("\n        Expenses Prediction Result: "),
+          _c("b", [_vm._v(_vm._s(_vm.predictions))]),
+        ]),
+        _vm._v(" "),
+        _c("card", { staticClass: "p-2 mx-2" }, [
+          _vm._v("\n            Total Income: "),
+          _c("b", [_vm._v(_vm._s(_vm.totalIncomes))]),
+        ]),
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "flex" },
+      [
+        _c("ExpensesChartVue", {
+          attrs: { "data-sources": _vm.expensesWithPrediction },
+        }),
+        _vm._v(" "),
+        _c("IncomeChartVue", { attrs: { "data-sources": _vm.incomes } }),
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "flex" },
+      [
+        _c("ProjectExpensesChartVue", {
+          attrs: { "data-sources": _vm.dataSources["projects"] },
+        }),
+        _vm._v(" "),
+        _c("ExpensesPerCategoryChart", {
+          attrs: { "data-sources": _vm.categoryExpenses },
+        }),
+      ],
+      1
+    ),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "h-1/3 w-1/3 flex justify-center items-center" },
-      [
-        _c("img", {
-          staticClass: "rounded-full",
-          staticStyle: { "max-width": "250px" },
-          attrs: { src: "/logo.png", alt: "" },
-        }),
-      ]
-    )
-  },
-]
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExpensesChart.vue?vue&type=template&id=2e92ffa8&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExpensesChart.vue?vue&type=template&id=2e92ffa8& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("h4", [_vm._v("Expenses")]),
+      _vm._v(" "),
+      _c("chart", {
+        attrs: {
+          width: 400,
+          type: "area",
+          options: _vm.chartOptions,
+          series: [
+            {
+              name: "Expenses",
+              data: _vm.dataSources.map(function (e) {
+                return [e.label, e.value]
+              }),
+            },
+          ],
+        },
+      }),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExpensesPerCategoryChart.vue?vue&type=template&id=a8c7ddee&":
+/*!********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExpensesPerCategoryChart.vue?vue&type=template&id=a8c7ddee& ***!
+  \********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("h4", [_vm._v("Category Expenses")]),
+      _vm._v(" "),
+      _c("chart", {
+        key: _vm.key,
+        attrs: {
+          width: 400,
+          type: "pie",
+          options: _vm.chartOptions,
+          series: _vm.dataSources.map(function (e) {
+            return e.value
+          }),
+        },
+      }),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/IncomeChart.vue?vue&type=template&id=01a5001a&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/IncomeChart.vue?vue&type=template&id=01a5001a& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("h4", [_vm._v("Income")]),
+      _vm._v(" "),
+      _c("chart", {
+        attrs: {
+          width: 400,
+          type: "bar",
+          options: _vm.chartOptions,
+          series: [
+            {
+              name: "Income",
+              data: _vm.dataSources.map(function (e) {
+                return [e.label, e.value]
+              }),
+            },
+          ],
+        },
+      }),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ProjectExpensesChart.vue?vue&type=template&id=7545bed5&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ProjectExpensesChart.vue?vue&type=template&id=7545bed5& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("h4", [_vm._v("Projects")]),
+      _vm._v(" "),
+      _c("chart", {
+        key: _vm.key,
+        attrs: {
+          width: 400,
+          type: "pie",
+          options: _vm.chartOptions,
+          series: _vm.dataSources.map(function (e) {
+            return parseInt(e.budget)
+          }),
+        },
+      }),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -363,14 +809,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue_apexcharts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-apexcharts */ "./node_modules/vue-apexcharts/dist/vue-apexcharts.js");
 /* harmony import */ var vue_apexcharts__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_apexcharts__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var _ExpensesChart_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ExpensesChart.vue */ "./resources/js/components/ExpensesChart.vue");
+/* harmony import */ var _IncomeChart_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./IncomeChart.vue */ "./resources/js/components/IncomeChart.vue");
+/* harmony import */ var _ProjectExpensesChart_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ProjectExpensesChart.vue */ "./resources/js/components/ProjectExpensesChart.vue");
+/* harmony import */ var _ExpensesPerCategoryChart_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ExpensesPerCategoryChart.vue */ "./resources/js/components/ExpensesPerCategoryChart.vue");
+/* harmony import */ var _mixin_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./mixin.js */ "./resources/js/components/mixin.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 //
@@ -404,6 +861,137 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+
+
+
+
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'Chart',
+  mixins: [_mixin_js__WEBPACK_IMPORTED_MODULE_5__["default"]],
+  components: {
+    chart: (vue_apexcharts__WEBPACK_IMPORTED_MODULE_0___default()),
+    ExpensesChartVue: _ExpensesChart_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    IncomeChartVue: _IncomeChart_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    ProjectExpensesChartVue: _ProjectExpensesChart_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    ExpensesPerCategoryChart: _ExpensesPerCategoryChart_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+  },
+  mounted: function mounted() {
+    var _this = this;
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      var data;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return axios__WEBPACK_IMPORTED_MODULE_6__["default"].get('/api/dashboard');
+          case 2:
+            data = _context.sent;
+            console.log('data >> ', data.data);
+            _this.dataSources = _objectSpread({}, data.data);
+          case 5:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee);
+    }))();
+  },
+  data: function data() {
+    return {
+      dataSources: {},
+      expensesDashboardFilter: 'day'
+    };
+  },
+  computed: {
+    incomes: function incomes() {
+      return this.dataSources["project_per_".concat(this.expensesDashboardFilter)];
+    },
+    expenses: function expenses() {
+      return this.dataSources["expenses_per_".concat(this.expensesDashboardFilter)];
+    },
+    categoryExpenses: function categoryExpenses() {
+      return this.dataSources["category_expenses_per_".concat(this.expensesDashboardFilter)];
+    },
+    expensesWithPrediction: function expensesWithPrediction() {
+      var result = _toConsumableArray(this.expenses);
+      result.push({
+        label: this.expenses[this.expenses.length - 1].label + 1,
+        value: this.predictions <= 0 ? 0 : this.predictions
+      });
+      return result;
+    },
+    totalExpenses: function totalExpenses() {
+      try {
+        return this.expenses[this.expenses.length - 1].value;
+      } catch (error) {
+        return '---';
+      }
+    },
+    totalIncomes: function totalIncomes() {
+      try {
+        return this.incomes[this.incomes.length - 1].value;
+      } catch (error) {
+        return '---';
+      }
+    },
+    predictions: function predictions() {
+      try {
+        // Given expense data for 5 days
+        var expenses = this.expenses.map(function (e) {
+          return e.value;
+        });
+        var timeIndices = this.expenses.map(function (e) {
+          return e.label;
+        }); // Days as time indices
+        // for (let i = this.expenses[0].label; i <= this.expenses[this.expenses.length - 1].label; i ++) {
+        //     timeIndices.push(i); 
+        //     expenses[expenses.length] = this.expenses.find( e => e.label == i) ? this.expenses.find( e => e.label == i).value : 0; 
+        // }
+
+        // Predicting expenses for future time indices 
+        var futureTimeIndices = [timeIndices[timeIndices.length - 1] + 1];
+        var result = this.predictFutureExpenses(timeIndices, expenses, futureTimeIndices)[0];
+        console.table({
+          expenses: expenses,
+          timeIndices: timeIndices,
+          futureTimeIndices: futureTimeIndices
+        });
+        if (Number.isNaN(result)) return '---';
+        return result;
+      } catch (error) {
+        console.log(error);
+        return '---';
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExpensesChart.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExpensesChart.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue_apexcharts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-apexcharts */ "./node_modules/vue-apexcharts/dist/vue-apexcharts.js");
+/* harmony import */ var vue_apexcharts__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_apexcharts__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -414,231 +1002,234 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'Chart',
+  props: ['dataSources'],
   components: {
-    apexcharts: (vue_apexcharts__WEBPACK_IMPORTED_MODULE_0___default())
-  },
-  mounted: function mounted() {
-    var _this = this;
-    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var _yield$_this$axios$ge, data, categories, _loop, i, _loop2, _i;
-      return _regeneratorRuntime().wrap(function _callee$(_context3) {
-        while (1) switch (_context3.prev = _context3.next) {
-          case 0:
-            _context3.next = 2;
-            return _this.axios.get('/dashboard');
-          case 2:
-            _yield$_this$axios$ge = _context3.sent;
-            data = _yield$_this$axios$ge.data;
-            console.log(data);
-            _this.expensesPerDay.chartOptions.xaxis.categories = data.expenses_per_day.map(function (item) {
-              return _this.moment(item.date).format('MM/DD/YY');
-            });
-            _this.expensesPerDay.series[0].data = data.expenses_per_day.map(function (item) {
-              return item.total;
-            });
-            _this.expensesPerCategory.chartOptions.xaxis.categories = data.expenses_per_category.map(function (item) {
-              return item.name;
-            });
-            _this.expensesPerCategory.series[0].data = data.expenses_per_category.map(function (item) {
-              var total = 0;
-              var _iterator = _createForOfIteratorHelper(item.expenses),
-                _step;
-              try {
-                for (_iterator.s(); !(_step = _iterator.n()).done;) {
-                  var expense = _step.value;
-                  total += parseFloat(expense.amount);
-                }
-              } catch (err) {
-                _iterator.e(err);
-              } finally {
-                _iterator.f();
-              }
-              return parseInt(total);
-            });
-            _this.projectSeries = data.expenses_per_project.map(function (item) {
-              var total = 0;
-              var _iterator2 = _createForOfIteratorHelper(item.expenses),
-                _step2;
-              try {
-                for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-                  var expense = _step2.value;
-                  total += parseFloat(expense.amount);
-                }
-              } catch (err) {
-                _iterator2.e(err);
-              } finally {
-                _iterator2.f();
-              }
-              return parseInt(total);
-            });
-            _this.projectOptions.labels = data.expenses_per_project.map(function (item) {
-              return item.name;
-            });
-
-            // overall
-            categories = data.expenses_per_day.map(function (item) {
-              return _this.moment(item.date).format('MM/DD/YY');
-            });
-            _this.chartOptions.xaxis.categories = categories;
-            _this.series[0].data = data.expenses_per_day.map(function (item) {
-              return item.total;
-            });
-            _this.series[0].name = "Per Day";
-            _this.series[1].name = "Per Project";
-            _this.series[1].data = [];
-            _this.series[2].name = "Per Category";
-            _this.series[2].data = [];
-            _loop = /*#__PURE__*/_regeneratorRuntime().mark(function _loop(i) {
-              var total;
-              return _regeneratorRuntime().wrap(function _loop$(_context) {
-                while (1) switch (_context.prev = _context.next) {
-                  case 0:
-                    total = 0;
-                    data.expenses_per_project.forEach(function (project) {
-                      var _iterator3 = _createForOfIteratorHelper(project.expenses),
-                        _step3;
-                      try {
-                        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-                          var _exp = _step3.value;
-                          if (_this.moment(_exp.date).format('MM/DD/YY') == categories[i]) {
-                            total += parseFloat(_exp.amount);
-                          }
-                        }
-                      } catch (err) {
-                        _iterator3.e(err);
-                      } finally {
-                        _iterator3.f();
-                      }
-                    });
-                    _this.series[1].data.push(total);
-                  case 3:
-                  case "end":
-                    return _context.stop();
-                }
-              }, _loop);
-            });
-            i = 0;
-          case 21:
-            if (!(i < categories.length)) {
-              _context3.next = 26;
-              break;
-            }
-            return _context3.delegateYield(_loop(i), "t0", 23);
-          case 23:
-            i++;
-            _context3.next = 21;
-            break;
-          case 26:
-            _loop2 = /*#__PURE__*/_regeneratorRuntime().mark(function _loop2(_i) {
-              var total;
-              return _regeneratorRuntime().wrap(function _loop2$(_context2) {
-                while (1) switch (_context2.prev = _context2.next) {
-                  case 0:
-                    total = 0;
-                    data.expenses_per_category.forEach(function (cat) {
-                      var _iterator4 = _createForOfIteratorHelper(cat.expenses),
-                        _step4;
-                      try {
-                        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-                          var _exp = _step4.value;
-                          if (_this.moment(_exp.date).format('MM/DD/YY') == categories[_i]) {
-                            total += parseFloat(_exp.amount);
-                          }
-                        }
-                      } catch (err) {
-                        _iterator4.e(err);
-                      } finally {
-                        _iterator4.f();
-                      }
-                    });
-                    _this.series[2].data.push(total);
-                  case 3:
-                  case "end":
-                    return _context2.stop();
-                }
-              }, _loop2);
-            });
-            _i = 0;
-          case 28:
-            if (!(_i < categories.length)) {
-              _context3.next = 33;
-              break;
-            }
-            return _context3.delegateYield(_loop2(_i), "t1", 30);
-          case 30:
-            _i++;
-            _context3.next = 28;
-            break;
-          case 33:
-            _this.loaded = true;
-          case 34:
-          case "end":
-            return _context3.stop();
-        }
-      }, _callee);
-    }))();
-  },
-  methods: {
-    moment: (moment__WEBPACK_IMPORTED_MODULE_1___default())
+    chart: (vue_apexcharts__WEBPACK_IMPORTED_MODULE_0___default())
   },
   data: function data() {
     return {
-      loaded: false,
-      axios: axios__WEBPACK_IMPORTED_MODULE_2__["default"],
-      projectOptions: {},
-      projectLabels: [],
-      expensesPerDay: {
-        chartOptions: {
-          chart: {
-            id: 'expenserPerDay'
-          },
-          xaxis: {
-            convertedCatToNumeric: false,
-            categories: []
-          }
+      chartOptions: {
+        colors: ['red'],
+        fill: {
+          colors: ['red']
         },
-        series: [{
-          name: 'Expenses Per Day',
-          data: []
-        }]
-      },
-      expensesPerCategory: {
-        chartOptions: {
-          chart: {
-            id: 'expensesPerCategory'
-          },
-          xaxis: {
-            categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-          }
+        markers: {
+          colors: ['red']
         },
-        series: [{
-          name: 'Per Day',
-          data: [30, 40, 45, 50, 49, 60, 70, 91]
-        }, {
-          name: 'Per Project',
-          data: [30, 40, 45, 50, 49, 60, 70, 91]
-        }]
-      },
+        chart: {
+          id: 'vue-example'
+        }
+      }
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExpensesPerCategoryChart.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExpensesPerCategoryChart.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue_apexcharts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-apexcharts */ "./node_modules/vue-apexcharts/dist/vue-apexcharts.js");
+/* harmony import */ var vue_apexcharts__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_apexcharts__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    chart: (vue_apexcharts__WEBPACK_IMPORTED_MODULE_0___default())
+  },
+  props: ['dataSources'],
+  data: function data() {
+    return {
+      key: 1
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+    setTimeout(function () {
+      _this.key++;
+    }, 10);
+  },
+  computed: {
+    chartOptions: function chartOptions() {
+      return {
+        chart: {
+          id: 'vue-example'
+        },
+        labels: this.dataSources.map(function (e) {
+          return "Category ".concat(e.label);
+        })
+      };
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/IncomeChart.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/IncomeChart.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue_apexcharts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-apexcharts */ "./node_modules/vue-apexcharts/dist/vue-apexcharts.js");
+/* harmony import */ var vue_apexcharts__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_apexcharts__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    chart: (vue_apexcharts__WEBPACK_IMPORTED_MODULE_0___default())
+  },
+  props: ['dataSources'],
+  data: function data() {
+    return {
       chartOptions: {
         chart: {
-          id: 'app'
+          id: 'vue-example'
         },
         xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+          type: 'datetime'
         }
-      },
-      series: [{
-        name: 'series-1',
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
-      }, {
-        name: 'series-2',
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
-      }, {
-        name: 'series-3',
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
-      }]
+      }
     };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ProjectExpensesChart.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ProjectExpensesChart.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue_apexcharts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-apexcharts */ "./node_modules/vue-apexcharts/dist/vue-apexcharts.js");
+/* harmony import */ var vue_apexcharts__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_apexcharts__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    chart: (vue_apexcharts__WEBPACK_IMPORTED_MODULE_0___default())
+  },
+  props: ['dataSources'],
+  data: function data() {
+    return {
+      key: 1
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+    setTimeout(function () {
+      _this.key++;
+    }, 10);
+  },
+  computed: {
+    chartOptions: function chartOptions() {
+      return {
+        chart: {
+          id: 'vue-example'
+        },
+        labels: this.dataSources.map(function (e) {
+          return e.name;
+        })
+      };
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/components/mixin.js":
+/*!******************************************!*\
+  !*** ./resources/js/components/mixin.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  methods: {
+    mean: function mean(arr) {
+      return arr.reduce(function (acc, val) {
+        return acc + val;
+      }, 0) / arr.length;
+    },
+    calculateSlope: function calculateSlope(x, y, xMean, yMean) {
+      var numerator = 0;
+      var denominator = 0;
+      for (var i = 0; i < x.length; i++) {
+        numerator += (x[i] - xMean) * (y[i] - yMean);
+        denominator += Math.pow(x[i] - xMean, 2);
+      }
+      return numerator / denominator;
+    },
+    calculateIntercept: function calculateIntercept(xMean, yMean, slope) {
+      return yMean - slope * xMean;
+    },
+    predictFutureExpenses: function predictFutureExpenses(x, y, futureX) {
+      var xMean = this.mean(x);
+      var yMean = this.mean(y);
+      var slope = this.calculateSlope(x, y, xMean, yMean);
+      var intercept = this.calculateIntercept(xMean, yMean, slope);
+      return futureX.map(function (xValue) {
+        return slope * xValue + intercept;
+      });
+    }
   }
 });
 
