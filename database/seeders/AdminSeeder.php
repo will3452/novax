@@ -17,13 +17,21 @@ class AdminSeeder extends Seeder
     public function run()
     {
         $superadmin = Role::create(['name'=>Role::SUPERADMIN]);
-        $user = User::create([
-            'name'=>'superadmin',
-            'email'=>'super@admin.com',
+         
+
+        $admin = User::create([
+            'name'=>'Joselito Cruz',
+            'email'=>'cruzjoselito345@gmail.com',
             'password'=> bcrypt('password')
         ]);
 
-        $user->assignRole($superadmin);
+        User::create([
+            'name'=>'Darwin Castro',
+            'email'=>'darwincastrooo07@gmail.com',
+            'password'=> bcrypt('password')
+        ]);
+
+        $admin->assignRole($superadmin);
         info('Superadmin created!, email: super@admin.com');
     }
 }
