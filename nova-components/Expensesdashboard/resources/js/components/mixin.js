@@ -26,5 +26,15 @@ export default {
             
             return futureX.map((xValue) => (slope * xValue) + intercept);
           }, 
+    },
+    filters: {
+        format(amount) {
+            const currencyFormatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'PHP' // Change this to the currency you want
+              });
+
+              return currencyFormatter.format(amount);
+          }, 
     }
 }

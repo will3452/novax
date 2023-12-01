@@ -378,63 +378,74 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "select",
-      {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.expensesDashboardFilter,
-            expression: "expensesDashboardFilter",
-          },
-        ],
-        staticClass: "mb-2",
-        attrs: { name: "", id: "" },
-        on: {
-          change: function ($event) {
-            var $$selectedVal = Array.prototype.filter
-              .call($event.target.options, function (o) {
-                return o.selected
-              })
-              .map(function (o) {
-                var val = "_value" in o ? o._value : o.value
-                return val
-              })
-            _vm.expensesDashboardFilter = $event.target.multiple
-              ? $$selectedVal
-              : $$selectedVal[0]
+    _c("div", { staticClass: "flex items-center" }, [
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.expensesDashboardFilter,
+              expression: "expensesDashboardFilter",
+            },
+          ],
+          staticClass: "p-2 border-2 border-green-700rounded mb-2 px-4",
+          attrs: { name: "", id: "" },
+          on: {
+            change: function ($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function (o) {
+                  return o.selected
+                })
+                .map(function (o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.expensesDashboardFilter = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            },
           },
         },
-      },
-      [
-        _c("option", { attrs: { value: "day" } }, [_vm._v("Day")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "week" } }, [_vm._v("Week")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "month" } }, [_vm._v("Month")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "year" } }, [_vm._v("Year")]),
-      ]
-    ),
-    _vm._v("\n    " + _vm._s(_vm.incomes) + "\n    "),
+        [
+          _c("option", { attrs: { value: "day" } }, [_vm._v("Day")]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "week" } }, [_vm._v("Week")]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "month" } }, [_vm._v("Month")]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "year" } }, [_vm._v("Year")]),
+        ]
+      ),
+    ]),
+    _vm._v(" "),
     _c(
       "div",
-      { staticClass: "flex" },
+      { staticClass: "flex justify-center" },
       [
-        _c("card", { staticClass: "p-4 mx-2" }, [
-          _vm._v("\n            Total Expenses: "),
-          _c("b", [_vm._v(_vm._s(_vm.totalExpenses))]),
+        _c("card", { staticClass: "p-4 m-2 w-full md:w-1/3 text-center" }, [
+          _c("h1", [_vm._v(_vm._s(_vm._f("format")(_vm.totalExpenses)))]),
+          _vm._v(" "),
+          _c("div", [_vm._v("\n                Total Expenses\n            ")]),
         ]),
         _vm._v(" "),
-        _c("card", { staticClass: "p-4 mx-2" }, [
-          _vm._v("\n        Expenses Prediction Result: "),
-          _c("b", [_vm._v(_vm._s(_vm.predictions))]),
+        _c("card", { staticClass: "p-4 m-2 w-full md:w-1/3 text-center" }, [
+          _c("h1", [_vm._v(_vm._s(_vm._f("format")(_vm.predictions)))]),
+          _vm._v(" "),
+          _c("div", [
+            _vm._v(
+              "\n                Expenses Prediction Result after a " +
+                _vm._s(_vm.expensesDashboardFilter) +
+                "\n            "
+            ),
+          ]),
         ]),
         _vm._v(" "),
-        _c("card", { staticClass: "p-4 mx-2" }, [
-          _vm._v("\n            Total Income: "),
-          _c("b", [_vm._v(_vm._s(_vm.totalIncomes))]),
+        _c("card", { staticClass: "p-4 m-2 w-full md:w-1/3 text-center" }, [
+          _c("h1", [_vm._v(_vm._s(_vm._f("format")(_vm.totalIncomes)))]),
+          _vm._v(" "),
+          _c("div", [_vm._v("\n                Total Income\n            ")]),
         ]),
       ],
       1
@@ -442,33 +453,49 @@ var render = function () {
     _vm._v(" "),
     _c("br"),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "flex" },
-      [
-        _c("ExpensesChartVue", {
-          attrs: { "data-sources": _vm.expensesWithPrediction },
-        }),
-        _vm._v(" "),
-        _c("IncomeChartVue", { attrs: { "data-sources": _vm.incomes } }),
-      ],
-      1
-    ),
+    _c("div", { staticClass: "flex justify-center" }, [
+      _c(
+        "div",
+        { staticClass: "w-full md:w-1/2" },
+        [
+          _c("ExpensesChartVue", {
+            attrs: { "data-sources": _vm.expensesWithPrediction },
+          }),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "w-full md:w-1/2" },
+        [_c("IncomeChartVue", { attrs: { "data-sources": _vm.incomes } })],
+        1
+      ),
+    ]),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "flex" },
-      [
-        _c("ProjectExpensesChartVue", {
-          attrs: { "data-sources": _vm.dataSources["projects"] },
-        }),
-        _vm._v(" "),
-        _c("ExpensesPerCategoryChart", {
-          attrs: { "data-sources": _vm.categoryExpenses },
-        }),
-      ],
-      1
-    ),
+    _c("div", { staticClass: "flex justify-center" }, [
+      _c(
+        "div",
+        { staticClass: "w-full md:w-1/2" },
+        [
+          _c("ProjectExpensesChartVue", {
+            attrs: { "data-sources": _vm.incomes },
+          }),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "w-full md:w-1/2" },
+        [
+          _c("ExpensesPerCategoryChart", {
+            attrs: { "data-sources": _vm.categoryExpenses },
+          }),
+        ],
+        1
+      ),
+    ]),
   ])
 }
 var staticRenderFns = []
@@ -500,15 +527,15 @@ var render = function () {
       _c("h4", [_vm._v("Expenses")]),
       _vm._v(" "),
       _c("chart", {
+        staticStyle: { width: "100%" },
         attrs: {
-          width: 400,
           type: "area",
           options: _vm.chartOptions,
           series: [
             {
               name: "Expenses",
               data: _vm.dataSources.map(function (e) {
-                return [e.label, e.value.toFixed(2)]
+                return [e.label, parseFloat(e.value)]
               }),
             },
           ],
@@ -548,8 +575,8 @@ var render = function () {
       _vm._v(" "),
       _c("chart", {
         key: _vm.key,
+        staticStyle: { width: "80%" },
         attrs: {
-          width: 400,
           type: "pie",
           options: _vm.chartOptions,
           series: _vm.dataSources.map(function (e) {
@@ -591,8 +618,8 @@ var render = function () {
       _vm._v(" "),
       _c("chart", {
         key: _vm.key,
+        staticStyle: { width: "100%" },
         attrs: {
-          width: 400,
           type: "area",
           options: _vm.chartOptions,
           series: [
@@ -635,17 +662,22 @@ var render = function () {
   return _c(
     "div",
     [
-      _c("h4", [_vm._v("Projects")]),
+      _c("h4", [_vm._v("Project budgets")]),
       _vm._v(" "),
       _c("chart", {
         key: _vm.key,
+        staticStyle: { width: "100%" },
         attrs: {
-          width: 400,
-          type: "pie",
+          type: "area",
           options: _vm.chartOptions,
-          series: _vm.dataSources.map(function (e) {
-            return parseInt(e.budget)
-          }),
+          series: [
+            {
+              name: "Income",
+              data: _vm.dataSources.map(function (e) {
+                return [e.label, e.value]
+              }),
+            },
+          ],
         },
       }),
     ],
@@ -863,6 +895,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -908,10 +959,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   computed: {
+    projectBudgets: function projectBudgets() {
+      return this.dataSources["project_per_".concat(this.expensesDashboardFilter)];
+    },
     incomes: function incomes() {
       var _this2 = this;
       try {
-        return this.dataSources["project_per_".concat(this.expensesDashboardFilter)].map(function (income) {
+        return this.projectBudgets.map(function (income) {
           var expenses = _this2.expenses.find(function (e) {
             return e.label == income.label;
           });
@@ -933,12 +987,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return this.dataSources["category_expenses_per_".concat(this.expensesDashboardFilter)];
     },
     expensesWithPrediction: function expensesWithPrediction() {
-      var result = _toConsumableArray(this.expenses);
-      result.push({
-        label: this.expenses[this.expenses.length - 1].label + 1,
-        value: this.predictions <= 0 ? 0 : this.predictions
-      });
-      return result;
+      try {
+        var result = _toConsumableArray(this.expenses);
+        result.push({
+          label: this.expenses[this.expenses.length - 1].label + 1,
+          value: this.predictions <= 0 ? 0 : this.predictions
+        });
+        return result.map(function (e) {
+          return _objectSpread(_objectSpread({}, e), {}, {
+            value: (e.value || 0).toFixed(2)
+          });
+        });
+      } catch (error) {
+        console.log(error);
+        return [];
+      }
     },
     totalExpenses: function totalExpenses() {
       try {
@@ -976,11 +1039,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           timeIndices: timeIndices,
           futureTimeIndices: futureTimeIndices
         });
-        if (Number.isNaN(result)) return '---';
+        if (Number.isNaN(result)) return expenses[expenses.length - 1];
         return result <= 0 ? 0 : result;
       } catch (error) {
         console.log(error);
-        return '---';
+        return 0;
       }
     }
   }
@@ -1088,14 +1151,23 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     chartOptions: function chartOptions() {
-      return {
-        chart: {
-          id: 'vue-example'
-        },
-        labels: this.dataSources.map(function (e) {
-          return "Category ".concat(e.label);
-        })
-      };
+      try {
+        return {
+          chart: {
+            id: 'vue-example'
+          },
+          labels: this.dataSources.map(function (e) {
+            return "Category ".concat(e.label);
+          })
+        };
+      } catch (error) {
+        return {
+          chart: {
+            id: 'vue-example3'
+          },
+          labels: []
+        };
+      }
     }
   }
 });
@@ -1170,8 +1242,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue_apexcharts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-apexcharts */ "./node_modules/vue-apexcharts/dist/vue-apexcharts.js");
 /* harmony import */ var vue_apexcharts__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_apexcharts__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -1180,8 +1250,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
-
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -1191,27 +1262,33 @@ __webpack_require__.r(__webpack_exports__);
   props: ['dataSources'],
   data: function data() {
     return {
-      key: 1
-    };
-  },
-  mounted: function mounted() {
-    var _this = this;
-    setTimeout(function () {
-      _this.key++;
-    }, 10);
-  },
-  computed: {
-    chartOptions: function chartOptions() {
-      return {
+      key: 1,
+      chartOptions: {
         chart: {
-          id: 'vue-example'
+          id: 'vue-example1'
         },
-        labels: this.dataSources.map(function (e) {
-          return e.name;
-        })
-      };
-    }
+        xaxis: {
+          categories: []
+        }
+      }
+    };
   }
+});
+
+/***/ }),
+
+/***/ "./resources/js/card.js":
+/*!******************************!*\
+  !*** ./resources/js/card.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_Card_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Card.vue */ "./resources/js/components/Card.vue");
+
+Nova.booting(function (Vue, router, store) {
+  Vue.component('expensesdashboard', _components_Card_vue__WEBPACK_IMPORTED_MODULE_0__["default"]);
 });
 
 /***/ }),
@@ -1254,6 +1331,16 @@ __webpack_require__.r(__webpack_exports__);
       return futureX.map(function (xValue) {
         return slope * xValue + intercept;
       });
+    }
+  },
+  filters: {
+    format: function format(amount) {
+      var currencyFormatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'PHP' // Change this to the currency you want
+      });
+
+      return currencyFormatter.format(amount);
     }
   }
 });
@@ -3327,6 +3414,19 @@ var toString = {}.toString;
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
+
+
+/***/ }),
+
+/***/ "./resources/css/app.css":
+/*!*******************************!*\
+  !*** ./resources/css/app.css ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
 
 
 /***/ }),
@@ -29329,7 +29429,42 @@ const isThenable = (thing) =>
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/chunk loaded */
+/******/ 	(() => {
+/******/ 		var deferred = [];
+/******/ 		__webpack_require__.O = (result, chunkIds, fn, priority) => {
+/******/ 			if(chunkIds) {
+/******/ 				priority = priority || 0;
+/******/ 				for(var i = deferred.length; i > 0 && deferred[i - 1][2] > priority; i--) deferred[i] = deferred[i - 1];
+/******/ 				deferred[i] = [chunkIds, fn, priority];
+/******/ 				return;
+/******/ 			}
+/******/ 			var notFulfilled = Infinity;
+/******/ 			for (var i = 0; i < deferred.length; i++) {
+/******/ 				var [chunkIds, fn, priority] = deferred[i];
+/******/ 				var fulfilled = true;
+/******/ 				for (var j = 0; j < chunkIds.length; j++) {
+/******/ 					if ((priority & 1 === 0 || notFulfilled >= priority) && Object.keys(__webpack_require__.O).every((key) => (__webpack_require__.O[key](chunkIds[j])))) {
+/******/ 						chunkIds.splice(j--, 1);
+/******/ 					} else {
+/******/ 						fulfilled = false;
+/******/ 						if(priority < notFulfilled) notFulfilled = priority;
+/******/ 					}
+/******/ 				}
+/******/ 				if(fulfilled) {
+/******/ 					deferred.splice(i--, 1)
+/******/ 					var r = fn();
+/******/ 					if (r !== undefined) result = r;
+/******/ 				}
+/******/ 			}
+/******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
@@ -29391,21 +29526,68 @@ const isThenable = (thing) =>
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		// no baseURI
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			"/js/card": 0,
+/******/ 			"public/css/app": 0
+/******/ 		};
+/******/ 		
+/******/ 		// no chunk on demand loading
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
+/******/ 		
+/******/ 		// install a JSONP callback for chunk loading
+/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
+/******/ 			var [chunkIds, moreModules, runtime] = data;
+/******/ 			// add "moreModules" to the modules object,
+/******/ 			// then flag all "chunkIds" as loaded and fire callback
+/******/ 			var moduleId, chunkId, i = 0;
+/******/ 			if(chunkIds.some((id) => (installedChunks[id] !== 0))) {
+/******/ 				for(moduleId in moreModules) {
+/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
+/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
+/******/ 					}
+/******/ 				}
+/******/ 				if(runtime) var result = runtime(__webpack_require__);
+/******/ 			}
+/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
+/******/ 			for(;i < chunkIds.length; i++) {
+/******/ 				chunkId = chunkIds[i];
+/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 					installedChunks[chunkId][0]();
+/******/ 				}
+/******/ 				installedChunks[chunkId] = 0;
+/******/ 			}
+/******/ 			return __webpack_require__.O(result);
+/******/ 		}
+/******/ 		
+/******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];
+/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
+/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
+/******/ 	})();
+/******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
-(() => {
-"use strict";
-/*!******************************!*\
-  !*** ./resources/js/card.js ***!
-  \******************************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_Card_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Card.vue */ "./resources/js/components/Card.vue");
-
-Nova.booting(function (Vue, router, store) {
-  Vue.component('expensesdashboard', _components_Card_vue__WEBPACK_IMPORTED_MODULE_0__["default"]);
-});
-})();
-
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
+/******/ 	__webpack_require__.O(undefined, ["public/css/app"], () => (__webpack_require__("./resources/js/card.js")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["public/css/app"], () => (__webpack_require__("./resources/css/app.css")))
+/******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
+/******/ 	
 /******/ })()
 ;

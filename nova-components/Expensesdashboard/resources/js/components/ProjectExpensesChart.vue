@@ -1,39 +1,33 @@
 <template>
     <div>
-        <h4>Projects</h4>
-        <chart :key="key" :width="400" type="pie" :options="chartOptions" :series="dataSources.map( e => parseInt(e.budget))"/>
+        <h4>Project budgets</h4>
+        <chart :key="key" style="width:100%" type="area" :options="chartOptions" :series="[ {
+                        name: 'Income',
+                        data: dataSources.map( e => ([e.label, e.value])), 
+                    }]"/>
     </div>
 </template>
 
 
 <script>
 import VueApexCharts from 'vue-apexcharts'
-import axios from 'axios';
-import moment from 'moment';
 
 export default {
     components: {
         chart: VueApexCharts, 
     }, 
-    props: ['dataSources'], 
+    props: ['dataSources'],
     data() {
         return {
-            key: 1, 
-        }
-    },
-    mounted() {
-        setTimeout(() => {
-            this.key ++;
-        }, 10)
-    }, 
-    computed: {
-        chartOptions() {
-            return {
+            key:1, 
+            chartOptions: {
                 chart: {
-                    id: 'vue-example', 
+                    id: 'vue-example1', 
                 },
-                labels: this.dataSources.map( e => e.name), 
-            }; 
+                xaxis: {
+                    categories: [], 
+                }
+            }
         }
     }
 }

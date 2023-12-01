@@ -1,7 +1,7 @@
 <template>
     <div>
         <h4>Category Expenses</h4>
-        <chart :key="key" :width="400" type="pie" :options="chartOptions" :series="dataSources.map( e => e.value)"/>
+        <chart :key="key" style="width:80%" type="pie" :options="chartOptions" :series="dataSources.map( e => e.value)"/>
     </div>
 </template>
 
@@ -28,12 +28,21 @@ export default {
     }, 
     computed: {
         chartOptions() {
-            return {
+            try {
+                return {
                 chart: {
                     id: 'vue-example', 
                 },
                 labels: this.dataSources.map( e => `Category ${e.label}`), 
             }; 
+            } catch(error) {
+                return {
+                    chart: {
+                        id: 'vue-example3', 
+                    },
+                    labels: []
+                }; 
+            }
         }
     }
 }

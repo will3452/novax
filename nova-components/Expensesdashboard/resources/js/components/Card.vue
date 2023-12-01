@@ -1,31 +1,50 @@
 <template>
     <div>
-        <select name="" id="" class="mb-2" v-model="expensesDashboardFilter">
-            <option value="day">Day</option>
-            <option value="week">Week</option>
-            <option value="month">Month</option>
-            <option value="year">Year</option>
-        </select>
-        {{ incomes }}
-        <div class="flex">
-            <card class="p-4 mx-2">
-                Total Expenses: <b>{{totalExpenses}}</b>
+        <div class="flex items-center">
+            <select class="p-2  border-2 border-green-700rounded mb-2 px-4" name="" id=""  v-model="expensesDashboardFilter">
+                <option value="day">Day</option>
+                <option value="week">Week</option>
+                <option value="month">Month</option>
+                <option value="year">Year</option>
+            </select>
+        </div>
+        <div class="flex justify-center">
+            <card class="p-4 m-2 w-full md:w-1/3 text-center">
+                <h1>{{ totalExpenses | format }}</h1>
+                <div>
+                    Total Expenses
+                </div>
             </card>
-            <card class="p-4 mx-2 ">
-            Expenses Prediction Result: <b>{{predictions}}</b>
+            <card class="p-4 m-2 w-full md:w-1/3 text-center">
+                <h1>{{ predictions  | format}}</h1>
+                <div>
+                    Expenses Prediction Result after a {{ expensesDashboardFilter }}
+                </div>
             </card>
-            <card class="p-4 mx-2 ">
-                Total Income: <b>{{ totalIncomes }}</b>
+            <card class="p-4 m-2 w-full md:w-1/3 text-center ">
+                <h1>{{ totalIncomes | format}}</h1>
+                <div>
+                    Total Income
+                </div>
             </card>
         </div>
         <br/>
-        <div class="flex">
-            <ExpensesChartVue :data-sources="expensesWithPrediction"/>
-            <IncomeChartVue :data-sources="incomes"/>
+        <div class="flex justify-center">
+            <div class="w-full md:w-1/2">
+                <ExpensesChartVue :data-sources="expensesWithPrediction"/>
+            </div>
+            <div class="w-full md:w-1/2">
+                <IncomeChartVue :data-sources="incomes"/>
+            </div>
         </div>
-        <div class="flex">
-            <ProjectExpensesChartVue :data-sources="dataSources['projects']"/>
-            <ExpensesPerCategoryChart :data-sources="categoryExpenses"/>
+        <div class="flex justify-center">
+            
+            <div class="w-full md:w-1/2">
+                <ProjectExpensesChartVue :data-sources="incomes"/>
+            </div>
+            <div class="w-full md:w-1/2">
+                <ExpensesPerCategoryChart :data-sources="categoryExpenses"/>
+            </div>
         </div>
     </div>
 </template>
@@ -60,9 +79,12 @@ export default {
         }
     },
     computed: {
+        projectBudgets() {
+            return this.dataSources[`project_per_${this.expensesDashboardFilter}`]; 
+        },
         incomes() {
             try {
-                return this.dataSources[`project_per_${this.expensesDashboardFilter}`].map((income => {
+                return this.projectBudgets.map((income => {
                     let expenses = this.expenses.find( e => e.label == income.label)
                     if (! expenses) return {...income}; 
                     console.log('expenses>> ', expenses)
@@ -79,9 +101,14 @@ export default {
             return this.dataSources[`category_expenses_per_${this.expensesDashboardFilter}`];
         }, 
         expensesWithPrediction() {
-            let result = [...this.expenses]; 
-            result.push({label: this.expenses[this.expenses.length - 1].label + 1, value: this.predictions <= 0 ? 0 : this.predictions})
-            return result; 
+            try {
+                let result = [...this.expenses]; 
+                result.push({label: this.expenses[this.expenses.length - 1].label + 1, value: this.predictions <= 0 ? 0 : this.predictions})
+                return result.map(e => ({...e, value: (e.value || 0).toFixed(2)})); 
+            } catch (error) {
+                console.log(error)
+                return []
+            }
         },
         totalExpenses() {
             try {
@@ -111,11 +138,11 @@ export default {
                 const futureTimeIndices = [timeIndices[timeIndices.length - 1] + 1];
                 let result = this.predictFutureExpenses(timeIndices, expenses, futureTimeIndices)[0]; 
                 console.table({expenses, timeIndices, futureTimeIndices})
-                if (Number.isNaN(result)) return '---'
+                if (Number.isNaN(result)) return expenses[expenses.length - 1];
                 return  result <= 0 ? 0 : result;
             } catch (error) {
                 console.log(error)
-                return '---'; 
+                return 0; 
             }
         }
     }, 

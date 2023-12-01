@@ -1,9 +1,9 @@
 <template>
     <div>
         <h4>Expenses</h4>
-        <chart :width="400" type="area" :options="chartOptions" :series="[ {
+        <chart style="width:100%" type="area" :options="chartOptions" :series="[ {
                         name: 'Expenses',
-                        data: dataSources.map( e => ([e.label, e.value.toFixed(2)]))
+                        data: dataSources.map( e => ([e.label, parseFloat(e.value)]))
                     }]"/>
     </div>
 </template>

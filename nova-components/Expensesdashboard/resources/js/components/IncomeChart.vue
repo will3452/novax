@@ -1,7 +1,7 @@
 <template>
     <div>
         <h4>Income</h4>
-        <chart :key="key" :width="400" type="area" :options="chartOptions" :series="[ {
+        <chart :key="key" style="width:100%" type="area" :options="chartOptions" :series="[ {
                         name: 'Income',
                         data: dataSources.map( e => ([e.label, e.value])), 
                     }]"/>
