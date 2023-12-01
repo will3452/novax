@@ -50,8 +50,8 @@ Route::get('/dashboard', function () {
         'expenses_per_year' => Expense::select(DB::raw('YEAR(date) as label'), DB::raw('COUNT(*) as count'), DB::raw('SUM(amount) as value'))
         ->groupBy(DB::raw('YEAR(date)'))
         ->get(), 
-        'project_per_day' => Project::select(DB::raw('DATE(start_date) as label'), DB::raw('COUNT(*) as count'), DB::raw('SUM(budget) as value'))
-        ->groupBy(DB::raw('DATE(start_date)'), DB::raw('DATE(start_date)'))->get(), 
+        'project_per_day' => Project::select(DB::raw('DAYOFYEAR(start_date) as label'), DB::raw('COUNT(*) as count'), DB::raw('SUM(budget) as value'))
+        ->groupBy(DB::raw('DAYOFYEAR(start_date)'))->get(), 
         'project_per_week' => Project::select(DB::raw('WEEK(start_date) as label'), DB::raw('COUNT(*) as count'), DB::raw('SUM(budget) as value'))
         ->groupBy(DB::raw('YEAR(start_date)'), DB::raw('WEEK(start_date)'))
         ->get(),
