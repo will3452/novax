@@ -6,6 +6,7 @@
             <option value="month">Month</option>
             <option value="year">Year</option>
         </select>
+        {{ incomes }}
         <div class="flex">
             <card class="p-4 mx-2">
                 Total Expenses: <b>{{totalExpenses}}</b>
@@ -60,7 +61,16 @@ export default {
     },
     computed: {
         incomes() {
-            return this.dataSources[`project_per_${this.expensesDashboardFilter}`];
+            try {
+                return this.dataSources[`project_per_${this.expensesDashboardFilter}`].map((income => {
+                    let expenses = this.expenses.find( e => e.label == income.label)
+                    if (! expenses) return {...income}; 
+                    console.log('expenses>> ', expenses)
+                    return {label: income.label, value: income.value - expenses.value}
+                }))
+            } catch (error) {
+                return [];
+            }
         }, 
         expenses() {
             return this.dataSources[`expenses_per_${this.expensesDashboardFilter}`];
@@ -75,7 +85,7 @@ export default {
         },
         totalExpenses() {
             try {
-                return this.expenses[this.expenses.length - 1].value; 
+                return this.expenses[this.expenses.length - 1].value <= 0 ? 0 : this.expenses[this.expenses.length - 1].value; 
             } catch (error) {
                 return '---'; 
             }
@@ -102,7 +112,7 @@ export default {
                 let result = this.predictFutureExpenses(timeIndices, expenses, futureTimeIndices)[0]; 
                 console.table({expenses, timeIndices, futureTimeIndices})
                 if (Number.isNaN(result)) return '---'
-                return  result;
+                return  result <= 0 ? 0 : result;
             } catch (error) {
                 console.log(error)
                 return '---'; 

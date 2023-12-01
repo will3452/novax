@@ -3,7 +3,7 @@
         <h4>Expenses</h4>
         <chart :width="400" type="area" :options="chartOptions" :series="[ {
                         name: 'Expenses',
-                        data: dataSources.map( e => ([e.label, e.value]))
+                        data: dataSources.map( e => ([e.label, e.value.toFixed(2)]))
                     }]"/>
     </div>
 </template>

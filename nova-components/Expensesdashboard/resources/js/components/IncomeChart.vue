@@ -1,7 +1,7 @@
 <template>
     <div>
         <h4>Income</h4>
-        <chart :width="400" type="bar" :options="chartOptions" :series="[ {
+        <chart :key="key" :width="400" type="area" :options="chartOptions" :series="[ {
                         name: 'Income',
                         data: dataSources.map( e => ([e.label, e.value])), 
                     }]"/>
@@ -19,13 +19,21 @@ export default {
     props: ['dataSources'],
     data() {
         return {
+            key:1, 
             chartOptions: {
+                colors: ['green'], 
+                fill: {
+                    colors: ['green']
+                }, 
+                markers: {
+                    colors: ['green']
+                }, 
                 chart: {
-                    id: 'vue-example', 
+                    id: 'vue-example1', 
                 },
                 xaxis: {
-                    type: 'datetime',
-                }, 
+                    categories: [], 
+                }
             }
         }
     }

@@ -417,22 +417,22 @@ var render = function () {
         _c("option", { attrs: { value: "year" } }, [_vm._v("Year")]),
       ]
     ),
-    _vm._v(" "),
+    _vm._v("\n    " + _vm._s(_vm.incomes) + "\n    "),
     _c(
       "div",
       { staticClass: "flex" },
       [
-        _c("card", { staticClass: "p-2 mx-2" }, [
+        _c("card", { staticClass: "p-4 mx-2" }, [
           _vm._v("\n            Total Expenses: "),
           _c("b", [_vm._v(_vm._s(_vm.totalExpenses))]),
         ]),
         _vm._v(" "),
-        _c("card", { staticClass: "p-2 mx-2" }, [
+        _c("card", { staticClass: "p-4 mx-2" }, [
           _vm._v("\n        Expenses Prediction Result: "),
           _c("b", [_vm._v(_vm._s(_vm.predictions))]),
         ]),
         _vm._v(" "),
-        _c("card", { staticClass: "p-2 mx-2" }, [
+        _c("card", { staticClass: "p-4 mx-2" }, [
           _vm._v("\n            Total Income: "),
           _c("b", [_vm._v(_vm._s(_vm.totalIncomes))]),
         ]),
@@ -508,7 +508,7 @@ var render = function () {
             {
               name: "Expenses",
               data: _vm.dataSources.map(function (e) {
-                return [e.label, e.value]
+                return [e.label, e.value.toFixed(2)]
               }),
             },
           ],
@@ -590,9 +590,10 @@ var render = function () {
       _c("h4", [_vm._v("Income")]),
       _vm._v(" "),
       _c("chart", {
+        key: _vm.key,
         attrs: {
           width: 400,
-          type: "bar",
+          type: "area",
           options: _vm.chartOptions,
           series: [
             {
@@ -861,6 +862,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -907,7 +909,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   computed: {
     incomes: function incomes() {
-      return this.dataSources["project_per_".concat(this.expensesDashboardFilter)];
+      var _this2 = this;
+      try {
+        return this.dataSources["project_per_".concat(this.expensesDashboardFilter)].map(function (income) {
+          var expenses = _this2.expenses.find(function (e) {
+            return e.label == income.label;
+          });
+          if (!expenses) return _objectSpread({}, income);
+          console.log('expenses>> ', expenses);
+          return {
+            label: income.label,
+            value: income.value - expenses.value
+          };
+        });
+      } catch (error) {
+        return [];
+      }
     },
     expenses: function expenses() {
       return this.dataSources["expenses_per_".concat(this.expensesDashboardFilter)];
@@ -925,7 +942,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     totalExpenses: function totalExpenses() {
       try {
-        return this.expenses[this.expenses.length - 1].value;
+        return this.expenses[this.expenses.length - 1].value <= 0 ? 0 : this.expenses[this.expenses.length - 1].value;
       } catch (error) {
         return '---';
       }
@@ -960,7 +977,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           futureTimeIndices: futureTimeIndices
         });
         if (Number.isNaN(result)) return '---';
-        return result;
+        return result <= 0 ? 0 : result;
       } catch (error) {
         console.log(error);
         return '---';
@@ -1118,12 +1135,20 @@ __webpack_require__.r(__webpack_exports__);
   props: ['dataSources'],
   data: function data() {
     return {
+      key: 1,
       chartOptions: {
+        colors: ['green'],
+        fill: {
+          colors: ['green']
+        },
+        markers: {
+          colors: ['green']
+        },
         chart: {
-          id: 'vue-example'
+          id: 'vue-example1'
         },
         xaxis: {
-          type: 'datetime'
+          categories: []
         }
       }
     };
