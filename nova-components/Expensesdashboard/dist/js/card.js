@@ -479,7 +479,7 @@ var render = function () {
         { staticClass: "w-full md:w-1/2" },
         [
           _c("ProjectExpensesChartVue", {
-            attrs: { "data-sources": _vm.incomes },
+            attrs: { "data-sources": _vm.projectBudgets },
           }),
         ],
         1

@@ -40,7 +40,7 @@
         <div class="flex justify-center">
             
             <div class="w-full md:w-1/2">
-                <ProjectExpensesChartVue :data-sources="incomes"/>
+                <ProjectExpensesChartVue :data-sources="projectBudgets"/>
             </div>
             <div class="w-full md:w-1/2">
                 <ExpensesPerCategoryChart :data-sources="categoryExpenses"/>
