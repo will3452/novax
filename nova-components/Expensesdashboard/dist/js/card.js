@@ -997,11 +997,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     expensesWithPrediction: function expensesWithPrediction() {
       try {
         var result = _toConsumableArray(this.expenses);
-        var label = this.expenses[this.expenses.length - 1].label;
+        var label = this.expenses[this.expenses.length - 1].label + 1;
         if (label > 12 && this.expensesDashboardFilter == 'month') {
-          label = (label + 1) % 12;
-        } else if (label <= 11) {
-          label += 1;
+          label = label % 12;
         }
         result.push({
           label: label,
