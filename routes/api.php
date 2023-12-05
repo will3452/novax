@@ -44,7 +44,7 @@ Route::get('/dashboard', function () {
         'expenses_per_week' => Expense::select(DB::raw('WEEK(date) as label'), DB::raw('COUNT(*) as count'), DB::raw('SUM(amount) as value'))
         ->groupBy(DB::raw('YEAR(date)'), DB::raw('WEEK(date)'))
         ->get(),
-        'expenses_per_month' => Expense::select(DB::raw('CONCAT(YEAR(date), "-", LDAP(MONTH(date), 2, 0)) as label'), DB::raw('COUNT(*) as count'), DB::raw('SUM(amount) as value'))
+        'expenses_per_month' => Expense::select(DB::raw('MONTH(date) as label'), DB::raw('COUNT(*) as count'), DB::raw('SUM(amount) as value'))
         ->groupBy(DB::raw('YEAR(date)'), DB::raw('MONTH(date)'))
         ->get(), 
         'expenses_per_year' => Expense::select(DB::raw('YEAR(date) as label'), DB::raw('COUNT(*) as count'), DB::raw('SUM(amount) as value'))

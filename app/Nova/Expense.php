@@ -3,13 +3,15 @@
 namespace App\Nova;
 
 use App\Models\Project as ProjectModel;
+use App\Nova\Filters\FromDate;
+use App\Nova\Filters\ToDate;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\Text;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Expense extends Resource
@@ -47,16 +49,17 @@ class Expense extends Resource
     public function fields(Request $request)
     {
         return [
+            
             Select::make('Project', 'project_id')
                 ->options(ProjectModel::get()->pluck('name', 'id'))
                 ->displayUsingLabels(),
             // BelongsTo::make('Project', 'project', Project::class),
             BelongsTo::make('Category', 'category', Category::class),
+            Text::make('Description'), 
             Date::make('Date')
                 ->rules(['required']),
             Currency::make('Amount')
                 ->rules(['required']),
-            Trix::make('Description')->alwaysShow(),
             HasMany::make('Receipts', 'receipts', Receipt::class),
         ];
     }
@@ -80,7 +83,10 @@ class Expense extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            FromDate::make(), 
+            ToDate::make(), 
+        ];
     }
 
     /**
@@ -103,7 +109,7 @@ class Expense extends Resource
     public function actions(Request $request)
     {
         return [
-            new DownloadExcel(), 
+           ( new DownloadExcel())->withHeadings('Name', 'Title', 'Description', 'Date', 'Price'), 
         ];
     }
 }

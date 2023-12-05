@@ -31,7 +31,7 @@
         <br/>
         <div class="flex justify-center">
             <div class="w-full md:w-1/2">
-                <ExpensesChartVue :data-sources="expensesWithPrediction"/>
+                <ExpensesChartVue :key="key" :data-sources="expensesWithPrediction"/>
             </div>
             <div class="w-full md:w-1/2">
                 <IncomeChartVue :data-sources="incomes"/>
@@ -74,10 +74,16 @@ export default {
     }, 
     data() {
         return {
+            key: 0, 
             dataSources: {}, 
             expensesDashboardFilter: 'day', 
         }
     },
+    watch: {
+        expensesDashboardFilter(current, old){
+            this.key ++; 
+        }
+    }, 
     computed: {
         projectBudgets() {
             return this.dataSources[`project_per_${this.expensesDashboardFilter}`]; 

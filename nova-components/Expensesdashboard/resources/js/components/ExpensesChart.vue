@@ -1,10 +1,9 @@
 <template>
     <div>
         <h4>Expenses</h4>
-        <chart style="width:100%" type="area" :options="chartOptions" :series="[ {
-                        name: 'Expenses',
-                        data: dataSources.map( e => ([e.label, parseFloat(e.value)]))
-                    }]"/>
+        <chart :key="key" style="width:100%" type="area" :options="chartOptions"
+                    :series="[{name: 'Expenses', data: dataSources.map(e => parseFloat(e.value))}]"
+                    />
     </div>
 </template>
 
@@ -15,13 +14,16 @@ import axios from 'axios';
 import moment from 'moment';
 
 export default {
-    props: ['dataSources'], 
+    props: ['dataSources', 'key'], 
     components: {
         chart: VueApexCharts, 
     }, 
-    data() {
-        return {
-            chartOptions: {
+    mounted() {
+        this.chartOptions.xaxis.categories = this.dataSources.map(e => `${e.label}`)
+    }, 
+    computed: {
+        chartOptions() {
+            return  {
                 colors: ['red'], 
                 fill: {
                     colors: ['red']
@@ -32,7 +34,10 @@ export default {
                 chart: {
                     id: 'vue-example', 
                 },
-            }
+                xaxis: {
+                    categories: this.dataSources.map(e => `${e.label}`), 
+                }
+            };
         }
     }
 }

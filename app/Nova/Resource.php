@@ -7,6 +7,7 @@ use Laravel\Nova\Resource as NovaResource;
 
 abstract class Resource extends NovaResource
 {
+    public static $perPageOptions = [25, 50, 100, 200, 500, 1000];
     /**
      * Build an "index" query for the given resource.
      *

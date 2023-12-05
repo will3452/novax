@@ -459,6 +459,7 @@ var render = function () {
         { staticClass: "w-full md:w-1/2" },
         [
           _c("ExpensesChartVue", {
+            key: _vm.key,
             attrs: { "data-sources": _vm.expensesWithPrediction },
           }),
         ],
@@ -527,6 +528,7 @@ var render = function () {
       _c("h4", [_vm._v("Expenses")]),
       _vm._v(" "),
       _c("chart", {
+        key: _vm.key,
         staticStyle: { width: "100%" },
         attrs: {
           type: "area",
@@ -535,7 +537,7 @@ var render = function () {
             {
               name: "Expenses",
               data: _vm.dataSources.map(function (e) {
-                return [e.label, parseFloat(e.value)]
+                return parseFloat(e.value)
               }),
             },
           ],
@@ -954,9 +956,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      key: 0,
       dataSources: {},
       expensesDashboardFilter: 'day'
     };
+  },
+  watch: {
+    expensesDashboardFilter: function expensesDashboardFilter(current, old) {
+      this.key++;
+    }
   },
   computed: {
     projectBudgets: function projectBudgets() {
@@ -1076,19 +1084,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['dataSources'],
+  props: ['dataSources', 'key'],
   components: {
     chart: (vue_apexcharts__WEBPACK_IMPORTED_MODULE_0___default())
   },
-  data: function data() {
-    return {
-      chartOptions: {
+  mounted: function mounted() {
+    this.chartOptions.xaxis.categories = this.dataSources.map(function (e) {
+      return "".concat(e.label);
+    });
+  },
+  computed: {
+    chartOptions: function chartOptions() {
+      return {
         colors: ['red'],
         fill: {
           colors: ['red']
@@ -1098,9 +1110,14 @@ __webpack_require__.r(__webpack_exports__);
         },
         chart: {
           id: 'vue-example'
+        },
+        xaxis: {
+          categories: this.dataSources.map(function (e) {
+            return "".concat(e.label);
+          })
         }
-      }
-    };
+      };
+    }
   }
 });
 
