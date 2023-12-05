@@ -109,7 +109,11 @@ export default {
         expensesWithPrediction() {
             try {
                 let result = [...this.expenses]; 
-                result.push({label: this.expenses[this.expenses.length - 1].label + 1, value: this.predictions <= 0 ? 0 : this.predictions})
+                let label = this.expenses[this.expenses.length - 1].label + 1; 
+                if (this.label > 12 && this.expensesDashboardFilter == 'month') {
+                    label = label % 12; 
+                }
+                result.push({label, value: this.predictions <= 0 ? 0 : this.predictions})
                 return result.map(e => ({...e, value: (e.value || 0).toFixed(2)})); 
             } catch (error) {
                 console.log(error)
