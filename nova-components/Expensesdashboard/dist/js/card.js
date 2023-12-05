@@ -1000,7 +1000,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         var label = this.expenses[this.expenses.length - 1].label;
         if (label > 12 && this.expensesDashboardFilter == 'month') {
           label = (label + 1) % 12;
-        } else {
+        } else if (label <= 11) {
           label += 1;
         }
         result.push({
