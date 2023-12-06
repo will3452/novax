@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Models\User as ModelsUser;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Avatar;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
@@ -49,6 +50,7 @@ class User extends Resource
     {
         return [
             Avatar::make('Image', 'image'),
+            Image::make('License', 'license')->help('This is required for drivers account.'), 
             Select::make('Type')
                 ->default(fn() => ModelsUser::TYPE_DRIVER)
                 ->options([

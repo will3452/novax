@@ -28,6 +28,7 @@ class User extends Authenticatable
         'mobile',
         'lat',
         'lng', 
+        'license', 
     ];
 
     const TYPE_ADMIN = 'Administrator';

@@ -7,6 +7,10 @@
                         <a-descriptions-item label="Image">
                             <a-avatar :src="'/storage/' + driver.image" :size="32"></a-avatar>
                         </a-descriptions-item>
+                        <a-descriptions-item label="License">
+                            
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 12l2 2l4-4M7.835 4.697a3.42 3.42 0 0 0 1.946-.806a3.42 3.42 0 0 1 4.438 0a3.42 3.42 0 0 0 1.946.806a3.42 3.42 0 0 1 3.138 3.138a3.42 3.42 0 0 0 .806 1.946a3.42 3.42 0 0 1 0 4.438a3.42 3.42 0 0 0-.806 1.946a3.42 3.42 0 0 1-3.138 3.138a3.42 3.42 0 0 0-1.946.806a3.42 3.42 0 0 1-4.438 0a3.42 3.42 0 0 0-1.946-.806a3.42 3.42 0 0 1-3.138-3.138a3.42 3.42 0 0 0-.806-1.946a3.42 3.42 0 0 1 0-4.438a3.42 3.42 0 0 0 .806-1.946a3.42 3.42 0 0 1 3.138-3.138Z"/></svg>
+                        </a-descriptions-item>
                         <a-descriptions-item label="Name">
                             {{driver.name}}
                         </a-descriptions-item>
@@ -66,9 +70,8 @@
         <a-row>
             <a-col :md="24">
                 <a-steps :current="currentStep"  type="navigation">
-                    <a-step title="Pick-up">
+                    <a-step title="Pick-up & Drop Location">
                     </a-step>
-                    <a-step title="Drop" />
                     <a-step title="Driver" />
                     <a-step title="Summary" />
                 </a-steps>
@@ -77,7 +80,7 @@
 
                 <!-- SELECT DRIVER HERE -->
 
-                <div v-show="currentStep == 3" style="padding: 1em; ">
+                <div v-show="currentStep == 2" style="padding: 1em; ">
                     <a-descriptions :column="1" bordered title="Booking information">
                         <a-descriptions-item label="Pick-Up">
                             {{ payload.steps[0] && payload.steps[0].address }}
@@ -100,7 +103,7 @@
                     </a-descriptions>
                 </div>
 
-                <div v-show="currentStep == 2" >
+                <div v-show="currentStep == 1" >
                     <div  style="padding: 2em;padding-bottom: 0; ">
                         <a-input-search placeholder="Search Driver" size="large"/>
                     </div>
@@ -127,7 +130,7 @@
                 </div>
             <!-- END SELECT DRIVER HERE -->
 
-                <div v-show="currentStep == 0 || currentStep == 1">
+                <!-- <div v-show="currentStep == 0 || currentStep == 1">
                     <a-card :title="`ADDRESS : ${address.display_name}`">
 
                     </a-card>
@@ -139,6 +142,9 @@
                             </l-icon>
                         </l-marker>
                     </l-map>
+                </div> -->
+                <div v-show="currentStep == 0">
+                    <div id="map" style='width: 100vw; height: 70vh;'></div> 
                 </div>
                 <a-row>
                     <a-col :span="12" class="_button prev" @click="currentStep ? currentStep-- : null" :class="{'disabled' : currentStep == 0}">
@@ -158,6 +164,10 @@
 <script>
 import MainVue from '../Layouts/Main.vue'
 import Van from '../Van.vue'; 
+import mapboxgl from 'mapbox-gl'; 
+import 'mapbox-gl/dist/mapbox-gl.css';
+mapboxgl.accessToken = 'pk.eyJ1IjoiZWxlemVya3ciLCJhIjoiY2wxNHE4d2E5MHRvMTNkczA1anltY3lybSJ9.T2bcLRSnEZB_LNGM7Qs5Mw';
+
 export default {
     layout: MainVue,
     components: {Van}, 
@@ -209,15 +219,20 @@ export default {
             }
         },
         async next(e) {
-            if (this.currentStep == 0 || this.currentStep == 1) {
-                this.payload.steps[this.currentStep] = { lat: this.lat, lng: this.lng, address: this.address.display_name };
+            if (this.currentStep == 0) {
+                
+                let { geometry:origin } = this.direction.getOrigin(); 
+                this.payload.steps[0] = { lat: origin.coordinates[1], lng: origin.coordinates[0], address: origin.coordinates.join(',')};
+                let { geometry:destination } = this.direction.getDestination(); 
+                this.payload.steps[1] = { lat: destination.coordinates[1], lng: destination.coordinates[0], address: destination.coordinates.join(',') };
+                console.log(this.payload)
             }
 
-            if (this.currentStep == 2) {
+            if (this.currentStep == 1) {
                this.distance =  await this.getDistance();
             }
 
-            if (this.currentStep == 3) {
+            if (this.currentStep == 2) {
                 this.payload.distance = this.distance;
                 this.payload.fee = this.fee;
                 this.payload.post('/booking');
@@ -246,8 +261,19 @@ export default {
         selectDetails(driver) {
             this.driver = driver;
             this.viewDetails = true;
-        }
+        },
+        setupMap(center) {
+            this.map = new mapboxgl.Map({
+                container: 'map', // container ID
+                style: 'mapbox://styles/mapbox/standard', // style URL
+                center, 
+                zoom: 16, // starting zoom
+            });
 
+            this.direction = new MapboxDirections({accessToken: mapboxgl.accessToken})
+
+            this.map.addControl(this.direction, 'top-left')
+        }
     },
     mounted() {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -255,10 +281,14 @@ export default {
             this.lat = coords.latitude;
             this.lng = coords.longitude;
             this.loading = false;
+            console.log(this.lat, this.lng)
+            this.setupMap([this.lng, this.lat])
         })
     },
     data() {
         return {
+            map: null, 
+            direction: null, 
             loading: true,
             distance: {},
             address: '',
