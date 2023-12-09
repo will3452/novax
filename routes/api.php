@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Route as ModelsRoute;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\Feedback;
 use App\Models\Schedule;
 
 /*
@@ -88,6 +89,20 @@ Route::middleware('auth:sanctum')->group(function () {
 
         return ['message' => 'success', 'booking' => $booking]; 
     }); 
+
+    Route::post('/feedback', function (Request $request) {
+        $request->validate([
+            'comment' => 'required', 
+            'star' => 'required', 
+        ]); 
+        $data = [
+            'body' => $request->comment, 
+            'category' => $request->star, 
+            'user_id' => auth()->id(), 
+        ];
+
+        return Feedback::create($data); 
+    });
 
     Route::post('/booking-old', function (Request $request) {
         $data = $request->validate([
