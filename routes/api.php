@@ -2,13 +2,15 @@
 
 use App\Models\Booking;
 use App\Models\Receipt;
-use App\Models\Transaction;
-use Illuminate\Http\Request;
-use App\Models\Route as ModelsRoute;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ApiAuthenticationController;
 use App\Models\Feedback;
 use App\Models\Schedule;
+use App\Models\Transaction;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\Route as ModelsRoute;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiAuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,6 +105,30 @@ Route::middleware('auth:sanctum')->group(function () {
 
         return Feedback::create($data); 
     });
+
+
+    Route::post('send-otp', function(Request $request) {
+        $code = Str::random(6); 
+        auth()->user()->update(['code' => $code]);  
+        Mail::raw("Your OTP is code is $code", function ($message) use($request) {
+            $message->subject('OTP verification')->to($request->email); 
+        }); 
+
+        return $code; 
+    }); 
+
+
+    Route::post('/validate-otp', function (Request $request) {
+        $code = $request->code; 
+
+        if ($code == auth()->user()->code) {
+            auth()->user()->update(['email_verified_at' => now()]); 
+            return response(['message' => 'OTP verified'], 200); 
+        }
+
+
+        return response(['message' => 'OTP is wrong.'], 400); 
+}); 
 
     Route::post('/booking-old', function (Request $request) {
         $data = $request->validate([

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Api\ErrorHelper;
 use App\Models\User;
+use App\Api\ErrorHelper;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,6 +17,9 @@ class ApiAuthenticationController extends Controller
     }
     public function createUser($data)
     {
+        
+        $code = Str::random(6); 
+        $data['code'] = $code; 
         $data['password'] = bcrypt($data['password']);
         return User::create($data);
     }
