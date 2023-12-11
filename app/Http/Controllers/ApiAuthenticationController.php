@@ -17,7 +17,6 @@ class ApiAuthenticationController extends Controller
     }
     public function createUser($data)
     {
-        
         $code = Str::random(6); 
         $data['code'] = $code; 
         $data['password'] = bcrypt($data['password']);
