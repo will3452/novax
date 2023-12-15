@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use GeneaLabs\NovaMapMarkerField\MapMarker;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\File;
@@ -54,6 +55,14 @@ class Sos extends Resource
             Date::make('Date', 'created_at')
                 ->sortable()
                 ->exceptOnForms(),
+            Text::make('Level', function () {
+                $color = 'yellow'; 
+                if ($this->level == 'Moderate') $color = 'orange'; 
+                if ($this->level == 'Severe') $color = 'red'; 
+
+                return "<div><span style='width:25px; height:25px; border-radius:100%; border:1px solid #222' ></span> $this->level</div>"; 
+            })
+                ->asHtml(), 
             Select::make('Status')
                 ->options([
                     'NEW' => 'NEW',
