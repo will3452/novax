@@ -16,6 +16,7 @@ class Sos extends Model
         'lat',
         'lng',
         'status',
+        'audio', 
     ];
 
     public function user()

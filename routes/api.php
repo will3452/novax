@@ -32,6 +32,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('my-sos', function (Request $request) {
         $data = $request->all();
         $data['user_id'] = auth()->id();
+        if($request->has('file')) {
+            $path = $request->file->store('public');
+            $pathArr = explode('/', $path);
+            $data['audio'] = end($pathArr); 
+        }
         return Sos::create($data);
     });
 });
