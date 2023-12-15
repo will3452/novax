@@ -17,6 +17,7 @@ class Sos extends Model
         'lng',
         'status',
         'audio', 
+        'level', 
     ];
 
     public function user()
