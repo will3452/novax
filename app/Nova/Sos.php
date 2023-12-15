@@ -60,7 +60,7 @@ class Sos extends Resource
                 if ($this->level == 'Moderate') $color = 'orange'; 
                 if ($this->level == 'Severe') $color = 'red'; 
 
-                return "<div><span style='display:inline-block;width:25px; height:25px; border-radius:100%; border:1px solid #222' ></span> $this->level</div>"; 
+                return "<div style='display:flex; align-items:center;'><span style='display:inline-block;width:25px; height:25px; border-radius:100%; border:1px solid #222; background:$color;' ></span> $this->level</div>"; 
             })
                 ->asHtml(), 
             Select::make('Status')
