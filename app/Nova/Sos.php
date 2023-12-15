@@ -16,6 +16,8 @@ use Laravel\Nova\Fields\Textarea;
 class Sos extends Resource
 {
 
+    public static $polling = true; 
+
     public static function singularLabel()
     {
         return 'SOS';
@@ -33,6 +35,8 @@ class Sos extends Resource
      * @var string
      */
     public static $title = 'id';
+
+    
 
     /**
      * The columns that should be searched.
@@ -72,6 +76,7 @@ class Sos extends Resource
             Text::make('Type'),
             Textarea::make('Message'),
             File::make('Voice Message', 'audio'), 
+            
             MapMarker::make('Location')
                 ->latitude('lat')
                 ->longitude('lng'),
