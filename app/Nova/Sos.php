@@ -6,6 +6,7 @@ use GeneaLabs\NovaMapMarkerField\MapMarker;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
@@ -61,6 +62,7 @@ class Sos extends Resource
                 ]),
             Text::make('Type'),
             Textarea::make('Message'),
+            File::make('Voice Message', 'audio'), 
             MapMarker::make('Location')
                 ->latitude('lat')
                 ->longitude('lng'),
