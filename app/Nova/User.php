@@ -29,7 +29,10 @@ class User extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+
+    public function title() {
+        return "$this->id : $this->name"; 
+    }
 
     /**
      * The columns that should be searched.
