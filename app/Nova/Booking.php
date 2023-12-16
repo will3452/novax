@@ -58,7 +58,6 @@ class Booking extends Resource
             Text::make('From'),
             Text::make('To'),
             Currency::make('Fare'),
-            Text::make('Discount'),
             Text::make('Qty'),
             Text::make('Total Price', function () {
                 return ($this->qty * $this->fare) - (($this->qty * $this->fare) * $this->discount);
