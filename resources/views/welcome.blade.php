@@ -1,7 +1,9 @@
 <x-layout>
-    <div class="w-screen h-screen flex justify-center items-center bg-gray-100">
-        <h1 class="text-3xl uppercase font-bold text-gray-700">
-            &lt;Under Development /&gt;
-        </h1>
-    </div>
+    <x-top-header></x-top-header>
+    <x-hero></x-hero>
+    <x-introduction></x-introduction>
+    <x-vision></x-vision>
+    <x-mission></x-mission>
+    <x-map></x-map>
+    <x-footer></x-footer>
 </x-layout>

@@ -29,6 +29,7 @@
     @foreach(\Laravel\Nova\Nova::themeStyles() as $publicPath)
         <link rel="stylesheet" href="{{ $publicPath }}">
     @endforeach
+    @livewireStyles
 </head>
 <body class="min-w-site bg-40 text-90 font-medium min-h-full">
     <div id="nova">
