@@ -1,4 +1,4 @@
-<div id="intro">
+<div id="intro" data-aos="zoom-out-up">
     <x-sticky-header>
         <h1>Introduction</h1>
     </x-sticky-header>
@@ -14,7 +14,7 @@
 economic uncertainties, and global health crises, EICC
 in collaboration with sponsors,  partners, and affiliates emerges as a beacon of sustainable business practices. 
         </div>
-        <div class="mb-4 leading-loose">
+        <div class="mb-4 leading-loose ">
             
 This comprehensive business model not only envisions profitability but, 
 more importantly, addresses crucial societal needs such as food security, 

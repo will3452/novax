@@ -48,10 +48,15 @@
             font-family: inder; 
         }
     </style>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     @livewireStyles
 </head>
 <body>
     {{$slot}}
+    <script>
+        AOS.init();
+    </script>
     @livewireScripts
 </body>
 </html>

@@ -1,4 +1,4 @@
-<div class="backdrop-opacity-50 bg-black/30 p-4 w-full md:w-1/3 mx-auto" x-data="{}">
+<div  class="backdrop-opacity-50 bg-black/30 p-4 w-full md:w-1/3 mx-auto" x-data="{}">
     <div class="text-white text-center">
         <div class="text-xs font-thin md:text-lg">
             {{now()->toFormattedDateString()}}
