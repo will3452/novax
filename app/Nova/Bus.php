@@ -53,17 +53,18 @@ class Bus extends Resource
                 ->options([
                     'FIRST CLASS' => 'FIRST CLASS',
                     'REGULAR AIRCON' => 'REGULAR AIRCON',
-                ]),
+                ])->sortable(),
             Hidden::make('Status')
                 ->hideWhenUpdating()
                 ->default(fn () => 'AVAILABLE'), 
             Select::make('Status')
                 ->hideWhenCreating()
+                ->sortable()
                 ->default(fn() => 'AVAILABLE')
                 ->options([
-                    'AVAILABLE' => 'AVAILABLE',
-                    'NOT AVAILABLE' => 'NOT AVAILABLE',
-                ]),
+                    'AVAILABLE' => 'Not Assigned',
+                    'NOT AVAILABLE' => 'Assigned',
+                ])->displayUsingLabels(),
             Text::make('Plate Number')
                 ->hideWhenUpdating()
                 ->rules(['required']),

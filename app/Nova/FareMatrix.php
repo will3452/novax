@@ -3,7 +3,9 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
@@ -54,10 +56,12 @@ class FareMatrix extends Resource
                     'REGULAR AIRCON' => 'REGULAR AIRCON',
                 ])
                 ->rules(['required']),
-            Text::make('From')->rules(['required']),
-            Text::make('To')->rules(['required']),
-            Text::make('Km', 'km'),
-            Currency::make('Fare')->rules(['required']),
+            BelongsTo::make('From', 'from', Terminal::class),
+            BelongsTo::make('To', 'to', Terminal::class),
+            Text::make('Km', 'km')->hideWhenCreating(), 
+            Currency::make('Fare')
+                ->hideWhenCreating(), 
+            Hidden::make('')
         ];
     }
 

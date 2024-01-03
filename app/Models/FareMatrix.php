@@ -16,4 +16,17 @@ class FareMatrix extends Model
         'fare',
         'km',
     ];
+
+    protected $casts = [
+        'from' => 'int',
+        'to' => 'int', 
+    ]; 
+
+    public function from () {
+        return $this->belongsTo(Terminal::class, 'from'); 
+    }
+
+    public function to () {
+        return $this->belongsTo(Terminal::class, 'to'); 
+    }
 }

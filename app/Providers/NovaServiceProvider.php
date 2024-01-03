@@ -8,6 +8,7 @@ use App\Nova\Metrics\Buses;
 use App\Nova\Metrics\Profiles;
 use App\Nova\Metrics\Terminals;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -26,6 +27,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Currency::make('First Five (5) kilometers fee', 'ffk')->default(fn () => 15), 
+            Currency::make('Succeeding kilometer fee', 'skf')->default(fn() => 2.65), 
         ]);
     }
 

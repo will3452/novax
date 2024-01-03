@@ -5,6 +5,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 
 class Feedback extends Resource
@@ -49,7 +50,12 @@ class Feedback extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Text::make('Category'),
+            Select::make('Category')
+                ->sortable()
+                ->options([
+                    'Report' => 'Report',
+                    'Feedback' => 'Feedback'
+                ]), 
             Text::make('Body'),
             BelongsTo::make('User', 'user', User::class),
         ];

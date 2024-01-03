@@ -49,7 +49,7 @@ class Terminal extends Resource
             MapMarker::make('Pin Location')
                 ->latitude('lat')
                 ->longitude('lng'),
-            Text::make('Category'),
+            Text::make('Region', 'category'),
 
         ];
     }

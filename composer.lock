@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e2ce81bb786f1145ce37b025f37138f6",
+    "content-hash": "2acff170e2bf05bf54316c8a5b62e3f3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -988,6 +988,51 @@
                 }
             ],
             "time": "2020-12-29T14:50:06+00:00"
+        },
+        {
+            "name": "epartment/nova-dependency-container",
+            "version": "1.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/epartment/nova-dependency-container.git",
+                "reference": "da1490d015754d2aa7fd0815ad91d54b279472d7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/epartment/nova-dependency-container/zipball/da1490d015754d2aa7fd0815ad91d54b279472d7",
+                "reference": "da1490d015754d2aa7fd0815ad91d54b279472d7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Epartment\\NovaDependencyContainer\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Epartment\\NovaDependencyContainer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field container allowing to depend on other fields values",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/epartment/nova-dependency-container/issues",
+                "source": "https://github.com/epartment/nova-dependency-container/tree/1.3.3"
+            },
+            "time": "2021-05-13T16:30:53+00:00"
         },
         {
             "name": "fruitcake/laravel-cors",

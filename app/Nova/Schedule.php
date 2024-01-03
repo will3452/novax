@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Rules\UniqueSchedule;
 use Illuminate\Http\Request;
 use Laraning\NovaTimeField\TimeField;
 use Laravel\Nova\Fields\BelongsTo;
@@ -56,7 +57,8 @@ class Schedule extends Resource
                     'Sunday' => 'Sunday',
                 ]),
 
-            TimeField::make('Departure')->help('The time format is in miltary.'),
+            TimeField::make('Departure')->help('The time format is in miltary.')
+                ->rules([new UniqueSchedule]),
 
             BelongsTo::make('Bus Number', 'bus', Bus::class),
             BelongsTo::make('Route', 'route', Route::class), 
