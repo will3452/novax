@@ -75,7 +75,7 @@ Route::middleware('auth:sanctum')->group(function () {
         // if ($totalCharges > $totalBalance) return ['message' => 'not enough balance']; 
 
         $booking = Booking::create([
-            'status' => 'FOR CONFIRMATION', 
+            'status' => 'FOR APPROVAL', 
             'from' => $schedule->route->from->name, 
             'to' => $schedule->route->to->name, 
             'fare' => $fare,
@@ -88,7 +88,7 @@ Route::middleware('auth:sanctum')->group(function () {
             'schedule_id' => $schedule->id, 
             'discount' => 0, 
             'file' => $file, 
-            'passengers' => $request->passengers, 
+            'passengers' => implode(", ", $request->passengers), 
         ]); 
 
 
