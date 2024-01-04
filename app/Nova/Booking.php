@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\ApplyDiscount;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
@@ -57,7 +58,8 @@ class Booking extends Resource
                     'PAID' => 'PAID',
                     'REJECTED' => 'REJECTED',
                 ]),
-            Image::make('Discount ID', 'file'), 
+            Image::make('ID', 'file'), 
+            Image::make('Discount (%)', 'discount'), 
             Text::make('Passengers'), 
             Text::make('From'),
             Text::make('To'),
@@ -115,6 +117,8 @@ class Booking extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            ApplyDiscount::make(), 
+        ];
     }
 }
