@@ -22,6 +22,8 @@ class Booking extends Model
         'route_id',
         'time',
         'schedule_id', 
+        'file',
+        'passengers'
     ];
 
     public function user()

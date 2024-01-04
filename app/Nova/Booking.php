@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 
@@ -52,9 +53,12 @@ class Booking extends Resource
             Select::make('Status')
                 ->options([
                     'APPROVED' => 'APPROVED',
-                    'NEW' => 'NEW',
+                    'FOR CONFIRMATION' => 'FOR CONFIRMATION',
+                    'PAID' => 'PAID',
                     'REJECTED' => 'REJECTED',
                 ]),
+            Image::make('Discount ID', 'file'), 
+            Text::make('Passengers'), 
             Text::make('From'),
             Text::make('To'),
             Currency::make('Fare'),

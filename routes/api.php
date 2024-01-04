@@ -47,12 +47,21 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/booking', function (Request $request) {
         // check if has balance 
-        $inTransactions = auth()->user()->transactions()->whereBound('IN')->sum('amount'); 
-        $outTransactions = auth()->user()->transactions()->whereBound('OUT')->sum('amount'); 
+        // $inTransactions = auth()->user()->transactions()->whereBound('IN')->sum('amount'); 
+        // $outTransactions = auth()->user()->transactions()->whereBound('OUT')->sum('amount'); 
 
-        $totalBalance = $inTransactions - $outTransactions; 
+        // $totalBalance = $inTransactions - $outTransactions; 
         
-        if ($inTransactions - $outTransactions <= 0) return ['message' => 'no balance']; 
+        // if ($inTransactions - $outTransactions <= 0) return ['message' => 'no balance']; 
+
+        $file = null; 
+
+        if ($request->hasFile('file')) {
+            $filePath = $request->file->store('public'); 
+
+            $filePathArray = explode('/', $filePath); 
+            $file = end($filePathArray); 
+        }
 
         $schedule = Schedule::find($request->schedule_id);
 
@@ -60,12 +69,12 @@ Route::middleware('auth:sanctum')->group(function () {
         
         $fare = $schedule->route->fare + $schedule->bus->additional_fee; 
 
-        $totalCharges = $passenger * $fare; 
+        // $totalCharges = $passenger * $fare; 
 
-        if ($totalCharges > $totalBalance) return ['message' => 'not enough balance']; 
+        // if ($totalCharges > $totalBalance) return ['message' => 'not enough balance']; 
 
         $booking = Booking::create([
-            'status' => 'APPROVED', 
+            'status' => 'FOR CONFIRMATION', 
             'from' => $schedule->route->from->name, 
             'to' => $schedule->route->to->name, 
             'fare' => $fare,
@@ -77,17 +86,19 @@ Route::middleware('auth:sanctum')->group(function () {
             'time' => $schedule->departure, 
             'schedule_id' => $schedule->id, 
             'discount' => 0, 
+            'file' => $file, 
+            'passengers' => $request->passengers, 
         ]); 
 
 
-        // add transaction
-        Transaction::create([
-            'type' => 'PAYMENT',
-            'bound' => 'OUT',
-            'amount' => $totalCharges,
-            'user_id' => auth()->id(),
-            'status' => 'APPROVED',
-        ]);
+        // // add transaction
+        // Transaction::create([
+        //     'type' => 'PAYMENT',
+        //     'bound' => 'OUT',
+        //     'amount' => $totalCharges,
+        //     'user_id' => auth()->id(),
+        //     'status' => 'APPROVED',
+        // ]);
 
         return ['message' => 'success', 'booking' => $booking]; 
     }); 
