@@ -54,7 +54,8 @@ class Booking extends Resource
             Select::make('Status')
                 ->options([
                     'APPROVED' => 'APPROVED',
-                    'FOR CONFIRMATION' => 'FOR CONFIRMATION',
+                    'PAYMENT CONFIRMATION' => 'PAYMENT CONFIRMATION', 
+                    'FOR APPROVAL' => 'FOR APPROVAL',
                     'PAID' => 'PAID',
                     'REJECTED' => 'REJECTED',
                 ]),

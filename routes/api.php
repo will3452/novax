@@ -11,6 +11,7 @@ use App\Models\Route as ModelsRoute;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -206,6 +207,21 @@ Route::middleware('auth:sanctum')->group(function () {
             'reference' => 'required',
         ]);
 
+        if ($request->has('booking')) {
+            $booking = Booking::find($request->booking);
+            Mail::raw("Your receipt has been submitted to the administrator.", function ($message) use($booking) {
+                $message->subject('Booking payment')->to($booking->user->email); 
+            }); 
+
+            $booking->update(['status' => 'PAYMENT CONFIRMATION']); 
+            $users = User::whereType('ADMIN')->get(); 
+
+            foreach($users as $user) {
+                Mail::raw("New payment receipt has been received, waiting for your review.", function ($message) use($user) {
+                    $message->subject('Booking payment')->to($user->email); 
+                }); 
+            }
+        }
         if ($request->hasFile('file')) {
             $filePath = $request->file->store('public'); 
 
