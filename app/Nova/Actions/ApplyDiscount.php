@@ -24,8 +24,9 @@ class ApplyDiscount extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
+        $discount = Discount::find($fields->discount); 
         foreach($models as $model) {
-            $model->update(['discount' => $fields->discount]); 
+            $model->update(['discount' => $discount->rate]); 
         }
     }
 
@@ -38,7 +39,7 @@ class ApplyDiscount extends Action
     {
         return [
             Select::make('Discount type', 'discount')
-                ->options(Discount::get()->pluck('description', 'rate')), 
+                ->options(Discount::get()->pluck('description', 'id')), 
         ];
     }
 }

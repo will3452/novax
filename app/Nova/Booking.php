@@ -59,7 +59,7 @@ class Booking extends Resource
                     'REJECTED' => 'REJECTED',
                 ]),
             Image::make('ID', 'file'), 
-            Image::make('Discount (%)', 'discount'), 
+            Text::make('Discount (%)', 'discount'), 
             Text::make('Passengers'), 
             Text::make('From'),
             Text::make('To'),
