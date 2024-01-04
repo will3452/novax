@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Booking;
 use App\Models\FareMatrix;
+use App\Observers\BookingObserver;
 use App\Observers\FareMatrixObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -31,5 +33,6 @@ class EventServiceProvider extends ServiceProvider
     {
         //
         FareMatrix::observe(FareMatrixObserver::class); 
+        Booking::observe(BookingObserver::class); 
     }
 }
