@@ -32,7 +32,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-        FareMatrix::observe(FareMatrixObserver::class); 
-        Booking::observe(BookingObserver::class); 
+        FareMatrix::observe(FareMatrixObserver::class);
+        // Booking::observe(BookingObserver::class);
     }
 }
