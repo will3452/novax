@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,3 +33,7 @@ Route::get('/public-test', function () {
 //user authentication
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
+
+Route::get('/users', function () {
+    return User::get(); 
+}); 
