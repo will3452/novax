@@ -2,34 +2,31 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Hidden;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Post extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'super@admin.com');
-    }
-
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Post::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'title';
 
     /**
      * The columns that should be searched.
@@ -37,7 +34,10 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'title',
+        'excerpt',
+        'content', 
     ];
 
     /**
@@ -49,25 +49,17 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
-
-            MorphToMany::make('Roles', 'roles', Role::class)
-                ->canSee(fn () => config('novax.role_enabled')),
+            ID::make(__('ID'), 'id')->sortable(),
+            Text::make('Title')
+                ->sortable(),
+            Image::make('Cover')
+                ->rules(['max:5000']),
+            Textarea::make('Excerpt')
+                ->rules(['required']),
+            Trix::make('Content')->rules(['required']), 
+            Hidden::make('user_id')
+                ->default(fn() => auth()->id()), 
+            BelongsToMany::make('Tags', 'tags', Tag::class), 
         ];
     }
 

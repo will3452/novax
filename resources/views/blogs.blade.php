@@ -6,19 +6,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <meta name="author" content="TemplateMo">
+    <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
 
-    <title>{{ env('APP_NAME') }}</title>
+    <title>Stand Blog Posts</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="/assets/css/fontawesome.css">
-    <link rel="stylesheet" href="/assets/css/templatemo-stand-blog.css">
-    <link rel="stylesheet" href="/assets/css/owl.css">
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-stand-blog.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
 <!--
 
 TemplateMo 551 Stand Blog
@@ -44,73 +44,60 @@ https://templatemo.com/tm-551-stand-blog
 
     <!-- Page Content -->
     <!-- Banner Starts Here -->
-    <div class="main-banner header-text">
-      <div class="container-fluid">
-        <div class="owl-banner owl-carousel">
-          @foreach (\App\Models\Destination::inRandomOrder()->take(10)->get() as $item)
-          <div class="item">
-            <img src="/storage/{{$item->photographs()->first()->image}}" alt="">
-            <div class="item-content">
-              <div class="main-content">
-                <div class="meta-category">
-                  <span>{{$item->category->category}}</span>
-                </div>
-                <a href="#details"><h4>{{$item->name}}</h4></a>
-                <ul class="post-info">
-                  <li><a href="#">{{$item->location}}</a></li>
-                </ul>
+    <div class="heading-page header-text">
+      <section class="page-heading">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="text-content">
+                <h4>Recent Posts</h4>
+                <h2>Our Recent Blog Entries</h2>
               </div>
             </div>
           </div>
-          @endforeach
         </div>
-      </div>
+      </section>
     </div>
+    
     <!-- Banner Ends Here -->
 
-
-    <section class="blog-posts">
+    <section class="blog-posts grid-system">
       <div class="container">
         <div class="row">
           <div class="col-lg-8">
             <div class="all-blog-posts">
               <div class="row">
-                @forelse (\App\Models\Post::latest()->take(5)->get() as $item)
-                <div class="col-lg-12">
-                    <div class="blog-post">
-                      <div class="blog-thumb">
-                        <img src="assets/images/blog-post-01.jpg" alt="">
-                      </div>
-                      <div class="down-content">
-                        {{-- <span>Lifestyle</span> --}}
-                        <a href="#details"><h4>{{$item->title}}</h4></a>
-                        <ul class="post-info">
-                          <li><a href="#">{{$item->user->name}}</a></li>
-                          <li><a href="#">{{$item->created_at->diffForHumans()}}</a></li>
-                        </ul>
-                        <p>{{$item->excerpt}}</p>
-                        <div class="post-options">
-                          <div class="row">
-                            <div class="col-6">
-                              <ul class="post-tags">
-                                <li><i class="fa fa-tags"></i></li>
-                                @foreach ($item->tags as $item)
+                @foreach ($posts as $item)
+                <div class="col-lg-6">
+                  <div class="blog-post">
+                    <div class="blog-thumb">
+                      <img src="assets/images/blog-thumb-01.jpg" alt="">
+                    </div>
+                    <div class="down-content">
+                      <a href="post-details.html"><h4>{{$item->title}}</h4></a>
+                      <ul class="post-info">
+                        <li><a href="#">{{$item->user->name}}</a></li>
+                        <li><a href="#">{{$item->created_at->diffForHumans()}}</a></li>
+                      </ul>
+                      <p>{{$item->excerpt}}</p>
+                      <div class="post-options">
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <ul class="post-tags">
+                              <li><i class="fa fa-tags"></i></li>
+                              @foreach ($item->tags as $item)
                                     <li><a href="#">{{$item->tag}}</a> </li>
                                 @endforeach
-                              </ul>
-                            </div>
+                            </ul>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                @empty
-                    <h1>No post to show</h1>
-                @endforelse
+                </div>
+                @endforeach
                 <div class="col-lg-12">
-                  <div class="main-button">
-                    <a href="#">View All Posts</a>
-                  </div>
+                  {{$posts->links()}}
                 </div>
               </div>
             </div>
@@ -126,7 +113,6 @@ https://templatemo.com/tm-551-stand-blog
                   </div>
                 </div>
                 <x-recent-post></x-recent-post>
-                <x-destination-categories></x-destination-categories>
                 <x-blog-tags></x-blog-tags>
               </div>
             </div>
@@ -137,6 +123,7 @@ https://templatemo.com/tm-551-stand-blog
 
     
     <x-footer></x-footer>
+
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
