@@ -1,4 +1,4 @@
-<div class=" w-full md:w-1/2 h-52 p-2">
+<div class=" w-full md:w-1/2 h-auto md:h-64 p-2">
     <div class="flex items-center border border-gray-50 rounded-md shadow-lg overflow-hidden h-full">
         <img src="https://picsum.photos/seed/picsum/200/300" alt="" class="h-full w-1/3">
         <div class="h-full p-4 w-2/3  bg-gray-50">
