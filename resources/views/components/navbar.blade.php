@@ -1,6 +1,6 @@
 <div x-data="{isOpen: false, }">
     <div class="flex p-2 md:p-8 justify-between items-center">
-        <div class="flex items-center">
+        <div class="flex items-center font-custom">
             <img src="/logo.png" alt="" class="w-16 md:w-24 mr-2">
             <div>
                 <h1 class="text-xs md:text-2xl md:font-bold md:tracking-widest text-green-500">Cultural, Historical & Tourism Promotions Division</h1>

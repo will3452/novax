@@ -1,5 +1,5 @@
 
-<form action="" class="w-full md:w-1/2 p-8">
+<form action="" class="w-full md:w-1/2 p-8" data-aos="fade-right">
     <div class="text-2xl font-custom tracking-widest">
       Full Name
     </div>

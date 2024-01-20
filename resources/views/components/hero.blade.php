@@ -1,5 +1,5 @@
-<div class="text-center flex items-center justify-center "style="height: 40vh; background:url('/bg.jpg'); background-size:cover;background-attachment: fixed; background-position:center;">
-    <div class="w-2/3">
+<div class="text-center flex items-center justify-center h-32 md:h-80"style=" background:url('/bg.jpg'); background-size:cover;background-attachment: fixed; background-position:center;">
+    <div class="w-full md:w-2/3 p-2">
       <h1 class="text-3xl md:text-6xl font-mono font-custom mb-2">
         Find the best place to rest
       </h1>
