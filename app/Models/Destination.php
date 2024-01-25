@@ -38,4 +38,8 @@ class Destination extends Model
     public function photographs () {
         return $this->hasMany(Photograph::class, 'destination_id'); 
     }
+
+    public function feedback () {
+        return $this->hasMany(Feedback::class, 'destination_id'); 
+    }
 }

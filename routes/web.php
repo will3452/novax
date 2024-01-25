@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
+use App\Models\Feedback;
 use App\Models\Inquiry;
 
 Route::get('/', function () {
@@ -36,6 +37,12 @@ Route::post('/inquiry', function (Request $request) {
     return back(); 
 }); 
 
+Route::post('/feedback', function (Request $request) {
+    $data = $request->all(); 
+    Feedback::create($data);
+    alert()->success('Your Feedback has been submitted!'); 
+    return back(); 
+}); 
 
 Route::get('/search', function (Request $request) {
     $keyword = $request->keyword; 

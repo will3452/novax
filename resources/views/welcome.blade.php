@@ -19,10 +19,9 @@
     </div>
     <h1 class="sticky top-0 z-1 text-4xl font-custom hover:underline text-center bg-white p-4 mt-4"> Feedback / Testimonials</h1>
     <div class="fb-slider owl-carousel owl-theme">
-      <x-feedback-item></x-feedback-item>      
-      <x-feedback-item></x-feedback-item>      
-      <x-feedback-item></x-feedback-item>      
-      <x-feedback-item></x-feedback-item>      
+      @foreach (\App\Models\Feedback::latest()->take(12)->get() as $item)
+        <x-feedback-item :feedback="$item"></x-feedback-item>
+      @endforeach          
     </div>
     <h1 class="sticky top-0 z-1 text-4xl font-custom hover:underline text-center bg-white p-4 mt-8"> Contact Us</h1>
     <div class="flex">
