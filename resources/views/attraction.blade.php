@@ -3,7 +3,7 @@
   integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
   crossorigin=""/>
   <x-navbar></x-navbar>
-  <div class="w-full w-5/6 mx-auto">
+  <div class="w-full w-5/6 mx-auto px-4">
     <div>
       <a href="{{url()->previous()}}" class="text-2xl mb-4 block font-custom underline">Back</a>
     </div>
