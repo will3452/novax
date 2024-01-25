@@ -5,6 +5,11 @@
     <h1 class="text-center font-custom text-2xl mt-4">*** Search Results ***</h1>
   @else 
   <h1 class="text-center font-custom text-2xl mt-4">List of Attractions</h1>
+  
+  <div class="flex justify-center">
+    {{$destinations->links()}}
+  </div>
+  
   @endif
   <div class="flex px-4 justify-center flex-wrap">
     @forelse ($destinations as $item)         
@@ -16,5 +21,8 @@
       No Result found.
     </div>
     @endforelse
+  </div>
+  <div class="flex justify-center">
+    {{$destinations->links()}}
   </div>
 </x-layout>

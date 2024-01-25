@@ -39,12 +39,13 @@ Route::post('/inquiry', function (Request $request) {
 
 Route::get('/search', function (Request $request) {
     $keyword = $request->keyword; 
-    $destinations = Destination::where("name", "LIKE", "%$keyword%")->get(); 
+    $destinations = Destination::where("name", "LIKE", "%$keyword%")->paginate(10); 
 
     return view('destinations', compact('destinations')); 
 }); 
 
 Route::get('/attractions/{attraction}', function (Destination $attraction) {
+    $attraction->load(['category', 'photographs']); 
     return view('attraction', compact('attraction')); 
 }); 
 
