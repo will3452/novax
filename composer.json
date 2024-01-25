@@ -26,6 +26,7 @@
         "laravel/tinker": "^2.5",
         "laravelwebdev/responsive": "^1.0",
         "optimistdigital/nova-settings": "^3.2",
+        "realrashid/sweet-alert": "^7.1",
         "richardkeep/nova-timenow": "^1.0",
         "runlinenl/nova-profile-tool": "^1.1",
         "silvanite/novafieldcheckboxes": "^1.2",

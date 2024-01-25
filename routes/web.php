@@ -1,10 +1,12 @@
 <?php
 
+use App\Models\Post;
+use App\Models\Destination;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
-use App\Models\Destination;
-use App\Models\Post;
+use App\Models\Inquiry;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,6 +29,12 @@ Route::get('/blogs', function () {
 Route::get('/register', [RegisterController::class, 'registrationPage']);
 Route::post('/register', [RegisterController::class, 'postRegister']);
 
+Route::post('/inquiry', function (Request $request) {
+    $data = $request->all(); 
+    Inquiry::create($data);
+    alert()->success('Your Inquiry has been sent to the administrator!.'); 
+    return back(); 
+}); 
 
 //artisan helper
 Route::get('/artisan', function () {
