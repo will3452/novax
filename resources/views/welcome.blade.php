@@ -7,7 +7,7 @@
     <h1 class="sticky top-0 z-2 text-4xl font-custom hover:underline text-center bg-white p-4"> Attractions</h1>
     <div class="place-slider z-1 owl-carousel owl-theme flex mt-2 text-center flex-wrap ">
       @foreach (\App\Models\Destination::with(['photographs'])->inRandomOrder()->take(10)->get() as $item)         
-        <x-place-item :photo="$item->photographs[0]->image" :name="$item->name"></x-place-item>
+        <x-place-item :photo="$item->photographs[0]->image" :name="$item->name" :id="$item->id"></x-place-item>
       @endforeach
     </div>
     <h1 class="sticky top-0 z-1 text-4xl font-custom hover:underline text-center bg-white p-4 mt-4"> Blogs</h1>

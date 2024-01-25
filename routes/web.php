@@ -36,6 +36,18 @@ Route::post('/inquiry', function (Request $request) {
     return back(); 
 }); 
 
+
+Route::get('/search', function (Request $request) {
+    $keyword = $request->keyword; 
+    $destinations = Destination::where("name", "LIKE", "%$keyword%")->get(); 
+
+    return view('destinations', compact('destinations')); 
+}); 
+
+Route::get('/attractions/{attraction}', function (Destination $attraction) {
+    return view('attraction', compact('attraction')); 
+}); 
+
 //artisan helper
 Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);

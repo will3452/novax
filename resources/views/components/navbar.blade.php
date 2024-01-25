@@ -18,13 +18,13 @@
     </div>
     <ul class="list-none text-center md:text-2xl" x-show="isOpen">
         <li>
-            <a href="" class="block my-2 p-4 tracking-widest hover:bg-gray-200">Home</a>
+            <a href="/" class="block my-2 p-4 tracking-widest hover:bg-gray-200">Home</a>
         </li>
         <li>
             <a href="" class="block my-2 p-4 tracking-widest hover:bg-gray-200">Map</a>
         </li>
         <li>
-            <a href="" class="block my-2 p-4 tracking-widest hover:bg-gray-200">Tourist Attractions</a>
+            <a href="/search" class="block my-2 p-4 tracking-widest hover:bg-gray-200">Tourist Attractions</a>
         </li>
         <li>
             <a href="" class="block my-2 p-4 tracking-widest hover:bg-gray-200">About</a>
