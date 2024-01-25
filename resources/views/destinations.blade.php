@@ -6,7 +6,7 @@
   @else 
   <h1 class="text-center font-custom text-2xl mt-4">List of Attractions</h1>
   @endif
-  <div class="flex px-4 justify-center">
+  <div class="flex px-4 justify-center flex-wrap">
     @forelse ($destinations as $item)         
         <div class="w-full md:w-1/4">
           <x-place-item :photo="$item->photographs[0]->image" :name="$item->name" :id="$item->id"></x-place-item>
