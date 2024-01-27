@@ -17,6 +17,6 @@
       <button class="bg-green-700 text-white rounded-md p-4" type="submit">Leave Message</button>
     </div>
   </form>
-  <div class="items-center justify-center hidden md:flex">
-    <img src="/contact.svg" class="w-2/3" alt="">
+  <div class="items-center  justify-center w-1/3 hidden md:flex">
+    <img src="/map.jpg" class="w-full" alt="">
   </div>
