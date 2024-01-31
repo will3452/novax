@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17cb8e37b3e20aedf36d15dfdfd5ef87",
+    "content-hash": "bd6253300c3954d52f990471203a2ffc",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1057,6 +1057,42 @@
                 }
             ],
             "time": "2020-12-29T14:50:06+00:00"
+        },
+        {
+            "name": "elezerk/tsu",
+            "version": "dev-alumni-v2",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/Tsu",
+                "reference": "98bfc283357b667aa43091b157e6e07a586b3b70"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Elezerk\\Tsu\\ThemeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Elezerk\\Tsu\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova theme.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "fruitcake/laravel-cors",
