@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,17 +19,24 @@ use Illuminate\Support\Facades\Route;
 
 //private access
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/auth-test', function () {
-        return 'authentication test';
-    });
+
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
-});
 
-Route::get('/public-test', function () {
-    return 'public test';
+    Route::get('/me', function () {
+        return auth()->user(); 
+    }); 
 });
-
 
 //user authentication
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
+
+Route::get('/blogs', function () {
+    return Blog::with('author')->latest()->get(); 
+}); 
+
+Route::get('/blogs/{blog}', function (Blog $blog) {
+    $blog->load('author'); 
+    return $blog; 
+}); 
+
