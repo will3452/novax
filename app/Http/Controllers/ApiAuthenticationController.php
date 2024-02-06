@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Api\ErrorHelper;
+use App\Models\Alumnus;
+use App\Models\ProfessionalRecord;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class ApiAuthenticationController extends Controller
 {
@@ -22,11 +26,16 @@ class ApiAuthenticationController extends Controller
 
     public function register(Request $request)
     {
-        $name = $request->name;
+        $name = "$request->first_name $request->middle_name $request->last_name";
         $email = $request->email;
-        $password = $request->password;
+        $password = Str::random(8);
 
-        if (is_null($name) || is_null($email) || is_null($password)) {
+        // send to the email 
+        Mail::raw("Your temporary password: $password", function ($message) use ($email) {
+            $message->to($email)->subject('Temporary Password'); 
+        }); 
+
+        if (is_null($email)) {
             return ErrorHelper::sendError(400, 'field(s) are required!');
         }
 
@@ -47,6 +56,35 @@ class ApiAuthenticationController extends Controller
         ]);
 
         $token = $this->createToken($user);
+
+        // create alumni 
+        $alumnus = Alumnus::create([
+            'user_id' => $user->id, 
+            'first_name' => $request->first_name, 
+            'last_name' => $request->last_name, 
+            'middle_name' => $request->middle_name, 
+            'gender' => $request->gender, 
+            'batch' => $request->batch, 
+            'birthday' => $request->birthday, 
+            'employment_status' => $request->employment_status, 
+            'soc_med' => json_encode($request->soc_med), 
+            'program' => $request->program, 
+        ]); 
+
+
+        foreach($request->records as $record) {
+            ProfessionalRecord::create([
+                'alumnus_id' => $alumnus->id,
+                'scope' => $record['scope'], 
+                'work_type' => $record['work_type'], 
+                'is_private' => $record['is_private'], 
+                'is_aligned' => $record['is_aligned'], 
+                'company' => $record['company'],
+                'company_address' => $record['company_address'],
+            ]); 
+        }
+
+        
 
         return response([
             'user'=>$user,

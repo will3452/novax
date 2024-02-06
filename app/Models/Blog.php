@@ -20,4 +20,8 @@ class Blog extends Model
     public function author () {
         return $this->belongsTo(User::class, 'user_id'); 
     }
+
+    public function likers () {
+        return $this->belongsToMany(User::class, 'likes', 'blog_id','user_id'); 
+    }
 }

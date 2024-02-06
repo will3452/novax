@@ -28,6 +28,10 @@ class Alumnus extends Model
         return $this->belongsTo(User::class, 'user_id'); 
     }
 
+    public function records () {
+        return $this->hasMany(ProfessionalRecord::class, 'alumnus_id'); 
+    }
+
     protected $casts = [
         'birthday' => 'date'
     ]; 
