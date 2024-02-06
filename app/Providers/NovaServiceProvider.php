@@ -2,6 +2,16 @@
 
 namespace App\Providers;
 
+use App\Nova\Dashboards\Statistics;
+use App\Nova\Metrics\AlumniPerPrograms;
+use App\Nova\Metrics\Batches;
+use App\Nova\Metrics\Blogs;
+use App\Nova\Metrics\EmploymentStatuses;
+use App\Nova\Metrics\Genders;
+use App\Nova\Metrics\Jobs;
+use App\Nova\Metrics\ProfessionIsAligned;
+use App\Nova\Metrics\Users;
+use App\Nova\Metrics\WorkTypes;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -10,6 +20,7 @@ use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
+use Coroowicaksono\ChartJsIntegration\LineChart;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -65,17 +76,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
-                'Africa/Nairobi',
-                'America/Mexico_City',
-                'Australia/Sydney',
-                'Europe/Paris',
-                'Asia/Manila',
-                'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila')
-            ->canSee(function () {
-                return config('novax.time_enabled');
-            }),
+            Users::make(), 
+            Jobs::make(), 
+            Blogs::make(), 
         ];
     }
 
@@ -86,7 +89,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function dashboards()
     {
-        return [];
+        return [
+            Statistics::make(), 
+        ];
     }
 
     /**

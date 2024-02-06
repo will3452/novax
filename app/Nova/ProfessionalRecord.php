@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\DownloadTemplate;
+use App\Nova\Actions\ImportNewRecords;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
@@ -107,6 +109,9 @@ class ProfessionalRecord extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            ImportNewRecords::make()->standalone(),
+            DownloadTemplate::make()->standalone(), 
+        ];
     }
 }
