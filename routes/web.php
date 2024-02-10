@@ -31,6 +31,10 @@ Route::get('/blogs', function () {
     return view('blogs', compact('posts')); 
 })->name('blogs'); 
 
+Route::get('/blog/{post}', function (Post $post) {
+    return view('blog', compact('post')); 
+}); 
+
 Route::get('/register', [RegisterController::class, 'registrationPage']);
 Route::post('/register', [RegisterController::class, 'postRegister']);
 

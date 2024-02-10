@@ -12,7 +12,6 @@
                 <a href="/map" class=" p-4 tracking-widest hover:bg-gray-200">Map</a>
                 <a href="/search" class=" p-4 tracking-widest hover:bg-gray-200">Tourist Attractions</a>
                 <a href="/about" class=" p-4 tracking-widest hover:bg-gray-200">About</a>
-                <a href="#" class=" p-4 tracking-widest hover:bg-gray-200">Contacts</a>
         </div>
         <div class="block md:hidden">
             <button x-show="! isOpen" @click="isOpen = !isOpen" class="transition">
@@ -35,9 +34,6 @@
         </li>
         <li>
             <a href="/about" class="block my-2 p-4 tracking-widest hover:bg-gray-200">About</a>
-        </li>
-        <li>
-            <a href="#" class="block my-2 p-4 tracking-widest hover:bg-gray-200">Contacts</a>
         </li>
     </ul>
 </div>
