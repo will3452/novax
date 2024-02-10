@@ -14,7 +14,7 @@
   <div class="flex px-4 justify-center flex-wrap">
     @forelse ($destinations as $item)         
         <div class="w-full md:w-1/4">
-          <x-place-item :photo="$item->photographs[0]->image" :name="$item->name" :id="$item->id"></x-place-item>
+          <x-place-item :photo="count($item->photographs) ? $item->photographs[0]->image: null" :name="$item->name" :id="$item->id"></x-place-item>
         </div>
     @empty 
     <div class="text-2xl text-gray-500 mt-8">

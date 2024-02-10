@@ -17,6 +17,10 @@ Route::get('/about', function () {
     return view('about'); 
 })->name('about'); 
 
+Route::get('/map', function () {
+    return view('map'); 
+})->name('map'); 
+
 Route::get('/destinations', function () {
     $destinations = Destination::paginate(10); 
     return view('destinations', compact('destinations')); 

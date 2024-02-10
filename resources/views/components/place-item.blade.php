@@ -5,7 +5,7 @@
         
       </div> --}}
     </a>
-    <p style="width:100%; text-align:left; " class="p-2 text-left w-full text-2xl">
+    <p style="width:100%; text-align:left; " class="p-2 text-left w-full text-xs">
       {{ $name }}
     </p>
 </div>
