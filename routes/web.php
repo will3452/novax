@@ -17,8 +17,9 @@ Route::get('/about', function () {
     return view('about'); 
 })->name('about'); 
 
-Route::get('/map', function () {
-    return view('map'); 
+Route::get('/map', function (Request $request) {
+    $destinations = Destination::get(); 
+    return view('map', compact('destinations')); 
 })->name('map'); 
 
 Route::get('/destinations', function () {
