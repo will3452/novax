@@ -25,6 +25,9 @@
 
     destinations.forEach(d => {
       let image = '/no-image.png'
+      if (d.photographs && d.photographs.length) {
+        image = "/storage/" + d.photographs[0].image; 
+      }
       let pop = L.popup()
         .setContent(`
         <img class="w-32 h-16 mb-2 mx-auto block" style="object-fit:cover; " src="${image}"/>
