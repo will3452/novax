@@ -25,6 +25,7 @@
 
     destinations.forEach(d => {
       let image = '/no-image.png'
+      console.log(d)
       if (d.photographs && d.photographs.length) {
         image = "/storage/" + d.photographs[0].image; 
       }
