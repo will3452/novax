@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\ApiAuthenticationController;
-use App\Models\Alumnus;
-use App\Models\Blog;
-use App\Models\Event;
 use App\Models\Job;
+use App\Models\Blog;
 use App\Models\Like;
 use App\Models\User;
+use App\Models\Event;
+use App\Models\Alumnus;
 use Illuminate\Http\Request;
+use App\Models\ProfessionalRecord;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiAuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,33 @@ Route::middleware('auth:sanctum')->group(function () {
         $user = User::find(auth()->id());
         $user->load(['alumnus.records']); 
         return $user; 
+    }); 
+
+    Route::post('/me', function (Request $request) {
+        $key = $request->prop; 
+
+        $value = $request->value; 
+
+        auth()->user()->update([$key => $value]); 
+
+        return 'ok'; 
+    }); 
+
+    Route::post('/add-record', function (Request $request) {
+
+        $alumnus = Alumnus::whereUserId(auth()->id())->first(); 
+        
+        ProfessionalRecord::create([
+            'alumnus_id' => $alumnus->id,
+            'scope' => $request->scope, 
+            'work_type' => $request->work_type, 
+            'is_private' => $request->is_private, 
+            'is_aligned' => $request->is_aligned, 
+            'company' => $request->company,
+            'company_address' => $request->company_address,
+        ]); 
+
+        return 'ok'; 
     }); 
 
     Route::post('/update-password', function (Request $request) {
