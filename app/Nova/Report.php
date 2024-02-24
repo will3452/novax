@@ -5,17 +5,35 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use App\Nova\Metrics\Reports;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Textarea;
+use App\Nova\Actions\AssignReport;
 use App\Nova\Metrics\ReportsTrend;
 use Laravel\Nova\Fields\BelongsTo;
 use App\Models\Report as ModelsReport;
 use GeneaLabs\NovaMapMarkerField\MapMarker;
-
+use Laravel\Nova\Http\Requests\NovaRequest;
+use App\Models\User as ModelUser; 
 class Report extends Resource
 {
+    /**
+     * Build an "index" query for the given resource.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (auth()->user()->type == ModelUser::TYPE_DISPATCHER) {
+            $reports = auth()->user()->tasks->pluck('id')->all(); 
+            return $query->whereIn('id', $reports); 
+        }
+        return $query;
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -64,7 +82,17 @@ class Report extends Resource
                     'Done' => 'Done',
                     'New' => 'New'
                 ]), 
-            Image::make('Image'),
+            // Image::make('Image'),
+            Text::make('Images', function () {
+                $images = explode("***", $this->image); 
+                $html = ""; 
+                foreach($images as $img)  {
+                    if (strlen($img) == 0) continue; 
+                    $html .= "<a target='_blank' href='/storage/$img'><img style='width:50px; height:50px; margin:2px; object-fit:cover;' src='/storage/$img'/></a>";
+                }
+
+                return $html; 
+            })->asHtml(), 
             BelongsTo::make('User', 'user'),
             MapMarker::make('Location')
                 ->longitude('lng')
@@ -116,6 +144,8 @@ class Report extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            AssignReport::make(), 
+        ];
     }
 }

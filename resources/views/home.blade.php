@@ -2,7 +2,7 @@
     <x-topbar></x-topbar>
     <div class="w-screen flex overflow-auto justify-center" style="height: 90vh; ">
         <div class="md:w-2/3 w-full h-screen overflow-y-auto">
-            <h1 class="p-4 bg-red-400  font-bold text-2xl uppercase font-mono text-white text-center md:text-left flex items-center">
+            <h1 class="p-4 bg-blue-400  font-bold text-2xl uppercase font-mono text-white text-center md:text-left flex items-center">
                 <span class="material-symbols-outlined">
                     flag_circle
                     </span>
@@ -34,14 +34,14 @@
                 </div>
                 <label for="">
                     <span class="font-bold mb-2 block">Image</span>
-                    <input type="file" required name="image" accept="image/*">
+                    <input type="file" multiple name="image[]" accept="image/*">
                 </label>
                 <button type="submit"
-                    class="w-full border-4 border-green-400 mt-4 bg-green-700 block p-2 font-bold rounded-full text-white"> 
+                    class="w-full border-4 border-blue-400 mt-4 bg-blue-900 block p-2 font-bold rounded-full text-white"> 
                     SEND REPORT
                 </button>
             </form>
-            <h1 class="p-4 bg-red-400  font-bold text-2xl uppercase font-mono text-white text-center md:text-left flex items-center">
+            <h1 class="p-4 bg-blue-400  font-bold text-2xl uppercase font-mono text-white text-center md:text-left flex items-center">
                 <span class="material-symbols-outlined">
                     list_alt
                     </span>

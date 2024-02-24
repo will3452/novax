@@ -1,5 +1,5 @@
 <div class="md:w-1/3 hidden md:block bg-gray-200 ">
-    <h1 class="p-4 bg-red-500  font-bold text-2xl  font-mono text-white flex items-center ">
+    <h1 class="p-4 bg-blue-900  font-bold text-2xl  font-mono text-white flex items-center ">
         <div class="flex items-center uppercase">
             <span class="material-symbols-outlined ">
                 newspaper

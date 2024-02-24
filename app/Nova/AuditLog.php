@@ -2,25 +2,46 @@
 
 namespace App\Nova;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
-class ReportCategory extends Resource
+class AuditLog extends Resource
 {
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false; 
+    }
+
+    public function authorizedToView(Request $request)
+    {
+        return false; 
+    }
+
+    public static function availableForNavigation(Request $request)
+    {
+        return in_array(auth()->user()->type, [User::TYPE_ADMINISTRATOR, User::TYPE_SUPERVISOR]);  
+    }
+
+    
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\ReportCategory::class;
+    public static $model = \App\Models\AuditLog::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -29,7 +50,6 @@ class ReportCategory extends Resource
      */
     public static $search = [
         'id',
-        'name',
     ];
 
     /**
@@ -41,9 +61,12 @@ class ReportCategory extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Category', 'name')
-                ->rules(['required', 'unique:report_categories,name']),
-            Number::make('Severity Level')->rules(['required']),
+            ID::make(__('ID'), 'id')->sortable(),
+            BelongsTo::make('User', 'user', User::class)->hideWhenCreating()->hideWhenUpdating(), 
+            Text::make('Activity', 'activity')->onlyOnIndex(), 
+            Date::make('Date', 'created_at')
+                ->onlyOnIndex()
+                ->sortable(), 
         ];
     }
 

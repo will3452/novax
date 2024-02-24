@@ -14,6 +14,6 @@
         <a href="{{route('news.show', ['post' => $item->id])}}"
             class="text-sm font-bold underline block">Read more</a>
             {{-- <a href="{{route('news.show', ['post' => $item->id])}}#disqus_thread"
-                class="text-sm text-red-500 font-bold underline block">Comments</a> --}}
+                class="text-sm text-blue-500 font-bold underline block">Comments</a> --}}
     </div>
 </div>

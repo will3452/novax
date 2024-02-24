@@ -31,4 +31,8 @@ class Report extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function assignees () {
+        return $this->belongsToMany(User::class, 'user_reports', 'report_id', 'user_id'); 
+    }
 }

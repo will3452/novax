@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ReportController;
+use App\Models\AuditLog;
+use Illuminate\Support\Facades\Log;
 
 Route::get('/', function () {
     return view('welcome');
@@ -91,6 +93,7 @@ Route::post('anonymous', function (Request $request) {
 
 
 function sendMessage($number, $otp) {
+    info("otp -> $otp"); 
     $ch = curl_init();
     $parameters = array(
         'apikey' => env('SMS_KEY'), //Your API KEY
@@ -141,6 +144,12 @@ Route::post('/verify-code', function (Request $request) {
     if ($user->code != $data['code']) return 'Unauthorized!'; 
     auth()->loginUsingId($user->id);
 
+    AuditLog::create([
+        'user_id' => auth()->id(), 
+        'activity' => 'Login', 
+    ]); 
+
+    if ($request->has('redirect_path')) return redirect()->to($request->redirect_path); 
 
     return redirect()->to('/admin/dashboards/main'); 
 }); 

@@ -2,9 +2,11 @@
 
 namespace App\Nova;
 
+use App\Models\User as ModelsUser;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -47,6 +49,14 @@ class User extends Resource
     {
         return [
             ID::make()->sortable(),
+
+            Select::make('Type')
+                ->options([
+                    ModelsUser::TYPE_DISPATCHER  => ModelsUser::TYPE_DISPATCHER, 
+                    ModelsUser::TYPE_NORMAL  => ModelsUser::TYPE_NORMAL, 
+                    ModelsUser::TYPE_POLICE  => ModelsUser::TYPE_POLICE, 
+                    ModelsUser::TYPE_SUPERVISOR  => ModelsUser::TYPE_SUPERVISOR, 
+                ]), 
 
             Text::make('Name')
                 ->sortable()

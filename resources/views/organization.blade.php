@@ -2,7 +2,7 @@
     <x-topbar></x-topbar>
     <div class="w-screen flex overflow-auto" style="height: 90vh; ">
         <div class="md:w-2/3 w-full h-screen overflow-y-auto">
-            <h1 class="p-4 bg-red-400  font-bold text-2xl uppercase font-mono text-white text-center md:text-left flex items-center">
+            <h1 class="p-4 bg-blue-400  font-bold text-2xl uppercase font-mono text-white text-center md:text-left flex items-center">
                 <span class="material-symbols-outlined">
                     group
                     </span>
@@ -15,7 +15,7 @@
                 <button class="sort  bg-gray-200 rounded-xl p-2 font-bold text-xs" data-sort="designation">Sort by Designation</button>
                 <div class="list">
                     @foreach (\App\Models\Organization::get() as $item)
-                        <div class="p-4 bg-red-500 my-4 rounded flex">
+                        <div class="p-4 bg-blue-900 my-4 rounded flex">
                             <img src="/storage/{{$item->image}}" alt="" class="w-40">
                             <div class="mx-4 font-bold text-white">
                                 <div class="name">Name: {{$item->name}}</div>

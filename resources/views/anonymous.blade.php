@@ -2,7 +2,7 @@
     <div class="text-center " x-data="{token: null, location: {},}" x-init="token = localStorage.getItem('police-emerge-token'); navigator.geolocation.getCurrentPosition((position) => {
         location = position.coords;
     })">
-        <h1 class="text-center text-2xl font-bold uppercase bg-green-400 text-white p-2">Report now!</h1>
+        <h1 class="text-center text-2xl font-bold uppercase bg-blue-900 text-white p-2">Report now!</h1>
         <form action="/anonymous" method="post" class="p-2 px-5" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="token" :value="token">
@@ -31,7 +31,7 @@
                 <input type="file" required name="image" accept="image/*">
             </label>
             <button type="submit"
-                class="w-full border-4 border-green-400 mt-4 bg-green-700 block p-2 font-bold rounded-full text-white"> 
+                class="w-full border-4 border-blue-400 mt-4 bg-blue-900 block p-2 font-bold rounded-full text-white"> 
                 SEND REPORT
             </button>
             <a href="/" class="block mt-4 underline">Back to welcome page.</a>

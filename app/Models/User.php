@@ -31,6 +31,9 @@ class User extends Authenticatable
     const TYPE_ADMINISTRATOR = 'Administrator';
     const TYPE_POLICE = 'Police';
     const TYPE_NORMAL = 'Normal';
+    const TYPE_DISPATCHER = 'Dispatcher'; 
+    const TYPE_SUPERVISOR = 'Supervisor'; 
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -53,5 +56,9 @@ class User extends Authenticatable
 
     public function reports () {
         return $this->hasMany(Report::class, 'user_id'); 
+    }
+
+    public function tasks () {
+        return $this->belongsToMany(Report::class, 'user_reports', 'user_id', 'report_id'); 
     }
 }

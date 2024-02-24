@@ -1,14 +1,14 @@
 :root {
-  --primary: rgb(213,0,15);
-  --primary-dark: rgb(213,0,15);
-  --primary-70: rgb(213,0,15, .7);
-  --primary-50: rgb(213,0,15, .5);
-  --primary-30: rgb(213,0,15, .3);
-  --primary-10: rgb(213,0,15, .1);
-  --logo: rgb(213,0,15);
+  --primary: rgb(0, 0, 143);
+  --primary-dark: rgb(0, 0, 82);
+  --primary-70: rgba(0, 0, 143, 0.738);
+  --primary-50: rgba(3, 3, 154, 0.382);
+  --primary-30: rgba(0, 0, 143, 0.275);
+  --primary-10: rgba(7, 0, 213, 0.082);
+  --logo: rgb(0, 0, 143);
   --sidebar-icon: #fff;
 }
 
 .bg-grad-sidebar {
-  background: #b4000d;
+  background: rgb(0, 0, 143);
 }
