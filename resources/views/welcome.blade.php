@@ -1,4 +1,10 @@
 <x-layout>
+  <style>
+
+    .owl-nav  {
+      display: none; 
+    }
+  </style>
   <x-navbar></x-navbar>
   <x-hero></x-hero>
   <div class="p-2 mt-2 mx-auto md:w-11/12">
