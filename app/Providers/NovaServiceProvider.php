@@ -2,17 +2,18 @@
 
 namespace App\Providers;
 
-use App\Nova\Metrics\Blogs;
-use App\Nova\Metrics\Destinations;
-use App\Nova\Metrics\Inquiries;
-use App\Nova\Metrics\Users;
 use Laravel\Nova\Nova;
+use App\Nova\Metrics\Blogs;
+use App\Nova\Metrics\Users;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Image;
-use Spatie\BackupTool\BackupTool;
-use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\Image;
+use App\Nova\Metrics\Inquiries;
+use vmitchell85\NovaLinks\Links;
+use Spatie\BackupTool\BackupTool;
+use App\Nova\Metrics\Destinations;
+use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -121,6 +122,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
                 config('novax.setting_enabled');
             }),
+            (new Links('Links'))
+                ->add('Chat', '/home')
+                ->add('Website', '/'), 
         ];
     }
 
