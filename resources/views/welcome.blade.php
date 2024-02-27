@@ -3,7 +3,7 @@
         <div class="flex justify-center py-4 bg-blue-100 block md:hidden">
             <img src="/alarm.png" class="md:hidden block w-20 h-20 mr-10" alt="">
         </div>
-        <nav class="flex p-4 text-white bg-blue-400 items-center justify-center md:justify-start">
+        <nav class="flex p-4 text-blue-900 bg-blue-400 items-center justify-center md:justify-start">
             <img src="/alarm.png" class="hidden md:block w-20 h-20 mr-10" alt="">
             <a href="#" class="md:text-2xl font-mono mx-4 border-b-2">Home</a>
             <a href="/news" class="md:text-2xl font-mono mx-4">News</a>
