@@ -8,6 +8,10 @@ use Laravel\Nova\Metrics\Partition;
 
 class EmploymentStatuses extends Partition
 {
+    public function name()
+    {
+        return "Employment Status";
+    }
     /**
      * Calculate the value of the metric.
      *
