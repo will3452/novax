@@ -47,6 +47,7 @@ class ProfessionalRecord extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
+            Text::make('Career', 'career'), 
             BelongsTo::make('Alumnus', 'alumnus', Alumnus::class),
             Select::make('Scope', 'scope')
                 ->options([

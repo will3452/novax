@@ -79,6 +79,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             Users::make(), 
             Jobs::make(), 
             Blogs::make(), 
+            Genders::make(), 
+            EmploymentStatuses::make(), 
+            ProfessionIsAligned::make(), 
+            Batches::make(), 
+            AlumniPerPrograms::make(), 
+            WorkTypes::make(), 
         ];
     }
 

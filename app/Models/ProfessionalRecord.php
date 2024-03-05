@@ -17,6 +17,7 @@ class ProfessionalRecord extends Model
         'company',
         'company_address',
         'is_aligned', 
+        'career', 
     ]; 
 
     public function alumnus() {

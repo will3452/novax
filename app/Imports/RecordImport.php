@@ -34,6 +34,7 @@ class RecordImport implements ToModel, WithHeadingRow
          $birthday = $row['birthdate']; 
          $program = $row['program'];
          $status = $row['work_status_employedunemployed']; 
+         $career = $row['career'];
 
          if (! $alumni) {
             $alumni = Alumnus::create([
@@ -56,6 +57,7 @@ class RecordImport implements ToModel, WithHeadingRow
             'company_address' => $row['company_address'],
             'is_aligned' => $row['is_aligned_1_if_yes_0_if_no'], 
             'alumnus_id' => $alumni->id, 
+            'career' => $career, 
         ]);
     }
 }
