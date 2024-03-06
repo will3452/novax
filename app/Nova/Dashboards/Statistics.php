@@ -38,7 +38,7 @@ class Statistics extends Dashboard
                     'barPercentage' => 0.5,
                     'label' => $i->career,
                     'backgroundColor' => "#" . dechex(mt_rand(0, 0xFFFFFF)), 
-                    'data' => [$i->ciy]
+                    'data' => [$i->count]
                 ];
             })->all())
             // ->series(array([
