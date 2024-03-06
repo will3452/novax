@@ -57,7 +57,7 @@ class Statistics extends Dashboard
                     'categories' => [ 'Career' ]
                 ],
             ])
-            ->width('3/3'),
+            ->width('2/3'),
         ];
     }
 
