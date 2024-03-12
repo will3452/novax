@@ -54,6 +54,10 @@ class Post extends Resource
                 ->sortable(),
             Image::make('Cover')
                 ->rules(['max:5000']),
+            Image::make('Cover 1', 'cover_1')
+                ->rules(['max:5000']),
+            Image::make('Cover 2', 'cover_2')
+                ->rules(['max:5000']),
             Textarea::make('Excerpt')
                 ->rules(['required']),
             Trix::make('Content')->rules(['required']), 

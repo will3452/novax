@@ -28,7 +28,7 @@ Route::get('/destinations', function () {
 })->name('destinations'); 
 
 Route::get('/blogs', function () {
-    $posts = Post::latest()->paginate(10); 
+    $posts = Post::latest()->get(); 
     return view('blogs', compact('posts')); 
 })->name('blogs'); 
 

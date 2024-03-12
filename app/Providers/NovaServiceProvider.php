@@ -35,6 +35,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             Text::make('Facebook'),
             Text::make('Youtube'), 
             Text::make('Twitter'), 
+            Text::make('Phone'), 
+            Text::make('Email'), 
         ]);
     }
 
