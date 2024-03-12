@@ -49,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
         $alumnus = Alumnus::whereUserId(auth()->id())->first(); 
         
         ProfessionalRecord::create([
+            'career' => $request->career, 
             'alumnus_id' => $alumnus->id,
             'scope' => $request->scope, 
             'work_type' => $request->work_type, 
