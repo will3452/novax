@@ -1,7 +1,13 @@
 <x-layout>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-  crossorigin=""/>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"></script>
+  <style>
+    body { margin: 0; padding: 0; }
+    /* #map { position: absolute; top: 0; bottom: 0; width: 100%; } */
+  </style>
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.2.0/mapbox-gl-directions.js"></script>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.2.0/mapbox-gl-directions.css" type="text/css">
+  
   <x-navbar></x-navbar>
   <div class="w-full md:w-5/6 mx-auto px-2">
     <div>
@@ -9,11 +15,10 @@
     </div>
     <x-place-details :attraction="$attraction"></x-place-details>
     <h1 class="mb-4 text-2xl font-custom">Location</h1>
-    <div id="map" class="h-60"></div>
+    <div id="map" class="h-80"></div>
     <h1 class="mb-4 text-2xl font-custom my-2 mt-4">Feedback</h1>
     <div class="flex flex-wrap">
       <div class=" w-full md:w-2/3">
-      
         @if (count($attraction->feedback))
         <div class="fb-slider owl-carousel owl-theme">
           @foreach ($attraction->feedback as $item)
@@ -52,7 +57,36 @@
       </div>
     </div>
   </div>
-  <!-- Make sure you put this AFTER Leaflet's CSS -->
+
+  <script>
+
+  navigator.geolocation.getCurrentPosition(position => {
+      const { latitude, longitude } = position.coords;
+      // Show a map centered at latitude / longitude.
+      mapboxgl.accessToken = 'pk.eyJ1IjoiZWxlemVya3ciLCJhIjoiY2wxNHE4d2E5MHRvMTNkczA1anltY3lybSJ9.T2bcLRSnEZB_LNGM7Qs5Mw';
+      const map = new mapboxgl.Map({
+          container: 'map',
+          // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+          style: 'mapbox://styles/mapbox/streets-v12',
+          center: [longitude, latitude],
+          zoom: 13,
+      });
+
+      map.addControl(
+          new MapboxDirections({
+              accessToken: mapboxgl.accessToken,
+          }),
+          'top-right'
+      );
+
+      map.on('load', () => {
+        map.setOrigin([longitude, latitude])
+        map.setDestination([{{$attraction->lng}}, {{$attraction->lat}}])
+      })
+    });
+    
+  </script>
+  {{-- <!-- Make sure you put this AFTER Leaflet's CSS -->
  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
  crossorigin=""></script>
@@ -103,6 +137,6 @@
       }
     }
   })
- </script>
+ </script> --}}
 </x-layout>
 
