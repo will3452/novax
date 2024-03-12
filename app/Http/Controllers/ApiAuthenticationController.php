@@ -74,6 +74,7 @@ class ApiAuthenticationController extends Controller
 
         foreach($request->records as $record) {
             ProfessionalRecord::create([
+                'career' => $record['career'], 
                 'alumnus_id' => $alumnus->id,
                 'scope' => $record['scope'], 
                 'work_type' => $record['work_type'], 
