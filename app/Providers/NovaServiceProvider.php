@@ -22,6 +22,7 @@ use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Coroowicaksono\ChartJsIntegration\LineChart;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use vmitchell85\NovaLinks\Links;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -96,7 +97,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function dashboards()
     {
         return [
-            Statistics::make(), 
+            // Statistics::make(), 
         ];
     }
 
@@ -108,6 +109,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
+            (new Links('Links'))
+                ->add('Career trajectory', '/career-trajectory')
+                ->add('Alumni Portal', 'https://alumni-portal.dotph.website'), 
             (new ProfileTool)->canSee(function () {
                 return config('novax.profile_enabled');
             }),

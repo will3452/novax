@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
@@ -18,3 +19,9 @@ Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);
     return $result;
 });
+
+Route::get('/career-trajectory', function () {
+    $records = \App\Models\ProfessionalRecord::groupBy('career')->select('career', DB::raw('count(*) as count'))->get();
+    // return $records; 
+    return view('career-trajectory', compact('records')); 
+}); 
