@@ -71,17 +71,17 @@
           center: [longitude, latitude],
           zoom: 13,
       });
-
-      map.addControl(
-          new MapboxDirections({
+      let direction = new MapboxDirections({
               accessToken: mapboxgl.accessToken,
-          }),
+          });
+      map.addControl(
+        direction, 
           'top-right'
       );
 
       map.on('load', () => {
-        map.setOrigin([longitude, latitude])
-        map.setDestination([{{$attraction->lng}}, {{$attraction->lat}}])
+        direction.setOrigin([longitude, latitude])
+        direction.setDestination([{{$attraction->lng}}, {{$attraction->lat}}])
       })
     });
     
