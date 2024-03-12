@@ -2,7 +2,7 @@
 
 namespace App\Nova;
 
-use App\Models\User;
+use App\Models\User as UserModel;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
@@ -25,7 +25,7 @@ class AuditLog extends Resource
 
     public static function availableForNavigation(Request $request)
     {
-        return in_array(auth()->user()->type, [User::TYPE_ADMINISTRATOR, User::TYPE_SUPERVISOR]);  
+        return in_array(auth()->user()->type, [UserModel::TYPE_ADMINISTRATOR, UserModel::TYPE_SUPERVISOR]);  
     }
 
     
