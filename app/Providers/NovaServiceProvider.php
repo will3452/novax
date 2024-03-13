@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\AvailableSlots;
+use App\Nova\Metrics\NewUserPerDay;
+use App\Nova\Metrics\TypeOfUsers;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -72,10 +75,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'Europe/Paris',
                 'Asia/Manila',
                 'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila')
-            ->canSee(function () {
-                return config('novax.time_enabled');
-            }),
+            ])->defaultTimezone('Africa/Manila'),
+            (new NewUserPerDay()), 
+            (new TypeOfUsers()),
+            (new AvailableSlots())
         ];
     }
 

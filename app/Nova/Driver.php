@@ -2,30 +2,23 @@
 
 namespace App\Nova;
 
-use App\Models\User as ModelsUser;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Avatar;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Driver extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'super@admin.com');
-    }
-
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Driver::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -40,7 +33,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
     ];
 
     /**
@@ -53,16 +46,13 @@ class User extends Resource
     {
         return [
             ID::make()->sortable(),
-
-            Select::make('Type')
-                ->options([
-                    ModelsUser::TYPE_DRIVER => ModelsUser::TYPE_DRIVER,
-                    ModelsUser::TYPE_PASSENGER => ModelsUser::TYPE_PASSENGER,
-                ]),
+            Hidden::make('type')->default(\App\Models\User::TYPE_DRIVER), 
             Avatar::make('Image'),
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
+                
+            Text::make('Plate Number')->rules(['required']), 
 
             Text::make('Email')
                 ->sortable()
