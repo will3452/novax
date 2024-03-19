@@ -1,7 +1,7 @@
 <x-layout>
     <x-navbar></x-navbar>
     <div class="mx-auto" style="max-width: 1440px">
-        <div class="columns-3 gap-8">
+        <div class="columns-3 gap-8 mx-auto">
             <img src="/storage/{{$post->cover}}" class="mb-4" alt="">
             <img src="/storage/{{$post->cover_1}}" class="mb-4" alt="">
             <img src="/storage/{{$post->cover_2}}" class="mb-4" alt="">

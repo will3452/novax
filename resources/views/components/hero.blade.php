@@ -2,7 +2,7 @@
   <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
     <div class="w-full md:w-2/3 p-2">
       <h1 class="text-3xl md:text-6xl font-mono font-custom mb-2">
-        Find the best place to rest
+        City of Parañaque
       </h1>
       <form action="/search" class="w-full flex items-center mt-4 justify-center">
         <input id="search" type="text" name="keyword"  value="{{request()->keyword}}" class="p-2 md:p-6  rounded-l-md w-4/5" placeholder=""> <button class="p-2 md:p-6  rounded-r-md bg-green-700 text-white hover:bg-green-900 w-1/5">SEARCH</button>
