@@ -85,7 +85,7 @@
     des.on('click', (e) => {
         if (desMarker == null) {
             desMarker = new mapboxgl.Marker({
-                color: '#1e40af',
+                color: 'red',
                 draggable: true, 
             })
             .setLngLat(e.lngLat)

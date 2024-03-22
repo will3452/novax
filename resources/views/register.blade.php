@@ -7,7 +7,7 @@
             <input class="p-4 w-full mt-4 border-2" type="text" name="name" placeholder="Enter your Full Name" autofocus>
             <input class="p-4 w-full mt-4 border-2" type="email" name="email" placeholder="Enter your Email" autofocus>
             <input class="p-4 w-full mt-4 border-2" type="password" name="password" placeholder="Enter your Password" autofocus>
-            <button class="mt- 4 font-bold p-2 text-lg border-2  border-gray-300 mt-2 text-gray-800">SUBMIT</button>
+            <button class="mt-4 bg-blue-800 font-bold p-4 text-[14px] text-white border-r-4 border-b-4 border-gray-300">SUBMIT</button>
         </form>
     </div>
 </x-layout>
