@@ -18,10 +18,13 @@ class CreateBookingsTable extends Migration
             $table->id();
             $table->integer('driver_id');
             $table->integer('passenger_id');
-            $table->string('origin');
-            $table->string('destination');
+            $table->string('origin')->nullable();
+            $table->string('from_coords')->nullable();
+            $table->string('to_coords')->nullable();
+            $table->string('destination')->nullable();
             $table->integer('number_of_passenger');
             $table->string('payable');
+            $table->string('reference');
             $table->string('status')->default(Booking::STATUS_PENDING); 
             $table->timestamps();
         });

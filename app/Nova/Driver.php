@@ -13,6 +13,25 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Driver extends Resource
 {
+    public function authorizedToUpdate(Request $request)
+    {
+        return auth()->user()->type == \App\Models\User::TYPE_ADMINISTRATOR;
+    }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return auth()->user()->type == \App\Models\User::TYPE_ADMINISTRATOR;
+    }
+
+    public function authorizedToView(Request $request)
+    {
+        return true; 
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return auth()->user()->type == \App\Models\User::TYPE_ADMINISTRATOR; 
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -47,7 +66,7 @@ class Driver extends Resource
         return [
             ID::make()->sortable(),
             Hidden::make('type')->default(\App\Models\User::TYPE_DRIVER), 
-            Avatar::make('Image'),
+            // Avatar::make('Image'),
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),

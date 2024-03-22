@@ -12,11 +12,14 @@ class Booking extends Model
     protected $fillable = [
         'driver_id',
         'passenger_id', 
+        'from_coords',
+        'to_coords', 
         'origin',
         'destination',
         'number_of_passenger',
         'payable', 
         'status', 
+        'reference', 
     ]; 
 
     const STATUS_CONFIRMED = 'Confirmed';

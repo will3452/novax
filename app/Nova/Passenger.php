@@ -2,52 +2,49 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\CheckIn;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Avatar;
+use Laravel\Nova\Fields\Hidden;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Slot extends Resource
+class Passenger extends Resource
 {
-    public static function availableForNavigation(Request $request)
-    {
-        return auth()->user()->type != \App\Models\User::TYPE_PASSENGER; 
-    }
-    
     public function authorizedToUpdate(Request $request)
     {
-        return false;
+        return auth()->user()->type == \App\Models\User::TYPE_ADMINISTRATOR;
     }
 
     public static function authorizedToCreate(Request $request)
     {
-        return false; 
+        return auth()->user()->type == \App\Models\User::TYPE_ADMINISTRATOR;
     }
 
     public function authorizedToView(Request $request)
     {
-        return false; 
+        return true; 
     }
 
     public function authorizedToDelete(Request $request)
     {
-        return false; 
+        return auth()->user()->type == \App\Models\User::TYPE_ADMINISTRATOR; 
     }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Slot::class;
+    public static $model = \App\Models\Passenger::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -56,8 +53,6 @@ class Slot extends Resource
      */
     public static $search = [
         'id',
-        'created_at', 
-        'updated_at', 
     ];
 
     /**
@@ -69,9 +64,23 @@ class Slot extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
-            BelongsTo::make('User', 'user', Driver::class),
-            Boolean::make('Is Available'), 
+            ID::make()->sortable(),
+            Hidden::make('type')->default(\App\Models\User::TYPE_PASSENGER), 
+            // Avatar::make('Image'),
+            Text::make('Name')
+                ->sortable()
+                ->rules('required', 'max:255'),
+                
+            Text::make('Email')
+                ->sortable()
+                ->rules('required', 'email', 'max:254')
+                ->creationRules('unique:users,email')
+                ->updateRules('unique:users,email,{{resourceId}}'),
+
+            Password::make('Password')
+                ->onlyOnForms()
+                ->creationRules('required', 'string', 'min:8')
+                ->updateRules('nullable', 'string', 'min:8'),
         ];
     }
 
@@ -116,8 +125,6 @@ class Slot extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            CheckIn::make()->standalone(), 
-        ];
+        return [];
     }
 }
