@@ -16,6 +16,7 @@ class Passenger extends User {
         'email',
         'password',
         'address',
+        'approved_at', 
         'type',
     ];
 
