@@ -1,6 +1,6 @@
 <div class="bg-white">
     <div class="flex justify-center p-4">
-        <h1 class="text-2xl font-bold text-blue-800 flex">Pando T<x-logo /> DA</h1>
+        <h1 class="text-2xl font-bold text-blue-800 flex">M<x-logo />AYKAN</h1>
     </div>
     <div class="flex md:justify-center border-y bg-gray-100 flex-nowrap w-screen overflow-x-auto ">
         <a href="/" class="block font-thin mx-2 px-8 py-2 {{ route('welcome.page') == url()->current()  ? 'text-white bg-blue-800' : ''}}">Home</a>
