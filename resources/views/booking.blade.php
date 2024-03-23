@@ -30,14 +30,14 @@
     const map = new mapboxgl.Map({
         container: 'map-pu', // container ID
         style: 'mapbox://styles/mapbox/streets-v12', // style URL
-        center: [-74.5, 40], // starting position [lng, lat]
+        center: [120.668831, 15.33585], // starting position [lng, lat]
         zoom: 9, // starting zoom
     });
 
     const des = new mapboxgl.Map({
         container: 'map-des', // container ID
         style: 'mapbox://styles/mapbox/streets-v12', // style URL
-        center: [-74.5, 40], // starting position [lng, lat]
+        center: [120.668831, 15.33585], // starting position [lng, lat]
         zoom: 9, // starting zoom
     });
 
