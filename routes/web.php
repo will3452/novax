@@ -22,6 +22,27 @@ function getLocation($lat, $lng) {
     }
 } 
 
+Route::get('login', function (Request $request){
+    return view('login'); 
+})->name('login'); 
+
+Route::get('/app/login', function (Request $request){
+    return view('login'); 
+})->name('nova.login');
+
+Route::post('/login', function (Request $request) {
+    $creds = $request->validate([
+        'email' => ['email', 'exists:users,email'],
+        'password' => ['required'],
+    ]);
+
+    if (! auth()->attempt($creds)) {
+        return back()->errors(['error' => 'Incorrect email/password.']); 
+    }
+
+    return redirect()->to('/app/'); 
+})->name('nova.login'); 
+
 Route::get('/redirecting', function(Request $request){
     return redirect('/app'); 
 })->name('login'); 
