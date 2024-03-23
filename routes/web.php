@@ -114,9 +114,9 @@ Route::post('/register', function (Request $request) {
     $data['password'] = bcrypt($data['password']); 
 
     $user = User::create($data); 
-    auth()->login($user);
+    alert()->success('Success', 'You are now registered, please wait for administrator approval.'); 
 
-    return redirect()->to('/app'); 
+    return redirect()->to('/'); 
 })->name('register.post');
 Route::view('/register', 'register')->name('register.page'); 
 
