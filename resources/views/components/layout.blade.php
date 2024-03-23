@@ -8,6 +8,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+    @include('sweetalert::alert')
     <x-navbar />
     {{ $slot }}
 </body>

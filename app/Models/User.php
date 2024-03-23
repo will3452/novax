@@ -25,6 +25,7 @@ class User extends Authenticatable
         'address',
         'image',
         'type',
+        'approved_at', 
         'plate_number',
     ];
 

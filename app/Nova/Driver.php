@@ -2,9 +2,11 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\Approve;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Select;
@@ -64,7 +66,10 @@ class Driver extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            Badge::make('Status', fn () => $this->approved_at == null ? "FOR APPROVAL": "APPROVED")->map([
+                'APPROVED' => 'success',
+                'FOR APPROVAL' => 'warning',
+            ]), 
             Hidden::make('type')->default(\App\Models\User::TYPE_DRIVER), 
             // Avatar::make('Image'),
             Text::make('Name')
@@ -127,6 +132,10 @@ class Driver extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        $actions = [];
+        if (auth()->user()->type == \App\Models\User::TYPE_ADMINISTRATOR) {
+            array_push($actions, Approve::make()); 
+        }
+        return $actions;
     }
 }

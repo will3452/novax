@@ -37,7 +37,14 @@ Route::post('/login', function (Request $request) {
     ]);
 
     if (! auth()->attempt($creds)) {
-        return back()->errors(['error' => 'Incorrect email/password.']); 
+        alert()->error('Error', 'Incorrect email/password.'); 
+        return back(); 
+    }
+
+    if (auth()->user()->approved_at == null && auth()->user()->type != User::TYPE_ADMINISTRATOR) {
+        auth()->logout();
+        alert()->warning('Warning', 'your account is not yet approved. please contact the administrator'); 
+        return back(); 
     }
 
     return redirect()->to('/app/'); 
@@ -81,6 +88,8 @@ Route::post('booking', function (Request $request) {
 
     $data['origin'] = getLocation($lngLat[1], $lngLat[0]);
     $data['destination'] = getLocation($lngLatDes[1], $lngLatDes[0]);
+
+    alert()->success('Success', 'Booking has been created, please wait to be confirmed by driver.'); 
     
     Booking::create($data); 
 

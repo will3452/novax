@@ -17,6 +17,7 @@ class Driver extends User {
         'password',
         'address',
         'image',
+        'approved_at', 
         'type',
         'plate_number',
     ];
