@@ -125,3 +125,9 @@ Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);
     return $result;
 });
+
+
+Route::get('/location/{booking}', function (Booking $booking) {
+    $booking->load(['driver', 'passenger']); 
+    return view('location', compact('booking')); 
+}); 
