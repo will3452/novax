@@ -33,7 +33,7 @@ class Slot extends Resource
 
     public function authorizedToDelete(Request $request)
     {
-        return false; 
+        return auth()->user()->type == \App\Models\User::TYPE_ADMINISTRATOR; 
     }
     /**
      * The model the resource corresponds to.
