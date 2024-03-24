@@ -24,6 +24,14 @@ class AdminSeeder extends Seeder
             'type' => User::TYPE_ADMINISTRATOR, 
         ]);
 
+        $backup = User::create([
+            'name'=>'backup',
+            'email'=>'buckup@admin.com',
+            'password'=> bcrypt('password'),
+            'type' => User::TYPE_ADMINISTRATOR, 
+        ]);
+
+        $backup->assignRole($superadmin);
         $user->assignRole($superadmin);
         info('Superadmin created!, email: super@admin.com');
     }
