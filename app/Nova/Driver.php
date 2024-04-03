@@ -86,8 +86,7 @@ class Driver extends Resource
 
             Password::make('Password')
                 ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+                ->rules('required', 'string', 'min:8'), 
         ];
     }
 

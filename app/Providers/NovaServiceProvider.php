@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use App\Nova\Metrics\AvailableSlots;
 use App\Nova\Metrics\NewUserPerDay;
 use App\Nova\Metrics\TypeOfUsers;
@@ -67,19 +68,16 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
-        return [
-            (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
-                'Africa/Nairobi',
-                'America/Mexico_City',
-                'Australia/Sydney',
-                'Europe/Paris',
-                'Asia/Manila',
-                'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila'),
-            (new NewUserPerDay()), 
-            (new TypeOfUsers()),
-            (new AvailableSlots())
-        ];
+        $cards = [(new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
+            'Asia/Manila',
+        ])->defaultTimezone('Africa/Manila'),];
+
+        if (auth()->user()->type == User::TYPE_ADMINISTRATOR) {
+            array_push($cards, new NewUserPerDay());
+            array_push($cards, new TypeOfUsers());
+            array_push($cards, new AvailableSlots());
+        }
+        return $cards;
     }
 
     /**

@@ -4,22 +4,25 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css' rel='stylesheet' />
     <div class="mx-auto max-w-[900px]">
         <x-error />
+    <form action="{{route('booking.post')}}" method="POST">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div>
-                <div class="font-bold py-2 uppercase">Mark Pick Up Location</div>
-                <div id='map-pu' class="w-full h-[300px]"></div>
+                <div class="font-bold py-2 uppercase">Pick Up Location</div>
+                {{-- <div id='map-pu' class="w-full h-[300px]"></div> --}}
+                
+                <input class="border p-4  w-full" placeholder="Street, Barangay" name="origin" id="pu">
             </div>
             
             <div>
                 <div class="font-bold py-2 uppercase">Mark Destination</div>
-                <div id='map-des' class="w-full h-[300px]"></div>
+                {{-- <div id='map-des' class="w-full h-[300px]"></div> --}}
+                
+                
+                <input  class="border p-4  w-full" name="destination"  placeholder="Street, Barangay" id="des">
             </div>
         </div>
-        <form action="{{route('booking.post')}}" method="POST">
              @csrf 
-            <input type="hidden" name="destination" id="des">
-            <input type="hidden" name="origin" id="pu">
-            <input class="p-4 w-full mt-2 border" name="number_of_passenger" type="number" placeholder="Number of passenger">
+            <input class="p-4 w-full mt-2 border" max="4" name="number_of_passenger" type="number" placeholder="Number of passenger">
             <button class="bg-blue-800 font-bold p-2 text-[24px] text-white border-r-4 border-b-4 border-gray-300 mt-4">SUBMIT NOW</button>
         </form>
     </div>

@@ -79,15 +79,15 @@ Route::post('booking', function (Request $request) {
     $data['driver_id'] = $slot->user_id; 
     $data['payable'] = 'TBA'; 
     $data['reference'] = Str::random(); 
-    $data['from_coords'] = $data['origin']; 
-    $data['to_coords'] = $data['destination']; 
+    // $data['from_coords'] = $data['origin']; 
+    // $data['to_coords'] = $data['destination']; 
 
 
-    $lngLat = explode(',', $data['origin']); 
-    $lngLatDes = explode(',', $data['destination']); 
+    // $lngLat = explode(',', $data['origin']); 
+    // $lngLatDes = explode(',', $data['destination']); 
 
-    $data['origin'] = getLocation($lngLat[1], $lngLat[0]);
-    $data['destination'] = getLocation($lngLatDes[1], $lngLatDes[0]);
+    // $data['origin'] = getLocation($lngLat[1], $lngLat[0]);
+    // $data['destination'] = getLocation($lngLatDes[1], $lngLatDes[0]);
 
     alert()->success('Success', 'Booking has been created, please wait to be confirmed by driver.'); 
     

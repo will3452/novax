@@ -80,8 +80,8 @@ class Booking extends Resource
             Text::make('Reference', 'reference')->sortable(), 
             BelongsTo::make('Driver', 'driver', Driver::class),
             BelongsTo::make('Passenger', 'passenger', Passenger::class),
-            // Text::make('Pick up Location', 'origin'), 
-            // Text::make('Destination'),
+            Text::make('Pick up Location', 'origin'), 
+            Text::make('Destination'),
             Number::make('Number Of passenger'),
             Text::make('Payable'),
             Badge::make('Status')->types([
@@ -143,7 +143,7 @@ class Booking extends Resource
 
         if (auth()->user()->type == \App\Models\User::TYPE_DRIVER) {
             array_push($actions, UpdateBooking::make()); 
-            array_push($actions, ViewLocation::make()); 
+            // array_push($actions, ViewLocation::make()); 
         }
         return $actions;
     }
