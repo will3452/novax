@@ -1,10 +1,12 @@
 <x-layout>
     <div class=" w-screen max-w-[900px] mx-auto p-4">
         <x-error />
-        <form action="{{route('register.post')}}" method="POST">
+        <form action="{{route('register.post')}}" method="POST" enctype="multipart/form-data">
             @csrf 
             <h1 class="text-2xl font-bold" >REGISTER</h1>
             <div class="text-2xl ">Register as: <label for="p"><input type="radio" value="Passenger" name="type" id="p"/>Passenger</label> <label for="d"><input type="radio" id="d"  name="type" value="Driver"/>Driver</label> </div>
+            <div class="mt-2">Upload Profile</div>
+            <input type="file" name="image" required accept="image/*">
             <input class="p-4 w-full mt-4 border-2" type="text" name="name" placeholder="Enter your Full Name" autofocus>
             <input class="p-4 w-full mt-4 border-2" type="email" name="email" placeholder="Enter your Email" autofocus>
             <input class="p-4 w-full mt-4 border-2" type="password" name="password" placeholder="Enter your Password" autofocus>

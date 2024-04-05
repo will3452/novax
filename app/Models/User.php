@@ -27,6 +27,7 @@ class User extends Authenticatable
         'type',
         'approved_at', 
         'plate_number',
+        'email_verified_at', 
     ];
 
     const TYPE_PASSENGER = 'Passenger';

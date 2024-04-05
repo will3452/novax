@@ -8,7 +8,8 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 function getLocation($lat, $lng) {
     try {
@@ -53,6 +54,41 @@ Route::post('/login', function (Request $request) {
 Route::get('/redirecting', function(Request $request){
     return redirect('/app'); 
 })->name('login'); 
+
+Route::get('/logout', function () {
+    auth()->logout();
+    return redirect()->to('/'); 
+}); 
+
+Route::get('email-verify', function (Request $request) {
+    return view('email'); 
+})->name('email.verify'); 
+
+Route::get('verify-email', function (Request $request) {
+    if (Hash::check($request->email, $request->token)) {
+        User::whereEmail($request->email)->update(['email_verified_at' => now()]); 
+        $user = User::whereEmail($request->email)->first();
+        auth()->loginUsingId($user->id);
+        alert()->success('Your email is now verified!'); 
+        return redirect('/'); 
+    }
+
+    return 'Invalid link!'; 
+})->name('email.link'); 
+
+Route::post('email-verify', function (Request $request) {
+    $email = auth()->user()->email; 
+    $token = bcrypt($email); 
+    $link = route('email.link'); 
+    $html = "please verify your email. by clicking . <a href='$link?email=$email&token=$token'>verify now</a>"; 
+    Mail::send([], [], function($message) use($html, $email) {
+        $message->subject('Email Verification')
+        ->to($email)
+        ->setBody($html, 'text/html');
+    });
+
+    return 'verification link has been sent. please check you email'; 
+})->name('email.verify'); 
 
 Route::get('/', function () {
     return view('welcome');
@@ -109,7 +145,12 @@ Route::post('/register', function (Request $request) {
         'password' => ['required', 'min:6'],
         'name' => ['required'],
         'type' => ['required'], 
+        'image' => ['image'], 
     ]);
+
+    $image = $request->image->store('public'); 
+    $image = explode('/', $image); 
+    $data['image'] = "/$image[1]";
 
     $data['password'] = bcrypt($data['password']); 
 
