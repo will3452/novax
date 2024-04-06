@@ -18,7 +18,7 @@ class UpdateBooking extends Action
     use InteractsWithQueue, Queueable;
 
     public function escalateBookings ($booking) {
-        $slot = Slot::whereIsAvailable(true)->where('driver_id', '!=', $booking->driver_id)->first(); 
+        $slot = Slot::whereIsAvailable(true)->where('user_id', '!=', $booking->driver_id)->first(); 
         if (! $slot ) {
             $booking->update([
                 'status' => 'Rejected',
