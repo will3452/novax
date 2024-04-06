@@ -19,7 +19,7 @@ class UpdateBooking extends Action
 
     public function escalateBookings ($booking) {
         $slot = Slot::whereIsAvailable(true)->first(); 
-        if (! $slot || count($slot) == 1) {
+        if (! $slot && $slot->driver_id == auth()->id()) {
             $booking->update([
                 'status' => 'Rejected',
                 'driver_id' => 1, // admin 
