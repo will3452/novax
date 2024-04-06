@@ -15,6 +15,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Passenger extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->type != \App\Models\User::TYPE_PASSENGER;
+    }
     public function authorizedToUpdate(Request $request)
     {
         return auth()->user()->type == \App\Models\User::TYPE_ADMINISTRATOR;
@@ -85,7 +89,7 @@ class Passenger extends Resource
             Password::make('Password')
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+                ->updateRules('required', 'string', 'min:8'),
         ];
     }
 
