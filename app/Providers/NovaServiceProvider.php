@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\User;
 use App\Nova\Metrics\AvailableSlots;
+use App\Nova\Metrics\DateAndTime;
 use App\Nova\Metrics\NewUserPerDay;
 use App\Nova\Metrics\TypeOfUsers;
 use Laravel\Nova\Nova;
@@ -68,9 +69,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
-        $cards = [(new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
-            'Asia/Manila',
-        ])->defaultTimezone('Africa/Manila'),];
+        $cards = [
+            DateAndTime::make(), 
+        ];
 
         if (auth()->user()->type == User::TYPE_ADMINISTRATOR) {
             array_push($cards, new NewUserPerDay());

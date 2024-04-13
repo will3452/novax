@@ -15,6 +15,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Driver extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->type != \App\Models\User::TYPE_PASSENGER;
+    }
     public function authorizedToUpdate(Request $request)
     {
         return auth()->user()->type == \App\Models\User::TYPE_ADMINISTRATOR;
