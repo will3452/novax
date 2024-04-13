@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ab93988a0e83444ec0a42a9733e60fed",
+    "content-hash": "91e532f77b460db0b4e614af161a1611",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1279,6 +1279,58 @@
             ],
             "abandoned": true,
             "time": "2022-02-23T14:25:13+00:00"
+        },
+        {
+            "name": "gilbertchiao/nova-custom-text-card",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gilbertchiao/nova-custom-text-card.git",
+                "reference": "fa24f1401860de43ba4d9bc71fcfdb82c809d6a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gilbertchiao/nova-custom-text-card/zipball/fa24f1401860de43ba4d9bc71fcfdb82c809d6a4",
+                "reference": "fa24f1401860de43ba4d9bc71fcfdb82c809d6a4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "GilbertChiao\\CustomTextCard\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GilbertChiao\\CustomTextCard\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gilbert Chiao",
+                    "email": "gilbertchiao@gmail.com"
+                }
+            ],
+            "description": "A Laravel Nova card to customize card heading and content.",
+            "keywords": [
+                "card",
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/gilbertchiao/nova-custom-text-card/issues",
+                "source": "https://github.com/gilbertchiao/nova-custom-text-card/tree/v1.0.0"
+            },
+            "time": "2021-07-11T07:46:26+00:00"
         },
         {
             "name": "graham-campbell/result-type",

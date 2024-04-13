@@ -7,6 +7,7 @@ use App\Nova\Metrics\AvailableSlots;
 use App\Nova\Metrics\DateAndTime;
 use App\Nova\Metrics\NewUserPerDay;
 use App\Nova\Metrics\TypeOfUsers;
+use GilbertChiao\CustomTextCard\CustomTextCard;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -69,8 +70,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
+        $result = now()->format('M d, Y - h:i A');
         $cards = [
-            DateAndTime::make(), 
+            (new CustomTextCard())
+                ->heading('Date and Time')
+                ->content($result), 
         ];
 
         if (auth()->user()->type == User::TYPE_ADMINISTRATOR) {
