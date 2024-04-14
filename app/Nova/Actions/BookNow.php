@@ -3,13 +3,14 @@
 namespace App\Nova\Actions;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
+use Illuminate\Support\Collection;
 use Laravel\Nova\Fields\ActionFields;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Brightspot\Nova\Tools\DetachedActions\DetachedAction;
 
-class BookNow extends Action
+class BookNow extends DetachedAction
 {
     use InteractsWithQueue, Queueable;
 
@@ -22,7 +23,7 @@ class BookNow extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        return Action::redirect('/booking'); 
+        return DetachedAction::redirect('/booking'); 
     }
 
     /**
