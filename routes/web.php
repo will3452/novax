@@ -105,7 +105,7 @@ Route::post('booking', function (Request $request) {
     // find slot 
     $slot = Slot::whereIsAvailable(true)->first(); 
     if (! $slot) {
-        return "No Slot Available!"; 
+        return "No Slot Available! <a href='/booking'>go back</a>"; 
     }
 
     // geocoding 

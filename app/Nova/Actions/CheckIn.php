@@ -4,13 +4,14 @@ namespace App\Nova\Actions;
 
 use App\Models\Slot;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
+use Illuminate\Support\Collection;
 use Laravel\Nova\Fields\ActionFields;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Brightspot\Nova\Tools\DetachedActions\DetachedAction;
 
-class CheckIn extends Action
+class CheckIn extends DetachedAction
 {
     use InteractsWithQueue, Queueable;
 
@@ -31,7 +32,7 @@ class CheckIn extends Action
                 'user_id' => auth()->id(),
             ]);
         } else {
-            return Action::danger('You already Check in!'); 
+            return DetachedAction::danger('You already Check in!'); 
         }
     }
 
