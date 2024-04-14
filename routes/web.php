@@ -74,3 +74,7 @@ Route::get('/artisan', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/mission-vision', function () {
+    return view('mv'); 
+}); 

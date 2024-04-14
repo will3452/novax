@@ -11,6 +11,7 @@
                 <a href="/" class=" p-4 tracking-widest hover:bg-gray-200">Home</a>
                 <a href="/map" class=" p-4 tracking-widest hover:bg-gray-200">Map</a>
                 <a href="/search" class=" p-4 tracking-widest hover:bg-gray-200">Tourist Attractions</a>
+                <a href="/mission-vision" class=" p-4 tracking-widest hover:bg-gray-200">Mission/Vision</a>
                 <a href="/about" class=" p-4 tracking-widest hover:bg-gray-200">About</a>
         </div>
         <div class="block md:hidden">
@@ -31,6 +32,9 @@
         </li>
         <li>
             <a href="/search" class="block my-2 p-4 tracking-widest hover:bg-gray-200">Tourist Attractions</a>
+        </li>
+        <li>
+            <a href="/mission-vision" class="block my-2 p-4 tracking-widest hover:bg-gray-200">Mission / Vision</a>
         </li>
         <li>
             <a href="/about" class="block my-2 p-4 tracking-widest hover:bg-gray-200">About</a>
