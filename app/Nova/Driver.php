@@ -17,7 +17,8 @@ class Driver extends Resource
 {
     public static function availableForNavigation(Request $request)
     {
-        return auth()->user()->type != \App\Models\User::TYPE_PASSENGER;
+        $blocked = [\App\Models\User::TYPE_DRIVER, \App\Models\User::TYPE_PASSENGER]; 
+        return ! in_array(auth()->user()->type, $blocked); 
     }
     public function authorizedToUpdate(Request $request)
     {
