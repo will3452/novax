@@ -5,21 +5,10 @@
                 {{$error}}
             </div>
         @endforeach
-        <h1 class="font-bold p-2">Register as Trainee</h1>
-        <form action="/register-trainee" method="POST" class="p-2 ">
+        <h1 class="font-bold p-2">Register as Coordinator</h1>
+        <form action="/register-coordinator" method="POST" class="p-2 ">
             @csrf 
-            <label for="" class="text-base block mt-2">
-                Coordinator's Email
-            </label>
-            <input name="coordinator" required class="block border rounded-md w-full p-2" type="email">
-            <label for="" class="text-base block mt-2">
-                Name
-            </label>
-            <label for="" class="text-base block mt-2">
-                School name
-            </label>
-            <input name="school" required class="block border rounded-md w-full p-2" type="text">
-            <label for="" class="text-base block mt-2">
+           <label for="" class="text-base block mt-2">
                 Name
             </label>
             <input name="name" required class="block border rounded-md w-full p-2" type="text">

@@ -2,35 +2,39 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\Approve;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Coordinator extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
+    public static function availableForNavigation(Request $request)
     {
-        return $query->where('email', '!=', 'super@admin.com');
+        if (in_array(auth()->user()->type, [\App\Models\User::TYPE_TRAINEE, \App\Models\User::TYPE_COORDINATOR, \App\Models\User::TYPE_HTE])) {
+            return false; 
+        }
+        return true; 
     }
-
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Coordinator::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public function title () {
+        return "$this->name [$this->type]"; 
+    }
 
     /**
      * The columns that should be searched.
@@ -38,7 +42,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
     ];
 
     /**
@@ -50,15 +54,7 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-
-            Select::make('Type')
-                ->options([
-                    \App\Models\User::TYPE_ADMIN => \App\Models\User::TYPE_ADMIN, 
-                    \App\Models\User::TYPE_COORDINATOR => \App\Models\User::TYPE_COORDINATOR,
-                    \App\Models\User::TYPE_HTE => \App\Models\User::TYPE_HTE,
-                    \App\Models\User::TYPE_TRAINEE => \App\Models\User::TYPE_TRAINEE, 
-                ]), 
-
+            Hidden::make('type')->default(fn () => \App\Models\User::TYPE_COORDINATOR), 
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
@@ -73,6 +69,8 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
+
+            Date::make('Approved Date', 'approved_at'), 
         ];
     }
 
@@ -117,6 +115,8 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            Approve::make(), 
+        ];
     }
 }

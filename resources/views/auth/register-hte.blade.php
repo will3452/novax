@@ -5,20 +5,30 @@
                 {{$error}}
             </div>
         @endforeach
-        <h1 class="font-bold p-2">Register as Trainee</h1>
-        <form action="/register-trainee" method="POST" class="p-2 ">
-            @csrf 
-            <label for="" class="text-base block mt-2">
-                Coordinator's Email
-            </label>
-            <input name="coordinator" required class="block border rounded-md w-full p-2" type="email">
-            <label for="" class="text-base block mt-2">
-                Name
-            </label>
-            <label for="" class="text-base block mt-2">
-                School name
-            </label>
-            <input name="school" required class="block border rounded-md w-full p-2" type="text">
+        <h1 class="font-bold p-2">Register as HTE</h1>
+        <form action="/register-hte" method="POST" class="p-2 ">
+            @csrf
+            
+            <div x-data="{lat:null, lng: null}" x-init="
+            navigator.geolocation.getCurrentPosition((pos)=>{
+                let { latitude, longitude} = pos.coords; 
+                lat = latitude; 
+                lng = longitude; 
+            })
+        " class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                <div >
+                    <label for="" class="text-base block mt-2">
+                        Latitude
+                    </label>
+                    <input :value="lat" readonly name="lat" required class="block border rounded-md w-full p-2" type="text">
+                </div>
+                <div>
+                    <label for="" class="text-base block mt-2">
+                        Longitude
+                    </label>
+                    <input :value="lng" readonly name="lng" required class="block border rounded-md w-full p-2" type="text">
+                </div>
+            </div>
             <label for="" class="text-base block mt-2">
                 Name
             </label>

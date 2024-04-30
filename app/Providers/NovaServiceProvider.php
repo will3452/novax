@@ -2,6 +2,14 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\ApplicationStatus;
+use App\Nova\Metrics\ForApproval;
+use App\Nova\Metrics\JobPosts;
+use App\Nova\Metrics\MyApplications;
+use App\Nova\Metrics\MyStudents;
+use App\Nova\Metrics\SubmittedApplications;
+use App\Nova\Metrics\Trainees;
+use App\Nova\Metrics\UserTypes;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -51,9 +59,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+            return true;
         });
     }
 
@@ -64,7 +70,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
-        return [
+        $cards = [
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
                 'America/Mexico_City',
@@ -72,11 +78,28 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'Europe/Paris',
                 'Asia/Manila',
                 'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila')
-            ->canSee(function () {
-                return config('novax.time_enabled');
-            }),
+            ])->defaultTimezone('Africa/Manila'), 
+            JobPosts::make(), 
         ];
+        if (auth()->user()->type == \App\Models\User::TYPE_TRAINEE) {
+            array_push($cards, MyApplications::make()); 
+        }
+
+        if (auth()->user()->type == \App\Models\User::TYPE_COORDINATOR) {
+            array_push($cards, MyStudents::make()); 
+        }
+
+        if (auth()->user()->type == \App\Models\User::TYPE_ADMIN) {
+            array_push($cards, UserTypes::make()); 
+            array_push($cards, ForApproval::make()); 
+        }
+
+        if (auth()->user()->type == \App\Models\User::TYPE_HTE) {
+            array_push($cards, SubmittedApplications::make()); 
+            array_push($cards, ApplicationStatus::make()); 
+            array_push($cards, Trainees::make()); 
+        }
+        return $cards;
     }
 
     /**

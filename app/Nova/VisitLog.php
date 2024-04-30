@@ -5,32 +5,30 @@ namespace App\Nova;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class VisitLog extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
+    public static function availableForNavigation(Request $request)
     {
-        return $query->where('email', '!=', 'super@admin.com');
+        return auth()->user()->type == \App\Models\User::TYPE_COORDINATOR; 
     }
-
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\VisitLog::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -38,8 +36,19 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
     ];
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return true; 
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return false; 
+    }
+
 
     /**
      * Get the fields displayed by the resource.
@@ -50,29 +59,11 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-
-            Select::make('Type')
-                ->options([
-                    \App\Models\User::TYPE_ADMIN => \App\Models\User::TYPE_ADMIN, 
-                    \App\Models\User::TYPE_COORDINATOR => \App\Models\User::TYPE_COORDINATOR,
-                    \App\Models\User::TYPE_HTE => \App\Models\User::TYPE_HTE,
-                    \App\Models\User::TYPE_TRAINEE => \App\Models\User::TYPE_TRAINEE, 
-                ]), 
-
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+            ID::make(__('ID'), 'id')->sortable(),
+            Date::make('Date', 'created_at')->sortable(), 
+            BelongsTo::make('Trainee', 'trainee', Trainee::class), 
+            BelongsTo::make('Coordinator', 'coordinator', Coordinator::class), 
+            Text::make('Remarks'), 
         ];
     }
 

@@ -22,7 +22,21 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
+        'school',
+        'approved_at',
+        'lat',
+        'lng', 
     ];
+
+    public function applications () {
+        return $this->hasMany(Application::class, 'trainee_id'); 
+    }
+
+    const TYPE_HTE = 'HTE';
+    const TYPE_TRAINEE = 'TRAINEE';
+    const TYPE_COORDINATOR = 'COORDINATOR';
+    const TYPE_ADMIN = 'ADMINISTRATOR'; 
 
     /**
      * The attributes that should be hidden for serialization.
@@ -41,5 +55,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'approved_at' => 'datetime', 
     ];
 }
