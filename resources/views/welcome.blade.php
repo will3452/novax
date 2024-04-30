@@ -26,7 +26,7 @@
                 REPORT
             </a> 
             <div class="mt-2">
-                <a href="https://www.tsu.edu.ph/contact-us/emergency-contact-numbers" target="_blank" class="inline-block shadow-md p-1 bg-white font-mono font-bold">Other Emergency Hotlines</a>
+                <a href="https://www.tsu.edu.ph/contact-us/emergency-contact-numbers" target="_blank" class="underline text-blue-900">Other Emergency Hotlines</a>
             </div>
         </div>
         <img src="/police.png" alt="" class="absolute z-0 top-40 opacity-50 md:left-20">
