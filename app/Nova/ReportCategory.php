@@ -5,9 +5,13 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
-
+use App\Models\User as ModelUser; 
 class ReportCategory extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return in_array(auth()->user()->type, [ModelUser::TYPE_ADMINISTRATOR, ModelUser::TYPE_SUPERVISOR]);
+    }
     /**
      * The model the resource corresponds to.
      *

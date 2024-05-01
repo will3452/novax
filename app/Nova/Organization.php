@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Nova;
-
+use App\Models\User as ModelUser; 
 use App\Nova\Metrics\Organizations;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Avatar;
@@ -9,6 +9,10 @@ use Laravel\Nova\Fields\Text;
 
 class Organization extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return in_array(auth()->user()->type, [ModelUser::TYPE_ADMINISTRATOR, ModelUser::TYPE_SUPERVISOR]);
+    }
     /**
      * The model the resource corresponds to.
      *
