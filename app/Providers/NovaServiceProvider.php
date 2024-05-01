@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\Profiles;
+use App\Nova\Metrics\TotalMedicines;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -72,10 +74,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'Europe/Paris',
                 'Asia/Manila',
                 'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila')
-            ->canSee(function () {
-                return config('novax.time_enabled');
-            }),
+            ])->defaultTimezone('Africa/Manila'), 
+            TotalMedicines::make(), 
+            Profiles::make(), 
         ];
     }
 
@@ -97,9 +98,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            (new ProfileTool)->canSee(function () {
-                return config('novax.profile_enabled');
-            }),
+            // (new ProfileTool)->canSee(function () {
+            //     return config('novax.profile_enabled');
+            // }),
             (new BackupTool)->canSee(function ($request) {
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
                 config('novax.back_up_enabled');
