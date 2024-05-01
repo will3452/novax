@@ -22,7 +22,7 @@
                     @endforeach
                 </p>
                 <p class="text-xl font-mono">
-                    {{$post ->body}}
+                    {!!$post ->body!!}
                 </p>
                 <a href="/news" class="underline text-blue-500 mt-5 block">Go back to newsfeed.</a>
              </div>
