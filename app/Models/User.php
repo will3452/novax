@@ -22,7 +22,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
+        'address',
+        'sex',
+        'birthday', 
     ];
+
+    const TYPE_ADMIN = 'Administrator';
+    const TYPE_STAFF = 'Staff';
+    const TYPE_PATIENT = 'Patient';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -41,5 +49,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'birthday' => 'date', 
     ];
 }

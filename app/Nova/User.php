@@ -2,13 +2,18 @@
 
 namespace App\Nova;
 
+use App\Models\User as ModelsUser;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Panel;
 
 class User extends Resource
 {
@@ -17,7 +22,6 @@ class User extends Resource
         return $query->where('email', '!=', 'super@admin.com');
     }
 
-    public static $group = 'Data';
     /**
      * The model the resource corresponds to.
      *
@@ -50,25 +54,36 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
 
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
+            Panel::make('Basic Information', [
+                Select::make('Type')
+                    ->options([
+                        ModelsUser::TYPE_PATIENT => ModelsUser::TYPE_PATIENT, 
+                        ModelsUser::TYPE_STAFF => ModelsUser::TYPE_STAFF, 
+                    ]), 
+                Text::make('Name')
+                    ->sortable()
+                    ->rules('required', 'max:255'),
+                Select::make('Sex')
+                    ->options([
+                        'Male' => 'Male',
+                        'Female' => 'Female',
+                    ]),
+                Text::make('Address'), 
+                Date::make('Birthday'), 
+            ]), 
+            Panel::make('Account Credentials', [
+                Text::make('Email')
+                    ->sortable()
+                    ->rules('required', 'email', 'max:254')
+                    ->creationRules('unique:users,email')
+                    ->updateRules('unique:users,email,{{resourceId}}'),
 
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
-
-            MorphToMany::make('Roles', 'roles', Role::class)
-                ->canSee(fn () => config('novax.role_enabled')),
+                Password::make('Password')
+                    ->onlyOnForms()
+                    ->creationRules('required', 'string', 'min:8')
+                    ->updateRules('nullable', 'string', 'min:8'),
+            ])
         ];
     }
 

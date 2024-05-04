@@ -2,6 +2,13 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\Bookings;
+use App\Nova\Metrics\BookingStatus;
+use App\Nova\Metrics\BookingTrends;
+use App\Nova\Metrics\ForApprovalBookings;
+use App\Nova\Metrics\NewUsers;
+use App\Nova\Metrics\PatientBookingStatus;
+use App\Nova\Metrics\ScheduledBookingsToday;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -51,9 +58,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+            return true; 
         });
     }
 
@@ -64,19 +69,28 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
-        return [
+        $cards = [
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
-                'Africa/Nairobi',
-                'America/Mexico_City',
-                'Australia/Sydney',
-                'Europe/Paris',
                 'Asia/Manila',
-                'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila')
-            ->canSee(function () {
-                return config('novax.time_enabled');
-            }),
-        ];
+            ])->defaultTimezone('Africa/Manila'),
+            ]; 
+        if (auth()->user()->type == \App\Models\User::TYPE_PATIENT) {
+            array_push($cards, Bookings::make());
+            array_push($cards, BookingTrends::make());
+            array_push($cards, BookingStatus::make());
+
+            return $cards; 
+        }
+
+        // if (auth()->user()->type == \App\Models\User::TYPE_STAFF) {
+            
+        // }
+
+        array_push($cards, ForApprovalBookings::make());
+        array_push($cards, PatientBookingStatus::make());
+        array_push($cards, NewUsers::make()); 
+        array_push($cards, ScheduledBookingsToday::make()); 
+        return $cards;
     }
 
     /**
