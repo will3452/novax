@@ -21,7 +21,6 @@ class Role extends Resource
         return config('novax.role_enabled', false);
     }
 
-    public static $group = 'access Control';
     /**
      * The model the resource corresponds to.
      *

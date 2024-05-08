@@ -2,39 +2,33 @@
 
 namespace App\Nova;
 
-use App\Models\User as ModelsUser;
-use Laravel\Nova\Fields\ID;
+use App\Models\Section as ModelsSection;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Hidden;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Section extends Resource
 {
-    
-    public static $group = 'Administration'; 
-
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'super@admin.com');
-    }
-
+    public static $group = 'Manage';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Section::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'section';
 
     /**
      * The columns that should be searched.
@@ -42,7 +36,8 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'section', 
     ];
 
     /**
@@ -54,29 +49,29 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
-            Select::make('Type')
+            ID::make(__('ID'), 'id')->sortable(),
+            BelongsTo::make('Course', 'course', Course::class), 
+            Text::make('Section'),
+            Select::make('School Year')
+                ->options(\App\Models\SchoolYear::get()->pluck('name', 'name')),
+            Select::make('Term')
+                ->options(\App\Models\Term::get()->pluck('name', 'name')), 
+            Number::make('No of Students')->rules(['min:1']), 
+            Select::make('Thesis Phase')
                 ->options([
-                    ModelsUser::TYPE_DEAN =>  ModelsUser::TYPE_DEAN,
-                    ModelsUser::TYPE_STUDENT =>  ModelsUser::TYPE_STUDENT,
-                    ModelsUser::TYPE_FACULTY =>  ModelsUser::TYPE_FACULTY,
-                ]), 
-
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+                    ModelsSection::PHASE_PROPOSAL =>  ModelsSection::PHASE_PROPOSAL,
+                    ModelsSection::PHASE_GATHERING =>  ModelsSection::PHASE_GATHERING,
+                    ModelsSection::PHASE_FINAL =>  ModelsSection::PHASE_FINAL,
+                ]),
+            Select::make('IC type', 'ic_type')
+                ->options([
+                    \App\Models\Title::IC_TYPE_CAPSTONE => \App\Models\Title::IC_TYPE_CAPSTONE,
+                    \App\Models\Title::IC_TYPE_THESIS => \App\Models\Title::IC_TYPE_THESIS,
+                ]),
+            Hidden::make('ic_type')
+                ->default(fn() => auth()->id()),
+            BelongsTo::make('Creator', 'creator', User::class), 
+            Password::make('Pass Code'), 
         ];
     }
 

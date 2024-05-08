@@ -2,6 +2,14 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\Announcements;
+use App\Nova\Metrics\Courses;
+use App\Nova\Metrics\Groups;
+use App\Nova\Metrics\NewGroups;
+use App\Nova\Metrics\NewTitles;
+use App\Nova\Metrics\NewUsers;
+use App\Nova\Metrics\Titles;
+use App\Nova\Metrics\Users;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -66,16 +74,16 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
-                'Africa/Nairobi',
-                'America/Mexico_City',
-                'Australia/Sydney',
-                'Europe/Paris',
                 'Asia/Manila',
-                'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila')
-            ->canSee(function () {
-                return config('novax.time_enabled');
-            }),
+            ]),
+            Users::make(), 
+            Groups::make(), 
+            Titles::make(), 
+            Announcements::make(), 
+            Courses::make(), 
+            NewGroups::make(), 
+            NewTitles::make(), 
+            NewUsers::make(), 
         ];
     }
 

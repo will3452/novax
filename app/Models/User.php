@@ -22,7 +22,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type', 
     ];
+
+    const TYPE_ADMINISTRATOR = 'Administrator'; 
+    const TYPE_DEAN = 'Dean'; 
+    const TYPE_STUDENT = 'Student';
+    const TYPE_FACULTY = 'Faculty'; 
 
     /**
      * The attributes that should be hidden for serialization.
