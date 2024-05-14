@@ -2,50 +2,37 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\BookService;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use App\Models\User as ModelsUser;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Date;
 
-class Service extends Resource
+class Payment extends Resource
 {
-    public static function group () {
-        return 'MANAGE'; 
-    }
-    public static function authorizedToCreate(Request $request)
-    {
-        return auth()->user()->type == \App\Models\User::TYPE_ADMIN; 
-    }
-
-    public function authorizedToDelete(Request $request)
-    {
-        return auth()->user()->type == \App\Models\User::TYPE_ADMIN; 
-    }
-    public function authorizedToUpdate(Request $request)
-    {
-        if ($request->has('action')) return true; 
-        return auth()->user()->type == \App\Models\User::TYPE_ADMIN; ; 
-    }
-
-    public function authorizedToView(Request $request)
+    public static function availableForNavigation(Request $request)
     {
         return false; 
+    }
+
+    public static function group () {
+        return auth()->user()->type == ModelsUser::TYPE_STAFF ? 'CASHIER' : 'PAYMENTS'; 
     }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Service::class;
+    public static $model = \App\Models\Payment::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -56,6 +43,20 @@ class Service extends Resource
         'id',
     ];
 
+    public static function authorizedToCreate(Request $request)
+    {
+        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]); 
+    }
+    public function authorizedToDelete(Request $request)
+    {
+        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]); 
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]); 
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -65,10 +66,10 @@ class Service extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
-            Text::make('Name', 'name'),
-            Textarea::make('Description', 'description')
-                ->showOnIndex(), 
+            ID::make(__('OR #'), 'id')->sortable(),
+            Date::make('Date', 'created_at')->sortable(), 
+            BelongsTo::make('Billing Transaction', 'billing', Billing::class),
+            Currency::make('Amount')->rules(['required', 'min:1']), 
         ];
     }
 
@@ -113,10 +114,6 @@ class Service extends Resource
      */
     public function actions(Request $request)
     {
-         $actions = []; 
-         if (auth()->user()->type == \App\Models\User::TYPE_PATIENT) {
-            array_push($actions, BookService::make()); 
-         }
-        return $actions; 
+        return [];
     }
 }

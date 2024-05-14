@@ -13,6 +13,9 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class MedicalRecord extends Resource
 {
+    public static function group () {
+        return 'MANAGE'; 
+    }
     public static function authorizedToCreate(Request $request)
     {
         if (auth()->user()->type == \App\Models\User::TYPE_PATIENT) {
@@ -81,7 +84,9 @@ class MedicalRecord extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            BelongsTo::make('Patient', 'user', User::class)->searchable(), 
+            BelongsTo::make('Patient', 'user', User::class)
+                ->showCreateRelationButton()
+                ->searchable(), 
             Text::make('Physician'), 
             Select::make('Initial Visit Pain Score', 'initial_pain_score')
                 ->options([

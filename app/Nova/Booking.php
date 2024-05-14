@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Nova\Actions\MarkAsApproved;
+use App\Nova\Actions\MarkAsRejected;
 use App\Nova\Actions\RequestAppointment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
@@ -15,6 +16,9 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Booking extends Resource
 {
+    public static function group () {
+        return 'MANAGE'; 
+    }
     public static function authorizedToCreate(Request $request)
     {
         if (auth()->user()->type == \App\Models\User::TYPE_PATIENT) {
@@ -94,6 +98,7 @@ class Booking extends Resource
                 ->map([
                     'For Approval' => 'info',
                     'Approved' => 'success', 
+                    'Rejected' => 'danger', 
                 ]), 
             Textarea::make('Remarks')->alwaysShow(), 
         ];
@@ -145,10 +150,10 @@ class Booking extends Resource
             array_push($actions, RequestAppointment::make()->standalone()); 
             return $actions; 
         }
-
-        
+        $status = $this->status ?? $this->resource->find($request->resources)->status; 
         return [
-            MarkAsApproved::make(), 
+            MarkAsApproved::make()->canSee(fn () => $status == 'For Approval'), 
+            MarkAsRejected::make()->canSee(fn () => $status == 'For Approval'), 
         ];
     }
 }

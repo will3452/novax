@@ -1,26 +1,25 @@
 <?php
 
 namespace App\Nova;
-
-use App\Models\User as ModelsUser;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Textarea;
+use App\Models\User as ModelsUser;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Panel;
 
-class User extends Resource
+class Billing extends Resource
 {
-    public static function availableForNavigation(Request $request)
-    {
-        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]);
+
+    public static function group () {
+        return auth()->user()->type == ModelsUser::TYPE_STAFF ? 'CASHIER' : 'PAYMENTS'; 
     }
+
     public static function authorizedToCreate(Request $request)
     {
         return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]); 
@@ -30,34 +29,23 @@ class User extends Resource
         return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]); 
     }
 
-    public function authorizedToView(Request $request)
-    {
-        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]); 
-    }
-
     public function authorizedToUpdate(Request $request)
     {
         return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]); 
     }
-
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'super@admin.com');
-    }
-
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Billing::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -65,7 +53,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
     ];
 
     /**
@@ -77,36 +65,27 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
+            ID::make(__('order #'), 'id')->sortable(),
+            Date::make('Date', 'created_at')->sortable(), 
+            Textarea::make('Particulars')
+                ->alwaysShow()
+                ->showOnIndex(),
+            Currency::make('Amount')
+                ->rules(['required', 'min:1']),
+            Currency::make('Balance', function (){
+                $total = 0;
+                foreach($this->payments as $payment) {
+                    $total += $payment->amount; 
+                }
 
-            Panel::make('Basic Information', [
-                Select::make('Type')
-                    ->options([
-                        ModelsUser::TYPE_PATIENT => ModelsUser::TYPE_PATIENT, 
-                        ModelsUser::TYPE_STAFF => ModelsUser::TYPE_STAFF, 
-                    ]), 
-                Text::make('Name')
-                    ->sortable()
-                    ->rules('required', 'max:255'),
-                Select::make('Sex')
-                    ->options([
-                        'Male' => 'Male',
-                        'Female' => 'Female',
-                    ]),
-                Text::make('Address'), 
-                Date::make('Birthday'), 
-            ]), 
-            Panel::make('Account Credentials', [
-                Text::make('Email')
-                    ->sortable()
-                    ->rules('required', 'email', 'max:254')
-                    ->creationRules('unique:users,email')
-                    ->updateRules('unique:users,email,{{resourceId}}'),
-
-                Password::make('Password')
-                    ->onlyOnForms()
-                    ->creationRules('required', 'string', 'min:8')
-                    ->updateRules('nullable', 'string', 'min:8'),
-            ])
+                return $this->amount - $total; 
+            }), 
+            BelongsTo::make('Payee', 'payee', User::class)
+                ->showCreateRelationButton(), 
+            Select::make('Mode')
+                ->options(['Cash' => 'Cash', 'Check' => 'Check']), 
+            Text::make('Bank/Check #', 'bank'), 
+            HasMany::make('Payments', 'payments', Payment::class), 
         ];
     }
 

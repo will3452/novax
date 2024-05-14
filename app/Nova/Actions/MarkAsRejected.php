@@ -3,24 +3,21 @@
 namespace App\Nova\Actions;
 
 use App\Mail\BookingUpdate;
-use App\Nova\Metrics\BookingStatus;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use Laravel\Nova\Actions\Action;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
-use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class MarkAsApproved extends Action
+class MarkAsRejected extends Action
 {
     use InteractsWithQueue, Queueable;
-
     public function shownOnTableRow()
     {
         return true; 
     }
-
     /**
      * Perform the action on the given models.
      *
@@ -31,7 +28,7 @@ class MarkAsApproved extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach($models as $model) {
-            $model->update(['status' => 'Approved']); 
+            $model->update(['status' => 'Rejected']); 
             Mail::to([$model->patient->email])->send(new BookingUpdate($model));  
         }
     }
