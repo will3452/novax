@@ -16,6 +16,19 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Booking extends Resource
 {
+    /**
+     * Indicates whether the resource should automatically poll for new resources.
+     *
+     * @var bool
+     */
+    public static $polling = false;
+
+    /**
+     * The interval at which Nova should poll for new resources.
+     *
+     * @var int
+     */
+    public static $pollingInterval = 2;
     public static function group () {
         return 'MANAGE'; 
     }
@@ -150,7 +163,7 @@ class Booking extends Resource
             array_push($actions, RequestAppointment::make()->standalone()); 
             return $actions; 
         }
-        $status = $this->status ?? $this->resource->find($request->resources)->status; 
+        $status = $this->status ?? $this->resource->find($request->resources)?->status; 
         return [
             MarkAsApproved::make()->canSee(fn () => $status == 'For Approval'), 
             MarkAsRejected::make()->canSee(fn () => $status == 'For Approval'), 

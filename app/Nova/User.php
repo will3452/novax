@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Select;
@@ -106,7 +107,8 @@ class User extends Resource
                     ->onlyOnForms()
                     ->creationRules('required', 'string', 'min:8')
                     ->updateRules('nullable', 'string', 'min:8'),
-            ])
+            ]),
+            HasMany::make('Medical Records', 'medicalRecords', MedicalRecord::class), 
         ];
     }
 
