@@ -9,6 +9,11 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Course extends Resource
 {
+
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->isAdmin(); 
+    }
     
     public static $group = 'Administration'; 
     /**

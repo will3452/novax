@@ -30,6 +30,27 @@ class User extends Authenticatable
     const TYPE_STUDENT = 'Student';
     const TYPE_FACULTY = 'Faculty'; 
 
+
+    public function isCoordinator() {
+        return nova_get_setting('coordinator_id') == $this->id; 
+    }
+
+    public function isStudent() {
+        return $this->type == 'Student'; 
+    }
+
+    public function isAdmin() {
+        return $this->type == 'Administrator'; 
+    }
+
+    public function sections () {
+        return $this->belongsToMany(Section::class, 'section_students', 'student_id', 'section_id'); 
+    }
+
+    public function classInvitations () {
+        return $this->hasMany(SectionStudent::class, 'student_id'); 
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

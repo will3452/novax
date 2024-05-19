@@ -2,26 +2,37 @@
 
 namespace App\Nova;
 
-use App\Models\Group as ModelsGroup;
+use App\Nova\Actions\JoinClass;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Group extends Resource
+class ClassInvitation extends Resource
 {
-    public static function group()
+    public static $group = 'Task';
+    
+    public static function availableForNavigation(Request $request)
     {
-        if (auth()->user()->isStudent()) return "Class"; 
-        return "Manage"; 
+        return auth()->user()->isStudent(); 
+    }
+    
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (auth()->user()->isCoordinator()) return $query; 
+        return $query->whereStatus('PENDING');
+    }
+    public static function authorizedToCreate(Request $request)
+    {
+        return false; 
     }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Group::class;
+    public static $model = \App\Models\SectionStudent::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -37,7 +48,6 @@ class Group extends Resource
      */
     public static $search = [
         'id',
-        'title_id', 
     ];
 
     /**
@@ -50,16 +60,13 @@ class Group extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            BelongsTo::make('Title', 'title', Title::class),
-            Select::make('Status')
-                ->options([
-                    ModelsGroup::FOR_PANEL_APPROVAL => ModelsGroup::FOR_PANEL_APPROVAL,
-                    ModelsGroup::FOR_COORDINATOR_APPROVAL => ModelsGroup::FOR_COORDINATOR_APPROVAL,
-                    ModelsGroup::FOR_DEAN_APPROVAL => ModelsGroup::FOR_DEAN_APPROVAL,
-                    ModelsGroup::FOR_DEFENSE => ModelsGroup::FOR_DEFENSE,
-                    ModelsGroup::FINISHED => ModelsGroup::FINISHED,
-                ]),
-            Date::make('Defense Schedule'), 
+            BelongsTo::make('Student', 'student', User::class),
+            BelongsTo::make('Section', 'section', Section::class), 
+            Badge::make('Status', 'status')
+                ->map([
+                    'JOINED' => 'success',
+                    'PENDING' => 'warning', 
+                ]), 
         ];
     }
 
@@ -104,6 +111,9 @@ class Group extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            JoinClass::make()
+                ->canSee(fn () => auth()->user()->isStudent()), 
+        ];
     }
 }

@@ -36,5 +36,7 @@ class Section extends Model
         return $this->belongsTo(User::class, 'creator_id'); 
     }
 
-
+    public function students () {
+        return $this->hasMany(SectionStudent::class, 'section_id'); 
+    }
 }

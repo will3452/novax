@@ -10,7 +10,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class SchoolYear extends Resource
 {
-    
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->isAdmin(); 
+    }
     public static $group = 'Administration'; 
     /**
      * The model the resource corresponds to.

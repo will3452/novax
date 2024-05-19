@@ -3,8 +3,12 @@
 namespace App\Nova;
 
 use App\Models\Section as ModelsSection;
+use App\Models\SectionStudent;
+use App\Nova\Actions\InviteStudent;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
@@ -15,7 +19,38 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Section extends Resource
 {
-    public static $group = 'Manage';
+    public static function group()
+    {
+        if (auth()->user()->isStudent()) return "Class"; 
+        return "Manage"; 
+    }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        if (auth()->user()->isCoordinator()) return true; 
+        return false;
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        if (auth()->user()->isCoordinator()) return true; 
+        return false; 
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        if (auth()->user()->isCoordinator()) return true; 
+        return false; 
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (auth()->user()->isStudent()) {
+            $sections = SectionStudent::whereStudentId(auth()->id())->whereStatus('JOINED')->get()->pluck('section_id'); 
+            return $query->whereIn('id', $sections); 
+        }
+        return $query;
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -68,10 +103,12 @@ class Section extends Resource
                     \App\Models\Title::IC_TYPE_CAPSTONE => \App\Models\Title::IC_TYPE_CAPSTONE,
                     \App\Models\Title::IC_TYPE_THESIS => \App\Models\Title::IC_TYPE_THESIS,
                 ]),
-            Hidden::make('ic_type')
+            Hidden::make('creator_id')
                 ->default(fn() => auth()->id()),
-            BelongsTo::make('Creator', 'creator', User::class), 
+            
+            BelongsTo::make('Creator', 'creator', User::class)->onlyOnDetail(), 
             Password::make('Pass Code'), 
+            HasMany::make('Students', 'students', ClassInvitation::class)->canSee(fn () => auth()->user()->isCoordinator()), 
         ];
     }
 
@@ -116,6 +153,8 @@ class Section extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            InviteStudent::make()->canSee(fn () => auth()->user()->isCoordinator()), 
+        ];
     }
 }

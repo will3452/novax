@@ -10,7 +10,11 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Announcement extends Resource
 {
-    public static $group = 'Manage';
+    public static function group()
+    {
+        if (auth()->user()->isStudent()) return "Social"; 
+        return "Manage"; 
+    }
     /**
      * The model the resource corresponds to.
      *

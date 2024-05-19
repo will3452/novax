@@ -6,6 +6,7 @@ use App\Models\Title as ModelsTitle;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
@@ -15,7 +16,26 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Title extends Resource
 {
-    public static $group = 'Manage';
+    public static function group()
+    {
+        if (auth()->user()->isStudent()) return "Class"; 
+        return "Manage"; 
+    }
+
+    /**
+     * Build an "index" query for the given resource.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (auth()->user()->type == \App\Models\User::TYPE_FACULTY) {
+            return $query->whereFacultyId(auth()->id()); 
+        }
+        return $query;
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -55,6 +75,7 @@ class Title extends Resource
                 ->sortable(), 
             Textarea::make('Description')
                 ->alwaysShow(),
+            Hidden::make('faculty_id')->default(fn () => auth()->id() ), 
             BelongsTo::make('Faculty', 'faculty', User::class), 
             Number::make('No Of Students')->rules(['required']),
             Text::make('Area of Research'),
