@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Models\Title as ModelsTitle;
+use App\Nova\Actions\SendApplication;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
@@ -139,6 +140,9 @@ class Title extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            SendApplication::make()
+                ->canSee(fn () => auth()->user()->isStudent()), 
+        ];
     }
 }

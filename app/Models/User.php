@@ -43,6 +43,10 @@ class User extends Authenticatable
         return $this->type == 'Administrator'; 
     }
 
+    public function isFaculty() {
+        return $this->type == 'Faculty'; 
+    }
+
     public function sections () {
         return $this->belongsToMany(Section::class, 'section_students', 'student_id', 'section_id'); 
     }

@@ -2,37 +2,40 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\JoinClass;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class ClassInvitation extends Resource
+class TitleApplication extends Resource
 {
     public static $group = 'Task & Activities';
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false; 
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (auth()->user()->isStudent()) {
+            return $query->whereStudentId(auth()->id()); 
+        }
+        return $query;
+    }
     
     public static function availableForNavigation(Request $request)
     {
         return auth()->user()->isStudent(); 
-    }
-    
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        if (auth()->user()->isCoordinator()) return $query; 
-        return $query->whereStatus('PENDING');
-    }
-    public static function authorizedToCreate(Request $request)
-    {
-        return false; 
     }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\SectionStudent::class;
+    public static $model = \App\Models\TitleApplication::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -60,13 +63,17 @@ class ClassInvitation extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            BelongsTo::make('Student', 'student', User::class),
-            BelongsTo::make('Section', 'section', Section::class), 
-            Badge::make('Status', 'status')
+            Date::make('Date', 'created_at')
+                ->onlyOnIndex()
+                ->sortable(),
+            BelongsTo::make('Title', 'title', Title::class),
+            BelongsTo::make('Student', 'student', User::class), 
+            Badge::make('Status')
                 ->map([
-                    'JOINED' => 'success',
+                    'APPROVED' => 'success',
+                    'REJECTED' => 'danger',
                     'PENDING' => 'warning', 
-                ]), 
+                ])
         ];
     }
 
@@ -111,9 +118,6 @@ class ClassInvitation extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            JoinClass::make()
-                ->canSee(fn () => auth()->user()->isStudent()), 
-        ];
+        return [];
     }
 }
