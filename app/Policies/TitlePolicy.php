@@ -31,7 +31,7 @@ class TitlePolicy
     public function view(User $user, Title $title)
     {
         if ($user->isCoordinator()) return true; 
-        if ($user->id == $title->creator_id) return true; 
+        if ($user->id == $title->faculty_id) return true; 
         if ($user->isStudent()) return true; 
         return false; 
     }
@@ -61,7 +61,7 @@ class TitlePolicy
     {
         if ($user->isFaculty()) return true; 
         if ($user->isCoordinator()) return true; 
-        if ($user->id == $title->creator_id) return true; 
+        if ($user->id == $title->faculty_id) return true; 
         if ($user->isStudent()) return true; 
         return false; 
     }

@@ -2,12 +2,19 @@
 
 namespace App\Nova;
 
-use App\Models\Group as ModelsGroup;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\BelongsTo;
+use App\Models\Group as ModelsGroup;
+use App\Models\GroupMember as ModelGroupMember;
+use App\Nova\Actions\AddPanellist;
+use App\Nova\Actions\MoveToCoordinatorApproval;
+use App\Nova\Actions\MoveToDeanApproval;
+use App\Nova\Actions\MoveToPanellistApproval;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Group extends Resource
 {
@@ -15,6 +22,31 @@ class Group extends Resource
     {
         if (auth()->user()->isStudent()) return "Class"; 
         return "Manage"; 
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (auth()->user()->isStudent()) {
+            $groups = ModelGroupMember::whereStudentId(auth()->id())->get()->pluck('group_id'); 
+            return $query->whereStatus('Ongoing')->whereIn('id', $groups); 
+        }
+        return $query;
+    }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false; 
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        if ($request->has('action')) return true; 
+        return false; 
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return false; 
     }
     /**
      * The model the resource corresponds to.
@@ -49,10 +81,13 @@ class Group extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            Date::make('Date', 'created_at')
+                ->sortable()
+                ->exceptOnForms(), 
             BelongsTo::make('Title', 'title', Title::class),
             Select::make('Status')
                 ->options([
+                    ModelsGroup::ADD_PANELIST => ModelsGroup::ADD_PANELIST,
                     ModelsGroup::FOR_PANEL_APPROVAL => ModelsGroup::FOR_PANEL_APPROVAL,
                     ModelsGroup::FOR_COORDINATOR_APPROVAL => ModelsGroup::FOR_COORDINATOR_APPROVAL,
                     ModelsGroup::FOR_DEAN_APPROVAL => ModelsGroup::FOR_DEAN_APPROVAL,
@@ -60,6 +95,8 @@ class Group extends Resource
                     ModelsGroup::FINISHED => ModelsGroup::FINISHED,
                 ]),
             Date::make('Defense Schedule'), 
+            HasMany::make('Panellists', 'panellists', Panellist::class), 
+            HasMany::make('Group Member', 'groupMembers', GroupMember::class), 
         ];
     }
 
@@ -104,6 +141,20 @@ class Group extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            AddPanellist::make()->canSee(fn () => auth()->user()->isFaculty()), 
+            MoveToPanellistApproval::make()->canSee(fn () => auth()->user()->isFaculty()), 
+            MoveToCoordinatorApproval::make()->canSee(function () {
+                $visible = true; 
+                foreach($this->panellists as $p) {
+                    if ($p->status == 'PENDING') $visible = false; 
+                }
+                return $visible; 
+            }),
+            MoveToDeanApproval::make()->canSee(function () {
+                if (! $this->status) return true; 
+                return $this->status == 'For Dean Approval'; 
+            })
+        ];
     }
 }

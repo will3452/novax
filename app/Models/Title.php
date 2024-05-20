@@ -28,4 +28,12 @@ class Title extends Model
     public function faculty () {
         return $this->belongsTo(User::class, 'faculty_id'); 
     }
+
+    public function titleApplications () {
+        return $this->hasMany(TitleApplication::class, 'title_id'); 
+    }
+
+    public function group () {
+        return $this->hasOne(Group::class, 'title_id'); 
+    }
 }

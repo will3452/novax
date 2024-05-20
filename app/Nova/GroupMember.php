@@ -2,58 +2,46 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
-use App\Nova\Actions\ApproveApplication;
-use App\Nova\Actions\RejectApplication;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class TitleApplication extends Resource
+class GroupMember extends Resource
 {
-    public static $group = 'Task & Activities';
+    
+    public static $searchable = false; 
+    public static function availableForNavigation(Request $request)
+    {
+        return false; 
+    }
 
     public static function authorizedToCreate(Request $request)
     {
         return false; 
     }
 
-    public static function indexQuery(NovaRequest $request, $query)
+    public function authorizedToDelete(Request $request)
     {
-        if (auth()->user()->isStudent()) {
-            return $query->whereStudentId(auth()->id()); 
-        }
-        return $query;
+        return false;
     }
 
     public function authorizedToUpdate(Request $request)
     {
-        if ($request->has('action')) return true; 
-        return false; 
+        return false;
     }
 
     public function authorizedToView(Request $request)
     {
         return false; 
     }
-
-    public function authorizedToDelete(Request $request)
-    {
-        return false; 
-    }
-    
-    public static function availableForNavigation(Request $request)
-    {
-        return auth()->user()->isStudent(); 
-    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\TitleApplication::class;
+    public static $model = \App\Models\GroupMember::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -68,7 +56,7 @@ class TitleApplication extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'created_at'
+        'id',
     ];
 
     /**
@@ -80,17 +68,7 @@ class TitleApplication extends Resource
     public function fields(Request $request)
     {
         return [
-            Date::make('Date', 'created_at')
-                ->onlyOnIndex()
-                ->sortable(),
-            BelongsTo::make('Title', 'title', Title::class),
             BelongsTo::make('Student', 'student', User::class), 
-            Badge::make('Status')
-                ->map([
-                    'APPROVED' => 'success',
-                    'REJECTED' => 'danger',
-                    'PENDING' => 'warning', 
-                ])
         ];
     }
 
@@ -135,12 +113,6 @@ class TitleApplication extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            ApproveApplication::make()
-                ->canSee(fn () => auth()->user()->isFaculty()), 
-
-            RejectApplication::make()
-                ->canSee(fn () => auth()->user()->isFaculty()), 
-        ];
+        return [];
     }
 }

@@ -3,10 +3,15 @@
 namespace App\Nova;
 
 use App\Models\Title as ModelsTitle;
+use App\Nova\Actions\ApproveApplication;
+use App\Nova\Actions\CreateGroupFromThisTitle;
 use App\Nova\Actions\SendApplication;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
@@ -37,6 +42,27 @@ class Title extends Resource
         }
         return $query;
     }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return auth()->user()->isFaculty(); 
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return false; 
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        if ($request->has('action')) return true; 
+        return auth()->user()->isFaculty(); 
+    }
+
+    public function authorizedToView(Request $request)
+    {
+        return auth()->user()->isFaculty(); 
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -57,7 +83,6 @@ class Title extends Resource
      * @var array
      */
     public static $search = [
-        'id',
         'title',
         'description', 
     ];
@@ -71,7 +96,9 @@ class Title extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            Date::make('Date', 'created_at')
+                ->exceptOnForms()
+                ->sortable(), 
             Text::make('Title')
                 ->sortable(), 
             Textarea::make('Description')
@@ -96,6 +123,8 @@ class Title extends Resource
                     'Taken' => 'Taken',
                     'Available' => 'Available', 
                 ]), 
+            HasOne::make('Group', 'group', Group::class), 
+            HasMany::make('Applications', 'titleApplications', TitleApplication::class), 
         ];
     }
 
@@ -138,11 +167,12 @@ class Title extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function actions(Request $request)
-    {
+    public function actions(Request $request) {
         return [
+            CreateGroupFromThisTitle::make()
+                ->canSee(fn () => auth()->user()->isFaculty()), 
             SendApplication::make()
-                ->canSee(fn () => auth()->user()->isStudent()), 
+                ->canSee(fn () => auth()->user()->isStudent() && ! \App\Models\TitleApplication::whereStudentId(auth()->id())->whereTitleId($this->id)->exists()),
         ];
     }
 }

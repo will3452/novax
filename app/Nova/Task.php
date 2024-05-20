@@ -2,58 +2,47 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
+use App\Nova\Actions\ApproveTask;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
-use App\Nova\Actions\ApproveApplication;
-use App\Nova\Actions\RejectApplication;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class TitleApplication extends Resource
+class Task extends Resource
 {
-    public static $group = 'Task & Activities';
-
-    public static function authorizedToCreate(Request $request)
-    {
-        return false; 
-    }
+    public static $group = 'Approval'; 
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if (auth()->user()->isStudent()) {
-            return $query->whereStudentId(auth()->id()); 
-        }
-        return $query;
-    }
-
-    public function authorizedToUpdate(Request $request)
-    {
-        if ($request->has('action')) return true; 
-        return false; 
-    }
-
-    public function authorizedToView(Request $request)
-    {
-        return false; 
-    }
-
-    public function authorizedToDelete(Request $request)
-    {
-        return false; 
-    }
-    
-    public static function availableForNavigation(Request $request)
-    {
-        return auth()->user()->isStudent(); 
+        return $query->whereUserId(auth()->id());
     }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\TitleApplication::class;
+    public static $model = \App\Models\Task::class;
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false; 
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        if ($request->has('action')) return true; 
+        return false;
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        if ($request->has('action')) return true; 
+        return false;
+    }
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -68,7 +57,7 @@ class TitleApplication extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'created_at'
+        'id', 'created_at', 
     ];
 
     /**
@@ -81,16 +70,16 @@ class TitleApplication extends Resource
     {
         return [
             Date::make('Date', 'created_at')
-                ->onlyOnIndex()
-                ->sortable(),
-            BelongsTo::make('Title', 'title', Title::class),
-            BelongsTo::make('Student', 'student', User::class), 
+                ->sortable()
+                ->exceptOnForms(),
             Badge::make('Status')
                 ->map([
-                    'APPROVED' => 'success',
-                    'REJECTED' => 'danger',
-                    'PENDING' => 'warning', 
-                ])
+                    'PENDING' => 'warning',
+                    'APPROVED' => 'success', 
+                ]), 
+            Text::make('Description', function () {
+                return $this->description; 
+            })->asHtml(),          
         ];
     }
 
@@ -136,11 +125,7 @@ class TitleApplication extends Resource
     public function actions(Request $request)
     {
         return [
-            ApproveApplication::make()
-                ->canSee(fn () => auth()->user()->isFaculty()), 
-
-            RejectApplication::make()
-                ->canSee(fn () => auth()->user()->isFaculty()), 
+            ApproveTask::make()->canSee(fn () => $this->status != 'APPROVED'), 
         ];
     }
 }
