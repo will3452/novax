@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\AnnouncementsPerCategory;
+use App\Nova\Metrics\NewAnnouncements;
+use App\Nova\Metrics\NewUsers;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -51,9 +54,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+            return true; 
         });
     }
 
@@ -65,17 +66,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
-                'Africa/Nairobi',
-                'America/Mexico_City',
-                'Australia/Sydney',
-                'Europe/Paris',
-                'Asia/Manila',
-                'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila')
-            ->canSee(function () {
-                return config('novax.time_enabled');
-            }),
+            (new \Richardkeep\NovaTimenow\NovaTimenow)->defaultTimezone('Africa/Manila'),
+            NewUsers::make(),
+            NewAnnouncements::make(), 
+            AnnouncementsPerCategory::make(), 
         ];
     }
 
