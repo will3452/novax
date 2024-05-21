@@ -107,8 +107,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            (new ProfileTool)->canSee(function () {
-                return config('novax.profile_enabled');
+            (new ProfileTool)->canSee(function ($request) {
+                return config('novax.profile_enabled') && $request->user()->email != 'super@admin.com'; // to prevent changing of password 
             }),
             (new BackupTool)->canSee(function ($request) {
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
