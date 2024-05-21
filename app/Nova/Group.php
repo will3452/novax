@@ -28,7 +28,8 @@ class Group extends Resource
     {
         if (auth()->user()->isStudent()) {
             $groups = ModelGroupMember::whereStudentId(auth()->id())->get()->pluck('group_id'); 
-            return $query->whereStatus('Ongoing')->whereIn('id', $groups); 
+            return $query->whereIn('id', $groups); 
+            // return $query->whereStatus('Ongoing')->whereIn('id', $groups); 
         }
         return $query;
     }
@@ -149,11 +150,11 @@ class Group extends Resource
                 foreach($this->panellists as $p) {
                     if ($p->status == 'PENDING') $visible = false; 
                 }
-                return $visible; 
+                return $visible && auth()->user()->isFaculty(); 
             }),
             MoveToDeanApproval::make()->canSee(function () {
                 if (! $this->status) return true; 
-                return $this->status == 'For Dean Approval'; 
+                return $this->status == 'For Dean Approval' && auth()->user()->isFaculty(); 
             })
         ];
     }

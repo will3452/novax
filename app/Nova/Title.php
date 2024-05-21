@@ -102,6 +102,7 @@ class Title extends Resource
             Text::make('Title')
                 ->sortable(), 
             Textarea::make('Description')
+                ->showOnIndex()
                 ->alwaysShow(),
             Hidden::make('faculty_id')->default(fn () => auth()->id() ), 
             BelongsTo::make('Faculty', 'faculty', User::class), 

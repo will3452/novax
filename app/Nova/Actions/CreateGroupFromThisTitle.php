@@ -33,6 +33,10 @@ class CreateGroupFromThisTitle extends Action
             $model->update(['status' => 'Taken']); 
             $exists = Group::whereTitleId($model->id)->exists(); 
             if ($exists) return Action::danger('Group is already existing'); 
+            $approvedMembers = \App\Models\TitleApplication::whereTitleId($model->id)->whereStatus('APPROVED')->count();
+            if ($model->no_of_students != $approvedMembers) {
+                return Action::danger('Number of approved student application is not match to the title\'s required no. of student.'); 
+            } 
             $group = Group::create([
                 'title_id' => $model->id, 
                 'status' => Group::ADD_PANELIST, 
