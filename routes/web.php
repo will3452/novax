@@ -6,6 +6,7 @@ use App\Http\Controllers\RegisterController;
 
 
 Route::get('/', function () {
+    return redirect()->to(route('nova.login')); 
     return view('welcome');
 });
 

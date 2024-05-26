@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Nova\Metrics\AnnouncementsPerCategory;
 use App\Nova\Metrics\NewAnnouncements;
 use App\Nova\Metrics\NewUsers;
+use App\Nova\Metrics\SMSBalances;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -70,6 +71,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             NewUsers::make(),
             NewAnnouncements::make(), 
             AnnouncementsPerCategory::make(), 
+            SMSBalances::make(), 
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\Broadcast;
 use App\Nova\Metrics\AnnouncementsPerCategory;
 use App\Nova\Metrics\NewAnnouncements;
 use Illuminate\Http\Request;
@@ -102,6 +103,8 @@ class Announcement extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            Broadcast::make(), 
+        ];
     }
 }
