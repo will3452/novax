@@ -5,9 +5,13 @@ namespace App\Providers;
 use App\Nova\Metrics\Announcements;
 use App\Nova\Metrics\Courses;
 use App\Nova\Metrics\Groups;
+use App\Nova\Metrics\GroupsBelong;
+use App\Nova\Metrics\MySections;
 use App\Nova\Metrics\NewGroups;
 use App\Nova\Metrics\NewTitles;
 use App\Nova\Metrics\NewUsers;
+use App\Nova\Metrics\Tasks;
+use App\Nova\Metrics\TitleApplications;
 use App\Nova\Metrics\Titles;
 use App\Nova\Metrics\Users;
 use Laravel\Nova\Nova;
@@ -74,19 +78,30 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
-        return [
+        $cards = [
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Asia/Manila',
             ]),
-            Users::make(), 
-            Groups::make(), 
-            Titles::make(), 
-            Announcements::make(), 
-            Courses::make(), 
-            NewGroups::make(), 
-            NewTitles::make(), 
-            NewUsers::make(), 
-        ];
+            Tasks::make(), 
+        ]; 
+
+        if (auth()->user()->type == \App\Models\User::TYPE_ADMINISTRATOR) {
+            array_push($cards, Users::make());
+            array_push($cards, Groups::make());
+            array_push($cards, Titles::make());
+            array_push($cards, Announcements::make());
+            array_push($cards, Courses::make());
+            array_push($cards, NewGroups::make());
+            array_push($cards, NewTitles::make());
+            array_push($cards, NewUsers::make());
+        }
+
+        if (auth()->user()->type == \App\Models\User::TYPE_STUDENT) {
+            array_push($cards, GroupsBelong::make()); 
+            array_push($cards, MySections::make()); 
+            array_push($cards, TitleApplications::make()); 
+        }
+        return $cards; 
     }
 
     /**
