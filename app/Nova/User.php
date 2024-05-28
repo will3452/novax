@@ -22,6 +22,11 @@ class User extends Resource
         return $query->where('email', '!=', 'super@admin.com');
     }
 
+    public static function availableForNavigation(Request $request)
+    {
+        return ! auth()->user()->isStudent(); 
+    }
+
     /**
      * The model the resource corresponds to.
      *
@@ -56,7 +61,14 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
+            Text::make('Type', function () {
+                if ($this->id == nova_get_setting('coordinator_id'))  return "$this->type / Coordinator"; 
+                return $this->type; 
+            })
+                ->exceptOnForms(), 
+
             Select::make('Type')
+                ->onlyOnForms()
                 ->options([
                     ModelsUser::TYPE_DEAN =>  ModelsUser::TYPE_DEAN,
                     ModelsUser::TYPE_STUDENT =>  ModelsUser::TYPE_STUDENT,

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Panellist extends Resource
@@ -20,6 +21,11 @@ class Panellist extends Resource
     public function authorizedToUpdate(Request $request)
     {
         return false; 
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return ! auth()->user()->isStudent(); 
     }
 
     public function authorizedToView(Request $request)
@@ -64,10 +70,12 @@ class Panellist extends Resource
     {
         return [
             BelongsTo::make('Faculty', 'faculty', User::class), 
+            Text::make('Examination Committee', 'type'), 
             Badge::make('Status')
                 ->map([
                     'APPROVED' => 'success',
                     'PENDING' => 'warning', 
+                    'REJECTED' => 'danger', 
                 ]), 
         ];
     }

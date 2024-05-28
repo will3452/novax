@@ -105,7 +105,7 @@ class Title extends Resource
                 ->showOnIndex()
                 ->alwaysShow(),
             Hidden::make('faculty_id')->default(fn () => auth()->id() ), 
-            BelongsTo::make('Faculty', 'faculty', User::class), 
+            BelongsTo::make('Faculty', 'faculty', User::class)->exceptOnForms(), 
             Number::make('No Of Students')->rules(['required']),
             Text::make('Area of Research'),
             Select::make('IC type', 'ic_type')

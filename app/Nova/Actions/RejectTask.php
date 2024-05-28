@@ -8,12 +8,11 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Fields\Text;
 
-class ApproveTask extends Action
+class RejectTask extends Action
 {
     use InteractsWithQueue, Queueable;
-
+    
     public $showOnTableRow = true; 
 
     /**
@@ -25,12 +24,10 @@ class ApproveTask extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
+        //
         foreach($models as $model) {
-            $model->task()->update(['status' => $model->approved_status]); 
-            if (auth()->user()->type == \App\Models\User::TYPE_DEAN) {
-                $model->task()->update(['code' => $fields['code']]); 
-            }
-            $model->update(['status' => 'APPROVED']); 
+            $model->task()->update(['status' => 'REJECTED']); 
+            $model->update(['status' => 'REJECTED']); 
         }
     }
 
@@ -41,10 +38,6 @@ class ApproveTask extends Action
      */
     public function fields()
     {
-        $fields = [];
-        if ( auth()->user()->type == \App\Models\User::TYPE_DEAN ) {
-            array_push($fields, Text::make('Group Code', 'code')->rules(['required'])); // todo: modify fields to become dynamic 
-        }
-        return $fields;
+        return [];
     }
 }

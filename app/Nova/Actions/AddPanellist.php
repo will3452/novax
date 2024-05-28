@@ -32,6 +32,7 @@ class AddPanellist extends Action
             Panellist::create([
                 'group_id' => $model->id,
                 'faculty_id' => $fields['faculty_id'], 
+                'type' => $fields['type'], 
             ]); 
         }
     }
@@ -47,6 +48,12 @@ class AddPanellist extends Action
             Select::make('Panellist', 'faculty_id')
                 ->options(User::whereType(User::TYPE_FACULTY)->get()->pluck('name', 'id'))
                 ->searchable(),
+            Select::make('Type', 'type')
+                ->options([
+                    \App\Models\Panellist::TYPE_ADVISER => \App\Models\Panellist::TYPE_ADVISER, 
+                    \App\Models\Panellist::TYPE_CHAIR => \App\Models\Panellist::TYPE_CHAIR,
+                    \App\Models\Panellist::TYPE_MEMBER => \App\Models\Panellist::TYPE_MEMBER, 
+                ])
         ];
     }
 }

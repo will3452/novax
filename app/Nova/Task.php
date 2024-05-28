@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Nova\Actions\ApproveTask;
+use App\Nova\Actions\RejectTask;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
@@ -76,6 +77,7 @@ class Task extends Resource
                 ->map([
                     'PENDING' => 'warning',
                     'APPROVED' => 'success', 
+                    'REJECTED' => 'danger', 
                 ]), 
             Text::make('Description', function () {
                 return $this->description; 
@@ -124,8 +126,11 @@ class Task extends Resource
      */
     public function actions(Request $request)
     {
+        $actions = [];
+
         return [
-            ApproveTask::make()->canSee(fn () => $this->status != 'APPROVED'), 
+            ApproveTask::make()->canSee(fn () => $this->status == 'PENDING' || $request->has('action')), 
+            RejectTask::make()->canSee(fn () => $this->status == 'PENDING'|| $request->has('action')), 
         ];
     }
 }

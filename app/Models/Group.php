@@ -13,6 +13,7 @@ class Group extends Model
         'title_id',
         'status',
         'defense_schedule', 
+        'code', 
     ]; 
 
     const ADD_PANELIST = 'Add Panelist';
@@ -21,6 +22,7 @@ class Group extends Model
     const FOR_DEAN_APPROVAL = 'For Dean Approval';
     const ONGOING = 'Ongoing';
     const FOR_DEFENSE = 'For Defense';
+    const READY_FOR_DEFENSE = 'Ready for defense'; 
     const FINISHED = 'Finished'; 
 
     protected $casts = [

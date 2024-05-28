@@ -17,6 +17,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
+     return true; 
      return $user->type == User::TYPE_ADMINISTRATOR || $user->isCoordinator() || $user->isFaculty(); 
     }
 
@@ -29,6 +30,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
+          return true; 
          return $user->type == User::TYPE_ADMINISTRATOR || $user->isCoordinator() || $user->isFaculty(); 
     }
 
@@ -40,7 +42,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-         return $user->type == User::TYPE_ADMINISTRATOR || $user->isCoordinator(); 
+         return $user->type == User::TYPE_ADMINISTRATOR; 
     }
 
     /**
@@ -52,7 +54,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-         return $user->type == User::TYPE_ADMINISTRATOR || $user->isCoordinator(); 
+         return $user->type == User::TYPE_ADMINISTRATOR; 
     }
 
     /**
@@ -64,7 +66,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-         return $user->type == User::TYPE_ADMINISTRATOR || $user->isCoordinator(); 
+         return $user->type == User::TYPE_ADMINISTRATOR; 
     }
 
     /**

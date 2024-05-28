@@ -28,7 +28,7 @@ class MoveToPanellistApproval extends Action
                 $panel->task()->create([
                     'status' => 'PENDING', 
                     'user_id' => $panel->faculty_id, 
-                    'description' => "You are invited to be one of the panelists of the group '$title'.", 
+                    'description' => "You are invited to be one of the panelists of the group '$title'. as '$panel->type'.", 
                 ]); 
             }
             $model->update(['status' => 'For Panel Approval']); 

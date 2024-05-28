@@ -10,10 +10,14 @@ use Laravel\Nova\Fields\BelongsTo;
 use App\Models\Group as ModelsGroup;
 use App\Models\GroupMember as ModelGroupMember;
 use App\Nova\Actions\AddPanellist;
+use App\Nova\Actions\MarkAsReadyForDefence;
+use App\Nova\Actions\MarkAsReadyForDefense;
 use App\Nova\Actions\MoveToCoordinatorApproval;
 use App\Nova\Actions\MoveToDeanApproval;
 use App\Nova\Actions\MoveToPanellistApproval;
+use App\Nova\Actions\ReadyForDenfense;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Group extends Resource
@@ -85,6 +89,8 @@ class Group extends Resource
             Date::make('Date', 'created_at')
                 ->sortable()
                 ->exceptOnForms(), 
+            Text::make('Group code', 'code')
+                ->exceptOnForms(), 
             BelongsTo::make('Title', 'title', Title::class),
             Select::make('Status')
                 ->options([
@@ -142,20 +148,27 @@ class Group extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            AddPanellist::make()->canSee(fn () => auth()->user()->isFaculty()), 
-            MoveToPanellistApproval::make()->canSee(fn () => auth()->user()->isFaculty()), 
-            MoveToCoordinatorApproval::make()->canSee(function () {
-                $visible = true; 
-                foreach($this->panellists as $p) {
-                    if ($p->status == 'PENDING') $visible = false; 
-                }
-                return $visible && auth()->user()->isFaculty(); 
-            }),
-            MoveToDeanApproval::make()->canSee(function () {
-                if (! $this->status) return true; 
-                return $this->status == 'For Dean Approval' && auth()->user()->isFaculty(); 
-            })
-        ];
+        $actions = [MarkAsReadyForDefense::make()->canSee(fn () => auth()->user()->isFaculty() && $this->defense_schedule == null)]; 
+        if ($request->action == 'mark-as-ready-for-defense') {
+            return [MarkAsReadyForDefense::make()]; 
+        }
+        if ($this->code == null) {
+            return [
+                AddPanellist::make()->canSee(fn () => auth()->user()->isFaculty()), 
+                MoveToPanellistApproval::make()->canSee(fn () => auth()->user()->isFaculty()), 
+                MoveToCoordinatorApproval::make()->canSee(function () {
+                    $visible = true; 
+                    foreach($this->panellists as $p) {
+                        if ($p->status == 'PENDING') $visible = false; 
+                    }
+                    return $visible && auth()->user()->isFaculty(); 
+                }),
+                MoveToDeanApproval::make()->canSee(function () {
+                    if (! $this->status) return true; 
+                    return $this->status == 'For Dean Approval' && auth()->user()->isFaculty(); 
+                })
+            ];
+        }
+        return $actions; 
     }
 }
