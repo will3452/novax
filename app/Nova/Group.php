@@ -65,7 +65,7 @@ class Group extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'code';
 
     /**
      * The columns that should be searched.
@@ -104,6 +104,7 @@ class Group extends Resource
             Date::make('Defense Schedule'), 
             HasMany::make('Panellists', 'panellists', Panellist::class), 
             HasMany::make('Group Member', 'groupMembers', GroupMember::class), 
+            HasMany::make('Progress Reports', 'progresses', Progress::class), 
         ];
     }
 

@@ -46,4 +46,8 @@ class Group extends Model
     public function task() {
         return $this->morphOne(Task::class, 'task'); 
     }
+
+    public function progresses() {
+        return $this->hasMany(Progress::class, 'group_id');
+    }
 }

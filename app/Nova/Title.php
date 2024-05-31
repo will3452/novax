@@ -112,6 +112,9 @@ class Title extends Resource
                 ->options([
                     ModelsTitle::IC_TYPE_CAPSTONE => ModelsTitle::IC_TYPE_CAPSTONE,
                     ModelsTitle::IC_TYPE_THESIS => ModelsTitle::IC_TYPE_THESIS,
+                    ModelsTitle::IC_TYPE_FEASIBILITY_STUDY =>  ModelsTitle::IC_TYPE_FEASIBILITY_STUDY,
+                    ModelsTitle::IC_TYPE_BUSINESS_PLAN => ModelsTitle::IC_TYPE_BUSINESS_PLAN,
+                    ModelsTitle::IC_TYPE_PLANT_DESIGN => ModelsTitle::IC_TYPE_PLANT_DESIGN, 
                 ]),
             Badge::make('Status')
                 ->map([

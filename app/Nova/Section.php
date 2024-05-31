@@ -102,6 +102,9 @@ class Section extends Resource
                 ->options([
                     \App\Models\Title::IC_TYPE_CAPSTONE => \App\Models\Title::IC_TYPE_CAPSTONE,
                     \App\Models\Title::IC_TYPE_THESIS => \App\Models\Title::IC_TYPE_THESIS,
+                    \App\Models\Title::IC_TYPE_PLANT_DESIGN => \App\Models\Title::IC_TYPE_PLANT_DESIGN,
+                    \App\Models\Title::IC_TYPE_FEASIBILITY_STUDY => \App\Models\Title::IC_TYPE_FEASIBILITY_STUDY,
+                    \App\Models\Title::IC_TYPE_BUSINESS_PLAN => \App\Models\Title::IC_TYPE_BUSINESS_PLAN,
                 ]),
             Hidden::make('creator_id')
                 ->default(fn() => auth()->id()),

@@ -12,6 +12,10 @@ class Section extends Model
     
     const IC_TYPE_CAPSTONE = 'Capstone';
     const IC_TYPE_THESIS = 'Thesis'; 
+    const IC_TYPE_PLANT_DESIGN = 'Plant Design';
+    const IC_TYPE_FEASIBILITY_STUDY = 'Feasibility Study'; 
+    const IC_TYPE_BUSINESS_PLAN = 'Business Plan'; 
+
     const PHASE_PROPOSAL = 'Proposal';
     const PHASE_GATHERING = 'Data Gathering';
     const PHASE_FINAL = 'Final'; 
