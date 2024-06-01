@@ -2,23 +2,30 @@
 
 namespace App\Nova;
 
+use Eminiarts\Tabs\Tab;
+use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\BelongsTo;
-use App\Models\Group as ModelsGroup;
-use App\Models\GroupMember as ModelGroupMember;
+use Laravel\Nova\Fields\HasMany;
 use App\Nova\Actions\AddPanellist;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\MorphMany;
+use App\Models\Group as ModelsGroup;
+use App\Nova\Actions\ReadyForDenfense;
+use App\Nova\Actions\MoveToDeanApproval;
 use App\Nova\Actions\MarkAsReadyForDefence;
 use App\Nova\Actions\MarkAsReadyForDefense;
-use App\Nova\Actions\MoveToCoordinatorApproval;
-use App\Nova\Actions\MoveToDeanApproval;
-use App\Nova\Actions\MoveToPanellistApproval;
-use App\Nova\Actions\ReadyForDenfense;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use App\Nova\Actions\MoveToPanellistApproval;
+use App\Nova\Actions\SubmitOralDefenseRequest;
+use App\Models\GroupMember as ModelGroupMember;
+use App\Nova\Actions\MoveToCoordinatorApproval;
+use KirschbaumDevelopment\NovaComments\Commenter;
+use KirschbaumDevelopment\NovaComments\CommentsPanel;
 
 class Group extends Resource
 {
@@ -40,6 +47,7 @@ class Group extends Resource
 
     public static function authorizedToCreate(Request $request)
     {
+        if ($request->has('action')) return true; 
         return false; 
     }
 
@@ -86,27 +94,50 @@ class Group extends Resource
     public function fields(Request $request)
     {
         return [
-            Date::make('Date', 'created_at')
-                ->sortable()
-                ->exceptOnForms(), 
-            Text::make('Group code', 'code')
-                ->exceptOnForms(), 
-            BelongsTo::make('Title', 'title', Title::class),
-            Select::make('Status')
-                ->options([
-                    ModelsGroup::ADD_PANELIST => ModelsGroup::ADD_PANELIST,
-                    ModelsGroup::FOR_PANEL_APPROVAL => ModelsGroup::FOR_PANEL_APPROVAL,
-                    ModelsGroup::FOR_COORDINATOR_APPROVAL => ModelsGroup::FOR_COORDINATOR_APPROVAL,
-                    ModelsGroup::FOR_DEAN_APPROVAL => ModelsGroup::FOR_DEAN_APPROVAL,
-                    ModelsGroup::FOR_DEFENSE => ModelsGroup::FOR_DEFENSE,
-                    ModelsGroup::FINISHED => ModelsGroup::FINISHED,
+            Tabs::make('Group', [
+                Tab::make('Information', [
+                    Date::make('Date', 'created_at')
+                        ->sortable()
+                        ->exceptOnForms(), 
+                    Text::make('Group code', 'code')
+                        ->exceptOnForms(), 
+                        
+            
+                    BelongsTo::make('Title', 'title', Title::class),
+                    Select::make('Status')
+                        ->options([
+                            ModelsGroup::ADD_PANELIST => ModelsGroup::ADD_PANELIST,
+                            ModelsGroup::FOR_PANEL_APPROVAL => ModelsGroup::FOR_PANEL_APPROVAL,
+                            ModelsGroup::FOR_COORDINATOR_APPROVAL => ModelsGroup::FOR_COORDINATOR_APPROVAL,
+                            ModelsGroup::FOR_DEAN_APPROVAL => ModelsGroup::FOR_DEAN_APPROVAL,
+                            ModelsGroup::FOR_DEFENSE => ModelsGroup::FOR_DEFENSE,
+                            ModelsGroup::FINISHED => ModelsGroup::FINISHED,
+                        ]),
+                    Date::make('Defense Schedule'), 
                 ]),
-            Date::make('Defense Schedule'), 
-            HasMany::make('Panellists', 'panellists', Panellist::class), 
-            HasMany::make('Group Member', 'groupMembers', GroupMember::class), 
-            HasMany::make('Progress Reports', 'progresses', Progress::class), 
-        ];
+                Tab::make('Students', [
+                    HasMany::make('Group Member', 'groupMembers', GroupMember::class), 
+                ]), 
+                Tab::make('Panelists', [
+                    HasMany::make('Panellists', 'panellists', Panellist::class)
+                ]),
+                Tab::make('Progress ', [
+                    HasMany::make('Progress Reports', 'progresses', Progress::class), 
+                ]),
+                Tab::make('Oral Defense Requests ', [
+                    HasMany::make('Oral Defense Request', 'oralDefenseRequests', OralDefenseRequest::class), 
+                ]),
+            ])->withToolbar(),
+            MorphMany::make(
+                'Comments',
+                'comments',
+                \KirschbaumDevelopment\NovaComments\Nova\Comment::class
+            )->onlyOnForms(),
+            Commenter::make(), 
+        ]; 
     }
+
+    
 
     /**
      * Get the cards available for the request.

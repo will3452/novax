@@ -2,49 +2,52 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
+use App\Models\OralDefenseRequest as ModelsOralDefenseRequest;
+use App\Nova\Actions\SubmitToPanelist;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use KirschbaumDevelopment\NovaComments\Commenter;
 
-class Announcement extends Resource
+class OralDefenseRequest extends Resource
 {
-    public static function group()
+    public static function availableForNavigation(Request $request)
     {
-        if (auth()->user()->isStudent()) return "Social"; 
-        return "Manage"; 
+        return false; 
     }
-
     public static function authorizedToCreate(Request $request)
     {
-        return ! auth()->user()->isStudent(); 
+        return false; 
     }
 
     public function authorizedToUpdate(Request $request)
     {
-        return ! auth()->user()->isStudent(); 
+        if ($request->has('action')) return true; 
+        return false; 
     }
 
     public function authorizedToDelete(Request $request)
     {
-        return ! auth()->user()->isStudent();
+        return false; 
     }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Announcement::class;
+    public static $model = \App\Models\OralDefenseRequest::class;
+
+    public static $searchable = false; 
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'title';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -53,7 +56,6 @@ class Announcement extends Resource
      */
     public static $search = [
         'id',
-        'title', 
     ];
 
     /**
@@ -65,15 +67,19 @@ class Announcement extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
-            Text::make('Subject')->sortable(), 
-            Textarea::make('Body')->alwaysShow(), 
-            MorphMany::make(
-                'Comments',
-                'comments',
-                \KirschbaumDevelopment\NovaComments\Nova\Comment::class
-            )->onlyOnForms(),
-            new Commenter()
+            // BelongsTo::make('Section', 'section', Section::class), 
+            BelongsTo::make('Group', 'group', Group::class), 
+            Date::make('Date', 'date',),
+            Text::make('Time', 'time'), 
+            Text::make('Venue'), 
+            Badge::make('Status')
+                ->map([
+                    ModelsOralDefenseRequest::SUBMIT_ORAL_DEFENSE => 'warning',
+                    ModelsOralDefenseRequest::PANELIST_APPROVAL => 'info',
+                    ModelsOralDefenseRequest::COORDINATOR_APPROVAL => 'warning',
+                    'APPROVED' => 'success',
+                    ModelsOralDefenseRequest::REJECTED => 'danger',
+                ])
         ];
     }
 
@@ -118,6 +124,13 @@ class Announcement extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        if ($request->action == 'submit-to-panelist') {
+            return [
+                SubmitToPanelist::make(), 
+            ];
+        }
+        return [
+            SubmitToPanelist::make()->canSee(fn () => auth()->user()->isStudent() && ($this->status == "Submit Oral Defense Request")), 
+        ];
     }
 }

@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use KirschbaumDevelopment\NovaComments\Commentable;
 
 class Section extends Model
 {
-    use HasFactory;
+    use HasFactory, Commentable;
 
     
     const IC_TYPE_CAPSTONE = 'Capstone';

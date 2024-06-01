@@ -2,26 +2,27 @@
 
 namespace App\Providers;
 
-use App\Nova\Metrics\Announcements;
-use App\Nova\Metrics\Courses;
+use Laravel\Nova\Nova;
+use App\Nova\Metrics\Tasks;
+use App\Nova\Metrics\Users;
 use App\Nova\Metrics\Groups;
-use App\Nova\Metrics\GroupsBelong;
-use App\Nova\Metrics\MySections;
+use App\Nova\Metrics\Titles;
+use Laravel\Nova\Cards\Help;
+use App\Nova\Metrics\Courses;
+use Laravel\Nova\Fields\Text;
+use App\Nova\Metrics\NewUsers;
+use Laravel\Nova\Fields\Image;
 use App\Nova\Metrics\NewGroups;
 use App\Nova\Metrics\NewTitles;
-use App\Nova\Metrics\NewUsers;
-use App\Nova\Metrics\Tasks;
-use App\Nova\Metrics\TitleApplications;
-use App\Nova\Metrics\Titles;
-use App\Nova\Metrics\Users;
-use Laravel\Nova\Nova;
-use Laravel\Nova\Cards\Help;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Image;
-use Spatie\BackupTool\BackupTool;
-use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Fields\Select;
+use App\Nova\Metrics\MySections;
+use Spatie\BackupTool\BackupTool;
+use App\Nova\Metrics\GroupsBelong;
+use App\Nova\Metrics\Announcements;
+use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
+use App\Nova\Metrics\TitleApplications;
+use Czemu\NovaCalendarTool\NovaCalendarTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -125,6 +126,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             (new ProfileTool)->canSee(function ($request) {
                 return config('novax.profile_enabled') && $request->user()->email != 'super@admin.com'; // to prevent changing of password 
             }),
+            (new NovaCalendarTool)->canSee(function ($request) {
+                return $request->user()->id == nova_get_setting('coordinator_id'); 
+            }), 
             (new BackupTool)->canSee(function ($request) {
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
                 config('novax.back_up_enabled');

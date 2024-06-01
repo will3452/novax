@@ -81,7 +81,6 @@ class Progress extends Resource
                 ->rules(['required']), 
             Textarea::make('Description')
                 ->alwaysShow()
-                ->showOnIndex()
                 ->rules(['required']),
             Boolean::make('Ready for oral Defense', 'is_ready_for_oral_def')->exceptOnForms(), 
             Text::make('Preferred Schedule')->exceptOnForms(), 

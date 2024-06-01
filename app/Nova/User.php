@@ -7,6 +7,7 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Select;
@@ -76,8 +77,15 @@ class User extends Resource
                 ]), 
 
             Text::make('Name')
+                ->help('SURNAME, GIVEN NAME MI.')
                 ->sortable()
                 ->rules('required', 'max:255'),
+
+            Text::make('ID no.', 'number'), 
+
+            Text::make('Program of study', 'course'), 
+
+            Image::make('Signature'), 
 
             Text::make('Email')
                 ->sortable()

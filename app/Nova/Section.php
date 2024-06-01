@@ -2,20 +2,22 @@
 
 namespace App\Nova;
 
-use App\Models\Section as ModelsSection;
-use App\Models\SectionStudent;
-use App\Nova\Actions\InviteStudent;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\Select;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use App\Models\SectionStudent;
+use Laravel\Nova\Fields\Hidden;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\MorphMany;
+use App\Nova\Actions\InviteStudent;
+use Laravel\Nova\Fields\BelongsToMany;
+use App\Models\Section as ModelsSection;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use KirschbaumDevelopment\NovaComments\Commenter;
 
 class Section extends Resource
 {
@@ -112,6 +114,12 @@ class Section extends Resource
             BelongsTo::make('Creator', 'creator', User::class)->onlyOnDetail(), 
             Password::make('Pass Code'), 
             HasMany::make('Students', 'students', ClassInvitation::class)->canSee(fn () => auth()->user()->isCoordinator()), 
+            new Commenter(),
+            MorphMany::make(
+                'Comments',
+                'comments',
+                \KirschbaumDevelopment\NovaComments\Nova\Comment::class
+            )->onlyOnForms(),
         ];
     }
 

@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use KirschbaumDevelopment\NovaComments\Commentable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Group extends Model
 {
-    use HasFactory;
+    use HasFactory, Commentable;
+    
 
     protected $fillable = [
         'title_id',
@@ -49,5 +51,9 @@ class Group extends Model
 
     public function progresses() {
         return $this->hasMany(Progress::class, 'group_id');
+    }
+
+    public function oralDefenseRequests() {
+        return $this->hasMany(OralDefenseRequest::class, 'group_id'); 
     }
 }
