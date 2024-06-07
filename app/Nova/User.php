@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Models\User as ModelsUser;
+use App\Nova\Filters\UserType;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
@@ -119,7 +120,9 @@ class User extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            UserType::make(), 
+        ];
     }
 
     /**

@@ -47,7 +47,6 @@ class Course extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
             Text::make('Name')
                 ->sortable(),
             Text::make('Code')

@@ -116,17 +116,16 @@ class Title extends Resource
                     ModelsTitle::IC_TYPE_BUSINESS_PLAN => ModelsTitle::IC_TYPE_BUSINESS_PLAN,
                     ModelsTitle::IC_TYPE_PLANT_DESIGN => ModelsTitle::IC_TYPE_PLANT_DESIGN, 
                 ]),
-            Badge::make('Status')
-                ->map([
-                    'Taken' => 'warning',
-                    'Available' => 'success', 
-                ]), 
-            Select::make('Status')
-                ->onlyOnForms()
+            // Badge::make('Status')
+            //     ->map([
+            //         'Taken' => 'warning',
+            //         'Available' => 'success', 
+            //     ]), 
+            Select::make('Assigned Group', "status")
                 ->options([
-                    'Taken' => 'Taken',
-                    'Available' => 'Available', 
-                ]), 
+                    'Taken' => 'No',
+                    'Available' => 'Yes', 
+                ])->displayUsingLabels(), 
             HasOne::make('Group', 'group', Group::class), 
             HasMany::make('Applications', 'titleApplications', TitleApplication::class), 
         ];

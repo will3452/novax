@@ -21,6 +21,7 @@ class ClassInvitation extends Resource
     public static function indexQuery(NovaRequest $request, $query)
     {
         if (auth()->user()->isCoordinator()) return $query; 
+        if (auth()->user()->isStudent()) return $query->whereStatus('PENDING')->whereStudentId(auth()->id());
         return $query->whereStatus('PENDING');
     }
     public static function authorizedToCreate(Request $request)

@@ -47,7 +47,6 @@ class Term extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
             Text::make('Name')
                 ->sortable(),
             Boolean::make('Is Default'), 
