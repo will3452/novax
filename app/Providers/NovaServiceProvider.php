@@ -39,9 +39,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
-            Select::make('Coordinator', 'coordinator_id')
-                ->help('Select from faculty.')
-                ->options(\App\Models\User::whereType(\App\Models\User::TYPE_FACULTY)->get()->pluck('name', 'id')), 
+            // Select::make('Coordinator', 'coordinator_id')
+            //     ->help('Select from faculty.')
+            //     ->options(\App\Models\User::whereType(\App\Models\User::TYPE_FACULTY)->get()->pluck('name', 'id')), 
         ]);
     }
 
