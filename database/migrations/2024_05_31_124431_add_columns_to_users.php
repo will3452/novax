@@ -14,6 +14,7 @@ class AddColumnsToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->string('type')->nullable(); 
             $table->string('number')->nullable(); 
             $table->string('course')->nullable(); 
             $table->text('signature')->nullable(); 
