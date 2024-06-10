@@ -17,6 +17,7 @@ class Title extends Model
         'area_of_research',
         'ic_type',
         'status', 
+        'section_id', 
     ];
 
     const IC_TYPE_CAPSTONE = 'Capstone';
@@ -38,5 +39,9 @@ class Title extends Model
 
     public function group () {
         return $this->hasOne(Group::class, 'title_id'); 
+    }
+
+    public function section () {
+        return $this->belongsTo(Section::class, 'section_id'); 
     }
 }

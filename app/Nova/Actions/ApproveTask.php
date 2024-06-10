@@ -17,6 +17,11 @@ class ApproveTask extends Action
     use InteractsWithQueue, Queueable;
 
     public $showOnTableRow = true; 
+    public $task; 
+    public function __construct(Task $task)
+    {
+        $this->task = $task;    
+    }
 
     /**
      * Perform the action on the given models.
@@ -29,12 +34,13 @@ class ApproveTask extends Action
     {
         foreach($models as $model) {
             $model->update(['status' => 'APPROVED']); 
-            if (auth()->user()->type == \App\Models\User::TYPE_DEAN) {
+            // if (auth()->user()->type == \App\Models\User::TYPE_DEAN) {
+            if ($this->task->task->status == 'For Coordinator Approval') {
                 $model->task()->update(['code' => $fields['code']]); 
             }
 
             if ($model->task_type == "App\Models\OralDefenseRequest") {
-                $approved = Task::whereTaskType("App\Models\OralDefenseRequest")->whereTaskId($model->task_id)->whereStatus('APPROVED')->count(); 
+                $approved = Task::whereTaskType("App\Models\OralDefenseRequest")->whereTaskId($model->task_p)->whereStatus('APPROVED')->count(); 
                 $total = Task::whereTaskType("App\Models\OralDefenseRequest")->whereTaskId($model->task_id)->count(); 
 
                 if ($total == $approved && $approved > 0) {
@@ -75,7 +81,8 @@ class ApproveTask extends Action
     public function fields()
     {
         $fields = [];
-        if ( auth()->user()->type == \App\Models\User::TYPE_DEAN ) {
+        // if ( auth()->user()->type == \App\Models\User::TYPE_DEAN ) {
+        if ( $this->task->task->status == 'For Coordinator Approval' ) {
             array_push($fields, Text::make('Group Code', 'code')->rules(['required'])); // todo: modify fields to become dynamic 
         }
         return $fields;

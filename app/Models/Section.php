@@ -44,4 +44,8 @@ class Section extends Model
     public function students () {
         return $this->hasMany(SectionStudent::class, 'section_id'); 
     }
+
+    public function titles () {
+        return $this->hasMany(Title::class, 'section_id'); 
+    }
 }

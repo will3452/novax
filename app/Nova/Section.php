@@ -16,6 +16,8 @@ use Laravel\Nova\Fields\MorphMany;
 use App\Nova\Actions\InviteStudent;
 use Laravel\Nova\Fields\BelongsToMany;
 use App\Models\Section as ModelsSection;
+use Eminiarts\Tabs\Tab;
+use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use KirschbaumDevelopment\NovaComments\Commenter;
 
@@ -86,34 +88,43 @@ class Section extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
-            BelongsTo::make('Course', 'course', Course::class), 
-            Text::make('Section'),
-            Select::make('School Year')
-                ->options(\App\Models\SchoolYear::get()->pluck('name', 'name')),
-            Select::make('Term')
-                ->options(\App\Models\Term::get()->pluck('name', 'name')), 
-            Number::make('No of Students')->rules(['min:1']), 
-            Select::make('Thesis Phase')
-                ->options([
-                    ModelsSection::PHASE_PROPOSAL =>  ModelsSection::PHASE_PROPOSAL,
-                    ModelsSection::PHASE_GATHERING =>  ModelsSection::PHASE_GATHERING,
-                    ModelsSection::PHASE_FINAL =>  ModelsSection::PHASE_FINAL,
-                ]),
-            Select::make('IC type', 'ic_type')
-                ->options([
-                    \App\Models\Title::IC_TYPE_CAPSTONE => \App\Models\Title::IC_TYPE_CAPSTONE,
-                    \App\Models\Title::IC_TYPE_THESIS => \App\Models\Title::IC_TYPE_THESIS,
-                    \App\Models\Title::IC_TYPE_PLANT_DESIGN => \App\Models\Title::IC_TYPE_PLANT_DESIGN,
-                    \App\Models\Title::IC_TYPE_FEASIBILITY_STUDY => \App\Models\Title::IC_TYPE_FEASIBILITY_STUDY,
-                    \App\Models\Title::IC_TYPE_BUSINESS_PLAN => \App\Models\Title::IC_TYPE_BUSINESS_PLAN,
-                ]),
-            Hidden::make('creator_id')
-                ->default(fn() => auth()->id()),
-            
-            BelongsTo::make('Creator', 'creator', User::class)->onlyOnDetail(), 
-            Password::make('Pass Code'), 
-            HasMany::make('Students', 'students', ClassInvitation::class)->canSee(fn () => auth()->user()->isCoordinator()), 
+            Tabs::make('Section', [
+                Tab::make('Section Information', [
+                    BelongsTo::make('Course', 'course', Course::class), 
+                    Text::make('Section'),
+                    Select::make('School Year')
+                        ->options(\App\Models\SchoolYear::get()->pluck('name', 'name')),
+                    Select::make('Term')
+                        ->options(\App\Models\Term::get()->pluck('name', 'name')), 
+                    // Number::make('No of Students')->rules(['min:1']), 
+                    Hidden::make('no_of_students')->default(fn () => 100), 
+                    Select::make('Thesis Phase')
+                        ->options([
+                            ModelsSection::PHASE_PROPOSAL =>  ModelsSection::PHASE_PROPOSAL,
+                            ModelsSection::PHASE_GATHERING =>  ModelsSection::PHASE_GATHERING,
+                            ModelsSection::PHASE_FINAL =>  ModelsSection::PHASE_FINAL,
+                        ]),
+                    Select::make('IC type', 'ic_type')
+                        ->options([
+                            \App\Models\Title::IC_TYPE_CAPSTONE => \App\Models\Title::IC_TYPE_CAPSTONE,
+                            \App\Models\Title::IC_TYPE_THESIS => \App\Models\Title::IC_TYPE_THESIS,
+                            \App\Models\Title::IC_TYPE_PLANT_DESIGN => \App\Models\Title::IC_TYPE_PLANT_DESIGN,
+                            \App\Models\Title::IC_TYPE_FEASIBILITY_STUDY => \App\Models\Title::IC_TYPE_FEASIBILITY_STUDY,
+                            \App\Models\Title::IC_TYPE_BUSINESS_PLAN => \App\Models\Title::IC_TYPE_BUSINESS_PLAN,
+                        ]),
+                    Hidden::make('creator_id')
+                        ->default(fn() => auth()->id()),
+                    
+                    BelongsTo::make('Creator', 'creator', User::class)->onlyOnDetail(), 
+                    Password::make('Pass Code'), 
+                    ]),
+                    Tab::make('Students', [
+                        HasMany::make('Students', 'students', ClassInvitation::class)->canSee(fn () => auth()->user()->isCoordinator()),
+                    ]), 
+                    Tab::make('Titles', [
+                        HasMany::make('Titles', 'titles', Title::class), 
+                    ])
+            ])->withToolbar(),  
             new Commenter(),
             MorphMany::make(
                 'Comments',

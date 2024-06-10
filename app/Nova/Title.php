@@ -40,6 +40,13 @@ class Title extends Resource
         if (auth()->user()->type == \App\Models\User::TYPE_FACULTY) {
             return $query->whereFacultyId(auth()->id()); 
         }
+
+        if (auth()->user()->isStudent()) {
+            $sections = auth()->user()->sections()->get()->map(function($section, int $index) {
+                return $section->id; 
+            })->toArray(); 
+            return $query->whereIn('section_id', $sections);
+        }
         return $query;
     }
 
@@ -99,6 +106,7 @@ class Title extends Resource
             Date::make('Date', 'created_at')
                 ->exceptOnForms()
                 ->sortable(), 
+            BelongsTo::make('Section', 'section', Section::class), 
             Text::make('Title')
                 ->sortable(), 
             Textarea::make('Description')

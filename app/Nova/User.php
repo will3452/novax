@@ -61,7 +61,6 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
 
             Text::make('Type', function () {
                 if ($this->id == nova_get_setting('coordinator_id'))  return "$this->type / Coordinator"; 

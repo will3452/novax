@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Models\Task as ModelsTask;
 use App\Nova\Actions\ApproveTask;
 use App\Nova\Actions\RejectTask;
 use Illuminate\Http\Request;
@@ -127,9 +128,15 @@ class Task extends Resource
     public function actions(Request $request)
     {
         $actions = [];
-
+        $task = null; 
+        if ($this->id) {
+            $task = ModelsTask::find($this->id); 
+        } else {
+            $task = ModelsTask::find($request->resources); 
+        }
+        if (! $task) return []; 
         return [
-            ApproveTask::make()->canSee(fn () => $this->status == 'PENDING' || $request->has('action')), 
+            (new ApproveTask($task))->canSee(fn () => $this->status == 'PENDING' || $request->has('action')), 
             RejectTask::make()->canSee(fn () => $this->status == 'PENDING'|| $request->has('action')), 
         ];
     }

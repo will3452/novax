@@ -30,6 +30,8 @@ class MoveToCoordinatorApproval extends Action
                 'approved_status' => 'For Dean Approval', 
             ]);
         }
+        
+        $model->update(['status' => 'For Coordinator Approval']); 
     }
 
     /**
