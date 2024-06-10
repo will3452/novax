@@ -2,21 +2,23 @@
 
 namespace App\Nova;
 
-use App\Models\User as ModelsUser;
-use App\Nova\Filters\UserType;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
+use App\Nova\Filters\UserType;
 use Laravel\Nova\Fields\Image;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\Password;
+use App\Models\User as ModelsUser;
+use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Epartment\NovaDependencyContainer\HasDependencies;
+use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 
 class User extends Resource
 {
-    
+    use HasDependencies;    
     public static $group = 'Administration'; 
 
     public static function indexQuery(NovaRequest $request, $query)
@@ -83,9 +85,19 @@ class User extends Resource
 
             Text::make('ID no.', 'number'), 
 
-            Text::make('Program of study', 'course'), 
+            NovaDependencyContainer::make([
+                Text::make('Program of study', 'course'), 
+            ])->dependsOn('type', ModelsUser::TYPE_STUDENT ), 
 
-            Image::make('Signature'), 
+            NovaDependencyContainer::make([
+                Text::make('Cluster'), 
+            ])->dependsOn('type', ModelsUser::TYPE_DEAN ), 
+
+            NovaDependencyContainer::make([
+                Text::make('Cluster'), 
+            ])->dependsOn('type', ModelsUser::TYPE_FACULTY ), 
+
+            Image::make('Signature')->onlyOnDetail(), 
 
             Text::make('Email')
                 ->sortable()

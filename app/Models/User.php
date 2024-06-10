@@ -26,6 +26,7 @@ class User extends Authenticatable
         'number',
         'course',
         'signature', 
+        'cluster', 
     ];
 
     const TYPE_ADMINISTRATOR = 'Administrator'; 
