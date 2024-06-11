@@ -16,7 +16,11 @@ class TitleApplications extends Partition
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->count($request, TitleApplication::whereStudentId(auth()->id()), 'status');
+        return $this->count($request, TitleApplication::whereStudentId(auth()->id()), 'status')->colors([
+            'APPROVED' => '#23EB80', 
+            'REJECTED' => 'red',
+            'PENDING' => 'blue'
+        ]);
     }
 
     /**

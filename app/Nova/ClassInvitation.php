@@ -2,11 +2,12 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\JoinClass;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Badge;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Badge;
+use App\Nova\Actions\JoinClass;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class ClassInvitation extends Resource
@@ -60,7 +61,10 @@ class ClassInvitation extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            
+            Date::make('Date', 'created_at')
+                ->sortable()
+                ->exceptOnForms(), 
             BelongsTo::make('Student', 'student', User::class),
             BelongsTo::make('Section', 'section', Section::class), 
             Badge::make('Status', 'status')

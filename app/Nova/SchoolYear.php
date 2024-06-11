@@ -50,7 +50,6 @@ class SchoolYear extends Resource
         return [
             Text::make('Name')
                 ->sortable(), 
-            Boolean::make('Is Default'), 
         ];
     }
 

@@ -13,6 +13,7 @@ class TitleApplication extends Model
         'student_id',
         'title_id',
         'status', 
+        'section_id', 
     ]; 
     
 

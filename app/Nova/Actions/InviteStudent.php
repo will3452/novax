@@ -2,18 +2,27 @@
 
 namespace App\Nova\Actions;
 
-use App\Models\SectionStudent;
+use App\Models\Section;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Collection;
+use App\Models\SectionStudent;
 use Laravel\Nova\Actions\Action;
+use Illuminate\Support\Collection;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Fields\Select;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use OptimistDigital\MultiselectField\Multiselect;
+use Brightspot\Nova\Tools\DetachedActions\DetachedAction;
 
-class InviteStudent extends Action
+class InviteStudent extends DetachedAction
 {
     use InteractsWithQueue, Queueable;
+
+    public $sectionId; 
+
+    public function __construct(int $sectionId)
+    {
+        $this->sectionId = $sectionId; 
+    }
 
     /**
      * Perform the action on the given models.
@@ -22,19 +31,19 @@ class InviteStudent extends Action
      * @param  \Illuminate\Support\Collection  $models
      * @return mixed
      */
-    public function handle(ActionFields $fields, Collection $models)
+    public function handle(ActionFields $fields)
     {
-        foreach($models as $model) {
+        foreach(json_decode($fields['students']) as $student) {
             $exists = SectionStudent::where([
-                'student_id' => $fields->student_id, 
-                'section_id' => $model->id,
+                'student_id' => $student, 
+                'section_id' => $this->sectionId,
             ])->exists();
             if ($exists) {
-                return Action::danger('student has already invitation'); 
+                return DetachedAction::danger('student has already invitation'); 
             }
             SectionStudent::create([
-                'student_id' => $fields->student_id, 
-                'section_id' => $model->id,
+                'student_id' => $student, 
+                'section_id' => $this->sectionId,
             ]); 
         }
     }
@@ -47,9 +56,11 @@ class InviteStudent extends Action
     public function fields()
     {
         return [
-            Select::make('Student', 'student_id')
-                ->options(\App\Models\User::whereType(\App\Models\User::TYPE_STUDENT)->get()->pluck('name', 'id'))
-                ->searchable(), 
+            // Select::make('Student', 'student_id')
+            //     ->options(\App\Models\User::whereType(\App\Models\User::TYPE_STUDENT)->get()->pluck('name', 'id'))
+            //     ->searchable(), 
+            Multiselect::make('Students')
+                ->options(\App\Models\User::whereType(\App\Models\User::TYPE_STUDENT)->get()->pluck('name', 'id')), 
         ];
     }
 }

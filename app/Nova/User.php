@@ -72,6 +72,7 @@ class User extends Resource
 
             Select::make('Type')
                 ->onlyOnForms()
+                ->hideWhenUpdating()
                 ->options([
                     ModelsUser::TYPE_DEAN =>  ModelsUser::TYPE_DEAN,
                     ModelsUser::TYPE_STUDENT =>  ModelsUser::TYPE_STUDENT,
@@ -83,7 +84,7 @@ class User extends Resource
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Text::make('ID no.', 'number'), 
+            Text::make('ID no.', 'number')->hideWhenUpdating(), 
 
             NovaDependencyContainer::make([
                 Text::make('Program of study', 'course'), 
@@ -97,7 +98,7 @@ class User extends Resource
                 Text::make('Cluster'), 
             ])->dependsOn('type', ModelsUser::TYPE_FACULTY ), 
 
-            Image::make('Signature')->onlyOnDetail(), 
+            Image::make('Signature')->hideFromIndex()->hideWhenCreating(), 
 
             Text::make('Email')
                 ->sortable()

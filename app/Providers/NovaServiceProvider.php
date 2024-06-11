@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\SchoolYear;
+use App\Models\Term;
 use Laravel\Nova\Nova;
 use App\Nova\Metrics\Tasks;
 use App\Nova\Metrics\Users;
@@ -42,6 +44,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             Select::make('Coordinator', 'coordinator_id')
                 ->help('Select from faculty.')
                 ->options(\App\Models\User::whereType(\App\Models\User::TYPE_FACULTY)->get()->pluck('name', 'id')), 
+            Select::make('Default School Year', 'school_year')
+                ->options(SchoolYear::get()->pluck('name', 'name')), 
+            Select::make('Default Term', 'term')
+                ->options(Term::get()->pluck('name', 'name')), 
         ]);
     }
 
@@ -123,16 +129,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            (new ProfileTool)->canSee(function ($request) {
-                return config('novax.profile_enabled') && $request->user()->email != 'super@admin.com'; // to prevent changing of password 
-            }),
+            // (new ProfileTool)->canSee(function ($request) {
+            //     return config('novax.profile_enabled') && $request->user()->email != 'super@admin.com'; // to prevent changing of password 
+            // }),
             (new NovaCalendarTool)->canSee(function ($request) {
                 return $request->user()->id == nova_get_setting('coordinator_id'); 
             }), 
-            (new BackupTool)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
-                config('novax.back_up_enabled');
-            }),
             (new NovaSettings)->canSee(function ($request) {
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
                 config('novax.setting_enabled');

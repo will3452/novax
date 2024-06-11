@@ -28,7 +28,8 @@ class JoinClass extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach($models as $model) {
-            if (Hash::check($fields->pass_code, $model->section->pass_code)) {
+            // if (Hash::check($fields->pass_code, $model->section->pass_code)) { 
+            if ($fields->pass_code == $model->section->pass_code) {
                 $model->update(['status' => 'JOINED']); 
                 return Action::message("You've joined successfully!"); 
             } else {

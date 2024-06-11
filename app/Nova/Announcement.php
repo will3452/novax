@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use KirschbaumDevelopment\NovaComments\Commenter;
+use Laravel\Nova\Fields\Date;
 
 class Announcement extends Resource
 {
@@ -65,7 +66,9 @@ class Announcement extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            Date::make('Date', 'created_at')
+                ->sortable()
+                ->exceptOnForms(), 
             Text::make('Subject')->sortable(), 
             Textarea::make('Body')->alwaysShow(), 
             MorphMany::make(

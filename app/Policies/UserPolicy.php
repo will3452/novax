@@ -54,7 +54,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-         return $user->type == User::TYPE_ADMINISTRATOR; 
+         return $user->type == User::TYPE_ADMINISTRATOR || $user->id == auth()->id(); 
     }
 
     /**

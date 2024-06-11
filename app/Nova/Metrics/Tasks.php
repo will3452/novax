@@ -16,7 +16,11 @@ class Tasks extends Partition
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->count($request, Task::whereUserId(auth()->id()), 'status');
+        return $this->count($request, Task::whereUserId(auth()->id()), 'status')->colors([
+            'APPROVED' => '#23EB80', 
+            'REJECTED' => 'red',
+            'PENDING' => 'blue'
+        ]);
     }
 
     /**

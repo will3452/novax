@@ -49,7 +49,6 @@ class Term extends Resource
         return [
             Text::make('Name')
                 ->sortable(),
-            Boolean::make('Is Default'), 
         ];
     }
 

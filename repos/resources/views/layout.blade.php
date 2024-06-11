@@ -48,15 +48,17 @@
 
             <!-- Content -->
             <div class="content">
-                <div class="flex items-center relative shadow h-header bg-white z-20 px-view">
+                <div class="flex items-center relative shadow h-header bg-white z-20 px-view" style="background: {{(auth()->user()->isAdmin() ? '#ddd':( auth()->user()->isFaculty() ? 'rgb(191 219 254)' : (auth()->user()->isStudent() ? '#23EB80': '#E5ACFF')))}}" >
                     <a v-if="@json(\Laravel\Nova\Nova::name() !== null)" href="{{ \Illuminate\Support\Facades\Config::get('nova.url') }}" class="no-underline dim font-bold text-90 mr-6">
                         {{ \Laravel\Nova\Nova::name() }}
                     </a>
-
-                    @if (count(\Laravel\Nova\Nova::globallySearchableResources(request())) > 0)
-                        <global-search dusk="global-search-component"></global-search>
-                    @endif
-
+                    <div class="mx- 2 items-center flex">
+                        <svg width="25" class="mr-2" xmlns="http://www.w3.org/2000/svg" fill="none"  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                          </svg>
+                          
+                        {{nova_get_setting('term')}} - {{nova_get_setting('school_year')}}
+                    </div>
                     <dropdown class="ml-auto h-9 flex items-center dropdown-right">
                         @include('nova::partials.user')
                     </dropdown>

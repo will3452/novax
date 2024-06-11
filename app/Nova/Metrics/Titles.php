@@ -16,7 +16,9 @@ class Titles extends Partition
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->count($request, Title::class, 'status');
+        return $this->count($request, Title::class, 'status')->colors([
+            'Available' => '#23EB80', 
+        ]);
     }
 
     /**

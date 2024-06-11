@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "944df7b3ac7959c63c239f1b1839a189",
+    "content-hash": "21651d99ce8838b470a1289f7cf2d43a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1359,6 +1359,54 @@
             ],
             "abandoned": true,
             "time": "2022-02-23T14:25:13+00:00"
+        },
+        {
+            "name": "gobrightspot/nova-detached-actions",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gobrightspot/nova-detached-actions.git",
+                "reference": "dc4975cb03c761f8fd9ba7d98e75acc41306af9b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gobrightspot/nova-detached-actions/zipball/dc4975cb03c761f8fd9ba7d98e75acc41306af9b",
+                "reference": "dc4975cb03c761f8fd9ba7d98e75acc41306af9b",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": "^3.0",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Brightspot\\Nova\\Tools\\DetachedActions\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Brightspot\\Nova\\Tools\\DetachedActions\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova tool to allow for placing actions in the Nova toolbar detached from the checkbox selection mechanism.",
+            "keywords": [
+                "detached actions",
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/gobrightspot/nova-detached-actions/issues",
+                "source": "https://github.com/gobrightspot/nova-detached-actions/tree/1.1.1"
+            },
+            "abandoned": true,
+            "time": "2020-10-11T22:54:19+00:00"
         },
         {
             "name": "google/apiclient",
@@ -2881,6 +2929,51 @@
             "time": "2024-01-28T23:22:08+00:00"
         },
         {
+            "name": "lexicon/nova-action-button-selectors",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pitchayakit/nova-action-button-selector.git",
+                "reference": "1c47e50bd352b1a6ce2b5297ef054210652306c1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pitchayakit/nova-action-button-selector/zipball/1c47e50bd352b1a6ce2b5297ef054210652306c1",
+                "reference": "1c47e50bd352b1a6ce2b5297ef054210652306c1",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Lexicon\\ActionButtonSelector\\AssetServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Lexicon\\ActionButtonSelector\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova asset.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/pitchayakit/nova-action-button-selector/issues",
+                "source": "https://github.com/pitchayakit/nova-action-button-selector/tree/v1.0.0"
+            },
+            "time": "2022-08-15T09:48:05+00:00"
+        },
+        {
             "name": "michielfb/laravel-nova-time-field",
             "version": "1.3.0",
             "source": {
@@ -3569,6 +3662,73 @@
                 "source": "https://github.com/optimistdigital/nova-translations-loader/tree/3.1.4"
             },
             "time": "2022-04-08T12:27:58+00:00"
+        },
+        {
+            "name": "outl1ne/nova-multiselect-field",
+            "version": "2.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/outl1ne/nova-multiselect-field.git",
+                "reference": "7735a994326b851b515785db15d3a70795b78076"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/outl1ne/nova-multiselect-field/zipball/7735a994326b851b515785db15d3a70795b78076",
+                "reference": "7735a994326b851b515785db15d3a70795b78076",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": "^3.0",
+                "optimistdigital/nova-translations-loader": "^3.0.0",
+                "php": ">=7.2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "OptimistDigital\\MultiselectField\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "OptimistDigital\\MultiselectField\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tarvo Reinpalu",
+                    "email": "tarvoreinpalu@gmail.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Optimist Digital",
+                    "email": "info@optimistdigital.com",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "A multiple select field for Laravel Nova.",
+            "keywords": [
+                "laravel",
+                "multiselect",
+                "nova",
+                "select"
+            ],
+            "support": {
+                "issues": "https://github.com/outl1ne/nova-multiselect-field/issues",
+                "source": "https://github.com/outl1ne/nova-multiselect-field/tree/2.4.3"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/outl1ne",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-10-21T15:06:05+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
@@ -4812,156 +4972,6 @@
             "time": "2018-12-04T22:15:15+00:00"
         },
         {
-            "name": "spatie/db-dumper",
-            "version": "2.21.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/db-dumper.git",
-                "reference": "05e5955fb882008a8947c5a45146d86cfafa10d1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/db-dumper/zipball/05e5955fb882008a8947c5a45146d86cfafa10d1",
-                "reference": "05e5955fb882008a8947c5a45146d86cfafa10d1",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2|^8.0",
-                "symfony/process": "^4.2|^5.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7.0|^8.0|^9.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\DbDumper\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Dump databases",
-            "homepage": "https://github.com/spatie/db-dumper",
-            "keywords": [
-                "database",
-                "db-dumper",
-                "dump",
-                "mysqldump",
-                "spatie"
-            ],
-            "support": {
-                "issues": "https://github.com/spatie/db-dumper/issues",
-                "source": "https://github.com/spatie/db-dumper/tree/2.21.1"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/spatie",
-                    "type": "github"
-                }
-            ],
-            "time": "2021-02-24T14:56:42+00:00"
-        },
-        {
-            "name": "spatie/laravel-backup",
-            "version": "6.16.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/laravel-backup.git",
-                "reference": "332fae80b12cacb9e4161824ba195d984b28c8fb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/332fae80b12cacb9e4161824ba195d984b28c8fb",
-                "reference": "332fae80b12cacb9e4161824ba195d984b28c8fb",
-                "shasum": ""
-            },
-            "require": {
-                "ext-zip": "^1.14.0",
-                "illuminate/console": "^6.0|^7.0|^8.0",
-                "illuminate/contracts": "^6.0|^7.0|^8.0",
-                "illuminate/events": "^6.0|^7.0|^8.0",
-                "illuminate/filesystem": "^6.0|^7.0|^8.0",
-                "illuminate/notifications": "^6.0|^7.0|^8.0",
-                "illuminate/support": "^6.0|^7.0|^8.0",
-                "league/flysystem": "^1.0.49",
-                "php": "^7.3|^8.0",
-                "spatie/db-dumper": "^2.12",
-                "spatie/temporary-directory": "^1.1",
-                "symfony/finder": "^4.2|^5.0"
-            },
-            "require-dev": {
-                "laravel/slack-notification-channel": "^2.3",
-                "league/flysystem-aws-s3-v3": "^1.0",
-                "mockery/mockery": "^1.4.2",
-                "orchestra/testbench": "4.*|5.*|6.*",
-                "phpunit/phpunit": "^8.4|^9.0"
-            },
-            "suggest": {
-                "laravel/slack-notification-channel": "Required for sending notifications via Slack"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Spatie\\Backup\\BackupServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/Helpers/functions.php"
-                ],
-                "psr-4": {
-                    "Spatie\\Backup\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A Laravel package to backup your application",
-            "homepage": "https://github.com/spatie/laravel-backup",
-            "keywords": [
-                "backup",
-                "database",
-                "laravel-backup",
-                "spatie"
-            ],
-            "support": {
-                "issues": "https://github.com/spatie/laravel-backup/issues",
-                "source": "https://github.com/spatie/laravel-backup/tree/6.16.5"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/sponsors/spatie",
-                    "type": "github"
-                },
-                {
-                    "url": "https://spatie.be/open-source/support-us",
-                    "type": "other"
-                }
-            ],
-            "time": "2021-09-12T10:04:18+00:00"
-        },
-        {
             "name": "spatie/laravel-google-calendar",
             "version": "3.8.0",
             "source": {
@@ -5118,75 +5128,6 @@
             "time": "2023-10-25T05:12:01+00:00"
         },
         {
-            "name": "spatie/nova-backup-tool",
-            "version": "4.2.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/nova-backup-tool.git",
-                "reference": "d305afbd31aefaf8518c1eac14c69bebcd9b3ec6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/nova-backup-tool/zipball/d305afbd31aefaf8518c1eac14c69bebcd9b3ec6",
-                "reference": "d305afbd31aefaf8518c1eac14c69bebcd9b3ec6",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "^7.0|^8.0|^9.0",
-                "laravel/nova": "^3.0",
-                "nesbot/carbon": "^2.31",
-                "php": "^8.0|^7.3",
-                "spatie/laravel-backup": "^6.0|^7.0|^8.0"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^5.0|^6.0|^7.0",
-                "phpunit/phpunit": "9.3",
-                "spatie/phpunit-snapshot-assertions": "^3.0|^4.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Spatie\\BackupTool\\BackupToolServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\BackupTool\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A Laravel Nova tool to backup your application.",
-            "homepage": "https://github.com/spatie/nova-backup-tool",
-            "keywords": [
-                "laravel",
-                "nova"
-            ],
-            "support": {
-                "issues": "https://github.com/spatie/nova-backup-tool/issues",
-                "source": "https://github.com/spatie/nova-backup-tool/tree/4.2.3"
-            },
-            "funding": [
-                {
-                    "url": "https://spatie.be/open-source/support-us",
-                    "type": "custom"
-                }
-            ],
-            "time": "2022-03-28T12:11:46+00:00"
-        },
-        {
             "name": "spatie/once",
             "version": "3.1.1",
             "source": {
@@ -5247,57 +5188,6 @@
                 }
             ],
             "time": "2024-05-27T09:17:58+00:00"
-        },
-        {
-            "name": "spatie/temporary-directory",
-            "version": "1.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/temporary-directory.git",
-                "reference": "f517729b3793bca58f847c5fd383ec16f03ffec6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/temporary-directory/zipball/f517729b3793bca58f847c5fd383ec16f03ffec6",
-                "reference": "f517729b3793bca58f847c5fd383ec16f03ffec6",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2|^8.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8.0|^9.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\TemporaryDirectory\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Alex Vanderbist",
-                    "email": "alex@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Easily create, use and destroy temporary directories",
-            "homepage": "https://github.com/spatie/temporary-directory",
-            "keywords": [
-                "php",
-                "spatie",
-                "temporary-directory"
-            ],
-            "support": {
-                "issues": "https://github.com/spatie/temporary-directory/issues",
-                "source": "https://github.com/spatie/temporary-directory/tree/1.3.0"
-            },
-            "time": "2020-11-09T15:54:21+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

@@ -2,10 +2,14 @@
 
 namespace App\Nova;
 
+use Eminiarts\Tabs\Tab;
+use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\Text;
 use App\Models\SectionStudent;
+use Laravel\Nova\Fields\Place;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
@@ -16,8 +20,6 @@ use Laravel\Nova\Fields\MorphMany;
 use App\Nova\Actions\InviteStudent;
 use Laravel\Nova\Fields\BelongsToMany;
 use App\Models\Section as ModelsSection;
-use Eminiarts\Tabs\Tab;
-use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use KirschbaumDevelopment\NovaComments\Commenter;
 
@@ -93,8 +95,14 @@ class Section extends Resource
                     BelongsTo::make('Course', 'course', Course::class), 
                     Text::make('Section'),
                     Select::make('School Year')
+                        ->default(function () {
+                            return nova_get_setting('school_year'); 
+                        })
                         ->options(\App\Models\SchoolYear::get()->pluck('name', 'name')),
                     Select::make('Term')
+                        ->default(function () {
+                            return nova_get_setting('term'); 
+                        })
                         ->options(\App\Models\Term::get()->pluck('name', 'name')), 
                     // Number::make('No of Students')->rules(['min:1']), 
                     Hidden::make('no_of_students')->default(fn () => 100), 
@@ -116,7 +124,7 @@ class Section extends Resource
                         ->default(fn() => auth()->id()),
                     
                     BelongsTo::make('Creator', 'creator', User::class)->onlyOnDetail(), 
-                    Password::make('Pass Code'), 
+                    Text::make('Pass Code')->onlyOnForms(), 
                     ]),
                     Tab::make('Students', [
                         HasMany::make('Students', 'students', ClassInvitation::class)->canSee(fn () => auth()->user()->isCoordinator()),
@@ -175,8 +183,14 @@ class Section extends Resource
      */
     public function actions(Request $request)
     {
+        $resourceId = $request->resourceId ?? request()->resourceId;
+        if (! $resourceId) {
+            $urlArray = explode("/", parse_url(request()->headers->get('referer'))['path']); 
+            $resourceId = end($urlArray); 
+        }
+        if (! is_numeric($resourceId)) return []; 
         return [
-            InviteStudent::make()->canSee(fn () => auth()->user()->isCoordinator()), 
+            (new InviteStudent(intval($resourceId)))->canSee(fn () => auth()->user()->isCoordinator()), 
         ];
     }
 }

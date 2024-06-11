@@ -3,11 +3,12 @@
 namespace App\Nova\Actions;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Collection;
+use App\Models\TitleApplication;
 use Laravel\Nova\Actions\Action;
+use Illuminate\Support\Collection;
 use Laravel\Nova\Fields\ActionFields;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ApproveApplication extends Action
 {
@@ -25,6 +26,8 @@ class ApproveApplication extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach($models as $model) {
+            $others = TitleApplication::whereStudentId($model->student_id)->whereSectionId($model->section_id)->whereStatus('PENDING')->where('id', '!=', $model->id)->update(['status' => 'REJECTED']);
+            
             $model->update(['status' => 'APPROVED']); 
         }
     }

@@ -1,3 +1,4 @@
+
 <dropdown-trigger class="h-9 flex items-center">
     @isset($user->email)
         <img
@@ -10,6 +11,7 @@
         {{ $user->name ?? $user->email ?? __('Nova User') }}
     </span>
 </dropdown-trigger>
+
 
 <dropdown-menu slot="menu" width="200" direction="rtl">
     <ul class="list-reset">

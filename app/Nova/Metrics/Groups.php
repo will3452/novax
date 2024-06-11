@@ -16,7 +16,9 @@ class Groups extends Partition
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->count($request, Group::class, 'status');
+        return $this->count($request, Group::class, 'status')->colors([
+            'Ready for defense' => '#23EB80'
+        ]);
     }
 
     /**
