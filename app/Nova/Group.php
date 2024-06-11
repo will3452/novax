@@ -180,7 +180,11 @@ class Group extends Resource
      */
     public function actions(Request $request)
     {
-        $actions = [MarkAsReadyForDefense::make()->canSee(fn () => auth()->user()->isFaculty() && $this->defense_schedule == null)]; 
+        $actions = [MarkAsReadyForDefense::make()->canSee(fn () => auth()->user()->isFaculty() && $this->defense_schedule == null), 
+                MoveToDeanApproval::make()->canSee(function () {
+                    if (! $this->status) return true; 
+                    return $this->status == 'For Dean Approval' && auth()->user()->isFaculty(); 
+                })]; 
         if ($request->action == 'mark-as-ready-for-defense') {
             return [MarkAsReadyForDefense::make()]; 
         }
@@ -194,10 +198,6 @@ class Group extends Resource
                         if ($p->status == 'PENDING') $visible = false; 
                     }
                     return $visible && auth()->user()->isFaculty(); 
-                }),
-                MoveToDeanApproval::make()->canSee(function () {
-                    if (! $this->status) return true; 
-                    return $this->status == 'For Dean Approval' && auth()->user()->isFaculty(); 
                 })
             ];
         }
