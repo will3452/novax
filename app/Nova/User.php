@@ -11,6 +11,8 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use App\Models\User as ModelsUser;
+use App\Nova\Actions\DownloadTemplate;
+use App\Nova\Actions\ImportUsers;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Epartment\NovaDependencyContainer\HasDependencies;
@@ -156,6 +158,9 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            DownloadTemplate::make()->onlyOnIndexToolbar(), 
+            ImportUsers::make()->onlyOnIndexToolbar(), 
+        ];
     }
 }
