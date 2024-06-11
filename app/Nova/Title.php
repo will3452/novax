@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Models\Title as ModelsTitle;
 use App\Nova\Actions\ApproveApplication;
 use App\Nova\Actions\CreateGroupFromThisTitle;
+use App\Nova\Actions\RemoveAllApplications;
 use App\Nova\Actions\SendApplication;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
@@ -114,7 +115,14 @@ class Title extends Resource
                 ->alwaysShow(),
             Hidden::make('faculty_id')->default(fn () => auth()->id() ), 
             BelongsTo::make('Faculty', 'faculty', User::class)->exceptOnForms(), 
-            Number::make('No Of Students')->rules(['required', 'max:3']),
+            Text::make('Applications', function () {
+                $limit = $this->no_of_students; 
+                $applications = $this->titleApplications()->count(); 
+                return "$applications / $limit"; 
+            }), 
+            Number::make('No Of Students')
+                ->hideFromIndex()
+                ->rules(['required', 'max:3']),
             Text::make('Area of Research'),
             Select::make('IC type', 'ic_type')
                 ->options([
@@ -180,6 +188,8 @@ class Title extends Resource
     public function actions(Request $request) {
         return [
             CreateGroupFromThisTitle::make()
+                ->canSee(fn () => auth()->user()->isFaculty()), 
+            RemoveAllApplications::make()
                 ->canSee(fn () => auth()->user()->isFaculty()), 
             SendApplication::make()
                 ->canSee(fn () => auth()->user()->isStudent() && ! \App\Models\TitleApplication::whereStudentId(auth()->id())->whereTitleId($this->id)->exists()),
