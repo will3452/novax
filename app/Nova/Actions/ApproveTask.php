@@ -89,8 +89,16 @@ class ApproveTask extends Action
     {
         $fields = [];
         // if ( auth()->user()->type == \App\Models\User::TYPE_DEAN ) {
+        // if ( true) {
         if ( $this->task->task->status == 'For Coordinator Approval' ) {
-            array_push($fields, Text::make('Group Code', 'code')->rules(['required'])); // todo: modify fields to become dynamic 
+            array_push($fields, Text::make('Group Code', 'code')
+                ->default(function () {
+                    $year = nova_get_setting('school_year');
+                    $ps = $this->task->task->title->titleApplications()->first()->student->course; 
+                    $sq = Group::whereNotNull('code')->count() + 1; 
+                    return "$year-$ps-$sq"; 
+                })
+                ->rules(['required'])); // todo: modify fields to become dynamic 
         }
         return $fields;
     }
