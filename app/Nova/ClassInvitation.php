@@ -29,6 +29,12 @@ class ClassInvitation extends Resource
     {
         return false; 
     }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        if ($request->has('action')) return true;
+        return false; 
+    }
     /**
      * The model the resource corresponds to.
      *
