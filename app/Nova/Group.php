@@ -180,7 +180,9 @@ class Group extends Resource
      */
     public function actions(Request $request)
     {
-        $actions = [MarkAsReadyForDefense::make()->canSee(fn () => auth()->user()->isFaculty() && $this->defense_schedule == null), MoveToDeanApproval::make()]; 
+        $actions = [MarkAsReadyForDefense::make()->canSee(fn () => auth()->user()->isFaculty() && $this->defense_schedule == null), MoveToDeanApproval::make()->canSee(function () {
+            return auth()->user()->isFaculty(); 
+        })]; 
         if ($request->action == 'mark-as-ready-for-defense') {
             return [MarkAsReadyForDefense::make()]; 
         }

@@ -86,7 +86,7 @@ class User extends Resource
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Text::make('ID no.', 'number')->hideWhenUpdating(), 
+            Text::make('ID no.', 'number'), 
 
             NovaDependencyContainer::make([
                 Text::make('Program of study', 'course'), 

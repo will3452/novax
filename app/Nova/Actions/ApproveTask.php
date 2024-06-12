@@ -4,6 +4,7 @@ namespace App\Nova\Actions;
 
 use App\Models\Task;
 use App\Models\Group;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Actions\Action;
@@ -40,19 +41,20 @@ class ApproveTask extends Action
             }
 
             if ($model->task_type == "App\Models\OralDefenseRequest") {
-                $approved = Task::whereTaskType("App\Models\OralDefenseRequest")->whereTaskId($model->task_p)->whereStatus('APPROVED')->count(); 
+                $approved = Task::whereTaskType("App\Models\OralDefenseRequest")->whereTaskId($model->task_id)->whereStatus('APPROVED')->count(); 
                 $total = Task::whereTaskType("App\Models\OralDefenseRequest")->whereTaskId($model->task_id)->count(); 
 
                 if ($total == $approved && $approved > 0) {
                     $group = Group::find($model->task->group_id); 
                     
                     $date = $model->task->date->format('M d, Y'); 
+                    $venue = $model->task->venue; 
+                    $time = $model->task->time; 
+
                     if ($model->task->status == 'Panelist Approval') {
                         $model->task()->update(['status' => 'Coordinator Approval']); 
                         
                         
-                        $venue = $model->task->venue; 
-                        $time = $model->task->time; 
                         $model->task->tasks()->create([
                             'user_id' => nova_get_setting('coordinator_id', 1), 
                             'description' => "The group $group->code is requesting to schedule their oral defense on $date, at $time in $venue. "
@@ -61,8 +63,13 @@ class ApproveTask extends Action
                     }
 
                     $model->task()->update(['status' => $model->approved_status]); 
-                    $group->update(['defense_schedule' => $date]); 
-                    return; 
+                    $group->update(['defense_schedule' => $date]);
+                    \App\Models\Event::create([
+                        'title' => $group->code. " Defense @ $venue", 
+                        'start' => Carbon::parse($date)->setTimeFromTimeString($time),
+                        'end' => Carbon::parse($date)->addHours(2), 
+                    ]); 
+                    return Action::message('Event created successfully!'); 
                 }   
 
                 

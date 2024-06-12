@@ -29,8 +29,9 @@ class SubmitToPanelist extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach($models as $model) {
-            $model->update(['section_id' => $fields->section_id, 'status' => OralDefenseRequest::PANELIST_APPROVAL]); 
             $group = Group::find($model->group_id); 
+            $model->update(['section_id' => $group->title->section_id, 'status' => OralDefenseRequest::PANELIST_APPROVAL]); 
+            
             $panelists = $group->panellists; 
             $date = $model->date->format('M d, Y'); 
             foreach($panelists as $p) {
@@ -49,14 +50,8 @@ class SubmitToPanelist extends Action
      */
     public function fields()
     {
-        $sections = auth()->user()->sections->map(function ($item) {
-            return $item->id; 
-        });
-
         
         return [
-            Select::make('Section', 'section_id')
-                ->options(Section::whereIn('id', $sections->toArray())->get()->pluck('section', 'id')), 
         ];
     }
 }

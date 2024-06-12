@@ -132,9 +132,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             // (new ProfileTool)->canSee(function ($request) {
             //     return config('novax.profile_enabled') && $request->user()->email != 'super@admin.com'; // to prevent changing of password 
             // }),
-            (new NovaCalendarTool)->canSee(function ($request) {
-                return $request->user()->id == nova_get_setting('coordinator_id'); 
-            }), 
+            (new NovaCalendarTool), 
             (new NovaSettings)->canSee(function ($request) {
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
                 config('novax.setting_enabled');
