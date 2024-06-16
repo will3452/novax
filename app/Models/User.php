@@ -25,6 +25,8 @@ class User extends Authenticatable
         'type',
         'school',
         'approved_at',
+        'address', 
+        'mobile_no', 
         'lat',
         'lng', 
     ];

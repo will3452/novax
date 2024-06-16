@@ -6,7 +6,7 @@
             <a class="inline-block rounded-full font-bold text-white m-2 p-2 px-4 bg-blue-400" href="/app/login">LOGIN</a>
             <a class="inline-block rounded-full font-bold text-white m-2 p-2 px-4 bg-yellow-600" href="/register-hte">REGISTER AS HTE</a>
             <a class="inline-block rounded-full font-bold text-white m-2 p-2 px-4 bg-red-800" href="/register">REGISTER AS TRAINEE</a>
-            <a class="inline-block rounded-full font-bold text-white m-2 p-2 px-4 bg-green-800" href="/register-coordinator">REGISTER AS SCHOOL COORDINATOR</a>
+            <a class="inline-block rounded-full font-bold text-white m-2 p-2 px-4 bg-green-800" href="/register-coordinator">REGISTER AS PRACTICUM COORDINATOR</a>
         </div>
     </div>
 </x-layout>

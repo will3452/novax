@@ -33,7 +33,7 @@ Route::post('/register-trainee', function (Request $request) {
     $data['coordinator'] = null; 
     $head = User::whereEmail($coordinator)->first();
     
-    $data['password'] = bcrypt('password'); 
+    $data['password'] = bcrypt($data['password']); 
     $member = User::create($data); 
 
     Supervision::create([
@@ -52,9 +52,10 @@ Route::post('/register-hte', function (Request $request) {
         'password' => ['required', 'confirmed'],
         'name' => 'required',
         'lat' => ['required'], 
+        'address' => ['required'], 
         'lng' => ['required'], 
     ]);
-    $data['password'] = bcrypt('password'); 
+    $data['password'] = bcrypt($data['password']); 
     $data['type'] = User::TYPE_HTE; 
     User::create($data); 
 
@@ -69,7 +70,7 @@ Route::post('/register-coordinator', function (Request $request) {
         'password' => ['required', 'confirmed'],
         'name' => 'required',
     ]);
-    $data['password'] = bcrypt('password'); 
+    $data['password'] = bcrypt($data['password']); 
     $data['type'] = User::TYPE_COORDINATOR; 
     User::create($data); 
 

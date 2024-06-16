@@ -9,21 +9,25 @@
         <form action="/register-coordinator" method="POST" class="p-2 ">
             @csrf 
            <label for="" class="text-base block mt-2">
-                Name
+                Name <span class="text-red-700">*</span>
             </label>
             <input name="name" required class="block border rounded-md w-full p-2" type="text">
             <label for="" class="text-base block mt-2">
-                Email
+                Email <span class="text-red-700">*</span>
             </label>
             <input name="email" required class="block border rounded-md w-full p-2" type="email">
-            <label for="" class="text-base block mt-2">
-                Password
-            </label>
-            <input name="password" required class="block border rounded-md w-full p-2" type="password">
-            <label for="" class="text-base block mt-2">
-                Confirm Password
-            </label>
-            <input name="password_confirmation" required class="block border rounded-md w-full p-2" type="password">
+            <div x-data="{showPassword:false}">
+                
+                <label for="" class="text-base block mt-2">
+                    Password <span class="text-red-700">*</span>
+                </label>
+                <input name="password" required class="block border rounded-md w-full p-2" :type="showPassword ? 'text' : 'password'">
+                <label for="" class="text-base block mt-2">
+                    Confirm Password <span class="text-red-700">*</span>
+                </label>
+                <input name="password_confirmation" required class="block border rounded-md w-full p-2" :type="showPassword ? 'text' : 'password'">
+                <a class="underline text-sm" x-on:click="showPassword = !showPassword">show password</a>
+                </div>
             <button class="mt-2 p-2 bg-blue-400 font-bold text-white w-full rounded-md" type="submit">SUBMIT</button>
         </form>
     </div>
