@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Nova\Metrics\ApplicationStatus;
+use App\Nova\Metrics\Attendances;
 use App\Nova\Metrics\ForApproval;
 use App\Nova\Metrics\JobPosts;
 use App\Nova\Metrics\MyApplications;
@@ -92,6 +93,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         if (auth()->user()->type == \App\Models\User::TYPE_ADMIN) {
             array_push($cards, UserTypes::make()); 
             array_push($cards, ForApproval::make()); 
+            array_push($cards, Attendances::make()); 
         }
 
         if (auth()->user()->type == \App\Models\User::TYPE_HTE) {

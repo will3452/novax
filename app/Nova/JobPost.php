@@ -75,7 +75,7 @@ class JobPost extends Resource
         return [
             Hidden::make('user_id')
                 ->default(fn () => auth()->id()),
-            BelongsTo::make('Author', 'author', User::class)->exceptOnForms(), 
+            BelongsTo::make('HTE/Company', 'author', User::class)->exceptOnForms(), 
             Select::make('Status')
                 ->options([
                     'ON-GOING' => 'ON-GOING',
