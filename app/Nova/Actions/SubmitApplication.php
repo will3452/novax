@@ -9,6 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\File;
 
 class SubmitApplication extends Action
 {
@@ -28,11 +29,15 @@ class SubmitApplication extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
+        $file = $fields->file->store('public');
+        $arrFile = explode("/", $file);
+        $end = end($arrFile); 
         foreach($models as $m) {
             Application::create([
                 'job_post_id' => $m->id,
                 'trainee_id' => auth()->id(),
                 'hte_id' => $m->user_id, 
+                'file' => $end, 
             ]); 
         }
     }
@@ -44,6 +49,8 @@ class SubmitApplication extends Action
      */
     public function fields()
     {
-        return [];
+        return [
+            File::make('Resume, Recommendation and etc.., ', 'file')->rules(['required']), 
+        ];
     }
 }

@@ -14,6 +14,7 @@ class Application extends Model
         'trainee_id',
         'hte_id',
         'status', 
+        'file', 
     ]; 
 
     const STATUS_PENDING = "PENDING"; 

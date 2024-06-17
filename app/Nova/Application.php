@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -81,6 +82,7 @@ class Application extends Resource
         return [
             Date::make('Applied Date', 'created_at'), 
             Text::make('Status'), 
+            File::make('Attachments', 'file'), 
             BelongsTo::make('Trainee', 'trainee', Trainee::class),
             BelongsTo::make('HTE', 'hte', Hte::class),
             BelongsTo::make('Job Post', 'jobPost', JobPost::class), 
