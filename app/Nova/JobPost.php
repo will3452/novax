@@ -139,7 +139,7 @@ class JobPost extends Resource
                 array_push($actions, SubmitApplication::make());
             } 
         }
-        array_push($actions, SubmitApplication::make());
+        // array_push($actions, SubmitApplication::make());
         return $actions;
     }
 }
