@@ -53,6 +53,10 @@ class Group extends Model
         return $this->hasMany(Progress::class, 'group_id');
     }
 
+    public function revisions() {
+        return $this->hasMany(Revision::class, 'group_id');
+    }
+
     public function oralDefenseRequests() {
         return $this->hasMany(OralDefenseRequest::class, 'group_id'); 
     }

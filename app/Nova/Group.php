@@ -25,6 +25,7 @@ use App\Nova\Actions\SubmitOralDefenseRequest;
 use App\Models\GroupMember as ModelGroupMember;
 use App\Nova\Actions\MoveToCoordinatorApproval;
 use App\Nova\Actions\ViewAcceptanceOfAdviserAndPanelMembersForm;
+use App\Nova\Actions\ViewRequirementsForRevisionForm;
 use KirschbaumDevelopment\NovaComments\Commenter;
 use KirschbaumDevelopment\NovaComments\CommentsPanel;
 
@@ -128,6 +129,9 @@ class Group extends Resource
                 Tab::make('Oral Defense Requests ', [
                     HasMany::make('Oral Defense Request', 'oralDefenseRequests', OralDefenseRequest::class), 
                 ]),
+                Tab::make('Revisions', [
+                    HasMany::make('Revisions', 'revisions', Revision::class), 
+                ]),
             ])->withToolbar(),
             MorphMany::make(
                 'Comments',
@@ -187,15 +191,18 @@ class Group extends Resource
                 return auth()->user()->isFaculty(); 
             }),
             ViewAcceptanceOfAdviserAndPanelMembersForm::make(), 
+            ViewRequirementsForRevisionForm::make(), 
         ]; 
         if ($request->action == 'mark-as-ready-for-defense') {
             return [MarkAsReadyForDefense::make(), 
             ViewAcceptanceOfAdviserAndPanelMembersForm::make(), 
+            ViewRequirementsForRevisionForm::make(), 
         ]; 
         }
         if ($this->code == null) {
             return [
                 ViewAcceptanceOfAdviserAndPanelMembersForm::make(), 
+                ViewRequirementsForRevisionForm::make(), 
                 AddPanellist::make()->canSee(fn () => auth()->user()->isFaculty()), 
                 MoveToPanellistApproval::make()->canSee(fn () => auth()->user()->isFaculty()), 
                 MoveToCoordinatorApproval::make()->canSee(function () {
