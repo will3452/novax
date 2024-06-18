@@ -44,6 +44,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             Select::make('Coordinator', 'coordinator_id')
                 ->help('Select from faculty.')
                 ->options(\App\Models\User::whereType(\App\Models\User::TYPE_FACULTY)->get()->pluck('name', 'id')), 
+            Select::make('Program Chair', 'programchair_id')
+                ->help('Select from faculty.')
+                ->options(\App\Models\User::whereType(\App\Models\User::TYPE_FACULTY)->get()->pluck('name', 'id')), 
             Select::make('Default School Year', 'school_year')
                 ->options(SchoolYear::get()->pluck('name', 'name')), 
             Select::make('Default Term', 'term')

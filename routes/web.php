@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
+use App\Models\OralDefenseRequest;
 use App\Models\Progress;
 use Illuminate\Http\Request;
 
@@ -15,10 +16,20 @@ Route::get('/app/login', function () {
 }); 
 
 Route::get('/form', function (Request $request) {
-    $progress = Progress::find($request->model);
-    $progress->load('section', 'group');  
+    $response = []; 
+    if ($request->form == 'progress') {
+        $progress = Progress::find($request->model);
+        $progress->load('section', 'group');  
+        $response['progress'] = $progress; 
+    }
+
+    if ($request->form == 'oral_defense') {
+        $oral_defense = OralDefenseRequest::find($request->model); 
+        $oral_defense->load('section.course', 'group.title'); 
+        $response['oral_defense'] = $oral_defense; 
+    }
     
-    return view('form', ['progress' => $progress]); 
+    return view('form', $response); 
 })->name('form'); 
 
 

@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Models\OralDefenseRequest as ModelsOralDefenseRequest;
 use App\Nova\Actions\SubmitToPanelist;
+use App\Nova\Actions\ViewOralDefenseRequestForm;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
@@ -130,6 +131,7 @@ class OralDefenseRequest extends Resource
             ];
         }
         return [
+            ViewOralDefenseRequestForm::make(), 
             SubmitToPanelist::make()->canSee(fn () => auth()->user()->isStudent() && ($this->status == "Submit Oral Defense Request")), 
         ];
     }
