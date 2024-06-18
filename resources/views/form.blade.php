@@ -233,9 +233,9 @@
 
             form.getTextField('Text34').setText(`{{$oral_defense->group->panellists()->whereType('Chair')->first()->faculty->name}}`) 
             @if($oral_defense->group->panellists()->whereType('Chair')->first()->faculty->signature)
-              const p1 = await getSignature(`/storage/{{ $oral_defense->group->panellists()->whereType('Chair')->first()->faculty->signature }}`)
-              const ep1 = await pdfDoc.embedPng(p1);
-              form.getTextField('Text37').setImage(ep1)
+              const p2 = await getSignature(`/storage/{{ $oral_defense->group->panellists()->whereType('Chair')->first()->faculty->signature }}`)
+              const ep2 = await pdfDoc.embedPng(p2);
+              form.getTextField('Text37').setImage(ep2)
             @else 
             form.getTextField('Text37').setText('')
             @endif
@@ -243,9 +243,9 @@
 
             form.getTextField('Text35').setText(`{{$oral_defense->group->panellists()->whereType('Member')->first()->faculty->name}}`) 
             @if($oral_defense->group->panellists()->whereType('Member')->first()->faculty->signature)
-              const p1 = await getSignature(`/storage/{{ $oral_defense->group->panellists()->whereType('Member')->first()->faculty->signature }}`)
-              const ep1 = await pdfDoc.embedPng(p1);
-              form.getTextField('Text38').setImage(ep1)
+              const p3 = await getSignature(`/storage/{{ $oral_defense->group->panellists()->whereType('Member')->first()->faculty->signature }}`)
+              const ep3 = await pdfDoc.embedPng(p3);
+              form.getTextField('Text38').setImage(ep3)
             @else 
             form.getTextField('Text38').setText('')
             @endif
