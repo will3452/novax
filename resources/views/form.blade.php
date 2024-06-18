@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <script src="https://unpkg.com/pdf-lib"></script>
 </head>
-<body>s
+<body>
     <iframe id="pdf" style="width: 100%; height: 100%;"></iframe>
 </body>
 <script>
