@@ -24,6 +24,7 @@ use App\Nova\Actions\MoveToPanellistApproval;
 use App\Nova\Actions\SubmitOralDefenseRequest;
 use App\Models\GroupMember as ModelGroupMember;
 use App\Nova\Actions\MoveToCoordinatorApproval;
+use App\Nova\Actions\ViewAcceptanceOfAdviserAndPanelMembersForm;
 use KirschbaumDevelopment\NovaComments\Commenter;
 use KirschbaumDevelopment\NovaComments\CommentsPanel;
 
@@ -180,14 +181,21 @@ class Group extends Resource
      */
     public function actions(Request $request)
     {
-        $actions = [MarkAsReadyForDefense::make()->canSee(fn () => auth()->user()->isFaculty() && $this->defense_schedule == null), MoveToDeanApproval::make()->canSee(function () {
-            return auth()->user()->isFaculty(); 
-        })]; 
+        $actions = [
+            MarkAsReadyForDefense::make()->canSee(fn () => auth()->user()->isFaculty() && $this->defense_schedule == null),
+            MoveToDeanApproval::make()->canSee(function () {
+                return auth()->user()->isFaculty(); 
+            }),
+            ViewAcceptanceOfAdviserAndPanelMembersForm::make(), 
+        ]; 
         if ($request->action == 'mark-as-ready-for-defense') {
-            return [MarkAsReadyForDefense::make()]; 
+            return [MarkAsReadyForDefense::make(), 
+            ViewAcceptanceOfAdviserAndPanelMembersForm::make(), 
+        ]; 
         }
         if ($this->code == null) {
             return [
+                ViewAcceptanceOfAdviserAndPanelMembersForm::make(), 
                 AddPanellist::make()->canSee(fn () => auth()->user()->isFaculty()), 
                 MoveToPanellistApproval::make()->canSee(fn () => auth()->user()->isFaculty()), 
                 MoveToCoordinatorApproval::make()->canSee(function () {

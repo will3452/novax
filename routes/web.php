@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
+use App\Models\Group;
 use App\Models\OralDefenseRequest;
 use App\Models\Progress;
 use Illuminate\Http\Request;
@@ -27,6 +28,12 @@ Route::get('/form', function (Request $request) {
         $oral_defense = OralDefenseRequest::find($request->model); 
         $oral_defense->load('section.course', 'group.title'); 
         $response['oral_defense'] = $oral_defense; 
+    }
+
+    if ($request->form == 'acceptance') {
+        $group = Group::find($request->model); 
+        $group->load('title'); 
+        $response['group'] = $group; 
     }
     
     return view('form', $response); 

@@ -5,7 +5,7 @@
     <script src="https://unpkg.com/pdf-lib"></script>
 </head>
 <body>
-  
+    {{$group}}
     <iframe id="pdf" style="width: 100%; height: 100%;"></iframe>
 </body>
 <script>
@@ -283,6 +283,175 @@
             @if ($oral_defense->section->thesis_phase == 'Final')
                 form.getCheckBox('Check Box14').check();
             @endif
+            
+
+
+            form.flatten();
+            const pdfDataUri = await pdfDoc.saveAsBase64({
+                dataUri: true
+            });
+            document.getElementById('pdf').src = pdfDataUri;
+        }
+    </script>
+@endif
+
+@if (request()->form == 'acceptance')
+    <script>
+      getForm()
+
+      async function getForm() {
+            const formUrl = '/acceptance.pdf';
+            const formBytes = await fetch(formUrl).then(res => res.arrayBuffer());
+
+            const pdfDoc = await PDFLib.PDFDocument.load(formBytes);
+
+            const form = pdfDoc.getForm();
+
+            const fields = form.getFields()
+            fields.forEach(field => {
+                const type = field.constructor.name
+                const name = field.getName()
+                if (type != 'e') {
+                    form.getTextField(name).setText(name);
+                }
+                // if (type == 'e' && name.includes('Check')) {
+                //   const checkBox = form.getCheckBox(name)
+                // checkBox.check()
+                // }
+                console.log(`${type}: ${name}`)
+            });
+
+            form.getTextField('Course').setText('{{$group->title->section->course->name}}')
+            form.getTextField('Course Code').setText('{{$group->title->section->course->code}}')
+            form.getTextField('Section').setText('{{$group->title->section->section}}')
+            form.getTextField('SY/TERM').setText('{{$group->title->section->school_year}} {{$group->title->section->term}}')
+            form.getTextField('Tentative Title of Research Project').setText('{{$group->title->title}}')
+            form.getTextField('Group Code').setText('{{$group->code}}')
+            // form.getTextField('Text16').setText('{{$group->time}}')
+            // form.getTextField('Text17').setText('{{$group->venue}}')
+
+            // // student 1
+            form.getTextField('Text31').setText(`{{ $group->groupMembers[0]->student->name }}`)
+            form.getTextField('Text34').setText(`{{ $group->groupMembers[0]->student->number }}`)
+            form.getTextField('Text37').setText(`{{ $group->groupMembers[0]->student->course }}`)
+            form.getTextField('Text40').setText(``)
+            // // get signature of student 
+            const sig1 = await getSignature(`/storage/{{ $group->groupMembers[0]->student->signature }}`)
+            const eSig1 = await pdfDoc.embedPng(sig1);
+            form.getTextField('Text43').setImage(eSig1);
+
+
+            @if (array_key_exists(1, $group->groupMembers->toArray()))
+                form.getTextField('Text32').setText(`{{ $group->groupMembers[1]->student->name }}`)
+                form.getTextField('Text35').setText(`{{ $group->groupMembers[1]->student->number }}`)
+                form.getTextField('Text38').setText(`{{ $group->groupMembers[1]->student->course }}`)
+                form.getTextField('Text41').setText(``)
+                const sig2 = await getSignature(`/storage/{{ $group->groupMembers[1]->student->signature }}`)
+                const eSig2 = await pdfDoc.embedPng(sig2);
+                form.getTextField('Text44').setImage(eSig2);
+            @else
+                form.getTextField('Text32').setText(``)
+                form.getTextField('Text35').setText(``)
+                form.getTextField('Text38').setText(``)
+                form.getTextField('Text41').setText(``)
+                form.getTextField('Text44').setText(``)
+            @endif
+
+            @if (array_key_exists(2, $group->groupMembers->toArray()))
+                form.getTextField('Text33').setText(`{{ $group->groupMembers[2]->student->name }}`)
+                form.getTextField('Text36').setText(`{{ $group->groupMembers[2]->student->number }}`)
+                form.getTextField('Text39').setText(`{{ $group->groupMembers[2]->student->course }}`)
+                form.getTextField('Text42').setText(``)
+                const sig3 = await getSignature(`/storage/{{ $group->groupMembers[2]->student->signature }}`)
+                const eSig3 = await pdfDoc.embedPng(sig3);
+                form.getTextField('Text45').setImage(eSig3);
+            @else
+                form.getTextField('Text33').setText(``)
+                form.getTextField('Text36').setText(``)
+                form.getTextField('Text39').setText(``)
+                form.getTextField('Text42').setText(``)
+                form.getTextField('Text45').setText(``)
+            @endif
+            
+            // PANELIST 
+            form.getTextField('Text50').setText(`{{$group->panellists()->whereType('Adviser')->first()->faculty->name}}`) 
+            form.getTextField('Text46').setText(`{{$group->panellists()->whereType('Adviser')->first()->faculty->name}}`) 
+            form.getTextField('Text53').setText(``) // relevant degree
+            form.getTextField('Text47').setText(``) // relevant degree
+            form.getTextField('Text60').setText(``) // date 
+            form.getTextField('Text49').setText(``) // date 
+            @if($group->panellists()->whereType('Adviser')->first()->faculty->signature)
+              const p1 = await getSignature(`/storage/{{ $group->panellists()->whereType('Adviser')->first()->faculty->signature }}`)
+              const ep1 = await pdfDoc.embedPng(p1);
+              form.getTextField('Signature58_es_:signer:signature').setImage(ep1)
+              form.getTextField('Signature48_es_:signer:signature').setImage(ep1)
+            @else 
+            
+            form.getTextField('Signature58_es_:signer:signature').setText('')
+            form.getTextField('Signature48_es_:signer:signature').setText('')
+            @endif
+
+            form.getTextField('Text51').setText(`{{$group->panellists()->whereType('Chair')->first()->faculty->name}}`) 
+            form.getTextField('Text54').setText(``) // relevant degree
+            form.getTextField('Text61').setText(``) // date 
+            @if($group->panellists()->whereType('Chair')->first()->faculty->signature)
+              const p1 = await getSignature(`/storage/{{ $group->panellists()->whereType('Chair')->first()->faculty->signature }}`)
+              const ep1 = await pdfDoc.embedPng(p1);
+              form.getTextField('Signature57_es_:signer:signature').setImage(ep1)
+            @else 
+            form.getTextField('Signature57_es_:signer:signature').setText('')
+            @endif
+
+            form.getTextField('Text52').setText(`{{$group->panellists()->whereType('Member')->first()->faculty->name}}`) 
+            form.getTextField('Text55').setText(``) // relevant degree
+            form.getTextField('Text62').setText(``) // date 
+            @if($group->panellists()->whereType('Member')->first()->faculty->signature)
+              const p1 = await getSignature(`/storage/{{ $group->panellists()->whereType('Member')->first()->faculty->signature }}`)
+              const ep1 = await pdfDoc.embedPng(p1);
+              form.getTextField('Signature59_es_:signer:signature').setImage(ep1)
+            @else 
+            form.getTextField('Signature59_es_:signer:signature').setText('')
+            @endif
+
+            form.getTextField('Text65').setText('{{\App\Models\User::find(nova_get_setting("coordinator_id"))->name}}')
+            form.getTextField('Text63').setText('{{\App\Models\User::find(nova_get_setting("programchair_id"))->name}}')
+            form.getTextField('Text64').setText('{{\App\Models\User::whereType("Dean")->first()->name}}')
+
+            // // CHECKBOX 
+            @if ($group->title->ic_type == 'Thesis')
+                form.getCheckBox('Check Box23').check();
+            @endif
+
+            @if ($group->title->ic_type == 'Capstone')
+                form.getCheckBox('Check Box24').check();
+            @endif
+
+            @if ($group->title->ic_type == 'Feasibility Study')
+                form.getCheckBox('Check Box25').check();
+            @endif
+
+            @if ($group->title->ic_type == 'Plant Design')
+                form.getCheckBox('Check Box26').check();
+            @endif
+
+            @if ($group->title->ic_type == 'Business Plan')
+                form.getCheckBox('Check Box27').check();
+            @endif
+
+            
+            @if ($group->title->section->thesis_phase == 'Data Gathering')
+                form.getCheckBox('Check 29').check();
+            @endif
+
+            @if ($group->title->section->thesis_phase == 'Proposal')
+                form.getCheckBox('Check Box28').check();
+            @endif
+
+            
+            @if ($group->title->section->thesis_phase == 'Final')
+                form.getCheckBox('Check Box30').check();
+            @endif
+
             
 
 
