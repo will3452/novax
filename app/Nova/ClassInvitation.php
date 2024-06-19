@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Badge;
 use App\Nova\Actions\JoinClass;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class ClassInvitation extends Resource
@@ -71,6 +72,10 @@ class ClassInvitation extends Resource
             Date::make('Date', 'created_at')
                 ->sortable()
                 ->exceptOnForms(), 
+            Text::make('Course', function () {
+                if (! $this->course) return "---"; 
+                return $this->course->name; 
+            }), 
             BelongsTo::make('Student', 'student', User::class),
             BelongsTo::make('Section', 'section', Section::class), 
             Badge::make('Status', 'status')

@@ -26,6 +26,7 @@ use App\Models\GroupMember as ModelGroupMember;
 use App\Nova\Actions\MoveToCoordinatorApproval;
 use App\Nova\Actions\ViewAcceptanceOfAdviserAndPanelMembersForm;
 use App\Nova\Actions\ViewRequirementsForRevisionForm;
+use App\Nova\Filters\GroupFilter;
 use KirschbaumDevelopment\NovaComments\Commenter;
 use KirschbaumDevelopment\NovaComments\CommentsPanel;
 
@@ -163,7 +164,9 @@ class Group extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            GroupFilter::make()->canSee(fn() => auth()->user()->isFaculty()),
+        ];
     }
 
     /**

@@ -136,8 +136,8 @@ class Title extends Resource
                 return $this->status == 'Taken' ? 'Yes': 'No'; 
             })
                 ->map([
-                    'Yes' => 'warning',
-                    'No' => 'success', 
+                    'Yes' => 'success',
+                    'No' => 'danger', 
                 ]), 
             Hidden::make('Assigned Group', "status")
                 ->default(fn () => 'Available'), 

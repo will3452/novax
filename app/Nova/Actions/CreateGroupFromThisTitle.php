@@ -4,6 +4,7 @@ namespace App\Nova\Actions;
 
 use App\Models\Group;
 use App\Models\GroupMember;
+use App\Models\Panellist;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -16,7 +17,7 @@ class CreateGroupFromThisTitle extends Action
     use InteractsWithQueue, Queueable;
 
     
-    public $confirmText = 'Are you sure you want to create group from this title, all application with approved status will automatically added as member of the group.';
+    public $confirmText = 'Are you sure you want to create group for this title? All approved applicants will be added as member of the group.';
 
     public $confirmButtonText = 'Create Group now';
 
@@ -40,6 +41,13 @@ class CreateGroupFromThisTitle extends Action
             $group = Group::create([
                 'title_id' => $model->id, 
                 'status' => Group::ADD_PANELIST, 
+            ]); 
+
+            Panellist::create([
+              'status' => 'APPROVED',
+              'faculty_id' => $model->id, 
+              'group_id' => $group->id, 
+              'type' => 'Adviser',   
             ]); 
 
             foreach(\App\Models\TitleApplication::whereTitleId($model->id)->whereStatus('APPROVED')->get() as $application) {

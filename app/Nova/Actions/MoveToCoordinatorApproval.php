@@ -23,6 +23,9 @@ class MoveToCoordinatorApproval extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach($models as $model) {
+            foreach($model->panellists as $p) {
+                if ($p->status != "APPROVED") return Action::danger('Make sure all panelists approved!'); 
+            }
             $title = $model->title->title; 
             $model->task()->create([
                 'user_id' => nova_get_setting('coordinator_id'),

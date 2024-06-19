@@ -50,7 +50,7 @@ class AddPanellist extends Action
                 ->searchable(),
             Select::make('Type', 'type')
                 ->options([
-                    \App\Models\Panellist::TYPE_ADVISER => \App\Models\Panellist::TYPE_ADVISER, 
+                    // \App\Models\Panellist::TYPE_ADVISER => \App\Models\Panellist::TYPE_ADVISER, 
                     \App\Models\Panellist::TYPE_CHAIR => \App\Models\Panellist::TYPE_CHAIR,
                     \App\Models\Panellist::TYPE_MEMBER => \App\Models\Panellist::TYPE_MEMBER, 
                 ])
