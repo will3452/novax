@@ -2,16 +2,19 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\ViewForm;
-use App\Nova\Actions\ViewProgressForm;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\Date;
+use App\Models\Panellist;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Number;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
+use App\Nova\Actions\ViewForm;
+use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Actions\ViewProgressForm;
+use App\Models\Progress as ModelsProgress;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Progress extends Resource
@@ -83,6 +86,12 @@ class Progress extends Resource
                 ->alwaysShow()
                 ->rules(['required']),
             Boolean::make('Ready for oral Defense', 'is_ready_for_oral_def')->exceptOnForms(), 
+            Badge::make('Status')
+                ->map([
+                    'For Adviser Approval' => 'warning',
+                    'For Coordinator Approval' => 'info',
+                    'Approved' => 'success', 
+                ]),
             Text::make('Preferred Schedule')->exceptOnForms(), 
         ];
     }
@@ -129,7 +138,12 @@ class Progress extends Resource
     public function actions(Request $request)
     {
         return [
-            ViewProgressForm::make(), 
+            ViewProgressForm::make()->canSee(function () {
+                $p = Panellist::whereGroupId($this->group_id)->whereType('Adviser')->first(); 
+                if ($this->status == ModelsProgress::FOR_ADVISER_APPROVAL && $p->faculty_id == auth()->id() || $this->status == ModelsProgress::FOR_COORDINATOR) return true; 
+                if ($this->status == ModelsProgress::FOR_COORDINATOR && auth()->id() == nova_get_setting('coordinator_id')) return true; 
+                return $this->status == ModelsProgress::APPROVED; 
+            }), 
         ];
     }
 }

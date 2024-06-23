@@ -19,7 +19,16 @@ class Progress extends Model
         'endorsed_by',
         'preferred_schedule', 
         'description',
+        'status', 
     ];
+
+    const FOR_ADVISER_APPROVAL = 'For Adviser Approval'; 
+    const FOR_COORDINATOR = 'For Coordinator Approval'; 
+    const APPROVED = 'Approved'; 
+
+    public function task() {
+        return $this->morphOne(Task::class, 'task'); 
+    }
 
     public function section () {
         return $this->belongsTo(Section::class, 'section_id'); 

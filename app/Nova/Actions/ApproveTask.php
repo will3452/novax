@@ -4,6 +4,7 @@ namespace App\Nova\Actions;
 
 use App\Models\Task;
 use App\Models\Group;
+use App\Models\Progress;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Fields\Text;
@@ -36,8 +37,22 @@ class ApproveTask extends Action
         foreach($models as $model) {
             $model->update(['status' => 'APPROVED']); 
             // if (auth()->user()->type == \App\Models\User::TYPE_DEAN) {
-            if ($this->task->task->status == 'For Coordinator Approval') {
+            if ($this->task->task->status == 'For Coordinator Approval' && $model->task_type != "App\Models\Progress") {
                 $model->task()->update(['code' => $fields['code']]); 
+            }
+
+            if ($model->task_type == "App\Models\Progress" && $this->task->task->status == 'For Coordinator Approval') {
+                Task::create([
+                    'task_type' => $model->task_type, 
+                    'task_id' => $model->task_id,  
+                    'user_id' => nova_get_setting('coordinator_id'), 
+                    'description' => "New progress report of " . $model->task->group->code, 
+                    'approved_status' => Progress::APPROVED, 
+                ]); 
+        
+                Progress::whereGroupId($model->task->group_id)->update([
+                    'is_ready_for_oral_def' => true, 
+                ]); 
             }
 
             if ($model->task_type == "App\Models\OralDefenseRequest") {
@@ -90,7 +105,7 @@ class ApproveTask extends Action
         $fields = [];
         // if ( auth()->user()->type == \App\Models\User::TYPE_DEAN ) {
         // if ( true) {
-        if ( $this->task->task->status == 'For Coordinator Approval' ) {
+        if ( $this->task->task->status == 'For Coordinator Approval' && $this->task->task_type != "App\Models\Progress") {
             array_push($fields, Text::make('Group Code', 'code')
                 ->default(function () {
                     $year = nova_get_setting('school_year');
