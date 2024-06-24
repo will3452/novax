@@ -45,7 +45,7 @@ class CreateGroupFromThisTitle extends Action
 
             Panellist::create([
               'status' => 'APPROVED',
-              'faculty_id' => $model->id, 
+              'faculty_id' => $model->faculty_id, 
               'group_id' => $group->id, 
               'type' => 'Adviser',   
             ]); 
