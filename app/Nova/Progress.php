@@ -32,6 +32,10 @@ class Progress extends Resource
         return false; 
     }
 
+    public function authorizedToView(Request $request)
+    {
+        return false; 
+    }
     
     public static function authorizedToCreate(Request $request)
     {
@@ -138,11 +142,16 @@ class Progress extends Resource
     public function actions(Request $request)
     {
         return [
-            ViewProgressForm::make()->canSee(function () {
+            ViewProgressForm::make()->canSee(function () use ($request) {
                 $p = Panellist::whereGroupId($this->group_id)->whereType('Adviser')->first(); 
-                if ($this->status == ModelsProgress::FOR_ADVISER_APPROVAL && $p->faculty_id == auth()->id() || $this->status == ModelsProgress::FOR_COORDINATOR) return true; 
-                if ($this->status == ModelsProgress::FOR_COORDINATOR && auth()->id() == nova_get_setting('coordinator_id')) return true; 
-                return $this->status == ModelsProgress::APPROVED; 
+                $result = false; 
+                if ($this->status == ModelsProgress::FOR_ADVISER_APPROVAL && $p->faculty_id == auth()->id() || $this->status == ModelsProgress::FOR_COORDINATOR) $result = true;  
+                else if ($this->status == ModelsProgress::FOR_COORDINATOR && auth()->id() == nova_get_setting('coordinator_id')) $result = true; 
+                else if ($request->has('action')) $result = true; 
+                else {
+                    $result = $this->status == ModelsProgress::APPROVED; 
+                }
+                return $result; 
             }), 
         ];
     }

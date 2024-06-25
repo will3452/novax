@@ -189,7 +189,11 @@ class Group extends Resource
     public function actions(Request $request)
     {
         $actions = [
-            MarkAsReadyForDefense::make()->canSee(fn () => auth()->user()->isFaculty() && $this->defense_schedule == null),
+            MarkAsReadyForDefense::make()->canSee(function () use ($request) {
+                $result = $request->has('action'); 
+                if (auth()->user()->isFaculty() && $this->title->faculty_id == auth()->id() && $this->defense_schedule == null) $result = true; 
+                return $result; 
+            }),
             MoveToDeanApproval::make()->canSee(function () {
                 return auth()->user()->isFaculty(); 
             }),
