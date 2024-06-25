@@ -38,6 +38,10 @@ class Title extends Resource
      */
     public static function indexQuery(NovaRequest $request, $query)
     {
+        if (auth()->user()->isCoordinator()) {
+            return $query; 
+        }
+
         if (auth()->user()->type == \App\Models\User::TYPE_FACULTY) {
             return $query->whereFacultyId(auth()->id()); 
         }
