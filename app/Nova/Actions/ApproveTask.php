@@ -35,13 +35,14 @@ class ApproveTask extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach($models as $model) {
+            // dd($this->task->task); 
             $model->update(['status' => 'APPROVED']); 
             // if (auth()->user()->type == \App\Models\User::TYPE_DEAN) {
             if ($this->task->task->status == 'For Coordinator Approval' && $model->task_type != "App\Models\Progress") {
                 $model->task()->update(['code' => $fields['code']]); 
             }
 
-            if ($model->task_type == "App\Models\Progress" && $this->task->task->status == 'For Coordinator Approval') {
+            if ($model->task_type == "App\Models\Progress" && $this->task->task->status == 'For Adviser Approval') {
                 Task::create([
                     'task_type' => $model->task_type, 
                     'task_id' => $model->task_id,  
@@ -49,7 +50,9 @@ class ApproveTask extends Action
                     'description' => "New progress report of " . $model->task->group->code, 
                     'approved_status' => Progress::APPROVED, 
                 ]); 
-        
+            }
+
+            if ($model->task_type == "App\Models\Progress" && $this->task->task->status == 'For Coordinator Approval') {
                 Progress::whereGroupId($model->task->group_id)->update([
                     'is_ready_for_oral_def' => true, 
                 ]); 
