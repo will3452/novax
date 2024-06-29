@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApiAuthenticationController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StoreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,4 @@ Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
 Route::resource('products', ProductController::class); 
+Route::resource('stores', StoreController::class); 

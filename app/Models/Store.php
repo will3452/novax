@@ -14,6 +14,10 @@ class Store extends Model
         return $this->belongsTo(User::class, 'user_id'); 
     }
 
+    public function products () {
+        return $this->hasMany(Product::class, 'store_id'); 
+    }
+
     protected $casts = [
         'bank_account' => FlexibleCast::class, 
     ]; 
