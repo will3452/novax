@@ -16,11 +16,14 @@ use Laravel\Nova\Fields\BelongsTo;
 use Google\Service\ShoppingContent\Brand;
 use Google\Service\AdExchangeBuyerII\Price;
 use Google\Service\Compute\Resource\Images;
+use Laravel\Nova\Fields\Heading;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Whitecube\NovaFlexibleContent\Flexible;
 
 class Product extends Resource
 {
+    public static $group = 'Store';
     /**
      * The model the resource corresponds to.
      *
@@ -44,7 +47,7 @@ class Product extends Resource
         'id',
         'description',
         'name',
-        'category', 
+        'category',
     ];
 
     /**
@@ -56,6 +59,8 @@ class Product extends Resource
     public function fields(Request $request)
     {
         return [
+            Hidden::make('user_id')
+                ->default(fn () => auth()->id()), 
             BelongsTo::make('Store', 'store', Store::class),
             BelongsTo::make('Brand', 'brand', ProductBrand::class),
             Text::make('Name')
@@ -64,48 +69,47 @@ class Product extends Resource
                 ->alwaysShow(),
             Select::make('Category')
                 ->options(\App\Models\ProductCategory::get()->pluck('name', 'name'))
-                ->sortable(), 
+                ->sortable(),
             Select::make('Product Type')
                 ->options(\App\Models\ProductType::get()->pluck('name', 'name'))
-                ->sortable(), 
+                ->sortable(),
             Number::make('Price')
-                ->sortable(), 
+                ->sortable(),
             Number::make('Discount Price')
                 ->sortable(),
-            Image::make('Primary Image'), 
-            Date::make('Available Release Date'), 
+            Image::make('Primary Image'),
+            Date::make('Available Release Date'),
             Select::make('Available Status')
                 ->options([
                     'IN_STOCK' => 'IN_STOCK',
                     'OUT_OF_STOCK' => 'OUT_OF_STOCK',
-                    'PRE_ORDER' => 'PRE_ORDER', 
-                ]), 
-            Text::make('Label'), 
+                    'PRE_ORDER' => 'PRE_ORDER',
+                ]),
+            Text::make('Label'),
             Flexible::make('Images')
                 ->button('New Image')
                 ->addLayout('Image', 'image', [
-                    Image::make('Image'), 
+                    Image::make('Image'),
                 ]),
-            Panel::make('Variants', [
-                Flexible::make('Colors')
-                    ->button('New Color')
-                    ->addLayout('Color', 'color', [
-                          Text::make('Name'), 
-                          Text::make('Code'), 
-                    ]),
-                Flexible::make('Sizes')
-                    ->button('New Size')
-                    ->addLayout('Size', 'size', [
-                          Text::make('Name'), 
-                    ]),
-                Flexible::make('Attributes')
-                    ->button('New Attribute')
-                    ->addLayout('Attribute', 'attribute', [
-                        Text::make('Property')
-                            ->rules(['required']),
-                        Text::make('Value')->rules(['required']), 
-                    ])
-            ]), 
+            Heading::make('Variants'),
+            Flexible::make('Colors')
+                ->button('New Color')
+                ->addLayout('Color', 'color', [
+                    Text::make('Name'),
+                    Text::make('Code'),
+                ]),
+            Flexible::make('Sizes')
+                ->button('New Size')
+                ->addLayout('Size', 'size', [
+                    Text::make('Name'),
+                ]),
+            Flexible::make('Attributes')
+                ->button('New Attribute')
+                ->addLayout('Attribute', 'attribute', [
+                    Text::make('Property')
+                        ->rules(['required']),
+                    Text::make('Value')->rules(['required']),
+                ])
         ];
     }
 

@@ -12,12 +12,13 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Country;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Whitecube\NovaFlexibleContent\Flexible;
-use Fourstacks\NovaRepeatableFields\Repeater;
 
 class Store extends Resource
 {
+    public static $group = 'Store';
     /**
      * The model the resource corresponds to.
      *
@@ -60,23 +61,7 @@ class Store extends Resource
             Textarea::make('Description'),
             Select::make('Category')
                 ->options(\App\Models\StoreCategory::get()->pluck('name', 'name')),
-            
-            Text::make('Business License Number'),
-            Text::make('Tax Identification Number'),
-            Panel::make('Contact & Address', [
-                Text::make('Phone'),
-                Text::make('Address'),
-                Text::make('City'),
-                Text::make('Province'),
-                Text::make('Postal Code', 'postal'),
-                Country::make('Country'),
-            ]), 
-            Panel::make('Schedules', [
-                Text::make('Opening Hours'),
-                Text::make('Closing Hours'),
-                Text::make('Days Closed'),
-            ]), 
-            Flexible::make('Bank Account')
+                Flexible::make('Bank Account')
                 ->button('Add Account')
                 ->addLayout('Account Details', 'wysiwyg', [
                     Select::make('Bank')
@@ -88,16 +73,28 @@ class Store extends Resource
                             "Philippine National Bank (PNB)" => "Philippine National Bank (PNB)",
                             "China Banking Corporation (China Bank)" => "China Banking Corporation (China Bank)",
                             "Security Bank Corporation" => "Security Bank Corporation",
-                            "Rizal Commercial Banking Corporation (RCBC)" => "Rizal Commercial Banking Corporation (RCBC)", 
+                            "Rizal Commercial Banking Corporation (RCBC)" => "Rizal Commercial Banking Corporation (RCBC)",
                         ]),
                     Text::make('Account No.', 'account_number')
-                    ]),
-                Panel::make('Social Media', [
-                    Text::make('Facebook'),
-                    Text::make('Instagram'),
-                    Text::make('Twitter (x)', 'twitter'),
-                    Text::make('LinkedIn', 'linkedIn'),
-                ])
+                ]),
+            Text::make('Business License Number'),
+            Text::make('Tax Identification Number'),
+            Heading::make('Contact & Address Information'),
+            Text::make('Phone'),
+            Text::make('Address'),
+            Text::make('City'),
+            Text::make('Province'),
+            Text::make('Postal Code', 'postal'),
+            Country::make('Country'),
+            Heading::make('Schedules'),
+            Text::make('Opening Hours'),
+            Text::make('Closing Hours'),
+            Text::make('Days Closed'),
+            Heading::make('Social Media'),
+            Text::make('Facebook'),
+            Text::make('Instagram'),
+            Text::make('Twitter (x)', 'twitter'),
+            Text::make('LinkedIn', 'linkedIn'),
         ];
     }
 

@@ -3,27 +3,30 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Tag extends Resource
+class Order extends Resource
 {
-    
-    public static $group = 'Manage';
+    public static $group = 'Store';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Tag::class;
+    public static $model = \App\Models\Order::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -32,7 +35,7 @@ class Tag extends Resource
      */
     public static $search = [
         'id',
-        'name'
+        'reference', 
     ];
 
     /**
@@ -44,7 +47,18 @@ class Tag extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Name')->sortable(),
+            Text::make('Reference')
+                ->sortable(), 
+            BelongsTo::make('Customer', 'customer', User::class), 
+            Number::make('Total Amount'), 
+            Badge::make('Status')
+                ->map([
+                    'PROCESSING' => 'warning',
+                    'SHIPPED' => 'info',
+                    'DELIVERED' => 'success',
+                    'CANCELLED' => 'danger', 
+                ]),
+            HasMany::make('Details', 'orderItem', OrderItem::class), 
         ];
     }
 

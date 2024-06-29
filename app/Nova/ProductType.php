@@ -10,6 +10,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class ProductType extends Resource
 {
+    
+    public static $group = 'Manage';
     /**
      * The model the resource corresponds to.
      *
@@ -22,7 +24,7 @@ class ProductType extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.

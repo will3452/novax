@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\Select;
 
 class User extends Resource
 {
+    public static $group = 'Security';
     /**
      * The model the resource corresponds to.
      *

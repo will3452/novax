@@ -3,27 +3,31 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Country;
+use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Panel;
 
-class Tag extends Resource
+class OrderItem extends Resource
 {
-    
-    public static $group = 'Manage';
+    public static $group = 'Store';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Tag::class;
+    public static $model = \App\Models\OrderItem::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -32,7 +36,6 @@ class Tag extends Resource
      */
     public static $search = [
         'id',
-        'name'
     ];
 
     /**
@@ -44,7 +47,31 @@ class Tag extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Name')->sortable(),
+            BelongsTo::make('Order', 'order', Order::class),             
+            BelongsTo::make('Product', 'product', Product::class), 
+            Number::make('Quantity'),
+            Number::make('Unit Price'),
+            Number::make('Total Amount'), 
+            Heading::make('Payment details'), 
+            Text::make('Payment Method'),
+            Text::make('Payment Status'),
+            Heading::make('Shipping Information'), 
+            Text::make('Shipping Address'),
+            Text::make('Shipping City'),
+            Text::make('Shipping Province'),
+            Text::make('Shipping Postal Code'),
+            Country::make('Shipping Country'),
+            Text::make('Shipping Method'), 
+            Number::make('Shipping Cost'), 
+            Text::make('Shipping Tracking Number'),
+            Text::make('Shipping Status'),
+            Heading::make('Discount details'), 
+            Text::make('Discount Code'),
+            Text::make('Discount Amount'), 
+            Heading::make('Tax Details'),
+            Text::make('Tax Rate'),
+            Text::make('Tax Amount'), 
+
         ];
     }
 

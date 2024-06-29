@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d86dfa6ca539b618494bcfd5388d0e36",
+    "content-hash": "df6213cce703775d49171d9fc575682d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2431,6 +2431,42 @@
                 }
             ],
             "time": "2024-01-28T23:22:08+00:00"
+        },
+        {
+            "name": "lzrk/chizmis",
+            "version": "dev-chizmis-store-management",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/Chizmis",
+                "reference": "b214bc96525a4e280851177f70aa1a2d7a693265"
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Lzrk\\Chizmis\\ThemeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Lzrk\\Chizmis\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova theme.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "monolog/monolog",

@@ -10,6 +10,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class ProductCategory extends Resource
 {
+    
+    public static $group = 'Manage';
     /**
      * The model the resource corresponds to.
      *

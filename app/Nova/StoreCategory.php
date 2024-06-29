@@ -8,6 +8,8 @@ use Laravel\Nova\Fields\Textarea;
 
 class StoreCategory extends Resource
 {
+    
+    public static $group = 'Manage';
     /**
      * The model the resource corresponds to.
      *
