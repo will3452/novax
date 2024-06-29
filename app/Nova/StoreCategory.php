@@ -2,23 +2,18 @@
 
 namespace App\Nova;
 
-use App\Models\User as ModelsUser;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Textarea;
 
-class User extends Resource
+class StoreCategory extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\StoreCategory::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -33,7 +28,8 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'name', 
     ];
 
     /**
@@ -45,27 +41,11 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            Select::make('Type')
-                ->options([
-                    ModelsUser::TYPE_ADMIN => ModelsUser::TYPE_ADMIN,
-                    ModelsUser::TYPE_CUSTOMER => ModelsUser::TYPE_CUSTOMER,
-                    ModelsUser::TYPE_VENDOR => ModelsUser::TYPE_VENDOR,
-                ]), 
-
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+            Text::make('Name')->sortable(),
+            Textarea::make('Description')
+                ->alwaysShow(),
+            Text::make('Icon')
+                ->help('please refer to: https://heroicons.com/'), 
         ];
     }
 
