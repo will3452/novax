@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApiAuthenticationController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StoreCategoryController;
 use App\Http\Controllers\StoreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/auth-test', function () {
         return 'authentication test';
     });
+    Route::get('/session', function (Request $request) {
+        return $request->user(); 
+    }); 
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
 });
 
@@ -37,3 +41,4 @@ Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
 Route::resource('products', ProductController::class); 
 Route::resource('stores', StoreController::class); 
+Route::resource('store-categories', StoreCategoryController::class); 
