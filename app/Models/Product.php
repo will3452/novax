@@ -48,6 +48,7 @@ class Product extends Model
         'colors' => FlexibleCast::class, 
         'sizes' => FlexibleCast::class, 
         'attributes' => FlexibleCast::class, 
+        'available_release_date' => 'date', 
     ]; 
 
     const STATUSES = ['IN_STOCK', 'OUT_OF_STOCK', 'PRE_ORDER'];
