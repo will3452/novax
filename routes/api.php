@@ -106,7 +106,9 @@ Route::resource('store-categories', StoreCategoryController::class);
 // webhook
 Route::post('/payment', function (Request $request) {
     WebhookLog::create([
-        'payload' => $request->all(),
+        'payload' => json_encode($request->data),
     ]);
-    return 'ok';
+    return [
+        'message' => 'ok'
+    ];
 });
