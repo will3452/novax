@@ -105,9 +105,16 @@ Route::resource('store-categories', StoreCategoryController::class);
 
 // webhook
 Route::post('/payment', function (Request $request) {
+    $data = $request->data;
     WebhookLog::create([
         'payload' => json_encode($request->data),
     ]);
+
+    $reference = $data->attributes->data->attributes->reference_number;
+    if ($data->attributes->type == "checkout_session.payment.paid") {
+        Order::whereReference($reference)->update(['payment_status' => 'PAID']);
+    }
+
     return [
         'message' => 'ok'
     ];
