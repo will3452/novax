@@ -15,14 +15,22 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         if ($request->has('random')) {
-            $limit = $request->limit ?? 12; 
-            $products = Product::inRandomOrder()->take($limit)->get(); 
+            $limit = $request->limit ?? 12;
+            $products = Product::inRandomOrder()->take($limit)->get();
             $products->load(['store', 'brand']);
-            return $products; 
+            return $products;
         }
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $products = Product::where("name", "LIKE", "%$search%")->latest()
+                ->get();
+            return $products;
+        }
+
         $products = Product::latest()->get();
-        $products->load(['store', 'brand']); 
-        return $products;  
+        $products->load(['store', 'brand']);
+        return $products;
     }
 
     /**
@@ -56,7 +64,7 @@ class ProductController extends Controller
     {
         $product->load(['store', 'brand']);
 
-        return $product; 
+        return $product;
     }
 
     /**

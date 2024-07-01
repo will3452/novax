@@ -15,14 +15,23 @@ class StoreController extends Controller
     public function index(Request $request)
     {
         if ($request->has('random')) {
-            $limit = $request->limit ?? 12; 
-            $stores = Store::inRandomOrder()->take($limit)->get(); 
+            $limit = $request->limit ?? 12;
+            $stores = Store::inRandomOrder()->take($limit)->get();
             $stores->load(['owner', 'products']);
-            return $stores; 
+            return $stores;
         }
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $stores = Store::where("name", "LIKE", "%$search%")
+                ->latest()
+                ->get();
+            return $stores;
+        }
+
         $stores = Store::latest()->get();
-        $stores->load(['owner', 'products']); 
-        return $stores;  
+        $stores->load(['owner', 'products']);
+        return $stores;
     }
 
     /**
@@ -43,7 +52,7 @@ class StoreController extends Controller
      */
     public function store(Request $request)
     {
-        
+
     }
 
     /**
@@ -54,8 +63,8 @@ class StoreController extends Controller
      */
     public function show(Store $store)
     {
-        $store->load(['owner', 'products']); 
-        return $store; 
+        $store->load(['owner', 'products']);
+        return $store;
     }
 
     /**
