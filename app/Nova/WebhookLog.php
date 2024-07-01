@@ -10,6 +10,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class WebhookLog extends Resource
 {
+    public static $group = 'Security';
     /**
      * The model the resource corresponds to.
      *
