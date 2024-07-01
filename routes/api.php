@@ -40,7 +40,7 @@ Route::post('/checkout-session', function (Request $request){
     // create order
     $total_amount = 0;
     foreach ($request->line_items as $item) {
-        $total_amount += ($item['amount'] / 100);
+        $total_amount += ($item['amount'] / 100) * $item['quantity'];
     }
 
     $order = Order::create([
