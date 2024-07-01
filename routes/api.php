@@ -112,7 +112,7 @@ Route::post('/payment', function (Request $request) {
 
     $reference = $data->attributes->data->attributes->reference_number;
     WebhookLog::create([
-        'payload' => $reference,
+        'payload' => json_encode(['reference' => $reference]),
     ]);
     if ($data->attributes->type == "checkout_session.payment.paid") {
         WebhookLog::create([
