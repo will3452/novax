@@ -35,7 +35,7 @@ class Order extends Resource
      */
     public static $search = [
         'id',
-        'reference', 
+        'reference',
     ];
 
     /**
@@ -48,17 +48,18 @@ class Order extends Resource
     {
         return [
             Text::make('Reference')
-                ->sortable(), 
-            BelongsTo::make('Customer', 'customer', User::class), 
-            Number::make('Total Amount'), 
+                ->sortable(),
+            BelongsTo::make('Customer', 'customer', User::class),
+            Number::make('Total Amount'),
             Badge::make('Status')
                 ->map([
                     'PROCESSING' => 'warning',
                     'SHIPPED' => 'info',
                     'DELIVERED' => 'success',
-                    'CANCELLED' => 'danger', 
+                    'CANCELLED' => 'danger',
                 ]),
-            HasMany::make('Details', 'orderItem', OrderItem::class), 
+            Text::make('Payment Status'),
+            HasMany::make('Details', 'orderItems', OrderItem::class),
         ];
     }
 
