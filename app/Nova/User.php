@@ -51,7 +51,7 @@ class User extends Resource
                     ModelsUser::TYPE_ADMIN => ModelsUser::TYPE_ADMIN,
                     ModelsUser::TYPE_CUSTOMER => ModelsUser::TYPE_CUSTOMER,
                     ModelsUser::TYPE_VENDOR => ModelsUser::TYPE_VENDOR,
-                ]), 
+                ]),
 
             Text::make('Name')
                 ->sortable()
