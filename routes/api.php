@@ -116,7 +116,7 @@ Route::post('/payment', function (Request $request) {
     ]);
     if ($data->attributes->type == "checkout_session.payment.paid") {
         WebhookLog::create([
-            'payload' => $data->attributes->type,
+            'payload' =>json_encode(['$data->attributes->type' => $data->attributes->type])  ,
         ]);
         Order::whereReference($reference)->update(['payment_status' => 'PAID']);
     }
