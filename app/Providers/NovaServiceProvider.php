@@ -3,10 +3,11 @@
 namespace App\Providers;
 
 use App\Models\User;
-use App\Nova\Metrics\NewUsers;
 use Laravel\Nova\Nova;
+use Laravel\Nova\Panel;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
+use App\Nova\Metrics\NewUsers;
 use Laravel\Nova\Fields\Image;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
@@ -27,6 +28,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+
+            Panel::make('Payments', [
+                Text::make('Secret Key'),
+                Text::make('Public Key'),
+                Text::make('Success Url'),
+            ]),
         ]);
     }
 
@@ -57,7 +64,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             //     //
             // ]);
 
-            return true; 
+            return true;
         });
     }
 
@@ -76,8 +83,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'Europe/Paris',
                 'Asia/Manila',
                 'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila'), 
-            NewUsers::make(), 
+            ])->defaultTimezone('Africa/Manila'),
+            NewUsers::make(),
         ];
     }
 

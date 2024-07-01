@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "df6213cce703775d49171d9fc575682d",
+    "content-hash": "d4b9e81d75ac9a62384ed70961a8ab7f",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -316,7 +316,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/NovaPermissionsField",
-                "reference": "28acde79e69fc2d44408d3e836f6577fa22f282e"
+                "reference": "614a50f18d8486064f9fbe789621b2c38b070569"
             },
             "require": {
                 "php": ">=7.1.0"
@@ -1704,7 +1704,7 @@
             "dist": {
                 "type": "path",
                 "url": "./repos",
-                "reference": "d8047d4978d807a2b2a7d4ffcc87153def053bfa"
+                "reference": "60d1815bf82a9a508489b5f577227dc708a1a9df"
             },
             "require": {
                 "brick/money": "^0.5.0",
@@ -2438,7 +2438,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/Chizmis",
-                "reference": "b214bc96525a4e280851177f70aa1a2d7a693265"
+                "reference": "5b3dd3855db31d8107e9e7db402b68d0dede938f"
             },
             "require": {
                 "php": ">=7.1.0"

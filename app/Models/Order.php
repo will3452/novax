@@ -13,16 +13,18 @@ class Order extends Model
         'customer_id',
         'reference',
         'total_amount',
-        'status', 
-    ]; 
+        'payment_method',
+        'payment_status',
+        'status',
+    ];
 
     public function orderItems () {
-        return $this->hasMany(OrderItem::class, 'order_id'); 
+        return $this->hasMany(OrderItem::class, 'order_id');
     }
 
     public function customer () {
-        return $this->belongsTo(User::class, 'customer_id'); 
+        return $this->belongsTo(User::class, 'customer_id');
     }
 
-    const ORDER_STATUS = ['PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED']; 
+    const ORDER_STATUS = ['PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED'];
 }
