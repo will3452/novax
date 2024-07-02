@@ -103,7 +103,7 @@ Route::post('/login', [ApiAuthenticationController::class, 'login']);
 Route::resource('products', ProductController::class);
 Route::resource('stores', StoreController::class);
 Route::resource('store-categories', StoreCategoryController::class);
-Route::resource('change-logs', function (Request $request) {
+Route::get('change-logs', function (Request $request) {
     return ChangeLog::latest()->get();
 });
 
