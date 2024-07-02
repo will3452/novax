@@ -3,6 +3,7 @@
 use App\Models\Order;
 use GuzzleHttp\Client;
 use App\Models\Product;
+use App\Models\ChangeLog;
 use App\Models\OrderItem;
 use App\Models\WebhookLog;
 use Illuminate\Support\Str;
@@ -102,6 +103,9 @@ Route::post('/login', [ApiAuthenticationController::class, 'login']);
 Route::resource('products', ProductController::class);
 Route::resource('stores', StoreController::class);
 Route::resource('store-categories', StoreCategoryController::class);
+Route::resource('change-logs', function (Request $request) {
+    return ChangeLog::latest()->get();
+});
 
 // webhook
 Route::post('/payment', function (Request $request) {
