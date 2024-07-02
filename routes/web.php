@@ -6,7 +6,7 @@ use App\Http\Controllers\RegisterController;
 
 
 Route::get('/', function () {
-    return redirect()->to('/app'); 
+    return redirect()->to('/app');
 });
 
 Route::get('/register', [RegisterController::class, 'registrationPage']);

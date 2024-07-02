@@ -14,22 +14,21 @@ class StoreController extends Controller
      */
     public function index(Request $request)
     {
+        $stores = [];
         if ($request->has('random')) {
             $limit = $request->limit ?? 12;
-            $stores = Store::inRandomOrder()->take($limit)->get();
+            $stores = Store::whereHas('products')->inRandomOrder()->take($limit)->get();
             $stores->load(['owner', 'products']);
-            return $stores;
-        }
-
-        if ($request->has('search')) {
+        } else if ($request->has('search')) {
             $search = $request->search;
             $stores = Store::where("name", "LIKE", "%$search%")
+                ->whereHas('products')
                 ->latest()
                 ->get();
-            return $stores;
+        } else {
+            $stores = Store::whereHas('products')->latest()->get();
         }
 
-        $stores = Store::latest()->get();
         $stores->load(['owner', 'products']);
         return $stores;
     }
@@ -39,11 +38,14 @@ class StoreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
     }
 
+    function getFile($path) {
+        $pathArray = explode("/", $path);
+        return end($pathArray);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -52,7 +54,32 @@ class StoreController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->data;
+        $logo = $this->getFile($request->logo->store('public'));
+        $banner = $this->getFile($request->logo->store('public'));
+        $object = json_decode($data);
+        $user = \App\Models\User::create([
+            'name' => $object->user_name,
+            'email' => $object->user_email,
+            'password' => bcrypt($object->user_password),
+            'type' => 'VENDOR',
+        ]);
 
+        $store = Store::create([
+            'user_id' => $user->id,
+            'name' => $object->name,
+            'phone' => $object->phone,
+            'address' => $object->address,
+            'city' => $object->city,
+            'provice' => $object->province,
+            'postal' => $object->postal,
+            'business_license_number' => $object->business_license_number,
+            'tax_identification_number' => $object->tax_identification_number,
+            'description' => $object->description,
+            'category' => $object->category,
+        ]);
+
+        return $store;
     }
 
     /**
