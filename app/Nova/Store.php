@@ -19,6 +19,12 @@ use Whitecube\NovaFlexibleContent\Flexible;
 class Store extends Resource
 {
     public static $group = 'Store';
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (auth()->user()->isAdmin()) return $query; 
+        return $query->whereUserId(auth()->id()); 
+    }
     /**
      * The model the resource corresponds to.
      *

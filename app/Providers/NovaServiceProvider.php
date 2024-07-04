@@ -64,7 +64,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             //     //
             // ]);
 
-            return true;
+            return ! $user->isCustomer();
         });
     }
 

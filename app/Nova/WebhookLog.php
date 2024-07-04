@@ -94,4 +94,9 @@ class WebhookLog extends Resource
     {
         return [];
     }
+
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->isAdmin(); 
+    }
 }

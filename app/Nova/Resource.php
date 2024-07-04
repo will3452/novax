@@ -2,12 +2,20 @@
 
 namespace App\Nova;
 
+use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource as NovaResource;
 
 abstract class Resource extends NovaResource
 {
     public static $group = 'Misc';
+
+    public static function availableForNavigation(Request $request)
+    {
+        if (auth()->user()->type == \App\Models\User::TYPE_VENDOR) return in_array(self::group(), ['Store']); 
+        if (auth()->user()->type == \App\Models\User::TYPE_ADMIN) return true; 
+        return false; 
+    }
     /**
      * Build an "index" query for the given resource.
      *

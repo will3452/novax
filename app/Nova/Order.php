@@ -14,6 +14,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class Order extends Resource
 {
     public static $group = 'Store';
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->isAdmin(); 
+    }
     /**
      * The model the resource corresponds to.
      *

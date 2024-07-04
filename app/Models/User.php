@@ -28,6 +28,18 @@ class User extends Authenticatable
     const TYPE_CUSTOMER = 'CUSTOMER';
     const TYPE_VENDOR = 'VENDOR'; 
 
+    public function isAdmin() {
+        return $this->type == self::TYPE_ADMIN; 
+    }
+
+    public function isCustomer() {
+        return $this->type == self::TYPE_CUSTOMER; 
+    }
+
+    public function isVendor() {
+        return $this->type == self::TYPE_VENDOR; 
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -46,4 +58,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function products () {
+        return $this->hasMany(Product::class, 'user_id'); 
+    }
 }

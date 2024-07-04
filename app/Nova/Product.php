@@ -24,6 +24,11 @@ use Whitecube\NovaFlexibleContent\Flexible;
 class Product extends Resource
 {
     public static $group = 'Store';
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        return $query->whereUserId(auth()->id()); 
+    }
     /**
      * The model the resource corresponds to.
      *

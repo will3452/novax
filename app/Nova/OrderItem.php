@@ -15,6 +15,21 @@ use Laravel\Nova\Panel;
 class OrderItem extends Resource
 {
     public static $group = 'Store';
+    
+    public static function label () {
+        return auth()->user()->isAdmin() ? 'Order Items' : 'Orders';  
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        $productIds = auth()->user()->products()->get()->pluck('id')->toArray();
+        return $query->whereIn('product_id', $productIds); 
+    }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false; 
+    }
     /**
      * The model the resource corresponds to.
      *
