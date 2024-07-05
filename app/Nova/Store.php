@@ -9,10 +9,11 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Country;
+use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Whitecube\NovaFlexibleContent\Flexible;
 
@@ -22,8 +23,8 @@ class Store extends Resource
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if (auth()->user()->isAdmin()) return $query; 
-        return $query->whereUserId(auth()->id()); 
+        if (auth()->user()->isAdmin()) return $query;
+        return $query->whereUserId(auth()->id());
     }
     /**
      * The model the resource corresponds to.
@@ -58,6 +59,7 @@ class Store extends Resource
     public function fields(Request $request)
     {
         return [
+            Boolean::make('Private', 'is_private'),
             BelongsTo::make('Owner', 'owner', User::class),
             Text::make('Name')
                 ->sortable()
