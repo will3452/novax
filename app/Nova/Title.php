@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\Hidden;
@@ -40,26 +41,24 @@ class Title extends Resource
      */
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if (auth()->user()->isCoordinator()) {
-            return $query;
-        }
 
         if (auth()->user()->isFaculty()) {
-            return $query->whereFacultyId(auth()->id());
+             $query->whereFacultyId(auth()->id());
         }
 
         if (auth()->user()->isStudent()) {
             $sections = auth()->user()->sections()->get()->map(function ($section, int $index) {
                 return $section->id;
             })->toArray();
-            return $query->whereApprovalStatus('APPROVED')->whereIn('section_id', $sections);
+             $query->whereApprovalStatus('APPROVED')->whereIn('section_id', $sections);
         }
-        return $query;
+
+        return $query->orWhere('created_by_id', auth()->id());
     }
 
     public static function authorizedToCreate(Request $request)
     {
-        return auth()->user()->isFaculty();
+        return true; 
     }
 
     public function authorizedToDelete(Request $request)
@@ -70,7 +69,7 @@ class Title extends Resource
     public function authorizedToUpdate(Request $request)
     {
         if ($request->has('action')) return true;
-        return auth()->user()->isFaculty();
+        return auth()->user()->isFaculty() &&  auth()->id() == $this->created_by_id;
     }
 
     public function authorizedToView(Request $request)
@@ -115,6 +114,11 @@ class Title extends Resource
                     Date::make('Date', 'created_at')
                         ->exceptOnForms()
                         ->sortable(),
+                    Text::make('Type', function () {
+                        return $this->type == 'FACULTY' ? 'Faculty Driven': 'Student Driven'; 
+                    }), 
+                    File::make('File', )
+                        ->help('.docx, .pdf'), 
                     Select::make('Approval Status')
                         ->exceptOnForms()
                         ->options([
@@ -130,7 +134,11 @@ class Title extends Resource
                         ->showOnIndex()
                         ->alwaysShow(),
                     Hidden::make('faculty_id')->default(fn () => auth()->id()),
-                    BelongsTo::make('Faculty', 'faculty', User::class)->exceptOnForms(),
+                    Hidden::make('type')->default(function () {
+                        return auth()->user()->isFaculty() ? 'FACULTY': 'STUDENT'; 
+                    }), 
+                    Hidden::make('created_by_id')->default(fn () => auth()->id()), 
+                    BelongsTo::make('Faculty', 'faculty', User::class)->hideWhenCreating(auth()->user()->isFaculty()),
                     Text::make('Applications', function () {
                         $limit = $this->no_of_students;
                         $applications = $this->titleApplications()->count();
@@ -162,7 +170,7 @@ class Title extends Resource
                     }), 
                         // HasOne::make('Group', 'group', Group::class),
                     ]),
-                    Tab::make('Applications', [
+                    Tab::make('Students/Applications', [
                         HasMany::make('Applications', 'titleApplications', TitleApplication::class),
                     ])
             ])->withToolbar(),

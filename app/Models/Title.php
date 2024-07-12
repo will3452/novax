@@ -10,6 +10,7 @@ class Title extends Model
     use HasFactory;
 
     protected $fillable = [
+        'type', 
         'title',
         'description',
         'faculty_id',
@@ -17,7 +18,9 @@ class Title extends Model
         'area_of_research',
         'ic_type',
         'status', 
-        'section_id', 
+        'section_id',
+        'file', 
+        'created_by_id', 
     ];
 
     const IC_TYPE_CAPSTONE = 'Capstone';

@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Title;
+use App\Models\TitleApplication;
 
 class TitleObserver
 {
@@ -19,6 +20,15 @@ class TitleObserver
             'description' => "[Coordinator] New Title \"$title->title\" has been created.", 
             'approved_status' => "FOR_DEAN_APPROVAL", 
         ]);
+
+        if ($title->type == 'STUDENT') {
+            TitleApplication::create([
+                'student_id' => $title->created_by_id, 
+                'status' => 'APPROVED',
+                'section_id' => $title->section_id, 
+                'title_id' => $title->id, 
+            ]); 
+        }
     }
 
     /**
