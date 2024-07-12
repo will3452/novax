@@ -30,11 +30,12 @@ Route::get('/form', function (Request $request) {
         $response['oral_defense'] = $oral_defense; 
     }
 
-    if ($request->form == 'acceptance' || $request->form == 'revision') {
+    if ($request->form == 'acceptance' || $request->form == 'revision' || $request->form == 'rubric') {
         $group = Group::find($request->model); 
         $group->load('title'); 
         $response['group'] = $group; 
     }
+    
     
     return view('form', $response); 
 })->name('form'); 

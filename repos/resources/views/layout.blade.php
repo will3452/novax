@@ -48,7 +48,7 @@
 
             <!-- Content -->
             <div class="content">
-                <div class="flex items-center relative shadow h-header bg-white z-20 px-view" style="{{(auth()->user()->isAdmin() ? 'background: #fff; color: #000;':( auth()->user()->isFaculty() ? 'background: #152C58; color: #000;' : (auth()->user()->isStudent() ? 'background: #C71223; color: #fff': 'background: #E6E6E7 !important; color: #000')))}}" >
+                <div class="flex items-center relative shadow h-header bg-white z-20 px-view" style="{{(auth()->user()->isAdmin() ? 'background: #fff; color: #000;':( auth()->user()->isFaculty() ? 'background: #152C58; color: #fff;' : (auth()->user()->isStudent() ? 'background: #C71223; color: #fff': 'background: #E6E6E7 !important; color: #000')))}}" >
                    
                     <div class="mx-2 items-center flex">
                         <svg width="25" class="mr-2" xmlns="http://www.w3.org/2000/svg" fill="none"  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

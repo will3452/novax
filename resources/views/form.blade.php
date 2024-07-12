@@ -463,6 +463,48 @@
     </script>
 @endif
 
+@if(request()->form == 'rubric')
+<script>
+    getForm()
+
+    async function getForm() {
+        
+        const formUrl = '/rubric.pdf';
+        const formBytes = await fetch(formUrl).then(res => res.arrayBuffer());
+
+        
+
+        const pdfDoc = await PDFLib.PDFDocument.load(formBytes);
+        const form = pdfDoc.getForm();
+
+            const fields = form.getFields()
+            fields.forEach(field => {
+                const type = field.constructor.name
+                const name = field.getName()
+                if (type != 'e') {
+                    // form.getTextField(name).setText(name);
+                }
+                // if (type == 'e' && name.includes('Check')) {
+                //   const checkBox = form.getCheckBox(name)
+                // checkBox.check()
+                // }
+                console.log(`${type}: ${name}`)
+                
+            });
+
+            form.getTextField('Presenters').setText('{{implode(",", $group->groupMembers->map( fn ($e) => $e->student->name)->toArray())}}')
+            form.getTextField('Title of Study').setText('{{$group->title->title}}')
+            form.getTextField('Adviser').setText('{{$group->panellists()->whereType("Adviser")->first()->faculty->name}}')
+            form.getTextField('Program').setText('{{$group->groupMembers()->first()->student->course}}')
+            form.flatten();
+            const pdfDataUri = await pdfDoc.saveAsBase64({
+                dataUri: true
+            });
+            document.getElementById('pdf').src = pdfDataUri;
+    }
+</script>
+@endif 
+
 @if (request()->form == 'revision')
     <script>
       getForm()

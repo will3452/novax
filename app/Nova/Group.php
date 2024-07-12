@@ -24,6 +24,7 @@ use App\Nova\Actions\SubmitOralDefenseRequest;
 use App\Models\GroupMember as ModelGroupMember;
 use App\Nova\Actions\MoveToCoordinatorApproval;
 use App\Nova\Actions\ViewAcceptanceOfAdviserAndPanelMembersForm;
+use App\Nova\Actions\ViewFinalOralDefensePresentationRubric;
 use App\Nova\Actions\ViewRequirementsForRevisionForm;
 use App\Nova\Filters\GroupFilter;
 use KirschbaumDevelopment\NovaComments\Commenter;
@@ -234,12 +235,14 @@ class Group extends Resource
             return [EndorseGroupForDefense::make(), 
             ViewAcceptanceOfAdviserAndPanelMembersForm::make(), 
             ViewRequirementsForRevisionForm::make(), 
+            ViewFinalOralDefensePresentationRubric::make(), 
         ]; 
         }
         if ($this->code == null) {
             return [
                 ViewAcceptanceOfAdviserAndPanelMembersForm::make(), 
                 ViewRequirementsForRevisionForm::make(), 
+                ViewFinalOralDefensePresentationRubric::make(),
                 AddPanellist::make()->canSee(fn () => auth()->user()->isStudent()), 
                 MoveToPanellistApproval::make()->canSee(fn () => auth()->user()->isStudent()), 
                 MoveToCoordinatorApproval::make()->canSee(function () {
