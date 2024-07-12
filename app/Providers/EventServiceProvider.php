@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Progress;
+use App\Models\Title;
 use App\Observers\ProgressObserver;
+use App\Observers\TitleObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -30,5 +32,6 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         Progress::observe(ProgressObserver::class); 
+        Title::observe(TitleObserver::class); 
     }
 }

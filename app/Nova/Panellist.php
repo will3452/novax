@@ -25,7 +25,7 @@ class Panellist extends Resource
 
     public function authorizedToDelete(Request $request)
     {
-        return ! auth()->user()->isStudent(); 
+        return auth()->user()->isStudent() && $this->status == 'REJECTED'; 
     }
 
     public function authorizedToView(Request $request)
@@ -69,7 +69,10 @@ class Panellist extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('Faculty', 'faculty', User::class), 
+            BelongsTo::make('Faculty', 'faculty', User::class)->onlyOnForms(),
+            Text::make('Personnel', function () {
+                return $this->faculty->name; 
+            }), 
             Text::make('Examination Committee', 'type'), 
             Badge::make('Status')
                 ->map([
@@ -77,6 +80,9 @@ class Panellist extends Resource
                     'PENDING' => 'warning', 
                     'REJECTED' => 'danger', 
                 ]), 
+            Text::make('Remarks/Reason', function () {
+                return $this->task->reason ?? 'N/a'; 
+            }), 
         ];
     }
 

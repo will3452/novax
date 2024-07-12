@@ -44,6 +44,7 @@ class InviteStudent extends DetachedAction
             SectionStudent::create([
                 'student_id' => $student, 
                 'section_id' => $this->sectionId,
+                'status' => 'JOINED', 
             ]); 
         }
     }

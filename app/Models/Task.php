@@ -16,6 +16,7 @@ class Task extends Model
         'user_id', 
         'description', 
         'approved_status', 
+        'reason', 
     ]; 
 
     public function task() {

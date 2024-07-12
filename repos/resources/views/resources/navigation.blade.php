@@ -21,6 +21,17 @@
                             resourceName: '{{ $resource::uriKey() }}'
                         }
                     }" class="text-white text-justify no-underline dim" dusk="{{ $resource::uriKey() }}-resource-link">
+                        @if ($resource == "App\Nova\Task" && \App\Models\Task::whereStatus('PENDING')->whereUserId(auth()->id())->count()) 
+                        <span class="whitespace-no-wrap
+                    px-2 py-1 mx-2
+    rounded-full
+    uppercase
+    text-xs
+    font-bold
+   bg-danger-light text-warning-dark">
+    {{\App\Models\Task::whereStatus('PENDING')->whereUserId(auth()->id())->count()}}
+    </span>
+                        @endif 
                         {{ $resource::label() }}
                     </router-link>
                 </li>

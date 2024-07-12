@@ -12,6 +12,7 @@ class Course extends Model
 
     protected $fillable = [
         'name',
-        'code', 
+        'code',
+        'thesis_phase',  
     ]; 
 }

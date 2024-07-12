@@ -27,8 +27,9 @@ class AddPanellist extends Action
     {
         foreach($models as $model) {
             $exists = Panellist::whereFacultyId($fields['faculty_id'])->whereGroupId($model->id)->exists();
+            $exists1 = Panellist::whereType($fields['type'])->whereIn('status', ['APPROVED', 'PENDING'])->exists();
 
-            if ($exists) return Action::danger('Faculty has already been added!'); 
+            if ($exists && $exists1) return Action::danger('Personnel is already added/Assigned.'); 
             Panellist::create([
                 'group_id' => $model->id,
                 'faculty_id' => $fields['faculty_id'], 
@@ -45,7 +46,7 @@ class AddPanellist extends Action
     public function fields()
     {
         return [
-            Select::make('Panellist', 'faculty_id')
+            Select::make('Panelist', 'faculty_id')
                 ->options(User::whereType(User::TYPE_FACULTY)->get()->pluck('name', 'id'))
                 ->searchable(),
             Select::make('Type', 'type')

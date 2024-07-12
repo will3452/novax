@@ -33,6 +33,11 @@ class User extends Resource
         return ! auth()->user()->isStudent(); 
     }
 
+    public function authorizedToUpdate(Request $request)
+    {
+        return auth()->id() == $this->id; 
+    }
+
     /**
      * The model the resource corresponds to.
      *
@@ -98,6 +103,9 @@ class User extends Resource
 
             NovaDependencyContainer::make([
                 Text::make('Cluster'), 
+                Text::make('Relevant Degree', 'relevant_deg'), 
+                Text::make('Research Specialization', 'research_spec'),
+                Text::make('Schedule Type'), 
             ])->dependsOn('type', ModelsUser::TYPE_FACULTY ), 
 
             Image::make('Signature')->hideFromIndex()->hideWhenCreating(), 

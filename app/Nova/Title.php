@@ -7,6 +7,8 @@ use App\Nova\Actions\ApproveApplication;
 use App\Nova\Actions\CreateGroupFromThisTitle;
 use App\Nova\Actions\RemoveAllApplications;
 use App\Nova\Actions\SendApplication;
+use Eminiarts\Tabs\Tab;
+use Eminiarts\Tabs\Tabs;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
@@ -25,8 +27,8 @@ class Title extends Resource
 {
     public static function group()
     {
-        if (auth()->user()->isStudent()) return "Class"; 
-        return "Manage"; 
+        if (auth()->user()->isStudent()) return "Class";
+        return "Manage";
     }
 
     /**
@@ -39,41 +41,41 @@ class Title extends Resource
     public static function indexQuery(NovaRequest $request, $query)
     {
         if (auth()->user()->isCoordinator()) {
-            return $query; 
+            return $query;
         }
 
-        if (auth()->user()->type == \App\Models\User::TYPE_FACULTY) {
-            return $query->whereFacultyId(auth()->id()); 
+        if (auth()->user()->isFaculty()) {
+            return $query->whereFacultyId(auth()->id());
         }
 
         if (auth()->user()->isStudent()) {
-            $sections = auth()->user()->sections()->get()->map(function($section, int $index) {
-                return $section->id; 
-            })->toArray(); 
-            return $query->whereIn('section_id', $sections);
+            $sections = auth()->user()->sections()->get()->map(function ($section, int $index) {
+                return $section->id;
+            })->toArray();
+            return $query->whereApprovalStatus('APPROVED')->whereIn('section_id', $sections);
         }
         return $query;
     }
 
     public static function authorizedToCreate(Request $request)
     {
-        return auth()->user()->isFaculty(); 
+        return auth()->user()->isFaculty();
     }
 
     public function authorizedToDelete(Request $request)
     {
-        return false; 
+        return false;
     }
 
     public function authorizedToUpdate(Request $request)
     {
-        if ($request->has('action')) return true; 
-        return auth()->user()->isFaculty(); 
+        if ($request->has('action')) return true;
+        return auth()->user()->isFaculty();
     }
 
     public function authorizedToView(Request $request)
     {
-        return auth()->user()->isFaculty(); 
+        return true;
     }
     /**
      * The model the resource corresponds to.
@@ -96,7 +98,7 @@ class Title extends Resource
      */
     public static $search = [
         'title',
-        'description', 
+        'description',
     ];
 
     /**
@@ -108,46 +110,64 @@ class Title extends Resource
     public function fields(Request $request)
     {
         return [
-            Date::make('Date', 'created_at')
-                ->exceptOnForms()
-                ->sortable(), 
-            BelongsTo::make('Section', 'section', Section::class), 
-            Text::make('Title')
-                ->sortable(), 
-            Textarea::make('Description')
-                ->showOnIndex()
-                ->alwaysShow(),
-            Hidden::make('faculty_id')->default(fn () => auth()->id() ), 
-            BelongsTo::make('Faculty', 'faculty', User::class)->exceptOnForms(), 
-            Text::make('Applications', function () {
-                $limit = $this->no_of_students; 
-                $applications = $this->titleApplications()->count(); 
-                return "$applications / $limit"; 
-            }), 
-            Number::make('No Of Students')
-                ->hideFromIndex()
-                ->rules(['required', 'max:3']),
-            Text::make('Area of Research'),
-            Select::make('IC type', 'ic_type')
-                ->options([
-                    ModelsTitle::IC_TYPE_CAPSTONE => ModelsTitle::IC_TYPE_CAPSTONE,
-                    ModelsTitle::IC_TYPE_THESIS => ModelsTitle::IC_TYPE_THESIS,
-                    ModelsTitle::IC_TYPE_FEASIBILITY_STUDY =>  ModelsTitle::IC_TYPE_FEASIBILITY_STUDY,
-                    ModelsTitle::IC_TYPE_BUSINESS_PLAN => ModelsTitle::IC_TYPE_BUSINESS_PLAN,
-                    ModelsTitle::IC_TYPE_PLANT_DESIGN => ModelsTitle::IC_TYPE_PLANT_DESIGN, 
-                ]),
-            Badge::make('Assigned Group', function () {
-                return $this->status == 'Taken' ? 'Yes': 'No'; 
-            })
-                ->map([
-                    'Yes' => 'success',
-                    'No' => 'danger', 
-                ]), 
-            Hidden::make('Assigned Group', "status")
-                ->default(fn () => 'Available'), 
-            HasOne::make('Group', 'group', Group::class), 
-            HasMany::make('Applications', 'titleApplications', TitleApplication::class), 
-        ];
+            Tabs::make("Title: " . $this->title, [
+                Tab::make('Title Information', [
+                    Date::make('Date', 'created_at')
+                        ->exceptOnForms()
+                        ->sortable(),
+                    Select::make('Approval Status')
+                        ->exceptOnForms()
+                        ->options([
+                            'FOR_COORDINATOR_APPROVAL' => 'FOR_COORDINATOR_APPROVAL',
+                            'FOR_DEAN_APPROVAL' => 'FOR_DEAN_APPROVAL',
+                            'APPROVED' => 'APPROVED',
+                        ]),
+
+                    BelongsTo::make('Section', 'section', Section::class),
+                    Text::make('Title')
+                        ->sortable(),
+                    Textarea::make('Description')
+                        ->showOnIndex()
+                        ->alwaysShow(),
+                    Hidden::make('faculty_id')->default(fn () => auth()->id()),
+                    BelongsTo::make('Faculty', 'faculty', User::class)->exceptOnForms(),
+                    Text::make('Applications', function () {
+                        $limit = $this->no_of_students;
+                        $applications = $this->titleApplications()->count();
+                        return "$applications / $limit";
+                    }),
+                    Number::make('No Of Students')
+                        ->hideFromIndex()
+                        ->rules(['required', 'max:3']),
+                    Text::make('Area of Research'),
+                    Select::make('IC type', 'ic_type')
+                        ->options([
+                            ModelsTitle::IC_TYPE_CAPSTONE => ModelsTitle::IC_TYPE_CAPSTONE,
+                            ModelsTitle::IC_TYPE_THESIS => ModelsTitle::IC_TYPE_THESIS,
+                            ModelsTitle::IC_TYPE_FEASIBILITY_STUDY =>  ModelsTitle::IC_TYPE_FEASIBILITY_STUDY,
+                            ModelsTitle::IC_TYPE_BUSINESS_PLAN => ModelsTitle::IC_TYPE_BUSINESS_PLAN,
+                            ModelsTitle::IC_TYPE_PLANT_DESIGN => ModelsTitle::IC_TYPE_PLANT_DESIGN,
+                        ]),
+                    Badge::make('Assigned Group', function () {
+                        return $this->status == 'Taken' ? 'Yes' : 'No';
+                    })
+                        ->map([
+                            'Yes' => 'success',
+                            'No' => 'danger',
+                        ]),
+                    Hidden::make('Assigned Group Status', "status")
+                        ->default(fn () => 'Available'),
+                    Text::make('Group Assigned', function () {
+                        return $this->group->code ?? 'No Group Code Available'; 
+                    }), 
+                        // HasOne::make('Group', 'group', Group::class),
+                    ]),
+                    Tab::make('Applications', [
+                        HasMany::make('Applications', 'titleApplications', TitleApplication::class),
+                    ])
+            ])->withToolbar(),
+
+            ];
     }
 
     /**
@@ -189,14 +209,15 @@ class Title extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function actions(Request $request) {
+    public function actions(Request $request)
+    {
         return [
             CreateGroupFromThisTitle::make()
-                ->canSee(fn () => auth()->user()->isFaculty()), 
+                ->canSee(fn () => auth()->user()->isFaculty()),
             RemoveAllApplications::make()
-                ->canSee(fn () => auth()->user()->isFaculty()), 
+                ->canSee(fn () => auth()->user()->isFaculty()),
             SendApplication::make()
-                ->canSee(fn () => auth()->user()->isStudent() && ! \App\Models\TitleApplication::whereStudentId(auth()->id())->whereTitleId($this->id)->exists()),
+                ->canSee(fn () => auth()->user()->isStudent() && !\App\Models\TitleApplication::whereStudentId(auth()->id())->whereTitleId($this->id)->exists()),
         ];
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Textarea;
 
 class RejectTask extends Action
 {
@@ -27,7 +28,7 @@ class RejectTask extends Action
         //
         foreach($models as $model) {
             $model->task()->update(['status' => 'REJECTED']); 
-            $model->update(['status' => 'REJECTED']); 
+            $model->update(['status' => 'REJECTED', 'reason' => $fields->reason, ]); 
         }
     }
 
@@ -38,6 +39,8 @@ class RejectTask extends Action
      */
     public function fields()
     {
-        return [];
+        return [
+            Textarea::make('Reason', 'reason')->rules(['required'])
+        ];
     }
 }

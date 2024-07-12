@@ -500,7 +500,7 @@
             form.getTextField('VENUE').setText("{{$group->oralDefenseRequests()->latest()->first()->venue}}")
             const reF = form.getTextField('undefined_2')
             reF.setFontSize(12)
-            reF.setText("{{implode('\n', $group->revisions->map(fn ($e) => '- '.$e->revision)->toArray())}}")
+            reF.setText("{{implode('\n', $group->revisions->map(fn ($e) => '- '.$e->revision)->take(8)->toArray())}}")
             // $group->oralDefenseRequests()->latest()->first()
             // // form.getTextField('Text16').setText('{{$group->time}}')
             // // form.getTextField('Text17').setText('{{$group->venue}}')
@@ -599,65 +599,65 @@
             // form.getTextField('Signature59_es_:signer:signature').setText('')
             // @endif
 
-            form.getTextField('Text42').setText('') // other revisions
+            form.getTextField('Text42').setText("{{implode('\n', $group->revisions->map(fn ($e) => '- '.$e->revision)->take(8 - count($group->revisions))->toArray())}}") // other revisions
             form.getTextField('COURSE COORDINATOR').setText('{{\App\Models\User::find(nova_get_setting("coordinator_id"))->name}}')
             form.getTextField('COURSE COORDINATOR_2').setText('{{\App\Models\User::find(nova_get_setting("coordinator_id"))->name}}')
             form.getTextField('PROGRAM CHAIR').setText('{{\App\Models\User::find(nova_get_setting("programchair_id"))->name}}')
             // form.getTextField('Text64').setText('{{\App\Models\User::whereType("Dean")->first()->name}}')
 
             // // CHECKBOX 
+           
             @if ($group->title->ic_type == 'Thesis')
-                let field = form.getTextField('THESIS')
-                  field.setFontSize(16)
-                  field.setText('*')
+                let fielda = form.getTextField('THESIS')
+                  fielda.setFontSize(16)
+                  fielda.setText('*')
             @else 
               form.getTextField('THESIS').setText('')
             @endif
 
             @if ($group->title->ic_type == 'Capstone')
-              let field = form.getTextField('CAPSTONE PROJECT')
-                  field.setFontSize(16)
-                  field.setText('*')
+              let fieldb = form.getTextField('CAPSTONE PROJECT')
+                  fieldb.setFontSize(16)
+                  fieldb.setText('*')
             @else 
               form.getTextField('CAPSTONE PROJECT').setText('')
             @endif
 
             @if ($group->title->ic_type == 'Feasibility Study')
-              let field = form.getTextField('FEASIBILITY STUDY')
-                  field.setFontSize(16)
-                  field.setText('*')
+              let fieldc = form.getTextField('FEASIBILITY STUDY')
+                  fieldc.setFontSize(16)
+                  fieldc.setText('*')
             @else 
               form.getTextField('FEASIBILITY STUDY').setText('')
             @endif
 
             @if ($group->title->ic_type == 'Plant Design')
-              let field = form.getTextField('PLANT DESIGN')
-                  field.setFontSize(16)
-                  field.setText('*')
+              let fieldd = form.getTextField('PLANT DESIGN')
+                  fieldd.setFontSize(16)
+                  fieldd.setText('*')
             @else 
               form.getTextField('PLANT DESIGN').setText('')
             @endif
 
             @if ($group->title->ic_type == 'Business Plan')
-              let field = form.getTextField('BUSINESS PLAN')
-                  field.setFontSize(16)
-                  field.setText('*')
+              let fielde = form.getTextField('BUSINESS PLAN')
+                  fielde.setFontSize(16)
+                  fielde.setText('*')
             @else 
               form.getTextField('BUSINESS PLAN').setText('')
             @endif
-
-            @if ($group->title->ic_type == 'Proposal')
-              let field = form.getTextField('undefined')
-                  field.setFontSize(16)
-                  field.setText('*')
+            @if ($group->title->section->course->thesis_phase == 'Proposal')
+              let fieldf = form.getTextField('undefined')
+                  fieldf.setFontSize(16)
+                  fieldf.setText('*')
             @else 
               form.getTextField('undefined').setText('')
             @endif
 
-            @if ($group->title->ic_type == 'Final')
-              let field = form.getTextField('PROPOSAL DEFENSE')
-                  field.setFontSize(16)
-                  field.setText('*')
+            @if ($group->title->section->course->thesis_phase == 'Final')
+              let fieldx = form.getTextField('PROPOSAL DEFENSE')
+                  fieldx.setFontSize(16)
+                  fieldx.setText('*')
             @else 
               form.getTextField('PROPOSAL DEFENSE').setText('')
             @endif

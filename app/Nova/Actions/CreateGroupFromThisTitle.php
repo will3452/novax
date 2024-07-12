@@ -35,7 +35,8 @@ class CreateGroupFromThisTitle extends Action
             $exists = Group::whereTitleId($model->id)->exists(); 
             if ($exists) return Action::danger('Group is already existing'); 
             $approvedMembers = \App\Models\TitleApplication::whereTitleId($model->id)->whereStatus('APPROVED')->count();
-            if ($model->no_of_students != $approvedMembers) {
+            if (! $approvedMembers) {
+            // if ($model->no_of_students != $approvedMembers) {
                 return Action::danger('Number of approved student application is not match to the title\'s required no. of student.'); 
             } 
             $group = Group::create([
@@ -49,7 +50,7 @@ class CreateGroupFromThisTitle extends Action
               'group_id' => $group->id, 
               'type' => 'Adviser',   
             ]); 
-
+            // dd(\App\Models\TitleApplication::whereTitleId($model->id)->whereStatus('APPROVED')->count()); 
             foreach(\App\Models\TitleApplication::whereTitleId($model->id)->whereStatus('APPROVED')->get() as $application) {
                 GroupMember::create([
                     'group_id' => $group->id, 

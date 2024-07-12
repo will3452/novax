@@ -37,6 +37,10 @@ class Title extends Model
         return $this->hasMany(TitleApplication::class, 'title_id'); 
     }
 
+    public function task() {
+        return $this->morphOne(Task::class, 'task'); 
+    }
+
     public function group () {
         return $this->hasOne(Group::class, 'title_id'); 
     }

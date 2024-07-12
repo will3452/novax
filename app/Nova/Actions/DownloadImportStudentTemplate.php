@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions;
 
+use Brightspot\Nova\Tools\DetachedActions\DetachedAction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -9,7 +10,7 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
-class RemoveAllApplications extends Action
+class DownloadImportStudentTemplate extends DetachedAction
 {
     use InteractsWithQueue, Queueable;
 
@@ -20,11 +21,10 @@ class RemoveAllApplications extends Action
      * @param  \Illuminate\Support\Collection  $models
      * @return mixed
      */
-    public function handle(ActionFields $fields, Collection $models)
+    public function handle(ActionFields $fieldss)
     {
-        foreach($models as $model) {
-            $model->titleApplications()->whereStatus('STATUS_REJECTED')->delete(); 
-        }
+        //
+        return DetachedAction::download('/invite-template.xlsx', 'student-import-template.xlsx'); 
     }
 
     /**

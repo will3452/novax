@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Models\Task as ModelsTask;
 use App\Nova\Actions\ApproveTask;
 use App\Nova\Actions\RejectTask;
+use App\Nova\Filters\Status;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
@@ -83,6 +84,12 @@ class Task extends Resource
             Text::make('Description', function () {
                 return $this->description; 
             })->asHtml(),          
+            
+            Text::make('Age', function () {
+                return \Carbon\Carbon::parse($this->created_at)->diff(now())->format('%d day(s)'); 
+            }), 
+
+            Text::make('Remarks/Reason', 'reason'), 
         ];
     }
 
@@ -105,7 +112,9 @@ class Task extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            Status::make(), 
+        ];
     }
 
     /**

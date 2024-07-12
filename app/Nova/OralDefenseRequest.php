@@ -79,8 +79,11 @@ class OralDefenseRequest extends Resource
                     ModelsOralDefenseRequest::PANELIST_APPROVAL => 'info',
                     ModelsOralDefenseRequest::COORDINATOR_APPROVAL => 'warning',
                     'APPROVED' => 'success',
-                    ModelsOralDefenseRequest::REJECTED => 'danger',
-                ])
+                    'REJECTED' => 'danger',
+                ]),
+            Text::make('Remarks/Reason', function () {
+                    return $this->tasks()->latest()->first()->reason ?? 'N/a'; 
+                }), 
         ];
     }
 

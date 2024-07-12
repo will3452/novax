@@ -27,6 +27,9 @@ class User extends Authenticatable
         'course',
         'signature', 
         'cluster', 
+        'relevant_deg',
+        'research_spec',
+        'schedule_type', 
     ];
 
     const TYPE_ADMINISTRATOR = 'Administrator'; 

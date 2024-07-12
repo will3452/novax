@@ -17,8 +17,7 @@ use Laravel\Nova\Fields\MorphMany;
 use App\Models\Group as ModelsGroup;
 use App\Nova\Actions\ReadyForDenfense;
 use App\Nova\Actions\MoveToDeanApproval;
-use App\Nova\Actions\MarkAsReadyForDefence;
-use App\Nova\Actions\MarkAsReadyForDefense;
+use App\Nova\Actions\EndorseGroupForDefense;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Nova\Actions\MoveToPanellistApproval;
 use App\Nova\Actions\SubmitOralDefenseRequest;
@@ -40,10 +39,20 @@ class Group extends Resource
 
     public static function indexQuery(NovaRequest $request, $query)
     {
+        $query->whereHas('title', function ($query) {
+            $query->whereHas('section', function ($query) {
+                $query->whereTerm(nova_get_setting('term'))->where('school_year', nova_get_setting('school_year')); 
+            }); 
+        }); 
         if (auth()->user()->isStudent()) {
             $groups = ModelGroupMember::whereStudentId(auth()->id())->get()->pluck('group_id'); 
-            return $query->whereIn('id', $groups); 
+            $query->whereIn('id', $groups); 
             // return $query->whereStatus('Ongoing')->whereIn('id', $groups); 
+        }
+        if (auth()->user()->isFaculty()) {
+            $query->whereHas('panellists', function ($query) {
+                $query->whereFacultyId(auth()->id())->whereStatus('APPROVED'); 
+            }); 
         }
         return $query;
     }
@@ -86,6 +95,7 @@ class Group extends Resource
     public static $search = [
         'id',
         'title_id', 
+        'code', 
     ];
 
     /**
@@ -97,7 +107,7 @@ class Group extends Resource
     public function fields(Request $request)
     {
         return [
-            Tabs::make('Group', [
+            Tabs::make("Group: " . $this->code, [
                 Tab::make('Information', [
                     Date::make('Date', 'created_at')
                         ->sortable()
@@ -107,7 +117,8 @@ class Group extends Resource
                         
             
                     BelongsTo::make('Title', 'title', Title::class),
-                    Select::make('Status')
+                    Select::make('Status', 'status')
+                        ->displayUsingLabels()
                         ->options([
                             ModelsGroup::ADD_PANELIST => ModelsGroup::ADD_PANELIST,
                             ModelsGroup::FOR_PANEL_APPROVAL => ModelsGroup::FOR_PANEL_APPROVAL,
@@ -115,16 +126,34 @@ class Group extends Resource
                             ModelsGroup::FOR_DEAN_APPROVAL => ModelsGroup::FOR_DEAN_APPROVAL,
                             ModelsGroup::FOR_DEFENSE => ModelsGroup::FOR_DEFENSE,
                             ModelsGroup::FINISHED => ModelsGroup::FINISHED,
+                            'Ongoing' => 'Approved Group', 
                         ]),
                     Date::make('Defense Schedule'), 
                 ]),
+                Text::make('Panelist', function () {
+                    $p = $this->panellists; 
+                    $p->load('faculty'); 
+                    $res = "<ul>"; 
+                    $arr = $p->map(function ($e){
+                        return "<div class='flex'>  <span style='font-size:12px;'>". ($e->faculty->name ?? '---')."</span> <span class='whitespace-no-wrap
+                    px-2 py-1 mx-2
+    rounded-full
+    uppercase
+    font-bold text-warning-dark' style='font-size:12px;'>$e->type</span></div>"; 
+                    }); 
+                    foreach($arr as $i ) {
+                        $res .= $i; 
+                    }
+                    $res .= "</ul>"; 
+                    return $res; 
+                })->onlyOnIndex()->asHtml(), 
                 Tab::make('Students', [
                     HasMany::make('Group Member', 'groupMembers', GroupMember::class), 
                 ]), 
                 Tab::make('Panelists', [
-                    HasMany::make('Panellists', 'panellists', Panellist::class)
+                    HasMany::make('Panelist', 'panellists', Panellist::class)
                 ]),
-                Tab::make('Progress ', [
+                Tab::make('Progress Report', [
                     HasMany::make('Progress Reports', 'progresses', Progress::class), 
                 ]),
                 Tab::make('Oral Defense Requests ', [
@@ -132,7 +161,8 @@ class Group extends Resource
                 ]),
                 Tab::make('Revisions', [
                     HasMany::make('Revisions', 'revisions', Revision::class), 
-                ]),
+                ])->showIf(in_array($this->status, ['For Defense', 'Ongoing', 'Ready for defense', 'Finished'])),
+                
             ])->withToolbar(),
             MorphMany::make(
                 'Comments',
@@ -189,7 +219,7 @@ class Group extends Resource
     public function actions(Request $request)
     {
         $actions = [
-            MarkAsReadyForDefense::make()->canSee(function () use ($request) {
+            EndorseGroupForDefense::make()->canSee(function () use ($request) {
                 $result = $request->has('action'); 
                 if (auth()->user()->isFaculty() && $this->title->faculty_id == auth()->id() && $this->defense_schedule == null) $result = true; 
                 return $result; 
@@ -201,7 +231,7 @@ class Group extends Resource
             ViewRequirementsForRevisionForm::make(), 
         ]; 
         if ($request->action == 'mark-as-ready-for-defense') {
-            return [MarkAsReadyForDefense::make(), 
+            return [EndorseGroupForDefense::make(), 
             ViewAcceptanceOfAdviserAndPanelMembersForm::make(), 
             ViewRequirementsForRevisionForm::make(), 
         ]; 
@@ -210,8 +240,8 @@ class Group extends Resource
             return [
                 ViewAcceptanceOfAdviserAndPanelMembersForm::make(), 
                 ViewRequirementsForRevisionForm::make(), 
-                AddPanellist::make()->canSee(fn () => auth()->user()->isFaculty()), 
-                MoveToPanellistApproval::make()->canSee(fn () => auth()->user()->isFaculty()), 
+                AddPanellist::make()->canSee(fn () => auth()->user()->isStudent()), 
+                MoveToPanellistApproval::make()->canSee(fn () => auth()->user()->isStudent()), 
                 MoveToCoordinatorApproval::make()->canSee(function () {
                     $visible = true; 
                     foreach($this->panellists as $p) {

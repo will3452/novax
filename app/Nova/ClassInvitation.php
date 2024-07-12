@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\ImportStudents;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
@@ -17,7 +18,7 @@ class ClassInvitation extends Resource
     
     public static function availableForNavigation(Request $request)
     {
-        return auth()->user()->isStudent(); 
+        return false; 
     }
     
     public static function indexQuery(NovaRequest $request, $query)

@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -51,6 +52,12 @@ class Course extends Resource
                 ->sortable(),
             Text::make('Code')
                 ->sortable(), 
+            Select::make('Thesis Phase')
+                ->options([
+                    'Proposal' => 'Proposal',
+                    'Data Gathering' => 'Data Gathering',
+                    'Final' => 'Final', 
+                ]), 
         ];
     }
 

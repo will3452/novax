@@ -13,7 +13,7 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
 use Michielfb\Time\Time;
 
-class MarkAsReadyForDefense extends Action
+class EndorseGroupForDefense extends Action
 {
     use InteractsWithQueue, Queueable;
 

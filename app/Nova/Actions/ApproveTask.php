@@ -5,6 +5,7 @@ namespace App\Nova\Actions;
 use App\Models\Task;
 use App\Models\Group;
 use App\Models\Progress;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Fields\Text;
@@ -94,7 +95,22 @@ class ApproveTask extends Action
                 return; 
                 
             }
-            $model->task()->update(['status' => $model->approved_status]); 
+            $status = 'status'; 
+            if ($model->task_type == "App\Models\Title") {
+                $status = "approval_status";
+            }
+
+            if ($status == 'approval_status') {
+                if ($model->approved_status == "FOR_DEAN_APPROVAL") {
+                    $title = $model->task; 
+                    $model->task->task()->create([
+                        'user_id' => User::whereType('Dean')->first()->id ?? 1, 
+                        'description' => "[Dean] New Title \"$title->title\" has been created.",
+                        'approved_status' => "APPROVED",
+                    ]); 
+                }
+            }
+            $model->task()->update([$status => $model->approved_status]); 
         }
     }
 

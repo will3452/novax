@@ -18,10 +18,13 @@ use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphMany;
 use App\Nova\Actions\InviteStudent;
+use App\Nova\Actions\DownloadTemplate;
 use Laravel\Nova\Fields\BelongsToMany;
 use App\Models\Section as ModelsSection;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use KirschbaumDevelopment\NovaComments\Commenter;
+use App\Nova\Actions\DownloadImportStudentTemplate;
+use App\Nova\Actions\ImportStudents;
 
 class Section extends Resource
 {
@@ -41,6 +44,11 @@ class Section extends Resource
     {
         if (auth()->user()->isCoordinator()) return true; 
         return false; 
+    }
+
+    public function authorizedToForceDelete(Request $request)
+    {
+        return $this->authorizedToDelete($request); 
     }
 
     public function authorizedToUpdate(Request $request)
@@ -105,13 +113,8 @@ class Section extends Resource
                         })
                         ->options(\App\Models\Term::get()->pluck('name', 'name')), 
                     // Number::make('No of Students')->rules(['min:1']), 
-                    Hidden::make('no_of_students')->default(fn () => 100), 
-                    Select::make('Thesis Phase')
-                        ->options([
-                            ModelsSection::PHASE_PROPOSAL =>  ModelsSection::PHASE_PROPOSAL,
-                            ModelsSection::PHASE_GATHERING =>  ModelsSection::PHASE_GATHERING,
-                            ModelsSection::PHASE_FINAL =>  ModelsSection::PHASE_FINAL,
-                        ]),
+                    Hidden::make('no_of_students')->default(fn () => 3), 
+                    Hidden::make('Thesis Phase')->default(fn () => ModelsSection::PHASE_PROPOSAL), 
                     Select::make('IC type', 'ic_type')
                         ->options([
                             \App\Models\Title::IC_TYPE_CAPSTONE => \App\Models\Title::IC_TYPE_CAPSTONE,
@@ -124,7 +127,7 @@ class Section extends Resource
                         ->default(fn() => auth()->id()),
                     
                     BelongsTo::make('Creator', 'creator', User::class)->onlyOnDetail(), 
-                    Text::make('Pass Code')->onlyOnForms(), 
+                    Hidden::make('Pass Code')->default(fn () => bcrypt('password')), 
                     ]),
                     Tab::make('Students', [
                         HasMany::make('Students', 'students', ClassInvitation::class)->canSee(fn () => auth()->user()->isCoordinator()),
@@ -191,6 +194,8 @@ class Section extends Resource
         if (! is_numeric($resourceId)) return []; 
         return [
             (new InviteStudent(intval($resourceId)))->canSee(fn () => auth()->user()->isCoordinator()), 
+            DownloadImportStudentTemplate::make()->canSee(fn () => auth()->user()->isFaculty()), 
+            ImportStudents::make(intval($resourceId))->canSee(fn () => auth()->user()->isFaculty()),
         ];
     }
 }
