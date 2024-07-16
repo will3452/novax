@@ -22,6 +22,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Nova\Actions\MoveToPanellistApproval;
 use App\Nova\Actions\SubmitOralDefenseRequest;
 use App\Models\GroupMember as ModelGroupMember;
+use App\Nova\Actions\ExportMonitoringReport;
 use App\Nova\Actions\MoveToCoordinatorApproval;
 use App\Nova\Actions\ViewAcceptanceOfAdviserAndPanelMembersForm;
 use App\Nova\Actions\ViewFinalOralDefensePresentationRubric;
@@ -50,7 +51,7 @@ class Group extends Resource
             $query->whereIn('id', $groups); 
             // return $query->whereStatus('Ongoing')->whereIn('id', $groups); 
         }
-        if (auth()->user()->isFaculty()) {
+        if (auth()->user()->isFaculty() && ! auth()->user()->isCoordinator()) {
             $query->whereHas('panellists', function ($query) {
                 $query->whereFacultyId(auth()->id())->whereStatus('APPROVED'); 
             }); 
@@ -220,6 +221,10 @@ class Group extends Resource
     public function actions(Request $request)
     {
         $actions = [
+            ExportMonitoringReport::make()
+            ->standalone()->canSee(function () {
+                return auth()->user()->isCoordinator(); 
+            }), 
             EndorseGroupForDefense::make()->canSee(function () use ($request) {
                 $result = $request->has('action'); 
                 if (auth()->user()->isFaculty() && $this->title->faculty_id == auth()->id() && $this->defense_schedule == null) $result = true; 
@@ -236,10 +241,18 @@ class Group extends Resource
             ViewAcceptanceOfAdviserAndPanelMembersForm::make(), 
             ViewRequirementsForRevisionForm::make(), 
             ViewFinalOralDefensePresentationRubric::make(), 
+            ExportMonitoringReport::make()
+            ->standalone()->canSee(function () {
+                return auth()->user()->isCoordinator(); 
+            }), 
         ]; 
         }
         if ($this->code == null) {
             return [
+                ExportMonitoringReport::make()
+                ->standalone()->canSee(function () {
+                    return auth()->user()->isCoordinator(); 
+                }), 
                 ViewAcceptanceOfAdviserAndPanelMembersForm::make(), 
                 ViewRequirementsForRevisionForm::make(), 
                 ViewFinalOralDefensePresentationRubric::make(),

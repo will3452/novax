@@ -1,12 +1,14 @@
 <?php
 
+use App\Models\Group;
+use App\Models\Progress;
+use Illuminate\Http\Request;
+use App\Exports\MonitoringReports;
+use App\Models\OralDefenseRequest;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
-use App\Models\Group;
-use App\Models\OralDefenseRequest;
-use App\Models\Progress;
-use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome'); 
@@ -43,6 +45,10 @@ Route::get('/form', function (Request $request) {
 
 Route::get('/register', [RegisterController::class, 'registrationPage']);
 Route::post('/register', [RegisterController::class, 'postRegister']);
+
+Route::get('/download-monitoring', function () {
+    return Excel::download(new MonitoringReports(), "monitoring-".nova_get_setting('term').".xlsx"); 
+});
 
 
 //artisan helper
