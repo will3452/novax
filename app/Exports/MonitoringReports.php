@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Group;
+use ErrorException;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
@@ -28,9 +29,18 @@ class MonitoringReports implements FromArray
             $program = $g->groupMembers()->first()->student->course;  
             $members = $g->groupMembers->map(fn ($e) => $e->student->name)->toArray(); 
             $section = $g->title->section; 
-            $adviser = $g->panellists()->whereType('Adviser')->first()->faculty;
-            $chair = $g->panellists()->whereType('Chair')->first()->faculty;
-            $member = $g->panellists()->whereType('Member')->first()->faculty;
+            $adviser = "";
+            $chair = "";
+            $member = "";
+            try {
+                $adviser = $g->panellists()->whereType('Adviser')->first()->faculty->name;
+                $chair = $g->panellists()->whereType('Chair')->first()->faculty->name;
+                $member = $g->panellists()->whereType('Member')->first()->faculty->name;
+            } catch (ErrorException $e) {
+                $adviser = "";
+                $chair = "";
+                $member = "";
+            }
             array_push($results, 
             [
                 $program,
@@ -41,9 +51,9 @@ class MonitoringReports implements FromArray
                 implode(", ", $members),
                 $g->title->title, 
                 $g->title->area_of_research, 
-                $adviser->name, 
-                $chair->name, 
-                $member->name,
+                $adviser, 
+                $chair, 
+                $member,
                 $g->title->ic_type, 
                 $g->defense_schedule, 
                 '',  
