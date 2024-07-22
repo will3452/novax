@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
 use App\Nova\Metrics\TitleApplications;
 use Czemu\NovaCalendarTool\NovaCalendarTool;
+use Elezerk\EventCalendar\EventCalendar;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -135,9 +136,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             // (new ProfileTool)->canSee(function ($request) {
             //     return config('novax.profile_enabled') && $request->user()->email != 'super@admin.com'; // to prevent changing of password 
             // }),
-            (new NovaCalendarTool)->canSee(function ($request) {
-                return $request->user()->id == nova_get_setting('coordinator_id'); 
-            }), 
+            // (new NovaCalendarTool)->canSee(function ($request) {
+            //     return true; 
+            // }), 
+            (new EventCalendar()), 
             (new NovaSettings)->canSee(function ($request) {
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
                 config('novax.setting_enabled');

@@ -7,7 +7,9 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "mix --production",
+        "build-event-calendar": "cd nova-components/EventCalendar && npm run dev",
+        "build-event-calendar-prod": "cd nova-components/EventCalendar && npm run prod"
     },
     "devDependencies": {
         "axios": "^0.21",
