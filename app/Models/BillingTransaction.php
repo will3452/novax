@@ -16,4 +16,12 @@ class BillingTransaction extends Model
         'total_amount',
         'payable', 
     ];
+
+    protected $casts = [
+        'particulars' => 'json', 
+    ];
+
+    function user () {
+        return $this->belongsTo(User::class, 'user_id'); 
+    }
 }

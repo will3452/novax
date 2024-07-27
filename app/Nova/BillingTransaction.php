@@ -2,37 +2,36 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Hidden;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class BillingTransaction extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'super@admin.com');
-    }
-
+    public static $group = 'Billing'; 
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
-
-    public static $group = 'Security'; 
+    public static $model = \App\Models\BillingTransaction::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public function title () {
+        $reference = $this->reference; 
+        $payeeName = \App\Models\User::find($this->user_id)->name;
+        $balance = $this->total_amount - \App\Models\BillingPayment::whereBillingTransactionId($this->id)->sum('amount');
+        return "$reference - $payeeName [PHP $balance]";  
+    }
 
     /**
      * The columns that should be searched.
@@ -40,7 +39,8 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'reference', 
     ];
 
     /**
@@ -52,27 +52,20 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            Select::make('Type')
-                ->options([
-                    'ADMINISTRATOR',
-                    'CUSTOMER',
-                    'STAFF', 
-                ]), 
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
-
+            Hidden::make('reference')->default(fn () => \Str::random()), 
+            Text::make('Reference', function () {
+                return $this->reference; 
+            }), 
+            BelongsTo::make('Payee', 'user', User::class), 
+            KeyValue::make('Particulars')
+                ->keyLabel('Billing Item')
+                ->valueLabel('Amount')
+                ->rules('json'), 
+            Currency::make('Total Amount')
+                ->rules(['required']),
+            Currency::make('Balance', function () {
+                return $this->total_amount - \App\Models\BillingPayment::whereBillingTransactionId($this->id)->sum('amount');
+            }), 
         ];
     }
 

@@ -25,7 +25,9 @@ class Product extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
+    
+    public static $group = 'Manage'; 
 
     /**
      * The columns that should be searched.
@@ -54,6 +56,15 @@ class Product extends Resource
                 ->help('eg. pcs, sack and etc..,'),
             Currency::make('Price'),
             Hidden::make('qty')->default(fn () => 1), 
+            Number::make('Stock', function () {
+                $stocks = \App\Models\Inventory::whereProductId($this->id)
+                ->whereType('STOCK')
+                ->sum('qty'); 
+                $orders = \App\Models\Inventory::whereProductId($this->id)
+                ->whereType('ORDER')
+                ->sum('qty'); 
+                return $stocks - $orders;
+            }), 
         ];
     }
 

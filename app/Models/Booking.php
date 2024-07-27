@@ -15,4 +15,12 @@ class Booking extends Model
         'remarks',
         'status', // PENDING, DONE, CANCELLED
     ]; 
+
+    protected $casts = [
+        'date' => 'date',
+    ]; 
+
+    public function user () {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
