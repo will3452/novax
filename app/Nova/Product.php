@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Number;
@@ -52,6 +53,7 @@ class Product extends Resource
             Text::make('Unit of Measurement', 'uom')
                 ->help('eg. pcs, sack and etc..,'),
             Currency::make('Price'),
+            Hidden::make('qty')->default(fn () => 1), 
         ];
     }
 
