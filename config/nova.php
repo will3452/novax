@@ -144,6 +144,5 @@ return [
     |
     */
 
-    'currency' => 'USD',
-
+    'currency' => 'PHP',
 ];
