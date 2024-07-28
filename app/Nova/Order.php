@@ -5,19 +5,22 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class BillingPayment extends Resource
+class Order extends Resource
 {
-    public static $group = 'Billing'; 
+    public static $group = 'Orders'; 
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\BillingPayment::class;
+    public static $model = \App\Models\Order::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -33,6 +36,7 @@ class BillingPayment extends Resource
      */
     public static $search = [
         'id',
+        'reference', 
     ];
 
     /**
@@ -44,14 +48,21 @@ class BillingPayment extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('Transaction', 'billingTransaction', BillingTransaction::class),
-            Currency::make('Amount'),
-            Select::make('Mode of payment', 'mop')
+            Text::make('Reference')
+                ->sortable()
+                ->exceptOnForms(),
+            Hidden::make('reference')
+                ->default(fn() => \Str::random()), 
+            Currency::make('Total Amount'),
+            Select::make('Mode Of Payment', 'mop')
                 ->options([
                     'E-WALLET' => 'E-WALLET',
                     'BANK' => 'BANK',
                     'OVER-THE-COUNTER' => 'OVER-THE-COUNTER', 
-                ]), 
+                ]),
+            Image::make('Proof of Payment', 'pop'),
+            BelongsTo::make('Customer', 'user', User::class), 
+            
         ];
     }
 

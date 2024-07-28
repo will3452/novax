@@ -17,7 +17,7 @@ class CreateBillingPaymentsTable extends Migration
             $table->id();
             $table->integer('billing_transaction_id');
             $table->double('amount');
-            $table->string('mop')->default('CASHIER'); 
+            $table->string('mop')->default('OVER-THE-COUNTER'); 
             $table->timestamps();
         });
     }

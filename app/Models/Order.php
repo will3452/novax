@@ -13,8 +13,12 @@ class Order extends Model
         'reference',
         'total_amount',
         'status', // PENDING, DONE, CANCELLED
-        'mop', // EWALLET, BANK, CASHIER
+        'mop', // EWALLET, BANK, OVER-THE-COUNTER
         'pop', 
         'user_id', 
     ];
+
+    public function user () {
+        return $this->belongsTo(User::class); 
+    }
 }

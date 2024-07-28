@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->string('reference'); 
             $table->double('total_amount')->default(0);
             $table->string('status')->default('PENDING');
-            $table->string('mop')->string('CASHIER'); 
+            $table->string('mop')->string('OVER-THE-COUNTER'); 
             $table->string('pop')->nullable();
             $table->integer('user_id'); 
             $table->timestamps();
