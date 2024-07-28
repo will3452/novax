@@ -54,9 +54,9 @@ class User extends Resource
         return [
             Select::make('Type')
                 ->options([
-                    'ADMINISTRATOR',
-                    'CUSTOMER',
-                    'STAFF', 
+                    'ADMINISTRATOR' => 'ADMINISTRATOR',
+                    'CUSTOMER' => 'CUSTOMER',
+                    'STAFF' => 'STAFF', 
                 ]), 
             Text::make('Name')
                 ->sortable()
