@@ -13,6 +13,7 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StoreCategoryController;
 use App\Http\Controllers\ApiAuthenticationController;
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,64 +37,77 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
 
+    Route::post('/secure-purchase', function(Request $request) {
+        return URL::temporarySignedRoute('sp', now()->addMinutes(nova_get_setting('sec_age', 3)), $request->all()); 
+    }); 
+
     // payments
-Route::post('/checkout-session', function (Request $request){
-    // create order
-    $total_amount = 0;
-    foreach ($request->line_items as $item) {
-        $total_amount += ($item['amount'] / 100) * $item['quantity'];
-    }
+    Route::post('/checkout-session', function (Request $request) {
+        // create order
+        $total_amount = 0;
+        foreach ($request->line_items as $item) {
+            $total_amount += ($item['amount'] / 100) * $item['quantity'];
+        }
 
-    $order = Order::create([
-        'customer_id' => auth()->id(),
-        'reference' => "REF" . Str::random(16),
-        'payment_method' => "ONLINE",
-        'payment_status' => "PENDING",
-        'total_amount' => $total_amount,
-    ]);
-
-    foreach ($request->line_items as $item) {
-        $product = Product::find($item["product_id"]);
-        OrderItem::create([
-            'order_id' => $order->id,
-            'product_id' => $item["product_id"],
-            'quantity' => $item['quantity'],
-            'unit_price' => $product->price,
+        $order = Order::create([
+            'customer_id' => auth()->id(),
+            'reference' => "REF" . Str::random(16),
             'payment_method' => "ONLINE",
             'payment_status' => "PENDING",
+            'total_amount' => $total_amount,
         ]);
+
+        foreach ($request->line_items as $item) {
+            $product = Product::find($item["product_id"]);
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $item["product_id"],
+                'quantity' => $item['quantity'],
+                'unit_price' => $product->price,
+                'payment_method' => "ONLINE",
+                'payment_status' => "PENDING",
+            ]);
+        }
+
+        $client = new Client();
+        $auth = base64_encode(nova_get_setting('secret_key'));
+        $line_items = $request->line_items;
+        $body = [
+            'data' => [
+                'attributes' => [
+                    'send_email_receipt' => false,
+                    'show_description' => true,
+                    'show_line_items' => true,
+                    'line_items' => $line_items,
+                    "payment_method_types" => ["gcash", "grab_pay", "card"],
+                    "description" => "Chizmis Store payment orders",
+                    "success_url" => nova_get_setting('success_url'),
+                    "reference_number" => $order->reference,
+                ]
+            ],
+        ];
+        $response = $client->request('POST', 'https://api.paymongo.com/v1/checkout_sessions', [
+            'body' => json_encode($body),
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'accept' => 'application/json',
+                'authorization' => "Basic $auth",
+            ],
+        ]);
+
+
+        return $response->getBody();
+    });
+});
+
+
+Route::get('/secure-purchase', function (Request $request) {
+    if (! $request->hasValidSignature()) {
+        abort(401);
     }
 
-    $client = new Client();
-    $auth = base64_encode(nova_get_setting('secret_key'));
-    $line_items = $request->line_items;
-    $body = [
-        'data' => [
-            'attributes' => [
-                'send_email_receipt' => false,
-                'show_description' => true,
-                'show_line_items' => true,
-                'line_items' => $line_items,
-                "payment_method_types" => ["gcash", "grab_pay", "card"],
-                "description" => "Chizmis Store payment orders",
-                "success_url" => nova_get_setting('success_url'),
-                "reference_number" => $order->reference,
-            ]
-        ],
-    ];
-    $response = $client->request('POST', 'https://api.paymongo.com/v1/checkout_sessions', [
-        'body' => json_encode($body),
-        'headers' => [
-          'Content-Type' => 'application/json',
-          'accept' => 'application/json',
-          'authorization' => "Basic $auth",
-        ],
-    ]);
-
-
-    return $response->getBody();
-});
-});
+    return 'welcome to secure page!'; 
+})->name('sp'); 
 
 
 //user authentication
@@ -120,7 +134,7 @@ Route::post('/payment', function (Request $request) {
     ]);
     if ($data->attributes->type == "checkout_session.payment.paid") {
         WebhookLog::create([
-            'payload' =>json_encode(['$data->attributes->type' => $data->attributes->type])  ,
+            'payload' => json_encode(['$data->attributes->type' => $data->attributes->type]),
         ]);
         Order::whereReference($reference)->update(['payment_status' => 'PAID']);
     }

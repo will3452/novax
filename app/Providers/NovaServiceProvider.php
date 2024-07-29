@@ -11,6 +11,7 @@ use App\Nova\Metrics\NewUsers;
 use Laravel\Nova\Fields\Image;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Fields\Number;
 use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -33,6 +34,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 Text::make('Secret Key'),
                 Text::make('Public Key'),
                 Text::make('Success Url'),
+                Number::make('Secured Page Age', 'sec_age')
+                    ->help('in minute')
+                    ->default(fn () => 1), 
             ]),
         ]);
     }
