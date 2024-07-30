@@ -73,9 +73,6 @@ class PaymentController extends Controller
     public function checkout (Request $request) {
         // create order
         $total_amount = 0;
-        foreach ($request->line_items as $item) {
-            $total_amount += ($item['amount'] / 100) * $item['quantity'];
-        }
 
         $reference = "REF" . Str::random(16); 
 
@@ -89,6 +86,8 @@ class PaymentController extends Controller
 
         foreach ($request->line_items as $item) {
             $product = Product::find($item["product_id"]);
+            $price = $product->discount_price ? $product->discount_price : $product->price; 
+            $total_amount += ($price * $item['quantity']);
             OrderItem::create([
                 'order_id' => $order->id,
                 'product_id' => $item["product_id"],
