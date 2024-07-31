@@ -4,6 +4,7 @@ use App\Http\Controllers\ApiAuthenticationController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
 use App\Models\CartItem;
 use Illuminate\Http\Request;
@@ -32,3 +33,4 @@ Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
 Route::resource('/services', ServiceController::class); 
+Route::resource('/products', ProductController::class); 
