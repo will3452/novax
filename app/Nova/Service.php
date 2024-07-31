@@ -3,31 +3,29 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Booking extends Resource
+class Service extends Resource
 {
-
-    public static $group = 'Appointments'; 
+    public static $group = 'Manage'; 
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Booking::class;
+    public static $model = \App\Models\Service::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -36,9 +34,7 @@ class Booking extends Resource
      */
     public static $search = [
         'id',
-        'remarks',
-        'date',
-        'time', 
+        'name',
     ];
 
     /**
@@ -50,20 +46,13 @@ class Booking extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('Customer', 'user', User::class), 
-            Date::make('Date'),
-            Text::make('Time'),
-            Select::make('Service')
-                ->searchable()
-                ->options(\App\Models\Service::get()->pluck('name', 'name')), 
-            Textarea::make('Remarks')
-                ->alwaysShow(),
-            Select::make('Status')
-                ->options([
-                    'PENDING' => 'PENDING',
-                    'CANCELLED' => 'CANCELLED',
-                    'DONE' => 'DONE',
-                ])
+            Text::make('Name')
+                ->rules(['required'])
+                ->sortable(),
+            Image::make('Image'),
+            Currency::make('Price')
+                ->rules(['required']),
+            Textarea::make('Description'), 
         ];
     }
 

@@ -1,19 +1,13 @@
 <?php
 
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ServiceController;
+use App\Models\CartItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 
 
 //private access
@@ -22,6 +16,10 @@ Route::middleware('auth:sanctum')->group(function () {
         return 'authentication test';
     });
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
+
+    Route::resource('/bookings', BookingController::class); 
+    Route::resource('/cart-items', CartController::class); 
+    Route::resource('/orders', OrderController::class); 
 });
 
 Route::get('/public-test', function () {
@@ -32,3 +30,5 @@ Route::get('/public-test', function () {
 //user authentication
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
+
+Route::resource('/services', ServiceController::class); 

@@ -13,6 +13,7 @@ class Booking extends Model
         'date', 
         'time',
         'remarks',
+        'service', 
         'status', // PENDING, DONE, CANCELLED
     ]; 
 
