@@ -39,8 +39,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
 
     Route::post('/secure-purchase', function(Request $request) {
-        return URL::temporarySignedRoute('sp', now()->addMinutes(nova_get_setting('sec_age', 3)), $request->all()); 
-    }); 
+        return URL::temporarySignedRoute('sp', now()->addMinutes(nova_get_setting('sec_age', 3)), $request->all());
+    });
 
 
     // payments
@@ -103,7 +103,16 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/checkout-session', [PaymentController::class, 'checkout']);
 
-    Route::post('/checkout-qr', [PaymentController::class, 'generateQR']); 
+    Route::post('/checkout-qr', [PaymentController::class, 'generateQR']);
+
+    // carts
+    Route::prefix('cart-items')->group(function () {
+        Route::get('/', [CartController::class, 'getItems']);
+        Route::post('/', [CartController::class, 'addItem']);
+        Route::delete('/{cartItem}', [CartController::class, 'removeItem']);
+        Route::put('/{cartItem}', [CartController::class, 'updateItem']);
+    });
+
 });
 
 
@@ -115,8 +124,8 @@ Route::get('/secure-purchase', function (Request $request) {
         abort(401);
     }
 
-    return view('secure_page'); 
-})->name('sp'); 
+    return view('secure_page');
+})->name('sp');
 
 
 //user authentication
@@ -126,6 +135,7 @@ Route::post('/login', [ApiAuthenticationController::class, 'login']);
 Route::resource('products', ProductController::class);
 Route::resource('stores', StoreController::class);
 Route::resource('store-categories', StoreCategoryController::class);
+
 Route::get('change-logs', function (Request $request) {
     return ChangeLog::latest()->get();
 });

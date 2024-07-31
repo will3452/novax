@@ -21,23 +21,23 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'type', 
+        'type',
     ];
 
     const TYPE_ADMIN = 'ADMINISTRATOR';
     const TYPE_CUSTOMER = 'CUSTOMER';
-    const TYPE_VENDOR = 'VENDOR'; 
+    const TYPE_VENDOR = 'VENDOR';
 
     public function isAdmin() {
-        return $this->type == self::TYPE_ADMIN; 
+        return $this->type == self::TYPE_ADMIN;
     }
 
     public function isCustomer() {
-        return $this->type == self::TYPE_CUSTOMER; 
+        return $this->type == self::TYPE_CUSTOMER;
     }
 
     public function isVendor() {
-        return $this->type == self::TYPE_VENDOR; 
+        return $this->type == self::TYPE_VENDOR;
     }
 
     /**
@@ -60,6 +60,10 @@ class User extends Authenticatable
     ];
 
     public function products () {
-        return $this->hasMany(Product::class, 'user_id'); 
+        return $this->hasMany(Product::class, 'user_id');
+    }
+
+    public function cartItems () {
+        return $this->hasMany(CartItem::class, 'user_id');
     }
 }
