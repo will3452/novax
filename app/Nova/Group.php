@@ -227,7 +227,7 @@ class Group extends Resource
             }), 
             EndorseGroup::make()->canSee(function () use ($request) {
                 $result = $request->has('action'); 
-                if (auth()->user()->isFaculty() && $this->title->faculty_id == auth()->id() && $this->defense_schedule == null) $result = true; 
+                if (auth()->user()->isFaculty()) $result = true; 
                 return $result; 
             }),
             MoveToDeanApproval::make()->canSee(function () {
