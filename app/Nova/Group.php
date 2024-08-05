@@ -249,6 +249,7 @@ class Group extends Resource
         }
         if ($this->code == null) {
             return [
+                EndorseGroup::make(), 
                 ExportMonitoringReport::make()
                 ->standalone()->canSee(function () {
                     return auth()->user()->isCoordinator(); 
