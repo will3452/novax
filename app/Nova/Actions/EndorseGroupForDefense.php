@@ -36,6 +36,8 @@ class EndorseGroupForDefense extends Action
                 'status' => OralDefenseRequest::SUBMIT_ORAL_DEFENSE, 
             ]); 
         }
+
+        return Action::success('Success'); 
     }
 
     /**
