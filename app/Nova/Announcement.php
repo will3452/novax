@@ -55,6 +55,8 @@ class Announcement extends Resource
             Text::make('Title')
                 ->sortable(),
             Textarea::make('Body')
+                ->rules(['max:160'])
+                ->help('The message must not exceed 160 letters or characters.')
                 ->alwaysShow(),
         ];
     }
