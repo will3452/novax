@@ -26,18 +26,16 @@ class EndorseGroup extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        // foreach($models as $model) {
-        //     $model->update(['status' => \App\Models\Group::READY_FOR_DEFENSE]);
-        //     OralDefenseRequest::create([
-        //         'group_id' => $model->id, 
-        //         'time' => $fields->time, 
-        //         'date' => $fields->date, 
-        //         'venue' => $fields->venue, 
-        //         'status' => OralDefenseRequest::SUBMIT_ORAL_DEFENSE, 
-        //     ]); 
-        // }
-
-        return Action::success('Success'); 
+        foreach($models as $model) {
+            $model->update(['status' => \App\Models\Group::READY_FOR_DEFENSE]);
+            OralDefenseRequest::create([
+                'group_id' => $model->id, 
+                'time' => $fields->time, 
+                'date' => $fields->date, 
+                'venue' => $fields->venue, 
+                'status' => OralDefenseRequest::SUBMIT_ORAL_DEFENSE, 
+            ]); 
+        }
     }
 
     /**
