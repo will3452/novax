@@ -17,7 +17,7 @@ use Laravel\Nova\Fields\MorphMany;
 use App\Models\Group as ModelsGroup;
 use App\Nova\Actions\ReadyForDenfense;
 use App\Nova\Actions\MoveToDeanApproval;
-use App\Nova\Actions\EndorseGroupForDefense;
+use App\Nova\Actions\EndorseGroup;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Nova\Actions\MoveToPanellistApproval;
 use App\Nova\Actions\SubmitOralDefenseRequest;
@@ -225,7 +225,7 @@ class Group extends Resource
             ->standalone()->canSee(function () {
                 return auth()->user()->isCoordinator(); 
             }), 
-            EndorseGroupForDefense::make()->canSee(function () use ($request) {
+            EndorseGroup::make()->canSee(function () use ($request) {
                 $result = $request->has('action'); 
                 if (auth()->user()->isFaculty() && $this->title->faculty_id == auth()->id() && $this->defense_schedule == null) $result = true; 
                 return $result; 
@@ -237,7 +237,7 @@ class Group extends Resource
             ViewRequirementsForRevisionForm::make(), 
         ]; 
         if ($request->action == 'mark-as-ready-for-defense') {
-            return [EndorseGroupForDefense::make(), 
+            return [EndorseGroup::make(), 
             ViewAcceptanceOfAdviserAndPanelMembersForm::make(), 
             ViewRequirementsForRevisionForm::make(), 
             ViewFinalOralDefensePresentationRubric::make(), 
