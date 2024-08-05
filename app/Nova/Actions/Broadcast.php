@@ -24,7 +24,7 @@ class Broadcast extends Action
             'apikey' => ENV('SMS_KEY'), //Your API KEY
             'number' => $phone,
             'message' => $message,
-            'sendername' => 'SEMAPHORE'
+            'sendername' => 'OTIEPI'
         );
         curl_setopt( $ch, CURLOPT_URL,'https://semaphore.co/api/v4/messages' );
         curl_setopt( $ch, CURLOPT_POST, 1 );
