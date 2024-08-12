@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/me', function (Request $request) {
         $user = User::find(auth()->id());
-        $user->load(['cartItems', 'bookings']);
+        $user->load(['cartItems.product', 'bookings']);
         return $user;  
     });
 
