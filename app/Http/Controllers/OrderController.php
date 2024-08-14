@@ -50,6 +50,7 @@ class OrderController extends Controller
             'user_id' => auth()->id(), 
             'total_amount' => $total_amount, 
             'reference' => $reference, 
+            'mop' => 'OVER-THE-COUNTER', 
         ]);
         
         foreach($items as $item) {
