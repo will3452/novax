@@ -74,6 +74,7 @@ class CartController extends Controller
      */
     public function update(Request $request, CartItem $cartItem)
     {
+        if ($request->qty == 0) $cartItem->delete(); 
         return $cartItem->update(['qty' => $request->qty]); 
     }
 
