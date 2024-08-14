@@ -61,6 +61,8 @@ class OrderController extends Controller
             ]); 
         }
 
+        CartItem::whereUserId(auth()->id())->with('product')->delete(); // clean cart
+
         return $order; 
     }
 
