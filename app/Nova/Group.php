@@ -163,7 +163,7 @@ class Group extends Resource
                 ]),
                 Tab::make('Revisions', [
                     HasMany::make('Revisions', 'revisions', Revision::class), 
-                ])->showIf(in_array($this->status, ['For Defense', 'Ongoing', 'Ready for defense', 'Finished'])),
+                ])->showIf(in_array($this->status, ['For Defense', 'Ongoing', 'Ready for defense', 'Finished']) || is_null($this->status)),
                 
             ])->withToolbar(),
             MorphMany::make(
