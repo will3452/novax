@@ -25,19 +25,19 @@ class SendApplication extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        foreach($models as $model) {
-            if ($model->status == 'Taken') return Action::danger('This title was already assigned.'); 
-            $exists = TitleApplication::whereStudentId(auth()->id())->whereSectionId($model->section_id)->whereStatus('APPROVED')->exists();
-            $submitted = TitleApplication::whereStudentId(auth()->id())->whereSectionId($model->section_id)->whereTitleId($model->id)->exists();
-            $alreadyApplied = TitleApplication::whereStudentId(auth()->id())->whereStatus('PENDING')->exists(); 
-            if ($submitted) return Action::danger("You have already applied to this title.");
-            if ($exists || $alreadyApplied) return Action::danger("You have already applied to another title in this section. you may contact your adviser to remove your application.");
-            TitleApplication::create([
-                'title_id' => $model->id, 
-                'section_id' => $model->section_id, 
-                'student_id' => auth()->id(), 
-            ]); 
-        }
+        $model = $models[0];
+
+        if ($model->status == 'Taken') return Action::danger('This title was already assigned.'); 
+        $exists = TitleApplication::whereStudentId(auth()->id())->whereSectionId($model->section_id)->whereStatus('APPROVED')->exists();
+        $submitted = TitleApplication::whereStudentId(auth()->id())->whereSectionId($model->section_id)->whereTitleId($model->id)->exists();
+        $alreadyApplied = TitleApplication::whereStudentId(auth()->id())->whereStatus('PENDING')->exists(); 
+        if ($submitted) return Action::danger("You have already applied to this title.");
+        if ($exists || $alreadyApplied) return Action::danger("You have already applied to another title in this section. you may contact your adviser to remove your application.");
+        TitleApplication::create([
+            'title_id' => $model->id, 
+            'section_id' => $model->section_id, 
+            'student_id' => auth()->id(), 
+        ]); 
     }
 
     /**
