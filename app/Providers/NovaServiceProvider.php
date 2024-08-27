@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\Attendances;
+use App\Nova\Metrics\Tasks;
+use App\Nova\Metrics\TasksStatuses;
+use App\Nova\Metrics\Users;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -52,7 +56,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         Gate::define('viewNova', function ($user) {
             return in_array($user->email, [
-                //
+                'super@yopmail.com'
             ]);
         });
     }
@@ -66,16 +70,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
-                'Africa/Nairobi',
-                'America/Mexico_City',
-                'Australia/Sydney',
-                'Europe/Paris',
                 'Asia/Manila',
-                'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila')
-            ->canSee(function () {
-                return config('novax.time_enabled');
-            }),
+            ])->defaultTimezone('Africa/Manila'), 
+            Users::make(), 
+            Tasks::make(), 
+            TasksStatuses::make(),
+            Attendances::make(), 
         ];
     }
 
@@ -97,9 +97,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            (new ProfileTool)->canSee(function () {
-                return config('novax.profile_enabled');
-            }),
+            // (new ProfileTool)->canSee(function () {
+            //     return config('novax.profile_enabled');
+            // }),
             (new BackupTool)->canSee(function ($request) {
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
                 config('novax.back_up_enabled');

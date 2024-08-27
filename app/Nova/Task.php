@@ -3,7 +3,11 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Task extends Resource
@@ -20,7 +24,7 @@ class Task extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'title';
 
     /**
      * The columns that should be searched.
@@ -29,6 +33,8 @@ class Task extends Resource
      */
     public static $search = [
         'id',
+        'title',
+        'description'
     ];
 
     /**
@@ -40,7 +46,24 @@ class Task extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            Select::make('Priority Level')
+                ->options([
+                    'LOW' => 'LOW',
+                    'MEDIUM' => 'MEDIUM',
+                    'HIGH' => 'HIGH', 
+                ]),
+            Text::make('Title')
+                ->sortable(),
+            Textarea::make('Description')->alwaysShow(),
+            Select::make('Status')
+                ->options([
+                    'PENDING' => 'PENDING', 
+                    'ON-GOING' => 'ON-GOING',
+                    'DONE' => 'DONE',
+                    'DROPPED' => 'DROPPED', 
+                ]),
+            Date::make('From'),
+            Date::make('To'), 
         ];
     }
 
