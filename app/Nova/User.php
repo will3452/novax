@@ -12,12 +12,6 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
 {
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'super@admin.com');
-    }
-
-    public static $group = 'Data';
     /**
      * The model the resource corresponds to.
      *
@@ -66,9 +60,6 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
-
-            MorphToMany::make('Roles', 'roles', Role::class)
-                ->canSee(fn () => config('novax.role_enabled')),
         ];
     }
 

