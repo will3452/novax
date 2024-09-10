@@ -25,6 +25,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Text::make('SMS API KEY', 'SMS_KEY'),
+            Text::make('Sender Name', 'SENDER_NAME'),
         ]);
     }
 
