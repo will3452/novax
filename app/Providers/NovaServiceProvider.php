@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\NewCustomers;
+use App\Nova\Metrics\Orders;
+use App\Nova\Metrics\Sales;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -76,6 +79,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
+            Orders::make(),
+            NewCustomers::make(),  
+            Sales::make(), 
         ];
     }
 

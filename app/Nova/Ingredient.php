@@ -2,30 +2,35 @@
 
 namespace App\Nova;
 
+use App\Nova\Metrics\MacroAndMicro;
+use App\Nova\Metrics\NewIngredients;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Ingredient extends Resource
 {
-    public static $group = 'Administrator'; 
+    public static $group = 'Inventory'; 
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Ingredient::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+
+    public function title () {
+        return "$this->name ($this->type)"; 
+    }
 
     /**
      * The columns that should be searched.
@@ -33,7 +38,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
     ];
 
     /**
@@ -45,22 +50,19 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
             Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+                ->rules(['required']),
+            Select::make('Type')
+                ->options([
+                    'MACRO' => 'MACRO',
+                    'MICRO' => 'MICRO',
+                ]),
+            Number::make('Bag')->default(fn () => 1),
+            Number::make('Kg')->default(fn () => 1),
+            Currency::make('Unit Price', 'price'), 
+            Number::make('Current Inventory', fn () => $this->quantity), 
+            Number::make('Purchase Order', fn () => $this->purchaseOrders()->sum('quantity')),
+            Number::make('Outstanding P.O', fn () => $this->purchaseOrders()->sum('quantity') - $this->quantity),
         ];
     }
 
@@ -72,7 +74,10 @@ class User extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            MacroAndMicro::make(), 
+            NewIngredients::make(), 
+        ];
     }
 
     /**
