@@ -21,8 +21,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
+        'demographic', 
     ];
 
+    const TYPE_ADMINISTRATOR = "ADMINISTRATOR";
+    const TYPE_USER = "USER"; 
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -40,5 +44,10 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'demographic' => 'json', 
     ];
+
+    public function loans () {
+        return $this->belongsToMany(Loan::class, 'user_loans', 'user_id', 'loan_id'); 
+    }
 }
