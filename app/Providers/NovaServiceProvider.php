@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\NewReservations;
+use App\Nova\Metrics\NewTrips;
+use App\Nova\Metrics\NewUsers;
+use App\Nova\Metrics\ReservationTrend;
+use App\Nova\Metrics\Vehicles;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -76,6 +81,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
+            NewReservations::make(),
+            ReservationTrend::make(), 
+            Vehicles::make(), 
+            NewUsers::make(), 
+            NewTrips::make(), 
         ];
     }
 
