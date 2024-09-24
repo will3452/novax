@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\ApiAuthenticationController;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\Endpoint;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +34,15 @@ Route::get('/public-test', function () {
 //user authentication
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
+
+Route::any('/v1/{params}', function (Request $request, $params) {
+    $method = Str::lower($request->getMethod()); 
+    $path = $request->getPathInfo(); 
+    $arr_path = explode("/", $path); 
+    $name = end($arr_path); 
+    $endpoint = Endpoint::whereMethod($method)->wherePath($name)->first(); 
+    return [
+        'params' => $endpoint, 
+        'method' => Str::lower($request->getMethod()), 
+    ]; 
+}); 
