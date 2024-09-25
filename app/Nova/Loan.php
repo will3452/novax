@@ -82,8 +82,6 @@ class Loan extends Resource
                     }),
                     Hidden::make('Reference', 'reference')
                         ->default(fn () => "L" . Str::random(8)), 
-                    Number::make('Terms')
-                        ->help('in week'),
                     Currency::make('Amount')->onlyOnForms(),
                     Select::make('Interest')
                         ->onlyOnForms()

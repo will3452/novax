@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class PaymentSchedule extends Resource
@@ -46,7 +47,7 @@ class PaymentSchedule extends Resource
     {
         return [
             Date::make('Due Date'),
-            Currency::make('Amount'), 
+            Text::make('Amount'), 
             BelongsTo::make('Loan', 'loan', Loan::class),  
         ];
     }
