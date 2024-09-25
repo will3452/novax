@@ -24,7 +24,7 @@ class SetVerdict extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach($models as $model) {
-            $model->update('verdict', $fields['verdict']); 
+            $model->update(['verdict'=> $fields['verdict']]); 
         }
     }
 
