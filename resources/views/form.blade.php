@@ -531,7 +531,7 @@
                 console.log(`${type}: ${name}`)
             });
             try {
-                form.getCheckBox("{{$group->verdict}}").checkBox()
+                form.getCheckBox("{{$group->verdict}}").check()
             } catch (error) {
                 console.log('error -> ', error);
             }

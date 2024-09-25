@@ -14,7 +14,7 @@ class AddVerdictToGroups extends Migration
     public function up()
     {
         Schema::table('groups', function (Blueprint $table) {
-            //
+            $table->string('verdict')->nullable(); 
         });
     }
 
@@ -26,7 +26,6 @@ class AddVerdictToGroups extends Migration
     public function down()
     {
         Schema::table('groups', function (Blueprint $table) {
-            $table->string('verdict')->nullable(); 
         });
     }
 }
