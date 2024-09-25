@@ -58,6 +58,7 @@ class User extends Resource
                 Text::make("type", function () {
                     return "<div class='text-xs'>$this->type</div>"; 
                 })->asHtml(), 
+                Text::make('Phone')->rules(['max:11', 'min:11'])->help('format: 09XXXXXXXXX'), 
                 Select::make('Type')
                 ->onlyOnForms()
                 ->options([
