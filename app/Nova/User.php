@@ -12,6 +12,7 @@ use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Stack;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
@@ -49,18 +50,37 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
+            Stack::make('Details', [
+                Avatar::make('Avatar')->squared(),
+                    Text::make('Name')
+                    ->sortable()
+                    ->rules('required', 'max:255'),
+                Text::make("type", function () {
+                    return "<div class='text-xs'>$this->type</div>"; 
+                })->asHtml(), 
+                Select::make('Type')
+                ->onlyOnForms()
+                ->options([
+                    ModelsUser::TYPE_ADMINISTRATOR => ModelsUser::TYPE_ADMINISTRATOR, 
+                    ModelsUser::TYPE_USER => ModelsUser::TYPE_USER, 
+                ]), 
+            ]),
+
+            Avatar::make('Avatar')
+                ->onlyOnForms()
+                ->squared(),
+                    Text::make('Name')
+                    ->onlyOnForms()
+                    ->sortable()
+                    ->rules('required', 'max:255'),
 
             Select::make('Type')
+                ->onlyOnForms()
                 ->options([
                     ModelsUser::TYPE_ADMINISTRATOR => ModelsUser::TYPE_ADMINISTRATOR, 
                     ModelsUser::TYPE_USER => ModelsUser::TYPE_USER, 
                 ]), 
             
-            Avatar::make('Avatar'), 
-
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
 
             Text::make('Email')
                 ->sortable()

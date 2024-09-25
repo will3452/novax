@@ -2,17 +2,16 @@
 
 namespace App\Nova;
 
-use App\Nova\Metrics\OverallPayments;
+use App\Nova\Metrics\DueToday;
+use App\Nova\Metrics\DueTodayStatus;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Payment extends Resource
+class PaymentSchedule extends Resource
 {
     public static $group = '1_Services'; 
     /**
@@ -20,14 +19,12 @@ class Payment extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\Payment::class;
+    public static $model = \App\Models\PaymentSchedule::class;
 
-    /**
-     * The single value that should be used to represent the resource when being displayed.
-     *
-     * @var string
-     */
-    public static $title = 'id';
+
+    public function title () {
+        return $this->due_date->format('m/d/Y'); 
+    }
 
     /**
      * The columns that should be searched.
@@ -36,6 +33,7 @@ class Payment extends Resource
      */
     public static $search = [
         'id',
+        'due_date', 
     ];
 
     /**
@@ -47,17 +45,9 @@ class Payment extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
-            Hidden::make('penalty')->default(fn () => 0), 
-            BelongsTo::make('User', 'user', User::class),
-            BelongsTo::make('Loan', 'loan', Loan::class), 
-            // Date::make('Due Date'),
-            Currency::make('Amount'),
-            // Select::make('Status')
-            //     ->options([
-            //         'PENDING' => 'PENDING',
-            //         'PAID' => 'PAID', 
-            //     ])
+            Date::make('Due Date'),
+            Currency::make('Amount'), 
+            BelongsTo::make('Loan', 'loan', Loan::class),  
         ];
     }
 
@@ -70,7 +60,8 @@ class Payment extends Resource
     public function cards(Request $request)
     {
         return [
-            OverallPayments::make(), 
+            new DueToday(), 
+            new DueTodayStatus(), 
         ];
     }
 

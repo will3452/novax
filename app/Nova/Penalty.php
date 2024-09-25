@@ -2,25 +2,23 @@
 
 namespace App\Nova;
 
-use App\Nova\Metrics\OverallPayments;
+use App\Nova\Metrics\OverallPenalties;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Payment extends Resource
+class Penalty extends Resource
 {
-    public static $group = '1_Services'; 
+    public static $group = "1_Services";
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Payment::class;
+    public static $model = \App\Models\Penalty::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -47,17 +45,10 @@ class Payment extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
-            Hidden::make('penalty')->default(fn () => 0), 
-            BelongsTo::make('User', 'user', User::class),
-            BelongsTo::make('Loan', 'loan', Loan::class), 
-            // Date::make('Due Date'),
-            Currency::make('Amount'),
-            // Select::make('Status')
-            //     ->options([
-            //         'PENDING' => 'PENDING',
-            //         'PAID' => 'PAID', 
-            //     ])
+            BelongsTo::make('Loan', 'loan', Loan::class),
+            BelongsTo::make('Schedule', 'schedule', PaymentSchedule::class), 
+            Currency::make('Amount',),
+            Textarea::make('Notes')->alwaysShow(), 
         ];
     }
 
@@ -70,7 +61,7 @@ class Payment extends Resource
     public function cards(Request $request)
     {
         return [
-            OverallPayments::make(), 
+            OverallPenalties::make(), 
         ];
     }
 

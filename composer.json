@@ -29,6 +29,7 @@
         "laravel/nova": "*",
         "laravel/sanctum": "^2.12",
         "laravel/tinker": "^2.5",
+        "eminiarts/nova-tabs": "^1.4",
         "laravelwebdev/responsive": "^1.0",
         "optimistdigital/nova-settings": "^3.2",
         "richardkeep/nova-timenow": "^1.0",

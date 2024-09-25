@@ -32,4 +32,16 @@ class Loan extends Model
     public function users () {
         return $this->belongsToMany(User::class, 'user_loans', 'loan_id', 'user_id'); 
     }
+
+    public function payments () {
+        return $this->hasMany(Payment::class, 'loan_id'); 
+    }
+
+    public function schedules () {
+        return $this->hasMany(PaymentSchedule::class, 'loan_id'); 
+    }
+
+    public function penalties () {
+        return $this->hasMany(Penalty::class, 'loan_id'); 
+    }
 }

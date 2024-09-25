@@ -2,12 +2,24 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\AmountDisbursed;
+use App\Nova\Metrics\CapitalAmount;
+use App\Nova\Metrics\LoanTrend;
+use App\Nova\Metrics\PaymentReceived;
+use App\Nova\Metrics\PaymentTrend;
+use App\Nova\Metrics\RemainingCapital;
+use App\Nova\Metrics\TotalCash;
+use App\Nova\Metrics\TotalRevenue;
+use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Textarea;
 use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -22,9 +34,24 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
-
         NovaSettings::addSettingsFields([
-            Image::make('Logo'),
+            Tabs::make('Settings', [
+                'Application' => [
+                    Image::make('Logo'),
+                    Textarea::make('Mission'),
+                    Textarea::make('Vision'), 
+                ],
+                'Finance' => [
+                    Currency::make('Capital Amount'), 
+                    Currency::make('Max Loan'), 
+                    Currency::make('Minimum Loan'), 
+                ],
+                'Notification' => [
+                    Text::make('Semaphore API Key', 'sms_key'), 
+                    Boolean::make('Remind borrowers for their upcoming due?', 'reminder'), 
+                    Textarea::make('Reminder Template Message', 'sms_template')->rules(['max:160'])->help('max characters length is 160 only.'),
+                ]
+            ]), 
         ]);
     }
 
@@ -76,6 +103,14 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
+            CapitalAmount::make(), 
+            AmountDisbursed::make(), 
+            RemainingCapital::make(), 
+            PaymentReceived::make(), 
+            TotalRevenue::make(), 
+            TotalCash::make(), 
+            // PaymentTrend::make(), 
+            LoanTrend::make(), 
         ];
     }
 
