@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Models\User as ModelsUser;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\KeyValue;
@@ -15,6 +16,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
 {
+    public static $group = '2_Manage'; 
     /**
      * The model the resource corresponds to.
      *
@@ -47,13 +49,15 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
 
             Select::make('Type')
                 ->options([
                     ModelsUser::TYPE_ADMINISTRATOR => ModelsUser::TYPE_ADMINISTRATOR, 
                     ModelsUser::TYPE_USER => ModelsUser::TYPE_USER, 
                 ]), 
+            
+            Avatar::make('Avatar'), 
+
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),

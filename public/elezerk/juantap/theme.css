@@ -1,0 +1,14 @@
+:root {
+  --primary: #FD8400;
+  --primary-dark: rgb(210, 108, 0);
+  --primary-70: rgba(253, 132, 0, 0.7);
+  --primary-50: rgba(253, 132, 0, 0.5);
+  --primary-30: rgba(253, 132, 0, 0.3);
+  --primary-10: rgba(253, 132, 0, 0.1);
+  --logo: #FD8400;
+  --sidebar-icon: #ffd5a9;
+}
+
+.bg-grad-sidebar {
+  background-image: url('/bg.jpg');
+}

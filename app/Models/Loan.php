@@ -16,6 +16,8 @@ class Loan extends Model
         'interest',
         'payment_schedule',
         'start_date',
+        'status',
+        'reference', 
         'end_date',
         'collateral',
         'collateral_image',

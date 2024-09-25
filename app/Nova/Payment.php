@@ -12,6 +12,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Payment extends Resource
 {
+    public static $group = '1_Services'; 
     /**
      * The model the resource corresponds to.
      *

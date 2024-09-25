@@ -9,6 +9,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class UserLoan extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return false; 
+    }
     /**
      * The model the resource corresponds to.
      *

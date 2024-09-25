@@ -2,18 +2,23 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\Date;
+use Str;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Loan extends Resource
 {
+    public static $group = '1_Services'; 
     /**
      * The model the resource corresponds to.
      *
@@ -26,7 +31,7 @@ class Loan extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'reference';
 
     /**
      * The columns that should be searched.
@@ -34,7 +39,7 @@ class Loan extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'reference', 
     ];
 
     /**
@@ -46,15 +51,28 @@ class Loan extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            
+            Text::make('Reference')
+                ->exceptOnForms(), 
+            Badge::make('Status')
+                ->map([
+                    'PENDING' => 'warning',
+                    'APPROVED' => 'success',
+                    'REJECTED' => 'rejected', 
+                ]), 
+            Hidden::make('Reference', 'reference')
+                ->default(fn () => "L" . Str::random(8)), 
+            Text::make('Reference')->sortable(), 
             Select::make('Type')
                 ->options([
                     'INDIVIDUAL' => 'INDIVIDUAL',
                     'GROUP' => 'GROUP', 
                 ]),
-            Number::make('Terms'),
+            Number::make('Terms')
+                ->help('in week'),
             Currency::make('Amount'),
-            Number::make('Interest'),
+            Select::make('Interest')
+                ->options(fn () => \App\Models\Interest::get()->pluck('name', 'rate')), 
             Select::make('Payment Schedule')
                 ->options([
                     'DAILY' => 'DAILY',

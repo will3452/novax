@@ -10,11 +10,7 @@
     action="{{ route('nova.login') }}"
 >
     {{ csrf_field() }}
-
-    @component('nova::auth.partials.heading')
-        {{ __('Welcome Back!') }}
-    @endcomponent
-
+    
     @if ($errors->any())
     <p class="text-center font-semibold text-danger my-3">
         @if ($errors->has('email'))
