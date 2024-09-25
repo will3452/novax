@@ -67,6 +67,7 @@ class User extends Resource
                 ]), 
             ]),
 
+            
             Avatar::make('Avatar')
                 ->onlyOnForms()
                 ->squared(),
@@ -88,6 +89,7 @@ class User extends Resource
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
+            Text::make('Phone')->rules(['max:11', 'min:11'])->help('format: 09XXXXXXXXX')->onlyOnForms(), 
 
             Password::make('Password')
                 ->onlyOnForms()
