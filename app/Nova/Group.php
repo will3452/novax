@@ -259,6 +259,10 @@ class Group extends Resource
         }
         if ($this->code == null) {
             return [
+                SetVerdict::make()
+                ->canSee(function () {
+                    return auth()->user()->isFaculty(); 
+                }), 
                 EndorseGroup::make(), 
                 ExportMonitoringReport::make()
                 ->standalone()->canSee(function () {
