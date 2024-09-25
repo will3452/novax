@@ -4,6 +4,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\CronJob;
 use App\Models\Endpoint;
 
 /*
@@ -34,6 +35,10 @@ Route::get('/public-test', function () {
 //user authentication
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
+
+Route::any('/cron', function (Request $request) {
+    CronJob::create([]); 
+}); 
 
 Route::any('/v1/{params}', function (Request $request, $params) {
     $method = Str::lower($request->getMethod()); 
