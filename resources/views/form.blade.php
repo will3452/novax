@@ -530,6 +530,11 @@
                 // }
                 console.log(`${type}: ${name}`)
             });
+            try {
+                form.getCheckBox("{{$group->verdict}}").checkBox()
+            } catch (error) {
+                console.log('error -> ', error);
+            }
 
             form.getTextField('COURSE').setText('{{$group->title->section->course->name}}')
             form.getTextField('COURSE CODE').setText('{{$group->title->section->course->code}}')

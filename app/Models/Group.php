@@ -16,6 +16,7 @@ class Group extends Model
         'status',
         'defense_schedule', 
         'code', 
+        'verdict', 
     ]; 
 
     const ADD_PANELIST = 'Add Panelist';

@@ -24,6 +24,7 @@ use App\Nova\Actions\SubmitOralDefenseRequest;
 use App\Models\GroupMember as ModelGroupMember;
 use App\Nova\Actions\ExportMonitoringReport;
 use App\Nova\Actions\MoveToCoordinatorApproval;
+use App\Nova\Actions\SetVerdict;
 use App\Nova\Actions\ViewAcceptanceOfAdviserAndPanelMembersForm;
 use App\Nova\Actions\ViewFinalOralDefensePresentationRubric;
 use App\Nova\Actions\ViewRequirementsForRevisionForm;
@@ -221,6 +222,10 @@ class Group extends Resource
     public function actions(Request $request)
     {
         $actions = [
+            SetVerdict::make()
+                ->canSee(function () {
+                    return auth()->user()->isFaculty(); 
+                }), 
             ExportMonitoringReport::make()
             ->standalone()->canSee(function () {
                 return auth()->user()->isCoordinator(); 
@@ -237,7 +242,12 @@ class Group extends Resource
             ViewRequirementsForRevisionForm::make(), 
         ]; 
         if ($request->action == 'mark-as-ready-for-defense') {
-            return [EndorseGroup::make(), 
+            return [
+            SetVerdict::make()
+                ->canSee(function () {
+                    return auth()->user()->isFaculty(); 
+                }), 
+            EndorseGroup::make(), 
             ViewAcceptanceOfAdviserAndPanelMembersForm::make(), 
             ViewRequirementsForRevisionForm::make(), 
             ViewFinalOralDefensePresentationRubric::make(), 
