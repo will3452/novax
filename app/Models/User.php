@@ -23,6 +23,14 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function driver () {
+        return $this->hasOne(Driver::class, 'user_id'); 
+    }
+
+    public function client () {
+        return $this->hasOne(Client::class, 'user_id'); 
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -5,15 +5,21 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\File;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Reservation extends Resource
+class VehicleRequestForm extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Reservation::class;
+    public static $model = \App\Models\VehicleRequestForm::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -40,7 +46,13 @@ class Reservation extends Resource
     public function fields(Request $request)
     {
         return [
-            'date', 
+            Date::make('Date')->sortable(),
+            BelongsTo::make('User', 'user', User::class), 
+            Textarea::make('Purpose'),
+            Textarea::make('Remarks'),
+            File::make('Request Travel'),
+            File::make('Travel Order'),
+            Text::make('Status'), 
         ];
     }
 
@@ -52,13 +64,7 @@ class Reservation extends Resource
      */
     public function cards(Request $request)
     {
-        return [
-            Date::make('Date', 'date')
-                ->sortable(), 
-            BelongsTo::make('Client', 'client', Client::class),
-            BelongsTo::make('Driver', 'driver', Driver::class),
-            BelongsTo::make('Trip', 'trip', Trip::class),
-        ];
+        return [];
     }
 
     /**

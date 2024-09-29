@@ -74,6 +74,8 @@ class ApiAuthenticationController extends Controller
             return ErrorHelper::sendError(400, 'Wrong credentials!');
         }
         $token = $this->createToken($user);
+        $user->load('driver');
+        $user->load('client');
         return response([
             'user'=>$user,
             'token'=>$token,

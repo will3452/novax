@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiAuthenticationController;
 use App\Models\Endpoint;
+use App\Models\Reservation;
+use App\Models\Vehicle;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +26,26 @@ Route::middleware('auth:sanctum')->group(function () {
         return 'authentication test';
     });
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
+    
+    Route::post('/vehicle-form-requests', function (Request $request) {
+        $data = $request->all();
+        $data['user_id'] = auth()->id(); 
+        return Vehicle::create($data); 
+    }); 
+
+    Route::get('/reservation-driver', function (Request $request) {
+        $driverId = auth()->user()->driver->id; 
+        return Reservation::whereDriverId($driverId)->get();
+    }); 
+
+    Route::get('/reservation-client', function (Request $request) {
+        $clientId = auth()->user()->client->id; 
+        return Reservation::whereClientId($clientId)->get();
+    }); 
+});
+
+Route::get('/vehicles', function(Request $request) {
+    return Vehicle::get(); 
 });
 
 Route::get('/public-test', function () {
@@ -34,6 +56,8 @@ Route::get('/public-test', function () {
 //user authentication
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
+
+
 
 Route::any('/v1/{params}', function (Request $request, $params) {
     $method = Str::lower($request->getMethod()); 
