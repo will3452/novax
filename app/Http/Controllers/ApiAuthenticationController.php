@@ -76,9 +76,14 @@ class ApiAuthenticationController extends Controller
         $token = $this->createToken($user);
         $user->load('driver');
         $user->load('client');
+
+
+        $userType = $user->driver ? 'Driver' : 'Client'; 
+
         return response([
             'user'=>$user,
             'token'=>$token,
+            'userType' => $userType, 
         ], 200);
     }
 
