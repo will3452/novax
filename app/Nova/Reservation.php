@@ -29,6 +29,7 @@ class Reservation extends Resource
      */
     public static $search = [
         'id',
+        'date'
     ];
 
     /**
@@ -40,7 +41,11 @@ class Reservation extends Resource
     public function fields(Request $request)
     {
         return [
-            'date', 
+            Date::make('Date', 'date')
+                ->sortable(), 
+            BelongsTo::make('Client', 'client', Client::class),
+            BelongsTo::make('Driver', 'driver', Driver::class),
+            BelongsTo::make('Trip', 'trip', Trip::class),
         ];
     }
 
@@ -53,11 +58,6 @@ class Reservation extends Resource
     public function cards(Request $request)
     {
         return [
-            Date::make('Date', 'date')
-                ->sortable(), 
-            BelongsTo::make('Client', 'client', Client::class),
-            BelongsTo::make('Driver', 'driver', Driver::class),
-            BelongsTo::make('Trip', 'trip', Trip::class),
         ];
     }
 
