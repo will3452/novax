@@ -69,7 +69,7 @@
                     <a href="/reserve/{{$user->id}}/{{$trip->id}}" class="block text-center bg-green-600 text-white border-none p-2 uppercase font-bold rounded-full">
                         Reserve
                     </a>
-                    <a href="/map" class="block text-center bg-blue-900 text-white border-none p-2 uppercase font-bold rounded-full">
+                    <a href="/map/{{$trip->id}}" class="block text-center bg-blue-900 text-white border-none p-2 uppercase font-bold rounded-full">
                         View in Map
                     </a>
                 </div>

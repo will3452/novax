@@ -35,6 +35,10 @@ Route::get('/reserve/{user}/{trip}', function (Request $request, \App\Models\Use
     return view('reserve', compact('trip', 'user'));
 }); 
 
+Route::get('/map/{trip}', function (Request $request, Trip $trip) {
+    return view('map', compact('trip')); 
+}); 
+
 Route::post('/reserve', function (Request $request) {
     $user = User::find($request->user_id); 
     $trip = Trip::find($request->trip_id); 
