@@ -34,6 +34,69 @@
         <div>
             Date of Travel: <input type="date" />
         </div>
+        <div class="overflow-y-auto">
+            <table class="w-full border">
+                <thead>    
+                    <tr>
+                       <th class="border text-gray-800">
+                            Passenger/s
+                        </th>
+                        <th class="border text-gray-800">
+                            Organization
+                        </th> 
+                        <th class="border text-gray-800">
+                            Destination/s
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for ($i = 0; $i < 5; $i++)
+                    <tr>
+                        <td class="border p-2">
+                            <input name="passenger_${{$i}}"/>
+                        </td>
+                        <td class="border p-2">
+                            <input name="organization_${{$i}}" />
+                        </td>
+                        <td class="border p-2" name="destination_${{$i}}">
+                            <input />
+                        </td>
+                    </tr>
+                    @endfor
+                </tbody>
+            </table>
+        </div>
+        <div class="space-y-2">
+            <div>
+                Upload Request Travel
+            </div>
+            <input name="request_travel" type="file" />
+        </div>
+        <div class="space-y-2">
+            <div>
+                Upload Travel Order
+            </div>
+            <input name="travel_order" type="file" />
+        </div>
+        <div class="flex gap-2">
+            <div class="flex gap-2 items-center">
+                <input type="radio" name="status" value="approved"/> Approved
+            </div>
+            <div class="flex gap-2 items-center">
+                <input type="radio" name="status" value="declined"/> Declinded
+            </div>
+        </div>
+        <div>
+            <div>
+                Noted By: 
+            </div>
+            <div>
+                {{nova_get_setting('vehicle_request_form_authorizer', 'Dr. Federick T. Villa')}}
+            </div>
+        </div>
+        <div>
+            <button class="bg-blue-900 text-white p-4 font-bold text-lg rounded-full w-full">Submit</button>
+        </div>
     </div>
 </body>
 </html>
