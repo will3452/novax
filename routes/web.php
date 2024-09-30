@@ -1,9 +1,10 @@
 <?php
 
 use App\Models\Vehicle;
+use Illuminate\Http\Request;
+use App\Models\VehicleRequestForm;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Request;
 
 
 Route::get('/', function () {
@@ -21,3 +22,35 @@ Route::get('/form-request/{user}', function (Request $request, App\Models\User $
    $vehicles = Vehicle::where('is_available', true)->get(); 
    return view('form-request', compact('user', 'vehicles')); 
 });
+
+Route::post('/form-request', function (Request $request) {
+    $remarks = "<ul>";
+    for($i = 0; $i < 5; $i++) {
+        $p = $request->passenger[$i]; 
+        $o = $request->organization[$i]; 
+        $d = $request->destination[$i]; 
+        $remarks .= "<li>$p - $o - $d</li>"; 
+    }
+
+    $remarks .= "</ul>"; 
+
+    $tr = $request->file('request_travel')->store('public');
+    $trArr = explode("/", $tr); 
+    $tr = end($trArr); 
+    $to = $request->file('travel_order')->store('public');
+    $toArr = explode("/", $to); 
+    $to = end($toArr); 
+
+    VehicleRequestForm::create([
+        'user_id' => $request->user_id, 
+        'model' => implode(",", $request->model), 
+        'purpose' => $request->purpose, 
+        'remarks' => $remarks, 
+        'request_travel' => $tr,
+        'travel_order' => $to, 
+        'date' => $request->date, 
+        'status' => $request->status ?? 'approved', 
+    ]);
+
+    return view('success');
+}); 

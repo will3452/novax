@@ -8,9 +8,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <div class="p-4 text-xs space-y-4">
+    <form method="post" action="/form-request" enctype="multipart/form-data" class="p-4 text-xs space-y-4">
+        @csrf
+        <input type="hidden" name="user_id" value="{{$user->id}}" /> 
         <div>
-            Date: <input type="date">
+            Date: <input name="created_at" type="date">
         </div>
         <div class=" mb-4">
             Ma'am/Sir, 
@@ -21,7 +23,7 @@
         <div class="grid grid-cols-2 gap-2 my-4">
             @foreach ($vehicles as $item)
                 <div class=" flex items-center gap-2">
-                    <input type="checkbox" name="model" value="{{$item->model}}"/> {{$item->model}}
+                    <input type="checkbox" name="model[]" value="{{$item->model}}"/> {{$item->model}}
                 </div>
             @endforeach
         </div>
@@ -29,10 +31,10 @@
             <div>
                 Purpose/s:
             </div>
-            <textarea class="border rounded-md w-full mt-2 h-[50px] p-2" placeholder="Aa"></textarea>
+            <textarea name="purpose" class="border rounded-md w-full mt-2 h-[50px] p-2" placeholder="Aa"></textarea>
         </div>
         <div>
-            Date of Travel: <input type="date" />
+            Date of Travel: <input type="date" name="date" required />
         </div>
         <div class="overflow-y-auto">
             <table class="w-full border">
@@ -53,13 +55,13 @@
                     @for ($i = 0; $i < 5; $i++)
                     <tr>
                         <td class="border p-2">
-                            <input name="passenger_${{$i}}"/>
+                            <input name="passenger[]"/>
                         </td>
                         <td class="border p-2">
-                            <input name="organization_${{$i}}" />
+                            <input name="organization[]" />
                         </td>
-                        <td class="border p-2" name="destination_${{$i}}">
-                            <input />
+                        <td class="border p-2" >
+                            <input name="destination[]" />
                         </td>
                     </tr>
                     @endfor
@@ -95,8 +97,8 @@
             </div>
         </div>
         <div>
-            <button class="bg-blue-900 text-white p-4 font-bold text-lg rounded-full w-full">Submit</button>
+            <button type="submit" class="bg-blue-900 text-white p-4 font-bold text-lg rounded-full w-full">Submit</button>
         </div>
-    </div>
+    </form>
 </body>
 </html>
