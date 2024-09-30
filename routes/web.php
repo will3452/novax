@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Reservation;
 use App\Models\Trip;
+use App\Models\User;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use App\Models\VehicleRequestForm;
@@ -26,7 +28,26 @@ Route::get('/form-request/{user}', function (Request $request, App\Models\User $
 
 Route::get('/trips/{user}', function (Request $request, App\Models\User $user) {
     $trips = Trip::latest()->get(); 
-    return view('trips', compact('trips')); 
+    return view('trips', compact('trips', 'user')); 
+}); 
+
+Route::get('/reserve/{user}/{trip}', function (Request $request, \App\Models\User $user, \App\Models\Trip $trip) {
+    return view('reserve', compact('trip', 'user'));
+}); 
+
+Route::post('/reserve', function (Request $request) {
+    $user = User::find($request->user_id); 
+    $trip = Trip::find($request->trip_id); 
+    $driver_id = $trip->vehicle->driver_id; 
+    // dd($request->all()); 
+    Reservation::create([
+        'client_id' => $user->client ? $user->client->id : 1, 
+        'driver_id' => $driver_id,
+        'trip_id' => $request->trip_id, 
+        'date' => $request->date, 
+    ]);
+
+    return view('success'); 
 }); 
 
 Route::post('/form-request', function (Request $request) {

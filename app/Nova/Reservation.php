@@ -5,6 +5,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Select;
 
 class Reservation extends Resource
 {
@@ -46,6 +47,11 @@ class Reservation extends Resource
             BelongsTo::make('Client', 'client', Client::class),
             BelongsTo::make('Driver', 'driver', Driver::class),
             BelongsTo::make('Trip', 'trip', Trip::class),
+            Select::make('Status')->options([
+                'For Approval' => 'For Approval',
+                'Approved' => 'Approved',
+                'Reject' => 'Reject', 
+            ])
         ];
     }
 

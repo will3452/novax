@@ -26,6 +26,10 @@ class Trip extends Resource
      */
     public static $title = 'id';
 
+    public function title () {
+        return "$this->pickup_location - $this->dropoff_location"; 
+    }
+
     /**
      * The columns that should be searched.
      *
