@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Trip;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use App\Models\VehicleRequestForm;
@@ -22,6 +23,11 @@ Route::get('/form-request/{user}', function (Request $request, App\Models\User $
    $vehicles = Vehicle::where('is_available', true)->get(); 
    return view('form-request', compact('user', 'vehicles')); 
 });
+
+Route::get('/trips/{user}', function (Request $request, App\Models\User $user) {
+    $trips = Trip::latest()->get(); 
+    return view('trips', compact('trips')); 
+}); 
 
 Route::post('/form-request', function (Request $request) {
     $remarks = "<ul>";

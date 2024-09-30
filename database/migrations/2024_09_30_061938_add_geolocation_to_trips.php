@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddGeolocationToTrips extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('trips', function (Blueprint $table) {
+            $table->string('pickup_lat');
+            $table->string('pickup_lng');
+            $table->string('dropoff_lng');
+            $table->string('dropoff_lat');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('trips', function (Blueprint $table) {
+            
+        });
+    }
+}

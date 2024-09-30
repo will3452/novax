@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use GeneaLabs\NovaMapMarkerField\MapMarker;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
@@ -44,10 +45,16 @@ class Trip extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('Driver', 'driver', Driver::class), 
-            Text::make('Pickup Location'),
+            BelongsTo::make('Vehicle', 'vehicle', Vehicle::class), 
+            Text::make('Origin', 'pickup_location'),
+            MapMarker::make('Origin Coordinate')
+                ->latitude('pickup_lat')
+                ->longitude('pickup_lng'), 
             Text::make('Pickup Time'),
-            Text::make('Dropoff Location'),
+            Text::make('Destination', 'dropoff_location'),
+            MapMarker::make('Destination Coordinate')
+                ->latitude('dropoff_lat')
+                ->longitude('dropoff_lng'), 
             Text::make('Dropoff Time'), 
             Select::make('Day')
                 ->options([

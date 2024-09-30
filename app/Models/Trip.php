@@ -10,15 +10,19 @@ class Trip extends Model
     use HasFactory;
 
     protected $fillable = [
-        'driver_id',
+        'vehicle_id',
         'pickup_location', 
         'dropoff_location', 
         'pickup_time', 
         'dropoff_time', // estimated
         'day',  
+        'pickup_lat',
+        'pickup_lng',
+        'dropoff_lat',
+        'dropoff_lng', 
     ];
 
-    public function driver () {
-        return $this->belongsTo(Driver::class, 'driver_id'); 
+    public function vehicle () {
+        return $this->belongsTo(Vehicle::class, 'vehicle_id'); 
     }
 }
