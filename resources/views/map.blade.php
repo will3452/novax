@@ -13,6 +13,9 @@
   <style>
     body { margin: 0; padding: 0; }
     /* #map { position: absolute; top: 0; bottom: 0; width: 100%; } */
+    .mapboxgl-ctrl-directions {
+      display: none; 
+    }
   </style>
   <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.2.0/mapbox-gl-directions.js"></script>
   <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.2.0/mapbox-gl-directions.css" type="text/css">
@@ -35,7 +38,7 @@
       });
   map.addControl(
     direction, 
-      'top-right'
+      'bottom-right'
   );
 
   map.on('load', () => {
