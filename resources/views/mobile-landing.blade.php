@@ -8,6 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <div class="h-screen h-screen" style="background-image:url('/storage/{{nova_get_setting('landing_image')}}')"></div>
+    <div class="h-screen w-screen bg-no-repeat bg-cover bg-center" style="background-image:url('/storage/{{nova_get_setting('landing_image')}}')"></div>
 </body>
 </html>
