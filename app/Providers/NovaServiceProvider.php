@@ -30,6 +30,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Image::make('Landing Image'), 
         ]);
     }
 
