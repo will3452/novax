@@ -43,6 +43,10 @@ Route::get('/mobile-landing', function (Request $request) {
     return view('mobile-landing');
 });
 
+Route::get('/default-map', function (Request $request) {
+    return view('default-map');
+});
+
 Route::post('/reserve', function (Request $request) {
     $user = User::find($request->user_id); 
     $trip = Trip::find($request->trip_id); 
