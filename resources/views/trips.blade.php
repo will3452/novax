@@ -65,12 +65,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-3 gap-4">
                     <a href="/reserve/{{$user->id}}/{{$trip->id}}" class="text-center bg-green-600 text-white border-none p-2 uppercase font-bold font-bold rounded-full">
                         Reserve
                     </a>
-                    <a href="/map/{{$trip->id}}" class="block text-center bg-blue-900 text-white border-none p-2 uppercase font-bold rounded-full">
+                    <a href="/map/{{$trip->id}}" class="text-xs flex items-center justify-center block text-center bg-blue-900 text-white border-none p-2 uppercase font-bold rounded-full">
                         View in Map
+                    </a>
+                    <a href="/chat/{{$user->id}}/{{$trip->vehicle->driver->user->id}}" class="text-xs flex items-center block text-center bg-orange-500 text-white border-none p-2 uppercase font-bold rounded-full">
+                        Message Driver
                     </a>
                 </div>
             </div>
