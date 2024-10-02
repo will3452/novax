@@ -43,14 +43,14 @@ class Reservation extends Resource
     {
         return [
             Date::make('Date', 'date')
-                ->sortable(), 
+                ->sortable(),
             BelongsTo::make('Client', 'client', Client::class),
             BelongsTo::make('Driver', 'driver', Driver::class),
             BelongsTo::make('Trip', 'trip', Trip::class),
             Select::make('Status')->options([
                 'For Approval' => 'For Approval',
                 'Approved' => 'Approved',
-                'Reject' => 'Reject', 
+                'Reject' => 'Reject',
             ])
         ];
     }
