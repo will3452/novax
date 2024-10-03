@@ -6,6 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .ConversationListHeader__conversation-list-header {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
     <!-- container element in which TalkJS will display a chat UI -->
