@@ -2,16 +2,24 @@
 
 namespace App\Nova;
 
+use Eminiarts\Tabs\Tab;
+use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class User extends Resource
 {
+
+    public static $group = 'User Management';
     /**
      * The model the resource corresponds to.
      *
@@ -32,7 +40,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id', 'name', 'email', 'gender', 'birthday'
     ];
 
     /**
@@ -44,7 +52,12 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            Select::make('Account Type', 'type')
+                ->options([
+                    'Administrator' => 'Administrator',
+                    'Staff' => 'Staff',
+                    'Patient' => 'Patient',
+                ]),
 
             Text::make('Name')
                 ->sortable()
@@ -60,6 +73,28 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
+
+            Select::make('Gender')
+                ->options([
+                    'Male' => 'Male',
+                    'Female' => 'Female',
+                ]),
+
+            Date::make('Birthday'),
+            (new Tabs('Records', [
+                new Tab('Appointments', [
+                    HasMany::make('Appointments', 'appointments', Appointment::class)
+                ]),
+                new Tab('Medical Records', [
+                    HasMany::make('Records', 'records', Record::class)
+                ]),
+                new Tab('Treatments', [
+                    HasMany::make('Treatments', 'treatments', Treatment::class),
+                ]),
+                new Tab('Xray Results', [
+                    HasMany::make('Xrays', 'xrays', Xray::class)
+                ]),
+            ]))->withToolbar(),
         ];
     }
 
@@ -104,6 +139,9 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel())
+                ->withHeadings(),
+        ];
     }
 }

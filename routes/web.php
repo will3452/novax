@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Artisan;
 
 
 Route::get('/', function () {
-    return redirect()->to(config('nova.path')); 
+    return view('welcome');
 });
 
 

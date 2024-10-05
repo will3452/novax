@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'gender',
+        'birthday',
+        'type',
     ];
 
     /**
@@ -40,5 +43,19 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'birthday' => 'date',
     ];
+
+    public function records () {
+        return $this->hasMany(Record::class, 'patient_id');
+    }
+    public function treatments () {
+        return $this->hasMany(Treatment::class, 'patient_id');
+    }
+    public function xrays () {
+        return $this->hasMany(Xray::class, 'patient_id');
+    }
+    public function appointments () {
+        return $this->hasMany(Appointment::class, 'patient_id');
+    }
 }
