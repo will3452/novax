@@ -7,12 +7,12 @@
 
     <title>{{ \Laravel\Nova\Nova::name() }}</title>
 
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/main.min.css" rel="stylesheet" />
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('app.css', 'vendor/nova') }}">
-
     <!-- Tool Styles -->
     @foreach(\Laravel\Nova\Nova::availableStyles(request()) as $name => $path)
         @if (\Illuminate\Support\Str::startsWith($path, ['http://', 'https://']))
@@ -31,6 +31,7 @@
     @endforeach
 </head>
 <body class="min-w-site bg-40 text-90 font-medium min-h-full">
+    @include('sweetalert::alert')
     <div id="nova">
         <div v-cloak class="flex min-h-screen">
             <!-- Sidebar -->
@@ -74,6 +75,7 @@
     <script>
         window.config = @json(\Laravel\Nova\Nova::jsonVariables(request()));
     </script>
+
 
     <!-- Scripts -->
     <script src="{{ mix('manifest.js', 'vendor/nova') }}"></script>

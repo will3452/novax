@@ -4,8 +4,10 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\BotResponse;
 use App\Models\CronJob;
 use App\Models\Endpoint;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,17 +39,62 @@ Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
 Route::any('/cron', function (Request $request) {
-    CronJob::create([]); 
-}); 
+    CronJob::create([]);
+});
 
 Route::any('/v1/{params}', function (Request $request, $params) {
-    $method = Str::lower($request->getMethod()); 
-    $path = $request->getPathInfo(); 
-    $arr_path = explode("/", $path); 
-    $name = end($arr_path); 
-    $endpoint = Endpoint::whereMethod($method)->wherePath($name)->first(); 
+    $method = Str::lower($request->getMethod());
+    $path = $request->getPathInfo();
+    $arr_path = explode("/", $path);
+    $name = end($arr_path);
+    $endpoint = Endpoint::whereMethod($method)->wherePath($name)->first();
     return [
-        'params' => $endpoint, 
-        'method' => Str::lower($request->getMethod()), 
-    ]; 
-}); 
+        'params' => $endpoint,
+        'method' => Str::lower($request->getMethod()),
+    ];
+});
+
+
+Route::get('/get-message', function (Request $request) {
+    $message = [
+        'id' => Carbon::now(),
+        'from' => 'bot',
+        'message' => "I’m here to assist you with any questions or information you might need. Whether it's booking an appointment, understanding our services, or getting health tips, I'm here to help!",
+    ];
+
+    if ($request->has('q')) {
+        $q = $request->q;
+        if ($q == 'SHOW_CATEGORIES') {
+            $categories = BotResponse::select('category')->distinct()->get()->pluck('category');
+            $m = "These are the categories of questions I can help with. <br /> ";
+            foreach ($categories as $c) {
+                $m .= "<b> - $c</b> <br />";
+            }
+            $m .= "<br /> <br /> To choose a category, <br /> use this format: <b> 'show category &lt;category&gt;' </b>";
+            $message['message'] = $m;
+            return $message;
+        }
+
+        if (strpos($q, "show category ") !== false) {
+            $stmt = explode("show category ", $q);
+            $category = end($stmt);
+            $message['message'] = $category;
+            $questions = BotResponse::whereCategory($category)->get();
+            $m = "These are the questions under $category <br /> ";
+            foreach ($questions as $c) {
+                $m .= "<b> - $c->question </b> <br />";
+            }
+            $message['message'] = $m;
+            return $message;
+        }
+        $response = BotResponse::whereQuestion($q)->first();
+        if (! $response ) {
+            $message['message'] = "I'm sorry, I don't have the information you're looking for right now. 🤔But don't worry! You can visit our <a style='color:white' href='/faq'>FAQ page</a> where you might find the answer you're looking for. If you still need assistance, feel free to reach out to our team directly!";
+            return $message;
+        }
+
+        $message['message'] = $response->answer;
+    }
+
+    return $message;
+});

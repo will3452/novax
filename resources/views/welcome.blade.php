@@ -20,7 +20,7 @@
     <div x-show="openMenu">
         <a class="block text-center text-xl p-4 text-gray-900" href="#about">About Us</a>
         <a class="block text-center text-xl p-4 text-gray-900" href="#services">Our Services</a>
-        <a class="block text-center text-xl p-4 text-gray-900" href="/login">Register or Login</a>
+        <a class="block text-center text-xl p-4 text-gray-900" href="/login">Dashboard</a>
     </div>
   </div>
   <div style="background:url('/pexels-fr3nks-305568.jpg')" class="text-center md:text-left w-full h-[60vh] bg-bottom bg-contain bg-cover bg-no-repeat">
@@ -60,10 +60,10 @@
     </div>
   </div>
 
-  <div class="fixed right-5 bottom-5">
-    <button class="animate-bounce">
+  <div class="fixed right-5 bottom-5" >
+    <a class="animate-bounce block" href="/chat">
         <img src="/bot.png" class="w-[75px]" alt="">
-    </button>
-</div>
+    </a>
+    </div>
 </body>
 </html>
