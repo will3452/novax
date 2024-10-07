@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -11,7 +12,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class IngredientPurchaseOrder extends Resource
 {
 
-    public static $group = 'Inventory'; 
+    public static $group = 'Inventory';
     /**
      * The model the resource corresponds to.
      *
@@ -44,8 +45,9 @@ class IngredientPurchaseOrder extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('Ingredient', 'ingredient', Ingredient::class), 
-            Number::make('Quantity'), 
+            Date::make('Date', 'created_at')->sortable(),
+            BelongsTo::make('Ingredient', 'ingredient', Ingredient::class),
+            Number::make('Quantity (kg)', 'quantity'),
         ];
     }
 

@@ -11,10 +11,11 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Product extends Resource
 {
-    public static $group = 'Inventory'; 
+    public static $group = 'Inventory';
     /**
      * The model the resource corresponds to.
      *
@@ -50,15 +51,15 @@ class Product extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Name')->sortable(), 
-            Text::make('Category')->sortable(), 
+            Text::make('Name')->sortable(),
+            Text::make('Category')->sortable(),
             Image::make('Image', 'image'),
             Textarea::make('Description')->alwaysShow(),
             Select::make('Unit of Measurement', 'uom')
                 ->options([
-                    'Bag' => 'Bag', 
+                    'Bag' => 'Bag',
                 ]),
-            Currency::make('Unit Price', 'price')->sortable(), 
+            Currency::make('Unit Price', 'price')->sortable(),
             Number::make('Current Inventory', fn () => $this->quantity)
         ];
     }
@@ -104,6 +105,8 @@ class Product extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            DownloadExcel::make(),
+        ];
     }
 }

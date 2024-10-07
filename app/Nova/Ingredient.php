@@ -11,10 +11,11 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Ingredient extends Resource
 {
-    public static $group = 'Inventory'; 
+    public static $group = 'Inventory';
     /**
      * The model the resource corresponds to.
      *
@@ -29,7 +30,7 @@ class Ingredient extends Resource
      */
 
     public function title () {
-        return "$this->name ($this->type)"; 
+        return "$this->name ($this->type)";
     }
 
     /**
@@ -57,11 +58,11 @@ class Ingredient extends Resource
                     'MACRO' => 'MACRO',
                     'MICRO' => 'MICRO',
                 ]),
-            Number::make('Bag')->default(fn () => 1),
-            Number::make('Kg')->default(fn () => 1),
-            Currency::make('Unit Price', 'price'), 
-            Number::make('Current Inventory', fn () => $this->quantity), 
-            Number::make('Purchase Order', fn () => $this->purchaseOrders()->sum('quantity')),
+            // Number::make('Bag')->default(fn () => 1),
+            // Number::make('Kg')->default(fn () => 1),
+            // Currency::make('Unit Price', 'price'),
+            Number::make('Actual Stocks(kg)', fn () => $this->quantity),
+            Number::make('Total Purchase(kg', fn () => $this->purchaseOrders()->sum('quantity')),
             Number::make('Outstanding P.O', fn () => $this->purchaseOrders()->sum('quantity') - $this->quantity),
         ];
     }
@@ -75,8 +76,8 @@ class Ingredient extends Resource
     public function cards(Request $request)
     {
         return [
-            MacroAndMicro::make(), 
-            NewIngredients::make(), 
+            // MacroAndMicro::make(),
+            // NewIngredients::make(),
         ];
     }
 
@@ -110,6 +111,8 @@ class Ingredient extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new DownloadExcel()
+        ];
     }
 }

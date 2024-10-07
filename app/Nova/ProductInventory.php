@@ -2,16 +2,19 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\DateFilter;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class ProductInventory extends Resource
 {
-    public static $group = 'Inventory'; 
+    public static $group = 'Inventory';
     /**
      * The model the resource corresponds to.
      *
@@ -44,13 +47,15 @@ class ProductInventory extends Resource
     public function fields(Request $request)
     {
         return [
+            Date::make('Date', 'created_at')
+                ->sortable(),
             BelongsTo::make('Product', 'product', Product::class),
             Select::make('Transaction', 'type')
                 ->options([
-                    'ADJUSTMENT' => 'ADJUSTMENT', 
+                    'ADJUSTMENT' => 'ADJUSTMENT',
                     'ORDER' => 'ORDER',
                 ]),
-            Number::make('Quantity')->rules(['required', 'min:1']), 
+            Number::make('Quantity(bag)', 'quantity')->rules(['required', 'min:1']),
         ];
     }
 
@@ -73,7 +78,9 @@ class ProductInventory extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            DateFilter::make(),
+        ];
     }
 
     /**
@@ -95,6 +102,8 @@ class ProductInventory extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            DownloadExcel::make(),
+        ];
     }
 }

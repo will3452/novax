@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\DateFilter;
+use App\Nova\Filters\IngredientFilter;
 use App\Nova\Metrics\IngredientInventoryTransactions;
 use App\Nova\Metrics\UsageAndPurchase;
 use Illuminate\Http\Request;
@@ -11,10 +13,11 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class IngredientInventory extends Resource
 {
-    public static $group = 'Inventory'; 
+    public static $group = 'Inventory';
     /**
      * The model the resource corresponds to.
      *
@@ -48,15 +51,14 @@ class IngredientInventory extends Resource
     {
         return [
             Date::make('Date', 'created_at')
-                ->exceptOnForms()
-                ->sortable(), 
-            BelongsTo::make('Ingredient', 'ingredient', Ingredient::class), 
+                ->sortable(),
+            BelongsTo::make('Ingredient', 'ingredient', Ingredient::class),
             Select::make('Transaction', 'type')
                 ->options([
                     'PURCHASE' => 'PURCHASE',
-                    'USAGE' => 'USAGE', 
+                    'USAGE' => 'USAGE',
                 ]),
-            Number::make('Quantity'), 
+            Number::make('Quantity (kg)', 'quantity'),
         ];
     }
 
@@ -69,8 +71,8 @@ class IngredientInventory extends Resource
     public function cards(Request $request)
     {
         return [
-            UsageAndPurchase::make(), 
-            IngredientInventoryTransactions::make(), 
+            // UsageAndPurchase::make(),
+            // IngredientInventoryTransactions::make(),
         ];
     }
 
@@ -82,7 +84,10 @@ class IngredientInventory extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            DateFilter::make(),
+            IngredientFilter::make(),
+        ];
     }
 
     /**
@@ -104,6 +109,8 @@ class IngredientInventory extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new DownloadExcel(),
+        ];
     }
 }
