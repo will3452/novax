@@ -18,9 +18,9 @@ Route::get('/artisan', function () {
     return $result;
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('verified');
 Route::get('/chat', [App\Http\Controllers\ChatController::class, 'index']);
 Route::get('/reserve/{service}', function (Request $request, Service $service) {
     return view('reserve', compact('service'));
@@ -38,5 +38,9 @@ Route::post('/reserve', function (Request $request) {
         'date' => $request->date,
     ]);
 
-    return redirect()->to(route('home'));
+    return redirect()->to('/home');
+});
+
+Route::get('/faq', function (Request $request) {
+    return view('faq');
 });
