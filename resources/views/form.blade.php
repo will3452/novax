@@ -532,7 +532,7 @@
             });
             try {
                 let __f = form.getField("{{$group->verdict}}")
-                console.log("__f", __f)
+                console.log("__f", __f.constructor.name)
                 if (__f.constructor.name != 'e') {
                     form.getTextField("{{$group->verdict}}").setText("*")
                 } else {
