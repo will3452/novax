@@ -531,9 +531,13 @@
                 console.log(`${type}: ${name}`)
             });
             try {
-                form.getCheckBox("{{$group->verdict}}").check()
+                let __f = form.getField("{{$group->verdict}}")
+                if (__f.field.constructor.name != 'e') {
+                    form.getTextField("{{$group->verdict}}").setText("*")
+                } else {
+                    form.getCheckBox("{{$group->verdict}}").check()
+                }
             } catch (error) {
-                form.getTextField("{{$group->verdict}}").setText("*")
                 console.log('error -> ', error);
             }
 
