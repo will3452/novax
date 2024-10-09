@@ -2,14 +2,24 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\BroadcastAnnouncement;
+use App\Nova\Filters\FromAge;
+use App\Nova\Filters\SexFilter;
+use App\Nova\Filters\StatusFilter;
+use App\Nova\Filters\ToAge;
+use App\Nova\Metrics\Genders;
+use App\Nova\Metrics\Statuses;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Panel;
 
 class User extends Resource
 {
@@ -49,25 +59,42 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            Panel::make('Basic Information', [
+                Text::make('Name')
+                    ->sortable()
+                    ->rules('required', 'max:255'),
+                Select::make('Sex')
+                    ->options([
+                        'male' => 'male',
+                        'female' => 'female',
+                    ]),
+                Select::make('Status')
+                    ->options([
+                        'widowed' => 'widowed',
+                        'single' => 'single',
+                        'married' => 'married',
+                    ]),
+                Date::make('Birthday', ),
+                Number::make('Age')
+                    ->exceptOnForms(),
+            ]),
+            Panel::make('Contact Information', [
+                Text::make('Email')
+                        ->sortable()
+                        ->rules('required', 'email', 'max:254')
+                        ->creationRules('unique:users,email')
+                        ->updateRules('unique:users,email,{{resourceId}}'),
 
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
+                Number::make('Phone', 'phone')->rules(['required', 'max:99999999999']),
+            ]),
 
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
 
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
-            
-            Number::make('Phone', 'phone')->rules(['required', 'max:99999999999']), 
-
+            Panel::make('Security Information', [
+                Password::make('Password')
+                    ->onlyOnForms()
+                    ->creationRules('required', 'string', 'min:8')
+                    ->updateRules('nullable', 'string', 'min:8'),
+            ]),
         ];
     }
 
@@ -79,7 +106,10 @@ class User extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            Genders::make(),
+            Statuses::make(),
+        ];
     }
 
     /**
@@ -90,7 +120,12 @@ class User extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            SexFilter::make(),
+            StatusFilter::make(),
+            FromAge::make(),
+            ToAge::make(),
+        ];
     }
 
     /**
@@ -112,6 +147,8 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            BroadcastAnnouncement::make(),
+        ];
     }
 }

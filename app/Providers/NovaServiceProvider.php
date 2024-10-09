@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Nova\Metrics\AnnouncementsPerCategory;
+use App\Nova\Metrics\Genders;
 use App\Nova\Metrics\NewAnnouncements;
 use App\Nova\Metrics\NewUsers;
 use App\Nova\Metrics\SMSBalances;
+use App\Nova\Metrics\Statuses;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -55,7 +57,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return true; 
+            return true;
         });
     }
 
@@ -69,9 +71,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             (new \Richardkeep\NovaTimenow\NovaTimenow)->defaultTimezone('Africa/Manila'),
             NewUsers::make(),
-            NewAnnouncements::make(), 
-            AnnouncementsPerCategory::make(), 
-            SMSBalances::make(), 
+            NewAnnouncements::make(),
+            AnnouncementsPerCategory::make(),
+            Statuses::make(),
+            Genders::make(),
+            SMSBalances::make(),
         ];
     }
 

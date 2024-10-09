@@ -2,11 +2,11 @@
 
 namespace App\Nova\Metrics;
 
-use App\Models\SmsBalance;
+use App\Models\User;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Metrics\Value;
+use Laravel\Nova\Metrics\Partition;
 
-class SMSBalances extends Value
+class Statuses extends Partition
 {
     /**
      * Calculate the value of the metric.
@@ -16,8 +16,7 @@ class SMSBalances extends Value
      */
     public function calculate(NovaRequest $request)
     {
-        $amount = SmsBalance::latest()->first() ? SmsBalance::latest()->first()->amount : 0;
-        return $this->result($amount);
+        return $this->count($request, User::class, 'status');
     }
 
     /**
@@ -37,6 +36,6 @@ class SMSBalances extends Value
      */
     public function uriKey()
     {
-        return 's-m-s-balances';
+        return 'statuses';
     }
 }

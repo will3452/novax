@@ -21,8 +21,16 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
+        'sex',
+        'birthday',
+        'status',
     ];
+
+    public function getAgeAttribute() {
+        return $this->birthday->age;
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -41,5 +49,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'birthday' => 'date',
     ];
 }

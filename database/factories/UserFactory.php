@@ -20,6 +20,10 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
+            'phone' => $this->faker->phoneNumber(),
+            'sex' => ['male', 'female'][$this->faker->numberBetween(0, 1)],
+            'status' => ['widowed', 'single', 'married'][$this->faker->numberBetween(0, 2)],
+            'birthday' => $this->faker->dateTimeBetween('-90 years', 'now'),
         ];
     }
 
