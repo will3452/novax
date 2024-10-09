@@ -532,7 +532,8 @@
             });
             try {
                 let __f = form.getField("{{$group->verdict}}")
-                if (__f.field.constructor.name != 'e') {
+                console.log("__f", __f)
+                if (__f.constructor.name != 'e') {
                     form.getTextField("{{$group->verdict}}").setText("*")
                 } else {
                     form.getCheckBox("{{$group->verdict}}").check()
