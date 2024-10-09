@@ -24,7 +24,7 @@ class SetVerdict extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach($models as $model) {
-            $model->update(['verdict'=> $fields['verdict']]); 
+            $model->update(['verdict'=> $fields['verdict']]);
         }
     }
 
@@ -39,10 +39,10 @@ class SetVerdict extends Action
             Select::make('verdict')
                 ->options([
                     'Approved with no revisions' => 'Approved with no revisions',
-                    'Approved with minor revisions' => 'Approved with minor revisions', 
-                    'Approved with major revisions' => 'Approved with major revisions', 
-                    'Disapproved' => 'Disapproved', 
-                    'For re-defense' => 'For re-defense', 
+                    'Approved with minor revisions' => 'Approved with minor revisions',
+                    'Approved with major revisions' => 'Approved with major revisions',
+                    'Disapproved' => 'Disapproved',
+                    'For redefense' => 'For redefense',
                 ])
         ];
     }
