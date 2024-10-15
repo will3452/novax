@@ -14,7 +14,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class BotResponse extends Resource
 {
 
-    public static $group = 'Automated Responses';
+    public static $group = '2Clinic Services';
     /**
      * The model the resource corresponds to.
      *

@@ -5,6 +5,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
@@ -13,7 +14,11 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Xray extends Resource
 {
-    public static $group = 'Patient Management';
+    public static $group = '1Patient Management';
+
+    public static function label () {
+        return "X-Rays";
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -51,12 +56,13 @@ class Xray extends Resource
         return [
             Date::make('Date')->sortable(),
             BelongsTo::make('Patient', 'patient', User::class,),
-            Text::make('Type'),
+            Hidden::make('Type')->default(fn () => 'dental'),
             Textarea::make('Radiologist Report')
                 ->alwaysShow(),
             Textarea::make('Findings')
                 ->alwaysShow(),
             Textarea::make('Diagnosis')
+                ->showOnIndex()
                 ->alwaysShow(),
             Textarea::make('Follow Up')
                 ->alwaysShow(),

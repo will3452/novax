@@ -24,6 +24,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'gender',
         'birthday',
         'type',
+        'phone',
+        'address',
     ];
 
     /**
@@ -47,7 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     public function records () {
-        return $this->hasMany(Record::class, 'patient_id');
+        return $this->hasOne(Record::class, 'patient_id');
     }
     public function treatments () {
         return $this->hasMany(Treatment::class, 'patient_id');

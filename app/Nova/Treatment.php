@@ -11,12 +11,16 @@ use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Models\Treatment as ModelsTreatment;
+use App\Models\TreatmentType;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
+use OptimistDigital\MultiselectField\Multiselect;
 
 class Treatment extends Resource
 {
-
-    public static $group = 'Patient Management';
+    public static function label () {
+        return "Treatment History";
+    }
+    public static $group = '1Patient Management';
     /**
      * The model the resource corresponds to.
      *
@@ -52,10 +56,11 @@ class Treatment extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('Patient', 'patient', User::class),
-            Select::make('Type')
-                ->options(ModelsTreatment::get()->pluck('name', 'name')),
+            BelongsTo::make('Patient', 'patient', PatientRecord::class),
+            Multiselect::make('Type')
+                ->options(TreatmentType::get()->pluck('name', 'name')),
             Textarea::make('Description')
+                ->showOnIndex()
                 ->alwaysShow(),
             Textarea::make('Medication')
                 ->alwaysShow(),
@@ -63,8 +68,8 @@ class Treatment extends Resource
                 ->alwaysShow(),
             Date::make('Start Date'),
             Date::make('End Date'),
-            Text::make('Doctor')->default(fn () => auth()->user()->name),
-            Text::make('Outcome'),
+            Text::make('Dentist')->default(fn () => auth()->user()->name)->hideFromIndex(),
+            Text::make('Outcome')->hideFromIndex(),
             Textarea::make('Notes')
                 ->alwaysShow(),
         ];
@@ -89,7 +94,9 @@ class Treatment extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            \App\Nova\Filters\Date::make(),
+        ];
     }
 
     /**

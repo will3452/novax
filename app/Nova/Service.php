@@ -12,7 +12,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class Service extends Resource
 {
 
-    public static $group = 'Medical Setup';
+    public static $group = '2Clinic Services';
     /**
      * The model the resource corresponds to.
      *

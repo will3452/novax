@@ -9,7 +9,10 @@
 
     @foreach($navigation as $group => $resources)
         @if (count($groups) > 1)
-            <h4 class="ml-8 mb-4 text-xs text-white-50% uppercase tracking-wide">{{ $group }}</h4>
+            @php
+              $newGroupName = substr($group, 1);
+            @endphp
+            <h4 class="ml-8 mb-4 text-xs text-white-50% uppercase tracking-wide">{{ $newGroupName }}</h4>
         @endif
 
         <ul class="list-reset mb-8">

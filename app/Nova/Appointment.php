@@ -12,6 +12,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Textarea;
 use App\Nova\Actions\ChangeStatus;
 use App\Nova\Actions\SendReminder;
+use App\Nova\Filters\Status;
 use Laraning\NovaTimeField\TimeField;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -19,7 +20,23 @@ use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Appointment extends Resource
 {
-    public static $group = 'Patient Management';
+
+    public static function createButtonLabel()
+    {
+        return "Add Appointment";
+    }
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        // Customize the search logic here
+        if ($request->get('search')) {
+            return $query->orWhereHas('patient', function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->get('search') . '%');
+            });
+        }
+
+        return $query;
+    }
+    public static $group = '1Patient Management';
     /**
      * The model the resource corresponds to.
      *
@@ -32,7 +49,7 @@ class Appointment extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'date';
 
     /**
      * The columns that should be searched.
@@ -54,10 +71,13 @@ class Appointment extends Resource
     public function fields(Request $request)
     {
         return [
-            Date::make('Date')->sortable(),
+            Date::make('Date')
+                ->rules(['required', 'date', 'after_or_equal:today'])
+                ->required()
+                ->sortable(),
             BelongsTo::make('Patient', 'patient', User::class),
-            TimeField::make('From Time', 'time_start')->withTwelveHourTime(),
-            TimeField::make('To Time', 'time_end')->withTwelveHourTime(),
+            TimeField::make('Start Time', 'time_start')->withTwelveHourTime()->required(),
+            TimeField::make('End Time', 'time_end')->withTwelveHourTime()->required(),
             Textarea::make('Remarks')
                 ->alwaysShow(),
             Select::make("Service")
@@ -67,7 +87,8 @@ class Appointment extends Resource
                     'For Approval' => 'warning',
                     'Finished' => 'success',
                     'Approved' => 'info',
-                    'Rejected' => 'danger'
+                    'Rejected' => 'danger',
+                    'Cancelled' => 'danger',
                 ])
         ];
     }
@@ -91,7 +112,10 @@ class Appointment extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            Status::make(),
+            \App\Nova\Filters\Date::make(),
+        ];
     }
 
     /**

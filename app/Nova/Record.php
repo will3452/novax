@@ -13,7 +13,16 @@ use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Record extends Resource
 {
-    public static $group = 'Patient Management';
+    public static $group = '1Patient Management';
+
+    public static function availableForNavigation(Request $request)
+    {
+        return false;
+    }
+
+    public static function label () {
+        return "Health Backgrounds";
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -49,19 +58,25 @@ class Record extends Resource
     {
         return [
             Date::make('Diagnosis Date')
+                ->hideFromIndex()
                 ->sortable(),
             Date::make('Last Visit Date')
+                ->hideFromIndex()
                 ->sortable(),
-            BelongsTo::make('Patient', 'patient', User::class),
+            BelongsTo::make('Patient', 'patient', PatientRecord::class),
             Text::make('Condition'),
             Textarea::make('Allergies')
+                ->showOnIndex()
                 ->alwaysShow(),
             Textarea::make('Family history')
                 ->alwaysShow(),
             Textarea::make('Previous Hospitalization', 'prev_hospitalization')
                 ->alwaysShow(),
-            Text::make('Doctor')->default(fn () => auth()->user()->name),
+            Text::make('Dentist', 'doctor')
+                ->hideFromIndex()
+                ->default(fn () => auth()->user()->name),
             Textarea::make('Notes')
+                ->showOnIndex()
                 ->alwaysShow(),
         ];
     }

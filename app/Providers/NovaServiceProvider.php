@@ -8,6 +8,7 @@ use App\Nova\Metrics\Records;
 use App\Nova\Metrics\Services;
 use App\Nova\Metrics\Treatments;
 use App\Nova\Metrics\Users;
+use Elezerk\Calendar\Calendar;
 use Eminiarts\Tabs\Tab;
 use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Nova;
@@ -41,7 +42,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     Image::make('Logo'),
                 ]),
                 Tab::make('Clinic', [
-                    Text::make('Doctor Name'),
+                    Text::make('Dentist Name', 'doctor_name'),
                     Text::make('Clinic Name', 'clinic'),
                     Textarea::make('About'),
                     Textarea::make('Address'),
@@ -132,6 +133,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
+            (new Calendar()),
             (new ProfileTool)->canSee(fn () => config('novax.profile_enabled')),
             (new BackupTool)->canSee(fn () => config('novax.back_up_enabled')),
             (new NovaSettings)->canSee(fn () => config('novax.setting_enabled')),

@@ -11,20 +11,21 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\HasOne;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
-class User extends Resource
+class PatientRecord extends Resource
 {
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        return $query->where('type', '!=', 'Patient');
+        return $query->whereType('Patient');
     }
-
-    public static $group = 'zAdmin Accounts';
+    public static $group = '1Patient Management';
 
     /**
      * The model the resource corresponds to.
@@ -58,13 +59,9 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            Select::make('Account Type', 'type')
-                ->hideWhenUpdating()
-                ->options([
-                    'Administrator' => 'Administrator',
-                    'Staff' => 'Staff',
-                    // 'Patient' => 'Patient',
-                ]),
+
+            Hidden::make('type')
+                ->default(fn () => 'Patient'),
 
             Text::make('Name')
                 ->sortable()
@@ -76,10 +73,35 @@ class User extends Resource
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
 
+            Text::make('Phone'),
+            Text::make('Address'),
+
             Password::make('Password')
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
+
+            Select::make('Gender')
+                ->options([
+                    'Male' => 'Male',
+                    'Female' => 'Female',
+                ]),
+
+            Date::make('Birth Date', 'birthday'),
+            (new Tabs('Records', [
+                new Tab('Appointments', [
+                    HasMany::make('Appointments', 'appointments', Appointment::class)
+                ]),
+                new Tab('Health Background', [
+                    HasOne::make('Records', 'records', Record::class)
+                ]),
+                new Tab('Treatment History', [
+                    HasMany::make('Treatments', 'treatments', Treatment::class),
+                ]),
+                new Tab('X-Rays', [
+                    HasMany::make('Xrays', 'xrays', Xray::class)
+                ]),
+            ]))->withToolbar(),
         ];
     }
 
