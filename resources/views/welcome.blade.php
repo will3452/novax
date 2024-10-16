@@ -72,10 +72,6 @@
     </div>
   </div>
 
-  <div class="fixed right-5 bottom-5" >
-    <a class="animate-bounce block" href="/chat">
-        <img src="/bot.png" class="w-[75px]" alt="">
-    </a>
-    </div>
+<x-bot />
 </body>
 </html>

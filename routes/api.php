@@ -59,7 +59,8 @@ Route::get('/get-message', function (Request $request) {
     $message = [
         'id' => Carbon::now(),
         'from' => 'bot',
-        'message' => "I’m here to assist you with any questions or information you might need. Whether it's booking an appointment, understanding our services, or getting health tips, I'm here to help!",
+        'message' => "Hello! I am Joy, I’m here to assist you with any questions or information you might need. Just choose and click your desired  question below. ",
+        'questions' => BotResponse::whereNull('parent_id')->get()->pluck('question'),
     ];
 
     if ($request->has('q')) {
@@ -94,6 +95,7 @@ Route::get('/get-message', function (Request $request) {
         }
 
         $message['message'] = $response->answer;
+        $message['questions'] = BotResponse::whereParentId($response->id)->get()->pluck('question');
     }
 
     return $message;
