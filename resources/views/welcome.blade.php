@@ -31,17 +31,16 @@
         </svg>
     </div>
     <div x-show="openMenu">
-        <a class="block text-center text-xl p-4 text-gray-900" href="#about">About Us</a>
-        <a class="block text-center text-xl p-4 text-gray-900" href="#services">Our Services</a>
-        <a class="block text-center text-xl p-4 text-gray-900" href="/login">Dashboard</a>
+        <a class="block text-center text-xl p-4 text-gray-900" href="/">Home</a>
+        <a class="block text-center text-xl p-4 text-gray-900" href="/login">Login/Register</a>
     </div>
   </div>
   <div style="background:url('/pexels-fr3nks-305568.jpg')" class="text-center md:text-left w-full h-[60vh] bg-bottom bg-contain bg-cover bg-no-repeat">
         <div class="h-full w-full flex items-center justify-center md:justify-start font-serif px-4 md:w-3/4 mx-auto">
             <div class="space-y-4">
-                <h1 class="text-3xl md:text-6xl">Trusted Dentist in <span class="block text-[#0b6477] font-bold text-4xl md:text-6xl">{{nova_get_setting('name', 'Klinika Porma')}}</span></h1>
-                <div class="font-sans md:text-xl">Relaxed clinic. Experienced team. Exceptional care.</div>
-                <a href="/login" class="bg-white inline-block p-2 text-3xl outline outline-gray-200 px-4">Get Started</a>
+                <h1 class="text-3xl md:text-6xl"><span class="block text-[#0b6477] font-bold text-4xl md:text-6xl">{{nova_get_setting('name', 'JOYCE DENTAL SPA CLINIC')}}</span></h1>
+                <div class="font-sans md:text-xl">Your Smile Says It All</div>
+                <a href="/login" class="bg-white inline-block p-2 text-3xl outline outline-gray-200 px-4">Book an Appointment</a>
             </div>
         </div>
     </div>
