@@ -58,10 +58,7 @@
                                 <a class="nav-link" href="/">{{ __('Home') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/home">{{ __('Dashboard') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/chat">{{ __('Chatbot') }}</a>
+                                <a class="nav-link" href="/home">{{ __('Appointment') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/faq">{{ __('FAQ') }}</a>

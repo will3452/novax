@@ -10,7 +10,18 @@
 </head>
 <body class="bg-gray-100 relative">
   <div class="bg-white sticky top-0" x-data="{ openMenu: false }">
-    <div class="px-4 flex items-center justify-between">
+    <div class="px-4 items-center justify-between hidden md:flex">
+        <img src="/storage/{{nova_get_setting('logo')}}" alt="" class="w-[50px]">
+        <div class="flex gap-2">
+            @auth
+                <a href="/login" class="border border-[#0B6477] px-4 py-2 bg-[#0B6477] text-white">Login</a>
+                <a href="/register" class="border border-[#0B6477] px-4 py-2">Register</a>
+            @else
+                <a href="/home" class="">Appointment</a>
+            @endauth
+        </div>
+    </div>
+    <div class="px-4 flex items-center justify-between md:hidden">
         <img src="/storage/{{nova_get_setting('logo')}}" alt="" class="w-[50px]">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" x-show="! openMenu"  @click="openMenu = true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
