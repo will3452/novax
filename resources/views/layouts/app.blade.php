@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="/storage/{{nova_get_setting('logo',)}}" />
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16"></script>
 </head>

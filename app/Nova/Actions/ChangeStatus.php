@@ -45,6 +45,7 @@ class ChangeStatus extends Action
                     'Finished' => 'Finished',
                     'For Approval' => 'For Approval',
                     'Approved' => 'Approved',
+                    'Cancelled' => 'Cancelled',
                     'Rejected' => 'Rejected',
                 ])
         ];

@@ -5,10 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="icon" type="image/svg+xml" href="/storage/{{nova_get_setting('logo',)}}" />
+  <title>{{env('APP_NAME')}}</title>
 </head>
 <body class="bg-gray-100 relative">
   <div class="bg-white sticky top-0" x-data="{ openMenu: false }">
-    <div class=" px-4 flex items-center justify-between">
+    <div class="px-4 flex items-center justify-between">
         <img src="/storage/{{nova_get_setting('logo')}}" alt="" class="w-[50px]">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" x-show="! openMenu"  @click="openMenu = true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
