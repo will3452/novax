@@ -13,12 +13,12 @@
     <div class="px-4 items-center justify-between hidden md:flex">
         <img src="/storage/{{nova_get_setting('logo')}}" alt="" class="w-[50px]">
         <div class="flex gap-2">
-            @auth
+            @guest
                 <a href="/login" class="border border-[#0B6477] px-4 py-2 bg-[#0B6477] text-white">Login</a>
                 <a href="/register" class="border border-[#0B6477] px-4 py-2">Register</a>
             @else
                 <a href="/home" class="">Appointment</a>
-            @endauth
+            @endguest
         </div>
     </div>
     <div class="px-4 flex items-center justify-between md:hidden">
