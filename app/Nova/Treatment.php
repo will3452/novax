@@ -12,6 +12,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Models\Treatment as ModelsTreatment;
 use App\Models\TreatmentType;
+use Laravel\Nova\Fields\Hidden;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use OptimistDigital\MultiselectField\Multiselect;
 
@@ -56,22 +57,20 @@ class Treatment extends Resource
     public function fields(Request $request)
     {
         return [
+            Date::make('Date', 'created_at')->sortable(),
             BelongsTo::make('Patient', 'patient', PatientRecord::class),
             Multiselect::make('Type')
                 ->options(TreatmentType::get()->pluck('name', 'name')),
             Textarea::make('Description')
                 ->showOnIndex()
                 ->alwaysShow(),
-            Textarea::make('Medication')
-                ->alwaysShow(),
-            Textarea::make('Dosage')
-                ->alwaysShow(),
-            Date::make('Start Date'),
-            Date::make('End Date'),
-            Text::make('Dentist', 'doctor')->default(fn () => auth()->user()->name)->hideFromIndex(),
-            Text::make('Outcome')->hideFromIndex(),
-            Textarea::make('Notes')
-                ->alwaysShow(),
+            Hidden::make('medication')->default(fn () => '----'),
+            Hidden::make('dosage')->default(fn () => '----'),
+            Hidden::make('start_date')->default(fn () => now()),
+            Hidden::make('end_date')->default(fn () => now()),
+            Hidden::make('doctor')->default(fn () => '---'),
+            Hidden::make('outcome')->default(fn () => '---'),
+            Hidden::make('notes')->default(fn () => '---'),
         ];
     }
 
