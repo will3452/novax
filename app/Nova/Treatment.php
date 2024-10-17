@@ -68,7 +68,7 @@ class Treatment extends Resource
                 ->alwaysShow(),
             Date::make('Start Date'),
             Date::make('End Date'),
-            Text::make('Dentist')->default(fn () => auth()->user()->name)->hideFromIndex(),
+            Text::make('Dentist', 'doctor')->default(fn () => auth()->user()->name)->hideFromIndex(),
             Text::make('Outcome')->hideFromIndex(),
             Textarea::make('Notes')
                 ->alwaysShow(),
