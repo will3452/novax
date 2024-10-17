@@ -1,12 +1,12 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16"></script>
-<div class="fixed right-5 bottom-5"  id="app">
+<div class="fixed right-1 md:right-5 bottom-5"  id="app">
     <a class="block" @click.prevent="showChat = !showChat">
         <img src="/bot.png" class="animate-bounce  cursor-pointer w-[75px]" v-if="! showChat" alt="">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" v-else class="bg-white p-4 rounded-full w-[50px] border shadow-md mb-2 cursor-pointer">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
           </svg>
     </a>
-    <div v-if="showChat" class="bg-gray-100 border shadow w-[450px] h-[50vh] bottom-0 right-0 p-4 overflow-y-auto space-y-4" ref="container">
+    <div v-if="showChat" class="bg-gray-100 border shadow md:w-[450px] h-[80vh] md:h-[50vh] bottom-0 right-0 p-4 overflow-y-auto space-y-4" ref="container">
         <div v-for="message in messages" :key="message.id">
             <div v-if="message.from == 'bot'" class="mb-2 bg-green-600 text-white p-2" style="border-radius:0px 20px 20px 20px;" v-html="message.message">
             </div>
