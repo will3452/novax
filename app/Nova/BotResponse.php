@@ -15,6 +15,10 @@ class BotResponse extends Resource
 {
 
     public static $group = '2Clinic Services';
+
+    public static function label () {
+        return "Chatbot Responses";
+    }
     /**
      * The model the resource corresponds to.
      *

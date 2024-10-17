@@ -55,17 +55,18 @@ class Xray extends Resource
     {
         return [
             Date::make('Date')->sortable(),
-            BelongsTo::make('Patient', 'patient', User::class,),
+            BelongsTo::make('Patient', 'patient', PatientRecord::class,),
             Hidden::make('Type')->default(fn () => 'dental'),
-            Textarea::make('Radiologist Report')
-                ->alwaysShow(),
-            Textarea::make('Findings')
-                ->alwaysShow(),
-            Textarea::make('Diagnosis')
+            // Textarea::make('Radiologist Report')
+            //     ->alwaysShow(),
+            Textarea::make('Result', 'findings')
                 ->showOnIndex()
                 ->alwaysShow(),
-            Textarea::make('Follow Up')
-                ->alwaysShow(),
+            // Textarea::make('Diagnosis')
+            //     ->showOnIndex()
+            //     ->alwaysShow(),
+            // Textarea::make('Follow Up')
+            //     ->alwaysShow(),
             Image::make('Image'),
         ];
     }
