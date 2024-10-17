@@ -3,6 +3,7 @@
 namespace App\Nova\Actions;
 
 use App\Mail\AppointmentStatusUpdate;
+use App\Notifications\CancelledAppointment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -28,7 +29,11 @@ class ChangeStatus extends Action
         foreach ($models as $model) {
             $email = $model->patient->email;
             $model->update(['status' => $fields['status']]);
-            Mail::to($email)->send(new AppointmentStatusUpdate($fields['status']));
+            $status = $fields['status'];
+            Mail::to($email)->send(new AppointmentStatusUpdate($status));
+            if ($status == 'Cancelled') {
+                $model->patient->notify(new CancelledAppointment($model));
+            }
         }
     }
 

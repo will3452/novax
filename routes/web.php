@@ -44,3 +44,18 @@ Route::post('/reserve', function (Request $request) {
 Route::get('/faq', function (Request $request) {
     return view('faq');
 });
+
+
+Route::get('/admin-notifications', function (Request $request) {
+    return view('admin_notification');
+});
+
+Route::get('/notifications', function (Request $request) {
+    return view('user_notification');
+});
+
+Route::post('/admin-notifications/{notification}', function (Request $request, $notification) {
+    auth()->user()->notifications()->find($notification)->markAsRead();
+
+    return back();
+});
