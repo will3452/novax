@@ -27,6 +27,10 @@ class PatientRecord extends Resource
     }
     public static $group = '1Patient Management';
 
+    public static function label () {
+        return "Patient";
+    }
+
     /**
      * The model the resource corresponds to.
      *
