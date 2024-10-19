@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\Attendance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,3 +33,21 @@ Route::get('/public-test', function () {
 //user authentication
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
+
+Route::get('/time-status', function (Request $request) {
+    $exists = Attendance::whereUserId($request->userId)->whereDate('in', now()->today())->whereNull('out')->exists();
+    return $exists;
+});
+
+Route::post('/time', function (Request $request) {
+    $exists = Attendance::whereUserId($request->userId)->whereDate('in', now()->today())->whereNull('out')->first();
+    if (! $exists) {
+        return Attendance::create([
+            'user_id' => $request->userId,
+            'in' => now(),
+            'place_in' => $request->place
+        ]);
+    }
+
+    return $exists->update(['out' => now(), 'place_out' => $request->place]);
+});

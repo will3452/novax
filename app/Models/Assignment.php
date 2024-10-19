@@ -14,14 +14,14 @@ class Assignment extends Model
         'task_id',
         'status',
         'proof_of_done',
-        'eval_status', 
+        'eval_status',
     ];
 
     public function user () {
-        return $this->belongsTo(User::class, 'user_id'); 
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function task () {
-        return $this->belongsTo(Task::class, 'task_id'); 
+        return $this->belongsTo(Task::class, 'task_id');
     }
 }

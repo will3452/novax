@@ -22,7 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'type', 
+        'type',
     ];
 
     /**
@@ -34,6 +34,18 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function attendances () {
+        return $this->hasMany(Attendance::class, 'user_id');
+    }
+
+    public function tasks () {
+        return $this->belongsToMany(Task::class, 'assignments', 'user_id', 'task_id');
+    }
+
+    public function getOngoingAssignmentAttribute() {
+        return $this->tasks()->where('assignments.status', 'ON-GOING')->latest()->first();
+    }
 
     /**
      * The attributes that should be cast.

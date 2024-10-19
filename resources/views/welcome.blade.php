@@ -1,7 +1,9 @@
-<x-layout>
-    <div class="w-screen h-screen flex justify-center items-center bg-gray-100">
-        <h1 class="text-3xl uppercase font-bold text-gray-700">
-            &lt;Under Development /&gt;
-        </h1>
+@extends('layouts.app')
+
+@section('content')
+    <div class="container">
+        <div class="d-flex">
+            <h1>Tupad app</h1> <button>Login</button>
+        </div>
     </div>
-</x-layout>
+@endsection
