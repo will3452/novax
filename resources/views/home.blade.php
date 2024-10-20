@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container py-4">
         <div class="row g-3">
 
             <div class="col-12 col-md-4">
@@ -49,20 +49,33 @@
                                         </tr>
                                         <tr>
                                             <th>
-                                                Duration
+                                                Period
                                             </th>
                                             <td>
                                                 {{auth()->user()->ongoingAssignment->from->format('m/d/Y')}} - {{auth()->user()->ongoingAssignment->to->format('m/d/Y')}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                Duration
+                                            </th>
+                                            <td>
+                                                {{auth()->user()->ongoingAssignment->to->diff(auth()->user()->ongoingAssignment->from)->format('%d day(s)')}}
                                             </td>
                                         </tr>
                                     </table>
                                 </div>
                                 <div class="card-footer">
                                     <div class="d-flex">
-                                        <input type="file" />
-                                        <button class="btn btn-sm btn-success">Submit</button>
+                                        <task-completion-uploader />
                                     </div>
                                 </div>
+                            </div>
+                            <div class="alert alert-warning mt-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" width="25px">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75 12 3m0 0 3.75 3.75M12 3v18" />
+                                  </svg>
+                                Upload a photo of the completed cleaning task to mark it as accomplished
                             </div>
                         @endif
                     </div>

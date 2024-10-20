@@ -21,6 +21,7 @@ window.Vue = require('vue').default;
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('attendance', require('./components/Attendance.vue').default);
+Vue.component('TaskCompletionUploader', require('./components/TaskCompletionUploader.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

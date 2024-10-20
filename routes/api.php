@@ -51,3 +51,9 @@ Route::post('/time', function (Request $request) {
 
     return $exists->update(['out' => now(), 'place_out' => $request->place]);
 });
+
+Route::post('/upload-image', function (Request $request) {
+    $arr = explode("/", $request->image->store('public'));
+    $path = end($arr);
+    return $path;
+});

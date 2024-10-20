@@ -16,10 +16,15 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+            .ts {
+                text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+            }
+    </style>
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md bg-primary navbar-dark shadow-sm">
+        <nav class="navbar navbar-expand-md bg-success navbar-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -73,17 +78,9 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main>
             @yield('content')
         </main>
     </div>
-
-
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-
-    <script>
-        new DataTable('#attendance');
-    </script>
 </body>
 </html>
