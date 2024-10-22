@@ -22,4 +22,8 @@ class Member extends Model
         'profession',
         'status',
     ];
+
+    public function attendances () {
+        return $this->hasMany(Attendance::class, 'member_id');
+    }
 }

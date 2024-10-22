@@ -27,6 +27,7 @@ class Attendances extends Trend
     public function ranges()
     {
         return [
+            7 => __('7 Days'),
             30 => __('30 Days'),
             60 => __('60 Days'),
             90 => __('90 Days'),
