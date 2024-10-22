@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Nova\Actions\ImportMember;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
@@ -74,7 +75,8 @@ class Member extends Resource
                 ->options([
                     'active' => 'active',
                     'in-active' => 'in-active',
-                ])
+                ]),
+            HasMany::make('Attendances', 'attendances', Attendance::class),
         ];
     }
 
