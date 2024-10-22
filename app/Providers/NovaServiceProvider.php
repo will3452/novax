@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\Attendances;
+use App\Nova\Metrics\Members;
+use App\Nova\Metrics\MembersPerStatus;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -76,6 +79,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
+            Members::make(),
+            MembersPerStatus::make(),
+            Attendances::make(),
         ];
     }
 
@@ -99,7 +105,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             (new ProfileTool)->canSee(fn () => config('novax.profile_enabled')),
             (new BackupTool)->canSee(fn () => config('novax.back_up_enabled')),
-            (new NovaSettings)->canSee(fn () => config('novax.setting_enabled')), 
+            (new NovaSettings)->canSee(fn () => config('novax.setting_enabled')),
         ];
     }
 

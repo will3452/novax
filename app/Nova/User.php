@@ -12,6 +12,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
 {
+    public static $group = 'Security';
     /**
      * The model the resource corresponds to.
      *

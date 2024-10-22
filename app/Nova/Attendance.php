@@ -1,26 +1,23 @@
 <?php
 
 namespace App\Nova;
-use Laravel\Nova\Fields\ID;
+
+use App\Nova\Actions\ImportAttendance;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Select;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Endpoint extends Resource
+class Attendance extends Resource
 {
-    public static function availableForNavigation(Request $request)
-    {
-        return false;
-    }
+    public static $group = 'Manage';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Endpoint::class;
+    public static $model = \App\Models\Attendance::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -36,7 +33,7 @@ class Endpoint extends Resource
      */
     public static $search = [
         'id',
-        'method',
+        'date',
     ];
 
     /**
@@ -48,26 +45,10 @@ class Endpoint extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Path'),
-            Select::make('Method')
-                ->options([
-                    'post' => 'post',
-                    'get' => 'get',
-                    'put' => 'put',
-                ]),
-            Select::make('Model')
-                ->options(function () {
-                    $modelPath = app_path('Models');
-                    $files = File::files($modelPath);
-
-                    $array = [];
-
-                    foreach($files as $item) {
-                        $array[$item->getFilenameWithoutExtension()] = $item->getFilenameWithoutExtension();
-                    }
-                    return $array;
-                }),
-
+            Date::make('Date')
+                ->sortable(),
+            BelongsTo::make('Member', 'member', Member::class),
+            BelongsTo::make('Program', 'program', Program::class),
         ];
     }
 
@@ -112,6 +93,8 @@ class Endpoint extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            ImportAttendance::make()->standalone(),
+        ];
     }
 }

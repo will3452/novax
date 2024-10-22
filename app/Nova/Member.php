@@ -1,33 +1,34 @@
 <?php
 
 namespace App\Nova;
-use Laravel\Nova\Fields\ID;
+
+use App\Nova\Actions\ImportMember;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Endpoint extends Resource
+class Member extends Resource
 {
-    public static function availableForNavigation(Request $request)
-    {
-        return false;
-    }
+
+    public static $group = 'Manage';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Endpoint::class;
+    public static $model = \App\Models\Member::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public function title () {
+        return "$this->last_name, $this->first_name $this->middle_name";
+    }
 
     /**
      * The columns that should be searched.
@@ -36,7 +37,8 @@ class Endpoint extends Resource
      */
     public static $search = [
         'id',
-        'method',
+        'first_name',
+        'last_name',
     ];
 
     /**
@@ -48,26 +50,31 @@ class Endpoint extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Path'),
-            Select::make('Method')
+            Text::make('First Name')
+                ->rules(['required'])
+                ->sortable(),
+            Text::make('Last Name')
+                ->rules(['required'])
+                ->sortable(),
+            Text::make('Middle Name')->sortable(),
+            Date::make('Birthday'),
+            Select::make('Address')
+                ->options(fn () => \App\Models\Address::get()->pluck('name', 'name')),
+            Text::make('Email'),
+            Text::make('Phone'),
+            Select::make('Gender')
                 ->options([
-                    'post' => 'post',
-                    'get' => 'get',
-                    'put' => 'put',
-                ]),
-            Select::make('Model')
-                ->options(function () {
-                    $modelPath = app_path('Models');
-                    $files = File::files($modelPath);
-
-                    $array = [];
-
-                    foreach($files as $item) {
-                        $array[$item->getFilenameWithoutExtension()] = $item->getFilenameWithoutExtension();
-                    }
-                    return $array;
-                }),
-
+                    'Male' => 'Male',
+                    'Female' => 'Female',
+                ])
+                ->rules(['required']),
+            Date::make('Date Joined'),
+            Text::make('Profession'),
+            Select::make('Status')
+                ->options([
+                    'active' => 'active',
+                    'in-active' => 'in-active',
+                ])
         ];
     }
 
@@ -112,6 +119,9 @@ class Endpoint extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            ImportMember::make()
+                ->standalone(),
+        ];
     }
 }
