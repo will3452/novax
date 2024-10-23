@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Nova\Actions\ImportMember;
 use App\Nova\Actions\UpdateProgressStatus;
 use App\Nova\Actions\UpdateProperty;
+use App\Nova\Filters\FilterByProgressStatus;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\HasMany;
@@ -113,7 +114,9 @@ class Member extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            FilterByProgressStatus::make(),
+        ];
     }
 
     /**
