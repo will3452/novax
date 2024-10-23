@@ -2,22 +2,22 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\ImportAttendance;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Attendance extends Resource
+class Offering extends Resource
 {
-    public static $group = 'Manage';
+    public static $group = 'Finance';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Attendance::class;
+    public static $model = \App\Models\Offering::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -48,12 +48,10 @@ class Attendance extends Resource
             Date::make('Date')
                 ->exceptOnForms()
                 ->sortable(),
-            BelongsTo::make('Member', 'member', Member::class)
-                ->searchable()
-                ->debounce(100)
+            BelongsTo::make('Program')
                 ->showCreateRelationButton(),
-            BelongsTo::make('Program', 'program', Program::class)
-                ->showCreateRelationButton(),
+            Currency::make('Amount')
+                ->rules(['required']),
         ];
     }
 
@@ -98,8 +96,6 @@ class Attendance extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            ImportAttendance::make()->standalone(),
-        ];
+        return [];
     }
 }

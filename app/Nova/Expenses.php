@@ -2,29 +2,30 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\ImportAttendance;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Attendance extends Resource
+class Expenses extends Resource
 {
-    public static $group = 'Manage';
+    public static $group = 'Finance';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Attendance::class;
+    public static $model = \App\Models\Expenses::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'date';
 
     /**
      * The columns that should be searched.
@@ -33,7 +34,6 @@ class Attendance extends Resource
      */
     public static $search = [
         'id',
-        'date',
     ];
 
     /**
@@ -46,14 +46,13 @@ class Attendance extends Resource
     {
         return [
             Date::make('Date')
-                ->exceptOnForms()
                 ->sortable(),
-            BelongsTo::make('Member', 'member', Member::class)
-                ->searchable()
-                ->debounce(100)
-                ->showCreateRelationButton(),
-            BelongsTo::make('Program', 'program', Program::class)
-                ->showCreateRelationButton(),
+            Select::make('Category')
+                ->options(fn () => \App\Models\ExpensesCategory::get()->pluck('name', 'name'))
+                ->rules(['required']),
+            Currency::make('Amount')->sortable(),
+            Textarea::make('Remarks')
+                ->alwaysShow(),
         ];
     }
 
@@ -98,8 +97,6 @@ class Attendance extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            ImportAttendance::make()->standalone(),
-        ];
+        return [];
     }
 }

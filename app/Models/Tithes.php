@@ -5,23 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attendance extends Model
+class Tithes extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'member_id',
+        'amount',
         'date',
-        'program_id',
     ];
+
+    protected $casts = ['date' => 'date'];
 
     public function member () {
         return $this->belongsTo(Member::class, 'member_id');
     }
-
-    public function program () {
-        return $this->belongsTo(Program::class, 'program_id');
-    }
-
-    protected $casts = ['date' => 'date'];
 }

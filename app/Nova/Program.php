@@ -18,12 +18,12 @@ class Program extends Resource
      */
     public static $model = \App\Models\Program::class;
 
-    /**
-     * The single value that should be used to represent the resource when being displayed.
-     *
-     * @var string
-     */
-    public static $title = 'date';
+
+    public function title () {
+        $date = $this->date->format('m/d/y');
+        $week = $this->date->weekOfMonth;
+        return "$date: Week $week";
+    }
 
     /**
      * The columns that should be searched.
@@ -31,7 +31,6 @@ class Program extends Resource
      * @var array
      */
     public static $search = [
-        'id',
         'date'
     ];
 

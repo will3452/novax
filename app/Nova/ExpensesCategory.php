@@ -2,29 +2,27 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\ImportAttendance;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Attendance extends Resource
+class ExpensesCategory extends Resource
 {
-    public static $group = 'Manage';
+    public static $group = 'Maintenance';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Attendance::class;
+    public static $model = \App\Models\ExpensesCategory::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -32,8 +30,7 @@ class Attendance extends Resource
      * @var array
      */
     public static $search = [
-        'id',
-        'date',
+        'name'
     ];
 
     /**
@@ -45,15 +42,8 @@ class Attendance extends Resource
     public function fields(Request $request)
     {
         return [
-            Date::make('Date')
-                ->exceptOnForms()
-                ->sortable(),
-            BelongsTo::make('Member', 'member', Member::class)
-                ->searchable()
-                ->debounce(100)
-                ->showCreateRelationButton(),
-            BelongsTo::make('Program', 'program', Program::class)
-                ->showCreateRelationButton(),
+            Text::make('Name')
+                ->rules(['required', 'unique:expenses_categories,name']),
         ];
     }
 
@@ -98,8 +88,6 @@ class Attendance extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            ImportAttendance::make()->standalone(),
-        ];
+        return [];
     }
 }

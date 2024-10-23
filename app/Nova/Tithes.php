@@ -2,29 +2,28 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\ImportAttendance;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Attendance extends Resource
+class Tithes extends Resource
 {
-    public static $group = 'Manage';
+    public static $group = 'Finance';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Attendance::class;
+    public static $model = \App\Models\Tithes::class;
 
-    /**
-     * The single value that should be used to represent the resource when being displayed.
-     *
-     * @var string
-     */
-    public static $title = 'id';
+    public function title () {
+        $date = $this->date->format('m/d/y');
+        $member = $this->member->name;
+        return "$date:$member";
+    }
 
     /**
      * The columns that should be searched.
@@ -32,7 +31,6 @@ class Attendance extends Resource
      * @var array
      */
     public static $search = [
-        'id',
         'date',
     ];
 
@@ -46,14 +44,11 @@ class Attendance extends Resource
     {
         return [
             Date::make('Date')
-                ->exceptOnForms()
                 ->sortable(),
-            BelongsTo::make('Member', 'member', Member::class)
+            BelongsTo::make('Member')
                 ->searchable()
-                ->debounce(100)
                 ->showCreateRelationButton(),
-            BelongsTo::make('Program', 'program', Program::class)
-                ->showCreateRelationButton(),
+            Currency::make('Amount'),
         ];
     }
 
@@ -98,8 +93,6 @@ class Attendance extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            ImportAttendance::make()->standalone(),
-        ];
+        return [];
     }
 }

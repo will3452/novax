@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Nova\Dashboards\Finance;
+use App\Nova\Dashboards\Progress;
 use App\Nova\Metrics\Attendances;
 use App\Nova\Metrics\Members;
 use App\Nova\Metrics\MembersPerStatus;
@@ -54,6 +56,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
+
+            return true;
             return in_array($user->email, [
                 'root@yopmail.com'
             ]);
@@ -79,9 +83,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
-            Members::make(),
-            MembersPerStatus::make(),
-            Attendances::make(),
         ];
     }
 
@@ -92,7 +93,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function dashboards()
     {
-        return [];
+        return [
+            Finance::make(),
+            Progress::make(),
+        ];
     }
 
     /**

