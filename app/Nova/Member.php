@@ -3,6 +3,8 @@
 namespace App\Nova;
 
 use App\Nova\Actions\ImportMember;
+use App\Nova\Actions\UpdateProgressStatus;
+use App\Nova\Actions\UpdateProperty;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\HasMany;
@@ -58,23 +60,35 @@ class Member extends Resource
                 ->rules(['required'])
                 ->sortable(),
             Text::make('Middle Name')->sortable(),
-            Date::make('Birthday'),
+            Date::make('Birthday')->sortable(),
             Select::make('Address')
+                ->sortable()
                 ->options(fn () => \App\Models\Address::get()->pluck('name', 'name')),
-            Text::make('Email'),
-            Text::make('Phone'),
+            Text::make('Email')->hideFromIndex(),
+            Text::make('Phone')->hideFromIndex(),
             Select::make('Gender')
                 ->options([
                     'Male' => 'Male',
                     'Female' => 'Female',
                 ])
                 ->rules(['required']),
-            Date::make('Date Joined'),
-            Text::make('Profession'),
+            Date::make('Date Joined')
+                ->hideFromIndex()
+                ->sortable(),
+            Text::make('Profession')->sortable(),
             Select::make('Status')
                 ->options([
                     'active' => 'active',
                     'in-active' => 'in-active',
+                ]),
+            Select::make('Progress Status')
+                ->sortable()
+                ->options([
+                    'Regular' => 'Regular',
+                    '1st' => '1st',
+                    '2nd' => '2nd',
+                    '3rd' => '3rd',
+                    '4th' => '4th',
                 ]),
             HasMany::make('Attendances', 'attendances', Attendance::class),
         ];
@@ -124,6 +138,8 @@ class Member extends Resource
         return [
             ImportMember::make()
                 ->standalone(),
+            UpdateProgressStatus::make(),
+            UpdateProperty::make(),
         ];
     }
 }

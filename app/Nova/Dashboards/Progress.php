@@ -6,6 +6,8 @@ use Laravel\Nova\Dashboard;
 use App\Nova\Metrics\Members;
 use App\Nova\Metrics\Attendances;
 use App\Nova\Metrics\MembersPerStatus;
+use App\Nova\Metrics\MemberPerLocation;
+use App\Nova\Metrics\MembersProgressStatus;
 
 class Progress extends Dashboard
 {
@@ -19,6 +21,8 @@ class Progress extends Dashboard
         return [
             Members::make(),
             MembersPerStatus::make(),
+            MemberPerLocation::make(),
+            MembersProgressStatus::make(),
             Attendances::make(),
         ];
     }

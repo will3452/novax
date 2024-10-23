@@ -21,6 +21,7 @@ class Member extends Model
         'date_joined',
         'profession',
         'status',
+        'progress_status',
     ];
 
     public function attendances () {
