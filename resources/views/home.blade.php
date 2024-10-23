@@ -168,9 +168,14 @@
                                             Proof of Done
                                         </th>
                                         <td>
+                                            @if (\App\Models\TaskResult::whereUserId(auth()->id())->whereTaskId($item->id)->latest()->first())
                                             <a target="_blank" href="/result/{{\App\Models\TaskResult::whereUserId(auth()->id())->whereTaskId($item->id)->latest()->first()->id}}">
                                                 View Image Analyzed
                                             </a>
+                                            @else
+                                            ---
+                                            @endif
+
                                         </td>
                                     </tr>
                                 </table>
