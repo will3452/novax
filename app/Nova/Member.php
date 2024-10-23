@@ -82,6 +82,9 @@ class Member extends Resource
                     'active' => 'active',
                     'in-active' => 'in-active',
                 ]),
+            Text::make('Att. Count', function () {
+                return \App\Models\Attendance::whereMemberId($this->id)->count();
+            }),
             Select::make('Progress Status')
                 ->sortable()
                 ->options([
