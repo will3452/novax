@@ -4,9 +4,11 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Assignment extends Resource
@@ -43,22 +45,28 @@ class Assignment extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('Task', 'task', Task::class), 
-            BelongsTo::make('User', 'user', User::class), 
+            BelongsTo::make('Task', 'task', Task::class),
+            BelongsTo::make('User', 'user', User::class),
             Select::make('Status')
                 ->options([
-                    'PENDING' => 'PENDING', 
+                    'PENDING' => 'PENDING',
                     'ON-GOING' => 'ON-GOING',
                     'DONE' => 'DONE',
-                    'DROPPED' => 'DROPPED', 
+                    'DROPPED' => 'DROPPED',
                 ]),
         Image::make('Proof of Done'),
-        Select::make('Evaluation', 'eval_status')
-                ->options([
-                    'PENDING' => 'PENDING', 
-                    'CONFIRMED' => 'CONFIRMED',
-                    'REJECTED' => 'REJECTED',
-                ]),
+        Text::make('Analyzed Image', function () {
+            $tr = \App\Models\TaskResult::whereUserId($this->user_id)->whereTaskId($this->task_id)->latest()->first();
+            return "<a href='/result/$tr->id' target='_blank'>View Image</a>";
+        })->asHtml(),
+        Hidden::make('eval_status')
+                ->default(fn () => 'PENDING'),
+        // Select::make('Evaluation', 'eval_status')
+        //         ->options([
+        //             'PENDING' => 'PENDING',
+        //             'CONFIRMED' => 'CONFIRMED',
+        //             'REJECTED' => 'REJECTED',
+        //         ]),
         ];
     }
 
