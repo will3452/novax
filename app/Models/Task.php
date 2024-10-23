@@ -16,10 +16,11 @@ class Task extends Model
         'from',
         'to',
         'priority_level',
-    ]; 
+    ];
+
 
     protected $casts = [
         'from' => 'date',
-        'to' => 'date', 
-    ]; 
+        'to' => 'date',
+    ];
 }

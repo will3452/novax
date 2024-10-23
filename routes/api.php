@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\Assignment;
 use App\Models\Attendance;
+use App\Models\TaskResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -56,4 +58,15 @@ Route::post('/upload-image', function (Request $request) {
     $arr = explode("/", $request->image->store('public'));
     $path = end($arr);
     return $path;
+});
+
+Route::post('/upload-task-result', function (Request $request) {
+    Assignment::whereUserId($request->user_id)->whereTaskId($request->task_id)
+        ->update(['proof_of_done' => $request->image, 'status' => 'DONE']);
+    return TaskResult::create([
+        'user_id' => $request->user_id,
+        'task_id' => $request->task_id,
+        'result' => $request->result,
+        'image' => $request->image
+    ]);
 });

@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="d-flex">
-                                        <task-completion-uploader />
+                                        <task-completion-uploader user-id="{{auth()->id()}}" task="{{auth()->user()->ongoingAssignment->id}}" api="https://tupad.lzrk.host"/>
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (auth()->user()->attendances()->latest()->get() as $item)
+                                    @foreach (auth()->user()->attendances()->latest()->take(5)->get() as $item)
                                         <tr>
                                             <td>
                                                 {{$item->created_at->format('m/d/Y')}}
@@ -128,10 +128,58 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                         </svg>
-
                         Task Logs
                     </div>
-                    <div class="card-body"></div>
+                    <div class="card-body">
+                        @forelse (auth()->user()->tasks()->where('assignments.status', 'DONE')->latest()->get() as $item)
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                {{$item->title}}
+                                <div>
+                                    <span class="bg-warning text-white px-2 rounded">{{$item->status == 'PENDING' ? 'FOR EVALUATION': 'DONE'}}</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Description</th>
+                                        <td style="font-size: 14px;">
+                                            {{$item->description}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Period
+                                        </th>
+                                        <td>
+                                            {{$item->from->format('m/d/Y')}} - {{$item->to->format('m/d/Y')}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Duration
+                                        </th>
+                                        <td>
+                                            {{$item->to->diff($item->from)->format('%d day(s)')}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Proof of Done
+                                        </th>
+                                        <td>
+                                            <a target="_blank" href="/result/{{\App\Models\TaskResult::whereUserId(auth()->id())->whereTaskId($item->id)->latest()->first()->id}}">
+                                                View Image Analyzed
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        @empty
+                            <div class="alert alert-secondary">No Data Found.</div>
+                        @endforelse
+                    </div>
                 </div>
             </div>
         </div>

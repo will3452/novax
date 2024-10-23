@@ -5226,11 +5226,17 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['api', 'task', 'userId'],
   data: function data() {
     return {
-      file: null
+      file: null,
+      loading: false,
+      progress: 0
     };
   },
   methods: {
@@ -5240,34 +5246,54 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     submit: function submit() {
       var _this = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var fd, response;
+        var fd, api, response, result;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
+              _context.prev = 0;
+              _this.loading = true;
+              _this.progress = 10;
               fd = new FormData();
               fd.append('image', _this.file);
-              _context.next = 4;
-              return axios.post('/api/upload-image', fd);
-            case 4:
+              api = _this.api + '/api/upload-image';
+              _context.next = 8;
+              return axios.post(api, fd);
+            case 8:
               response = _context.sent;
-              console.log('response ', response);
-              axios({
-                method: "POST",
-                url: "https://detect.roboflow.com/tupad-program/2",
-                params: {
-                  api_key: "k4C9arHZknWSYWhXuT32",
-                  image: ''
-                }
-              }).then(function (response) {
-                console.log(response.data);
-              })["catch"](function (error) {
-                console.log(error.message);
+              _this.progress += 40;
+              _context.next = 12;
+              return axios.post("https://detect.roboflow.com/tupad-program/2?api_key=k4C9arHZknWSYWhXuT32&image=" + "".concat(_this.api, "/storage/").concat(response.data));
+            case 12:
+              result = _context.sent;
+              console.log(result.data);
+              _this.progress += 30;
+              _context.next = 17;
+              return axios.post('/api/upload-task-result', {
+                user_id: _this.userId,
+                task_id: _this.task,
+                image: response.data,
+                result: result.data
               });
-            case 7:
+            case 17:
+              _this.progress += 20;
+              alert('Task has been moved to for evaluation!');
+              window.location.reload();
+              _context.next = 26;
+              break;
+            case 22:
+              _context.prev = 22;
+              _context.t0 = _context["catch"](0);
+              alert('Something went wrong please contact the administrator!');
+              console.log('error => ', _context.t0);
+            case 26:
+              _context.prev = 26;
+              _this.loading = false;
+              return _context.finish(26);
+            case 29:
             case "end":
               return _context.stop();
           }
-        }, _callee);
+        }, _callee, null, [[0, 22, 26, 29]]);
       }))();
     }
   }
@@ -27587,11 +27613,25 @@ var render = function () {
   return _c("div", [
     _c("input", { attrs: { type: "file" }, on: { change: _vm.fileChange } }),
     _vm._v(" "),
-    _c(
-      "button",
-      { staticClass: "btn btn-sm btn-success", on: { click: _vm.submit } },
-      [_vm._v("Submit")]
-    ),
+    !_vm.loading
+      ? _c(
+          "button",
+          { staticClass: "btn btn-sm btn-success", on: { click: _vm.submit } },
+          [_vm._v("Submit")]
+        )
+      : _c("div", { staticClass: "progress" }, [
+          _c("div", {
+            staticClass:
+              "progress-bar progress-bar-striped progress-bar-animated",
+            style: { width: _vm.progress + "%" },
+            attrs: {
+              role: "progressbar",
+              "aria-valuenow": "75",
+              "aria-valuemin": "0",
+              "aria-valuemax": "100",
+            },
+          }),
+        ]),
   ])
 }
 var staticRenderFns = []
