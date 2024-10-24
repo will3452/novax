@@ -12,7 +12,6 @@ use Elezerk\Calendar\Calendar;
 use Eminiarts\Tabs\Tab;
 use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Nova;
-use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Spatie\BackupTool\BackupTool;
@@ -48,17 +47,17 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     Textarea::make('Address'),
                     Text::make('Phone No.', 'contact'),
                 ]),
-                Tab::make('Schedule', [
-                    TimeField::make('Opening')->withTwelveHourTime(),
-                    TimeField::make('Closing')->withTwelveHourTime(),
-                    Boolean::make('Monday'),
-                    Boolean::make('Tuesday'),
-                    Boolean::make('Wednesday'),
-                    Boolean::make('Thursday'),
-                    Boolean::make('Friday'),
-                    Boolean::make('Saturday'),
-                    Boolean::make('Sunday'),
-                ]),
+                // Tab::make('Schedule', [
+                //     TimeField::make('Opening')->withTwelveHourTime(),
+                //     TimeField::make('Closing')->withTwelveHourTime(),
+                //     Boolean::make('Monday'),
+                //     Boolean::make('Tuesday'),
+                //     Boolean::make('Wednesday'),
+                //     Boolean::make('Thursday'),
+                //     Boolean::make('Friday'),
+                //     Boolean::make('Saturday'),
+                //     Boolean::make('Sunday'),
+                // ]),
             ])->withToolbar(),
         ]);
     }
@@ -86,7 +85,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return $user->type == "Administrator";
+            return in_array($user->type, ['Administrator', 'Staff']);
         });
     }
 
@@ -106,7 +105,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             }),
             Appointments::make(),
             AppointmentToday::make(),
-            Services::make(),
+            // Services::make(),
             Treatments::make(),
             Records::make(),
             Users::make(),

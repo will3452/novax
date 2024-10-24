@@ -49,7 +49,10 @@ class Appointment extends Resource
      *
      * @var string
      */
-    public static $title = 'date';
+
+    public function title () {
+        return $this->date->format('m/d/y');
+    }
 
     /**
      * The columns that should be searched.
@@ -61,6 +64,7 @@ class Appointment extends Resource
         'date',
         'service',
     ];
+
 
     /**
      * Get the fields displayed by the resource.
@@ -75,7 +79,7 @@ class Appointment extends Resource
                 ->rules(['required', 'date', 'after_or_equal:today'])
                 ->required()
                 ->sortable(),
-            BelongsTo::make('Patient', 'patient', User::class),
+            BelongsTo::make('Patient', 'patient', PatientRecord::class),
             TimeField::make('Start Time', 'time_start')->withTwelveHourTime()->required(),
             TimeField::make('End Time', 'time_end')->withTwelveHourTime()->required(),
             Textarea::make('Remarks')

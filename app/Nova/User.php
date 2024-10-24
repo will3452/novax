@@ -18,13 +18,21 @@ use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class User extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return false;
+    }
 
     public static function indexQuery(NovaRequest $request, $query)
     {
         return $query->where('type', '!=', 'Patient');
     }
 
-    public static $group = 'zAdmin Accounts';
+    public static $group = '2Clinic Services';
+
+    public static function label () {
+        return "Admin Accounts";
+    }
 
     /**
      * The model the resource corresponds to.

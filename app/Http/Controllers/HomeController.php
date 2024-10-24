@@ -23,6 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if (in_array(auth()->user()->type, ['Administrator', 'Staff'])) {
+            return redirect('/admin');
+        }
         return view('home');
     }
 }
