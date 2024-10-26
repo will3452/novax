@@ -4,9 +4,11 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\Appointment;
 use App\Models\BotResponse;
 use App\Models\CronJob;
 use App\Models\Endpoint;
+use App\Models\SlotCount;
 use Carbon\Carbon;
 
 /*
@@ -99,4 +101,23 @@ Route::get('/get-message', function (Request $request) {
     }
 
     return $message;
+});
+
+
+Route::get('/fully-booked', function () {
+    return SlotCount::where('count', '>=', 21)->get()->pluck('date');
+});
+
+Route::get('/slots', function (Request $request) {
+    $date = $request->date;
+    $exists = Appointment::whereDate('date', $date)->get()->pluck('slot')->toArray();
+    $slots = \App\Models\Appointment::getSlots();
+    $available = [];
+    foreach ($slots as $key => $value) {
+        if (! in_array($value, $exists)) {
+            array_push($available, $value);
+        }
+    }
+
+    return $available;
 });

@@ -27,18 +27,25 @@ Route::get('/reserve/{service}', function (Request $request, Service $service) {
 })->middleware(['auth']);
 
 Route::post('/reserve', function (Request $request) {
-    [$time_start, $time_end ] = explode('-', $request->slot);
+    $exists = Appointment::whereSlot($request->slot)->whereDate('date', $request->date)->exists();
 
-    Appointment::create([
-        'time_start' => $time_start,
-        'time_end' => $time_end,
-        'service' => $request->service,
-        'patient_id' => $request->patient_id,
-        'remarks' => $request->remarks,
-        'date' => $request->date,
-    ]);
+    if (! $exists) {
+        Appointment::create([
+            'slot' => $request->slot,
+            'service' => $request->service,
+            'patient_id' => $request->patient_id,
+            'remarks' => $request->remarks,
+            'date' => $request->date,
+        ]);
+    } else {
+        alert()->error('Error','Schedule is already taken');
+        return redirect()->back();
+    }
 
-    return redirect()->to('/home');
+
+    alert()->success('Success','Appointment has been submitted');
+
+    return redirect()->back();
 });
 
 Route::get('/faq', function (Request $request) {

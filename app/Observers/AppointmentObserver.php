@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\User;
 use App\Models\Appointment;
+use App\Models\SlotCount;
 use App\Notifications\NewAppointment;
 
 class AppointmentObserver
@@ -19,6 +20,15 @@ class AppointmentObserver
         $users = User::whereType('Administrator')->get();
         foreach ($users as $user) {
             $user->notify(new NewAppointment($appointment));
+        }
+        $slotCount = SlotCount::whereDate('date', $appointment->date)->first();
+        if (! $slotCount) {
+            SlotCount::create([
+                'date' => $appointment->date,
+                'count' => 1,
+            ]);
+        } else {
+            $slotCount->update(['count' =>  $slotCount->count + 1]);
         }
     }
 

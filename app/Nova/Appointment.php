@@ -80,8 +80,11 @@ class Appointment extends Resource
                 ->required()
                 ->sortable(),
             BelongsTo::make('Patient', 'patient', PatientRecord::class),
-            TimeField::make('Start Time', 'time_start')->withTwelveHourTime()->required(),
-            TimeField::make('End Time', 'time_end')->withTwelveHourTime()->required(),
+            Select::make('Slot')
+                ->rules(['required'])
+                ->options(\App\Models\Appointment::getSlots()),
+            // TimeField::make('Start Time', 'time_start')->withTwelveHourTime()->required(),
+            // TimeField::make('End Time', 'time_end')->withTwelveHourTime()->required(),
             Textarea::make('Remarks')
                 ->alwaysShow(),
             Select::make("Service")
