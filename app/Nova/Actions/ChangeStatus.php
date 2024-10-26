@@ -30,7 +30,7 @@ class ChangeStatus extends Action
             $email = $model->patient->email;
             $model->update(['status' => $fields['status']]);
             $status = $fields['status'];
-            Mail::to($email)->send(new AppointmentStatusUpdate($status));
+            Mail::to($email)->send(new AppointmentStatusUpdate($model, $status));
             if ($status == 'Cancelled') {
                 $model->patient->notify(new CancelledAppointment($model));
             }

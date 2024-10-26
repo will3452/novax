@@ -121,3 +121,10 @@ Route::get('/slots', function (Request $request) {
 
     return $available;
 });
+
+
+Route::get('/reminders', function () {
+    $app = Appointment::whereDate('date', today())->get();
+    $app->load('patient');
+    return $app;
+});
