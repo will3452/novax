@@ -2,25 +2,25 @@
 
 namespace App\Nova;
 
+use App\Models\User as ModelsUser;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Stack;
 use Laravel\Nova\Fields\Avatar;
-use Laravel\Nova\Fields\Hidden;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Fields\Password;
-use App\Models\User as ModelsUser;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Stack;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Borrower extends Resource
 {
     public static function indexQuery(NovaRequest $request, $query)
     {
-        return $query->whereType(ModelsUser::TYPE_ADMINISTRATOR);
+        return $query->whereType(ModelsUser::TYPE_USER);
     }
     public static $group = '2_Manage';
     /**
@@ -55,20 +55,16 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
+            Text::make('ID', fn () => str_pad($this->id, 8, '0', STR_PAD_LEFT)),
             Stack::make('Details', [
                 Avatar::make('Avatar')->squared(),
                     Text::make('Name')
                     ->sortable()
                     ->rules('required', 'max:255'),
-                Text::make("type", function () {
-                    return "<div class='text-xs'>$this->type</div>";
-                })->asHtml(),
                 Text::make('Phone')->rules(['max:11', 'min:11'])->help('format: 09XXXXXXXXX'),
                 Hidden::make('type')
-                    ->default(fn () => ModelsUser::TYPE_ADMINISTRATOR),
+                    ->default(fn () => ModelsUser::TYPE_USER),
             ]),
-
-
             Avatar::make('Avatar')
                 ->onlyOnForms()
                 ->squared(),
@@ -77,9 +73,8 @@ class User extends Resource
                     ->sortable()
                     ->rules('required', 'max:255'),
 
-
             Hidden::make('type')
-                    ->default(fn () => ModelsUser::TYPE_ADMINISTRATOR),
+                ->default(fn () => ModelsUser::TYPE_USER),
 
 
             Text::make('Email')
@@ -88,12 +83,8 @@ class User extends Resource
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
             Text::make('Phone')->rules(['max:11', 'min:11'])->help('format: 09XXXXXXXXX')->onlyOnForms(),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
-
+            Hidden::make('password')
+                ->default(fn () => bcrypt('password')),
             KeyValue::make('Demographic'),
         ];
     }

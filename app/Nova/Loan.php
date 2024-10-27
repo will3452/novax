@@ -24,7 +24,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Loan extends Resource
 {
-    public static $group = '1_Services'; 
+    public static $group = '1_Services';
     /**
      * The model the resource corresponds to.
      *
@@ -45,7 +45,7 @@ class Loan extends Resource
      * @var array
      */
     public static $search = [
-        'reference', 
+        'reference',
     ];
 
     /**
@@ -58,56 +58,56 @@ class Loan extends Resource
     {
         return [
             Tabs::make('Loan Management', [
-                'Details' => [  
-                    Text::make('Reference')->exceptOnForms()->sortable(), 
+                'Details' => [
+                    Text::make('Reference')->exceptOnForms()->sortable(),
                     Badge::make('Status')
                         ->map([
                             'PENDING' => 'warning',
                             'APPROVED' => 'success',
-                            'REJECTED' => 'rejected', 
-                        ]), 
+                            'REJECTED' => 'rejected',
+                        ]),
                     Select::make('Type')
                         ->options([
                             'INDIVIDUAL' => 'INDIVIDUAL',
-                            'GROUP' => 'GROUP', 
+                            'GROUP' => 'GROUP',
                         ]),
                     Date::make('Start Date'),
                     Date::make('End Date'),
                     Text::make('Duration', function() {
-                        $duration = $this->start_date->diffInDays($this->end_date); 
-                        return "$duration day(s)"; 
-                    }), 
+                        $duration = $this->start_date->diffInDays($this->end_date);
+                        return "$duration day(s)";
+                    }),
                     Text::make('Interest', function () {
-                        return "$this->interest %"; 
+                        return "$this->interest %";
                     }),
                     Hidden::make('Reference', 'reference')
-                        ->default(fn () => "L" . Str::random(8)), 
+                        ->default(fn () => "L" . Str::random(8)),
                     Currency::make('Amount')->onlyOnForms(),
                     Select::make('Interest')
                         ->onlyOnForms()
-                        ->options(fn () => \App\Models\Interest::get()->pluck('name', 'rate')), 
+                        ->options(fn () => \App\Models\Interest::get()->pluck('name', 'rate')),
                     Select::make('Payment Schedule')
                         ->options([
                             'DAILY' => 'DAILY',
                             'WEEKLY' => 'WEEKLY',
-                            'MONTHLY' => 'MONTHLY', 
+                            'MONTHLY' => 'MONTHLY',
                         ]),
                     Textarea::make('Collateral'),
-                    Image::make('Collateral Image'), 
+                    Image::make('Collateral Image'),
                     ],
                 'Borrower(s)' => [
-                    BelongsToMany::make('Borrowers', 'users', User::class)->singularLabel('Borrower'), 
-                ], 
+                    BelongsToMany::make('Borrowers', 'users', Borrower::class)->singularLabel('Borrower'),
+                ],
                 'Payment Schedules' => [
-                    HasMany::make('Schedules', 'schedules', PaymentSchedule::class), 
+                    HasMany::make('Schedules', 'schedules', PaymentSchedule::class),
                 ],
                 'Payments' => [
-                    HasMany::make('Payments', 'payments', Payment::class), 
-                ], 
-                'Penalties' => [
-                    HasMany::make('Penalties', 'penalties', Penalty::class), 
+                    HasMany::make('Payments', 'payments', Payment::class),
                 ],
-            ])->withToolbar(),   
+                'Penalties' => [
+                    HasMany::make('Penalties', 'penalties', Penalty::class),
+                ],
+            ])->withToolbar(),
         ];
     }
 
@@ -120,9 +120,9 @@ class Loan extends Resource
     public function cards(Request $request)
     {
         return [
-            (new LoanAmount($request->resourceId))->onlyOnDetail(), 
-            (new TotalPenalties($request->resourceId))->onlyOnDetail(), 
-            // (new TotalBalance($request->resourceId))->onlyOnDetail(), 
+            (new LoanAmount($request->resourceId))->onlyOnDetail(),
+            (new TotalPenalties($request->resourceId))->onlyOnDetail(),
+            // (new TotalBalance($request->resourceId))->onlyOnDetail(),
         ];
     }
 
