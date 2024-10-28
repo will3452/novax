@@ -37,7 +37,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         NovaSettings::addSettingsFields([
             Tabs::make('Settings', [
                 Tab::make('Application', [
-                    Image::make('Name'),
+                    Text::make('Name'),
                     Image::make('Logo'),
                 ]),
                 Tab::make('Clinic', [
