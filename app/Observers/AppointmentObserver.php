@@ -40,7 +40,10 @@ class AppointmentObserver
      */
     public function updated(Appointment $appointment)
     {
-        //
+        $slotCount = SlotCount::whereDate('date', $appointment->date)->first();
+        if (in_array($appointment->status, ['Cancelled', 'Rejected'])) {
+            $slotCount->update(['count' =>  $slotCount->count - 1]);
+        }
     }
 
     /**
