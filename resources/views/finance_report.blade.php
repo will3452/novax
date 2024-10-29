@@ -4,7 +4,9 @@
 <body>
     <x-finance-header :selected-year="$selectedYear"></x-finance-header>
     <div class="mt-8 space-y-4">
-        <h1 class="text-lg text-center font-bold text-gray-800">*** Monthly Report ***</h1>
+        <x-heading>
+            Monthly Report
+        </x-heading>
         <table class="border w-full">
             <thead>
                 <tr>
@@ -110,7 +112,9 @@
         </table>
         <x-page-break></x-page-break>
         <x-finance-header :selected-year="$selectedYear"></x-finance-header>
-        <h1 class="text-lg text-center font-bold text-gray-800">*** Itemize Expenses ***</h1>
+        <x-heading>
+            Itemize Expenses
+        </x-heading>
         <div class="grid grid-cols-2 gap-2">
             @for ($i = 1; $i <= 12; $i++)
                 <div>
@@ -156,7 +160,9 @@
         </div>
         <x-page-break></x-page-break>
         <x-finance-header :selected-year="$selectedYear"></x-finance-header>
-        <h1 class="text-lg text-center font-bold text-gray-800">*** List of Tithers ***</h1>
+        <x-heading>
+            List of Tithers
+        </x-heading>
         <table class="w-full border">
             <tr>
                 <thead>

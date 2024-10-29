@@ -20,3 +20,9 @@ Route::get('/financial-report', function (Request $request) {
     $selectedYear = $request->year ?? now()->year;
     return view('finance_report', compact('selectedYear'));
 });
+
+Route::get('/progress-report', function (Request $request) {
+    $selectedMonth = $request->month ?? now()->month;
+    $selectedYear = $request->year ?? now()->year;
+    return view('progress_report', compact('selectedMonth', 'selectedYear'));
+});

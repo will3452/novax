@@ -35,4 +35,13 @@ class Member extends Model
     public function tithes () {
         return $this->hasMany(Tithes::class, 'member_id');
     }
+
+    public function isTimer($date, $no) {
+        $a = $this->attendances()->take($no)->get();
+        return count($a) >= $no && $a[$no - 1]->date->isSameDay($date);
+    }
+
+    public function attendanceAsOf($date) {
+        return $this->attendances()->whereDate('date', '<=', $date)->count();
+    }
 }
