@@ -48,27 +48,27 @@
                         $totAt += count($att);
                         $ft = [];
                         foreach ($att as $a) {
-                            $firstAttendance = $a->member->attendances()->first()->date;
+                            $firstAttendance = $a->member->attendances()->orderBy('date')->first()->date;
                             if (! $firstAttendance->isSameDay($date)) continue;
                             array_push($ft, $a->member->name);
                         }
                         $st = [];
                         foreach ($att as $a) {
-                            $at = $a->member->attendances()->take(2)->get();
+                            $at = $a->member->attendances()->orderBy('date')->take(2)->get();
                             if (is_null($a[1]) || ! $a[1]->date->isSameDay($date)) continue;
                             array_push($st, $a->member->name);
                         }
 
                         $tt = [];
                         foreach ($att as $a) {
-                            $at = $a->member->attendances()->take(3)->get();
+                            $at = $a->member->attendances()->orderBy('date')->take(3)->get();
                             if (is_null($a[2]) || ! $a[2]->date->isSameDay($date)) continue;
                             array_push($tt, $a->member->name);
                         }
 
                         $fft = [];
                         foreach ($att as $a) {
-                            $at = $a->member->attendances()->take(4)->get();
+                            $at = $a->member->attendances()->orderBy('date')->take(4)->get();
                             if (is_null($a[3]) || ! $a[3]->date->isSameDay($date)) continue;
                             array_push($fft, $a->member->name);
                         }
