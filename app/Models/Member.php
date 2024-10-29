@@ -24,6 +24,10 @@ class Member extends Model
         'progress_status',
     ];
 
+    protected $casts = [
+        'date_joined' => 'date'
+    ];
+
     public function attendances () {
         return $this->hasMany(Attendance::class, 'member_id');
     }
