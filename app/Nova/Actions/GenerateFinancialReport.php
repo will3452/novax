@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Nova\Actions;
+
+use App\Models\ReportLog;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Collection;
+use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Date;
+
+class GenerateFinancialReport extends Action
+{
+    use InteractsWithQueue, Queueable;
+
+    /**
+     * Perform the action on the given models.
+     *
+     * @param  \Laravel\Nova\Fields\ActionFields  $fields
+     * @param  \Illuminate\Support\Collection  $models
+     * @return mixed
+     */
+    public function handle(ActionFields $fields, Collection $models)
+    {
+        ReportLog::create([
+            'prepared_by' => auth()->user()->name,
+            'date' => now(),
+            'type' => 'FINANCIAL_REPORT',
+        ]);
+        return Action::openInNewTab("/financial-report?year=$fields->year");
+    }
+
+    /**
+     * Get the fields available on the action.
+     *
+     * @return array
+     */
+    public function fields()
+    {
+        return [
+            Date::make('year')
+                ->format('YYYY'),
+        ];
+    }
+}

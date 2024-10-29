@@ -2,50 +2,30 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
+use App\Nova\Actions\GenerateFinancialReport;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class ReportLog extends Resource
 {
+
     public static $group = 'Administration';
-
-    public static function indexQuery(NovaRequest $request, $query)
-    {
-        return $query->where('email', '!=', 'root@yopmail.com');
-    }
-
-    public static function authorizedToCreate(Request $request)
-    {
-        return auth()->user()->email == 'root@yopmail.com';
-    }
-
-    public function authorizedToUpdate(Request $request)
-    {
-        return auth()->user()->email == 'root@yopmail.com';
-    }
-
-    public function authorizedToDelete(Request $request)
-    {
-        return auth()->user()->email == 'root@yopmail.com';
-    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\ReportLog::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -53,8 +33,25 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'date',
     ];
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        if ($request->has('action')) return true;
+        return false;
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return false;
+    }
 
     /**
      * Get the fields displayed by the resource.
@@ -65,22 +62,8 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+            Date::make('Date')->sortable(),
+            Text::make('Type')->sortable(),
         ];
     }
 
@@ -125,6 +108,9 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            GenerateFinancialReport::make()
+                ->standalone(),
+        ];
     }
 }

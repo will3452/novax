@@ -31,4 +31,8 @@ class Member extends Model
     public function getNameAttribute() {
         return "$this->first_name $this->last_name";
     }
+
+    public function tithes () {
+        return $this->hasMany(Tithes::class, 'member_id');
+    }
 }
