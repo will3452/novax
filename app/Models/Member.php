@@ -25,7 +25,8 @@ class Member extends Model
     ];
 
     protected $casts = [
-        'date_joined' => 'date'
+        'date_joined' => 'date',
+        'birthday' => 'date',
     ];
 
     public function attendances () {
