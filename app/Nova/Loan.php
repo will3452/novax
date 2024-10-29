@@ -67,19 +67,20 @@ class Loan extends Resource
                             'REJECTED' => 'rejected',
                         ]),
                     Select::make('Type')
+                        ->rules(['required'])
                         ->options([
                             'INDIVIDUAL' => 'INDIVIDUAL',
                             'GROUP' => 'GROUP',
                         ]),
-                    Date::make('Start Date'),
-                    Date::make('End Date'),
+                    Date::make('Start Date')->rules(['required']),
+                    Date::make('End Date')->rules(['required']),
                     Text::make('Duration', function() {
                         $duration = $this->start_date->diffInDays($this->end_date);
                         return "$duration day(s)";
                     }),
                     Text::make('Interest', function () {
                         return "$this->interest %";
-                    }),
+                    })->rules(['required']),
                     Hidden::make('Reference', 'reference')
                         ->default(fn () => "L" . Str::random(8)),
                     Currency::make('Amount')->onlyOnForms(),
@@ -91,7 +92,7 @@ class Loan extends Resource
                             'DAILY' => 'DAILY',
                             'WEEKLY' => 'WEEKLY',
                             'MONTHLY' => 'MONTHLY',
-                        ]),
+                        ])->rules(['required']),
                     Textarea::make('Collateral'),
                     Image::make('Collateral Image'),
                     ],
