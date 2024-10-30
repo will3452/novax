@@ -18,7 +18,8 @@ Route::get('/artisan', function () {
 
 Route::get('/financial-report', function (Request $request) {
     $selectedYear = $request->year ?? now()->year;
-    return view('finance_report', compact('selectedYear'));
+    $selectedMonth = $request->month ?? now()->month;
+    return view('finance_report', compact('selectedMonth', 'selectedYear'));
 });
 
 Route::get('/progress-report', function (Request $request) {

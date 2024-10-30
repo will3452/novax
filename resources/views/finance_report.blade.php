@@ -45,7 +45,7 @@
                     $totalTot = 0;
                     $totalNet = 0;
                 @endphp
-                @for ($i = 1; $i <= 12; $i++)
+                @for ($i = 1; $i <= $selectedMonth; $i++)
                 <tr>
                     <td class="border p-1 text-sm">
                         {{\Carbon\Carbon::create(null, $i)->format('F')}}
@@ -116,7 +116,7 @@
             Itemize Expenses
         </x-heading>
         <div class="grid grid-cols-2 gap-2">
-            @for ($i = 1; $i <= 12; $i++)
+            @for ($i = 1; $i <= $selectedMonth; $i++)
                 <div>
                     <table class="w-full border">
                         <thead>
@@ -169,7 +169,7 @@
                     <th class="border text-xs">
                         Names
                     </th>
-                    @for ($i = 1; $i <= 12; $i++)
+                    @for ($i = 1; $i <= $selectedMonth; $i++)
                     <th class="border text-xs">
                         {{\Carbon\Carbon::create(null, $i)->format('M')}}
                     </th>
@@ -188,7 +188,7 @@
                         <td class="text-xs text-center border">
                             {{$member->name}}
                         </td>
-                        @for ($i = 1; $i <= 12; $i++)
+                        @for ($i = 1; $i <= $selectedMonth; $i++)
                             <td class="border text-xs text-center">
                                 @php
                                     $t = \App\Models\Tithes::whereMemberId($member->id)->whereYear('date', $selectedYear)->whereMonth('date', $i)->sum('amount');
