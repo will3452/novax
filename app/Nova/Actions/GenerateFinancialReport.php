@@ -29,7 +29,9 @@ class GenerateFinancialReport extends Action
             'date' => now(),
             'type' => 'FINANCIAL_REPORT',
         ]);
-        return Action::openInNewTab("/financial-report?year=$fields->year");
+        $year = Carbon::parse($fields->date)->year;
+        $month = Carbon::parse($fields->date)->month;
+        return Action::openInNewTab("/financial-report?year=$year&month=$month");
     }
 
     /**
@@ -40,8 +42,7 @@ class GenerateFinancialReport extends Action
     public function fields()
     {
         return [
-            Date::make('year')
-                ->format('YYYY'),
+            Date::make('year'),
         ];
     }
 }
