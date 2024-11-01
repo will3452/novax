@@ -133,8 +133,8 @@
                             @php
                                 $items = \App\Models\Expenses::whereYear('date', $selectedYear)
                                     ->whereMonth('date', $i)
-                                    ->groupBy('category')
-                                    ->select('category', \DB::raw('SUM(amount) as total'))
+                                    ->groupBy('remarks')
+                                    ->select('remarks', \DB::raw('SUM(amount) as total'))
                                     ->get();
                             @endphp
                             @forelse ($items as $item)
