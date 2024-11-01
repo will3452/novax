@@ -57,7 +57,7 @@
                         $totalExpenses += $expenses;
                         $totalOfferings += $offerings;
                         $totalTithes += $tithes;
-                        $tot = ($tithes + $totalOfferings) * .10;
+                        $tot = ($tithes + $offerings) * .10;
                         $totalTot += $tot;
                         $gross = $offerings + $tithes;
                         $totalGross += $gross;
