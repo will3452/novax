@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Nova\Actions\GenerateFinancialReport;
+use App\Nova\Actions\GenerateOverallReport;
 use App\Nova\Actions\GenerateSundayServiceProgressReport;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
@@ -113,6 +114,8 @@ class ReportLog extends Resource
             GenerateFinancialReport::make()
                 ->standalone(),
             GenerateSundayServiceProgressReport::make()
+                ->standalone(),
+            GenerateOverallReport::make()
                 ->standalone(),
         ];
     }

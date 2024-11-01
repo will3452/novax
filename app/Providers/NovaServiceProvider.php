@@ -30,6 +30,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Image::make("Pastor's Signature", 'p_sign'),
+            Image::make("Secretary's Signature", 's_sign'),
         ]);
     }
 
