@@ -30,8 +30,8 @@ class GenerateSundayServiceProgressReport extends Action
             'date' => now(),
             'type' => 'SUNDAY_PROGRESS_REPORT',
         ]);
-        $year = Carbon::parse($fields->date)->year;
-        $month = Carbon::parse($fields->date)->month;
+        $year = \Carbon\Carbon::parse($fields->date)->year;
+        $month = \Carbon\Carbon::parse($fields->date)->month;
         return Action::openInNewTab("/progress-report?year=$year&month=$month");
     }
 
