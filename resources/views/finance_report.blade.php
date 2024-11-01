@@ -140,7 +140,7 @@
                             @forelse ($items as $item)
                                 <tr>
                                     <td class="text-center  border p-1 text-gray-800">
-                                        {{$item->category}}
+                                        {{$item->remarks}}
                                     </td>
                                     <td class="text-right border p-1 text-gray-800">
                                         {{number_format($item->total, 2)}}
