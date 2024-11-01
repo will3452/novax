@@ -42,8 +42,7 @@ class Member extends Model
     }
 
     public function isTimer($date, $no) {
-        $a = $this->attendances()->take($no)->get();
-        return count($a) >= $no && end($a->toArray())->date->isSameDay($date);
+        return $this->attendanceAsOf($date) == $no;
     }
 
     public function attendanceAsOf($date) {

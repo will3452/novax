@@ -147,7 +147,7 @@
                     @php
                         $noA = $a->member->attendanceAsOf($date);
                     @endphp
-                    <td class="border text-center text-xs">{{$noA >= 4 ? 'Regular' : ($noA == 4 ? '4th' : ($noA == 3 ? '3rd' : ($noA == 2 ? '2nd' : ($noA == 1 ? '1st' : '')))) }}</td>
+                    <td class="border text-center text-xs">{{$noA >= 4 || $a->member->progress_status == 'Regular' ? 'Regular' : ($noA == 4 ? '4th' : ($noA == 3 ? '3rd' : ($noA == 2 ? '2nd' : ($noA == 1 ? '1st' : '')))) }}</td>
                 </tr>
                 @empty
                 <tr>
