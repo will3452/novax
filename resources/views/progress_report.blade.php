@@ -112,7 +112,7 @@
                 <td class="border text-center">{{$totFf  / count($sundays)}}</td>
                 <td class="border text-center">{{$totR  / count($sundays)}}</td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <td class="border text-center font-bold">Total</td>
                 <td class="border text-center">{{$totAt}}</td>
                 <td class="border text-center">{{$totF}}</td>
@@ -120,7 +120,7 @@
                 <td class="border text-center">{{$totT}}</td>
                 <td class="border text-center">{{$totFf}}</td>
                 <td class="border text-center">{{$totR}}</td>
-            </tr>
+            </tr> --}}
         </tbody>
     </table>
     @foreach ($sundays as $sunday)
