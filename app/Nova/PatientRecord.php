@@ -25,6 +25,11 @@ class PatientRecord extends Resource
     {
         return $query->whereType('Patient');
     }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return auth()->user()->type == 'Administrator';
+    }
     public static $group = '1Patient Management';
 
     public static function label () {
@@ -152,6 +157,7 @@ class PatientRecord extends Resource
     {
         return [
             (new DownloadExcel())
+                ->canSee(fn () => auth()->user()->type == 'Administrator')
                 ->withHeadings(),
         ];
     }

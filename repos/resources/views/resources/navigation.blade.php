@@ -31,6 +31,7 @@
         </ul>
     @endforeach
 
+    @if (auth()->user()->type == 'Administrator')
     <a href="/admin/resources/users">
 
         <h3 class="cursor-pointer flex items-center font-normal dim text-white mb-6 text-base no-underline">
@@ -42,4 +43,5 @@
         Admin Accounts
     </span></h3>
     </a>
+    @endif
 @endif
