@@ -40,18 +40,18 @@ Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
 Route::any('/cron', function (Request $request) {
-    CronJob::create([]); 
+    CronJob::create([]);
     if (nova_get_setting('reminder', false)) {
-        $dueToday = PaymentSchedule::whereDate('due_date', Carbon::today())->get(); 
-        $dueToday->load('loan.users'); 
-        $borrowers = collect(); 
+        $dueToday = PaymentSchedule::whereDate('due_date', Carbon::today())->get();
+        $dueToday->load('loan.users');
+        $borrowers = collect();
 
         foreach($dueToday as $due) {
             foreach($due->loan->users as $b) {
-                $borrowers->add($b->phone); 
+                $borrowers->add($b->phone);
             }
         }
-        $result = $borrowers->unique()->values()->all(); 
+        $result = $borrowers->unique()->values()->all();
 
         $ch = curl_init();
         $parameters = array(
@@ -71,19 +71,19 @@ Route::any('/cron', function (Request $request) {
         $output = curl_exec( $ch );
         curl_close ($ch);
 
-        return $result; 
+        return $result;
     }
-    return "ok!"; 
-}); 
+    return "ok!";
+});
 
 Route::any('/v1/{params}', function (Request $request, $params) {
-    $method = Str::lower($request->getMethod()); 
-    $path = $request->getPathInfo(); 
-    $arr_path = explode("/", $path); 
-    $name = end($arr_path); 
-    $endpoint = Endpoint::whereMethod($method)->wherePath($name)->first(); 
+    $method = Str::lower($request->getMethod());
+    $path = $request->getPathInfo();
+    $arr_path = explode("/", $path);
+    $name = end($arr_path);
+    $endpoint = Endpoint::whereMethod($method)->wherePath($name)->first();
     return [
-        'params' => $endpoint, 
-        'method' => Str::lower($request->getMethod()), 
-    ]; 
-}); 
+        'params' => $endpoint,
+        'method' => Str::lower($request->getMethod()),
+    ];
+});

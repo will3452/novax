@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -48,8 +49,10 @@ class Group extends Resource
             Text::make('Group Name', 'name')
                 ->rules(['required', 'unique:groups,name'])
                 ->sortable(),
-            Text::make('No. of Member', fn () =>$this->members->count()),
-            BelongsToMany::make('Group Members', 'members', Borrower::class),
+            HasMany::make('Group Member', 'groupMembers', GroupMember::class),
+            // Text::make('No. of Member', fn () =>$this->members->count()),
+
+            // BelongsToMany::make('Group Members', 'members', Borrower::class),
         ];
     }
 

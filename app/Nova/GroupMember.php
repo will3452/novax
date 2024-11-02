@@ -6,6 +6,7 @@ use App\Models\User as ModelsUser;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Avatar;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Hidden;
@@ -16,11 +17,15 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Stack;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Borrower extends Resource
+class GroupMember extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return false;
+    }
     public static function indexQuery(NovaRequest $request, $query)
     {
-        return $query->whereType(ModelsUser::TYPE_USER)->whereNull('group_id');
+        return $query->whereType(ModelsUser::TYPE_USER)->whereNotNull('group_id');
     }
     public static $group = '2_Manage';
     /**
@@ -56,6 +61,7 @@ class Borrower extends Resource
     {
         return [
             Text::make('ID', fn () => str_pad($this->id, 8, '0', STR_PAD_LEFT)),
+            BelongsTo::make('Group', 'group', Group::class),
             Stack::make('Details', [
                 Avatar::make('Avatar')->squared(),
                     Text::make('Name')

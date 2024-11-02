@@ -26,7 +26,7 @@ class AddGroup extends Action
     {
         $group = \App\Models\Group::find($fields->group);
         foreach ($models as $model) {
-            foreach ($group->members as $member) {
+            foreach ($group->groupMembers as $member) {
                 UserLoan::create([
                     'loan_id' => $model->id,
                     'group_id' => $group->id,

@@ -159,11 +159,17 @@ class Loan extends Resource
      */
     public function actions(Request $request)
     {
+        if ($request->has('action')) {
+            return [
+                AddGroup::make(),
+                AddBorrower::make(),
+            ];
+        }
         return [
             AddGroup::make()
                 ->canSee(fn () => $this->type == "GROUP"),
             AddBorrower::make()
-                ->canSee(fn () => $this->type != "GROUP")
+                ->canSee(fn () => $this->type != "GROUP"),
         ];
     }
 }

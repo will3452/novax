@@ -21,14 +21,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'phone', 
+        'phone',
         'type',
-        'avatar', 
-        'demographic', 
+        'avatar',
+        'demographic',
+        'group_id',
     ];
 
     const TYPE_ADMINISTRATOR = "ADMINISTRATOR";
-    const TYPE_USER = "USER"; 
+    const TYPE_USER = "USER";
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -46,10 +47,14 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'demographic' => 'json', 
+        'demographic' => 'json',
     ];
 
     public function loans () {
-        return $this->belongsToMany(Loan::class, 'user_loans', 'user_id', 'loan_id'); 
+        return $this->belongsToMany(Loan::class, 'user_loans', 'user_id', 'loan_id');
+    }
+
+    public function group () {
+        return $this->belongsTo(Group::class, 'group_id');
     }
 }
