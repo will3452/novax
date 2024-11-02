@@ -4,6 +4,7 @@ use App\Http\Controllers\ApiAuthenticationController;
 use App\Models\PreOrder;
 use App\Models\PreOrderItem;
 use App\Models\Product;
+use App\Models\Promo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -79,4 +80,9 @@ Route::post('/pre-order', function (Request $request) {
     $preOrder->load('items');
 
     return $preOrder;
+});
+
+
+Route::get('/promos', function () {
+    return Promo::where(['is_active' => true])->get();
 });
