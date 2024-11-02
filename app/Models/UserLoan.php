@@ -11,7 +11,8 @@ class UserLoan extends Model
 
     protected $fillable = [
         'user_id',
-        'loan_id', 
+        'loan_id',
+        'group_id',
     ];
 
     public function user () {
@@ -19,6 +20,10 @@ class UserLoan extends Model
     }
 
     public function loan() {
-        return $this->belongsTo(Loan::class, 'loan_id'); 
+        return $this->belongsTo(Loan::class, 'loan_id');
+    }
+
+    public function group() {
+        return $this->belongsTo(Group::class, 'group_id');
     }
 }

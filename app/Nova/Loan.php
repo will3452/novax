@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\AddBorrower;
+use App\Nova\Actions\AddGroup;
 use App\Nova\Metrics\LoanAmount;
 use App\Nova\Metrics\TotalBalance;
 use App\Nova\Metrics\TotalPenalties;
@@ -97,7 +99,7 @@ class Loan extends Resource
                     Image::make('Collateral Image'),
                     ],
                 'Borrower(s)' => [
-                    BelongsToMany::make('Borrowers', 'users', Borrower::class)->singularLabel('Borrower'),
+                    HasMany::make('Borrowers', 'userLoans', UserLoan::class),
                 ],
                 'Payment Schedules' => [
                     HasMany::make('Schedules', 'schedules', PaymentSchedule::class),
@@ -157,6 +159,11 @@ class Loan extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            AddGroup::make()
+                ->canSee(fn () => $this->type == "GROUP"),
+            AddBorrower::make()
+                ->canSee(fn () => $this->type != "GROUP")
+        ];
     }
 }

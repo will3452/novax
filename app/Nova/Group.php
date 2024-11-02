@@ -3,34 +3,28 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class UserLoan extends Resource
+class Group extends Resource
 {
-    public static function availableForNavigation(Request $request)
-    {
-        return false;
-    }
+
+    public static $group = '2_Manage';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\UserLoan::class;
+    public static $model = \App\Models\Group::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
-
-    public static function authorizedToCreate(Request $request)
-    {
-        return false;
-    }
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -39,6 +33,7 @@ class UserLoan extends Resource
      */
     public static $search = [
         'id',
+        'name'
     ];
 
     /**
@@ -50,9 +45,11 @@ class UserLoan extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('User', 'user', User::class),
-            BelongsTo::make('Loan', 'loan', Loan::class),
-            BelongsTo::make('Group', 'group', Group::class),
+            Text::make('Group Name', 'name')
+                ->rules(['required', 'unique:groups,name'])
+                ->sortable(),
+            Text::make('No. of Member', fn () =>$this->members->count()),
+            BelongsToMany::make('Group Members', 'members', Borrower::class),
         ];
     }
 
