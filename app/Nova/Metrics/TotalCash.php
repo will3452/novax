@@ -17,13 +17,13 @@ class TotalCash extends Value
      */
     public function calculate(NovaRequest $request)
     {
-        $revenue = Payment::sum('amount') - Loan::sum('amount'); 
-        $totCash = nova_get_setting('capital_amount', 0) + $revenue; 
+        $revenue = Payment::sum('amount') - Loan::sum('amount');
+        $totCash = nova_get_setting('capital_amount', 0) + $revenue;
         return $this->result("$totCash")
-            ->currency('₱ ')->withoutSuffixInflection();
+            ->currency('₱ ')->suffix(null)->format('0,0');
     }
 
-    
+
 
     /**
      * Determine for how many minutes the metric should be cached.

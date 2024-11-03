@@ -16,10 +16,10 @@ class CapitalAmount extends Value
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->result(nova_get_setting('capital_amount', 0))->prefix('₱ ');
+        return $this->result(nova_get_setting('capital_amount', 0))->prefix('₱ ')->suffix(null)->format('0,0');
     }
 
-    
+
 
     /**
      * Determine for how many minutes the metric should be cached.

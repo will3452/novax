@@ -16,7 +16,7 @@ class PaymentReceived extends Value
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->sum($request, Payment::class, 'amount', );
+        return $this->sum($request, Payment::class, 'amount', )->suffix(null)->format('0,0');
     }
 
     /**

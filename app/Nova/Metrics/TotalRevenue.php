@@ -17,7 +17,7 @@ class TotalRevenue extends Value
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->result(Payment::sum('amount') - Loan::sum('amount'))->prefix('₱');
+        return $this->result(Payment::sum('amount') - Loan::sum('amount'))->prefix('₱')->suffix(null)->format('0,0');
     }
 
     /**
