@@ -72,7 +72,11 @@ class Ingredient extends Resource
             Number::make('Total Usage(kg)', fn () => $this->inventories()->whereType('Usage')->sum('quantity')),
             Number::make('Daily Usage(avg.)', fn () => $this->inventories()->whereType('Usage')->avg('quantity')),
             Text::make('Days to Last', function () {
-                $result = $this->quantity / $this->inventories()->whereType('Usage')->avg('quantity');
+                $totalUsage = $this->inventories()->whereType('Usage')->avg('quantity');
+                $result = 0;
+                if ($totalUsage != 0) {
+                    $result = $this->quantity / $this->inventories()->whereType('Usage')->avg('quantity');
+                }
                 $color = 'grey';
                 if ($this->type == "MACRO" && $result <= 5) {
                     $color = 'red';
