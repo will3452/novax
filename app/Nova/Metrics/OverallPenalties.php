@@ -16,7 +16,7 @@ class OverallPenalties extends Value
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->sum($request, Penalty::class, 'amount'); 
+        return $this->sum($request, Penalty::class, 'amount')->suffix(null)->format('0,0');
     }
 
     /**

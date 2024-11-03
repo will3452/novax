@@ -46,9 +46,9 @@ class Penalty extends Resource
     {
         return [
             BelongsTo::make('Loan', 'loan', Loan::class),
-            BelongsTo::make('Schedule', 'schedule', PaymentSchedule::class), 
+            BelongsTo::make('Schedule', 'schedule', PaymentSchedule::class),
             Currency::make('Amount',),
-            Textarea::make('Notes')->alwaysShow(), 
+            Textarea::make('Notes')->alwaysShow(),
         ];
     }
 
@@ -61,7 +61,7 @@ class Penalty extends Resource
     public function cards(Request $request)
     {
         return [
-            OverallPenalties::make(), 
+            OverallPenalties::make(),
         ];
     }
 
