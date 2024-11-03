@@ -9,7 +9,11 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Customer extends Resource
 {
-    public static $group = 'Sales'; 
+    public static $group = 'Sales';
+    public static function availableForNavigation(Request $request)
+    {
+        return in_array(auth()->user()->type, ['administrator', 'sales']);
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -31,7 +35,7 @@ class Customer extends Resource
      */
     public static $search = [
         'id',
-        'name', 
+        'name',
     ];
 
     /**
@@ -46,8 +50,8 @@ class Customer extends Resource
             Text::make('Name')
                 ->sortable(),
             Text::make('Email')
-                ->rules(['email']), 
-            Text::make('Phone No.', 'phone'), 
+                ->rules(['email']),
+            Text::make('Phone No.', 'phone'),
         ];
     }
 

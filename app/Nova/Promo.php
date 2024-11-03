@@ -13,6 +13,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class Promo extends Resource
 {
     public static $group = 'Administrator';
+    public static function availableForNavigation(Request $request)
+    {
+        return in_array(auth()->user()->type, ['administrator']);
+    }
     /**
      * The model the resource corresponds to.
      *

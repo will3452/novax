@@ -8,11 +8,16 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
 {
-    public static $group = 'Administrator'; 
+    public static function availableForNavigation(Request $request)
+    {
+        return in_array(auth()->user()->type, ['administrator']);
+    }
+    public static $group = 'Administrator';
     /**
      * The model the resource corresponds to.
      *
@@ -45,7 +50,14 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+
+            Select::make('Type')
+                ->rules(['required'])
+                ->options([
+                    'administrator' => 'administrator',
+                    'inventory manager' => 'inventory manager',
+                    'sales' => 'sales',
+                ]),
 
             Text::make('Name')
                 ->sortable()

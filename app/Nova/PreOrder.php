@@ -15,6 +15,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class PreOrder extends Resource
 {
     public static $group = 'Sales';
+    public static function availableForNavigation(Request $request)
+    {
+        return in_array(auth()->user()->type, ['administrator', 'sales',]);
+    }
     /**
      * The model the resource corresponds to.
      *

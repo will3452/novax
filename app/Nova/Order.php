@@ -13,7 +13,11 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Order extends Resource
 {
-    public static $group = 'Sales'; 
+    public static $group = 'Sales';
+    public static function availableForNavigation(Request $request)
+    {
+        return in_array(auth()->user()->type, ['administrator', 'sales',]);
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -47,18 +51,18 @@ class Order extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            BelongsTo::make('Customer', 'customer', Customer::class), 
+            BelongsTo::make('Customer', 'customer', Customer::class),
             BelongsTo::make('Product', 'product', Product::class),
             Hidden::make('sales_associate_id')->default(fn () => auth()->id()),
             BelongsTo::make('Sales Associate', 'salesAssociate', User::class)->exceptOnForms(),
             Badge::make('Status')
                 ->map([
                     'Pending' => 'danger',
-                    'Confirmed' => 'success', 
+                    'Confirmed' => 'success',
                 ]),
             Number::make('Quantity')
                 ->rules(['required', 'min:1']),
-            Currency::make('Amount'), 
+            Currency::make('Amount'),
         ];
     }
 

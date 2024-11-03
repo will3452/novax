@@ -54,9 +54,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                'root@yopmail.com'
-            ]);
+            return true;
         });
     }
 
@@ -80,8 +78,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return config('novax.time_enabled');
             }),
             Orders::make(),
-            NewCustomers::make(),  
-            Sales::make(), 
+            NewCustomers::make(),
+            Sales::make(),
         ];
     }
 
@@ -105,7 +103,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             (new ProfileTool)->canSee(fn () => config('novax.profile_enabled')),
             (new BackupTool)->canSee(fn () => config('novax.back_up_enabled')),
-            (new NovaSettings)->canSee(fn () => config('novax.setting_enabled')), 
+            (new NovaSettings)->canSee(fn () => config('novax.setting_enabled') && auth()->user()->type == 'administrator'),
         ];
     }
 
