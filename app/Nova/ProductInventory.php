@@ -15,6 +15,8 @@ use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 class ProductInventory extends Resource
 {
     public static $group = 'Inventory';
+
+    public static $searchable = false;
     public static function availableForNavigation(Request $request)
     {
         return in_array(auth()->user()->type, ['administrator', 'inventory manager']);

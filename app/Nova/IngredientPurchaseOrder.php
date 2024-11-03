@@ -2,11 +2,13 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Number;
+use App\Nova\Filters\DateFilter;
+use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Filters\IngredientFilter;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class IngredientPurchaseOrder extends Resource
@@ -17,6 +19,8 @@ class IngredientPurchaseOrder extends Resource
     {
         return in_array(auth()->user()->type, ['administrator', 'inventory manager']);
     }
+
+    public static $searchable = false;
     /**
      * The model the resource corresponds to.
      *
@@ -49,7 +53,9 @@ class IngredientPurchaseOrder extends Resource
     public function fields(Request $request)
     {
         return [
-            Date::make('Date', 'created_at')->sortable(),
+            Date::make('Date', 'created_at')
+            ->default(fn () => now())
+            ->sortable(),
             BelongsTo::make('Ingredient', 'ingredient', Ingredient::class),
             Number::make('Quantity (kg)', 'quantity'),
         ];
@@ -74,7 +80,10 @@ class IngredientPurchaseOrder extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            DateFilter::make(),
+            IngredientFilter::make(),
+        ];
     }
 
     /**

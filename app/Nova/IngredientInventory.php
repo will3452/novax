@@ -36,6 +36,8 @@ class IngredientInventory extends Resource
      */
     public static $title = 'id';
 
+    public static $searchable = false;
+
     /**
      * The columns that should be searched.
      *
@@ -55,6 +57,7 @@ class IngredientInventory extends Resource
     {
         return [
             Date::make('Date', 'created_at')
+                ->default(fn () => now())
                 ->sortable(),
             BelongsTo::make('Ingredient', 'ingredient', Ingredient::class),
             Select::make('Transaction', 'type')

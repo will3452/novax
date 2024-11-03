@@ -44,6 +44,7 @@ class Ingredient extends Resource
      */
     public static $search = [
         'id',
+        'name',
     ];
 
     /**
@@ -66,8 +67,22 @@ class Ingredient extends Resource
             // Number::make('Kg')->default(fn () => 1),
             // Currency::make('Unit Price', 'price'),
             Number::make('Actual Stocks(kg)', fn () => $this->quantity),
-            Number::make('Total Purchase(kg', fn () => $this->purchaseOrders()->sum('quantity')),
             Number::make('Outstanding P.O', fn () => $this->purchaseOrders()->sum('quantity') - $this->quantity),
+            Number::make('Total Purchase(kg)', fn () => $this->purchaseOrders()->sum('quantity')),
+            Number::make('Total Usage(kg)', fn () => $this->inventories()->whereType('Usage')->sum('quantity')),
+            Number::make('Daily Usage(avg.)', fn () => $this->inventories()->whereType('Usage')->avg('quantity')),
+            Text::make('Days to Last', function () {
+                $result = $this->quantity / $this->inventories()->whereType('Usage')->avg('quantity');
+                $color = 'grey';
+                if ($this->type == "MACRO" && $result <= 5) {
+                    $color = 'red';
+                }
+                if ($this->type == "MICRO" && $result <= 15) {
+                    $color = 'red';
+                }
+                return "<span style='background:$color;padding:2px 4px; border-radius:10px;'>$result</span>";
+            })
+                ->asHtml(),
         ];
     }
 
