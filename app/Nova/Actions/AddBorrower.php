@@ -14,6 +14,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class AddBorrower extends Action
 {
     use InteractsWithQueue, Queueable;
+    public $name = "Add Individual Borrower";
 
     /**
      * Perform the action on the given models.

@@ -62,10 +62,10 @@ class Loan extends Resource
             Tabs::make('Loan Management', [
                 'Details' => [
                     Text::make('Reference')->exceptOnForms()->sortable(),
-                    Badge::make('Status')
+                    Badge::make('Status', 'payment_status')
                         ->map([
                             'PENDING' => 'warning',
-                            'APPROVED' => 'success',
+                            'PAID' => 'success',
                             'REJECTED' => 'rejected',
                         ]),
                     Select::make('Type')

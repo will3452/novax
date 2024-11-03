@@ -24,6 +24,19 @@ class Loan extends Model
         'status',
     ];
 
+    public function getTotalPayableAttribute() {
+        return $this->amount + $this->penalties()->sum('amount');
+        return ;
+    }
+
+    public function getPaymentStatusAttribute() {
+        $totalPayment = $this->total_payable;
+        if ($totalPayment <= $this->payments()->sum('amount')) {
+            return "PAID";
+        }
+        return "PENDING";
+    }
+
     protected $casts = [
         'start_date' => 'date',
         'end_date' => 'date',

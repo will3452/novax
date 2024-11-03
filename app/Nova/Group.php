@@ -27,6 +27,10 @@ class Group extends Resource
      */
     public static $title = 'name';
 
+    public static function label () {
+        return "Group Borrower";
+    }
+
     /**
      * The columns that should be searched.
      *

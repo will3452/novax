@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Nova\Metrics\OverallPayments;
+use App\Rules\CheckPaymentRule;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
@@ -14,7 +15,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Payment extends Resource
 {
-    public static $group = '1_Services'; 
+    public static $group = '1_Services';
     /**
      * The model the resource corresponds to.
      *
@@ -48,15 +49,15 @@ class Payment extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Hidden::make('penalty')->default(fn () => 0), 
+            Hidden::make('penalty')->default(fn () => 0),
             BelongsTo::make('User', 'user', User::class),
-            BelongsTo::make('Loan', 'loan', Loan::class), 
+            BelongsTo::make('Loan', 'loan', Loan::class),
             // Date::make('Due Date'),
-            Currency::make('Amount'),
+            Currency::make('Amount')->rules(['required', new CheckPaymentRule($this->id ?? $request->viaResourceId)]),
             // Select::make('Status')
             //     ->options([
             //         'PENDING' => 'PENDING',
-            //         'PAID' => 'PAID', 
+            //         'PAID' => 'PAID',
             //     ])
         ];
     }
@@ -70,7 +71,7 @@ class Payment extends Resource
     public function cards(Request $request)
     {
         return [
-            OverallPayments::make(), 
+            OverallPayments::make(),
         ];
     }
 

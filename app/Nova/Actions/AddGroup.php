@@ -15,6 +15,8 @@ class AddGroup extends Action
 {
     use InteractsWithQueue, Queueable;
 
+    public $name = "Add Group Borrower";
+
     /**
      * Perform the action on the given models.
      *

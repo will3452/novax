@@ -22,6 +22,10 @@ class Borrower extends Resource
     {
         return $query->whereType(ModelsUser::TYPE_USER)->whereNull('group_id');
     }
+
+    public static function label () {
+        return "Individual Borrower";
+    }
     public static $group = '2_Manage';
     /**
      * The model the resource corresponds to.
