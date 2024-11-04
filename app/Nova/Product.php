@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Lenses\TopSellingQuantity;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
@@ -98,7 +99,8 @@ class Product extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+        ];
     }
 
     /**

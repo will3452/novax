@@ -1,11 +1,14 @@
 <?php
 
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\Ingredient;
+use App\Models\IngredientInventory;
 use App\Models\PreOrder;
 use App\Models\PreOrderItem;
 use App\Models\Product;
 use App\Models\Promo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -85,4 +88,30 @@ Route::post('/pre-order', function (Request $request) {
 
 Route::get('/promos', function () {
     return Promo::where(['is_active' => true])->get();
+});
+
+Route::get('/sync', function () {
+    $ingredients = Ingredient::get();
+    foreach ($ingredients as $i) {
+        $totalUsage = $i->inventories()->whereType('USAGE')->sum('quantity');
+        $totalPurchase = $i->inventories()->whereType('PURCHASE')->sum('quantity');
+        $current_qty = $totalPurchase - $totalUsage;
+        $tp = $i->purchaseOrders()->sum('quantity');
+        $opo = $tp - $current_qty;
+        $td = $i->inventories()->whereType('USAGE')->avg('quantity') ?? 0;
+        $dl = 0;
+        if ($td != 0) {
+            $dl = $current_qty / $td;
+        }
+        $i->update([
+            'current_qty' => $current_qty,
+            'opo' => $opo,
+            'tp' => $tp,
+            'tu' => $totalUsage,
+            'td' => $td,
+            'dl' => $dl,
+        ]);
+    }
+
+    return 'success!';
 });

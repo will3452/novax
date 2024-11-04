@@ -66,25 +66,32 @@ class Ingredient extends Resource
             // Number::make('Bag')->default(fn () => 1),
             // Number::make('Kg')->default(fn () => 1),
             // Currency::make('Unit Price', 'price'),
-            Number::make('Actual Stocks(kg)', fn () => $this->quantity),
-            Number::make('Outstanding P.O', fn () => $this->purchaseOrders()->sum('quantity') - $this->quantity),
-            Number::make('Total Purchase(kg)', fn () => $this->purchaseOrders()->sum('quantity')),
-            Number::make('Total Usage(kg)', fn () => $this->inventories()->whereType('Usage')->sum('quantity')),
-            Number::make('Daily Usage(avg.)', fn () => $this->inventories()->whereType('Usage')->avg('quantity')),
-            Text::make('Days to Last', function () {
-                $totalUsage = $this->inventories()->whereType('Usage')->avg('quantity');
-                $result = 0;
-                if ($totalUsage != 0) {
-                    $result = $this->quantity / $this->inventories()->whereType('Usage')->avg('quantity');
-                }
+            Number::make('Actual Stocks(kg)', 'current_qty')->sortable()->exceptOnForms(),
+            Number::make('Outstanding P.O', 'opo')->sortable()->exceptOnForms(),
+            Number::make('Total Purchase(kg)', 'tp')->sortable()->exceptOnForms(),
+            Number::make('Total Usage(kg)', 'tu')->sortable()->exceptOnForms(),
+            Number::make('Daily Usage(avg.)', 'td')->sortable()->exceptOnForms(),
+            Number::make('Days to Last', 'dl')->sortable()->exceptOnForms(),
+            // Number::make('Outstanding P.O', fn () => $this->purchaseOrders()->sum('quantity') - $this->quantity),
+            // Number::make('Total Purchase(kg)', fn () => $this->purchaseOrders()->sum('quantity')),
+            // Number::make('Total Usage(kg)', fn () => $this->inventories()->whereType('Usage')->sum('quantity')),
+            // Number::make('Daily Usage(avg.)', fn () => $this->inventories()->whereType('Usage')->avg('quantity')),
+            Text::make('Status', function () {
+                // $totalUsage = $this->inventories()->whereType('Usage')->avg('quantity');
+                // $result = 0;
+                // if ($totalUsage != 0) {
+                //     $result = $this->current_qty / $this->inventories()->whereType('Usage')->avg('quantity');
+                // }
+
+                $result = $this->dl;
                 $color = 'grey';
                 if ($this->type == "MACRO" && $result <= 5) {
                     $color = 'red';
                 }
                 if ($this->type == "MICRO" && $result <= 15) {
-                    $color = 'red';
+                    $color = '#FF9999';
                 }
-                return "<span style='background:$color;padding:2px 4px; border-radius:10px;'>$result</span>";
+                return "<span style='display:block; width:20px; height:20px;background:$color;padding:4px 4px; border-radius:10px;'></span>";
             })
                 ->asHtml(),
         ];

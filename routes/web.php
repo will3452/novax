@@ -4,7 +4,12 @@ use Illuminate\Support\Facades\Artisan;
 
 
 Route::get('/', function () {
-    return redirect()->to(config('nova.path')); 
+    return redirect()->to(config('nova.path'));
+});
+
+
+Route::get('/i-graphs', function () {
+    return view('i-graphs');
 });
 
 
