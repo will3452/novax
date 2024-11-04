@@ -84,12 +84,12 @@ class Ingredient extends Resource
                 // }
 
                 $result = $this->dl;
-                $color = 'grey';
+                $color = 'green';
                 if ($this->type == "MACRO" && $result <= 5) {
                     $color = 'red';
                 }
                 if ($this->type == "MICRO" && $result <= 15) {
-                    $color = '#FF9999';
+                    $color = 'red';
                 }
                 return "<span style='display:block; width:20px; height:20px;background:$color;padding:4px 4px; border-radius:10px;'></span>";
             })
