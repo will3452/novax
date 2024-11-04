@@ -16,13 +16,30 @@ class IngredientInventoryObserver
     public function created(IngredientInventory $ingredientInventory)
     {
         $i = Ingredient::find($ingredientInventory->ingredient_id);
+        $current_qty = $i->current_qty;
         if ($ingredientInventory->type == "USAGE") {
-            $i->current_qty -= $ingredientInventory->quantity;
+            $current_qty -= $ingredientInventory->quantity;
         } else {
-            $i->current_qty += $ingredientInventory->quantity;
+            $current_qty += $ingredientInventory->quantity;
         }
 
-        $i->save();
+        $totalUsage = $i->inventories()->whereType('USAGE')->sum('quantity');
+
+        $tp = $i->purchaseOrders()->sum('quantity');
+        $opo = $tp - $current_qty;
+        $td = $i->inventories()->whereType('USAGE')->avg('quantity') ?? 0;
+        $dl = 0;
+        if ($td != 0) {
+            $dl = $current_qty / $td;
+        }
+        $i->update([
+            'current_qty' => $current_qty,
+            'opo' => $opo,
+            'tp' => $tp,
+            'tu' => $totalUsage,
+            'td' => $td,
+            'dl' => $dl,
+        ]);
     }
 
     /**
