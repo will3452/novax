@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\ViewUsageAnalytic;
 use App\Nova\Metrics\MacroAndMicro;
 use App\Nova\Metrics\NewIngredients;
 use Laravel\Nova\Fields\ID;
@@ -142,6 +143,7 @@ class Ingredient extends Resource
     public function actions(Request $request)
     {
         return [
+            ViewUsageAnalytic::make()->standalone(),
             new DownloadExcel()
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\CategoryFilter;
 use App\Nova\Lenses\TopSellingQuantity;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Currency;
@@ -88,7 +89,9 @@ class Product extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            CategoryFilter::make(),
+        ];
     }
 
     /**
