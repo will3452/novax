@@ -17,7 +17,7 @@ class LoanObserver
         $interval = floor($total_days / $payment_times);
 
         // Generate the due dates
-        for ($i = 1; $i < $payment_times; $i++) {
+        for ($i = 0; $i < $payment_times; $i++) {
             $due_dates[] = $start_date->copy()->addDays($i * $interval)->toDateString();
         }
 
@@ -42,7 +42,7 @@ class LoanObserver
             $days = 30;
         }
 
-        $times = ($loan->start_date->diffInDays($loan->end_date) / $days) - 1;
+        $times = ($loan->start_date->diffInDays($loan->end_date) / $days);
 
         $dues = $this->generateDueDates($loan->start_date, $loan->end_date, $times);
         $finalAmount = ($loan->amount + (intval($loan->interest??'0') * $loan->amount * $times)) / $times;
