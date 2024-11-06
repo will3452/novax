@@ -45,7 +45,7 @@ class LoanObserver
         $times = ($loan->start_date->diffInDays($loan->end_date) / $days);
 
         $dues = $this->generateDueDates($loan->start_date, $loan->end_date, $times);
-        $finalAmount = ($loan->amount + (intval($loan->interest??'0') * $loan->amount * $times)) / $times;
+        $finalAmount = ($loan->amount + ((intval($loan->interest??'0') / 100 ) * $loan->amount * $times)) / $times;
         foreach($dues as $due) {
             PaymentSchedule::create([
             'loan_id' => $loan->id,
