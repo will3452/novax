@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Nova\Filters\FilterByDate;
 use App\Nova\Metrics\DueToday;
+use App\Nova\Lenses\DueToday as DueTodayLens;
 use App\Nova\Metrics\DueTodayStatus;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -76,7 +77,7 @@ class PaymentSchedule extends Resource
     public function filters(Request $request)
     {
         return [
-            FilterByDate::make('due_date')
+            FilterByDate::make('due_date'),
         ];
     }
 
@@ -88,7 +89,9 @@ class PaymentSchedule extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            DueTodayLens::make(),
+        ];
     }
 
     /**

@@ -9,11 +9,6 @@ use Laravel\Nova\Filters\DateFilter;
 class FilterByDate extends DateFilter
 {
 
-    public function default()
-    {
-        return now();
-    }
-
     public $col;
     public function __construct(string $col)
     {
