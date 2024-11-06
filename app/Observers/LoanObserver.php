@@ -9,18 +9,18 @@ class LoanObserver
 {
     public function generateDueDates($start_date, $end_date, $payment_times) {
         $due_dates = [];
-        
+
         // Calculate the total number of days between start and end date
         $total_days = $end_date->diffInDays($start_date);
-    
+
         // Calculate the interval in days between each payment
         $interval = floor($total_days / $payment_times);
-    
+
         // Generate the due dates
-        for ($i = 0; $i < $payment_times; $i++) {
+        for ($i = 1; $i < $payment_times; $i++) {
             $due_dates[] = $start_date->copy()->addDays($i * $interval)->toDateString();
         }
-    
+
         return $due_dates;
     }
     /**
@@ -35,24 +35,24 @@ class LoanObserver
 
         if ($loan->payment_schedule == "WEEKLY") {
             $days = 7;
-        } 
-        
+        }
+
 
         if ($loan->payment_schedule == "MONTHLY") {
             $days = 30;
-        } 
+        }
 
         $times = $loan->start_date->diffInDays($loan->end_date) / $days;
 
-        $dues = $this->generateDueDates($loan->start_date, $loan->end_date, $times); 
-        $amount = $loan->amount / $times; 
+        $dues = $this->generateDueDates($loan->start_date, $loan->end_date, $times);
+        $amount = $loan->amount / $times;
         $interest = $amount * (intval($loan->interest) / 100);
-        $finalAmount = $amount + $interest; 
+        $finalAmount = $amount + $interest;
         foreach($dues as $due) {
             PaymentSchedule::create([
-            'loan_id' => $loan->id, 
+            'loan_id' => $loan->id,
                 'amount' => $finalAmount,
-                'due_date' => $due, 
+                'due_date' => $due,
             ]);
         }
     }
