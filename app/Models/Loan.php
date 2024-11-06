@@ -25,8 +25,7 @@ class Loan extends Model
     ];
 
     public function getTotalPayableAttribute() {
-        return $this->amount + $this->penalties()->sum('amount');
-        return ;
+        return $this->schedules()->sum('amount') + $this->penalties()->sum('amount');
     }
 
     public function getPaymentStatusAttribute() {
