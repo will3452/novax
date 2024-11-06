@@ -42,7 +42,7 @@ class AddBorrower extends Action
     {
         return [
             Select::make('Borrower', 'borrower')
-                ->options(\App\Models\User::whereType('USER')->get()->pluck('name', 'id')),
+                ->options(\App\Models\User::whereType('USER')->whereNull('group_id')->get()->pluck('name', 'id')),
         ];
     }
 }
