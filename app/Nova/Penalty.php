@@ -75,7 +75,7 @@ class Penalty extends Resource
     public function filters(Request $request)
     {
         return [
-            FilterByDate::make(),
+            FilterByDate::make('created_at'),
         ];
     }
 
