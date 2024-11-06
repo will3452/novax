@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\FilterByDate;
 use App\Nova\Metrics\OverallPenalties;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -73,7 +74,9 @@ class Penalty extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            FilterByDate::make(),
+        ];
     }
 
     /**

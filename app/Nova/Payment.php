@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\FilterByDate;
 use App\Nova\Metrics\OverallPayments;
 use App\Rules\CheckPaymentRule;
 use Illuminate\Http\Request;
@@ -52,6 +53,7 @@ class Payment extends Resource
             Hidden::make('penalty')->default(fn () => 0),
             BelongsTo::make('User', 'user', User::class),
             BelongsTo::make('Loan', 'loan', Loan::class),
+            Date::make('Date', 'created_at')->sortable()->exceptOnForms(),
             // Date::make('Due Date'),
             Currency::make('Amount')->rules(['required', new CheckPaymentRule($this->id ?? $request->viaResourceId)]),
             // Select::make('Status')
@@ -83,7 +85,9 @@ class Payment extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            FilterByDate::make('created_at'),
+        ];
     }
 
     /**

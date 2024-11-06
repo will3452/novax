@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\FilterByDate;
 use App\Nova\Metrics\DueToday;
 use App\Nova\Metrics\DueTodayStatus;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class PaymentSchedule extends Resource
 {
-    public static $group = '1_Services'; 
+    public static $group = '1_Services';
     /**
      * The model the resource corresponds to.
      *
@@ -24,7 +25,7 @@ class PaymentSchedule extends Resource
 
 
     public function title () {
-        return $this->due_date->format('m/d/Y'); 
+        return $this->due_date->format('m/d/Y');
     }
 
     /**
@@ -34,7 +35,7 @@ class PaymentSchedule extends Resource
      */
     public static $search = [
         'id',
-        'due_date', 
+        'due_date',
     ];
 
     /**
@@ -47,8 +48,8 @@ class PaymentSchedule extends Resource
     {
         return [
             Date::make('Due Date'),
-            Text::make('Amount'), 
-            BelongsTo::make('Loan', 'loan', Loan::class),  
+            Text::make('Amount'),
+            BelongsTo::make('Loan', 'loan', Loan::class),
         ];
     }
 
@@ -61,8 +62,8 @@ class PaymentSchedule extends Resource
     public function cards(Request $request)
     {
         return [
-            new DueToday(), 
-            new DueTodayStatus(), 
+            new DueToday(),
+            new DueTodayStatus(),
         ];
     }
 
@@ -74,7 +75,9 @@ class PaymentSchedule extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            FilterByDate::make('due_date')
+        ];
     }
 
     /**

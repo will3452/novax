@@ -39,19 +39,19 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'Application' => [
                     Image::make('Logo'),
                     Textarea::make('Mission'),
-                    Textarea::make('Vision'), 
+                    Textarea::make('Vision'),
                 ],
                 'Finance' => [
-                    Currency::make('Capital Amount'), 
-                    Currency::make('Max Loan'), 
-                    Currency::make('Minimum Loan'), 
+                    Currency::make('Capital Amount'),
+                    Currency::make('Max Loan'),
+                    Currency::make('Minimum Loan'),
                 ],
                 'Notification' => [
-                    Text::make('Semaphore API Key', 'sms_key'), 
-                    Boolean::make('Remind borrowers for their upcoming due?', 'reminder'), 
+                    // Text::make('Semaphore API Key', 'sms_key'),
+                    Boolean::make('Remind borrowers for their upcoming due?', 'reminder'),
                     Textarea::make('Reminder Template Message', 'sms_template')->rules(['max:160'])->help('max characters length is 160 only.'),
                 ]
-            ]), 
+            ]),
         ]);
     }
 
@@ -103,14 +103,14 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
-            CapitalAmount::make(), 
-            AmountDisbursed::make(), 
-            RemainingCapital::make(), 
-            PaymentReceived::make(), 
-            TotalRevenue::make(), 
-            TotalCash::make(), 
-            // PaymentTrend::make(), 
-            LoanTrend::make(), 
+            CapitalAmount::make(),
+            AmountDisbursed::make(),
+            RemainingCapital::make(),
+            PaymentReceived::make(),
+            TotalRevenue::make(),
+            TotalCash::make(),
+            // PaymentTrend::make(),
+            LoanTrend::make(),
         ];
     }
 
@@ -134,7 +134,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             (new ProfileTool)->canSee(fn () => config('novax.profile_enabled')),
             (new BackupTool)->canSee(fn () => config('novax.back_up_enabled')),
-            (new NovaSettings)->canSee(fn () => config('novax.setting_enabled')), 
+            (new NovaSettings)->canSee(fn () => config('novax.setting_enabled')),
         ];
     }
 
