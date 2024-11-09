@@ -41,6 +41,7 @@ Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
 Route::any('/cron', function (Request $request) {
     CronJob::create([]);
+    $result = [];
     if (nova_get_setting('reminder', false)) {
         $dueToday = PaymentSchedule::whereDate('due_date', Carbon::today())->get();
         $dueToday->load('loan.users');
@@ -70,10 +71,8 @@ Route::any('/cron', function (Request $request) {
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
         $output = curl_exec( $ch );
         curl_close ($ch);
-
-        return $result;
     }
-    return "ok!";
+    return $result;
 });
 
 Route::any('/v1/{params}', function (Request $request, $params) {

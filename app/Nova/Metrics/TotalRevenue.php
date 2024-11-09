@@ -20,7 +20,8 @@ class TotalRevenue extends Value
         $totalPayment = Payment::sum('amount');
         $totalLoan = Loan::sum('amount');
 
-        return $this->result($totalPayment - $totalLoan)->prefix('₱')
+        return $this->result($totalPayment - $totalLoan)
+            ->prefix('₱')
             ->suffix(null)
             ->format('0,0');
     }
