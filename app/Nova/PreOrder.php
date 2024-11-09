@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\MarkAsApproved;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
@@ -63,7 +64,7 @@ class PreOrder extends Resource
                 ->options([
                     'For Confirmation' => 'For Confirmation',
                     'Confirmed' => 'Confirmed',
-                    'Paid' => 'Paid',
+                    // 'Paid' => 'Paid',
                 ]),
             Currency::make('Payable'),
             HasMany::make('Items', 'items', PreOrderItem::class),
@@ -111,6 +112,8 @@ class PreOrder extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            MarkAsApproved::make(),
+        ];
     }
 }

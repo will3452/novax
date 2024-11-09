@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\MarkAsApproved;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
@@ -14,6 +15,12 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class Order extends Resource
 {
     public static $group = 'Sales';
+    public function authorizedToUpdate(Request $request)
+    {
+        if ($request->has('action')) return true;
+
+        return false;
+    }
     public static function availableForNavigation(Request $request)
     {
         return in_array(auth()->user()->type, ['administrator', 'sales',]);
@@ -107,6 +114,8 @@ class Order extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            MarkAsApproved::make(),
+        ];
     }
 }
