@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
@@ -58,7 +59,7 @@ class User extends Resource
                     'inventory manager' => 'inventory manager',
                     'sales' => 'sales',
                 ]),
-
+            Avatar::make('Avatar'),
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
