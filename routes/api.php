@@ -96,6 +96,9 @@ Route::get('/p-sync', function () {
         $adj = $p->inventories()->whereType('ADJUSTMENT')->sum('quantity');
         $orders = $p->inventories()->whereType('ORDER')->sum('quantity');
         $p->update(['ci' => $adj - $orders]);
+
+        // qty sell
+        $p->update(['qty_sell' => $orders]);
     }
 });
 
