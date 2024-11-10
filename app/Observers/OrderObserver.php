@@ -26,11 +26,13 @@ class OrderObserver
      */
     public function updated(Order $order)
     {
-        ProductInventory::create([
-            'product_id' => $order->product->id,
-            'type' => 'ORDER',
-            'quantity' => $order->quantity,
-        ]);
+        if ($order->status == 'Confirmed') {
+            ProductInventory::create([
+                'product_id' => $order->product->id,
+                'type' => 'ORDER',
+                'quantity' => $order->quantity,
+            ]);
+        }
     }
 
     /**

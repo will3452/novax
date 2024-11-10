@@ -13,6 +13,11 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class SalesRecord extends Resource
 {
     public static $group = 'Sales';
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+
     public function authorizedToUpdate(Request $request)
     {
         if ($request->has('action')) return true;
