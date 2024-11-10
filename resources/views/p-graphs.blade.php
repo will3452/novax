@@ -11,7 +11,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        Daily Usage
+                        Daily Orders
                     </div>
                     <div class="card-body">
                         <canvas id="dl" >
@@ -22,7 +22,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        Monthly Usage
+                        Monthly Orders
                     </div>
                     <div class="card-body">
 
@@ -34,7 +34,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        Yearly Usage
+                        Yearly Orders
                     </div>
                     <div class="card-body">
                         <canvas id="yl" >
