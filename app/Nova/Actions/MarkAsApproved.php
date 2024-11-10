@@ -28,7 +28,7 @@ class MarkAsApproved extends Action
             $model->update(['status' => 'Confirmed']);
             $items = [];
 
-            if (issets($model->product_id)) {
+            if (isset($model->product_id)) {
                 $source = 'ORDER';
                 $items[] = [
                     'item' => $model->product->name,
