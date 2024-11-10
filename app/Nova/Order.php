@@ -21,6 +21,12 @@ class Order extends Resource
 
         return false;
     }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return false;
+    }
+
     public static function availableForNavigation(Request $request)
     {
         return in_array(auth()->user()->type, ['administrator', 'sales',]);

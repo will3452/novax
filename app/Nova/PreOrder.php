@@ -16,9 +16,25 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class PreOrder extends Resource
 {
     public static $group = 'Sales';
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
     public static function availableForNavigation(Request $request)
     {
         return in_array(auth()->user()->type, ['administrator', 'sales',]);
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        if ($request->has('action')) return true;
+
+        return false;
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return false;
     }
     /**
      * The model the resource corresponds to.

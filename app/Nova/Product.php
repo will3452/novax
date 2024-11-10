@@ -20,7 +20,7 @@ class Product extends Resource
     public static $group = 'Inventory';
     public static function availableForNavigation(Request $request)
     {
-        return in_array(auth()->user()->type, ['administrator', 'inventory manager']);
+        return in_array(auth()->user()->type, ['administrator', 'inventory manager', 'sales']);
     }
     /**
      * The model the resource corresponds to.
