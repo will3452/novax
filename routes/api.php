@@ -90,7 +90,16 @@ Route::get('/promos', function () {
     return Promo::where(['is_active' => true])->get();
 });
 
-Route::get('/sync', function () {
+Route::get('/p-sync', function () {
+    $ps = Product::get();
+    foreach ($ps as $p) {
+        $adj = $p->inventories()->whereType('ADJUSTMENT')->sum('quantity');
+        $orders = $p->inventories()->whereType('ORDER')->sum('quantity');
+        $p->update(['ci' => $adj - $orders]);
+    }
+});
+
+Route::get('/i-sync', function () {
     $ingredients = Ingredient::get();
     foreach ($ingredients as $i) {
         $totalUsage = $i->inventories()->whereType('USAGE')->sum('quantity');

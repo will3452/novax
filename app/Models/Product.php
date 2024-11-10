@@ -15,16 +15,19 @@ class Product extends Model
         'description',
         'uom',
         'category',
-        'price', 
-    ]; 
+        'price',
+        'qty_sell',
+        'amount_sell',
+        'ci', // current inventory
+    ];
 
     public function inventories () {
         return $this->hasMany(ProductInventory::class, 'product_id');
     }
 
-    public function getQuantityAttribute() {
-        $adjustments =  $this->inventories()->whereType('ADJUSTMENT')->sum('quantity'); 
-        $orders =  $this->inventories()->whereType('ORDER')->sum('quantity'); 
-        return $adjustments - $orders; 
-    }
+    // public function getQuantityAttribute() {
+    //     $adjustments =  $this->inventories()->whereType('ADJUSTMENT')->sum('quantity');
+    //     $orders =  $this->inventories()->whereType('ORDER')->sum('quantity');
+    //     return $adjustments - $orders;
+    // }
 }

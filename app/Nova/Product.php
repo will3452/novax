@@ -66,7 +66,8 @@ class Product extends Resource
                     'Bag' => 'Bag',
                 ]),
             Currency::make('Unit Price', 'price')->sortable(),
-            Number::make('Current Inventory', fn () => $this->quantity)
+            Number::make('Current Inventory', 'ci')->sortable(),
+            Number::make('Quantity Sold', 'qty_sell')->sortable(),
         ];
     }
 
