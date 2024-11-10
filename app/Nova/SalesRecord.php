@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\KeyValue;
@@ -71,6 +72,7 @@ class SalesRecord extends Resource
             BelongsTo::make('Sales', 'sales', User::class),
             Text::make('Source')->sortable(),
             KeyValue::make('Items', 'items'),
+            Currency::make('Total', 'total')->sortable(),
         ];
     }
 
