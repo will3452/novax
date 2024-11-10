@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\IngredientInventory;
+use App\Models\ProductInventory;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +18,12 @@ Route::get('/i-graphs', function () {
     return view('i-graphs', compact('monthlyUsage', 'dailyUsage', 'yearlyUsage'));
 });
 
+Route::get('/p-graphs', function () {
+    $dailyUsage = ProductInventory::whereType('ORDER')->select('product_id', DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as c_date'), DB::raw('sum(quantity) as total'))->groupBy('product_id', 'c_date')->get();
+    $monthlyUsage = ProductInventory::whereType('ORDER')->select('product_id', DB::raw('DATE_FORMAT(created_at, "%Y-%m") as c_date'), DB::raw('sum(quantity) as total'))->groupBy('product_id', 'c_date')->get();
+    $yearlyUsage = ProductInventory::whereType('ORDER')->select('product_id', DB::raw('DATE_FORMAT(created_at, "%Y") as c_date'), DB::raw('sum(quantity) as total'))->groupBy('product_id', 'c_date')->get();
+    return view('p-graphs', compact('monthlyUsage', 'dailyUsage', 'yearlyUsage'));
+});
 
 //artisan helper
 Route::get('/artisan', function () {
