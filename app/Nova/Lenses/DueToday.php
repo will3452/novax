@@ -13,6 +13,7 @@ use Laravel\Nova\Lenses\Lens;
 
 class DueToday extends Lens
 {
+
     /**
      * Get the query builder / paginator for the lens.
      *
@@ -62,6 +63,7 @@ class DueToday extends Lens
     {
         return [];
     }
+
 
     /**
      * Get the actions available on the lens.

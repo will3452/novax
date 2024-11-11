@@ -12,6 +12,7 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Payment extends Resource
@@ -70,7 +71,7 @@ class Payment extends Resource
             BelongsTo::make('Loan', 'loan', Loan::class),
             Date::make('Date', 'created_at')->sortable()->exceptOnForms(),
             // Date::make('Due Date'),
-            Currency::make('Amount')->rules(['required', new CheckPaymentRule($this->id ?? $request->viaResourceId)]),
+            Text::make('Amount'),
             // Select::make('Status')
             //     ->options([
             //         'PENDING' => 'PENDING',

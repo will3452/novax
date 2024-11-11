@@ -4,6 +4,7 @@ namespace App\Nova\Metrics;
 
 use App\Models\Loan;
 use App\Models\Payment;
+use App\Models\Revenue;
 use Laravel\Nova\Metrics\Value;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -17,13 +18,25 @@ class TotalRevenue extends Value
      */
     public function calculate(NovaRequest $request)
     {
-        $totalPayment = Payment::sum('amount');
-        $totalLoan = Loan::sum('amount');
 
-        return $this->result($totalPayment - $totalLoan)
+        return $this->sum($request, Revenue::class, 'amount')
             ->prefix('₱')
             ->suffix(null)
             ->format('0,0');
+    }
+
+    /**
+     * Get the ranges available for the metric.
+     *
+     * @return array
+     */
+    public function ranges()
+    {
+        return [
+            30 => __('30 Days'),
+            60 => __('60 Days'),
+            90 => __('90 Days'),
+        ];
     }
 
     /**

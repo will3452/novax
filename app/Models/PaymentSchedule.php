@@ -12,14 +12,15 @@ class PaymentSchedule extends Model
     protected $fillable = [
         'loan_id',
         'amount',
-        'due_date', 
-        'status', 
-    ]; 
+        'due_date',
+        'status',
+        'revenue',
+    ];
 
     public function loan () {
-        return $this->belongsTo(Loan::class, 'loan_id'); 
+        return $this->belongsTo(Loan::class, 'loan_id');
     }
     protected $casts = [
-        'due_date' => 'date', 
+        'due_date' => 'date',
     ];
 }

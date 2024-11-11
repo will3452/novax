@@ -2,11 +2,14 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\PayNow;
+use App\Nova\Actions\SendDueTodayReminder;
 use App\Nova\Filters\FilterByDate;
 use App\Nova\Metrics\DueToday;
 use App\Nova\Lenses\DueToday as DueTodayLens;
 use App\Nova\Metrics\DueTodayStatus;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
@@ -28,7 +31,6 @@ class PaymentSchedule extends Resource
     public function title () {
         return $this->due_date->format('m/d/Y');
     }
-
     /**
      * The columns that should be searched.
      *
@@ -51,6 +53,11 @@ class PaymentSchedule extends Resource
             Date::make('Due Date'),
             Text::make('Amount'),
             BelongsTo::make('Loan', 'loan', Loan::class),
+            Badge::make('Status')
+                ->map([
+                    'PAID' => 'success',
+                    'PENDING' => 'info',
+                ]),
         ];
     }
 
@@ -102,6 +109,15 @@ class PaymentSchedule extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        if ($request->has('action')) {
+            return [
+                PayNow::make()->showOnTableRow(),
+                SendDueTodayReminder::make()->standalone(),
+            ];
+        }
+        return [
+            PayNow::make()->showOnTableRow()->canSee(fn () => $this->status == 'PENDING'),
+            SendDueTodayReminder::make()->standalone(),
+        ];
     }
 }

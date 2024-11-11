@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\PaymentSchedule;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\SmsCredit;
 use Illuminate\Database\Eloquent\Collection;
 
 /*
@@ -54,6 +55,15 @@ Route::any('/cron', function (Request $request) {
         }
         $result = $borrowers->unique()->values()->all();
 
+        $limit = nova_get_setting('sms_limit', 100);
+        $credits = SmsCredit::count() - $limit;
+
+        if ($credits < count($result)) return 'No Balance';
+
+        foreach ($result as $r) {
+            (new SmsCredit())->save();
+        }
+
         $ch = curl_init();
         $parameters = array(
             'apikey' => nova_get_setting('sms_key', env('SMS_KEY')),
@@ -61,7 +71,7 @@ Route::any('/cron', function (Request $request) {
             'message' => nova_get_setting('sms_template', 'juantap: reminders please settle your loan.'),
             'sendername' => 'OTIEPI'
         );
-        curl_setopt( $ch, CURLOPT_URL,'https://semaphore.co/api/v4/messages' );
+        curl_setopt( $ch, CURLOPT_URL,'https://semaphore.co/api/v4/messages');
         curl_setopt( $ch, CURLOPT_POST, 1);
 
         //Send the parameters set above with the request
@@ -73,7 +83,7 @@ Route::any('/cron', function (Request $request) {
         curl_close ($ch);
     }
     return $result;
-});
+})->name('cron');
 
 Route::any('/v1/{params}', function (Request $request, $params) {
     $method = Str::lower($request->getMethod());
