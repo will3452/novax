@@ -8,10 +8,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class LoanAmount extends Value
 {
-    public $loanId; 
+    public $loanId;
     public function __construct($loanId)
     {
-        $this->loanId = $loanId;    
+        $this->loanId = $loanId;
     }
     /**
      * Calculate the value of the metric.
@@ -21,7 +21,7 @@ class LoanAmount extends Value
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->result(Loan::find($this->loanId)->amount)->prefix('₱');
+        return $this->result(Loan::find($this->loanId)->amount)->prefix('₱ ')->suffix(null)->format('0,0');
     }
 
     /**

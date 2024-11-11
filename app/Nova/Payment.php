@@ -24,6 +24,21 @@ class Payment extends Resource
      */
     public static $model = \App\Models\Payment::class;
 
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return false;
+    }
+
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
@@ -38,6 +53,7 @@ class Payment extends Resource
      */
     public static $search = [
         'id',
+        'created_at',
     ];
 
     /**
@@ -49,7 +65,6 @@ class Payment extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
             Hidden::make('penalty')->default(fn () => 0),
             BelongsTo::make('User', 'user', User::class),
             BelongsTo::make('Loan', 'loan', Loan::class),

@@ -8,6 +8,7 @@ use App\Nova\Metrics\LoanTrend;
 use App\Nova\Metrics\PaymentReceived;
 use App\Nova\Metrics\PaymentTrend;
 use App\Nova\Metrics\RemainingCapital;
+use App\Nova\Metrics\SmsCredit;
 use App\Nova\Metrics\TotalCash;
 use App\Nova\Metrics\TotalRevenue;
 use Eminiarts\Tabs\Tabs;
@@ -111,6 +112,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             TotalCash::make(),
             // PaymentTrend::make(),
             LoanTrend::make(),
+            SmsCredit::make(),
         ];
     }
 

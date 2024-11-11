@@ -7,6 +7,7 @@ use App\Nova\Actions\AddGroup;
 use App\Nova\Metrics\LoanAmount;
 use App\Nova\Metrics\TotalBalance;
 use App\Nova\Metrics\TotalPenalties;
+use Eminiarts\Tabs\Tab;
 use Eminiarts\Tabs\Tabs;
 use Str;
 use Laravel\Nova\Fields\ID;
@@ -59,7 +60,7 @@ class Loan extends Resource
     public function fields(Request $request)
     {
         return [
-            Tabs::make('Loan Management', [
+            Tabs::make('Loan Information', [
                 'Details' => [
                     Text::make('Reference')->exceptOnForms()->sortable(),
                     Badge::make('Status', 'payment_status')
@@ -97,11 +98,14 @@ class Loan extends Resource
                         ])->rules(['required']),
                     Textarea::make('Collateral'),
                     Image::make('Collateral Image'),
-                    ],
+                        ],
+
                 'Borrower(s)' => [
                     HasMany::make('Borrowers', 'userLoans', UserLoan::class),
                 ],
-                'Payment Schedules' => [
+            ])->withToolbar(),
+            Tabs::make('Payments', [
+                'Schedules' => [
                     HasMany::make('Schedules', 'schedules', PaymentSchedule::class),
                 ],
                 'Payments' => [

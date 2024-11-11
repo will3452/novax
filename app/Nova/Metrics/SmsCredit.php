@@ -2,17 +2,12 @@
 
 namespace App\Nova\Metrics;
 
-use App\Models\Loan;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Value;
+use App\Models\SmsCredit as SmsCreditModel;
 
-class TotalPenalties extends Value
+class SmsCredit extends Value
 {
-    public $loanId;
-    public function __construct($loanId)
-    {
-        $this->loanId = $loanId;
-    }
     /**
      * Calculate the value of the metric.
      *
@@ -21,7 +16,8 @@ class TotalPenalties extends Value
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->result(Loan::find($this->loanId)->penalties()->sum('amount'))->prefix('₱ ')->suffix(null)->format('0,0');
+        $limit = nova_get_setting('sms_limit', 100);
+        return $this->result($limit - SmsCreditModel::count());
     }
 
     /**
@@ -41,6 +37,6 @@ class TotalPenalties extends Value
      */
     public function uriKey()
     {
-        return 'total-penalties';
+        return 'sms-credit';
     }
 }
