@@ -1,0 +1,26 @@
+:root {
+    --primary: rgb(189, 3, 4, 1); /* BD0304 */
+    --primary-dark: rgb(155, 2, 3, 1); /* Darker shade of BD0304 */
+    --primary-70: rgba(189, 3, 4, 0.7);
+    --primary-50: rgba(189, 3, 4, 0.5);
+    --primary-30: rgba(189, 3, 4, 0.3);
+    --primary-10: rgba(189, 3, 4, 0.1);
+    --logo: #3a001f; /* A dark tone for logo */
+    --sidebar-icon: #9d1b3d; /* A complementary shade for sidebar icons */
+  }
+
+  .bg-grad-sidebar {
+    background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      from(rgb(189, 3, 4, 1)),
+      to(#3c4655)
+    );
+
+    background-image: linear-gradient(
+      0deg,
+      rgb(189, 3, 4, 1),
+      rgba(189, 3, 4, 0.1)
+    );
+  }

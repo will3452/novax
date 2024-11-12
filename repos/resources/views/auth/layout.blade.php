@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ \Laravel\Nova\Nova::name() }}</title>
-
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,800,800i,900,900i" rel="stylesheet">
 
@@ -21,11 +21,7 @@
         <link rel="stylesheet" href="{{ $publicPath }}">
     @endforeach
 </head>
-<body class="bg-40 text-black h-full">
-    <div class="h-full">
-        <div class="px-view py-view mx-auto">
-            @yield('content')
-        </div>
-    </div>
+<body class="">
+    @yield('content')
 </body>
 </html>

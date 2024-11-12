@@ -18,27 +18,29 @@ use Laravel\Nova\Panel;
 
 class User extends Resource
 {
+    public static $group = 'Security';
+
     public static function availableForNavigation(Request $request)
     {
         return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]);
     }
     public static function authorizedToCreate(Request $request)
     {
-        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]); 
+        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]);
     }
     public function authorizedToDelete(Request $request)
     {
-        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]); 
+        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]);
     }
 
     public function authorizedToView(Request $request)
     {
-        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]); 
+        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]);
     }
 
     public function authorizedToUpdate(Request $request)
     {
-        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]); 
+        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]);
     }
 
     public static function indexQuery(NovaRequest $request, $query)
@@ -82,9 +84,9 @@ class User extends Resource
             Panel::make('Basic Information', [
                 Select::make('Type')
                     ->options([
-                        ModelsUser::TYPE_PATIENT => ModelsUser::TYPE_PATIENT, 
-                        ModelsUser::TYPE_STAFF => ModelsUser::TYPE_STAFF, 
-                    ]), 
+                        ModelsUser::TYPE_PATIENT => ModelsUser::TYPE_PATIENT,
+                        ModelsUser::TYPE_STAFF => ModelsUser::TYPE_STAFF,
+                    ]),
                 Text::make('Name')
                     ->sortable()
                     ->rules('required', 'max:255'),
@@ -93,9 +95,9 @@ class User extends Resource
                         'Male' => 'Male',
                         'Female' => 'Female',
                     ]),
-                Text::make('Address'), 
-                Date::make('Birthday'), 
-            ]), 
+                Text::make('Address'),
+                Date::make('Birthday'),
+            ]),
             Panel::make('Account Credentials', [
                 Text::make('Email')
                     ->sortable()
@@ -108,7 +110,7 @@ class User extends Resource
                     ->creationRules('required', 'string', 'min:8')
                     ->updateRules('nullable', 'string', 'min:8'),
             ]),
-            HasMany::make('Medical Records', 'medicalRecords', MedicalRecord::class), 
+            HasMany::make('Medical Records', 'medicalRecords', MedicalRecord::class),
         ];
     }
 
