@@ -48,7 +48,7 @@
                                             </svg>
 
                                             <div>
-                                                {{item.time_start}} - {{ item.time_end }}
+                                                {{item.slot}}
                                             </div>
                                         </div>
                                     </div>
@@ -92,7 +92,7 @@ export default {
     },
     computed: {
         events () {
-            let _events = this.records.map( e => ({dates: new Date(e.date), key: e.id, dot: true, customData: {...e}}));
+            let _events = this.records.map( e => ({dates: new Date(e.date), key: e.id, bar: {color: 'green',}, customData: {...e}}));
             _events.push({
                     key: 'today',
                     highlight: {
