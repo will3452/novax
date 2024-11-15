@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\ShowDentalChart;
 use Eminiarts\Tabs\Tab;
 use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Fields\ID;
@@ -110,6 +111,9 @@ class PatientRecord extends Resource
                 new Tab('X-Rays', [
                     HasMany::make('Xrays', 'xrays', Xray::class)
                 ]),
+                new Tab('Dental Record', [
+                    HasOne::make('Dental Record', 'dentalRecord', DentalRecord::class),
+                ])
             ]))->withToolbar(),
         ];
     }
@@ -159,6 +163,7 @@ class PatientRecord extends Resource
             (new DownloadExcel())
                 ->canSee(fn () => auth()->user()->type == 'Administrator')
                 ->withHeadings(),
+            (new ShowDentalChart()),
         ];
     }
 }

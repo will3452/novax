@@ -4,12 +4,14 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Mail\AppointmentReminder;
 use App\Models\Appointment;
 use App\Models\BotResponse;
 use App\Models\CronJob;
 use App\Models\Endpoint;
 use App\Models\SlotCount;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -124,7 +126,11 @@ Route::get('/slots', function (Request $request) {
 
 
 Route::get('/reminders', function () {
-    $app = Appointment::whereDate('date', today())->get();
+    $app = Appointment::whereDate('date', today()->addDay(2))->get();
     $app->load('patient');
-    return $app;
+    foreach ($app as $a) {
+        Mail::to($a->patient->email)->send(new AppointmentReminder($a));
+    }
+
+    return 'ok!';
 });

@@ -2,6 +2,7 @@
 
 use App\Models\Appointment;
 use App\Models\Service;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -59,6 +60,10 @@ Route::post('/cancel', function (Request $request) {
     alert()->success('Your appointment has been cancelled!');
     return back();
 });
+
+Route::get('/dental-record/{user}', function (Request $request, User $user) {
+    return view('dental_record', compact('user'));
+})->middleware(['auth']);
 
 Route::get('/faq', function (Request $request) {
     return view('faq');
