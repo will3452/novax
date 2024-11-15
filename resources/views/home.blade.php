@@ -36,6 +36,15 @@
                                     <h4>{{$item->service}}</h4>
                                     <p>{{$item->slot}}</p>
                                 </div>
+                                @if ($item->status == 'Approved')
+                                    <div class="card-footer">
+                                        <form action="/cancel" method="POST" class="d-flex justify-content-end">
+                                            @csrf
+                                            <input type="hidden" name="appointment_id" value="{{$item->id}}" />
+                                            <button class="btn btn-danger">CANCEL</button>
+                                        </form>
+                                    </div>
+                                @endif
                             </div>
                         @empty
                         <div class="alert alert-info">

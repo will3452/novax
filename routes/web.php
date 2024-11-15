@@ -27,25 +27,37 @@ Route::get('/reserve/{service}', function (Request $request, Service $service) {
 })->middleware(['auth']);
 
 Route::post('/reserve', function (Request $request) {
-    $exists = Appointment::whereSlot($request->slot)->whereDate('date', $request->date)->exists();
+    try {
+        $exists = Appointment::whereSlot($request->slot)->whereDate('date', $request->date)->exists();
 
-    if (! $exists) {
-        Appointment::create([
-            'slot' => $request->slot,
-            'service' => $request->service,
-            'patient_id' => $request->patient_id,
-            'remarks' => $request->remarks,
-            'date' => $request->date,
-        ]);
-    } else {
-        alert()->error('Error','Schedule is already taken');
-        return redirect()->back();
+        if (! $exists) {
+            Appointment::create([
+                'slot' => $request->slot,
+                'service' => $request->service,
+                'patient_id' => $request->patient_id,
+                'remarks' => $request->remarks,
+                'date' => $request->date,
+            ]);
+        } else {
+            alert()->error('Error','Schedule is already taken');
+            return redirect()->back();
+        }
+
+
+        alert()->success('Success','Appointment has been submitted');
+
+        return back();
+    } catch (Exception $e) {
+        alert()->error('Please fill the form.');
+        return back();
     }
+});
 
-
-    alert()->success('Success','Appointment has been submitted');
-
-    return redirect()->back();
+Route::post('/cancel', function (Request $request) {
+    $app = Appointment::findOrFail($request->appointment_id);
+    $app->update(['status' => 'Cancelled']);
+    alert()->success('Your appointment has been cancelled!');
+    return back();
 });
 
 Route::get('/faq', function (Request $request) {
