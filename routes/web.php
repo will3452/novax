@@ -62,6 +62,10 @@ Route::post('/cancel', function (Request $request) {
 });
 
 Route::get('/dental-record/{user}', function (Request $request, User $user) {
+    if (! $user->dentalRecord) {
+        alert()->error('No Dental Record!');
+        return back();
+    }
     return view('dental_record', compact('user'));
 })->middleware(['auth']);
 
