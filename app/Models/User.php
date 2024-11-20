@@ -43,6 +43,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Task::class, 'assignments', 'user_id', 'task_id');
     }
 
+    public function assignments () {
+        return $this->hasMany(Assignment::class, 'user_id');
+    }
+
     public function getOngoingAssignmentAttribute() {
         return $this->tasks()->where('assignments.status', 'ON-GOING')->latest()->first();
     }

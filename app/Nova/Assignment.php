@@ -54,10 +54,11 @@ class Assignment extends Resource
                     'DONE' => 'DONE',
                     'DROPPED' => 'DROPPED',
                 ]),
-        Image::make('Proof of Done'),
+        Image::make('Proof of Done')->exceptOnForms(),
+        Image::make('Proof of Initiation')->exceptOnForms(),
         Text::make('Analyzed Image', function () {
             $tr = \App\Models\TaskResult::whereUserId($this->user_id)->whereTaskId($this->task_id)->latest()->first();
-            if (! $tr) return "----";
+            if (! $tr) return "—";
             return "<a href='/result/$tr->id' target='_blank'>View Image</a>";
         })->asHtml(),
         Hidden::make('eval_status')

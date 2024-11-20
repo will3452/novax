@@ -14,6 +14,7 @@ class Assignment extends Model
         'task_id',
         'status',
         'proof_of_done',
+        'proof_of_initiation',
         'eval_status',
     ];
 

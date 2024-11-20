@@ -61,8 +61,12 @@ Route::post('/upload-image', function (Request $request) {
 });
 
 Route::post('/upload-task-result', function (Request $request) {
-    Assignment::whereUserId($request->user_id)->whereTaskId($request->task_id)
-        ->update(['proof_of_done' => $request->image, 'status' => 'DONE']);
+    $ass = Assignment::whereUserId($request->user_id)->whereTaskId($request->task_id)->first();
+    if (! $ass->proof_of_initiation) {
+        $ass->update(['proof_of_initiation' => $request->image]);
+    } else {
+        $ass->update(['proof_of_done' => $request->image, 'status' => 'DONE']);
+    }
     return TaskResult::create([
         'user_id' => $request->user_id,
         'task_id' => $request->task_id,

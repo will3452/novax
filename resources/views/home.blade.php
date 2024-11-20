@@ -17,7 +17,48 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card mb-3">
+                    <div class="card-header gap-2 d-flex align-items-center">
+                        <svg style="width:25px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+                        </svg>
+                        Attendance Logs
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <table style="width:100%;" id="attendance">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>In</th>
+                                        <th>Out</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (auth()->user()->attendances()->latest()->take(5)->get() as $item)
+                                        <tr>
+                                            <td>
+                                                {{$item->created_at->format('m/d/Y')}}
+                                            </td>
+                                            <td>
+                                                {{$item->in->format('h:i A')}}
+                                            </td><td>
+                                                {{$item->out ? $item->out->format('h:i A'): '-'}}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-8">
+
+                <div class="card mb-3">
                     <div class="card-header d-flex gap-2 align-items-center">
                         <svg style="width:25px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -67,57 +108,20 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="d-flex">
-                                        <task-completion-uploader user-id="{{auth()->id()}}" task="{{auth()->user()->ongoingAssignment->id}}" api="https://tupad.lzrk.host"/>
+                                        @php
+                                            $assignment = auth()->user()->assignments()->whereTaskId(auth()->user()->ongoingAssignment->id)->first();
+                                        @endphp
+                                        <task-completion-uploader action="{{$assignment->proof_of_initiation == null ? 'Capture proof of Initiation' : 'Capture proof of Done'}}" user-id="{{auth()->id()}}" task="{{auth()->user()->ongoingAssignment->id}}" api="https://tupad.lzrk.host"/>
                                     </div>
                                 </div>
                             </div>
-                            <div class="alert alert-warning mt-2">
+                            {{-- <div class="alert alert-warning mt-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" width="25px">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75 12 3m0 0 3.75 3.75M12 3v18" />
                                   </svg>
                                 Upload a photo of the completed cleaning task to mark it as accomplished
-                            </div>
+                            </div> --}}
                         @endif
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-8">
-
-                <div class="card mb-3">
-                    <div class="card-header gap-2 d-flex align-items-center">
-                        <svg style="width:25px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
-                        </svg>
-                        Attendance Logs
-                    </div>
-                    <div class="card-body">
-                        <div>
-                            <table style="width:100%;" id="attendance">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>In</th>
-                                        <th>Out</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (auth()->user()->attendances()->latest()->take(5)->get() as $item)
-                                        <tr>
-                                            <td>
-                                                {{$item->created_at->format('m/d/Y')}}
-                                            </td>
-                                            <td>
-                                                {{$item->in->format('h:i A')}}
-                                            </td><td>
-                                                {{$item->out ? $item->out->format('h:i A'): '-'}}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                 </div>
 
@@ -163,22 +167,34 @@
                                             {{$item->to->diff($item->from)->format('%d day(s)')}}
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <th>
-                                            Proof of Done
-                                        </th>
-                                        <td>
-                                            @if (\App\Models\TaskResult::whereUserId(auth()->id())->whereTaskId($item->id)->latest()->first())
-                                            <a target="_blank" href="/result/{{\App\Models\TaskResult::whereUserId(auth()->id())->whereTaskId($item->id)->latest()->first()->id}}">
-                                                View Image Analyzed
-                                            </a>
-                                            @else
-                                            ---
-                                            @endif
-
-                                        </td>
-                                    </tr>
                                 </table>
+                                <div class="row">
+                                    @php
+                                        $images = \App\Models\TaskResult::whereUserId(auth()->id())->whereTaskId($item->id)->latest()->take(2)->get();
+                                    @endphp
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-header">Before</div>
+                                            <div class="card-body">
+                                                <img src="https://tupad.lzrk.host/storage/{{$images[1]->image}}" class="w-100" alt="">
+                                            </div>
+                                            <div class="card-footer text-center">
+                                                <a target="_blank" href="/result/{{$images[1]->id}}">View Image Analyzed</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-header">After</div>
+                                            <div class="card-body">
+                                                <img src="https://tupad.lzrk.host/storage/{{$images[0]->image}}" class="w-100" alt="">
+                                            </div>
+                                            <div class="card-footer text-center">
+                                                <a target="_blank" href="/result/{{$images[0]->id}}">View Image Analyzed</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         @empty

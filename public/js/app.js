@@ -5229,71 +5229,156 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['api', 'task', 'userId'],
+  props: ['api', 'task', 'userId', 'action'],
   data: function data() {
     return {
       file: null,
       loading: false,
-      progress: 0
+      progress: 0,
+      mediaStream: null,
+      capturedImage: null
     };
   },
   methods: {
     fileChange: function fileChange(e) {
       this.file = e.target.files[0];
     },
-    submit: function submit() {
+    base64ToBlob: function base64ToBlob(base64) {
+      // Decode base64 string
+      var byteString = atob(base64.split(",")[1]);
+      var mimeString = base64.split(",")[0].split(":")[1].split(";")[0];
+
+      // Create an ArrayBuffer and Uint8Array to store binary data
+      var arrayBuffer = new ArrayBuffer(byteString.length);
+      var uint8Array = new Uint8Array(arrayBuffer);
+      for (var i = 0; i < byteString.length; i++) {
+        uint8Array[i] = byteString.charCodeAt(i);
+      }
+
+      // Create and return a Blob from the binary data
+      return new Blob([uint8Array], {
+        type: mimeString
+      });
+    },
+    captureImage: function captureImage() {
       var _this = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var fd, api, response, result;
+        var video, canvas, ctx;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              _context.prev = 0;
-              _this.loading = true;
-              _this.progress = 10;
-              fd = new FormData();
-              fd.append('image', _this.file);
-              api = _this.api + '/api/upload-image';
+              video = _this.$refs.vid;
+              canvas = _this.$refs.canvas; // Set canvas dimensions to match the video
+              canvas.width = video.videoWidth;
+              canvas.height = video.videoHeight;
+
+              // Draw the current frame from the video onto the canvas
+              ctx = canvas.getContext("2d");
+              ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+              // Convert the canvas to a data URL (base64 string)
               _context.next = 8;
+              return canvas.toDataURL("image/png");
+            case 8:
+              _this.capturedImage = _context.sent;
+              _this.file = _this.base64ToBlob(_this.capturedImage);
+              _this.submit();
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee);
+      }))();
+    },
+    closeWebcam: function closeWebcam() {
+      if (this.mediaStream) {
+        // Stop all tracks in the media stream
+        this.mediaStream.getTracks().forEach(function (track) {
+          return track.stop();
+        });
+        this.mediaStream = null; // Clear the stored media stream
+        this.$refs.video.srcObject = null; // Remove the video source
+      } else {
+        alert("No webcam is active.");
+      }
+    },
+    openWebcam: function openWebcam() {
+      var _this2 = this;
+      navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: false
+      }).then(function (stream) {
+        _this2.mediaStream = stream;
+        console.log(_this2.$refs);
+        // Changing the source of video to current stream.
+        _this2.$refs['vid'].srcObject = stream;
+        _this2.$refs['vid'].addEventListener("loadedmetadata", function () {
+          _this2.$refs['vid'].play();
+        });
+      })["catch"](window.alert);
+    },
+    submit: function submit() {
+      var _this3 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var fd, api, response, result;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _this3.loading = true;
+              _this3.progress = 10;
+              fd = new FormData();
+              fd.append('image', _this3.file);
+              api = _this3.api + '/api/upload-image';
+              _context2.next = 8;
               return axios.post(api, fd);
             case 8:
-              response = _context.sent;
-              _this.progress += 40;
-              _context.next = 12;
-              return axios.post("https://detect.roboflow.com/tupad-program/2?api_key=k4C9arHZknWSYWhXuT32&image=" + "".concat(_this.api, "/storage/").concat(response.data));
+              response = _context2.sent;
+              _this3.progress += 40;
+              _context2.next = 12;
+              return axios.post("https://detect.roboflow.com/tupad-program/2?api_key=k4C9arHZknWSYWhXuT32&image=" + "".concat(_this3.api, "/storage/").concat(response.data));
             case 12:
-              result = _context.sent;
+              result = _context2.sent;
               console.log(result.data);
-              _this.progress += 30;
-              _context.next = 17;
+              _this3.progress += 30;
+              _context2.next = 17;
               return axios.post('/api/upload-task-result', {
-                user_id: _this.userId,
-                task_id: _this.task,
+                user_id: _this3.userId,
+                task_id: _this3.task,
                 image: response.data,
                 result: result.data
               });
             case 17:
-              _this.progress += 20;
-              alert('Task has been moved to for evaluation!');
+              _this3.progress += 20;
               window.location.reload();
-              _context.next = 26;
+              _context2.next = 25;
               break;
-            case 22:
-              _context.prev = 22;
-              _context.t0 = _context["catch"](0);
+            case 21:
+              _context2.prev = 21;
+              _context2.t0 = _context2["catch"](0);
               alert('Something went wrong please contact the administrator!');
-              console.log('error => ', _context.t0);
-            case 26:
-              _context.prev = 26;
-              _this.loading = false;
-              return _context.finish(26);
-            case 29:
+              console.log('error => ', _context2.t0);
+            case 25:
+              _context2.prev = 25;
+              _this3.loading = false;
+              return _context2.finish(25);
+            case 28:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
-        }, _callee, null, [[0, 22, 26, 29]]);
+        }, _callee2, null, [[0, 21, 25, 28]]);
       }))();
     }
   }
@@ -27611,15 +27696,71 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("input", { attrs: { type: "file" }, on: { change: _vm.fileChange } }),
+    _c("canvas", { ref: "canvas", staticStyle: { display: "none" } }),
     _vm._v(" "),
-    !_vm.loading
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.mediaStream,
+            expression: "mediaStream",
+          },
+        ],
+      },
+      [_c("video", { ref: "vid", staticClass: "w-100", attrs: { id: "vid" } })]
+    ),
+    _vm._v(" "),
+    _c("div", {
+      directives: [
+        {
+          name: "show",
+          rawName: "v-show",
+          value: !_vm.mediaStream,
+          expression: "! mediaStream",
+        },
+      ],
+    }),
+    _vm._v(" "),
+    _vm.mediaStream == null
       ? _c(
           "button",
-          { staticClass: "btn btn-sm btn-success", on: { click: _vm.submit } },
-          [_vm._v("Submit")]
+          {
+            staticClass: "btn btn-sm btn-secondary",
+            attrs: { id: "but" },
+            on: { click: _vm.openWebcam },
+          },
+          [_vm._v("\n        Open WebCam\n    ")]
         )
-      : _c("div", { staticClass: "progress" }, [
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.mediaStream != null
+      ? _c(
+          "button",
+          {
+            staticClass: "btn btn-sm btn-success",
+            on: { click: _vm.captureImage },
+          },
+          [_vm._v(_vm._s(_vm.action))]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.capturedImage
+      ? _c("img", {
+          staticClass: "w-100",
+          staticStyle: { display: "none" },
+          attrs: {
+            disabled: _vm.loading,
+            src: _vm.capturedImage,
+            alt: "Captured Image",
+          },
+        })
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.loading
+      ? _c("div", { staticClass: "progress" }, [
           _c("div", {
             staticClass:
               "progress-bar progress-bar-striped progress-bar-animated",
@@ -27631,7 +27772,8 @@ var render = function () {
               "aria-valuemax": "100",
             },
           }),
-        ]),
+        ])
+      : _vm._e(),
   ])
 }
 var staticRenderFns = []
