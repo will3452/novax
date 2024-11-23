@@ -10,12 +10,12 @@
 <body>
     <form method="post" action="/form-request" enctype="multipart/form-data" class="p-4 text-xs space-y-4">
         @csrf
-        <input type="hidden" name="user_id" value="{{$user->id}}" /> 
+        <input type="hidden" name="user_id" value="{{$user->id}}" />
         <div>
             Date: <input name="created_at" type="date">
         </div>
         <div class=" mb-4">
-            Ma'am/Sir, 
+            Ma'am/Sir,
         </div>
         <div class="xs">
             I/We would like to request for Authority to use SLSU Service Vehicle.
@@ -38,14 +38,14 @@
         </div>
         <div class="overflow-y-auto">
             <table class="w-full border">
-                <thead>    
+                <thead>
                     <tr>
                        <th class="border text-gray-800">
                             Passenger/s
                         </th>
                         <th class="border text-gray-800">
                             Organization
-                        </th> 
+                        </th>
                         <th class="border text-gray-800">
                             Destination/s
                         </th>
@@ -80,20 +80,20 @@
             </div>
             <input name="travel_order" type="file" />
         </div>
-        <div class="flex gap-2">
+        {{-- <div class="flex gap-2">
             <div class="flex gap-2 items-center">
                 <input type="radio" name="status" value="approved"/> Approved
             </div>
             <div class="flex gap-2 items-center">
                 <input type="radio" name="status" value="declined"/> Declinded
             </div>
-        </div>
+        </div> --}}
         <div>
             <div>
-                Noted By: 
+                Noted By:
             </div>
             <div>
-                {{nova_get_setting('vehicle_request_form_authorizer', 'Dr. Federick T. Villa')}}
+                {{nova_get_setting('vehicle_request_form_authorizer', 'Dr. Arvin N. Natividad')}}
             </div>
         </div>
         <div>

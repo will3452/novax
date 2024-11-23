@@ -23,7 +23,7 @@ class Client extends Resource
      * @var string
      */
     public function title () {
-        return "$this->first_name $this->last_name"; 
+        return "$this->first_name $this->last_name";
     }
 
     /**
@@ -36,7 +36,7 @@ class Client extends Resource
         'first_name',
         'last_name',
         'middle_name',
-        'employee_no', 
+        'employee_no',
     ];
 
     /**
@@ -56,7 +56,8 @@ class Client extends Resource
                 ->rules(['required','email']),
             Text::make('Employee No')
                 ->rules(['required']),
-            BelongsTo::make('User', 'user', User::class), 
+            Text::make('Department')->sortable(),
+            BelongsTo::make('User', 'user', User::class)->hideFromIndex(),
         ];
     }
 

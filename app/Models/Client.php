@@ -15,11 +15,12 @@ class Client extends Model
         'middle_name',
         'phone',
         'employee_no',
-        'email', 
+        'email',
         'user_id',
+        'department',
     ];
 
     public function user () {
-        return $this->belongsTo(User::class, 'user_id'); 
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

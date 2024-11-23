@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\AttachSignature;
+use App\Nova\Actions\ReviewAndDownloadForm;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
@@ -47,12 +49,13 @@ class VehicleRequestForm extends Resource
     {
         return [
             Date::make('Date')->sortable(),
-            BelongsTo::make('User', 'user', User::class), 
+            BelongsTo::make('User', 'user', User::class),
             Textarea::make('Purpose'),
             Textarea::make('Remarks'),
             File::make('Request Travel'),
             File::make('Travel Order'),
-            Text::make('Status'), 
+            Text::make('Status'),
+            Image::make('Signature'),
         ];
     }
 
@@ -97,6 +100,10 @@ class VehicleRequestForm extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+
+            ReviewAndDownloadForm::make()->showOnTableRow(),
+            AttachSignature::make()->showOnTableRow(),
+        ];
     }
 }

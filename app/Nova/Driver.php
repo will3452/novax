@@ -26,7 +26,7 @@ class Driver extends Resource
 
     public function title()
     {
-        return "$this->first_name $this->last_name"; 
+        return "$this->first_name $this->last_name";
     }
 
     /**
@@ -39,7 +39,7 @@ class Driver extends Resource
         'employee_no',
         'first_name',
         'last_name',
-        'middle_name', 
+        'middle_name',
     ];
 
     /**
@@ -64,8 +64,9 @@ class Driver extends Resource
                 ->rules(['required']),
             Image::make('Driver Lic B', 'driver_lic_b'),
             Image::make('Driver Lic C', 'driver_lic_c'),
-            Image::make('Medical Certificate', 'med_cert'),
-            BelongsTo::make('User', 'user', User::class), 
+            // Image::make('Medical Certificate', 'med_cert'),
+            Text::make('Campus')->sortable(),
+            BelongsTo::make('User', 'user', User::class)->hideFromIndex(),
         ];
     }
 

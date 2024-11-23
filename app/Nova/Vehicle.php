@@ -26,7 +26,7 @@ class Vehicle extends Resource
      */
 
     public function title () {
-        return "$this->model - $this->plate_number"; 
+        return "$this->model - $this->plate_number";
     }
 
     /**
@@ -53,9 +53,9 @@ class Vehicle extends Resource
                 ->rules(['required']),
             Text::make('Model'),
             Number::make('Capacity')
-                ->rules(['min:2']),
+                ->rules(['numeric', 'min:2']),
             Boolean::make('Is Available'),
-            BelongsTo::make('Driver', 'driver', Driver::class), 
+            BelongsTo::make('Driver', 'driver', Driver::class),
         ];
     }
 

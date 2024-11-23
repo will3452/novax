@@ -26,6 +26,13 @@ Route::get('/form-request/{user}', function (Request $request, App\Models\User $
    return view('form-request', compact('user', 'vehicles'));
 });
 
+
+Route::get('/view-request/{fr}', function (Request $request, VehicleRequestForm $fr) {
+    $user = auth()->user();
+    $vehicles = Vehicle::get();
+    return view('form-request-print', compact('fr', 'user', 'vehicles'));
+});
+
 Route::get('/trips/{user}', function (Request $request, App\Models\User $user) {
     $trips = Trip::latest()->get();
     return view('trips', compact('trips', 'user'));
@@ -81,6 +88,7 @@ Route::post('/reserve', function (Request $request) {
 
 Route::post('/form-request', function (Request $request) {
     $remarks = "<ul>";
+    // dd($request->model);
     for($i = 0; $i < 5; $i++) {
         $p = $request->passenger[$i];
         $o = $request->organization[$i];

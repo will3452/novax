@@ -16,15 +16,16 @@ class VehicleRequestForm extends Model
         'date',
         'remarks',
         'request_travel',
-        'travel_order', 
-        'status', 
+        'travel_order',
+        'status',
+        'signature',
     ];
 
     public function user () {
-        return $this->belongsTo(User::class); 
+        return $this->belongsTo(User::class);
     }
 
     protected $casts = [
-        'date' => 'date', 
+        'date' => 'date',
     ];
 }

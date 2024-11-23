@@ -21,14 +21,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     public function driver () {
-        return $this->hasOne(Driver::class, 'user_id'); 
+        return $this->hasOne(Driver::class, 'user_id');
     }
 
     public function client () {
-        return $this->hasOne(Client::class, 'user_id'); 
+        return $this->hasOne(Client::class, 'user_id');
     }
 
     /**

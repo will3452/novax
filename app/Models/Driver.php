@@ -20,9 +20,10 @@ class Driver extends Model
         'driver_lic_c',
         'med_cert',
         'user_id',
-    ]; 
+        'campus',
+    ];
 
     public function user () {
-        return $this->belongsTo(User::class, 'user_id'); 
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
