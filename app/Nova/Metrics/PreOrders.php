@@ -2,11 +2,11 @@
 
 namespace App\Nova\Metrics;
 
-use App\Models\SalesRecord;
+use App\Models\PreOrder;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Metrics\Trend;
+use Laravel\Nova\Metrics\Partition;
 
-class Sales extends Trend
+class PreOrders extends Partition
 {
     /**
      * Calculate the value of the metric.
@@ -16,21 +16,7 @@ class Sales extends Trend
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->countByDays($request, SalesRecord::class);
-    }
-
-    /**
-     * Get the ranges available for the metric.
-     *
-     * @return array
-     */
-    public function ranges()
-    {
-        return [
-            30 => __('30 Days'),
-            60 => __('60 Days'),
-            90 => __('90 Days'),
-        ];
+        return $this->count($request, PreOrder::class, 'status');
     }
 
     /**
@@ -50,6 +36,6 @@ class Sales extends Trend
      */
     public function uriKey()
     {
-        return 'sales';
+        return 'pre-orders';
     }
 }

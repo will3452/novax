@@ -113,7 +113,7 @@ Route::get('/i-sync', function () {
         $td = $i->inventories()->whereType('USAGE')->avg('quantity') ?? 0;
         $dl = 0;
         if ($td != 0) {
-            $dl = $current_qty / $td;
+            $dl = number_format($current_qty / $td, 2);
         }
         $i->update([
             'current_qty' => $current_qty,
