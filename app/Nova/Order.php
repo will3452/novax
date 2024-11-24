@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
@@ -64,6 +65,8 @@ class Order extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
+            Date::make('Date', 'created_at')
+                ->sortable(),
             BelongsTo::make('Customer', 'customer', Customer::class),
             BelongsTo::make('Product', 'product', Product::class),
             Hidden::make('sales_associate_id')->default(fn () => auth()->id()),

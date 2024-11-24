@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\ProductFilter;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
@@ -16,7 +17,7 @@ class PreOrderItem extends Resource
     public static $group = 'Sales';
     public static function availableForNavigation(Request $request)
     {
-        return in_array(auth()->user()->type, ['administrator', 'sales']);
+        return in_array(auth()->user()->type, ['administrator', 'sales', 'inventory manager']);
     }
     /**
      * The model the resource corresponds to.
@@ -54,7 +55,7 @@ class PreOrderItem extends Resource
             BelongsTo::make('Product', 'product', Product::class),
             Currency::make('Price'),
             Number::make('Quantity'),
-            Currency::make('Payable'),
+            // Currency::make('Payable'),
         ];
     }
 
@@ -77,7 +78,9 @@ class PreOrderItem extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            ProductFilter::make(),
+        ];
     }
 
     /**

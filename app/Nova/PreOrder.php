@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Nova\Actions\MarkAsApproved;
+use App\Nova\Filters\PickUpDateFilter;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
@@ -22,7 +23,7 @@ class PreOrder extends Resource
     }
     public static function availableForNavigation(Request $request)
     {
-        return in_array(auth()->user()->type, ['administrator', 'sales',]);
+        return in_array(auth()->user()->type, ['administrator', 'sales', 'inventory manager']);
     }
 
     public function authorizedToUpdate(Request $request)
@@ -106,7 +107,9 @@ class PreOrder extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            PickUpDateFilter::make(),
+        ];
     }
 
     /**
