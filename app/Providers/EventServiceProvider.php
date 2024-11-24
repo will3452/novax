@@ -2,14 +2,16 @@
 
 namespace App\Providers;
 
-use App\Models\IngredientInventory;
 use App\Models\Order;
-use App\Observers\IngredientInventoryObserver;
+use App\Models\PreOrder;
 use App\Observers\OrderObserver;
+use App\Models\IngredientInventory;
+use App\Observers\PreOrderObserver;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
+use App\Observers\IngredientInventoryObserver;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -33,5 +35,6 @@ class EventServiceProvider extends ServiceProvider
     {
         IngredientInventory::observe(IngredientInventoryObserver::class);
         Order::observe(OrderObserver::class);
+        PreOrder::observe(PreOrderObserver::class);
     }
 }
