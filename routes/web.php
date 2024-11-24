@@ -124,6 +124,12 @@ Route::get('/mobile-register', function () {
     return view('mobile-register');
 });
 
+Route::get('/trip-history/{user}', function (Request $request, User $user) {
+    $driver_id = $user->driver->id;
+    $reservations = Reservation::whereStatus('Approved')->whereDriverId($driver_id)->whereDate('date', '<=', now())->get();
+    return $reservations;
+});
+
 Route::post('/mobile-register', function (Request $request) {
     $data = $request->validate([
         'email' => ['unique:clients,email', 'required'],
@@ -140,10 +146,11 @@ Route::post('/mobile-register', function (Request $request) {
         'name' => "$request->first_name $request->last_name",
         'email' => $request->email,
         'password' => bcrypt($request->password),
+        'role' => 'Normal',
     ]);
 
     $data['user_id'] = $user->id;
-    $data['role'] = 'Normal';
+
 
     Client::create($data);
     alert()->success('Your account has been registered, and subject for approval.');
