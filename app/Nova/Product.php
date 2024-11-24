@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\RefreshRecords;
 use App\Nova\Actions\ViewOrderAnalytic;
 use App\Nova\Filters\CategoryFilter;
 use App\Nova\Lenses\TopSellingQuantity;
@@ -119,6 +120,8 @@ class Product extends Resource
         return [
             DownloadExcel::make(),
             ViewOrderAnalytic::make()
+                ->standalone(),
+            RefreshRecords::make('PRODUCT')
                 ->standalone(),
         ];
     }
