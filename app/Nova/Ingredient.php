@@ -2,15 +2,16 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\ViewUsageAnalytic;
-use App\Nova\Metrics\MacroAndMicro;
-use App\Nova\Metrics\NewIngredients;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Currency;
+use App\Nova\Metrics\MacroAndMicro;
+use App\Nova\Actions\RefreshRecords;
+use App\Nova\Metrics\NewIngredients;
+use App\Nova\Actions\ViewUsageAnalytic;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
@@ -144,7 +145,9 @@ class Ingredient extends Resource
     {
         return [
             ViewUsageAnalytic::make()->standalone(),
-            new DownloadExcel()
+            new DownloadExcel(),
+            RefreshRecords::make('INGREDIENT')
+                ->standalone(),
         ];
     }
 }
