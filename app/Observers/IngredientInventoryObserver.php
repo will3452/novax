@@ -17,16 +17,17 @@ class IngredientInventoryObserver
     {
         $i = Ingredient::find($ingredientInventory->ingredient_id);
         $current_qty = $i->current_qty;
+        $tp = $i->purchaseOrders()->sum('quantity');
+        $opo = $i->opo;
+
         if ($ingredientInventory->type == "USAGE") {
             $current_qty -= $ingredientInventory->quantity;
         } else {
             $current_qty += $ingredientInventory->quantity;
+            $opo = $tp - $current_qty;
         }
 
         $totalUsage = $i->inventories()->whereType('USAGE')->sum('quantity');
-
-        $tp = $i->purchaseOrders()->sum('quantity');
-        $opo = $tp - $current_qty;
         $td = $i->inventories()->whereType('USAGE')->avg('quantity') ?? 0;
         $dl = 0;
         if ($td != 0) {
