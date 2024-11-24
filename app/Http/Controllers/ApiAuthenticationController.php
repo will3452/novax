@@ -70,6 +70,10 @@ class ApiAuthenticationController extends Controller
             return ErrorHelper::sendError(404, 'user not found!');
         }
 
+        if (is_null($user->approved_at)) {
+            return ErrorHelper::sendError(400, "Your account is not yet approved by the user.");
+        }
+
         if (!Hash::check($password, $user->password)) {
             return ErrorHelper::sendError(400, 'Wrong credentials!');
         }
@@ -78,12 +82,12 @@ class ApiAuthenticationController extends Controller
         $user->load('client');
 
 
-        $userType = $user->driver ? 'Driver' : 'Client'; 
+        $userType = $user->driver ? 'Driver' : 'Client';
 
         return response([
             'user'=>$user,
             'token'=>$token,
-            'userType' => $userType, 
+            'userType' => $userType,
         ], 200);
     }
 

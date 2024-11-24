@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Client;
 use App\Models\Reservation;
 use App\Models\Trip;
 use App\Models\User;
@@ -117,4 +118,34 @@ Route::post('/form-request', function (Request $request) {
     ]);
 
     return view('success');
+});
+
+Route::get('/mobile-register', function () {
+    return view('mobile-register');
+});
+
+Route::post('/mobile-register', function (Request $request) {
+    $data = $request->validate([
+        'email' => ['unique:clients,email', 'required'],
+        'department' => ['required'],
+        'password' => ['required'],
+        'employee_no' => ['required'],
+        'phone' => ['required'],
+        'last_name' => ['required'],
+        'middle_name' => '',
+        'first_name' => ['required'],
+    ]);
+
+    $user = User::create([
+        'name' => "$request->first_name $request->last_name",
+        'email' => $request->email,
+        'password' => bcrypt($request->password),
+    ]);
+
+    $data['user_id'] = $user->id;
+    $data['role'] = 'Normal';
+
+    Client::create($data);
+    alert()->success('Your account has been registered, and subject for approval.');
+    return back();
 });

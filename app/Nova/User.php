@@ -2,8 +2,10 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\MarkAsApproved;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
@@ -51,6 +53,7 @@ class User extends Resource
                 ->options([
                     'OIC' => 'OIC',
                     'VPAFA' => 'VPAFA',
+                    'Normal' => 'Normal',
                 ]),
 
             Text::make('Name')
@@ -67,6 +70,9 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
+
+            Date::make('Approved At', 'approved_at')
+                ->sortable(),
         ];
     }
 
@@ -111,6 +117,8 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            MarkAsApproved::make(),
+        ];
     }
 }

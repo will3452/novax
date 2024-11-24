@@ -22,7 +22,10 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'approved_at',
     ];
+
+
 
     public function driver () {
         return $this->hasOne(Driver::class, 'user_id');
@@ -49,5 +52,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'approved_at' => 'datetime',
     ];
 }
