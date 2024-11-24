@@ -73,6 +73,7 @@ class PreOrder extends Resource
         return [
             Date::make('Date', 'created_at')
                 ->sortable(),
+            Text::make('Customer Email', fn () => $this->customer['email']),
             Date::make('Pick Up Date', 'pickup_date')
                 ->sortable(),
             Text::make('Reference'),
