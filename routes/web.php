@@ -156,3 +156,9 @@ Route::post('/mobile-register', function (Request $request) {
     alert()->success('Your account has been registered, and subject for approval.');
     return back();
 });
+
+
+Route::get("/mobile-dashboard/{user}", function (Request $request, User $user) {
+    auth()->login($user);
+    return view('mobile-dashboard');
+});
