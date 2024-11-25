@@ -42,6 +42,7 @@
             @endforelse
         </div>
     </div>
+    <x-back-home></x-back-home>
     <script>
         var field = document.getElementById('datepicker');
         var picker = new Pikaday({

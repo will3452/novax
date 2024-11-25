@@ -39,10 +39,10 @@
             <x-dashboard-item :image="'packing-list.png'"  :route="'/trip-history/' . auth()->id()">
                 Trip History
             </x-dashboard-item>
-            <x-dashboard-item :image="'mail.png'" :route="'#'">
+            <x-dashboard-item :image="'mail.png'" :route="'/inbox/' . auth()->id()">
                 Messages
             </x-dashboard-item>
-            <x-dashboard-item :image="'map.png'" :route="'#'">
+            <x-dashboard-item :image="'map.png'" :route="'/default-map'">
                 Map
             </x-dashboard-item>
             <x-dashboard-item :image="'profile.png'" :route="'#'">

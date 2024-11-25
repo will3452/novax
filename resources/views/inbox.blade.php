@@ -15,9 +15,10 @@
 </head>
 <body>
     <!-- container element in which TalkJS will display a chat UI -->
-<div id='talkjs-container' class="w-screen h-screen">
+<div id='talkjs-container' class="w-screen h-[90vh]">
     <i>Loading chat...</i>
   </div>
+  <x-back-home></x-back-home>
     <!-- minified snippet to load TalkJS without delaying your page -->
 <script>
     (function(t,a,l,k,j,s){
