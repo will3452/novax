@@ -117,7 +117,8 @@ Route::post('/form-request', function (Request $request) {
         'status' => $request->status ?? 'approved',
     ]);
 
-    return view('success');
+    alert()->success("Your request has been submitted!");
+    return redirect()->to("/mobile-dashboard/" . auth()->id());
 });
 
 Route::get('/mobile-register', function () {

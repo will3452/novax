@@ -8,97 +8,85 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <form method="post" action="/form-request" enctype="multipart/form-data" class="p-4 text-xs space-y-4">
-        @csrf
-        <input type="hidden" name="user_id" value="{{$user->id}}" />
-        <div>
-            Date: <input name="created_at" type="date">
-        </div>
-        <div class=" mb-4">
-            Ma'am/Sir,
-        </div>
-        <div class="xs">
-            I/We would like to request for Authority to use SLSU Service Vehicle.
-        </div>
-        <div class="grid grid-cols-2 gap-2 my-4">
-            @foreach ($vehicles as $item)
-                <div class=" flex items-center gap-2">
-                    <input type="checkbox" name="model[]" value="{{$item->model}}"/> {{$item->model}}
+    <div class="p-2 space-y-4">
+        <h1 class="text-lg font-bold flex gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m6.75 12-3-3m0 0-3 3m3-3v6m-1.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+              </svg> Vehicle Request Form</h1>
+
+        <form method="POST" action="/form-request" enctype="multipart/form-data" class="space-y-3">
+            <div class="space-y-2">
+
+                <input type="hidden" name="user_id" value="{{$user->id}}" />
+                <label for="" class="font-bold">Select Service Vehicle: </label>
+                <div class="grid grid-cols-2 gap-2">
+                    @foreach ($vehicles as $item)
+                        <div class=" flex items-center gap-2">
+                            <input type="checkbox" name="model[]" value="{{$item->model}}"/> {{$item->model}}
+                        </div>
+                    @endforeach
                 </div>
-            @endforeach
-        </div>
-        <div>
-            <div>
-                Purpose/s:
             </div>
-            <textarea name="purpose" class="border rounded-md w-full mt-2 h-[50px] p-2" placeholder="Aa"></textarea>
-        </div>
-        <div>
-            Date of Travel: <input type="date" name="date" required />
-        </div>
-        <div class="overflow-y-auto">
-            <table class="w-full border">
-                <thead>
-                    <tr>
-                       <th class="border text-gray-800">
-                            Passenger/s
-                        </th>
-                        <th class="border text-gray-800">
-                            Organization
-                        </th>
-                        <th class="border text-gray-800">
-                            Destination/s
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for ($i = 0; $i < 5; $i++)
-                    <tr>
-                        <td class="border p-2">
-                            <input name="passenger[]"/>
-                        </td>
-                        <td class="border p-2">
-                            <input name="organization[]" />
-                        </td>
-                        <td class="border p-2" >
-                            <input name="destination[]" />
-                        </td>
-                    </tr>
-                    @endfor
-                </tbody>
-            </table>
-        </div>
-        <div class="space-y-2">
-            <div>
-                Upload Request Travel
+            <div class="space-y-2">
+                <label for="" class="font-bold">Purpose:</label>
+                <textarea name="purpose" id="" class="border-2 block w-full p-2 rounded-xl"></textarea>
             </div>
-            <input name="request_travel" type="file" />
-        </div>
-        <div class="space-y-2">
-            <div>
-                Upload Travel Order
-            </div>
-            <input name="travel_order" type="file" />
-        </div>
-        {{-- <div class="flex gap-2">
-            <div class="flex gap-2 items-center">
-                <input type="radio" name="status" value="approved"/> Approved
-            </div>
-            <div class="flex gap-2 items-center">
-                <input type="radio" name="status" value="declined"/> Declinded
-            </div>
-        </div> --}}
-        <div>
-            <div>
-                Noted By:
+            <div class="space-y-2">
+                <label for="" class="font-bold">Date of Travel:</label>
+                <input type="date" class="block border-2 w-full p-2 rounded-xl" name="date" />
             </div>
             <div>
-                {{nova_get_setting('vehicle_request_form_authorizer', 'Dr. Arvin N. Natividad')}}
+                <div class="overflow-y-auto border rounded-xl">
+                    <table class="w-full border">
+                        <thead>
+                            <tr>
+                               <th class="border text-gray-800 p-2">
+                                    Passenger/s
+                                </th>
+                                <th class="border text-gray-800 p-2">
+                                    Organization
+                                </th>
+                                <th class="border text-gray-800 p-2">
+                                    Destination/s
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for ($i = 0; $i < 5; $i++)
+                            <tr>
+                                <td class="border p-2">
+                                    <input name="passenger[]"/>
+                                </td>
+                                <td class="border p-2">
+                                    <input name="organization[]" />
+                                </td>
+                                <td class="border p-2" >
+                                    <input name="destination[]" />
+                                </td>
+                            </tr>
+                            @endfor
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        <div>
-            <button type="submit" class="bg-blue-900 text-white p-4 font-bold text-lg rounded-full w-full">Submit</button>
-        </div>
-    </form>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="border border-dashed space-y-2 truncate flex flex-col justify-center p-2 rounded-xl">
+                    <div class="font-bold">
+                        Upload Request Travel
+                    </div>
+                    <input class="text-xs" name="request_travel" type="file" />
+                </div>
+                <div class="border border-dashed space-y-2 truncate flex flex-col justify-center p-2 rounded-xl">
+                    <div class="font-bold">
+                        Upload Travel Order
+                    </div>
+                    <input class="text-xs" name="travel_order" type="file" />
+                </div>
+            </div>
+            @csrf
+            <button class="bg-blue-900 text-white rounded-md px-4 py-2 shadow-md w-full">Submit</button>
+        </form>
+    </div>
+    <x-back-home/>
 </body>
 </html>

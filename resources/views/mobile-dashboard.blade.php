@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="p-2">
+    @include('sweetalert::alert')
     <div class="space-y-4">
         <div class="bg-gray-200 p-2 px-4 rounded-md shadow-md">
             <div class="flex items-center justify-between">
