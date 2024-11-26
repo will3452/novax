@@ -46,7 +46,7 @@ class PaymentOrder extends Resource
 
     public function authorizedToDelete(Request $request)
     {
-        return false;
+        return auth()->user()->type != 'Patient';;
     }
 
     public function authorizedToUpdate(Request $request)
