@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Nova\Actions\Acknowledge;
+use App\Nova\Actions\ChangeStatus;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
@@ -73,8 +74,9 @@ class PaymentOrder extends Resource
             Image::make('Receipt', 'file'),
             Badge::make('Status')
                 ->map([
-                    'approved' => 'success',
-                    'pending' => 'info'
+                    'Approved' => 'success',
+                    'Pending' => 'info',
+                    'Declined' => 'danger',
                 ]),
         ];
     }
@@ -121,7 +123,7 @@ class PaymentOrder extends Resource
     public function actions(Request $request)
     {
         return [
-            Acknowledge::make()
+            ChangeStatus::make()
                 ->showOnTableRow()
                 ->canSee(fn () => auth()->user()->type != 'Patient')
         ];

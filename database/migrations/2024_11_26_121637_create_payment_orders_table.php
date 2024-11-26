@@ -17,7 +17,7 @@ class CreatePaymentOrdersTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->string('file');
-            $table->enum('status', ['approved', 'pending'])->default('pending');
+            $table->string('status')->default('Pending');
             $table->timestamps();
         });
     }
