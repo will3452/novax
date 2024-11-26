@@ -121,6 +121,15 @@
                             Services
                         </router-link>
 
+                        <router-link class="text-primary-900" :to="{
+                            name: 'index',
+                            params: {
+                                resourceName: 'payment-orders'
+                            }
+                        }" class="text-white text-justify no-underline dim" >
+                            Payment Orders
+                        </router-link>
+
                         @if (auth()->user()->type != 'Patient')
                         <router-link class="text-primary-900" :to="{
                             name: 'index',
@@ -139,7 +148,11 @@
                                 Users
                             </router-link>
                         @endif
+
+
                     </div>
+
+
 
 
                     {{-- @if (count(\Laravel\Nova\Nova::globallySearchableResources(request())) > 0)

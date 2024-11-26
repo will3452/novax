@@ -25,7 +25,7 @@ class User extends Authenticatable
         'type',
         'address',
         'sex',
-        'birthday', 
+        'birthday',
     ];
 
     const TYPE_ADMIN = 'Administrator';
@@ -42,6 +42,10 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function paymentOrders () {
+        return $this->hasMany(PaymentOrder::class, 'user_id');
+    }
+
     /**
      * The attributes that should be cast.
      *
@@ -49,10 +53,10 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'birthday' => 'date', 
+        'birthday' => 'date',
     ];
 
     public function medicalRecords() {
-        return $this->belongsTo(MedicalRecord::class, 'user_id'); 
+        return $this->belongsTo(MedicalRecord::class, 'user_id');
     }
 }
