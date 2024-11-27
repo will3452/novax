@@ -30,10 +30,12 @@ class MarkAsApproved extends Action
 
             if (isset($model->product_id)) {
                 $source = 'ORDER';
-                $items[] = [
-                    'item' => $model->product->name,
-                    'qty' =>  $model->quantity,
-                ];
+                foreach ($model->items as $i) {
+                    $items[] = [
+                        'item' => $i->product->name,
+                        'qty' =>  $i->quantity,
+                    ];
+                }
 
             } else {
                 $source = 'PRE-ORDER';
