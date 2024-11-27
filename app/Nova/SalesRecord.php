@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Fields\Text;
 use App\Models\PreOrder as PreOrderModel;
 use App\Models\Order as OrderModel;
+use Exception;
 
 class SalesRecord extends Resource
 {
@@ -73,21 +74,25 @@ class SalesRecord extends Resource
             BelongsTo::make('Sales', 'sales', User::class),
             Text::make('Source')->sortable(),
             Text::make('Customer Email', function () {
-                $types = [
-                    'ORDER' => 'Order',
-                    'PRE-ORDER' => 'PreOrder',
-                ];
+                try {
+                    $types = [
+                        'ORDER' => 'Order',
+                        'PRE-ORDER' => 'PreOrder',
+                    ];
 
-                $type = $types[$this->source];
-                $source = "-";
+                    $type = $types[$this->source];
+                    $source = "-";
 
-                if ($type == 'Order') {
-                    $source = OrderModel::with('customer')->find($this->source_id)->customer->email;
-                } else {
-                    $source = PreOrderModel::find($this->source_id)->customer['email'];
+                    if ($type == 'Order') {
+                        $source = OrderModel::with('customer')->find($this->source_id)->customer->email;
+                    } else {
+                        $source = PreOrderModel::find($this->source_id)->customer['email'];
+                    }
+
+                    return $source;
+                } catch (Exception  $e) {
+                    return "-";
                 }
-
-                return $source;
             }),
             // KeyValue::make('Items', 'items'),
             Text::make('Items', function () {
