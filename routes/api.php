@@ -3,6 +3,8 @@
 use App\Http\Controllers\ApiAuthenticationController;
 use App\Models\Ingredient;
 use App\Models\IngredientInventory;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\PreOrder;
 use App\Models\PreOrderItem;
 use App\Models\Product;
@@ -42,6 +44,22 @@ Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
 Route::get('/products', function(Request $request) {
     return Product::get();
+});
+
+
+Route::get('migrate', function () {
+    $orders = Order::get();
+    $success = 0;
+    foreach ($orders as $o) {
+        OrderItem::create([
+            'product_id' => $o->product_id,
+            'order_id' => $o->id,
+            'quantity' => $o->quantity,
+        ]);
+        $success++;
+    }
+    $total = count($orders);
+    return "$success / $total";
 });
 
 Route::post('/pre-order', function (Request $request) {

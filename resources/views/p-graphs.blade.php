@@ -2,49 +2,52 @@
 
 @section('content')
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script> <!-- Include the datalabels plugin -->
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             <h1>Order Analytics</h1>
             <a href="/admin" class="btn btn-primary">Back to Management</a>
         </div>
         <div class="row g-4">
+            <!-- Total Product Sacks -->
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        Product Orders from the last 7 Days
-                        <select id="dailyProductSelect" class="form-select mt-2" style="width: 200px;">
-                            <option value="none">None</option>
-                        </select>
-                        <input type="date" id="datePicker" class="form-control mt-2" style="width: 200px;">
-                    </div>
-                    <div class="card-body">
-                        <canvas id="dl"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        Total Product Orders - Current Month This Year vs. Last Year
-                        <select id="monthlyProductSelect" class="form-select mt-2" style="width: 200px;">
-                            <option value="none">None</option>
-                        </select>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="ml"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        Total Product Orders - Last Year vs. Current Year
+                        Total Product Sacks
                         <select id="yearlyProductSelect" class="form-select mt-2" style="width: 200px;">
                             <option value="none">None</option>
+                            <!-- Options will be added dynamically -->
                         </select>
                     </div>
                     <div class="card-body">
-                        <canvas id="yl"></canvas>
+                        <canvas id="yl" class="w-100 h-auto"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Row for Dynamic Lists -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Top 10 Ordered Products
+                    </div>
+                    <div class="card-body">
+                        <ul id="topOrderedList" class="list-group">
+                            <!-- Top 10 Ordered Products will be added dynamically -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Top 10 Least Ordered Products
+                    </div>
+                    <div class="card-body">
+                        <ul id="leastOrderedList" class="list-group">
+                            <!-- Top 10 Least Ordered Products will be added dynamically -->
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -53,216 +56,138 @@
 
     <script>
         const today = new Date();
-        const currentDay = today.getDate();
-        const currentMonth = today.getMonth();
         const currentYear = today.getFullYear();
 
-        // Utility function to group by product name and collect all data
-        function groupByProduct(data) {
-            const grouped = {};
-            data.forEach(item => {
-                const productName = item.label;
-                if (!grouped[productName]) {
-                    grouped[productName] = {
-                        label: productName,
-                        data: [],
-                        backgroundColor: item.backgroundColor
-                    };
-                }
-                grouped[productName].data.push({
-                    x: item.c_date,
-                    y: item.data[0].y
-                });
-            });
-            return grouped;
-        }
-
-        // Filter Daily Data (Current Day and Last 6 Days)
-        const dailyUsageData = [
-            @foreach ($dailyUsage as $item)
-                {
-                    label: '{{ \App\Models\Product::find($item->product_id)->name }}',
-                    data: [{ x: '{{$item->c_date}}', y: {{$item->total}} }],
-                    backgroundColor: ["{{ sprintf('#%06X', mt_rand(0, 0xffffff)) }}"],
-                    product_id: '{{$item->product_id}}',
-                    c_date: '{{$item->c_date}}'
-                },
-            @endforeach
-        ];
-
-        // Adjust the logic to filter data correctly based on the current day and last 6 days
-        function getFilteredDailyData(selectedDate = today) {
-            const filteredData = dailyUsageData.filter((item) => {
-                const itemDate = new Date(item.c_date);
-                const itemDay = itemDate.getDate();
-                const itemMonth = itemDate.getMonth();
-                const itemYear = itemDate.getFullYear();
-                const selectedDay = new Date(selectedDate);
-
-                if (itemYear === selectedDay.getFullYear() && itemMonth === selectedDay.getMonth()) {
-                    return itemDay >= selectedDay.getDate() - 6 && itemDay <= selectedDay.getDate();
-                }
-
-                if (itemYear === selectedDay.getFullYear() && itemMonth === selectedDay.getMonth() - 1) {
-                    const prevMonthLastDay = new Date(selectedDay.getFullYear(), selectedDay.getMonth(), 0).getDate();
-                    return itemDay >= prevMonthLastDay - (6 - selectedDay.getDate()) && itemDay <= prevMonthLastDay;
-                }
-
-                return false;
-            });
-            return filteredData;
-        }
-
-        const groupedDailyData = groupByProduct(getFilteredDailyData());
-        const dailyDatasets = Object.values(groupedDailyData);
-
-        const dailyProductSelect = document.getElementById('dailyProductSelect');
-        Object.keys(groupedDailyData).forEach(product => {
-            const option = document.createElement('option');
-            option.value = product;
-            option.textContent = product;
-            dailyProductSelect.appendChild(option);
-        });
-
-        const dlCtx = document.getElementById('dl');
-        const dailyChart = new Chart(dlCtx, {
-            type: 'bar',
-            data: {
-                datasets: dailyDatasets
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-        const monthlyUsageData = [
-            @foreach ($monthlyUsage as $item)
-                {
-                    label: '{{ \App\Models\Product::find($item->product_id)->name }}',
-                    data: [{ x: '{{$item->c_date}}', y: {{$item->total}} }],
-                    backgroundColor: ["{{ sprintf('#%06X', mt_rand(0, 0xffffff)) }}"],
-                    product_id: '{{$item->product_id}}',
-                    c_date: '{{$item->c_date}}'
-                },
-            @endforeach
-        ];
-
-        const filteredMonthlyData = monthlyUsageData.filter((item) => {
-            const itemDate = new Date(item.c_date);
-            const itemMonth = itemDate.getMonth();
-            const itemYear = itemDate.getFullYear();
-
-            if (itemYear === currentYear && itemMonth === currentMonth) {
-                return true;
-            }
-
-            if (itemYear === currentYear - 1 && itemMonth === currentMonth) {
-                return true;
-            }
-
-            return false;
-        });
-
-        const groupedMonthlyData = groupByProduct(filteredMonthlyData);
-        const monthlyDatasets = Object.values(groupedMonthlyData);
-
-        const monthlyProductSelect = document.getElementById('monthlyProductSelect');
-        Object.keys(groupedMonthlyData).forEach(product => {
-            const option = document.createElement('option');
-            option.value = product;
-            option.textContent = product;
-            monthlyProductSelect.appendChild(option);
-        });
-
-        const mlCtx = document.getElementById('ml');
-        const monthlyChart = new Chart(mlCtx, {
-            type: 'bar',
-            data: {
-                datasets: monthlyDatasets
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-        document.getElementById('monthlyProductSelect').addEventListener('change', function(event) {
-            const selectedProduct = event.target.value;
-            monthlyChart.data.datasets.forEach((dataset) => {
-                dataset.hidden = selectedProduct !== 'none' && dataset.label !== selectedProduct;
-            });
-            monthlyChart.update();
-        });
-
+        // Prepare the raw data, fetched from the server-side
         const yearlyUsageData = [
             @foreach ($yearlyUsage as $item)
                 {
                     label: '{{ \App\Models\Product::find($item->product_id)->name }}',
-                    data: [{ x: '{{$item->c_date}}', y: {{$item->total}} }],
-                    backgroundColor: "{{ sprintf('#%06X', mt_rand(0, 0xffffff)) }}",
-                    c_date: '{{$item->c_date}}'
+                    total: {{$item->total}},
+                    backgroundColor: "{{ sprintf('#%06X', mt_rand(0, 0xffffff)) }}",  // Random color
+                    product_id: {{$item->product_id}},  // Keep the product ID for filtering
                 },
             @endforeach
         ];
 
-        const groupedYearlyData = groupByProduct(yearlyUsageData);
-        const yearlyDatasets = Object.values(groupedYearlyData);
+        // Sort the products by total sacks in descending order
+        yearlyUsageData.sort((a, b) => b.total - a.total);  // Sort by total sacks in descending order
 
-        const yearlyProductSelect = document.getElementById('yearlyProductSelect');
-        Object.keys(groupedYearlyData).forEach(product => {
-            const option = document.createElement('option');
-            option.value = product;
-            option.textContent = product;
-            yearlyProductSelect.appendChild(option);
-        });
+        // Extract the labels (product names), data (sack totals), and background colors
+        const productLabels = yearlyUsageData.map(item => item.label);
+        const productTotals = yearlyUsageData.map(item => item.total);
+        const backgroundColors = yearlyUsageData.map(item => item.backgroundColor);
+        const productIds = yearlyUsageData.map(item => item.product_id);
 
         const ylCtx = document.getElementById('yl');
         const yearlyChart = new Chart(ylCtx, {
-            type: 'bar',
+            type: 'bar',  // Horizontal bar chart
             data: {
-                datasets: yearlyDatasets
+                labels: productLabels,  // Product names as labels
+                datasets: [{
+                    label: 'Total Sacks',  // Updated label for sacks
+                    data: productTotals,  // Total sacks for each product
+                    backgroundColor: backgroundColors,  // Random colors for each product
+                    borderWidth: 1
+                }]
             },
             options: {
                 responsive: true,
+                indexAxis: 'y',  // Make the chart horizontal
                 plugins: {
                     legend: {
-                        position: 'top',
+                        position: 'top',  // Display the legend at the top
+                    },
+                    // Enable the datalabels plugin
+                    datalabels: {
+                        color: '#fff',  // Text color (white)
+                        align: 'center',  // Center the label inside the bar
+                        font: {
+                            weight: 'bold',  // Bold text for visibility
+                        },
+                        formatter: (value) => value  // Show the total value inside the bar
                     }
                 },
                 scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    },
                     y: {
                         beginAtZero: true
                     }
                 }
-            }
+            },
+            plugins: [ChartDataLabels] // Register the datalabels plugin
         });
 
-        yearlyProductSelect.addEventListener('change', function(event) {
-            const selectedProduct = event.target.value;
-            yearlyChart.data.datasets.forEach(dataset => {
-                dataset.hidden = selectedProduct !== 'none' && dataset.label !== selectedProduct;
-            });
+        // Populate the product selection dropdown dynamically with product names
+        const yearlyProductSelect = document.getElementById('yearlyProductSelect');
+        yearlyUsageData.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.product_id;  // Use product ID as the value for filtering
+            option.textContent = item.label;  // Display product name
+            yearlyProductSelect.appendChild(option);
+        });
+
+        // Filter the chart based on product selection
+        document.getElementById('yearlyProductSelect').addEventListener('change', function(event) {
+            const selectedProductId = event.target.value;
+
+            if (selectedProductId === 'none') {
+                // Show all products if "None" is selected
+                yearlyChart.data.datasets[0].data = productTotals;
+                yearlyChart.data.datasets[0].backgroundColor = backgroundColors;
+                yearlyChart.data.labels = productLabels;
+            } else {
+                // Filter and show only the selected product
+                const filteredData = yearlyUsageData.filter(item => item.product_id == selectedProductId);
+                const filteredLabels = filteredData.map(item => item.label);
+                const filteredTotals = filteredData.map(item => item.total);
+                const filteredBackgroundColors = filteredData.map(item => item.backgroundColor);
+
+                // Update chart data for the selected product only
+                yearlyChart.data.labels = filteredLabels;
+                yearlyChart.data.datasets[0].data = filteredTotals;
+                yearlyChart.data.datasets[0].backgroundColor = filteredBackgroundColors;
+            }
+
+            // Update the chart after filtering
             yearlyChart.update();
         });
 
+        // Populate the Top 10 Ordered Products list
+        const topOrderedList = document.getElementById('topOrderedList');
+        const topOrderedData = yearlyUsageData.slice(0, 10);  // Take the top 10 products by total sacks
+        topOrderedData.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.classList.add('list-group-item');
+            listItem.textContent = `${item.label}: ${item.total} sacks`;  // Changed to sacks
+            topOrderedList.appendChild(listItem);
+        });
+
+        // Populate the Top 10 Least Ordered Products list
+        const leastOrderedList = document.getElementById('leastOrderedList');
+        const leastOrderedData = yearlyUsageData.slice(-10).reverse();  // Take the bottom 10 products by total sacks
+        leastOrderedData.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.classList.add('list-group-item');
+            listItem.textContent = `${item.label}: ${item.total} sacks`;  // Changed to sacks
+            leastOrderedList.appendChild(listItem);
+        });
+
+        // Add hover effects for the list items
+        document.querySelectorAll('.list-group-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                item.style.cursor = 'pointer';
+                item.style.transform = 'scale(1.05)';
+                item.style.transition = 'transform 0.2s ease-in-out';
+            });
+            item.addEventListener('mouseleave', function() {
+                item.style.transform = 'scale(1)';
+            });
+        });
     </script>
 @endsection

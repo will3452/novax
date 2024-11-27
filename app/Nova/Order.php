@@ -2,15 +2,17 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\MarkAsApproved;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Badge;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\Hidden;
+use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Actions\MarkAsApproved;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Order extends Resource
@@ -44,7 +46,9 @@ class Order extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public function title () {
+        return Str::padLeft($this->id, 8, 0);
+    }
 
     /**
      * The columns that should be searched.
@@ -68,7 +72,7 @@ class Order extends Resource
             Date::make('Date', 'created_at')
                 ->sortable(),
             BelongsTo::make('Customer', 'customer', Customer::class),
-            BelongsTo::make('Product', 'product', Product::class),
+            // BelongsTo::make('Product', 'product', Product::class),
             Hidden::make('sales_associate_id')->default(fn () => auth()->id()),
             BelongsTo::make('Sales Associate', 'salesAssociate', User::class)->exceptOnForms(),
             Badge::make('Status')
@@ -76,9 +80,10 @@ class Order extends Resource
                     'Pending' => 'danger',
                     'Confirmed' => 'success',
                 ]),
-            Number::make('Quantity')
-                ->rules(['required', 'min:1']),
-            Currency::make('Amount'),
+            // Number::make('Quantity')
+            //     ->rules(['required', 'min:1']),
+            // Currency::make('Amount'),
+            HasMany::make('Order Items', 'items', OrderItem::class),
         ];
     }
 

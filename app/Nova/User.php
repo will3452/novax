@@ -59,10 +59,13 @@ class User extends Resource
                     'inventory manager' => 'inventory manager',
                     'sales' => 'sales',
                 ]),
-            Avatar::make('Avatar'),
+            Avatar::make('Image', 'avatar'),
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
+
+            Text::make('Phone')
+                ->sortable(),
 
             Text::make('Email')
                 ->sortable()

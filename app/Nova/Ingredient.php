@@ -69,7 +69,7 @@ class Ingredient extends Resource
             // Number::make('Kg')->default(fn () => 1),
             // Currency::make('Unit Price', 'price'),
             Number::make('Actual Stocks(kg)', 'current_qty')->sortable()->exceptOnForms(),
-            Number::make('Outstanding P.O', 'opo')->sortable()->exceptOnForms(),
+            // Number::make('Outstanding P.O', 'opo')->sortable()->exceptOnForms(),
             Number::make('Total Purchase(kg)', 'tp')->sortable()->exceptOnForms(),
             Number::make('Total Usage(kg)', 'tu')->sortable()->exceptOnForms(),
             Number::make('Daily Usage(avg.)', 'td')->sortable()->exceptOnForms(),

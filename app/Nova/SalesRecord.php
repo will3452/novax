@@ -9,7 +9,8 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
+use App\Models\PreOrder as PreOrderModel;
+use App\Models\Order as OrderModel;
 
 class SalesRecord extends Resource
 {
@@ -71,7 +72,33 @@ class SalesRecord extends Resource
                 ->sortable(),
             BelongsTo::make('Sales', 'sales', User::class),
             Text::make('Source')->sortable(),
-            KeyValue::make('Items', 'items'),
+            Text::make('Customer Email', function () {
+                $types = [
+                    'ORDER' => 'Order',
+                    'PRE-ORDER' => 'PreOrder',
+                ];
+
+                $type = $types[$this->source];
+                $source = "-";
+
+                if ($type == 'Order') {
+                    $source = OrderModel::with('customer')->find($this->source_id)->customer->email;
+                } else {
+                    $source = PreOrderModel::find($this->source_id)->customer['email'];
+                }
+
+                return $source;
+            }),
+            // KeyValue::make('Items', 'items'),
+            Text::make('Items', function () {
+                $result = "<table class='m-4 border' ><tr><th class='border p-2 bg-primary text-white'>Product</th><th class='border p-2 bg-primary text-white'>Quantity </th></tr>";
+                foreach ($this->items as $i) {
+                    $item = $i['item'];
+                    $qty = $i['qty'];
+                    $result .= "<tr><td class='border p-2'>$item</td><td class='border p-2'>$qty</td></tr>";
+                }
+                return $result .= "</table />";
+            })->asHtml()->hideFromIndex(),
             Currency::make('Total', 'total')->sortable(),
         ];
     }

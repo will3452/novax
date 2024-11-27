@@ -8,6 +8,7 @@
             <a href="/admin" class="btn btn-primary">Back to Management</a>
         </div>
         <div class="row g-4">
+            <!-- Ingredient Usage from the last 7 Days -->
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
@@ -18,11 +19,12 @@
                         <input type="date" id="datePicker" class="form-control mt-2" style="width: 200px;">
                     </div>
                     <div class="card-body">
-                        <canvas id="dl"></canvas>
+                        <canvas id="dl" class="w-100 h-auto"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <!-- Total Ingredient Usage - Current Month This Year vs. Last Year -->
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         Total Ingredient Usage - Current Month This Year vs. Last Year
@@ -31,11 +33,12 @@
                         </select>
                     </div>
                     <div class="card-body">
-                        <canvas id="ml"></canvas>
+                        <canvas id="ml" class="w-100 h-auto"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <!-- Total Ingredient Usage - Last Year vs. Current Year -->
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         Total Ingredient Usage - Last Year vs. Current Year
@@ -44,12 +47,15 @@
                         </select>
                     </div>
                     <div class="card-body">
-                        <canvas id="yl"></canvas>
+                        <canvas id="yl" class="w-100 h-auto"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
 
     <script>
         const today = new Date();

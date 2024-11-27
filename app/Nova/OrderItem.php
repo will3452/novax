@@ -3,36 +3,27 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Image;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Promo extends Resource
+class OrderItem extends Resource
 {
-    public static function label () {
-        return "Discount";
-    }
-    public static $group = 'Administrator';
-    public static function availableForNavigation(Request $request)
-    {
-        return in_array(auth()->user()->type, ['administrator']);
-    }
+    public static $group = 'Sales';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Promo::class;
+    public static $model = \App\Models\OrderItem::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -41,8 +32,18 @@ class Promo extends Resource
      */
     public static $search = [
         'id',
-        'name',
     ];
+
+    public function authorizedToUpdate(Request $request)
+    {
+
+        return $this->order->status != 'Confirmed';
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return $this->order->status != 'Confirmed';
+    }
 
     /**
      * Get the fields displayed by the resource.
@@ -53,15 +54,9 @@ class Promo extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Name')
-                ->rules(['required'])
-                ->sortable(),
-            Image::make('Cover')
-                ->rules(['required']),
-            Text::make('Rate'),
-            Boolean::make('Is Active', 'is_active'),
-            Date::make('From Date'),
-            Date::make('To Date'),
+            BelongsTo::make('Order', 'order', Order::class),
+            BelongsTo::make('Product', 'product', Product::class),
+            Number::make('Quantity'),
         ];
     }
 

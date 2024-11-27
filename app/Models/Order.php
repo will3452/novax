@@ -13,20 +13,24 @@ class Order extends Model
         'product_id',
         'status',
         'sales_associate_id',
-        'quantity', 
-        'amount', 
-        'customer_id', 
-    ]; 
+        'quantity',
+        'amount',
+        'customer_id',
+    ];
 
     public function product () {
-        return $this->belongsTo(Product::class, 'product_id'); 
+        return $this->belongsTo(Product::class, 'product_id');
+    }
+
+    public function items () {
+        return $this->hasMany(OrderItem::class, 'order_id');
     }
 
     public function salesAssociate() {
-        return $this->belongsTo(User::class, 'sales_associate_id'); 
+        return $this->belongsTo(User::class, 'sales_associate_id');
     }
 
     public function customer () {
-        return $this->belongsTo(Customer::class, 'customer_id'); 
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 }
