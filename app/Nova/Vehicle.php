@@ -5,6 +5,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
@@ -54,8 +55,17 @@ class Vehicle extends Resource
             Text::make('Model'),
             Number::make('Capacity')
                 ->rules(['numeric', 'min:2']),
-            Boolean::make('Is Available'),
-            BelongsTo::make('Driver', 'driver', Driver::class),
+            Text::make('Today Availability', function () {
+
+                $check = \App\Models\VehicleRequestForm::whereVehicleId($this->id)->whereDate('date', now())->whereStatus('approved')->exists();
+
+                $status = $check ? "NOT AVAILABLE": "AVAILABLE";
+
+                return $status;
+            }),
+            // Boolean::make('Is Available'),
+            Hidden::make('is_available')
+                ->default(fn () => false),
         ];
     }
 

@@ -7,79 +7,59 @@
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="p-4 space-y-4">
-        @foreach ($trips as $trip)
-            <div class="border rounded-md p-4 space-y-4">
-                <div class="flex gap-4">
-                    <div class="w-1/3 border-r-2 border-red-600 text-center relative">
-                        <div class="h-[12px] border-2 border-red-600 bg-white w-[12px] rounded-full top-0 -right-2 absolute"></div>
-                        <div class="h-[12px] border-2 border-red-600 bg-white w-[12px] rounded-full bottom-0 -right-2 absolute"></div>
-                        <div class="text-gray-800 font-bold relative mb-4">
-                            {{$trip->pickup_time}}
-                        </div>
-                        <div class="text-gray-800 font-bold relative">
-                            {{$trip->dropoff_time}}
-                        </div>
+<body class="bg-gray-100">
+    <div class="space-y-4 p-2 overflow-y-auto h-[90vh]">
+        <div class="flex gap-2 items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+
+              <h1 class="font-bold text-xl">Trip History</h1>
+        </div>
+       <div class="space-y-2">
+        @foreach ($records as $item)
+            <div class="p-4  w-full  rounded-md  space-y-4 border bg-white">
+                <div class="grid grid-cols-2 items-center gap-2 justify-between">
+                    <div class="flex gap-2 items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+                          </svg>
+
+                        <h1 class="font-bold text-lg text-gray-700">{{$item->model}}</h1>
                     </div>
-                    <div class="w-2/3 text-xs space-y-2">
-                        <div>
-                            {{$trip->pickup_location}}
-                        </div>
-                        <div>
-                            {{$trip->vehicle->capacity}} seats
-                        </div>
-                        <div>
-                            {{$trip->dropoff_location}}
-                        </div>
+                    <div class="text-xs text-right">
+                        {{$item->date->format('m/d/y')}}
+                    </div>
+                    <div class="flex gap-2 items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                          </svg>
+                        <h1 class="text-xs ">{{$item->driver ? $item->driver->first_name . " " . $item->driver->last_name : '---'}}</h1>
+                    </div>
+                    <div class="flex gap-2 items-start col-span-2 line-clamp-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+                          </svg>
+                        <h1 class="text-xs ">{{$item->purpose}}</h1>
                     </div>
                 </div>
-                <div class="flex gap-2 text-xs items-center justify-between">
-                    <div class="flex gap-2 text-xs items-center">
-                        <img src="/image-circle.png" class="w-[25px]"/>
-                        <div>
-                            <div class="font-bold text-gray-800">
-                                {{$trip->vehicle->driver->first_name}} {{$trip->vehicle->driver->last_name}}
-                            </div>
-                            <div>
-                                {{$trip->vehicle->driver->employee_no}}
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <div class="flex gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
-                                  </svg>
-                                {{$trip->vehicle->model}}
-                            </div>
-                            <div class="flex gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
-                                  </svg>
-
-                                <a href="tel:{{$trip->vehicle->driver->phone}}">
-                                    {{$trip->vehicle->driver->phone}}
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="grid grid-cols-3 gap-4">
-                    <a href="/reserve/{{$user->id}}/{{$trip->id}}" class="text-center bg-green-600 text-white border-none p-2 uppercase font-bold font-bold rounded-full">
-                        Reserve
-                    </a>
-                    <a href="/map/{{$trip->id}}" class="text-xs flex items-center justify-center block text-center bg-blue-900 text-white border-none p-2 uppercase font-bold rounded-full">
-                        View in Map
-                    </a>
-                    <a href="/chat/{{$user->id}}/{{$trip->vehicle->driver->user->id}}" class="text-xs flex items-center block text-center bg-orange-500 text-white border-none p-2 uppercase font-bold rounded-full">
-                        Message Driver
-                    </a>
+                <div class="grid grid-cols-3 gap-2">
+                    <a href="#" class=" rounded-full bg-green-900 p-2 text-center text-green-100 ">Trip Ticket</a>
+                    @if ($item->p_lat != null && $item->p_long != null && $item->d_lat != null && $item->d_long )
+                    <a href="/map/{{$item->id}}" class=" rounded-full bg-blue-900 p-2 text-center text-blue-100">Route</a>
+                    @else
+                    <a href="#" class=" rounded-full bg-gray-200 p-2 text-center text-gray-900">Route</a>
+                    @endif
+                    @if ($item->driver_id)
+                        <a href="/chat/{{$user->id}}/{{$item->driver_id}}" class=" rounded-full bg-yellow-900 p-2 text-center text-yellow-100">Message</a>
+                    @else
+                    <a href="#" class=" rounded-full bg-gray-200 p-2 text-center text-gray-900">Message</a>
+                    @endif
                 </div>
             </div>
         @endforeach
+       </div>
     </div>
+    <x-back-home></x-back-home>
 </body>
 </html>

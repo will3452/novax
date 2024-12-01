@@ -12,6 +12,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Trip extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return false;
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -27,7 +31,7 @@ class Trip extends Resource
     public static $title = 'id';
 
     public function title () {
-        return "$this->pickup_location - $this->dropoff_location"; 
+        return "$this->pickup_location - $this->dropoff_location";
     }
 
     /**
@@ -37,7 +41,7 @@ class Trip extends Resource
      */
     public static $search = [
         'id',
-        'pickup_location', 
+        'pickup_location',
     ];
 
     /**
@@ -49,17 +53,17 @@ class Trip extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('Vehicle', 'vehicle', Vehicle::class), 
+            BelongsTo::make('Vehicle', 'vehicle', Vehicle::class),
             Text::make('Origin', 'pickup_location'),
             MapMarker::make('Origin Coordinate')
                 ->latitude('pickup_lat')
-                ->longitude('pickup_lng'), 
+                ->longitude('pickup_lng'),
             Text::make('Pickup Time'),
             Text::make('Destination', 'dropoff_location'),
             MapMarker::make('Destination Coordinate')
                 ->latitude('dropoff_lat')
-                ->longitude('dropoff_lng'), 
-            Text::make('Dropoff Time'), 
+                ->longitude('dropoff_lng'),
+            Text::make('Dropoff Time'),
             Select::make('Day')
                 ->options([
                     'Monday',
@@ -69,7 +73,7 @@ class Trip extends Resource
                     'Friday',
                     'Saturday',
                     'Sunday'
-                ])->displayUsingLabels(), 
+                ])->displayUsingLabels(),
         ];
     }
 

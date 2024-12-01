@@ -19,10 +19,24 @@ class VehicleRequestForm extends Model
         'travel_order',
         'status',
         'signature',
+        'driver_id',
+        'p_lat',
+        'p_long',
+        'd_lat',
+        'd_long',
+        'vehicle_id',
     ];
 
     public function user () {
         return $this->belongsTo(User::class);
+    }
+
+    public function driver () {
+        return $this->belongsTo(Driver::class, 'driver_id');
+    }
+
+    public function vehicle () {
+        return $this->belongsTo(Vehicle::class, 'vehicle_id');
     }
 
     protected $casts = [

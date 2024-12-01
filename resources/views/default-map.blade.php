@@ -20,7 +20,7 @@
   <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.2.0/mapbox-gl-directions.js"></script>
   <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.2.0/mapbox-gl-directions.css" type="text/css">
 
-  <div id="map" class="h-screen"></div>
+  <div id="map" class="h-[90vh]"></div>
   <x-back-home></x-back-home>
 
   <script>

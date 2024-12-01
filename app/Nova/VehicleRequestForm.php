@@ -2,20 +2,28 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\Approve;
 use App\Nova\Actions\AttachSignature;
+use App\Nova\Actions\ChangeStatus;
+use App\Nova\Actions\Decline;
 use App\Nova\Actions\ReviewAndDownloadForm;
+use GeneaLabs\NovaMapMarkerField\MapMarker;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class VehicleRequestForm extends Resource
 {
+    public static function label () {
+        return "Vehicle Request";
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -54,8 +62,21 @@ class VehicleRequestForm extends Resource
             Textarea::make('Remarks'),
             File::make('Request Travel'),
             File::make('Travel Order'),
-            Text::make('Status'),
+            BelongsTo::make('Driver', 'driver', Driver::class),
+            // Text::make('Status'),
+            Select::make('Status')
+                ->options([
+                    'approved' => 'approved',
+                    'pending' => 'pending',
+                    'rejected' => 'rejected',
+                ]),
             Image::make('Signature'),
+            MapMarker::make('Origin')
+                ->longitude('p_long')
+                ->latitude('p_lat'),
+            MapMarker::make('Desgination')
+                ->longitude('d_lat')
+                ->latitude('d_long')
         ];
     }
 
@@ -101,7 +122,9 @@ class VehicleRequestForm extends Resource
     public function actions(Request $request)
     {
         return [
-
+            // ChangeStatus::make(),
+            Approve::make()->showOnTableRow(),
+            Decline::make()->showOnTableRow(),
             ReviewAndDownloadForm::make()->showOnTableRow(),
             AttachSignature::make()->showOnTableRow(),
         ];

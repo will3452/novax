@@ -29,9 +29,12 @@
                 </div>
             </div>
         </div>
-        <div class="grid grid-cols-4">
+        <div class="grid grid-cols-3">
+            <x-dashboard-item :image="'contact-form.png'" :route="'/new-request/' . auth()->id()">
+                Request New
+            </x-dashboard-item>
             <x-dashboard-item :image="'car-rental.png'" :route="'/form-request/' . auth()->id()">
-                Request
+                All Requests
             </x-dashboard-item>
             <x-dashboard-item :image="'calendar-page.png'" :route="'/schedule/' . auth()->id() . '?type=' . auth()->user()->type">
                 My Schedule
@@ -45,9 +48,9 @@
             <x-dashboard-item :image="'map.png'" :route="'/default-map'">
                 Map
             </x-dashboard-item>
-            <x-dashboard-item :image="'profile.png'" :route="'#'">
+            <!-- <x-dashboard-item :image="'profile.png'" :route="'#'">
                 My Account
-            </x-dashboard-item>
+            </x-dashboard-item> -->
             <x-dashboard-item :image="'info.png'" :route="'#'">
                 Help
             </x-dashboard-item>

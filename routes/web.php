@@ -22,11 +22,24 @@ Route::get('/artisan', function () {
     return $result;
 });
 
-Route::get('/form-request/{user}', function (Request $request, App\Models\User $user) {
-   $vehicles = Vehicle::where('is_available', true)->get();
-   return view('form-request', compact('user', 'vehicles'));
+Route::get('/new-request/{user}', function () {
+    return view('new-request');
 });
 
+Route::get('/form-request/{user}', function (Request $request, App\Models\User $user) {
+   $vehicles = Vehicle::where('is_available', true)->get();
+   $record = VehicleRequestForm::whereUserId($user->id)->latest()->get();
+   if ($request->has('date')) {
+    $record = VehicleRequestForm::whereUserId($user->id)->whereDate('date', $request->date)->latest()->get();
+   }
+   return view('form-request', compact('user', 'vehicles', 'record'));
+});
+
+Route::get('/form-request-create/{user}', function (Request $request, App\Models\User $user) {
+    $vehicles = Vehicle::where('is_available', true)->get();
+    $record = VehicleRequestForm::whereUserId($user->id)->get();
+    return view('form-request-create', compact('user', 'vehicles', 'record'));
+});
 
 Route::get('/view-request/{fr}', function (Request $request, VehicleRequestForm $fr) {
     $user = auth()->user();
@@ -43,7 +56,7 @@ Route::get('/reserve/{user}/{trip}', function (Request $request, \App\Models\Use
     return view('reserve', compact('trip', 'user'));
 });
 
-Route::get('/map/{trip}', function (Request $request, Trip $trip) {
+Route::get('/map/{trip}', function (Request $request, VehicleRequestForm $trip) {
     return view('map', compact('trip'));
 });
 
@@ -114,7 +127,7 @@ Route::post('/form-request', function (Request $request) {
         'request_travel' => $tr,
         'travel_order' => $to,
         'date' => $request->date,
-        'status' => $request->status ?? 'approved',
+        'status' => $request->status ?? 'pending',
     ]);
 
     alert()->success("Your request has been submitted!");
@@ -126,9 +139,8 @@ Route::get('/mobile-register', function () {
 });
 
 Route::get('/trip-history/{user}', function (Request $request, User $user) {
-    $driver_id = $user->driver->id;
-    $reservations = Reservation::whereStatus('Approved')->whereDriverId($driver_id)->whereDate('date', '<=', now())->get();
-    return $reservations;
+    $records = VehicleRequestForm::whereDate('date', '<=', now())->whereStatus('approved')->get();
+    return view('trip-history', compact('user', 'records'));
 });
 
 Route::post('/mobile-register', function (Request $request) {

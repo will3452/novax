@@ -30,7 +30,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
-            Image::make('Landing Image'), 
+            Image::make('Landing Image'),
         ]);
     }
 
@@ -82,11 +82,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
-            NewReservations::make(),
-            ReservationTrend::make(), 
-            Vehicles::make(), 
-            NewUsers::make(), 
-            NewTrips::make(), 
+            Vehicles::make(),
+            NewUsers::make(),
         ];
     }
 
@@ -110,7 +107,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             (new ProfileTool)->canSee(fn () => config('novax.profile_enabled')),
             (new BackupTool)->canSee(fn () => config('novax.back_up_enabled')),
-            (new NovaSettings)->canSee(fn () => config('novax.setting_enabled')), 
+            (new NovaSettings)->canSee(fn () => config('novax.setting_enabled')),
         ];
     }
 

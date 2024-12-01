@@ -9,6 +9,10 @@ use Laravel\Nova\Fields\Select;
 
 class Reservation extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return false;
+    }
     /**
      * The model the resource corresponds to.
      *

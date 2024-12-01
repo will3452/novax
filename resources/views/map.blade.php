@@ -20,7 +20,7 @@
   <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.2.0/mapbox-gl-directions.js"></script>
   <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.2.0/mapbox-gl-directions.css" type="text/css">
 
-  <div id="map" class="h-screen"></div>
+  <div id="map" class="h-[90vh]"></div>
 
   <x-back-home></x-back-home>
 
@@ -32,7 +32,7 @@
       container: 'map',
       // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
       style: 'mapbox://styles/mapbox/streets-v12',
-      center: [{{$trip->pickup_lng}}, {{$trip->pickup_lat}}],
+      center: [{{$trip->p_long}}, {{$trip->p_lat}}],
       zoom: 13,
   });
   let direction = new MapboxDirections({
@@ -44,8 +44,8 @@
   );
 
   map.on('load', () => {
-    direction.setOrigin([{{$trip->pickup_lng}}, {{$trip->pickup_lat}}])
-    direction.setDestination([{{$trip->dropoff_lng}}, {{$trip->dropoff_lat}}])
+    direction.setOrigin([{{$trip->p_long}}, {{$trip->p_lat}}])
+    direction.setDestination([{{$trip->d_long}}, {{$trip->d_lat}}])
   })
 
   </script>
