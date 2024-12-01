@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="grid grid-cols-3 gap-2">
-                    <a href="#" class=" rounded-full bg-green-900 p-2 text-center text-green-100 ">Trip Ticket</a>
+                    <a href="/mobile-view-request/{{$item->id}}" class=" rounded-full bg-green-900 p-2 text-center text-green-100 ">Trip Ticket</a>
                     @if ($item->p_lat != null && $item->p_long != null && $item->d_lat != null && $item->d_long )
                     <a href="/map/{{$item->id}}" class=" rounded-full bg-blue-900 p-2 text-center text-blue-100">Route</a>
                     @else

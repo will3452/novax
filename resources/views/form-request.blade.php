@@ -18,9 +18,6 @@
                 </div>
                 Vehicle Form Requests
             </h1>
-            <a href="/form-request-create/{{$user->id}}" class="underline rounded-xl font-bold">
-                Request New
-            </a>
         </div>
         <form action="/form-request/{{$user->id}}" class="flex grid grid-cols-5 gap-2">
             <input name="date" value="{{request()->date}}" type="date" class="col-span-3 border p-2 rounded-full" placeholder="Search By Date">

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\VehicleRequestForm;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-
+use Illuminate\Support\Facades\Http;
 
 Route::get('/', function () {
     return redirect()->to(config('nova.path'));
@@ -24,6 +24,31 @@ Route::get('/artisan', function () {
 
 Route::get('/new-request/{user}', function () {
     return view('new-request');
+});
+
+Route::post('/new-request', function (Request $request) {
+    $address = $request->destination;
+    $api = env('GEOAPI_KEY');
+    $response = Http::get("https://geocode.maps.co/search?q=$address&api_key=$api");
+    $result = $response->json();
+    $d_lat = $result[0]['lat'];
+    $d_long = $result[0]['lon'];
+    VehicleRequestForm::create([
+        'user_id' => auth()->id(),
+        'model' => $request->destination,
+        'purpose' => $request->purpose,
+        'date' => $request->date,
+        'time' => $request->time,
+        'remarks' => $request->passenger,
+        'd_lat' => $d_lat,
+        'd_long' => $d_long,
+        'request_travel' => '---',
+        'travel_order' => '---',
+        'status' => 'pending',
+    ]);
+
+    alert()->success('Your request has been submitted!');
+    return redirect()->to("/mobile-dashboard/" . auth()->id());
 });
 
 Route::get('/form-request/{user}', function (Request $request, App\Models\User $user) {
@@ -45,6 +70,11 @@ Route::get('/view-request/{fr}', function (Request $request, VehicleRequestForm 
     $user = auth()->user();
     $vehicles = Vehicle::get();
     return view('form-request-print', compact('fr', 'user', 'vehicles'));
+});
+Route::get('/mobile-view-request/{fr}', function (Request $request, VehicleRequestForm $fr) {
+    $user = auth()->user();
+    $vehicles = Vehicle::get();
+    return view('mobile-form-request-print', compact('fr', 'user', 'vehicles'));
 });
 
 Route::get('/trips/{user}', function (Request $request, App\Models\User $user) {
@@ -139,7 +169,7 @@ Route::get('/mobile-register', function () {
 });
 
 Route::get('/trip-history/{user}', function (Request $request, User $user) {
-    $records = VehicleRequestForm::whereDate('date', '<=', now())->whereStatus('approved')->get();
+    $records = VehicleRequestForm::whereUserId($user->id)->whereDate('date', '<=', now())->whereStatus('approved')->latest()->get();
     return view('trip-history', compact('user', 'records'));
 });
 

@@ -18,6 +18,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class VehicleRequestForm extends Resource
 {
@@ -57,11 +58,10 @@ class VehicleRequestForm extends Resource
     {
         return [
             Date::make('Date')->sortable(),
-            BelongsTo::make('User', 'user', User::class),
-            Textarea::make('Purpose'),
-            Textarea::make('Remarks'),
-            File::make('Request Travel'),
-            File::make('Travel Order'),
+            BelongsTo::make('Requestor', 'user', User::class),
+            Textarea::make('Purpose')->alwaysShow(),
+            Textarea::make('Passengers', 'remarks')
+                ->alwaysShow(),
             BelongsTo::make('Driver', 'driver', Driver::class),
             // Text::make('Status'),
             Select::make('Status')
@@ -70,13 +70,13 @@ class VehicleRequestForm extends Resource
                     'pending' => 'pending',
                     'rejected' => 'rejected',
                 ]),
-            Image::make('Signature'),
+            Image::make('Signature')->hideFromIndex(),
             MapMarker::make('Origin')
                 ->longitude('p_long')
                 ->latitude('p_lat'),
-            MapMarker::make('Desgination')
-                ->longitude('d_lat')
-                ->latitude('d_long')
+            MapMarker::make('Destination')
+                ->longitude('d_long')
+                ->latitude('d_lat')
         ];
     }
 
@@ -127,6 +127,7 @@ class VehicleRequestForm extends Resource
             Decline::make()->showOnTableRow(),
             ReviewAndDownloadForm::make()->showOnTableRow(),
             AttachSignature::make()->showOnTableRow(),
+            DownloadExcel::make(),
         ];
     }
 }

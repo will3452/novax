@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Document</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <div class="p-4 py-2 space-y-2">
+    <div class="p-4 py-2 space-y-2 v-[90vh] mb-[10vh]">
         <div class="flex justify-between mb-8">
             <h1 class="font-bold text-xl">Trip Ticket</h1>
             <div  class="font-bold text-xl">
@@ -164,8 +165,9 @@ and conditions imposed by SLSU. I am aware of the safety procedures and policies
             Passenger
         </div>
         <div>
-            {{$fr->remarks}}
+            {!!$fr->remarks!!}
         </div>
     </div>
+    <x-back-home></x-back-home>
 </body>
 </html>
