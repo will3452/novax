@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ApiAuthenticationController;
 use App\Models\Ingredient;
-use App\Models\IngredientInventory;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\PreOrder;
@@ -11,6 +10,7 @@ use App\Models\Product;
 use App\Models\Promo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +23,31 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::post('/predict', function (Request $request) {
+
+    $records = $request->data;
+    $horizon = $request->horizon;
+    $cls = $request->cls;
+
+    $response = Http::withHeaders([
+        'Content-Type' => 'application/json',
+        'x-rapidapi-host' => 'predict7.p.rapidapi.com',
+        'x-rapidapi-key' => '1b247d396amsh8e8a6460feee0a1p1f870cjsn6124f6f929aa',
+    ])
+        ->post('https://predict7.p.rapidapi.com/', [
+            'data' => $records,
+            'horizon' => $cls ?? 1,
+            'cls' => $cls ?? [1],
+        ]);
+
+    if ($response->successful()) {
+        $data = $response->json(); // Get the response as an array
+        dd($data); // Dump and die the response
+    } else {
+        dd('Request failed');
+    }
+});
 
 
 //private access
