@@ -14,6 +14,7 @@ use App\Nova\Metrics\NewIngredients;
 use App\Nova\Actions\ViewUsageAnalytic;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
+use Pdmfc\NovaCards\Info;
 
 class Ingredient extends Resource
 {
@@ -110,6 +111,8 @@ class Ingredient extends Resource
         return [
             // MacroAndMicro::make(),
             // NewIngredients::make(),
+            (new Info())
+                ->info('[ Green - Not Critical ] [Red - Critical Stocks]'),
         ];
     }
 

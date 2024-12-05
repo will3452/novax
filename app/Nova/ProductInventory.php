@@ -58,9 +58,9 @@ class ProductInventory extends Resource
             BelongsTo::make('Product', 'product', Product::class),
             Select::make('Transaction', 'type')
                 ->options([
-                    'ADJUSTMENT' => 'ADJUSTMENT',
-                    'ORDER' => 'ORDER',
-                ]),
+                    'ADJUSTMENT' => 'Adjustment',
+                    'ORDER' => 'Order',
+                ])->displayUsingLabels(),
             Number::make('Quantity(bag)', 'quantity')->rules(['required', 'min:1']),
         ];
     }

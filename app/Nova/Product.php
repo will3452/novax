@@ -61,12 +61,17 @@ class Product extends Resource
         return [
             Text::make('Name')->sortable(),
             Text::make('Category')->sortable(),
+            Select::make('Category')
+                ->options([
+                    'Hogs' => 'Hogs',
+                    'Poultry' => 'Poultry',
+                ]),
             Image::make('Image', 'image'),
             Textarea::make('Description')->alwaysShow(),
             Select::make('Unit of Measurement', 'uom')
                 ->options([
                     'Bag' => 'Bag',
-                ]),
+                ])->default(fn () => 'Bag'),
             Currency::make('Unit Price', 'price')->sortable(),
             Number::make('Current Inventory', 'ci')->sortable(),
             Number::make('Quantity Sold', 'qty_sell')->sortable(),

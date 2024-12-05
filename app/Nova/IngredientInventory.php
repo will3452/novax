@@ -62,9 +62,9 @@ class IngredientInventory extends Resource
             BelongsTo::make('Ingredient', 'ingredient', Ingredient::class),
             Select::make('Transaction', 'type')
                 ->options([
-                    'PURCHASE' => 'PURCHASE',
-                    'USAGE' => 'USAGE',
-                ]),
+                    'PURCHASE' => 'Purchase',
+                    'USAGE' => 'Usage',
+                ])->displayUsingLabels(),
             Number::make('Quantity (kg)', 'quantity'),
         ];
     }

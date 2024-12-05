@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Fields\Text;
 use App\Models\PreOrder as PreOrderModel;
 use App\Models\Order as OrderModel;
+use App\Nova\Actions\ViewPredictions;
 use Exception;
 
 class SalesRecord extends Resource
@@ -72,7 +73,11 @@ class SalesRecord extends Resource
             Date::make('Date', 'created_at')
                 ->sortable(),
             BelongsTo::make('Sales', 'sales', User::class),
-            Text::make('Source')->sortable(),
+            Text::make('Source', function () {
+                $source = strtolower($this->source);
+                return "<span style='text-transform:capitalize;'>$source</span>";
+            })
+                ->asHtml(),
             Text::make('Customer Email', function () {
                 try {
                     $types = [
@@ -149,6 +154,8 @@ class SalesRecord extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            ViewPredictions::make()->standalone(),
+        ];
     }
 }
