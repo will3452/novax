@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Fields\Text;
 use App\Models\PreOrder as PreOrderModel;
 use App\Models\Order as OrderModel;
+use App\Nova\Actions\GenerateReport;
 use App\Nova\Actions\ViewPredictions;
 use Exception;
 
@@ -156,6 +157,7 @@ class SalesRecord extends Resource
     {
         return [
             ViewPredictions::make()->standalone(),
+            GenerateReport::make()->standalone(),
         ];
     }
 }

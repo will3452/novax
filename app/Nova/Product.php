@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\RefreshRecords;
 use App\Nova\Actions\ViewOrderAnalytic;
+use App\Nova\Actions\ViewProductSalesRecordAndPrediction;
 use App\Nova\Filters\CategoryFilter;
 use App\Nova\Lenses\TopSellingQuantity;
 use Illuminate\Http\Request;
@@ -128,6 +129,7 @@ class Product extends Resource
                 ->standalone(),
             RefreshRecords::make('PRODUCT')
                 ->standalone(),
+            ViewProductSalesRecordAndPrediction::make(),
         ];
     }
 }

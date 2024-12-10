@@ -5,7 +5,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             <h1>Usage Analytics</h1>
-            <a href="/admin" class="btn btn-primary">Back to Management</a>
+            <a href="{{url()->previous()}}" class="btn btn-primary">Back to Management</a>
         </div>
         <div class="row g-4">
             <!-- Ingredient Usage from the last 7 Days -->

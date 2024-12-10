@@ -25,6 +25,14 @@ class Product extends Model
         return $this->hasMany(ProductInventory::class, 'product_id');
     }
 
+    public function preOrders () {
+        return $this->belongsToMany(PreOrder::class, 'pre_order_items', 'product_id', 'pre_order_id');
+    }
+
+    public function orders () {
+        return $this->belongsToMany(Order::class, 'order_items', 'product_id', 'order_id');
+    }
+
     // public function getQuantityAttribute() {
     //     $adjustments =  $this->inventories()->whereType('ADJUSTMENT')->sum('quantity');
     //     $orders =  $this->inventories()->whereType('ORDER')->sum('quantity');

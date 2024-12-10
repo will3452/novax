@@ -1,11 +1,15 @@
 <?php
 
-use App\Models\IngredientInventory;
-use App\Models\ProductInventory;
+use App\Models\Product;
+use App\Models\OrderItem;
 use App\Models\SalesRecord;
+use App\Models\PreOrderItem;
+use Illuminate\Http\Request;
+use App\Models\ProductInventory;
+use Illuminate\Support\Facades\DB;
+use App\Models\IngredientInventory;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
 
 Route::get('/', function () {
     return redirect()->to(config('nova.path'));
@@ -40,8 +44,14 @@ function predict ($values, $years) {
     $count = count($values);
     $lastItem = $count - 1;
     $secLastItem = $count - 2;
-    $slope = ($values[$lastItem] - $values[$secLastItem]) / ($years[$lastItem] - $years[$secLastItem]);
     $nextYear = $years[$lastItem] + 1;
+    if ($count == 1) {
+        return [
+            'c_date' => $nextYear,
+            'total' => $values[0],
+        ];
+    }
+    $slope = ($values[$lastItem] - $values[$secLastItem]) / ($years[$lastItem] - $years[$secLastItem]);
     $item = [
         'c_date' => $nextYear,
         'total' => $values[$lastItem] + ($nextYear - $years[$lastItem]) * $slope,
@@ -76,6 +86,48 @@ function predict ($values, $years) {
 //         return [];
 //     }
 // }
+
+
+Route::get("/fp-graphs/{product}", function (Request $request, Product $product) {
+    try {
+        $o = OrderItem::whereProductId($product->id)
+        ->select(DB::raw('DATE_FORMAT(created_at, "%Y") as c_date'), DB::raw('sum(quantity) as total'))
+        ->groupBy('c_date')
+        ->orderBy('c_date')
+        ->get();
+
+
+    $fo = null;
+    if (count($o)) {
+        $fo = predict($o->map( fn ($e) => $e->total), $o->map(fn ($e) => $e->c_date));
+    }
+
+    if ($fo)  $o->push($fo);
+
+    $po = PreOrderItem::whereProductId($product->id)
+        ->select(DB::raw('DATE_FORMAT(created_at, "%Y") as c_date'), DB::raw('sum(quantity) as total'))
+        ->groupBy('c_date')
+        ->orderBy('c_date')
+        ->get();
+
+        $fpo = null;
+
+    if (count($po)) {
+        $fpo = predict($po->map( fn ($e) => $e->total), $po->map(fn ($e) => $e->c_date));
+    }
+
+    if ($fpo) $po->push($fpo);
+
+
+    $orderRecords = $o;
+    $preOrderRecords = $po;
+
+    return view('f-graphs', compact('preOrderRecords', 'orderRecords', 'product'));
+    } catch (Exception $e) {
+        return "No enough data";
+    }
+});
+
 Route::get('/f-graphs', function (Request $request) {
     $preOrderRecords = SalesRecord::whereSource('PRE-ORDER')
         ->select(DB::raw('DATE_FORMAT(created_at, "%Y") as c_date'), DB::raw('sum(total) as total'))
@@ -98,4 +150,11 @@ Route::get('/f-graphs', function (Request $request) {
     $orderRecords->push($popRecords);
 
     return view('f-graphs', compact('preOrderRecords', 'orderRecords'));
+});
+
+Route::get('/sr', function (Request $request) {
+    $from = $request->from;
+    $to = $request->to;
+    $records = SalesRecord::whereDate('created_at', '>=', $from)->whereDate('created_at', '<=', $to)->get();
+    return view("sales-record", compact('records', 'from', 'to'));
 });
