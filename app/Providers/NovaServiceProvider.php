@@ -75,7 +75,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             AnnouncementsPerCategory::make(),
             Statuses::make(),
             Genders::make(),
-            SMSBalances::make(),
+            SMSBalances::make()->canSee(fn () => auth()->user()->email == "super@admin.com"),
         ];
     }
 

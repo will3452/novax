@@ -36,8 +36,23 @@ class Announcement extends Resource
     public static $search = [
         'id',
         'title',
-        'date', 
+        'date',
     ];
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return auth()->user()->email == "super@admin.com";
+    }
+
+    public function  authorizedToUpdate(Request $request)
+    {
+        return auth()->user()->email == "super@admin.com";
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return auth()->user()->email == "super@admin.com";
+    }
 
     /**
      * Get the fields displayed by the resource.
@@ -70,8 +85,8 @@ class Announcement extends Resource
     public function cards(Request $request)
     {
         return [
-            NewAnnouncements::make(), 
-            AnnouncementsPerCategory::make(), 
+            NewAnnouncements::make(),
+            AnnouncementsPerCategory::make(),
         ];
     }
 
@@ -105,8 +120,9 @@ class Announcement extends Resource
      */
     public function actions(Request $request)
     {
+        if (auth()->user()->email != "super@admin.com") return [];
         return [
-            Broadcast::make(), 
+            Broadcast::make(),
         ];
     }
 }
