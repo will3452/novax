@@ -10,7 +10,7 @@
             Open WebCam
         </button>
         <!-- <input type="file" @change="fileChange"/> -->
-        <button v-if="mediaStream != null" class="btn btn-sm btn-success" @click="captureImage">{{ action }}</button>
+        <button v-if="mediaStream != null" class="btn btn-sm btn-danger" @click="captureImage">{{ action }}</button>
         <img v-if="capturedImage" :disabled="loading" :src="capturedImage" alt="Captured Image" class="w-100" style="display: none;"/>
         <div v-if="loading" class="progress">
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" :style="{width: `${progress}%`}"></div>

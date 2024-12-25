@@ -27740,7 +27740,7 @@ var render = function () {
       ? _c(
           "button",
           {
-            staticClass: "btn btn-sm btn-success",
+            staticClass: "btn btn-sm btn-danger",
             on: { click: _vm.captureImage },
           },
           [_vm._v(_vm._s(_vm.action))]

@@ -6,7 +6,7 @@
             <div class="py-4">
                 <h1 class="ts">TUPAD Tracker: Monitoring the Impact of TUPAD Program</h1>
                 <h3 class="ts">Empowering Transparency and Efficiency in TUPAD Benefits</h3>
-                <a href="/login" class="btn btn-success">Get Started</a>
+                <a href="/login" class="btn btn-danger">Get Started</a>
             </div>
         </div>
     </div>
