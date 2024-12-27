@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
@@ -45,6 +46,7 @@ class Assignment extends Resource
     public function fields(Request $request)
     {
         return [
+            Date::make('Date', 'created_at')->exceptOnForms()->sortable(),
             BelongsTo::make('Task', 'task', Task::class),
             BelongsTo::make('User', 'user', User::class),
             Select::make('Status')

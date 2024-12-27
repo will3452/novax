@@ -49,9 +49,14 @@ Route::post('/time', function (Request $request) {
             'in' => now(),
             'place_in' => $request->place
         ]);
+    } else {
+        if ($exists->in->diffInHours(now()) >= 0) {
+            return $exists->update(['out' => now(), 'place_out' => $request->place]);
+        } else {
+            return 0;
+        }
     }
 
-    return $exists->update(['out' => now(), 'place_out' => $request->place]);
 });
 
 Route::post('/upload-image', function (Request $request) {

@@ -2,10 +2,12 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\AssignTask;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Select;
@@ -54,8 +56,8 @@ class User extends Resource
             Select::make('Type')
                 ->options([
                     'ADMINISTRATOR' => 'ADMINISTRATOR',
-                    'BENEFICIARY' => 'BENEFICIARY', 
-                ]), 
+                    'BENEFICIARY' => 'BENEFICIARY',
+                ]),
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
@@ -70,6 +72,8 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
+
+            HasMany::make('Assignments', 'assignments', Assignment::class),
         ];
     }
 
@@ -114,6 +118,8 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            AssignTask::make(),
+        ];
     }
 }
