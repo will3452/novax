@@ -50,8 +50,8 @@ Route::post('/time', function (Request $request) {
             'place_in' => $request->place
         ]);
     } else {
-        if ($exists->in->diffInHours(now()) >= 0) {
-            return $exists->update(['out' => now(), 'place_out' => $request->place]);
+        if ($exists->in->diffInHours(now()) >= nova_get_setting('interval', 0)) {
+            return $exists->update(['out' => now(), 'place_out' => $request->place, 'place_out' => $request->place]);
         } else {
             return 0;
         }

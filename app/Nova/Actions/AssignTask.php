@@ -29,6 +29,7 @@ class AssignTask extends Action
             Assignment::create([
                 'user_id' => $user->id,
                 'task_id' => $fields->task_id,
+                'status' => 'ON-GOING',
             ]);
         }
     }

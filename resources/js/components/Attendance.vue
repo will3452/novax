@@ -22,6 +22,7 @@ export default {
         return {
             time: new Date(),
             isTimeOut: false,
+            place:null,
         }
     },
     methods: {
@@ -33,6 +34,7 @@ export default {
             try {
                 let response = await axios.post('/api/time', {
                     userId: this.userId,
+                    place: this.place,
                 })
             } catch (error) {
                 console.log('error -> ', error)
@@ -45,6 +47,16 @@ export default {
         setInterval(() => {
             this.time = new Date()
         }, 1000);
+        if (! navigator.geolocation) {
+            alert('Geolocation is not supported by your browser!');
+        } else {
+            let positionHandler  = (pos) => {
+                const { latitude, longitude } = pos.coords;
+                console.log(latitude, longitude);
+                this.place = `${latitude},${longitude}`;
+            }
+            navigator.geolocation.getCurrentPosition(positionHandler)
+        }
         this.loadStatus()
     }
 }

@@ -2,12 +2,14 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\FilterByDate;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Attendance extends Resource
 {
@@ -70,7 +72,9 @@ class Attendance extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            FilterByDate::make(),
+        ];
     }
 
     /**
@@ -92,6 +96,8 @@ class Attendance extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new DownloadExcel()
+        ];
     }
 }

@@ -177,9 +177,34 @@
                                             <div class="card-header">Before</div>
                                             <div class="card-body">
                                                 <img src="https://tupad.lzrk.host/storage/{{$images[1]->image}}" class="w-100" alt="">
+                                                @php
+                                                    $before = $images[1];
+                                                    $objects = [];
+                                                    foreach ($before->result['predictions'] as $o) {
+                                                        if (array_key_exists($o['class'], $objects)) {
+                                                            $objects[$o['class']] ++;
+                                                        } else {
+                                                            $objects[$o['class']] = 1;
+                                                        }
+                                                    }
+                                                @endphp
+                                                <table class=" mt-2 table-sm table-bordered table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Object</th>
+                                                            <th>Count</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($objects as $key=>$value)
+                                                            <td>{{$key}}</td>
+                                                            <td>{{$value}}</td>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
                                             </div>
                                             <div class="card-footer text-center">
-                                                <a target="_blank" href="/result/{{$images[1]->id}}">View Image Analyzed</a>
+                                                <a href="/result/{{$before->id}}">View Image Analyzed</a>
                                             </div>
                                         </div>
                                     </div>
@@ -188,9 +213,34 @@
                                             <div class="card-header">After</div>
                                             <div class="card-body">
                                                 <img src="https://tupad.lzrk.host/storage/{{$images[0]->image}}" class="w-100" alt="">
+                                                @php
+                                                    $after = $images[0];
+                                                    $objects = [];
+                                                    foreach ($after->result['predictions'] as $o) {
+                                                        if (array_key_exists($o['class'], $objects)) {
+                                                            $objects[$o['class']] ++;
+                                                        } else {
+                                                            $objects[$o['class']] = 1;
+                                                        }
+                                                    }
+                                                @endphp
+                                                <table class=" mt-2 table-sm table-bordered table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Object</th>
+                                                            <th>Count</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($objects as $key=>$value)
+                                                            <td>{{$key}}</td>
+                                                            <td>{{$value}}</td>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
                                             </div>
                                             <div class="card-footer text-center">
-                                                <a target="_blank" href="/result/{{$images[0]->id}}">View Image Analyzed</a>
+                                                <a  href="/result/{{$after->id}}">View Image Analyzed</a>
                                             </div>
                                         </div>
                                     </div>

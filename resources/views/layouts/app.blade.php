@@ -23,7 +23,7 @@
     </style>
 </head>
 <body>
-    <div id="app">
+    <div>
         <nav class="navbar navbar-expand-md bg-danger navbar-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -55,6 +55,9 @@
                                 </li>
                             @endif
                         @else
+                        <li class="nav-item">
+                            <a href="/home" class="nav-link">Dashboard</a>
+                        </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -78,8 +81,11 @@
             </div>
         </nav>
 
-        <main>
+        <main  id="app">
             @yield('content')
+        </main>
+        <main>
+            @yield('content-2')
         </main>
     </div>
 </body>

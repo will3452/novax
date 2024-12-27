@@ -5102,7 +5102,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
   data: function data() {
     return {
       time: new Date(),
-      isTimeOut: false
+      isTimeOut: false,
+      place: null
     };
   },
   methods: {
@@ -5135,7 +5136,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               _context2.prev = 0;
               _context2.next = 3;
               return axios.post('/api/time', {
-                userId: _this2.userId
+                userId: _this2.userId,
+                place: _this2.place
               });
             case 3:
               response = _context2.sent;
@@ -5162,6 +5164,18 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     setInterval(function () {
       _this3.time = new Date();
     }, 1000);
+    if (!navigator.geolocation) {
+      alert('Geolocation is not supported by your browser!');
+    } else {
+      var positionHandler = function positionHandler(pos) {
+        var _pos$coords = pos.coords,
+          latitude = _pos$coords.latitude,
+          longitude = _pos$coords.longitude;
+        console.log(latitude, longitude);
+        _this3.place = "".concat(latitude, ",").concat(longitude);
+      };
+      navigator.geolocation.getCurrentPosition(positionHandler);
+    }
     this.loadStatus();
   }
 });
