@@ -30,9 +30,11 @@
             </div>
         </div>
         <div class="grid grid-cols-3">
-            <x-dashboard-item :image="'contact-form.png'" :route="'/new-request/' . auth()->id()">
-                Request New
-            </x-dashboard-item>
+            @if (auth()->user()->type == "Client")
+                <x-dashboard-item :image="'contact-form.png'" :route="'/new-request/' . auth()->id()">
+                    Request New
+                </x-dashboard-item>
+            @endif
             <x-dashboard-item :image="'car-rental.png'" :route="'/form-request/' . auth()->id()">
                 All Requests
             </x-dashboard-item>
@@ -51,7 +53,7 @@
             <!-- <x-dashboard-item :image="'profile.png'" :route="'#'">
                 My Account
             </x-dashboard-item> -->
-            <x-dashboard-item :image="'info.png'" :route="'#'">
+            <x-dashboard-item :image="'info.png'" route="/help/{{auth()->id()}}">
                 Help
             </x-dashboard-item>
         </div>

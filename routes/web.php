@@ -111,6 +111,7 @@ Route::get('/chat/{user}/{otherUser}', function (Request $request, User $user, U
 });
 
 Route::get('/inbox/{user}', function (Request $request, User $user) {
+    auth()->login($user);
     return view('inbox', compact('user'));
 });
 
@@ -168,8 +169,14 @@ Route::get('/mobile-register', function () {
     return view('mobile-register');
 });
 
+Route::get('/help/{user}', function (Request $request, User $user) {
+    auth()->login($user);
+    return view('help');
+});
+
 Route::get('/trip-history/{user}', function (Request $request, User $user) {
-    $records = VehicleRequestForm::whereUserId($user->id)->whereDate('date', '<=', now())->whereStatus('approved')->latest()->get();
+    auth()->login($user);
+    $records = VehicleRequestForm::whereUserId($user->id)->whereDate('date', '<', now())->whereStatus('approved')->latest()->get();
     return view('trip-history', compact('user', 'records'));
 });
 

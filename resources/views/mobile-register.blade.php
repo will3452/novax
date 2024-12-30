@@ -65,7 +65,7 @@
             <label for="">
                 Password *
             </label>
-            <input name="password" required class="w-full border p-4 rounded-xl" />
+            <input name="password" type="password" required class="w-full border p-4 rounded-xl" />
         </div>
 
         <button class="w-full bg-blue-900 text-white p-4 rounded-full">
