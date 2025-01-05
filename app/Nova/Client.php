@@ -2,10 +2,11 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Client extends Resource
@@ -57,7 +58,11 @@ class Client extends Resource
             Text::make('Employee No')
                 ->rules(['required']),
             Text::make('Department')->sortable(),
-            BelongsTo::make('User', 'user', User::class)->hideFromIndex(),
+            Select::make('User', 'user_id')
+                ->options(fn () => \App\Models\User::whereType('client')->get()->pluck('name', 'id')),
+            BelongsTo::make('User', 'user', User::class)
+                ->exceptOnForms()
+                ->hideFromIndex(),
         ];
     }
 
