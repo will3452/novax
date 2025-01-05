@@ -1,6 +1,8 @@
+
 <?php
 
 use App\Models\Client;
+use App\Models\Feedback;
 use App\Models\Reservation;
 use App\Models\Trip;
 use App\Models\User;
@@ -211,4 +213,18 @@ Route::post('/mobile-register', function (Request $request) {
 Route::get("/mobile-dashboard/{user}", function (Request $request, User $user) {
     auth()->login($user);
     return view('mobile-dashboard');
+});
+
+Route::get('/feedback/{vrf}', function (Request $request, VehicleRequestForm $vrf) {
+    return view('feedback', compact('vrf'));
+});
+
+Route::post('feedback', function (Request $request) {
+    Feedback::create([
+        'vrf_id' => $request->vrf_id,
+        'driver_id' => $request->driver_id,
+        'star' => $request->star,
+    ]);
+    alert()->success('Your feedback has been submitted');
+    return redirect('/mobile-dashboard/' . auth()->id());
 });

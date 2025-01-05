@@ -43,17 +43,18 @@
                         <h1 class="text-xs ">{{$item->purpose}}</h1>
                     </div>
                 </div>
-                <div class="grid grid-cols-3 gap-2">
-                    <a href="/mobile-view-request/{{$item->id}}" class=" rounded-full bg-green-900 p-2 text-center text-green-100 ">Trip Ticket</a>
+                <div class="grid grid-cols-4 gap-1">
+                    <a href="/feedback/{{$item->id}}" class=" rounded-md bg-purple-900 p-2 text-center text-green-100">Feedback</a>
+                    <a href="/mobile-view-request/{{$item->id}}" class=" rounded-md bg-green-900 p-2 text-center text-green-100">Ticket</a>
                     @if ($item->p_lat != null && $item->p_long != null && $item->d_lat != null && $item->d_long )
-                    <a href="/map/{{$item->id}}" class=" rounded-full bg-blue-900 p-2 text-center text-blue-100">Route</a>
+                    <a href="/map/{{$item->id}}" class=" rounded-md bg-blue-900 p-2 text-center text-blue-100">Route</a>
                     @else
-                    <a href="#" class=" rounded-full bg-gray-200 p-2 text-center text-gray-900">Route</a>
+                    <a href="#" class=" rounded-md bg-gray-200 p-2 text-center text-gray-900">Route</a>
                     @endif
                     @if ($item->driver_id)
-                        <a href="/chat/{{$user->id}}/{{$item->driver_id}}" class=" rounded-full bg-yellow-900 p-2 text-center text-yellow-100">Message</a>
+                        <a href="/chat/{{$user->id}}/{{$item->driver_id}}" class=" rounded-md bg-yellow-900 p-2 text-center text-yellow-100">Message</a>
                     @else
-                    <a href="#" class=" rounded-full bg-gray-200 p-2 text-center text-gray-900">Message</a>
+                    <a href="#" class=" rounded-md bg-gray-200 p-2 text-center text-gray-900">Message</a>
                     @endif
                 </div>
             </div>
