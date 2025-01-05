@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -66,7 +67,11 @@ class Driver extends Resource
             Image::make('Driver Lic C', 'driver_lic_c'),
             // Image::make('Medical Certificate', 'med_cert'),
             Text::make('Campus')->sortable(),
-            BelongsTo::make('User', 'user', User::class)->hideFromIndex(),
+            Select::make('User', 'user_id')
+                ->options(fn () => \App\Models\User::whereType('driver')->get('name', 'id')),
+            BelongsTo::make('User', 'user', User::class)
+                ->exceptOnForms()
+                ->hideFromIndex(),
         ];
     }
 

@@ -48,7 +48,12 @@ class User extends Resource
     {
         return [
             ID::make()->sortable(),
-
+            Select::make('Type', 'type')
+                ->options([
+                    'admin' => 'admin',
+                    'driver' => 'driver',
+                    'client' => 'client'
+                ]),
             Select::make('Role')
                 ->options([
                     'OIC' => 'OIC',
