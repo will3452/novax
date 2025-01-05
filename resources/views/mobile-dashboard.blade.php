@@ -34,10 +34,10 @@
                 <x-dashboard-item :image="'contact-form.png'" :route="'/new-request/' . auth()->id()">
                     Request New
                 </x-dashboard-item>
+                <x-dashboard-item :image="'car-rental.png'" :route="'/form-request/' . auth()->id()">
+                    All Requests
+                </x-dashboard-item>
             @endif
-            <x-dashboard-item :image="'car-rental.png'" :route="'/form-request/' . auth()->id()">
-                All Requests
-            </x-dashboard-item>
             <x-dashboard-item :image="'calendar-page.png'" :route="'/schedule/' . auth()->id() . '?type=' . auth()->user()->type">
                 My Schedule
             </x-dashboard-item>
