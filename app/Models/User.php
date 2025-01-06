@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Exception;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -29,7 +30,11 @@ class User extends Authenticatable
     ];
 
     public function getAgeAttribute() {
-        return $this->birthday->age;
+        try {
+            return $this->birthday->age;
+        } catch(Exception $e) {
+            return 0;
+        }
     }
 
     /**
