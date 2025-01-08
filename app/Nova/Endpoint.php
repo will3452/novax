@@ -18,6 +18,10 @@ class Endpoint extends Resource
      */
     public static $model = \App\Models\Endpoint::class;
 
+    public static function availableForNavigation(Request $request) {
+        return false;
+    }
+
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
@@ -44,24 +48,24 @@ class Endpoint extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Path'), 
+            Text::make('Path'),
             Select::make('Method')
                 ->options([
                     'post' => 'post',
                     'get' => 'get',
-                    'put' => 'put', 
+                    'put' => 'put',
                 ]),
             Select::make('Model')
                 ->options(function () {
-                    $modelPath = app_path('Models'); 
+                    $modelPath = app_path('Models');
                     $files = File::files($modelPath);
 
-                    $array = []; 
+                    $array = [];
 
                     foreach($files as $item) {
-                        $array[$item->getFilenameWithoutExtension()] = $item->getFilenameWithoutExtension(); 
+                        $array[$item->getFilenameWithoutExtension()] = $item->getFilenameWithoutExtension();
                     }
-                    return $array; 
+                    return $array;
                 }),
 
         ];

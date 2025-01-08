@@ -1,0 +1,14 @@
+:root {
+    --primary: rgb(136, 145, 148); /* #191970 */
+    --primary-dark: #666e70; /* Darker shade of #191970 */
+    --primary-70: rgba(136, 145, 148, 0.7); /* 70% opacity */
+    --primary-50: rgba(136, 145, 148, 0.5); /* 50% opacity */
+    --primary-30: rgba(136, 145, 148, 0.3); /* 30% opacity */
+    --primary-10: rgba(136, 145, 148, 0.1); /* 10% opacity */
+    --logo: #666e70; /* Complementary darker shade */
+    --sidebar-icon: #e6eced; /* Highlight variation of Midnight Blue */
+  }
+
+  .bg-grad-sidebar {
+    background: var(--primary);
+  }
