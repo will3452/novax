@@ -103,7 +103,7 @@ Route::get('/default-map', function (Request $request) {
 Route::get('/schedule/{user}', function (Request $request, User $user) {
     $type = $request->type;
     $profile = ("\\App\\Models\\$type")::whereUserId($user->id)->first();
-    $param = $type == 'Driver' ? 'driver_id' : 'client_id';
+    $param = $type == 'driver' ? 'driver_id' : 'client_id';
     $reservations = Reservation::whereStatus('Approved')->where([$param => $profile->id])->get();
     return view('schedule', compact('user', 'profile', 'reservations'));
 });

@@ -36,10 +36,10 @@ class User extends Authenticatable
         return $this->hasOne(Client::class, 'user_id');
     }
 
-    public function getTypeAttribute() {
+    /** public function getTypeAttribute() {
         if (is_null($this->client)) return "Driver";
         return "Client";
-    }
+    }**/
 
     /**
      * The attributes that should be hidden for serialization.
