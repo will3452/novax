@@ -104,6 +104,7 @@ Route::get('/schedule/{user}', function (Request $request, User $user) {
     $type = $request->type;
     $profile = ("\\App\\Models\\$type")::whereUserId($user->id)->first();
     $param = $type == 'driver' ? 'driver_id' : 'client_id';
+    if(is_null($profile)) return "No profile set.";
     $reservations = Reservation::whereStatus('Approved')->where([$param => $profile->id])->get();
     return view('schedule', compact('user', 'profile', 'reservations'));
 });
