@@ -41,6 +41,10 @@ class User extends Resource
      * @var string
      */
     public static $title = 'name';
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->email == 'super@admin.com';
+    }
 
     /**
      * The columns that should be searched.

@@ -16,7 +16,7 @@ class Broadcast extends Action
 {
     use InteractsWithQueue, Queueable;
 
-    public $showOnTableRow = true; 
+    public $showOnTableRow = true;
 
     public function sendMessage($phone, $message) {
         $ch = curl_init();
@@ -24,7 +24,7 @@ class Broadcast extends Action
             'apikey' => ENV('SMS_KEY'), //Your API KEY
             'number' => $phone,
             'message' => $message,
-            'sendername' => 'OTIEPI'
+            'sendername' => 'JUANCAST'
         );
         curl_setopt( $ch, CURLOPT_URL,'https://semaphore.co/api/v4/messages' );
         curl_setopt( $ch, CURLOPT_POST, 1 );
@@ -38,7 +38,7 @@ class Broadcast extends Action
         curl_close ($ch);
 
         //Show the server response
-        return; 
+        return;
     }
 
     /**
@@ -50,19 +50,19 @@ class Broadcast extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        $users = User::get(); 
+        $users = User::get();
         foreach($models as $model) {
-            if ( SmsBalance::latest()->first()->amount <= 0) return Action::danger("You don't have enough SMS Balance."); 
+            if ( SmsBalance::latest()->first()->amount <= 0) return Action::danger("You don't have enough SMS Balance.");
             foreach($users as $user) {
                 BroadcastLog::create([
-                    'user_id' => $user->id, 
-                    'announcement_id' => $model->id, 
+                    'user_id' => $user->id,
+                    'announcement_id' => $model->id,
                 ]);
-                if (! $user->phone) continue; 
-                $this->sendMessage($user->phone, $model->body); 
+                if (! $user->phone) continue;
+                $this->sendMessage($user->phone, $model->body);
                 SmsBalance::create([
                     'amount' => SmsBalance::latest()->first()->amount - 2,
-                ]); 
+                ]);
             }
         }
     }
