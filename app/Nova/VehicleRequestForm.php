@@ -63,6 +63,8 @@ class VehicleRequestForm extends Resource
             Textarea::make('Passengers', 'remarks')
                 ->alwaysShow(),
             BelongsTo::make('Driver', 'driver', Driver::class),
+            File::make('Travel Order')->showOnIndex(),
+            File::make('Request Travel')->showOnIndex(),
             // Text::make('Status'),
             Select::make('Status')
                 ->options([
