@@ -69,9 +69,9 @@ Route::post('/new-request', function (Request $request) {
 
 Route::get('/form-request/{user}', function (Request $request, App\Models\User $user) {
    $vehicles = Vehicle::where('is_available', true)->get();
-   $record = VehicleRequestForm::whereUserId($user->id)->orderBy('date', 'asc')->get();
+   $record = VehicleRequestForm::whereUserId($user->id)->orderBy('date', 'desc')->get();
    if ($request->has('date')) {
-    $record = VehicleRequestForm::whereUserId($user->id)->whereDate('date', $request->date)->orderBy('date', 'asc')->get();
+    $record = VehicleRequestForm::whereUserId($user->id)->whereDate('date', $request->date)->orderBy('date', 'desc')->get();
    }
    return view('form-request', compact('user', 'vehicles', 'record'));
 });
