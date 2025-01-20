@@ -49,6 +49,7 @@ Route::post('/new-request', function (Request $request) {
     } catch( Exception $e) {
 
     }
+
     VehicleRequestForm::create([
         'user_id' => auth()->id(),
         'model' => $request->destination,
