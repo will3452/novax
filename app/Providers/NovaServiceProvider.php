@@ -33,6 +33,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
             Image::make('Landing Image'),
+            Text::make('Campus Latitude', 'c_lat'),
+            Text::make('Campus Longitude', 'c_long'),
             Trix::make('Help'),
         ]);
     }

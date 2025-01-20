@@ -59,6 +59,8 @@ Route::post('/new-request', function (Request $request) {
         'remarks' => $request->passenger,
         'd_lat' => $d_lat,
         'd_long' => $d_long,
+        'p_lat' => nova_get_setting('c_lat'),
+        'p_long' => nova_get_setting('c_long'),
         'request_travel' => $request_travel,
         'travel_order' => $travel_order,
         'status' => 'pending',
