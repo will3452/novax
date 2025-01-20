@@ -48,6 +48,7 @@
             <input class="block" type="file" name="travel_order" />
         </div>
         <button class="bg-blue-900 text-white w-full p-4 rounded-full font-bold">SUBMIT</button>
+        <div class="h-[150px]"></div>
     </form>
     <x-back-home></x-back-home>
 </body>
