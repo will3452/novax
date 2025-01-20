@@ -64,10 +64,13 @@ class VehicleRequestForm extends Resource
                 ->alwaysShow(),
             BelongsTo::make('Driver', 'driver', Driver::class),
             Text::make('Request Travel', function () {
+
+                if (is_null($this->request_travel)) return "N/a";
                 return "<a href='/storage/$this->request_travel' download>Download</a>";
             })
                 ->asHtml(),
             Text::make('Travel Order', function () {
+                     if (is_null($this->travel_order)) return "N/a";
                     return "<a href='/storage/$this->travel_order' download>Download</a>";
                 })
                     ->asHtml(),
