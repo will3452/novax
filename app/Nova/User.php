@@ -49,7 +49,6 @@ class User extends Resource
         return [
             ID::make()->sortable(),
             Select::make('Type', 'type')
-                ->onlyOnForms()
                 ->options([
                     'admin' => 'admin',
                     'driver' => 'driver',

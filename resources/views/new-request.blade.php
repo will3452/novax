@@ -22,7 +22,7 @@
         </div>
         <div>
             <label for="">Date *</label>
-            <input type="date" name="date" required class="w-full border-2 rounded-md p-2">
+            <input type="date" name="date" min="{{now()->format('Y-m-d')}}" required class="w-full border-2 rounded-md p-2">
         </div>
 
         <div>

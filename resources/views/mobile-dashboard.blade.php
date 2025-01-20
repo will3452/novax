@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="grid grid-cols-3">
-            @if (auth()->user()->type == "Client")
+            @if (auth()->user()->type == "client")
                 <x-dashboard-item :image="'contact-form.png'" :route="'/new-request/' . auth()->id()">
                     Request New
                 </x-dashboard-item>

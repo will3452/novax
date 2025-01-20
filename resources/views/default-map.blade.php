@@ -12,6 +12,9 @@
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"></script>
   <style>
     body { margin: 0; padding: 0; }
+    .directions-control-instructions, .mapbox-directions-profile {
+        display: none;
+    }
     /* #map { position: absolute; top: 0; bottom: 0; width: 100%; } */
     /* .mapboxgl-ctrl-directions {
       display: none;
