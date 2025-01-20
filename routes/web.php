@@ -1,7 +1,6 @@
 
 <?php
 
-use Str;
 use App\Models\Trip;
 use App\Models\User;
 use App\Models\Client;
@@ -116,9 +115,9 @@ Route::get('/schedule/{user}', function (Request $request, User $user) {
     if(is_null($profile)) return "No profile set.";
     $records = [];
     if ($type == 'Driver') {
-        $records = VehicleRequestForm::whereDriverId($profile->id)->whereStatus('approved')->get();
+        $records = VehicleRequestForm::whereDriverId($profile->id)->whereStatus('approved')->latests()->get();
     } else {
-        $records = VehicleRequestForm::whereUserId($user->id)->whereStatus('approved')->get();
+        $records = VehicleRequestForm::whereUserId($user->id)->whereStatus('approved')->latests()->get();
     }
     // $reservations = Reservation::whereStatus('Approved')->where([$param => $profile->id])->get();
     return view('schedule', compact('user', 'profile', 'records'));
