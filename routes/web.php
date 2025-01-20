@@ -34,6 +34,13 @@ Route::post('/new-request', function (Request $request) {
     $d_lat = '';
     $d_long = '';
 
+    $f1 = explode("/", $request->file('request_travel')->store('public'));
+    $f2 = explode("/", $request->file('travel_order')->store('public'));
+
+    $travel_order = end($f1);
+    $request_travel = end($f2);
+
+
     try {
         $response = Http::get("https://geocode.maps.co/search?q=$address&api_key=$api");
         $result = $response->json();
@@ -51,8 +58,8 @@ Route::post('/new-request', function (Request $request) {
         'remarks' => $request->passenger,
         'd_lat' => $d_lat,
         'd_long' => $d_long,
-        'request_travel' => '---',
-        'travel_order' => '---',
+        'request_travel' => $request_travel,
+        'travel_order' => $travel_order,
         'status' => 'pending',
     ]);
 
@@ -62,9 +69,9 @@ Route::post('/new-request', function (Request $request) {
 
 Route::get('/form-request/{user}', function (Request $request, App\Models\User $user) {
    $vehicles = Vehicle::where('is_available', true)->get();
-   $record = VehicleRequestForm::whereUserId($user->id)->latest()->get();
+   $record = VehicleRequestForm::whereUserId($user->id)->orderBy('date', 'asc')->get();
    if ($request->has('date')) {
-    $record = VehicleRequestForm::whereUserId($user->id)->whereDate('date', $request->date)->latest()->get();
+    $record = VehicleRequestForm::whereUserId($user->id)->whereDate('date', $request->date)->orderBy('date', 'asc')->get();
    }
    return view('form-request', compact('user', 'vehicles', 'record'));
 });

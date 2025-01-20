@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <form action="/new-request" method="POST" class="space-y-4 p-2 h-[90vh]">
+    <form action="/new-request" method="POST" enctype="multipart/form-data" class="space-y-4 p-2 h-[90vh]">
         @csrf
         <h1 class="font-bold flex gap-2 items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -38,6 +38,14 @@
         <div>
             <label for="">Passengers *</label>
             <textarea name="passenger" required id="" class="w-full border-2 rounded-md p-2"></textarea>
+        </div>
+        <div>
+            <label for="">Request Travel</label>
+            <input class="block" type="file" name="request_travel" />
+        </div>
+        <div>
+            <label for="">Travel Order</label>
+            <input class="block" type="file" name="travel_order" />
         </div>
         <button class="bg-blue-900 text-white w-full p-4 rounded-full font-bold">SUBMIT</button>
     </form>

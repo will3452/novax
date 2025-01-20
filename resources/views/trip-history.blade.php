@@ -37,7 +37,7 @@
                         <h1 class="text-xs ">{{$item->driver ? $item->driver->first_name . " " . $item->driver->last_name : '---'}}</h1>
                     </div>
                     <div class="text-right text-xs">
-                        Capacity: {{$item?->vehicle?->capacity}}
+                        Capacity: {{$item->vehicle?->capacity ?? '---'}}
                     </div>
                     <div class="flex gap-2 items-start col-span-2 line-clamp-3">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3">

@@ -54,7 +54,7 @@
                 My Account
             </x-dashboard-item> -->
             <x-dashboard-item :image="'info.png'" route="/help/{{auth()->id()}}">
-                Help
+                FAQ
             </x-dashboard-item>
         </div>
         <x-back-home></x-back-home>
