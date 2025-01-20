@@ -59,6 +59,7 @@ class Client extends Resource
                 ->rules(['required']),
             Text::make('Department')->sortable(),
             Select::make('Select Client', 'user_id')
+                ->onlyOnForms()
                 ->options(fn () => \App\Models\User::whereType('client')->get()->pluck('name', 'id')),
             BelongsTo::make('User', 'user', User::class)
                 ->exceptOnForms()

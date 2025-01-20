@@ -17,6 +17,7 @@ use Laravel\Nova\Fields\Trix;
 use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Waynestate\Nova\CKEditor4Field\CKEditor;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {

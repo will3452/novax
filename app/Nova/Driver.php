@@ -68,6 +68,7 @@ class Driver extends Resource
             // Image::make('Medical Certificate', 'med_cert'),
             Text::make('Campus')->sortable(),
             Select::make('Select Driver', 'user_id')
+                ->onlyOnForms()
                 ->options(fn () => \App\Models\User::whereType('driver')->get()->pluck('name', 'id')),
             BelongsTo::make('User', 'user', User::class)
                 ->exceptOnForms()

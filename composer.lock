@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c545533884004fd5a64cec3fab3082f4",
+    "content-hash": "d737fab815e02df9e5f79c9d60cea6ce",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -7914,6 +7914,58 @@
                 }
             ],
             "time": "2022-01-24T18:55:24+00:00"
+        },
+        {
+            "name": "waynestate/nova-ckeditor4-field",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/waynestate/nova-ckeditor4-field.git",
+                "reference": "586d2ee3338b77c1ededbe2c2f4409106b6872ba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/waynestate/nova-ckeditor4-field/zipball/586d2ee3338b77c1ededbe2c2f4409106b6872ba",
+                "reference": "586d2ee3338b77c1ededbe2c2f4409106b6872ba",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Waynestate\\Nova\\CKEditor4Field\\CKEditor4FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Waynestate\\Nova\\CKEditor4Field\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Web Communications",
+                    "email": "web@wayne.edu"
+                }
+            ],
+            "description": "This nova package allows you to use CKEditor 4 for text areas.",
+            "keywords": [
+                "CKEditor",
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/waynestate/nova-ckeditor4-field/issues",
+                "source": "https://github.com/waynestate/nova-ckeditor4-field/tree/1.1.1"
+            },
+            "time": "2022-07-28T18:25:07+00:00"
         },
         {
             "name": "webmozart/assert",
