@@ -118,6 +118,11 @@ Route::get('/default-map', function (Request $request) {
 Route::get('/schedule/{user}', function (Request $request, User $user) {
     $type = Str::title($request->type);
 
+    if ($type == 'Admin') {
+        alert()->info("Unauthorized!");
+        return back();
+    }
+
     $profile = ("\\App\\Models\\$type")::whereUserId($user->id)->first();
     $param = $type == 'driver' ? 'driver_id' : 'client_id';
     if(is_null($profile)) return "No profile set.";
