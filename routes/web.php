@@ -1,17 +1,18 @@
 
 <?php
 
-use App\Models\Client;
-use App\Models\Feedback;
-use App\Models\Reservation;
+use Str;
 use App\Models\Trip;
 use App\Models\User;
+use App\Models\Client;
 use App\Models\Vehicle;
+use App\Models\Feedback;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Models\VehicleRequestForm;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Http;
 
 Route::get('/', function () {
     return redirect()->to(config('nova.path'));
@@ -101,7 +102,8 @@ Route::get('/default-map', function (Request $request) {
 });
 
 Route::get('/schedule/{user}', function (Request $request, User $user) {
-    $type = $request->type;
+    $type = Str::title($request->type);
+
     $profile = ("\\App\\Models\\$type")::whereUserId($user->id)->first();
     $param = $type == 'driver' ? 'driver_id' : 'client_id';
     if(is_null($profile)) return "No profile set.";
