@@ -32,10 +32,17 @@ Route::get('/new-request/{user}', function () {
 Route::post('/new-request', function (Request $request) {
     $address = $request->destination;
     $api = env('GEOAPI_KEY');
-    $response = Http::get("https://geocode.maps.co/search?q=$address&api_key=$api");
-    $result = $response->json();
-    $d_lat = $result[0]['lat'];
-    $d_long = $result[0]['lon'];
+    $d_lat = '';
+    $d_long = '';
+
+    try {
+        $response = Http::get("https://geocode.maps.co/search?q=$address&api_key=$api");
+        $result = $response->json();
+        $d_lat = $result[0]['lat'];
+        $d_long = $result[0]['lon'];
+    } catch( Exception $e) {
+
+    }
     VehicleRequestForm::create([
         'user_id' => auth()->id(),
         'model' => $request->destination,
@@ -107,8 +114,14 @@ Route::get('/schedule/{user}', function (Request $request, User $user) {
     $profile = ("\\App\\Models\\$type")::whereUserId($user->id)->first();
     $param = $type == 'driver' ? 'driver_id' : 'client_id';
     if(is_null($profile)) return "No profile set.";
-    $reservations = Reservation::whereStatus('Approved')->where([$param => $profile->id])->get();
-    return view('schedule', compact('user', 'profile', 'reservations'));
+    $records = [];
+    if ($type == 'Driver') {
+        $records = VehicleRequestForm::whereDriverId($profile->id)->whereStatus('approved')->get();
+    } else {
+        $records = VehicleRequestForm::whereUserId($user->id)->whereStatus('approved')->get();
+    }
+    // $reservations = Reservation::whereStatus('Approved')->where([$param => $profile->id])->get();
+    return view('schedule', compact('user', 'profile', 'records'));
 });
 
 Route::get('/chat/{user}/{otherUser}', function (Request $request, User $user, User $otherUser) {
