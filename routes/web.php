@@ -115,9 +115,9 @@ Route::get('/schedule/{user}', function (Request $request, User $user) {
     if(is_null($profile)) return "No profile set.";
     $records = [];
     if ($type == 'Driver') {
-        $records = VehicleRequestForm::whereDriverId($profile->id)->whereStatus('approved')->latests()->get();
+        $records = VehicleRequestForm::whereDriverId($profile->id)->whereStatus('approved')->latest()->get();
     } else {
-        $records = VehicleRequestForm::whereUserId($user->id)->whereStatus('approved')->latests()->get();
+        $records = VehicleRequestForm::whereUserId($user->id)->whereStatus('approved')->latest()->get();
     }
     // $reservations = Reservation::whereStatus('Approved')->where([$param => $profile->id])->get();
     return view('schedule', compact('user', 'profile', 'records'));
