@@ -30,8 +30,8 @@ class GenerateFinancialReport extends Action
             'date' => now(),
             'type' => 'FINANCIAL_REPORT',
         ]);
-        $year = Carbon::parse($fields->date)->year;
-        $month = Carbon::parse($fields->date)->month;
+        $year = Carbon::parse($fields->year)->year;
+        $month = Carbon::parse($fields->year)->month;
         return Action::openInNewTab("/financial-report?year=$year&month=$month");
     }
 

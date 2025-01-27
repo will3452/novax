@@ -2,17 +2,17 @@
 
 namespace App\Nova\Actions;
 
-use Carbon\Carbon;
 use App\Models\ReportLog;
 use Illuminate\Bus\Queueable;
-use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Actions\Action;
-use Illuminate\Support\Collection;
-use Laravel\Nova\Fields\ActionFields;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Collection;
+use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Date;
+use Carbon\Carbon;
 
-class GenerateOverallReport extends Action
+class GenerateFinancialDetailsReport extends Action
 {
     use InteractsWithQueue, Queueable;
 
@@ -28,11 +28,11 @@ class GenerateOverallReport extends Action
         ReportLog::create([
             'prepared_by' => auth()->user()->name,
             'date' => now(),
-            'type' => 'SUMMARY_REPORT',
+            'type' => 'FINANCIAL_REPORT',
         ]);
         $year = Carbon::parse($fields->year)->year;
         $month = Carbon::parse($fields->year)->month;
-        return Action::openInNewTab("/summary-report?year=$year&month=$month");
+        return Action::openInNewTab("/financial-details-report?year=$year&month=$month");
     }
 
     /**

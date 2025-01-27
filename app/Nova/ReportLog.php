@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\GenerateFinancialDetailsReport;
 use App\Nova\Actions\GenerateFinancialReport;
 use App\Nova\Actions\GenerateOverallReport;
 use App\Nova\Actions\GenerateSundayServiceProgressReport;
@@ -112,6 +113,8 @@ class ReportLog extends Resource
     {
         return [
             GenerateFinancialReport::make()
+                ->standalone(),
+            GenerateFinancialDetailsReport::make()
                 ->standalone(),
             GenerateSundayServiceProgressReport::make()
                 ->standalone(),
