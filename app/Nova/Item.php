@@ -1,26 +1,24 @@
 <?php
 
 namespace App\Nova;
-use Laravel\Nova\Fields\ID;
+
+use App\Models\Item as ModelsItem;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Endpoint extends Resource
+class Item extends Resource
 {
-    public static function availableForNavigation(Request $request)
-    {
-        return false;
-    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Endpoint::class;
+    public static $model = \App\Models\Item::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -36,7 +34,10 @@ class Endpoint extends Resource
      */
     public static $search = [
         'id',
-        'method',
+        'task',
+        'remarks',
+        'assignee',
+        'client',
     ];
 
     /**
@@ -48,26 +49,22 @@ class Endpoint extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Path'),
-            Select::make('Method')
-                ->options([
-                    'post' => 'post',
-                    'get' => 'get',
-                    'put' => 'put',
-                ]),
-            Select::make('Model')
-                ->options(function () {
-                    $modelPath = app_path('Models');
-                    $files = File::files($modelPath);
-
-                    $array = [];
-
-                    foreach($files as $item) {
-                        $array[$item->getFilenameWithoutExtension()] = $item->getFilenameWithoutExtension();
-                    }
-                    return $array;
-                }),
-
+            ID::make(__('ID'), 'id')->sortable(),
+            Date::make(__('Date'), 'created_at')->exceptOnForms()->sortable(),
+            Select::make('Application')
+                ->searchable()
+                ->options(ModelsItem::apps),
+            Text::make('Task')
+                ->rules(['required']),
+            Select::make('Type')
+                ->options(ModelsItem::types),
+            Select::make('Status')
+                ->options(ModelsItem::statuses),
+            Select::make('Priority Level')
+                ->options(ModelsItem::prioLevels),
+            Trix::make('Remarks'),
+            Text::make('Assignee'),
+            Text::make('Client'),
         ];
     }
 
