@@ -1,0 +1,56 @@
+<x-auth>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        Sections
+                    </div>
+                    <div class="card-body">
+                        <table id="dt" class="table table-striped table-bordered my-4" >
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Course</th>
+                                    <th>IC type</th>
+                                    <th>School Year</th>
+                                    <th>Term</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($sections as $item)
+                                    <tr>
+                                        <td>
+                                            {{$item->section}}
+                                        </td>
+                                        <td>
+                                            {{$item->course->name}}
+                                        </td>
+                                        <td>
+                                            {{$item->ic_type}}
+                                        </td>
+                                        <td>
+                                            {{$item->school_year}}
+                                        </td>
+                                        <td>
+                                            {{$item->term}}
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="/sections/{{$item->id}}" class="btn btn-sm btn-success">View</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            @nonstudent
+            <div class="col-md-3">
+                <x-section-create></x-section-create>
+            </div>
+            @endnonstudent
+        </div>
+    </div>
+</x-auth>

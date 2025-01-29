@@ -43,15 +43,15 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
             Select::make('Coordinator', 'coordinator_id')
+                 ->help('Select from faculty.')
+                ->options(\App\Models\User::whereType(\App\Models\User::TYPE_FACULTY)->get()->pluck('name', 'id')),
+             Select::make('Program Chair', 'programchair_id')
                 ->help('Select from faculty.')
-                ->options(\App\Models\User::whereType(\App\Models\User::TYPE_FACULTY)->get()->pluck('name', 'id')), 
-            Select::make('Program Chair', 'programchair_id')
-                ->help('Select from faculty.')
-                ->options(\App\Models\User::whereType(\App\Models\User::TYPE_FACULTY)->get()->pluck('name', 'id')), 
+                ->options(\App\Models\User::whereType(\App\Models\User::TYPE_FACULTY)->get()->pluck('name', 'id')),
             Select::make('Default School Year', 'school_year')
-                ->options(SchoolYear::get()->pluck('name', 'name')), 
+                ->options(SchoolYear::get()->pluck('name', 'name')),
             Select::make('Default Term', 'term')
-                ->options(Term::get()->pluck('name', 'name')), 
+               ->options(Term::get()->pluck('name', 'name')),
         ]);
     }
 
@@ -78,7 +78,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return true; 
+            return true;
         });
     }
 
@@ -93,8 +93,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Asia/Manila',
             ]),
-            Tasks::make(), 
-        ]; 
+            Tasks::make(),
+        ];
 
         if (auth()->user()->type == \App\Models\User::TYPE_ADMINISTRATOR) {
             array_push($cards, Users::make());
@@ -108,11 +108,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         }
 
         if (auth()->user()->type == \App\Models\User::TYPE_STUDENT) {
-            array_push($cards, GroupsBelong::make()); 
-            array_push($cards, MySections::make()); 
-            array_push($cards, TitleApplications::make()); 
+            array_push($cards, GroupsBelong::make());
+            array_push($cards, MySections::make());
+            array_push($cards, TitleApplications::make());
         }
-        return $cards; 
+        return $cards;
     }
 
     /**
@@ -134,12 +134,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             // (new ProfileTool)->canSee(function ($request) {
-            //     return config('novax.profile_enabled') && $request->user()->email != 'super@admin.com'; // to prevent changing of password 
+            //     return config('novax.profile_enabled') && $request->user()->email != 'super@admin.com'; // to prevent changing of password
             // }),
             // (new NovaCalendarTool)->canSee(function ($request) {
-            //     return true; 
-            // }), 
-            (new EventCalendar()), 
+            //     return true;
+            // }),
+            (new EventCalendar()),
             (new NovaSettings)->canSee(function ($request) {
                 return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
                 config('novax.setting_enabled');

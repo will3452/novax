@@ -23,7 +23,7 @@
     <div id="app">
         <x-navbar></x-navbar>
         <main class="py-4">
-            {{$slot}}
+            @yield('content')
         </main>
     </div>
 </body>

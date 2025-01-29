@@ -16,18 +16,18 @@ class TitleObserver
     public function created(Title $title)
     {
         $title->task()->create([
-            'user_id' => nova_get_setting('coordinator_id', 1), 
-            'description' => "[Coordinator] New Title \"$title->title\" has been created.", 
-            'approved_status' => "FOR_DEAN_APPROVAL", 
+            'user_id' => nova_get_setting('coordinator_id', 1),
+            'description' => "[Coordinator] New Title \"$title->title\" has been created.",
+            'approved_status' => "FOR DEAN APPROVAL",
         ]);
 
         if ($title->type == 'STUDENT') {
             TitleApplication::create([
-                'student_id' => $title->created_by_id, 
+                'student_id' => $title->created_by_id,
                 'status' => 'APPROVED',
-                'section_id' => $title->section_id, 
-                'title_id' => $title->id, 
-            ]); 
+                'section_id' => $title->section_id,
+                'title_id' => $title->id,
+            ]);
         }
     }
 

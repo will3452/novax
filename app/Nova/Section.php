@@ -30,38 +30,38 @@ class Section extends Resource
 {
     public static function group()
     {
-        if (auth()->user()->isStudent()) return "Class"; 
-        return "Manage"; 
+        if (auth()->user()->isStudent()) return "Class";
+        return "Manage";
     }
 
     public static function authorizedToCreate(Request $request)
     {
-        if (auth()->user()->isCoordinator()) return true; 
+        if (auth()->user()->isCoordinator()) return true;
         return false;
     }
 
     public function authorizedToDelete(Request $request)
     {
-        if (auth()->user()->isCoordinator()) return true; 
-        return false; 
+        if (auth()->user()->isCoordinator()) return true;
+        return false;
     }
 
     public function authorizedToForceDelete(Request $request)
     {
-        return $this->authorizedToDelete($request); 
+        return $this->authorizedToDelete($request);
     }
 
     public function authorizedToUpdate(Request $request)
     {
-        if (auth()->user()->isCoordinator()) return true; 
-        return false; 
+        if (auth()->user()->isCoordinator()) return true;
+        return false;
     }
 
     public static function indexQuery(NovaRequest $request, $query)
     {
         if (auth()->user()->isStudent()) {
-            $sections = SectionStudent::whereStudentId(auth()->id())->whereStatus('JOINED')->get()->pluck('section_id'); 
-            return $query->whereIn('id', $sections); 
+            $sections = SectionStudent::whereStudentId(auth()->id())->whereStatus('JOINED')->get()->pluck('section_id');
+            return $query->whereIn('id', $sections);
         }
         return $query;
     }
@@ -86,7 +86,7 @@ class Section extends Resource
      */
     public static $search = [
         'id',
-        'section', 
+        'section',
     ];
 
     /**
@@ -100,21 +100,21 @@ class Section extends Resource
         return [
             Tabs::make('Section', [
                 Tab::make('Section Information', [
-                    BelongsTo::make('Course', 'course', Course::class), 
+                    BelongsTo::make('Course', 'course', Course::class),
                     Text::make('Section'),
                     Select::make('School Year')
                         ->default(function () {
-                            return nova_get_setting('school_year'); 
+                            return nova_get_setting('school_year');
                         })
                         ->options(\App\Models\SchoolYear::get()->pluck('name', 'name')),
                     Select::make('Term')
                         ->default(function () {
-                            return nova_get_setting('term'); 
+                            return nova_get_setting('term');
                         })
-                        ->options(\App\Models\Term::get()->pluck('name', 'name')), 
-                    // Number::make('No of Students')->rules(['min:1']), 
-                    Hidden::make('no_of_students')->default(fn () => 3), 
-                    Hidden::make('Thesis Phase')->default(fn () => ModelsSection::PHASE_PROPOSAL), 
+                        ->options(\App\Models\Term::get()->pluck('name', 'name')),
+                    // Number::make('No of Students')->rules(['min:1']),
+                    Hidden::make('no_of_students')->default(fn () => 3),
+                    Hidden::make('Thesis Phase')->default(fn () => ModelsSection::PHASE_PROPOSAL),
                     Select::make('IC type', 'ic_type')
                         ->options([
                             \App\Models\Title::IC_TYPE_CAPSTONE => \App\Models\Title::IC_TYPE_CAPSTONE,
@@ -125,17 +125,17 @@ class Section extends Resource
                         ]),
                     Hidden::make('creator_id')
                         ->default(fn() => auth()->id()),
-                    
-                    BelongsTo::make('Creator', 'creator', User::class)->onlyOnDetail(), 
-                    Hidden::make('Pass Code')->default(fn () => bcrypt('password')), 
+
+                    BelongsTo::make('Creator', 'creator', User::class)->onlyOnDetail(),
+                    Hidden::make('Pass Code')->default(fn () => bcrypt('password')),
                     ]),
                     Tab::make('Students', [
                         HasMany::make('Students', 'students', ClassInvitation::class)->canSee(fn () => auth()->user()->isCoordinator()),
-                    ]), 
+                    ]),
                     Tab::make('Titles', [
-                        HasMany::make('Titles', 'titles', Title::class), 
+                        HasMany::make('Titles', 'titles', Title::class),
                     ])
-            ])->withToolbar(),  
+            ])->withToolbar(),
             new Commenter(),
             MorphMany::make(
                 'Comments',
@@ -188,13 +188,13 @@ class Section extends Resource
     {
         $resourceId = $request->resourceId ?? request()->resourceId;
         if (! $resourceId) {
-            $urlArray = explode("/", parse_url(request()->headers->get('referer'))['path']); 
-            $resourceId = end($urlArray); 
+            $urlArray = explode("/", parse_url(request()->headers->get('referer'))['path']);
+            $resourceId = end($urlArray);
         }
-        if (! is_numeric($resourceId)) return []; 
+        if (! is_numeric($resourceId)) return [];
         return [
-            (new InviteStudent(intval($resourceId)))->canSee(fn () => auth()->user()->isCoordinator()), 
-            DownloadImportStudentTemplate::make()->canSee(fn () => auth()->user()->isFaculty()), 
+            (new InviteStudent(intval($resourceId)))->canSee(fn () => auth()->user()->isCoordinator()),
+            DownloadImportStudentTemplate::make()->canSee(fn () => auth()->user()->isFaculty()),
             ImportStudents::make(intval($resourceId))->canSee(fn () => auth()->user()->isFaculty()),
         ];
     }

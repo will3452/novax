@@ -18,9 +18,10 @@ class CreateTasksTable extends Migration
             $table->string('status')->default('PENDING');
             $table->string('task_type');
             $table->integer('task_id');
-            $table->integer('user_id'); // approver 
-            $table->text('description'); 
-            $table->text('approved_status')->default('APPROVED'); 
+            $table->integer('user_id'); // approver
+            $table->text('description');
+            $table->text('approved_status');
+            // $table->text('approved_status')->default('APPROVED');
             $table->timestamps();
         });
     }
