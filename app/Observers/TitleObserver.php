@@ -2,7 +2,10 @@
 
 namespace App\Observers;
 
+use App\Models\Group;
 use App\Models\Title;
+use App\Models\Panellist;
+use Illuminate\Support\Str;
 use App\Models\TitleApplication;
 
 class TitleObserver
@@ -19,6 +22,18 @@ class TitleObserver
             'user_id' => nova_get_setting('coordinator_id', 1),
             'description' => "[Coordinator] New Title \"$title->title\" has been created.",
             'approved_status' => "FOR DEAN APPROVAL",
+        ]);
+
+        $group = Group::create([
+            'title_id' => $title->id,
+            'code' => intval(Str::limit(now()->timestamp ."", 9)),
+        ]);
+
+        Panellist::create([
+            'status' => 'APPROVED',
+            'faculty_id' => $title->faculty_id,
+            'group_id' => $group->id,
+            'type' => 'Adviser',
         ]);
 
         if ($title->type == 'STUDENT') {

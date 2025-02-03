@@ -19,10 +19,10 @@ class ProgressObserver
         $p = Panellist::whereGroupId($progress->group_id)->whereType('Adviser')->first();
 
         $progress->task()->create([
-            'user_id' => $p->faculty_id, 
-            'description' => "New progress report of " . $progress->group->code, 
-            'approved_status' => Progress::FOR_COORDINATOR, 
-        ]); 
+            'user_id' => $p->faculty_id,
+            'description' => "New progress report of " . $progress->group->code,
+            'approved_status' => Progress::FOR_COORDINATOR,
+        ]);
     }
 
     /**
@@ -33,19 +33,6 @@ class ProgressObserver
      */
     public function updated(Progress $progress)
     {
-        if ($progress->status == Progress::FOR_COORDINATOR) {
-            $progress->task()->create([
-                'user_id' => nova_get_setting('coordinator_id'), 
-                'description' => "New progress report of " . $progress->group->code, 
-                'approved_status' => Progress::APPROVED, 
-            ]); 
-        }
-
-        if ($progress->status == Progress::APPROVED) {
-            Progress::whereGroupId($progress->group_id)->update([
-                'is_ready_for_oral_def' => true, 
-            ]); 
-        }
     }
 
     /**

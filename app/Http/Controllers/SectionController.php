@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Section;
-use App\Models\SectionStudent;
 use Illuminate\Http\Request;
+use App\Models\SectionStudent;
+use App\Notifications\StudentJoinedSectionNotification;
 
 class SectionController extends Controller
 {
@@ -36,6 +38,7 @@ class SectionController extends Controller
     }
 
     public function show(Request $request, Section $section) {
+
         return view('sections.show', compact('section'));
     }
 
@@ -62,8 +65,14 @@ class SectionController extends Controller
                 'section_id' => $data['section_id'],
                 'status' => 'JOINED',
             ]);
+
+            $section = Section::find($data['section_id']);
+
+            User::find($value)->notify(new StudentJoinedSectionNotification($section->course, $section));
         }
         alert()->success('Success', 'Student has been added');
+
+
         return back();
     }
 }

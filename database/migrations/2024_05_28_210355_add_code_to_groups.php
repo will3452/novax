@@ -14,7 +14,7 @@ class AddCodeToGroups extends Migration
     public function up()
     {
         Schema::table('groups', function (Blueprint $table) {
-            $table->string('code')->unique()->nullable(); 
+            $table->string('code')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddCodeToGroups extends Migration
     public function down()
     {
         Schema::table('groups', function (Blueprint $table) {
-            //
+            $table->removeColumn('code');
         });
     }
 }
