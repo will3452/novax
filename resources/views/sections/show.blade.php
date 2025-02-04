@@ -125,7 +125,29 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="">Area of research</label>
-                                        <input name="area_of_research" id="" class="form-control" />
+                                        <select name="area_of_research" id="" class="form-control">
+                                            @foreach ([
+                                                "SDG 1 - NO POVERTY",
+                                                "SDG 2 - ZERO HUNGER",
+                                                "SDG 3 - GOOD HEALTH AND WELL-BEING",
+                                                "SDG 4 - QUALITY EDUCATION",
+                                                "SDG 5 - GENDER EQUALITY",
+                                                "SDG 6 - CLEAN WATER AND SANITATION",
+                                                "SDG 7 - AFFORDABLE AND CLEAN ENERGY",
+                                                "SDG 8 - DECENT WORK AND ECONOMIC GROWTH",
+                                                "SDG 9 - INDUSTRY, INNOVATION AND INFRASTRUCTURE",
+                                                "SDG 10 - REDUCED INEQUALITIES",
+                                                "SDG 11 - SUSTAINABLE CITIES AND COMMUNITIES",
+                                                "SDG 12 - RESPONSIBLE CONSUMPTION AND PRODUCTION",
+                                                "SDG 13 - CLIMATE ACTION",
+                                                "SDG 14 - LIFE BELOW WATER",
+                                                "SDG 15 - LIFE ON LAND",
+                                                "SDG 16 - PEACE, JUSTICE AND STRONG INSTITUTIONS",
+                                                "SDG 17 - PARTNERSHIPS FOR THE GOALS"
+                                            ] as $item)
+                                                <option value="{{$item}}">{{$item}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     @if (auth()->user()->type !==  'Faculty')
                                     <div class="form-group">
