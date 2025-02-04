@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 @nonstudent
-                @if ($title->group->defense_schedule == null)
+                @if ($title->group->defense_schedule == null && $title->group->status == 'Ongoing')
                     <div class="card mt-2">
                         <div class="card-header">
                             Endorse Group
@@ -73,6 +73,7 @@
                         </div>
                     </div>
                 @else
+                @if ($title->group->oralDefenseRequests()->whereStatus('Panelist Approval')->count())
                 <div class="card mt-2">
                     <div class="card-header">
                         Actions
@@ -91,6 +92,7 @@
                     </div>
                 </div>
                 @endif
+                @endif
                 @endnonstudent
             </div>
             <div class="col-md-9">
@@ -108,15 +110,18 @@
                     <li class="nav-item">
                         <a class="nav-link {{request()->tab == 'panelist' ? 'active' : ''}}" href="?tab=panelist">Panelist</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{request()->tab == 'progress' ? 'active' : ''}}" href="?tab=progress">Progress report</a>
-                    </li>
+                    @if ($title->group->status == 'Ongoing')
+                        <li class="nav-item">
+                            <a class="nav-link {{request()->tab == 'progress' ? 'active' : ''}}" href="?tab=progress">Progress report</a>
+                        </li>
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link {{request()->tab == 'oral' ? 'active' : ''}}" href="?tab=oral">Oral Defense Request</a>
                     </li>
                 </ul>
+               <div class="p-2 bg-white bordered">
                 @if (request()->tab == 'panelist')
-                  <x-title-panelist :title="$title"></x-title-panelist>
+                    <x-title-panelist :title="$title"></x-title-panelist>
                 @endif
                 @if (request()->tab == 'group')
                     <x-title-group :title="$title"></x-title-group>
@@ -127,6 +132,7 @@
                 @if (request()->tab == 'oral')
                     <x-title-oral :title="$title"></x-title-oral>
                 @endif
+               </div>
             </div>
         </div>
     </div>

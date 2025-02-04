@@ -67,9 +67,11 @@
                   form.getTextField('Text17').setText(`{{ $progress->group->groupMembers[1]->student->name }}`)
                   form.getTextField('Text20').setText(`{{ $progress->group->groupMembers[1]->student->number }}`)
                   form.getTextField('Text23').setText(`{{ $progress->group->groupMembers[1]->student->course }}`)
-                  const sig2 = await getSignature(`/storage/{{ $progress->group->groupMembers[1]->student->signature }}`)
+                  try {
+                    const sig2 = await getSignature(`/storage/{{ $progress->group->groupMembers[1]->student->signature }}`)
                   const eSig2 = await pdfDoc.embedPng(sig2);
                   form.getTextField('Text26').setImage(eSig2);
+                  } catch(err) {}
               @else
                   form.getTextField('Text17').setText(``)
                   form.getTextField('Text20').setText(``)
@@ -197,9 +199,11 @@
                   form.getTextField('Text22').setText(`{{ $oral_defense->group->groupMembers[1]->student->number }}`)
                   form.getTextField('Text25').setText(`{{ $oral_defense->group->groupMembers[1]->student->course }}`)
                   form.getTextField('Text28').setText(``)
-                  const sig2 = await getSignature(`/storage/{{ $oral_defense->group->groupMembers[1]->student->signature }}`)
+                  try {
+                    const sig2 = await getSignature(`/storage/{{ $oral_defense->group->groupMembers[1]->student->signature }}`)
                   const eSig2 = await pdfDoc.embedPng(sig2);
                   form.getTextField('Text31').setImage(eSig2);
+                  } catch (err) {}
               @else
                   form.getTextField('Text19').setText(``)
                   form.getTextField('Text22').setText(``)
@@ -213,9 +217,11 @@
                   form.getTextField('Text23').setText(`{{ $oral_defense->group->groupMembers[2]->student->number }}`)
                   form.getTextField('Text26').setText(`{{ $oral_defense->group->groupMembers[2]->student->course }}`)
                   form.getTextField('Text29').setText(``)
-                  const sig3 = await getSignature(`/storage/{{ $oral_defense->group->groupMembers[2]->student->signature }}`)
+                  try {
+                    const sig3 = await getSignature(`/storage/{{ $oral_defense->group->groupMembers[2]->student->signature }}`)
                   const eSig3 = await pdfDoc.embedPng(sig3);
                   form.getTextField('Text32').setImage(eSig3);
+                  } catch (err) {}
               @else
                   form.getTextField('Text20').setText(``)
                   form.getTextField('Text23').setText(``)

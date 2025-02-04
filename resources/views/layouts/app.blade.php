@@ -19,12 +19,11 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
-    <div id="app">
-        <x-navbar></x-navbar>
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+<body style="background:#ddd">
+    @include('sweetalert::alert')
+    <x-navbar></x-navbar>
+    <main class="py-4">
+        @yield('content')
+    </main>
 </body>
 </html>

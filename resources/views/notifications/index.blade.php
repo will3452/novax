@@ -37,8 +37,8 @@
                 </div>
             </div>
         @empty
-            <div>
-                No Notifications..
+            <div class="alert alert-warning text-center">
+                No Record
             </div>
         @endforelse
     </div>

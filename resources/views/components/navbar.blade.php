@@ -1,4 +1,18 @@
-<nav class="navbar navbar-expand-md bg-primary navbar-dark shadow-sm">
+
+<nav class="navbar navbar-expand-md navbar-dark shadow-sm
+    @guest
+        bg-primary
+    @endguest
+"
+@auth
+    @student
+    style="background:rgb(21, 44, 88) !important; "
+    @else
+
+    style="background:#c71223 !important; border-color:#a0101e;"
+    @endstudent
+@endauth
+>
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
@@ -37,7 +51,7 @@
                     <li class="nav-item">
                         <a class="nav-link flex gap-2" href="/home">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1m0 12h4a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1m10-4h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1m0-8h4a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1"/></svg>
-                            {{ __('Dashboard') }}
+                            {{ __('Home') }}
                         </a>
                     </li>
                     <li class="nav-item">

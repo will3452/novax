@@ -1,5 +1,5 @@
 @props(['section'])
-<div class="row mt-4">
+<div class="row p-2 bg-white bordered">
     <div class="@nonstudent col-md-8 @else col-md-12 @endnonstudent">
         <table id="dt" class="table table-bordered table-striped my-4">
             <thead>

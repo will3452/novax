@@ -32,7 +32,7 @@
                             {{$item->description}}
                         </td>
                         <td>
-                            <a class="btn btn-success btn-sm d-flex align-items-center gap-2" href="{{route('form', ['form' => 'progress', 'model' => $item])}}">
+                            <a class="btn btn-success btn-sm align-items-center gap-2" href="{{route('form', ['form' => 'progress', 'model' => $item])}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2m-8-4h6m-6-4h6"/></g></svg>
                                 Show Form
                             </a>

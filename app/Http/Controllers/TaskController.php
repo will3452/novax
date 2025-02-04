@@ -15,6 +15,19 @@ class TaskController extends Controller
         return view('tasks.index');
     }
 
+    public function storeReasonAndReject(Request $request, Task $task) {
+        $request->validate([
+            'reason' => ['required'],
+        ]);
+        $task->update(['status' => 'REJECTED', 'reason' => $request->reason]);
+        alert()->success('Success', 'Task has been rejected!');
+        return redirect()->to('/tasks');
+    }
+
+    public function reasonReject(Request $request, Task $task) {
+        return view('tasks.reject', compact('task'));
+    }
+
     public function isTitleApproval($task) {
         return $task->task_type == "App\Models\Title";
     }

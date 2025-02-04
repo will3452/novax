@@ -37,7 +37,8 @@ Route::middleware(['auth'])->prefix('titles')->name('titles.')->group(function (
 Route::middleware(['auth'])->prefix('tasks')->name('tasks.')->group(function () {
     Route::get('/', [TaskController::class, 'index'])->name('index');
     Route::post('/approve/{task}', [TaskController::class, 'approve'])->name('approve');
-    Route::post('/reject/{task}', [TaskController::class, 'reject'])->name('reject');
+    Route::get('/{task}', [TaskController::class, 'reasonReject'])->name('reject');
+    Route::post('/{task}', [TaskController::class, 'storeReasonAndReject'])->name("reason.reject");
 });
 
 Route::middleware('auth')->prefix('notifications')->name('notifications.')->group(function () {
@@ -64,6 +65,17 @@ Route::get('/', function () {
 Route::get('/app/login', function () {
     return redirect()->to('/');
 });
+
+Route::post('/user-edit', function (Request $request) {
+    $data = request()->all();
+     $opath = $request->signature->store('public');
+     $arr = explode('/', $opath);
+     $data['signature'] = end($arr);
+    //  dd($data);
+    auth()->user()->update($data);
+    alert()->success('Success', 'Profile has been updated!');
+    return back();
+})->name('user.update');
 
 Route::get('/form', function (Request $request) {
     $response = [];

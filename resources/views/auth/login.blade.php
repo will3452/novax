@@ -3,7 +3,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Login') }}</div>
+                    <div class="card-header">
+                        <img src="/logo.png" alt="" style="width:32px;margin-right:.5em;" />
+                        {{ __('Application Login') }}
+                    </div>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('login') }}">

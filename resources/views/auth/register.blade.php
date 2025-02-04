@@ -3,8 +3,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Register') }}</div>
-
+                    <div class="card-header">
+                        <img src="/logo.png" alt="" style="width:32px;margin-right:.5em;" />
+                        {{ __('Application Register') }}
+                    </div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
@@ -13,7 +15,7 @@
                                 <label for="type" class="col-md-4 col-form-label text-md-end">{{ __('User type') }}</label>
                                 <div class="col-md-6">
                                     <select class="form-control" name="type" required>
-                                        <option value="Dean">Dean</option>
+                                        {{-- <option value="Dean">Dean</option> --}}
                                         <option value="Student">Student</option>
                                         <option value="Faculty">Faculty</option>
                                     </select>
