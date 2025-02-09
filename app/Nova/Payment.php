@@ -71,7 +71,7 @@ class Payment extends Resource
             BelongsTo::make('Loan', 'loan', Loan::class),
             Date::make('Date', 'created_at')->sortable()->exceptOnForms(),
             // Date::make('Due Date'),
-            Text::make('Amount'),
+            Currency::make('Amount'),
             // Select::make('Status')
             //     ->options([
             //         'PENDING' => 'PENDING',

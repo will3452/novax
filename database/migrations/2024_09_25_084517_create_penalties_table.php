@@ -18,7 +18,8 @@ class CreatePenaltiesTable extends Migration
             $table->integer('loan_id');
             $table->integer('payment_schedule_id');
             $table->double('amount');
-            $table->string('notes')->nullable(); 
+            $table->string('notes')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

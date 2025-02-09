@@ -13,7 +13,7 @@ class AddColumnToUserLoans extends Migration
      */
     public function up()
     {
-        Schema::table('user_loans', function (Blueprint $table) {
+        Schema::table('individual_borrower', function (Blueprint $table) {
             $table->integer('group_id')->nullable();
         });
     }

@@ -17,7 +17,8 @@ class CreatePaymentSchedulesTable extends Migration
             $table->id();
             $table->string('loan_id');
             $table->string('amount');
-            $table->date('due_date'); 
+            $table->date('due_date');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

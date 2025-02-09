@@ -22,6 +22,22 @@ class User extends Resource
     {
         return $query->whereType(ModelsUser::TYPE_ADMINISTRATOR);
     }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return auth()->id() == 1;
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return auth()->id() == 1;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return auth()->id() == 1;
+    }
+
     public static $group = '2_Manage';
     /**
      * The model the resource corresponds to.

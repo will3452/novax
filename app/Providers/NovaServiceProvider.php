@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Nova\Metrics\AmountDisbursed;
 use App\Nova\Metrics\CapitalAmount;
+use App\Nova\Metrics\LoanDistribution;
 use App\Nova\Metrics\LoanTrend;
 use App\Nova\Metrics\PaymentReceived;
 use App\Nova\Metrics\PaymentTrend;
@@ -37,11 +38,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         parent::boot();
         NovaSettings::addSettingsFields([
             Tabs::make('Settings', [
-                'Application' => [
-                    Image::make('Logo'),
-                    Textarea::make('Mission'),
-                    Textarea::make('Vision'),
-                ],
+                // 'Application' => [
+                //     Image::make('Logo'),
+                //     Textarea::make('Mission'),
+                //     Textarea::make('Vision'),
+                // ],
                 'Finance' => [
                     Currency::make('Capital Amount'),
                     Currency::make('Max Loan'),
@@ -80,7 +81,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         Gate::define('viewNova', function ($user) {
             return in_array($user->email, [
-                'root@yopmail.com'
+                'super@admin.com'
             ]);
         });
     }
@@ -112,6 +113,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             TotalCash::make(),
             // PaymentTrend::make(),
             LoanTrend::make(),
+            LoanDistribution::make(),
             SmsCredit::make(),
         ];
     }

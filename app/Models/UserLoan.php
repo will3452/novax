@@ -9,6 +9,8 @@ class UserLoan extends Model
 {
     use HasFactory;
 
+    protected $table ='individual_borrower';
+
     protected $fillable = [
         'user_id',
         'loan_id',

@@ -51,7 +51,7 @@ class PaymentSchedule extends Resource
     {
         return [
             Date::make('Due Date'),
-            Text::make('Amount'),
+            Currency::make('Amount'),
             BelongsTo::make('Loan', 'loan', Loan::class),
             Badge::make('Status')
                 ->map([

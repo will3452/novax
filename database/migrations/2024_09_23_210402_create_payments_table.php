@@ -20,7 +20,8 @@ class CreatePaymentsTable extends Migration
             $table->date('due_date')->nullable();
             $table->double('penalty');
             $table->double('amount');
-            $table->string('status')->default('PENDING'); 
+            $table->string('status')->default('PENDING');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

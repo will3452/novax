@@ -16,6 +16,7 @@ class CreateRevenuesTable extends Migration
         Schema::create('revenues', function (Blueprint $table) {
             $table->id();
             $table->double('amount');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

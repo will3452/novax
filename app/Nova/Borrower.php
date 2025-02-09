@@ -60,23 +60,19 @@ class Borrower extends Resource
     {
         return [
             Text::make('ID', fn () => str_pad($this->id, 8, '0', STR_PAD_LEFT)),
-            Stack::make('Details', [
-                Avatar::make('Avatar')->squared(),
-                    Text::make('Name')
-                    ->sortable()
-                    ->rules('required', 'max:255'),
-                Text::make('Phone')->rules(['max:11', 'min:11'])->help('format: 09XXXXXXXXX'),
-                Hidden::make('type')
-                    ->default(fn () => ModelsUser::TYPE_USER),
-            ]),
+
             Avatar::make('Avatar')
                 ->onlyOnForms()
                 ->squared(),
-                    Text::make('Name')
-                    ->onlyOnForms()
+            Text::make('Name')
                     ->sortable()
                     ->rules('required', 'max:255'),
-
+            Stack::make('Details', [
+                        Avatar::make('Avatar')->squared(),
+                        Text::make('Phone')->rules(['max:11', 'min:11'])->help('format: 09XXXXXXXXX'),
+                        Hidden::make('type')
+                            ->default(fn () => ModelsUser::TYPE_USER),
+                ]),
             Hidden::make('type')
                 ->default(fn () => ModelsUser::TYPE_USER),
 

@@ -13,7 +13,7 @@ class CreateUserLoansTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_loans', function (Blueprint $table) {
+        Schema::create('individual_borrower', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
             $table->integer('loan_id');

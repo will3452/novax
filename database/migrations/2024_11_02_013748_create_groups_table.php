@@ -13,9 +13,10 @@ class CreateGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('group_borrower', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
