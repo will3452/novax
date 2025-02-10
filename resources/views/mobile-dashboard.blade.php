@@ -31,6 +31,12 @@
         </div>
         <div class="grid grid-cols-3">
             @if (auth()->user()->type == "client")
+                <x-dashboard-item :image="'to.png'" :route="'/to'">
+                    Travel Order
+                </x-dashboard-item>
+                <x-dashboard-item :image="'request.png'" :route="''">
+                    Request Of Travel
+                </x-dashboard-item>
                 <x-dashboard-item :image="'contact-form.png'" :route="'/new-request/' . auth()->id()">
                     Request New
                 </x-dashboard-item>

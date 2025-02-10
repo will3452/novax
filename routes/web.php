@@ -28,6 +28,10 @@ Route::get('/new-request/{user}', function () {
     return view('new-request');
 });
 
+Route::get('/to', function () {
+    return view('to');
+});
+
 Route::post('/new-request', function (Request $request) {
     $address = $request->destination;
     $api = env('GEOAPI_KEY');
