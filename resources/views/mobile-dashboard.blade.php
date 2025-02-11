@@ -7,10 +7,10 @@
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="p-2">
+<body >
     @include('sweetalert::alert')
     <div class="space-y-4">
-        <div class="bg-gray-200 p-2 px-4 rounded-md shadow-md">
+        <div class="bg-gray-200 p-2 px-4">
             <div class="flex items-center justify-between">
                 <div>
                     <div class="text-2xl font-bold">
@@ -31,10 +31,10 @@
         </div>
         <div class="grid grid-cols-3">
             @if (auth()->user()->type == "client")
-                <x-dashboard-item :image="'to.png'" :route="'/to'">
+                <x-dashboard-item :image="'to.png'" :route="'/to-index'">
                     Travel Order
                 </x-dashboard-item>
-                <x-dashboard-item :image="'request.png'" :route="''">
+                <x-dashboard-item :image="'request.png'" :route="route('rot.index')">
                     Request Of Travel
                 </x-dashboard-item>
                 <x-dashboard-item :image="'contact-form.png'" :route="'/new-request/' . auth()->id()">
@@ -50,6 +50,11 @@
             <x-dashboard-item :image="'packing-list.png'"  :route="'/trip-history/' . auth()->id()">
                 Trip History
             </x-dashboard-item>
+            @if (auth()->user()->type == 'driver')
+                <x-dashboard-item :image="'speedometer.png'"  :route="route('o.index')">
+                    Odometor Logs
+                </x-dashboard-item>
+            @endif
             <x-dashboard-item :image="'mail.png'" :route="'/inbox/' . auth()->id()">
                 Messages
             </x-dashboard-item>

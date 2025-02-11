@@ -1,11 +1,14 @@
 
 <?php
 
+use App\Http\Controllers\RequestOfTravelController;
+use App\Http\Controllers\TravelOrderController;
 use App\Models\Trip;
 use App\Models\User;
 use App\Models\Client;
 use App\Models\Vehicle;
 use App\Models\Feedback;
+use App\Models\Odometer;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Models\VehicleRequestForm;
@@ -32,17 +35,48 @@ Route::get('/to', function () {
     return view('to');
 });
 
+Route::get('/to-index', function () {
+    return view('to-index');
+});
+
+
+Route::get('/o', function () {
+    return view('odometer');
+})->name('o.index');
+
+Route::get('/oc', function () {
+    return view('odoc');
+})->name('o.c');
+
+Route::post('/oc', function (Request $request) {
+    $vehicle_id = VehicleRequestForm::find($request->vrf_id)->vehicle_id;
+    Odometer::create([
+        'driver_id' => auth()->user()->driver->id,
+        'vehicle_id' => $vehicle_id,
+        'start' => $request->start,
+        'end' => $request->end,
+        'vrf_id' => $request->vrf_id,
+    ]);
+
+    alert()->success('Success', 'Log has been submitted');
+    return back();
+});
+
+Route::post('/to', [TravelOrderController::class, 'store'])->name('to.store');
+Route::get('/rot', [RequestOfTravelController::class, 'index'])->name('rot.index');
+Route::get('/rotc', [RequestOfTravelController::class, 'create'])->name('rot.create');
+Route::post('/rot', [RequestOfTravelController::class, 'store'])->name('rot.store');
 Route::post('/new-request', function (Request $request) {
     $address = $request->destination;
     $api = env('GEOAPI_KEY');
     $d_lat = '';
     $d_long = '';
 
-    $f1 = explode("/", $request->file('request_travel')->store('public'));
-    $f2 = explode("/", $request->file('travel_order')->store('public'));
+    // $f1 = explode("/", $request->file('request_travel')->store('public'));
+    // $f2 = explode("/", $request->file('travel_order')->store('public'));
 
-    $travel_order = end($f1);
-    $request_travel = end($f2);
+    // $travel_order = end($f1);
+    // $request_travel = end($f2);
 
 
     try {
@@ -65,8 +99,10 @@ Route::post('/new-request', function (Request $request) {
         'd_long' => $d_long,
         'p_lat' => nova_get_setting('c_lat'),
         'p_long' => nova_get_setting('c_long'),
-        'request_travel' => $request_travel,
-        'travel_order' => $travel_order,
+        'request_travel' => '',
+        'travel_order' => '',
+        'travel_order_id' => $request->travel_order_id,
+        'request_of_travel_id' => $request->request_of_travel_id,
         'status' => 'pending',
     ]);
 

@@ -60,4 +60,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'approved_at' => 'datetime',
     ];
+
+    public function travelOrders () {
+        return $this->hasMany(TravelOrder::class, 'user_id');
+    }
+
+    public function rots () {
+        return $this->hasMany(RequestOfTravel::class, 'user_id');
+    }
 }

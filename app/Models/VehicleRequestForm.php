@@ -26,6 +26,9 @@ class VehicleRequestForm extends Model
         'd_lat',
         'd_long',
         'vehicle_id',
+        'travel_order_id',
+        'request_of_travel_id',
+        'category',
     ];
 
     public function user () {
@@ -39,6 +42,15 @@ class VehicleRequestForm extends Model
     public function vehicle () {
         return $this->belongsTo(Vehicle::class, 'vehicle_id');
     }
+
+    public function travelOrder() {
+        return $this->belongsTo(TravelOrder::class, 'travel_order_id');
+    }
+
+    public function requestOfTravel() {
+        return $this->belongsTo(RequestOfTravel::class, 'request_of_travel_id');
+    }
+
 
     protected $casts = [
         'date' => 'date',

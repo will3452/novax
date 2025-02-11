@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
+<x-layout>
     <form action="/new-request" method="POST" enctype="multipart/form-data" class="space-y-4 p-2 h-[90vh]">
         @csrf
         <h1 class="font-bold flex gap-2 items-center">
@@ -16,6 +7,13 @@
               </svg>
               New request
         </h1>
+        <div>
+            <label for="">Category</label>
+            <select class="block w-full" name="category" id="c2" >
+                <option value="Carpooling">Carpooling</option>
+                <option value="Reserved">Reserved</option>
+            </select>
+        </div>
         <div>
             <label for="">Purpose *</label>
             <input type="text" name="purpose" required class="w-full border-2 rounded-md p-2">
@@ -40,16 +38,36 @@
             <textarea name="passenger" required id="" class="w-full border-2 rounded-md p-2"></textarea>
         </div>
         <div>
-            <label for="">Request Travel</label>
-            <input class="block" type="file" name="request_travel" />
+            <label for="">Request of Travel</label>
+            <select class="block w-full" name="request_of_travel_id" id="r2" >
+                <option value="">N/a</option>
+                @foreach (auth()->user()->rots()->whereStatus('APPROVED')->get() as $item)
+                    <option value="{{$item->id}}">
+                        {{$item->date->format('m/d/Y')}} - {{$item->purpose}}
+                    </option>
+                @endforeach
+            </select>
         </div>
         <div>
             <label for="">Travel Order</label>
-            <input class="block" type="file" name="travel_order" />
+            <select class="block w-full" name="travel_order_id" id="s2" >
+                <option value="">N/a</option>
+                @foreach (auth()->user()->travelOrders()->where('approved_by_id', '!=', null)->get() as $item)
+                    <option value="{{$item->id}}">
+                        {{$item->date_of_travel->format('m/d/Y')}} - {{$item->purpose}}
+                    </option>
+                @endforeach
+                <option value=""></option>
+            </select>
         </div>
         <button class="bg-blue-900 text-white w-full p-4 rounded-full font-bold">SUBMIT</button>
         <div class="h-[150px]"></div>
     </form>
     <x-back-home></x-back-home>
-</body>
-</html>
+
+    <script>
+        $('#r2').select2()
+        $('#s2').select2()
+        $('#c2').select2()
+    </script>
+</x-layout>

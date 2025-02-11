@@ -37,7 +37,11 @@ class VehicleRequestForm extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+
+    public function title () {
+        $date = $this->date->format('m/d/Y');
+        return "$date - $this->purpose";
+    }
 
     /**
      * The columns that should be searched.
@@ -63,18 +67,20 @@ class VehicleRequestForm extends Resource
             Textarea::make('Passengers', 'remarks')
                 ->alwaysShow(),
             BelongsTo::make('Driver', 'driver', Driver::class),
-            Text::make('Request Travel', function () {
+            // Text::make('Request Travel', function () {
 
-                if (is_null($this->request_travel)) return "N/a";
-                return "<a href='/storage/$this->request_travel' download>Download</a>";
-            })
-                ->asHtml(),
-            Text::make('Travel Order', function () {
-                     if (is_null($this->travel_order)) return "N/a";
-                    return "<a href='/storage/$this->travel_order' download>Download</a>";
-                })
-                    ->asHtml(),
+            //     if (is_null($this->request_travel)) return "N/a";
+            //     return "<a href='/storage/$this->request_travel' download>Download</a>";
+            // })
+            //     ->asHtml(),
+            // Text::make('Travel Order', function () {
+            //          if (is_null($this->travel_order)) return "N/a";
+            //         return "<a href='/storage/$this->travel_order' download>Download</a>";
+            //     })
+            //         ->asHtml(),
             // Text::make('Status'),
+            BelongsTo::make('Travel Order', 'travelOrder', TravelOrder::class),
+            BelongsTo::make('Request of travel', 'requestOfTravel', RequestOfTravel::class),
             Select::make('Status')
                 ->options([
                     'approved' => 'approved',
