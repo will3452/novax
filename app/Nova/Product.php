@@ -1,17 +1,24 @@
 <?php
 
 namespace App\Nova;
-use Laravel\Nova\Fields\ID;
+
+use Eminiarts\Tabs\Tabs;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Select;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Endpoint extends Resource
+class Product extends Resource
 {
-    public static function availableForNavigation(Request $request)
+
+    public static $group = 'Inventory';
+
+    public function authorizedToAttachAny(NovaRequest $request, $model)
     {
         return false;
     }
@@ -20,14 +27,14 @@ class Endpoint extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\Endpoint::class;
+    public static $model = \App\Models\Product::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -36,7 +43,7 @@ class Endpoint extends Resource
      */
     public static $search = [
         'id',
-        'method',
+        'name',
     ];
 
     /**
@@ -48,26 +55,18 @@ class Endpoint extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Path'),
-            Select::make('Method')
-                ->options([
-                    'post' => 'post',
-                    'get' => 'get',
-                    'put' => 'put',
-                ]),
-            Select::make('Model')
-                ->options(function () {
-                    $modelPath = app_path('Models');
-                    $files = File::files($modelPath);
-
-                    $array = [];
-
-                    foreach($files as $item) {
-                        $array[$item->getFilenameWithoutExtension()] = $item->getFilenameWithoutExtension();
-                    }
-                    return $array;
-                }),
-
+            (new Tabs('Product', [
+                'Details' => [
+                    Text::make('Name')->sortable(),
+                    Textarea::make('Description')
+                        ->alwaysShow(),
+                    Image::make('Image'),
+                    Text::make('Category'),
+                    Currency::make('Price')->sortable(),
+                ],
+                BelongsToMany::make('Branches', 'branches', Branch::class),
+                HasMany::make('Sales', 'saleItems', SaleItem::class),
+            ]))->withToolbar()
         ];
     }
 

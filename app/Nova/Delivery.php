@@ -1,26 +1,24 @@
 <?php
 
 namespace App\Nova;
-use Laravel\Nova\Fields\ID;
+
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Select;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Endpoint extends Resource
+class Delivery extends Resource
 {
-    public static function availableForNavigation(Request $request)
-    {
-        return false;
-    }
+    public static $group = 'Transactions';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Endpoint::class;
+    public static $model = \App\Models\Delivery::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -36,7 +34,6 @@ class Endpoint extends Resource
      */
     public static $search = [
         'id',
-        'method',
     ];
 
     /**
@@ -48,26 +45,14 @@ class Endpoint extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Path'),
-            Select::make('Method')
-                ->options([
-                    'post' => 'post',
-                    'get' => 'get',
-                    'put' => 'put',
-                ]),
-            Select::make('Model')
-                ->options(function () {
-                    $modelPath = app_path('Models');
-                    $files = File::files($modelPath);
-
-                    $array = [];
-
-                    foreach($files as $item) {
-                        $array[$item->getFilenameWithoutExtension()] = $item->getFilenameWithoutExtension();
-                    }
-                    return $array;
-                }),
-
+            Date::make('Delivery Date')
+                ->sortable(),
+            BelongsTo::make('Purchase Order', 'purchaseOrder', PurchaseOrder::class),
+            Text::make('Delivered By'),
+            Badge::make('Confirmation Status')->map([
+                'Pending' => 'danger',
+                'Confirmed' => 'Success',
+            ]),
         ];
     }
 

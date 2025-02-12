@@ -1,26 +1,28 @@
 <?php
 
 namespace App\Nova;
-use Laravel\Nova\Fields\ID;
+
+use Eminiarts\Tabs\Tabs;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Endpoint extends Resource
+class Sale extends Resource
 {
-    public static function availableForNavigation(Request $request)
-    {
-        return false;
-    }
+
+    public static $group = 'Transactions';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Endpoint::class;
+    public static $model = \App\Models\Sale::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -36,7 +38,6 @@ class Endpoint extends Resource
      */
     public static $search = [
         'id',
-        'method',
     ];
 
     /**
@@ -48,25 +49,22 @@ class Endpoint extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Path'),
-            Select::make('Method')
-                ->options([
-                    'post' => 'post',
-                    'get' => 'get',
-                    'put' => 'put',
-                ]),
-            Select::make('Model')
-                ->options(function () {
-                    $modelPath = app_path('Models');
-                    $files = File::files($modelPath);
-
-                    $array = [];
-
-                    foreach($files as $item) {
-                        $array[$item->getFilenameWithoutExtension()] = $item->getFilenameWithoutExtension();
-                    }
-                    return $array;
-                }),
+            (new Tabs('Sale', [
+                'Summary' => [
+                    Date::make('Sale Date')
+                    ->sortable(),
+                    BelongsTo::make('Branch'),
+                    BelongsTo::make('Cashier', 'cashier', User::class),
+                    Currency::make('Total Amount')->sortable(),
+                    BelongsTo::make('Customer', 'customer', Customer::class),
+                    Select::make('Payment Method')
+                        ->options([
+                            'Cash' => 'Cash',
+                            'Card' => 'Card',
+                        ]),
+                    ],
+                HasMany::make('Line Items', 'saleItems', SaleItem::class),
+            ]))->withToolbar(),
 
         ];
     }

@@ -17,8 +17,8 @@ class AdminSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            'name'=>'The Administrator',
-            'email'=>'root@yopmail.com',
+            'name'=>'Peter',
+            'email'=>'peter@admin.com',
             'password'=> bcrypt('password')
         ]);
     }

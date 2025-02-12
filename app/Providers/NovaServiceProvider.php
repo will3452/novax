@@ -2,15 +2,22 @@
 
 namespace App\Providers;
 
+use App\Models\Inventory;
+use App\Nova\Metrics\Branches;
+use App\Nova\Metrics\Sales;
+use App\Nova\Metrics\SalesPerBranch;
+use App\Nova\Metrics\WarehousePerBranch;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Fields\Number;
 use Runline\ProfileTool\ProfileTool;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Radwanic\ResourceListing\ResourceListing;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -25,6 +32,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         NovaSettings::addSettingsFields([
             Image::make('Logo'),
+            Number::make('Threshold')->default(5),
         ]);
     }
 
@@ -51,9 +59,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                'root@yopmail.com'
-            ]);
+            return true;
+            // return in_array($user->email, [
+            //     'root@yopmail.com'
+            // ]);
         });
     }
 
@@ -76,6 +85,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->canSee(function () {
                 return config('novax.time_enabled');
             }),
+            Branches::make(),
+            WarehousePerBranch::make(),
+            Sales::make(),
+            SalesPerBranch::make(),
         ];
     }
 
@@ -99,7 +112,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             (new ProfileTool)->canSee(fn () => config('novax.profile_enabled')),
             (new BackupTool)->canSee(fn () => config('novax.back_up_enabled')),
-            (new NovaSettings)->canSee(fn () => config('novax.setting_enabled')), 
+            (new NovaSettings)->canSee(fn () => config('novax.setting_enabled')),
         ];
     }
 
