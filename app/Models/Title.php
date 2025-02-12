@@ -10,45 +10,54 @@ class Title extends Model
     use HasFactory;
 
     protected $fillable = [
-        'type', 
+        'type',
         'title',
         'description',
         'faculty_id',
         'no_of_students',
         'area_of_research',
         'ic_type',
-        'status', 
+        'status',
         'section_id',
-        'file', 
-        'created_by_id', 
+        'file',
+        'created_by_id',
     ];
 
     const IC_TYPE_CAPSTONE = 'Capstone';
-    const IC_TYPE_THESIS = 'Thesis'; 
+    const IC_TYPE_THESIS = 'Thesis';
     const IC_TYPE_PLANT_DESIGN = 'Plant Design';
-    const IC_TYPE_FEASIBILITY_STUDY = 'Feasibility Study'; 
-    const IC_TYPE_BUSINESS_PLAN = 'Business Plan'; 
+    const IC_TYPE_FEASIBILITY_STUDY = 'Feasibility Study';
+    const IC_TYPE_BUSINESS_PLAN = 'Business Plan';
 
     const STATUS_TAKEN = 'Taken';
     const STATUS_AVAILABLE = 'Available';
 
     public function faculty () {
-        return $this->belongsTo(User::class, 'faculty_id'); 
+        return $this->belongsTo(User::class, 'faculty_id');
     }
 
     public function titleApplications () {
-        return $this->hasMany(TitleApplication::class, 'title_id'); 
+        return $this->hasMany(TitleApplication::class, 'title_id');
     }
 
     public function task() {
-        return $this->morphOne(Task::class, 'task'); 
+        return $this->morphOne(Task::class, 'task');
     }
 
     public function group () {
-        return $this->hasOne(Group::class, 'title_id'); 
+        return $this->hasOne(Group::class, 'title_id');
     }
 
     public function section () {
-        return $this->belongsTo(Section::class, 'section_id'); 
+        return $this->belongsTo(Section::class, 'section_id');
+    }
+
+    public function getLineMembersAttribute() {
+        $students = [];
+        foreach ($this->group->groupMembers as $item) {
+            array_push($students, $item->student->name);
+        }
+
+        return implode(", ", $students);
     }
 }

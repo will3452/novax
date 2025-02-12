@@ -17,6 +17,20 @@ class TitleController extends Controller
         return view('titles.show', compact('title'));
     }
 
+
+    public function setVerdict(Request $request, Title $title) {
+        return view('titles.set-verdict', compact('title'));
+    }
+
+    public function storeVerdict(Request $request) {
+        $group = Group::find($request->group_id);
+        $group->update(['verdict' => $request->verdict]);
+        alert()->success('Success', 'Verdict has been set!');
+        return redirect()->to(route('titles.show', $group->title) . '?tab=group');
+    }
+
+
+
     public function submitOral(Request $request, Title $title, OralDefenseRequest $oral) {
         $group = $title->group;
         $oral->update(['status' => OralDefenseRequest::PANELIST_APPROVAL]);

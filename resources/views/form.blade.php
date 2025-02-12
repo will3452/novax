@@ -404,10 +404,14 @@
               form.getTextField('Text60').setText(``) // date
               form.getTextField('Text49').setText(``) // date
               @if($group->panellists()->whereType('Adviser')->first()->faculty->signature)
-                const p1 = await getSignature(`/storage/{{ $group->panellists()->whereType('Adviser')->first()->faculty->signature }}`)
+                try {
+                    const p1 = await getSignature(`/storage/{{ $group->panellists()->whereType('Adviser')->first()->faculty->signature }}`)
                 const ep1 = await pdfDoc.embedPng(p1);
                 form.getTextField('Signature58_es_:signer:signature').setImage(ep1)
                 form.getTextField('Signature48_es_:signer:signature').setImage(ep1)
+                } catch (err) {
+                    alert('some signature is empty.')
+                }
               @else
 
               form.getTextField('Signature58_es_:signer:signature').setText('')
@@ -418,9 +422,13 @@
               form.getTextField('Text54').setText(``) // relevant degree
               form.getTextField('Text61').setText(``) // date
               @if($group->panellists()->whereType('Chair')->first()->faculty->signature)
-                const p2 = await getSignature(`/storage/{{ $group->panellists()->whereType('Chair')->first()->faculty->signature }}`)
+                try {
+                    const p2 = await getSignature(`/storage/{{ $group->panellists()->whereType('Chair')->first()->faculty->signature }}`)
                 const ep2 = await pdfDoc.embedPng(p2);
                 form.getTextField('Signature57_es_:signer:signature').setImage(ep2)
+                } catch (error) {
+
+                }
               @else
               form.getTextField('Signature57_es_:signer:signature').setText('')
               @endif
@@ -429,16 +437,20 @@
               form.getTextField('Text55').setText(``) // relevant degree
               form.getTextField('Text62').setText(``) // date
               @if($group->panellists()->whereType('Member')->first()->faculty->signature)
-                const p3 = await getSignature(`/storage/{{ $group->panellists()->whereType('Member')->first()->faculty->signature }}`)
-                const ep3 = await pdfDoc.embedPng(p3);
-                form.getTextField('Signature59_es_:signer:signature').setImage(ep3)
+                try {
+                    const p3 = await getSignature(`/storage/{{ $group->panellists()->whereType('Member')->first()->faculty->signature }}`)
+                    const ep3 = await pdfDoc.embedPng(p3);
+                    form.getTextField('Signature59_es_:signer:signature').setImage(ep3)
+                } catch (err) {
+
+                }
               @else
               form.getTextField('Signature59_es_:signer:signature').setText('')
               @endif
 
               form.getTextField('Text65').setText('{{\App\Models\User::find(nova_get_setting("coordinator_id", 1))->name}}')
               form.getTextField('Text63').setText('{{\App\Models\User::find(nova_get_setting("programchair_id", 1))->name}}')
-              form.getTextField('Text64').setText('{{\App\Models\User::whereType("Dean")->first()->name}}')
+            //   form.getTextField('Text64').setText('{{\App\Models\User::whereType("Dean")->first()?->name}}')
 
               // // CHECKBOX
               @if ($group->title->ic_type == 'Thesis')
@@ -680,7 +692,7 @@
               form.getTextField('COURSE COORDINATOR').setText('{{\App\Models\User::find(nova_get_setting("coordinator_id", 1))->name}}')
               form.getTextField('COURSE COORDINATOR_2').setText('{{\App\Models\User::find(nova_get_setting("coordinator_id", 1))->name}}')
               form.getTextField('PROGRAM CHAIR').setText('{{\App\Models\User::find(nova_get_setting("programchair_id", 1))->name}}')
-              // form.getTextField('Text64').setText('{{\App\Models\User::whereType("Dean")->first()->name}}')
+            //    form.getTextField('Text64').setText('{{\App\Models\User::whereType("Dean")?->first()?->name}}')
 
               // // CHECKBOX
 

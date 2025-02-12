@@ -44,12 +44,16 @@
                         @endphp
                         @foreach (request()->segments() as $item)
                         @php
-                            array_push($url, $item);
+                            if ($item == 'titles') {
+                                array_push($url, 'sections');
+                            } else {
+                                array_push($url, $item);
+                            }
                         @endphp
                             @if ($loop->last)
                             <li class="breadcrumb-item">{{$item}}</li>
                             @else
-                                <li class="breadcrumb-item active"><a href="/{{implode('/', $url)}}">{{$item}}</a></li>
+                                <li class="breadcrumb-item active"><a href="/{{implode('/', $url)}}">{{$item == 'titles' ? 'sections' : $item}}</a></li>
                             @endif
                         @endforeach
                     </ol>

@@ -11,6 +11,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RevisionController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TitleController;
@@ -32,6 +33,8 @@ Route::middleware(['auth'])->prefix('titles')->name('titles.')->group(function (
     Route::post('/{title}/lock-panelist', [TitleController::class, 'lockPanelist'])->name('lock.panelist');
     Route::post('/{title}/endorse', [TitleController::class, 'endorse'])->name('endorse.group');
     Route::post('/{title}/request-approval/{oral}', [TitleController::class, 'submitOral'])->name('submit.oral');
+    Route::get('/{title}/verdict', [TitleController::class, 'setVerdict'])->name('set.verdict');
+    Route::post('/verdict', [TitleController::class, 'storeVerdict'])->name('store.verdict');
 });
 
 Route::middleware(['auth'])->prefix('tasks')->name('tasks.')->group(function () {
@@ -56,6 +59,12 @@ Route::middleware('auth')->prefix('calendars')->name('calendars.')->group(functi
         return view('calendar');
     });
 });
+
+Route::middleware('auth')->prefix('revisions')->name('revisions.')->group(function () {
+    Route::post('/', [RevisionController::class, 'store'])->name('store');
+});
+
+
 
 
 Route::get('/', function () {
