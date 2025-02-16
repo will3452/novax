@@ -1,12 +1,13 @@
 :root {
-    --primary: rgb(125, 140, 138, 1); /* Base muted gray-green */
-    --primary-dark: rgb(95, 110, 108, 1); /* Darker shade for contrast */
-    --primary-70: rgba(125, 140, 138, 0.7);
-    --primary-50: rgba(125, 140, 138, 0.5);
-    --primary-30: rgba(125, 140, 138, 0.3);
-    --primary-10: rgba(125, 140, 138, 0.1);
-    --logo: #3E4A49; /* Deep muted green-gray for logo */
-    --sidebar-icon: #A5B2B0; /* Lighter tone for icons */
+    --primary: rgb(0, 96, 186, 1); /* Primary Blue */
+    --primary-dark: rgb(0, 76, 148, 1); /* Darker shade for contrast */
+    --primary-70: rgba(0, 96, 186, 0.7);
+    --primary-50: rgba(0, 96, 186, 0.5);
+    --primary-30: rgba(0, 96, 186, 0.3);
+    --primary-10: rgba(0, 96, 186, 0.1);
+    --secondary: #E2E300; /* Secondary Yellow */
+    --logo: #004C94; /* Darker blue for logo */
+    --sidebar-icon: #A5C0E0; /* Lighter blue tone for icons */
   }
 
   .bg-grad-sidebar {
@@ -14,13 +15,13 @@
       linear,
       left bottom,
       left top,
-      from(rgb(125, 140, 138, 1)),
-      to(#3E4A49) /* Darker gray-green for depth */
+      from(rgb(0, 96, 186, 1)),
+      to(#004C94) /* Darker blue for depth */
     );
 
     background-image: linear-gradient(
       0deg,
-      rgb(125, 140, 138, 1),
-      rgb(62, 74, 73)
+      rgb(0, 96, 186, 1),
+      rgb(0, 76, 148)
     );
   }
