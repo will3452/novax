@@ -4,6 +4,8 @@ use App\Models\Group;
 use App\Models\Progress;
 use Illuminate\Http\Request;
 use App\Exports\MonitoringReports;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProgressController;
 use App\Models\OralDefenseRequest;
@@ -15,6 +17,8 @@ use App\Http\Controllers\RevisionController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TitleController;
+use App\Models\Setting;
+use Illuminate\Support\Facades\DB;
 
 Route::middleware(['auth'])->prefix('sections')->name('sections.')->group(function () {
     Route::get('/', [SectionController::class, 'index']);
@@ -37,6 +41,11 @@ Route::middleware(['auth'])->prefix('titles')->name('titles.')->group(function (
     Route::post('/verdict', [TitleController::class, 'storeVerdict'])->name('store.verdict');
 });
 
+Route::middleware(['auth'])->prefix('news')->name('news.')->group(function () {
+    Route::get('/', [NewsController::class, 'index'])->name('index');
+    Route::post('/', [NewsController::class, 'store'])->name('store');
+});
+
 Route::middleware(['auth'])->prefix('tasks')->name('tasks.')->group(function () {
     Route::get('/', [TaskController::class, 'index'])->name('index');
     Route::post('/approve/{task}', [TaskController::class, 'approve'])->name('approve');
@@ -48,6 +57,12 @@ Route::middleware('auth')->prefix('notifications')->name('notifications.')->grou
     Route::get('/', [NotificationController::class, 'index'])->name('index');
     Route::get('/read/{n}', [NotificationController::class, 'read'])->name('read');
     Route::get('/read-all', [NotificationController::class, 'readAll'])->name('read.all');
+});
+
+
+Route::middleware('auth')->prefix('courses')->name('courses.')->group(function () {
+    Route::get('/', [CourseController::class, 'index'])->name('index');
+    Route::post('/', [CourseController::class, 'store'])->name('store');
 });
 
 Route::middleware('auth')->prefix('progress')->name('progress.')->group(function () {
@@ -71,6 +86,36 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+Route::get('/settings', function () {
+    return view('settings');
+})->name('settings');
+
+Route::post('/settings', function(Request $request) {
+    $data = $request->validate([
+        'coordinator_id' => ['required'],
+        'term' => ['required'],
+        'school_year' => ['required'],
+    ]);
+
+    $settings = ['coordinator_id', 'term', 'school_year'];
+    foreach ($settings as $value) {
+        $s = DB::table('nova_settings')->where('key', $value)->first();
+        if ($s) {
+            DB::table('nova_settings')->where('key', $value)->update(['value' => $data[$value]]);
+        } else {
+            DB::table('nova_settings')->insert([
+                'key' => $value,
+                'value' => $data['value'],
+            ]);
+        }
+    }
+
+
+
+
+    return back()->withSuccess('Settings has been saved!');
+});
+
 Route::get('/app/login', function () {
     return redirect()->to('/');
 });
@@ -82,9 +127,12 @@ Route::post('/user-edit', function (Request $request) {
      $data['signature'] = end($arr);
     //  dd($data);
     auth()->user()->update($data);
-    alert()->success('Success', 'Profile has been updated!');
-    return back();
+    return back()->withSuccess('Profile has been updated!');
 })->name('user.update');
+
+Route::get('/user-edit', function () {
+    return view('user-edit');
+});
 
 Route::get('/form', function (Request $request) {
     $response = [];

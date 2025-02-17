@@ -22,49 +22,51 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'type', 
+        'type',
         'number',
         'course',
-        'signature', 
-        'cluster', 
+        'signature',
+        'cluster',
         'relevant_deg',
         'research_spec',
-        'schedule_type', 
+        'schedule_type',
+        'is_coordinator',
     ];
 
-    const TYPE_ADMINISTRATOR = 'Administrator'; 
-    const TYPE_DEAN = 'Dean'; 
+    const TYPE_ADMINISTRATOR = 'Administrator';
+    const TYPE_DEAN = 'Dean';
     const TYPE_STUDENT = 'Student';
-    const TYPE_FACULTY = 'Faculty'; 
+    const TYPE_FACULTY = 'Faculty';
 
 
     public function isCoordinator() {
-        return nova_get_setting('coordinator_id') == $this->id; 
+        // return $this->is_coordinator;
+        return nova_get_setting('coordinator_id') == $this->id;
     }
 
     public function isStudent() {
-        return $this->type == 'Student'; 
+        return $this->type == 'Student';
     }
 
     public function isAdmin() {
-        return $this->type == 'Administrator'; 
+        return $this->type == 'Administrator';
     }
 
     public function isFaculty() {
-        return $this->type == 'Faculty'; 
+        return $this->type == 'Faculty';
     }
 
 
     public function sections () {
-        return $this->belongsToMany(Section::class, 'section_students', 'student_id', 'section_id'); 
+        return $this->belongsToMany(Section::class, 'section_students', 'student_id', 'section_id');
     }
 
     public function groups () {
-        return $this->belongsToMany(Group::class, 'group_members', 'student_id', 'group_id'); 
+        return $this->belongsToMany(Group::class, 'group_members', 'student_id', 'group_id');
     }
 
     public function classInvitations () {
-        return $this->hasMany(SectionStudent::class, 'student_id'); 
+        return $this->hasMany(SectionStudent::class, 'student_id');
     }
 
     /**

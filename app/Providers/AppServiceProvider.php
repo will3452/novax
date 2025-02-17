@@ -24,12 +24,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Blade::if('nonstudent', function() {
-            return ! auth()->user()->isStudent();
-        });
-
-        Blade::if('student', function() {
-            return auth()->user()->isStudent();
-        });
+        Blade::if('nonstudent', fn () => ! auth()->user()->isStudent());
+        Blade::if('student', fn () => auth()->user()->isStudent());
+        Blade::if('admin', fn () => auth()->user()->isAdmin());
+        Blade::if('ca', fn () => auth()->user()->isAdmin() || auth()->user()->isCoordinator()); // coor and admin
+        Blade::if('coordinator', fn () => auth()->user()->isCoordinator());
     }
 }

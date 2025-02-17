@@ -24,12 +24,12 @@
             </div>
             <div class="col-md-9">
                 <ul class="nav nav-tabs">
-                        <li class="nav-item">
+                    <li class="nav-item">
+                         <a class="nav-link {{request()->tab == 'titles' ? 'active' : ''}}" href="?tab=titles">Titles</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{request()->tab == null || request()->tab == 'students' ? 'active' : ''}}" href="?tab=students">Students</a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link {{request()->tab == 'titles' ? 'active' : ''}}" href="?tab=titles">Titles</a>
-                        </li>
+                    </li>
                 </ul>
 
           @if (request()->tab == 'students' || request()->tab == null)

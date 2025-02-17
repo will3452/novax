@@ -37,7 +37,7 @@
                                             {{$item->term}}
                                         </td>
                                         <td class="text-center">
-                                            <a href="/sections/{{$item->id}}" class="btn btn-sm btn-success">View</a>
+                                            <a href="/sections/{{$item->id}}?tab=titles" class="btn btn-sm btn-success">View</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -47,9 +47,11 @@
                 </div>
             </div>
             @nonstudent
-            <div class="col-md-3">
-                <x-section-create></x-section-create>
-            </div>
+                @coordinator
+                <div class="col-md-3">
+                    <x-section-create></x-section-create>
+                </div>
+                @endcoordinator
             @endnonstudent
         </div>
     </div>

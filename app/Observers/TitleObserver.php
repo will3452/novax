@@ -2,9 +2,11 @@
 
 namespace App\Observers;
 
+use App\Models\Course;
 use App\Models\Group;
 use App\Models\Title;
 use App\Models\Panellist;
+use App\Models\Section;
 use Illuminate\Support\Str;
 use App\Models\TitleApplication;
 
@@ -24,9 +26,18 @@ class TitleObserver
             'approved_status' => "FOR DEAN APPROVAL",
         ]);
 
+        $courseCode = $title->section->course->code;
+        $seq = 1;
+        $sections = Section::whereSchoolYear(nova_get_setting('school_year'))->get();
+        foreach ($sections as $section) {
+            $seq += $section->titles->count();
+        }
+        $year = explode('-', nova_get_setting('school_year'))[0];
+        $code = $year . $courseCode . $seq;
+
         $group = Group::create([
             'title_id' => $title->id,
-            'code' => intval(Str::limit(now()->timestamp ."", 9)),
+            'code' => $code,
         ]);
 
         Panellist::create([

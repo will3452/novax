@@ -3,10 +3,12 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="card">
-                    <img src="/section.jpg" alt="" class="card-img-top">
+                    <div class="card-img-top" style="background: url('/section.jpg');height:150px; display:flex; align-items:center; justify-content:center;">
+                        <h1 class="text-center py-4 text-white">{{$title->title}}</h1>
+                    </div>
                     <div class="card-body">
                        <div class="d-flex justify-content-between align-items-center">
-                        <h4>{{$title->title}} </h4>
+                        <h4>{{$title->group->code}} </h4>
                         <span class="badge bg-primary">{{$title->status}}</span>
                        </div>
                         <div>
