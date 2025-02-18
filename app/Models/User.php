@@ -21,7 +21,19 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
+        'branch_id',
     ];
+
+    const TYPE_OWNER = 'Owner';
+    const TYPE_MANAGER = 'Branch Manager';
+    const TYPE_INVENTORY = 'Inventory Manager';
+    const TYPE_CASHIER = 'Cashier';
+    const TYPE_ACCOUNTING = 'Accounting';
+
+    public function branch () {
+        return $this->belongsTo(Branch::class, 'branch_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

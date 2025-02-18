@@ -4,10 +4,12 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
@@ -46,7 +48,17 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            Select::make('Type')
+                ->options([
+                    'Owner' => 'Owner',
+                    'Branch Manager' => 'Branch Manager',
+                    'Inventory Manager' => 'Inventory Manager',
+                    'Cashier' => 'Cashier',
+                    'Sales Associate' => 'Sales Associate',
+                    'Accounting' => 'Accounting',
+                ]),
+
+            BelongsTo::make('Branch', 'branch', Branch::class),
 
             Text::make('Name')
                 ->sortable()
