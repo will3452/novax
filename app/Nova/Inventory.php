@@ -1,26 +1,23 @@
 <?php
 
 namespace App\Nova;
-use Laravel\Nova\Fields\ID;
+
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Select;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Endpoint extends Resource
+class Inventory extends Resource
 {
-    public static function availableForNavigation(Request $request)
-    {
-        return false;
-    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Endpoint::class;
+    public static $model = \App\Models\Inventory::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -36,7 +33,6 @@ class Endpoint extends Resource
      */
     public static $search = [
         'id',
-        'method',
     ];
 
     /**
@@ -48,26 +44,12 @@ class Endpoint extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Path'),
-            Select::make('Method')
-                ->options([
-                    'post' => 'post',
-                    'get' => 'get',
-                    'put' => 'put',
-                ]),
-            Select::make('Model')
-                ->options(function () {
-                    $modelPath = app_path('Models');
-                    $files = File::files($modelPath);
-
-                    $array = [];
-
-                    foreach($files as $item) {
-                        $array[$item->getFilenameWithoutExtension()] = $item->getFilenameWithoutExtension();
-                    }
-                    return $array;
-                }),
-
+            BelongsTo::make('Branch', 'branch', Branch::class),
+            BelongsTo::make('Size', 'product', Product::class),
+            Currency::make('Sales Price', fn () => $this->product->price),
+            Currency::make('Cost', fn () => $this->product->cost),
+            Number::make('Quantity On Hand', 'qty')->sortable(),
+            Number::make('Reorder Point'),
         ];
     }
 

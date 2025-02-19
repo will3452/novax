@@ -1,33 +1,35 @@
 <?php
 
 namespace App\Nova;
+
+use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Select;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Endpoint extends Resource
+class Sale extends Resource
 {
-    public static function availableForNavigation(Request $request)
-    {
-        return false;
-    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Endpoint::class;
+    public static $model = \App\Models\Sale::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public function title () {
+        return "S" . Str::padLeft($this->id, 6, '0');
+    }
 
     /**
      * The columns that should be searched.
@@ -36,7 +38,6 @@ class Endpoint extends Resource
      */
     public static $search = [
         'id',
-        'method',
     ];
 
     /**
@@ -48,26 +49,26 @@ class Endpoint extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Path'),
-            Select::make('Method')
-                ->options([
-                    'post' => 'post',
-                    'get' => 'get',
-                    'put' => 'put',
+            Badge::make('Status')
+                ->map([
+                    'PENDING' => 'info',
+                    // 'REJECTED' => 'warning',
+                    'CONFIRMED' => 'success',
                 ]),
-            Select::make('Model')
-                ->options(function () {
-                    $modelPath = app_path('Models');
-                    $files = File::files($modelPath);
-
-                    $array = [];
-
-                    foreach($files as $item) {
-                        $array[$item->getFilenameWithoutExtension()] = $item->getFilenameWithoutExtension();
-                    }
-                    return $array;
-                }),
-
+            BelongsTo::make('Branch'),
+            Hidden::make('cashier_id')
+                ->default(fn () => auth()->id()),
+            Date::make('Date')
+                ->rules(['required']),
+            Currency::make('Total Amount')
+                ->exceptOnForms(),
+            BelongsTo::make('Customer')
+                ->showCreateRelationButton(),
+            Select::make('Payment Method')
+                ->options([
+                    'BANK' => 'BANK',
+                    'CASH' => 'CASH',
+                ]),
         ];
     }
 

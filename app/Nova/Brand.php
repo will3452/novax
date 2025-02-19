@@ -1,33 +1,31 @@
 <?php
 
 namespace App\Nova;
-use Laravel\Nova\Fields\ID;
+
+use App\Nova\Actions\ImportBrandProducts;
+use App\Nova\Actions\ImportBrands;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Select;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Endpoint extends Resource
+class Brand extends Resource
 {
-    public static function availableForNavigation(Request $request)
-    {
-        return false;
-    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Endpoint::class;
+    public static $model = \App\Models\Brand::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -35,8 +33,8 @@ class Endpoint extends Resource
      * @var array
      */
     public static $search = [
-        'id',
-        'method',
+        // 'id',
+        'name'
     ];
 
     /**
@@ -48,26 +46,10 @@ class Endpoint extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Path'),
-            Select::make('Method')
-                ->options([
-                    'post' => 'post',
-                    'get' => 'get',
-                    'put' => 'put',
-                ]),
-            Select::make('Model')
-                ->options(function () {
-                    $modelPath = app_path('Models');
-                    $files = File::files($modelPath);
-
-                    $array = [];
-
-                    foreach($files as $item) {
-                        $array[$item->getFilenameWithoutExtension()] = $item->getFilenameWithoutExtension();
-                    }
-                    return $array;
-                }),
-
+            Image::make('Logo', 'image'),
+            Text::make('Name')->sortable(),
+            Text::make('Category')->sortable(),
+            HasMany::make('Products', 'products', Product::class),
         ];
     }
 
@@ -112,6 +94,10 @@ class Endpoint extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            ImportBrands::make()
+                ->standalone(),
+            ImportBrandProducts::make(),
+        ];
     }
 }

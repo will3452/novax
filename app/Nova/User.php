@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
@@ -44,8 +45,12 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
+            Select::make('Role')
+                ->options([
+                    'Administrator' => 'Administrator',
+                    'Manager' => 'Manager',
+                    'Sales' => 'Sales',
+                ]),
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
