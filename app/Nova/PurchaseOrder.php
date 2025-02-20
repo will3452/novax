@@ -16,6 +16,8 @@ use PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel\Current;
 
 class PurchaseOrder extends Resource
 {
+
+    public static $group = '3. transaction';
     /**
      * The model the resource corresponds to.
      *

@@ -10,6 +10,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Branch extends Resource
 {
+    public static $group = '1. manage';
     /**
      * The model the resource corresponds to.
      *

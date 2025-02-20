@@ -9,6 +9,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Customer extends Resource
 {
+    public static $group = '1. manage';
     /**
      * The model the resource corresponds to.
      *

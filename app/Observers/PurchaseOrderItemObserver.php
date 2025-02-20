@@ -47,7 +47,17 @@ class PurchaseOrderItemObserver
      */
     public function deleted(PurchaseOrderItem $purchaseOrderItem)
     {
-        //
+        $po = PurchaseOrder::find($purchaseOrderItem->purchase_order_id);
+        $total_cost = 0;
+        $poi = PurchaseOrderItem::where([
+            'purchase_order_id' => $po->id,
+        ])->get();
+
+        foreach ($poi as $p) {
+            $total_cost += ($p->cost * $p->qty);
+        }
+
+        $po->update(['total_cost' => $total_cost]);
     }
 
     /**

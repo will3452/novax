@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\ConfirmTransaction;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -9,12 +10,15 @@ use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Sale extends Resource
 {
+
+    public static $group = '3. transaction';
     /**
      * The model the resource corresponds to.
      *
@@ -69,6 +73,7 @@ class Sale extends Resource
                     'BANK' => 'BANK',
                     'CASH' => 'CASH',
                 ]),
+            HasMany::make('Items', 'items', SaleItem::class),
         ];
     }
 
@@ -113,6 +118,8 @@ class Sale extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            ConfirmTransaction::make()->showOnTableRow(),
+        ];
     }
 }
