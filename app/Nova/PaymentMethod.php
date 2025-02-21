@@ -2,38 +2,27 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\ConfirmTransaction;
-use Illuminate\Support\Str;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Badge;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\Hidden;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Sale extends Resource
+class PaymentMethod extends Resource
 {
-
-    public static $group = '3. transaction';
+    public static $group = '1. manage';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Sale::class;
+    public static $model = \App\Models\PaymentMethod::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public function title () {
-        return "S" . Str::padLeft($this->id, 6, '0');
-    }
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -42,6 +31,7 @@ class Sale extends Resource
      */
     public static $search = [
         'id',
+        'name',
     ];
 
     /**
@@ -53,24 +43,8 @@ class Sale extends Resource
     public function fields(Request $request)
     {
         return [
-            Badge::make('Status')
-                ->map([
-                    'PENDING' => 'info',
-                    // 'REJECTED' => 'warning',
-                    'CONFIRMED' => 'success',
-                ]),
-            BelongsTo::make('Branch'),
-            Hidden::make('cashier_id')
-                ->default(fn () => auth()->id()),
-            Date::make('Date')
-                ->rules(['required']),
-            Currency::make('Total Amount')
-                ->exceptOnForms(),
-            BelongsTo::make('Customer')
-                ->showCreateRelationButton(),
-            Select::make('Payment Method')
-                ->options(\App\Models\PaymentMethod::get()->pluck('name', 'name')),
-            HasMany::make('Items', 'items', SaleItem::class),
+            Text::make('Name')
+                ->sortable(),
         ];
     }
 
@@ -115,8 +89,6 @@ class Sale extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            ConfirmTransaction::make()->showOnTableRow(),
-        ];
+        return [];
     }
 }
