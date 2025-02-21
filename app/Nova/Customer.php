@@ -50,9 +50,6 @@ class Customer extends Resource
                 ->rules(['required'])->sortable(),
             Text::make('Last Name')
                 ->rules(['required'])->sortable(),
-            Text::make('Email')
-                ->sortable()
-                ->rules(['email']),
             Text::make('Phone'),
             Text::make('Address')
                 ->sortable(),
