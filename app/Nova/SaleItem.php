@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class SaleItem extends Resource
@@ -55,6 +56,10 @@ class SaleItem extends Resource
                 ]),
             Number::make('Quantity', 'qty'),
             Currency::make('Price/Rate', 'price')->sortable(),
+            Text::make('Remarks')
+                ->sortable(),
+            Text::make('Discount')
+                ->sortable(),
         ];
     }
 

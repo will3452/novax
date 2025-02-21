@@ -14,6 +14,8 @@ class SaleItem extends Model
         'salable_type',
         'qty',
         'price',
+        'remarks',
+        'discount'
     ];
 
     public function sale () {

@@ -27,8 +27,9 @@ class BrandProductImport implements ToModel
         ], [
             'brand_id' => $this->brand_id,
             'name' => $row[0],
-            'price' => $row[1],
-            'cost' => $row[2],
+            'description' => $row[1],
+            'price' => $row[2],
+            'cost' => $row[3],
         ]);
     }
 }
