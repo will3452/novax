@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Product extends Resource
@@ -52,6 +53,9 @@ class Product extends Resource
         return [
             Image::make('Image'),
             Text::make('Size', 'name')->sortable(),
+            Textarea::make('Description')
+                ->alwaysShow()
+                ->showOnIndex(),
             BelongsTo::make('Brand', 'brand', Brand::class)->showCreateRelationButton(),
             Currency::make('Price')->sortable(),
             Currency::make('Cost')->sortable(),
