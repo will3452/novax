@@ -60,7 +60,7 @@ class PaymentSchedule extends Resource
                 $interestRate = intval($this->loan->interest ?? '0') / 100;
                 $principal = $this->loan->amount / $this->loan->number_of_installment;
                 $interest = $interestRate * $principal * $this->loan->number_of_installment;
-                return $interest;
+                return round($interest, 2);
             }),
             Currency::make('Total Amount', function () {
                 return round(floatval($this->amount), 2);
