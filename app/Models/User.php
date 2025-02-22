@@ -25,6 +25,8 @@ class User extends Authenticatable
         'phone',
         'type',
         'avatar',
+        'gender',
+        'age',
         'demographic',
         'group_id',
     ];

@@ -42,7 +42,7 @@ class LoanObserver
             $days = 30;
         }
 
-        $times = ($loan->end_date->diffInDays($loan->start_date) / $days);
+        $times = $loan->number_of_installment;
 
         $dues = $this->generateDueDates($loan->start_date, $loan->end_date, $times);
         $interest = ((intval($loan->interest??'0') / 100 ) * $loan->amount * count($dues));

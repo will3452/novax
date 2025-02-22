@@ -2,27 +2,29 @@
 
 namespace App\Providers;
 
-use App\Nova\Metrics\AmountDisbursed;
-use App\Nova\Metrics\CapitalAmount;
-use App\Nova\Metrics\LoanDistribution;
-use App\Nova\Metrics\LoanTrend;
-use App\Nova\Metrics\PaymentReceived;
-use App\Nova\Metrics\PaymentTrend;
-use App\Nova\Metrics\RemainingCapital;
-use App\Nova\Metrics\SmsCredit;
-use App\Nova\Metrics\TotalCash;
-use App\Nova\Metrics\TotalRevenue;
-use Eminiarts\Tabs\Tabs;
+use App\Models\Interest;
 use Laravel\Nova\Nova;
+use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
+use Elezerk\LoanForm\LoanForm;
 use Laravel\Nova\Fields\Image;
-use Spatie\BackupTool\BackupTool;
-use Illuminate\Support\Facades\Gate;
+use App\Nova\Metrics\LoanTrend;
+use App\Nova\Metrics\SmsCredit;
+use App\Nova\Metrics\TotalCash;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Textarea;
+use Spatie\BackupTool\BackupTool;
+use App\Nova\Metrics\PaymentTrend;
+use App\Nova\Metrics\TotalRevenue;
+use App\Nova\Metrics\CapitalAmount;
+use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
+use App\Nova\Metrics\AmountDisbursed;
+use App\Nova\Metrics\PaymentReceived;
+use App\Nova\Metrics\LoanDistribution;
+use App\Nova\Metrics\RemainingCapital;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -44,7 +46,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 //     Textarea::make('Vision'),
                 // ],
                 'Finance' => [
-                    Currency::make('Capital Amount'),
+                    // Currency::make('Capital Amount'),
                     Currency::make('Max Loan'),
                     Currency::make('Minimum Loan'),
                 ],
@@ -80,9 +82,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                'super@admin.com'
-            ]);
+            return true;
         });
     }
 
@@ -137,7 +137,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             (new ProfileTool)->canSee(fn () => config('novax.profile_enabled')),
-            (new BackupTool)->canSee(fn () => config('novax.back_up_enabled')),
+            (new LoanForm()),
             (new NovaSettings)->canSee(fn () => config('novax.setting_enabled')),
         ];
     }

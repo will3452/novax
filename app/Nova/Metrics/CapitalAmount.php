@@ -2,6 +2,7 @@
 
 namespace App\Nova\Metrics;
 
+use App\Models\Capital;
 use App\Models\Loan;
 use Laravel\Nova\Metrics\Value;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -16,7 +17,7 @@ class CapitalAmount extends Value
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->result(nova_get_setting('capital_amount', 0))->prefix('₱ ')->suffix(null)->format('0,0');
+        return $this->result(Capital::sum('amount'))->prefix('₱ ')->suffix(null)->format('0,0');
     }
 
 

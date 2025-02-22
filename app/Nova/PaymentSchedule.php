@@ -51,8 +51,20 @@ class PaymentSchedule extends Resource
     {
         return [
             Date::make('Due Date'),
-            Currency::make('Amount'),
+            Currency::make('Amount')->onlyOnForms(),
             BelongsTo::make('Loan', 'loan', Loan::class),
+            Currency::make('Principal', function () {
+                return $this->loan->amount / $this->loan->number_of_installment;
+            }),
+            Currency::make('Interest', function () {
+                $interestRate = intval($this->loan->interest ?? '0') / 100;
+                $principal = $this->loan->amount / $this->loan->number_of_installment;
+                $interest = $interestRate * $principal * $this->loan->number_of_installment;
+                return $interest;
+            }),
+            Currency::make('Total Amount', function () {
+                return round(floatval($this->amount), 2);
+            })->exceptOnForms(),
             Badge::make('Status')
                 ->map([
                     'PAID' => 'success',

@@ -2,19 +2,20 @@
 
 namespace App\Nova;
 
-use App\Models\User as ModelsUser;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Avatar;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\Stack;
+use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Hidden;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Fields\Password;
+use App\Models\User as ModelsUser;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\MorphToMany;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Stack;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class GroupMember extends Resource
@@ -91,7 +92,13 @@ class GroupMember extends Resource
             Text::make('Phone')->rules(['max:11', 'min:11'])->help('format: 09XXXXXXXXX')->onlyOnForms(),
             Hidden::make('password')
                 ->default(fn () => bcrypt('password')),
-            KeyValue::make('Demographic'),
+            // KeyValue::make('Demographic'),
+            Select::make('Gender')
+                ->options([
+                    'Male' => 'Male',
+                    'Female' => 'Female',
+                ]),
+            Number::make('Age'),
         ];
     }
 

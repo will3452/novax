@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\AddBorrower;
 use App\Nova\Actions\AddGroup;
+use App\Nova\Actions\CreateLoan;
 use App\Nova\Metrics\LoanAmount;
 use App\Nova\Metrics\TotalBalance;
 use App\Nova\Metrics\TotalPenalties;
@@ -27,6 +28,11 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Loan extends Resource
 {
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+
     public static $group = '1_Services';
     /**
      * The model the resource corresponds to.
@@ -75,7 +81,7 @@ class Loan extends Resource
                             'INDIVIDUAL' => 'INDIVIDUAL',
                             'GROUP' => 'GROUP',
                         ]),
-                    Date::make('Start Date')->rules(['required']),
+                    Date::make('Start Date', 'created_at'),
                     Date::make('End Date')->rules(['required']),
                     Text::make('Duration', function() {
                         $duration = $this->start_date->diffInDays($this->end_date);
@@ -103,8 +109,6 @@ class Loan extends Resource
                 'Borrower(s)' => [
                     HasMany::make('Borrowers', 'userLoans', UserLoan::class),
                 ],
-            ])->withToolbar(),
-            Tabs::make('Payments', [
                 'Schedules' => [
                     HasMany::make('Schedules', 'schedules', PaymentSchedule::class),
                 ],
@@ -165,15 +169,18 @@ class Loan extends Resource
     {
         if ($request->has('action')) {
             return [
-                AddGroup::make(),
-                AddBorrower::make(),
+                CreateLoan::make()->standalone(),
+                // AddGroup::make(),
+                // AddBorrower::make(),
             ];
         }
         return [
-            AddGroup::make()
-                ->canSee(fn () => $this->type == "GROUP"),
-            AddBorrower::make()
-                ->canSee(fn () => $this->type != "GROUP"),
+            CreateLoan::make()
+                ->standalone(),
+            // AddGroup::make()
+            //     ->canSee(fn () => $this->type == "GROUP"),
+            // AddBorrower::make()
+            //     ->canSee(fn () => $this->type != "GROUP"),
         ];
     }
 }

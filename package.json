@@ -7,7 +7,9 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "mix --production",
+        "build-loan-form": "cd nova-components/LoanForm && npm run dev",
+        "build-loan-form-prod": "cd nova-components/LoanForm && npm run prod"
     },
     "devDependencies": {
         "axios": "^0.21",

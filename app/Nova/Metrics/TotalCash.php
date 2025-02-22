@@ -2,6 +2,7 @@
 
 namespace App\Nova\Metrics;
 
+use App\Models\Capital;
 use App\Models\Loan;
 use App\Models\Payment;
 use Laravel\Nova\Metrics\Value;
@@ -18,7 +19,7 @@ class TotalCash extends Value
     public function calculate(NovaRequest $request)
     {
         $revenue = Payment::sum('amount') - Loan::sum('amount');
-        $totCash = nova_get_setting('capital_amount', 0) + $revenue;
+        $totCash = Capital::sum('amount') + $revenue;
         return $this->result("$totCash")
             ->currency('₱ ')->suffix(null)->format('0,0');
     }

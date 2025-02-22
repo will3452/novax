@@ -25,7 +25,7 @@ class User extends Resource
 
     public static function authorizedToCreate(Request $request)
     {
-        return auth()->id() == 1;
+        return false;
     }
 
     public function authorizedToDelete(Request $request)

@@ -3,33 +3,29 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Group extends Resource
+class Capital extends Resource
 {
-
     public static $group = '2_Manage';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Group::class;
+    public static $model = \App\Models\Capital::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
-
-    public static function label () {
-        return "Group Borrower";
-    }
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -37,8 +33,7 @@ class Group extends Resource
      * @var array
      */
     public static $search = [
-        'id',
-        'name'
+        'remarks'
     ];
 
     /**
@@ -50,13 +45,12 @@ class Group extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Group Name', 'name')
-                ->rules(['required', 'unique:group_borrower,name'])
-                ->sortable(),
-            HasMany::make('Group Member', 'groupMembers', GroupMember::class),
-            // Text::make('No. of Member', fn () =>$this->members->count()),
-
-            // BelongsToMany::make('Group Members', 'members', Borrower::class),
+            Date::make('Date', 'created_at')
+                ->sortable()
+                ->exceptOnForms(),
+            Currency::make('Amount')->rules(['required']),
+            Textarea::make('Remarks')
+                ->alwaysShow(),
         ];
     }
 

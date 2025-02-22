@@ -23,6 +23,8 @@ class Loan extends Model
         'collateral',
         'collateral_image',
         'status',
+        'agreement_image',
+        'number_of_installment',
     ];
 
     public function getTotalPayableAttribute() {
@@ -43,7 +45,7 @@ class Loan extends Model
     ];
 
     public function users () {
-        return $this->belongsToMany(User::class, 'user_loans', 'loan_id', 'user_id')->withPivot('group_id');
+        return $this->belongsToMany(User::class, 'individual_borrower', 'loan_id', 'user_id')->withPivot('group_id');
     }
 
     public function userLoans () {

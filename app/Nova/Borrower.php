@@ -12,6 +12,7 @@ use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Stack;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -85,7 +86,13 @@ class Borrower extends Resource
             Text::make('Phone')->rules(['max:11', 'min:11'])->help('format: 09XXXXXXXXX')->onlyOnForms(),
             Hidden::make('password')
                 ->default(fn () => bcrypt('password')),
-            KeyValue::make('Demographic'),
+            // KeyValue::make('Demographic'),
+            Select::make('Gender')
+                ->options([
+                    'Male' => 'Male',
+                    'Female' => 'Female',
+                ]),
+            Number::make('Age'),
         ];
     }
 

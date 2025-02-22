@@ -1,15 +1,20 @@
 <?php
 
 use Carbon\Carbon;
+use App\Models\Loan;
+use App\Models\Group;
 use App\Models\CronJob;
 use App\Models\Endpoint;
+use App\Models\UserLoan;
+use App\Models\SmsCredit;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PaymentSchedule;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ApiAuthenticationController;
-use App\Models\SmsCredit;
 use Illuminate\Database\Eloquent\Collection;
+use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\Capital;
+use Laravel\Nova\Actions\Action;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,4 +100,62 @@ Route::any('/v1/{params}', function (Request $request, $params) {
         'params' => $endpoint,
         'method' => Str::lower($request->getMethod()),
     ];
+});
+
+Route::post('/loan', function (Request $request) {
+    $data = json_decode($request->data);
+    $data->type = strtoupper($data->type);
+    $data->reference = "L" . Str::random(8);
+    $days = 2;
+
+    if ($data->payment_schedule == "WEEKLY") {
+        $days = 7;
+    }
+
+
+    if ($data->payment_schedule == "MONTHLY") {
+        $days = 30;
+    }
+
+    $data->start_date = now()->addDays($days);
+
+    $data->end_date = now()->addDays($days * $data->number_of_installment);
+
+    $collateral = $request->collateral->store('public');
+    $cr = explode('/', $collateral);
+    $data->collateral_image = end($cr);
+    $agreement = $request->agreement->store('public');
+    $ar = explode('/', $agreement);
+    $data->agreement_image = end($ar);
+    $loan = Loan::create(get_object_vars($data));
+    $capital = Capital::sum('amount') - Loan::whereStatus('PENDING')->sum('amount');
+    if (! ($data->amount >= $capital)) {
+        return response(['error' => 'Your available capital is insufficient to proceed with this operation.'], 401);
+    }
+    if ($data->amount < nova_get_setting('minimum_loan')) {
+        return response(['error' => 'The loan amount does not meet the minimum required threshold.'], 401);
+    }
+
+    if ($data->amount > nova_get_setting('max_loan')) {
+        return response(['error' => 'The loan amount exceeds the maximum permitted threshold.'], 401);
+    }
+
+    if ($data->type == 'INDIVIDUAL') {
+        UserLoan::create([
+            'loan_id' => $loan->id,
+            'user_id' => $data->user_id,
+        ]);
+    } else {
+        $group = Group::find($data->group_id);
+        // dd($group->groupMembers);
+        foreach ($group->groupMembers as $m) {
+
+            UserLoan::create([
+                'loan_id' => $loan->id,
+                'user_id' => $m->id,
+                'group_id' => $group->id,
+            ]);
+        }
+    }
+    return $loan;
 });
