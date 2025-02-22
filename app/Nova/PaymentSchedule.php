@@ -54,7 +54,7 @@ class PaymentSchedule extends Resource
             Currency::make('Amount')->onlyOnForms(),
             BelongsTo::make('Loan', 'loan', Loan::class),
             Currency::make('Principal', function () {
-                return $this->loan->amount / $this->loan->number_of_installment;
+                return round($this->loan->amount / $this->loan->number_of_installment, 2);
             }),
             Currency::make('Interest', function () {
                 $interestRate = intval($this->loan->interest ?? '0') / 100;
