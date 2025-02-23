@@ -8,6 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Textarea;
 
 class Decline extends Action
 {
@@ -23,7 +24,7 @@ class Decline extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            $model->update(['status' => 'rejected']);
+            $model->update(['status' => 'rejected', 'reason' => $fields->reason,]);
         }
     }
 
@@ -34,6 +35,8 @@ class Decline extends Action
      */
     public function fields()
     {
-        return [];
+        return [
+            Textarea::make('Reason'),
+        ];
     }
 }

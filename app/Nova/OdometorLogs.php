@@ -50,7 +50,7 @@ class OdometorLogs extends Resource
             Number::make('Start')->sortable(),
             Number::make('End')->sortable(),
             BelongsTo::make('Vehicle Request Form', 'vrf', VehicleRequestForm::class),
-            BelongsTo::make('Driver', 'driver', User::class),
+            BelongsTo::make('Driver', 'driver', Driver::class),
             BelongsTo::make('Vehicle', 'vehicle', Vehicle::class),
             Text::make('Total Distance', function () {
                 $tot = $this->end - $this->start;

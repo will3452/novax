@@ -55,6 +55,7 @@ class Vehicle extends Resource
             Text::make('Model'),
             Number::make('Capacity')
                 ->rules(['numeric', 'min:2']),
+            BelongsTo::make('Assign Driver', 'driver', Driver::class),
             Text::make('Today Availability', function () {
 
                 $check = \App\Models\VehicleRequestForm::whereVehicleId($this->id)->whereDate('date', now())->whereStatus('approved')->exists();

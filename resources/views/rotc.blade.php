@@ -17,7 +17,10 @@
         <div>
             <label for="">Vehicle *</label>
             <select class="w-full" name="vehicle_id" id="v_id" required id="">
-                @foreach (\App\Models\Vehicle::where('is_available', '=', true)->get() as $item)
+                @php
+                   $exclude =  \App\Models\VehicleRequestForm::whereStatus('approved')->get()->pluck('id')->toArray();
+                @endphp
+                @foreach (\App\Models\Vehicle::where('is_available', '=', true)->whereNotIn('id', $exclude)->get() as $item)
                 <option value="{{$item->id}}">
                     {{$item->model}}
                 </option>

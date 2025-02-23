@@ -18,6 +18,7 @@ class Driver extends Model
         'employee_no',
         'driver_lic_b',
         'driver_lic_c',
+        'lic_exp',
         'med_cert',
         'user_id',
         'campus',

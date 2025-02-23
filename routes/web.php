@@ -116,6 +116,9 @@ Route::get('/form-request/{user}', function (Request $request, App\Models\User $
    if ($request->has('date')) {
     $record = VehicleRequestForm::whereUserId($user->id)->whereDate('date', $request->date)->orderBy('date', 'desc')->get();
    }
+   if ($request->has('status')) {
+    $record = VehicleRequestForm::whereUserId($user->id)->whereStatus($request->status)->get();
+   }
    return view('form-request', compact('user', 'vehicles', 'record'));
 });
 

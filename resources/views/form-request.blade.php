@@ -20,7 +20,12 @@
             </h1>
         </div>
         <form action="/form-request/{{$user->id}}" class="flex grid grid-cols-5 gap-2">
-            <input name="date" value="{{request()->date}}" type="date" class="col-span-3 border p-2 rounded-full" placeholder="Search By Date">
+            {{-- <input name="date" value="{{request()->date}}" type="date" class="col-span-3 border p-2 rounded-full" placeholder="Search By Date"> --}}
+            <select name="status" id="" class="col-span-3 border p-2 rounded-full">
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+            </select>
             <button class="bg-blue-900 flex items-center justify-center rounded-full text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />

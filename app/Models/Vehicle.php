@@ -14,10 +14,10 @@ class Vehicle extends Model
         'model',
         'capacity',
         'is_available',
-        // 'driver_id',
+        'driver_id',
     ];
-/** public function driver () {
+    public function driver () {
         return $this->belongsTo(Driver::class, 'driver_id');
-    }*/
+    }
 
 }

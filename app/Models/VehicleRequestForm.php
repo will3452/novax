@@ -16,6 +16,7 @@ class VehicleRequestForm extends Model
         'date',
         'time',
         'remarks',
+        'reason',
         'request_travel',
         'travel_order',
         'status',
