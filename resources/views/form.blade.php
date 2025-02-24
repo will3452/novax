@@ -265,7 +265,7 @@
                     const p3 = await getSignature(`/storage/{{ $oral_defense->group->panellists()->whereType('Member')->first()->faculty->signature }}`)
                     const ep3 = await pdfDoc.embedPng(p3);
                     form.getTextField('Text38').setImage(ep3)
-                } catch() {
+                } catch(error) {
                     form.getTextField('Text38').setText('')
                 }
               @else
@@ -694,7 +694,7 @@
               form.getTextField('COURSE COORDINATOR').setText('{{\App\Models\User::find(nova_get_setting("coordinator_id", 1))->name}}')
               form.getTextField('COURSE COORDINATOR_2').setText('{{\App\Models\User::find(nova_get_setting("coordinator_id", 1))->name}}')
               form.getTextField('PROGRAM CHAIR').setText('{{\App\Models\User::find(nova_get_setting("programchair_id", 1))->name}}')
-            //    form.getTextField('Text64').setText('{{\App\Models\User::whereType("Dean")?->first()?->name}}')
+            //    form.getTextField('Text64').setText('{{\App\Models\User::whereType("Dean  ")?->first()?->name}}')
 
               // // CHECKBOX
 
