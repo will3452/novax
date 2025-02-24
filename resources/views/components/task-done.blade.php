@@ -1,4 +1,12 @@
-@forelse  (\App\Models\Task::where('status', '!=', 'PENDING')->whereUserId(auth()->id())->latest()->get() as $item)
+@php
+    $records = [];
+    if (request()->filter == 'all' || ! request()->filter) {
+        $records = \App\Models\Task::where('status', '!=', 'PENDING')->whereUserId(auth()->id())->latest()->get();
+    } else {
+        $records = \App\Models\Task::where('status', '!=', 'PENDING')->whereTaskType(request()->filter)->whereUserId(auth()->id())->latest()->get();
+    }
+@endphp
+@forelse  ($records as $item)
                     <div class="card mt-2">
                         <div class="card-header d-flex justify-content-between">
                             <div>

@@ -106,6 +106,7 @@
                 @if (request()->tab == 'revision')
                     <x-title-revisions :title="$title"></x-title-revisions>
                 @endif
+                <x-bulletin :title="$title"></x-bulletin>
                </div>
             </div>
         </div>

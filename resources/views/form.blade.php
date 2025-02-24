@@ -237,10 +237,10 @@
                     const ep1 = await pdfDoc.embedPng(p1);
                     form.getTextField('Text36').setImage(ep1)
                 } catch (error) {
-
+                    form.getTextField('Text36').setText('')
+                    console.log('error ', error)
                 }
               @else
-
               form.getTextField('Text36').setText('')
               @endif
               form.getTextField('Text39').setText('')
@@ -252,7 +252,7 @@
                     const ep2 = await pdfDoc.embedPng(p2);
                     form.getTextField('Text37').setImage(ep2)
                 } catch (error) {
-
+                    form.getTextField('Text37').setText('')
                 }
               @else
               form.getTextField('Text37').setText('')
@@ -266,15 +266,15 @@
                     const ep3 = await pdfDoc.embedPng(p3);
                     form.getTextField('Text38').setImage(ep3)
                 } catch() {
-
+                    form.getTextField('Text38').setText('')
                 }
               @else
               form.getTextField('Text38').setText('')
               @endif
               form.getTextField('Text41').setText('')
 
-              form.getTextField('Text42').setText('{{\App\Models\User::find(nova_get_setting("coordinator_id", 1))->name}}')
-              form.getTextField('Text43').setText('{{\App\Models\User::find(nova_get_setting("programchair_id", 1))->name}}')
+              form.getTextField('Text42').setText('{{\App\Models\User::find(nova_get_setting("coordinator_id", 1))?->name}}')
+              form.getTextField('Text43').setText('{{\App\Models\User::find(nova_get_setting("programchair_id", 1))?->name}}')
 
               // CHECKBOX
 
@@ -411,6 +411,8 @@
                 form.getTextField('Signature48_es_:signer:signature').setImage(ep1)
                 } catch (err) {
                     alert('some signature is empty.')
+                    form.getTextField('Signature58_es_:signer:signature').setText('')
+                    form.getTextField('Signature48_es_:signer:signature').setText('')
                 }
               @else
 

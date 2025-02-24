@@ -92,12 +92,14 @@
                                                 </a>
                                             @endif
                                             @student
-                                            <form action="{{route('titles.apply', $item->id)}}" method="POST">
-                                                @csrf
-                                                <button
-                                                {{\App\Models\TitleApplication::whereStudentId(auth()->id())->whereTitleId($item->id)->exists() ? 'disabled' : ''}} class="btn btn-success btn-sm d-flex  gap-1" type="submit">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.512 17.023L10 14l-7-3.5a.55.55 0 0 1 0-1L21 3l-4.45 12.324M15 19l2 2l4-4"/></svg>Apply</button>
-                                            </form>
+                                            @if (! \App\Models\TitleApplication::whereStudentId(auth()->id())->whereTitleId($item->id)->whereStatus('APPROVED')->exists() )
+                                                <form action="{{route('titles.apply', $item->id)}}" method="POST">
+                                                    @csrf
+                                                    <button
+                                                    {{\App\Models\TitleApplication::whereStudentId(auth()->id())->whereTitleId($item->id)->exists() ? 'disabled' : ''}} class="btn btn-success btn-sm d-flex  gap-1" type="submit">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.512 17.023L10 14l-7-3.5a.55.55 0 0 1 0-1L21 3l-4.45 12.324M15 19l2 2l4-4"/></svg>Apply</button>
+                                                </form>
+                                            @endif
                                             @endstudent
                                         </td>
                                     </tr>

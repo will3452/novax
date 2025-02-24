@@ -47,7 +47,7 @@
             @endif
             <div class="form-group">
                 <label for="" class="form-label">Signature</label>
-                <input type="file" class="form-control"  name="signature" required>
+                <input type="file" accept="image/*" class="form-control"  name="signature" required>
             </div>
             <button class="btn btn-primary">Update Account</button>
         </form>

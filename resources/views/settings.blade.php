@@ -16,6 +16,18 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="" class="form-label">
+                    Program Chair
+                </label>
+                <select class="form-select" name="programchair_id" id="s2">
+                    @foreach (\App\Models\User::whereType('Faculty')->get() as $item)
+                        <option value="{{$item->id}}" {{nova_get_setting('programchair_id') == $item->id ? 'selected': ''}}>
+                            {{$item->name}}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="" class="form-label" >
                     School Year
                 </label>
@@ -41,6 +53,7 @@
 
     <script>
         $('#s').select2()
+        $('#s2').select2()
         $('#sy').select2()
         $('#t').select2()
     </script>

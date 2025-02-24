@@ -1,6 +1,18 @@
 <x-auth>
     <div class="container">
-        <h1>My Tasks</h1>
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>My Tasks</h1>
+            <form class="d-flex gap-2">
+                <select name="filter" id="" class="form-select">
+                    <option value="all" {{ request()->filter == 'All' ? 'selected' : ''}}>All</option>
+                    <option value="App\Models\Title" {{ request()->filter == 'App\Models\Title' ? 'selected' : ''}}>Title Approval</option>
+                    <option value="App\Models\TitleApplication" {{ request()->filter == 'App\Models\TitleApplication' ? 'selected' : ''}}>Title Application Approval</option>
+                    <option value="App\Models\Group" {{ request()->filter == 'App\Models\Group' ? 'selected' : ''}}>Group Approval</option>
+                    <option value="App\Models\Progress" {{ request()->filter == 'App\Models\Progress' ? 'selected' : ''}}>Progress Approval</option>
+                </select>
+                <button class="btn btn-sm btn-warning">Filter</button>
+            </form>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <h3>

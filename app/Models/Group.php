@@ -41,6 +41,10 @@ class Group extends Model
         return $this->hasMany(GroupMember::class, 'group_id');
     }
 
+    public function comments () {
+        return $this->hasMany(Comment::class, 'group_id');
+    }
+
     public function panellists () {
         return $this->hasMany(Panellist::class, 'group_id');
     }

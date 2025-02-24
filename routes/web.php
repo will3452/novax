@@ -17,6 +17,7 @@ use App\Http\Controllers\RevisionController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TitleController;
+use App\Models\Comment;
 use App\Models\Setting;
 use Illuminate\Support\Facades\DB;
 
@@ -90,14 +91,29 @@ Route::get('/settings', function () {
     return view('settings');
 })->name('settings');
 
+Route::post('/comment', function (Request $request) {
+    $data = $request->validate([
+        'group_id' => ['required'],
+        'value' => ['required'],
+    ]);
+
+    $data['user_id'] = auth()->id();
+    $data['reply_to_id'] = 1;
+
+    Comment::create($data);
+
+    return back()->withSuccess('Comment has been posted.');
+});
+
 Route::post('/settings', function(Request $request) {
     $data = $request->validate([
         'coordinator_id' => ['required'],
         'term' => ['required'],
         'school_year' => ['required'],
+        'programchair_id' => ['required'],
     ]);
 
-    $settings = ['coordinator_id', 'term', 'school_year'];
+    $settings = ['coordinator_id', 'term', 'school_year', 'programchair_id'];
     foreach ($settings as $value) {
         $s = DB::table('nova_settings')->where('key', $value)->first();
         if ($s) {
