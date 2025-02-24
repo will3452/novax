@@ -31,6 +31,7 @@ class User extends Authenticatable
         'research_spec',
         'schedule_type',
         'is_coordinator',
+        'skills',
     ];
 
     const TYPE_ADMINISTRATOR = 'Administrator';
@@ -86,5 +87,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'skills' => 'json',
     ];
 }

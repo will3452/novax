@@ -19,6 +19,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TitleController;
 use App\Models\Comment;
 use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 Route::middleware(['auth'])->prefix('sections')->name('sections.')->group(function () {
@@ -136,8 +137,13 @@ Route::get('/app/login', function () {
     return redirect()->to('/');
 });
 
+Route::get('/user/{user}', function (Request $request, User $user) {
+    return view('show-account', compact('user'));
+});
+
 Route::post('/user-edit', function (Request $request) {
     $data = request()->all();
+    // dd($request->all());
      $opath = $request->signature->store('public');
      $arr = explode('/', $opath);
      $data['signature'] = end($arr);

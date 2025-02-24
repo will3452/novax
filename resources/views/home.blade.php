@@ -22,64 +22,8 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table class="table table-sm table-bordered table-striped">
-                            <tr>
-                                <th>ID No.  </th>
-                                <td>{{auth()->user()->number}}</td>
-                            </tr>
-                            <tr>
-                                <th>Name  </th>
-                                <td>{{auth()->user()->name}}</td>
-                            </tr>
-                            @student
-                            <tr>
-                                <th>
-                                    Program of study
-                                </th>
-                                <td>{{auth()->user()->course}}</td>
-                            </tr>
-                            @endstudent
-                            @if (auth()->user()->isFaculty())
-                            <tr>
-                                <th>
-                                    Cluster
-                                </th>
-                                <td>
-                                    {{auth()->user()->cluster ?? '---'}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Relevant Degree
-                                </th>
-                                <td>
-                                    {{auth()->user()->relevant_deg ?? '---'}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Research Specialization
-                                </th>
-                                <td>
-                                    {{auth()->user()->research_spec ?? '---'}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Schedule Type
-                                </th>
-                                <td>
-                                    {{auth()->user()->schedule_type ?? '---'}}
-                                </td>
-                            </tr>
-                            @endif
-                            <tr>
-                                <th>Signature</th>
-                                <td>
-                                    <img src="/storage/{{auth()->user()->signature  }}" alt=""  style="width:60px;" //>
-                                </td>
-                            </tr>
-                        </table>
+                        <x-account :user="auth()->user()">
+                        </x-account>
                     </div>
                 </div>
             </div>

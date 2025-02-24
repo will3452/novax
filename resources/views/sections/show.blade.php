@@ -73,7 +73,7 @@
                                             {{$item->description}}
                                         </td>
                                         <td>
-                                            {{$item->faculty->name}}
+                                            <a href="/user/{{$item->faculty->id}}">{{$item->faculty->name}} </a>
                                         </td>
                                         <td>
                                             {{$item->area_of_research}}
@@ -92,7 +92,7 @@
                                                 </a>
                                             @endif
                                             @student
-                                            @if (! \App\Models\TitleApplication::whereStudentId(auth()->id())->whereTitleId($item->id)->whereStatus('APPROVED')->exists() )
+                                            @if (! \App\Models\TitleApplication::whereStudentId(auth()->id())->whereTitleId($item->id)->whereStatus('APPROVED')->exists())
                                                 <form action="{{route('titles.apply', $item->id)}}" method="POST">
                                                     @csrf
                                                     <button

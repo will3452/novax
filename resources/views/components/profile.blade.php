@@ -18,6 +18,7 @@
                 </label>
                 <input type="text" name="course" class="form-control" value="{{auth()->user()->course}}" />
             </div>
+
             @endstudent
             @if (auth()->user()->isFaculty())
                 <div class="form-group">
@@ -49,7 +50,23 @@
                 <label for="" class="form-label">Signature</label>
                 <input type="file" accept="image/*" class="form-control"  name="signature" required>
             </div>
+            @student
+            <div class="form-group">
+                <label for="" class="form-label">Skills</label>
+                <select class="form-control"  name="skills[]" id="s" multiple="multiple">
+                    <option >Web</option>
+                    <option >Game</option>
+                    <option >Blockchain</option>
+                    <option >Machine Learning</option>
+                </select>
+            </div>
+            @endstudent
             <button class="btn btn-primary">Update Account</button>
         </form>
     </div>
 </div>
+<script>
+    $('#s').select2({
+        tags: true,
+    })
+</script>

@@ -22,6 +22,9 @@
                             </div>
                             <div class="card-footer">
                                 <div class="d-flex gap-2">
+                                    @if ($item->task_type == "App\Models\TitleApplication")
+                                        <a href="/user/{{$item->task->student_id}}" class="btn btn-primary">View Student Profile</a>
+                                    @endif
                                     @if ($item->task_type == "App\Models\Title")
                                         <a href="{{route('titles.show', $item->task_id)}}" class="btn btn-primary">View Title</a>
                                     @endif
