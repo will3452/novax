@@ -50,6 +50,7 @@ class Capital extends Resource
                 ->exceptOnForms(),
             Currency::make('Amount')->rules(['required']),
             Textarea::make('Remarks')
+                ->rules(['required'])
                 ->alwaysShow(),
         ];
     }

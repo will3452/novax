@@ -31,23 +31,21 @@ class LoanObserver
      */
     public function created(Loan $loan)
     {
-        $days = 1;
+        $schedule = $loan->payment_schedule;
 
-        if ($loan->payment_schedule == "WEEKLY") {
-            $days = 7;
-        }
-
-
-        if ($loan->payment_schedule == "MONTHLY") {
-            $days = 30;
-        }
 
         $times = $loan->number_of_installment;
 
-        $dues = $this->generateDueDates($loan->start_date, $loan->end_date, $times);
-        $interest = ((intval($loan->interest??'0') / 100 ) * $loan->amount * count($dues));
-        $finalAmount = ($loan->amount + $interest) / count($dues);
-        foreach($dues as $due) {
+        $interest = ((intval($loan->interest??'0') / 100 ) * $loan->amount * $times);
+        $finalAmount = ($loan->amount + $interest) / $times;
+        for ($i = 0; $i <= $times; $i++) {
+            $due = now()->addDay($i);
+            if ($schedule == "WEEKLY") {
+                $due = now()->addWeek($i);
+            } else if ($schedule == "MONTHLY") {
+                $due = now()->addMonth($i);
+            }
+
             PaymentSchedule::create([
             'loan_id' => $loan->id,
                 'amount' => $finalAmount,

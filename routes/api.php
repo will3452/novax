@@ -106,30 +106,12 @@ Route::post('/loan', function (Request $request) {
     $data = json_decode($request->data);
     $data->type = strtoupper($data->type);
     $data->reference = "L" . Str::random(8);
-    $days = 2;
-
-    if ($data->payment_schedule == "WEEKLY") {
-        $days = 7;
-    }
 
 
-    if ($data->payment_schedule == "MONTHLY") {
-        $days = 30;
-    }
-
-    $data->start_date = now()->addDays($days);
-
-    $data->end_date = now()->addDays($days * $data->number_of_installment);
-
-    $collateral = $request->collateral->store('public');
-    $cr = explode('/', $collateral);
-    $data->collateral_image = end($cr);
-    $agreement = $request->agreement->store('public');
-    $ar = explode('/', $agreement);
-    $data->agreement_image = end($ar);
-    $loan = Loan::create(get_object_vars($data));
     $capital = Capital::sum('amount') - Loan::whereStatus('PENDING')->sum('amount');
-    if (! ($data->amount >= $capital)) {
+
+    // validation
+    if (($data->amount >= $capital)) {
         return response(['error' => 'Your available capital is insufficient to proceed with this operation.'], 401);
     }
     if ($data->amount < nova_get_setting('minimum_loan')) {
@@ -139,6 +121,31 @@ Route::post('/loan', function (Request $request) {
     if ($data->amount > nova_get_setting('max_loan')) {
         return response(['error' => 'The loan amount exceeds the maximum permitted threshold.'], 401);
     }
+
+    $data->start_date = now()->addDay(1);
+
+    $data->end_date = now()->addDay($data->number_of_installment);
+
+    if ($data->payment_schedule == "WEEKLY") {
+        $data->start_date = now()->addWeek(1);
+        $data->end_date = now()->addWeek($data->number_of_installment);
+    }
+
+
+    if ($data->payment_schedule == "MONTHLY") {
+        $data->start_date = now()->addMonth(1);
+        $data->end_date = now()->addMonth($data->number_of_installment);
+    }
+
+
+    $collateral = $request->collateral->store('public');
+    $cr = explode('/', $collateral);
+    $data->collateral_image = end($cr);
+    $agreement = $request->agreement->store('public');
+    $ar = explode('/', $agreement);
+    $data->agreement_image = end($ar);
+    $loan = Loan::create(get_object_vars($data));
+
 
     if ($data->type == 'INDIVIDUAL') {
         UserLoan::create([
