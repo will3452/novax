@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
-use App\Models\Interest;
+use App\Models\Loan;
 use Laravel\Nova\Nova;
+use App\Models\Payment;
+use App\Models\Interest;
+use App\Models\Penalty;
 use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -25,7 +28,10 @@ use App\Nova\Metrics\AmountDisbursed;
 use App\Nova\Metrics\PaymentReceived;
 use App\Nova\Metrics\LoanDistribution;
 use App\Nova\Metrics\RemainingCapital;
+use Coroowicaksono\ChartJsIntegration\AreaChart;
+use Coroowicaksono\ChartJsIntegration\BarChart;
 use OptimistDigital\NovaSettings\NovaSettings;
+use Coroowicaksono\ChartJsIntegration\LineChart;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -94,17 +100,45 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
-            (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
-                'Africa/Nairobi',
-                'America/Mexico_City',
-                'Australia/Sydney',
-                'Europe/Paris',
-                'Asia/Manila',
-                'Asia/Tokyo',
-            ])->defaultTimezone('Africa/Manila')
-            ->canSee(function () {
-                return config('novax.time_enabled');
-            }),
+            (new LineChart())
+                ->title('Loan')
+                ->animations([
+                    'enabled' => true,
+                    'easing' => 'easeinout',
+                ])
+                ->model(Loan::class)
+                ->series([
+                    [
+                        'label' => 'Group',
+                        'filter' => [
+                            'key' => 'type',
+                            'value' => 'GROUP'
+                        ],
+                    ],
+                    [
+                        'label' => 'Individual',
+                        'filter' => [
+                            'key' => 'type',
+                            'value' => 'INDIVIDUAL'
+                        ],
+                    ],
+                ])->width('1/2'),
+            (new BarChart())
+                ->title('Penalties')
+                ->animations([
+                    'enabled' => true,
+                    'easing' => 'easeinout',
+                ])
+                ->model(Penalty::class)
+                ->width('1/2'),
+            (new AreaChart())
+                ->title('Payment Received')
+                ->animations([
+                    'enabled' => true,
+                    'easing' => 'easeinout',
+                ])
+                ->model(Payment::class)
+                ->width('1/3'),
             CapitalAmount::make(),
             AmountDisbursed::make(),
             RemainingCapital::make(),
@@ -114,7 +148,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             // PaymentTrend::make(),
             LoanTrend::make(),
             LoanDistribution::make(),
-            SmsCredit::make(),
+            // SmsCredit::make(),
         ];
     }
 
