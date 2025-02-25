@@ -8,6 +8,7 @@ use App\Nova\Filters\FilterByDate;
 use App\Nova\Metrics\DueToday;
 use App\Nova\Lenses\DueToday as DueTodayLens;
 use App\Nova\Metrics\DueTodayStatus;
+use Exception;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
@@ -54,13 +55,21 @@ class PaymentSchedule extends Resource
             Currency::make('Amount')->onlyOnForms(),
             BelongsTo::make('Loan', 'loan', Loan::class),
             Currency::make('Principal', function () {
-                return round($this->loan->amount / $this->loan->number_of_installment, 2);
+                try {
+                    return round($this->loan->amount / $this->loan->number_of_installment, 2);
+                } catch (Exception $e) {
+                    return 0;
+                }
             }),
             Currency::make('Interest', function () {
-                $interestRate = intval($this->loan->interest ?? '0') / 100;
-                $principal = $this->loan->amount / $this->loan->number_of_installment;
-                $interest = $interestRate * $principal * $this->loan->number_of_installment;
-                return round($interest, 2);
+                try {
+                    $interestRate = intval($this->loan->interest ?? '0') / 100;
+                    $principal = $this->loan->amount / $this->loan->number_of_installment;
+                    $interest = $interestRate * $principal * $this->loan->number_of_installment;
+                    return round($interest, 2);
+                } catch (Exception $e) {
+                    return 0;
+                }
             }),
             Currency::make('Total Amount', function () {
                 return round(floatval($this->amount), 2);
