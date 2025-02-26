@@ -2,39 +2,54 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\ConfirmTransaction;
-use App\Nova\Actions\GenerateInvoice;
-use Illuminate\Support\Str;
-use Laravel\Nova\Fields\ID;
+use App\Nova\Actions\PrintInvoice;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Badge;
-use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\Hidden;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Stack;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Sale extends Resource
+class Invoice extends Resource
 {
-
     public static $group = '3. transaction';
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+    public function authorizedToUpdate(Request $request)
+    {
+        if ($request->has('action')) return true;
+        return false;
+    }
+
+    public function authorizedToDelete(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToView(Request $request)
+    {
+        return false;
+    }
+
+    public static function label () {
+        return "Sales Invoice";
+    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Sale::class;
+    public static $model = \App\Models\Invoice::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public function title () {
-        return "S" . Str::padLeft($this->id, 6, '0');
-    }
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -54,24 +69,20 @@ class Sale extends Resource
     public function fields(Request $request)
     {
         return [
-            Badge::make('Status')
-                ->map([
-                    'PENDING' => 'info',
-                    // 'REJECTED' => 'warning',
-                    'CONFIRMED' => 'success',
-                ]),
-            BelongsTo::make('Branch'),
-            Hidden::make('cashier_id')
-                ->default(fn () => auth()->id()),
-            Date::make('Date')
-                ->rules(['required']),
-            Currency::make('Total Amount')
-                ->exceptOnForms(),
-            BelongsTo::make('Customer')
-                ->showCreateRelationButton(),
-            Select::make('Payment Method')
-                ->options(\App\Models\PaymentMethod::get()->pluck('name', 'name')),
-            HasMany::make('Items', 'items', SaleItem::class),
+            ID::make(__('ID'), 'id')->sortable(),
+            Stack::make('Branch', 'branch_name', [
+                // Avatar::make('Logo', fn () => $this->branch->image),
+                Text::make('Branch Name'),
+                Text::make('Branch Address')
+            ])->sortable(),
+            Stack::make('Customer', 'customer_name', [
+                Text::make('Customer Name'),
+                Text::make('Customer TIN', 'customer_tin'),
+                Text::make('Address', 'customer_address'),
+            ])->sortable(),
+            Currency::make('Total Sales')->sortable(),
+            Currency::make('Total Amount Due')->sortable(),
+            Text::make('Cashier')->sortable(),
         ];
     }
 
@@ -117,8 +128,7 @@ class Sale extends Resource
     public function actions(Request $request)
     {
         return [
-            ConfirmTransaction::make()->showOnTableRow(),
-            GenerateInvoice::make()->showOnTableRow(),
+            PrintInvoice::make()->showOnTableRow()->withoutConfirmation(),
         ];
     }
 }

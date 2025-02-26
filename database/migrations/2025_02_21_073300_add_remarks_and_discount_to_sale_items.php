@@ -14,8 +14,8 @@ class AddRemarksAndDiscountToSaleItems extends Migration
     public function up()
     {
         Schema::table('sale_items', function (Blueprint $table) {
-            $table->text('remarks');
-            $table->string('discount');
+            $table->text('remarks')->nullable();
+            $table->string('discount')->nullable();
         });
     }
 

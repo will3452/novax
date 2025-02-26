@@ -1,10 +1,12 @@
 <?php
+
+use App\Http\Controllers\PrintController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 
 
 Route::get('/', function () {
-    return redirect()->to(config('nova.path')); 
+    return redirect()->to(config('nova.path'));
 });
 
 
@@ -12,4 +14,8 @@ Route::get('/', function () {
 Route::get('/artisan', function () {
     $result = Artisan::call(request()->param);
     return $result;
+});
+
+Route::middleware(['auth'])->prefix('print')->name('print.')->group(function () {
+    Route::get('/invoice/{invoice}', [PrintController::class, 'invoice'])->name('invoice');
 });
