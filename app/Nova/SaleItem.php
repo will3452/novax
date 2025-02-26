@@ -13,6 +13,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class SaleItem extends Resource
 {
+
     public static function availableForNavigation(Request $request)
     {
         return false;
@@ -53,7 +54,7 @@ class SaleItem extends Resource
             MorphTo::make('Type', 'salable')
                 ->types([
                     Product::class,
-                ]),
+                ])->searchable(),
             Number::make('Quantity', 'qty'),
             Currency::make('Price/Rate', 'price')->sortable(),
             Text::make('Remarks')

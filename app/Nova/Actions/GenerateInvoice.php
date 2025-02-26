@@ -41,6 +41,7 @@ class GenerateInvoice extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
+            if ($model->status != 'CONFIRMED') return Action::danger('Transaction is not yet confirmed!');
             $branch = $model->branch;
             $cashier = $model->cashier;
             $customer = $model->customer;
