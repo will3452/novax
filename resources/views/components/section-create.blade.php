@@ -56,6 +56,10 @@
                     @endforeach
                 </select>
             </div>
+            <div class="form-group">
+                <label for="" class="label">Group Code</label>
+                <input type="text" required name="group_code" class="form-control" />
+            </div>
             <button type="submit" class="btn btn-primary">
                 Submit
             </button>

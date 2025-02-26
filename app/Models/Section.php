@@ -11,16 +11,16 @@ class Section extends Model
 {
     use HasFactory, Commentable, SoftDeletes;
 
-    
+
     const IC_TYPE_CAPSTONE = 'Capstone';
-    const IC_TYPE_THESIS = 'Thesis'; 
+    const IC_TYPE_THESIS = 'Thesis';
     const IC_TYPE_PLANT_DESIGN = 'Plant Design';
-    const IC_TYPE_FEASIBILITY_STUDY = 'Feasibility Study'; 
-    const IC_TYPE_BUSINESS_PLAN = 'Business Plan'; 
+    const IC_TYPE_FEASIBILITY_STUDY = 'Feasibility Study';
+    const IC_TYPE_BUSINESS_PLAN = 'Business Plan';
 
     const PHASE_PROPOSAL = 'Proposal';
     const PHASE_GATHERING = 'Data Gathering';
-    const PHASE_FINAL = 'Final'; 
+    const PHASE_FINAL = 'Final';
 
     protected $fillable = [
         'course_id',
@@ -31,22 +31,23 @@ class Section extends Model
         'thesis_phase',
         'ic_type',
         'creator_id',
-        'pass_code', 
-    ]; 
+        'pass_code',
+        'group_code',
+    ];
 
     public function course () {
         return $this->belongsTo(Course::class, 'course_id');
     }
 
     public function creator () {
-        return $this->belongsTo(User::class, 'creator_id'); 
+        return $this->belongsTo(User::class, 'creator_id');
     }
 
     public function students () {
-        return $this->hasMany(SectionStudent::class, 'section_id'); 
+        return $this->hasMany(SectionStudent::class, 'section_id');
     }
 
     public function titles () {
-        return $this->hasMany(Title::class, 'section_id'); 
+        return $this->hasMany(Title::class, 'section_id');
     }
 }

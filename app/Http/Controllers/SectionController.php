@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Group;
+use App\Models\Panellist;
 use App\Models\User;
 use App\Models\Section;
 use Illuminate\Http\Request;
@@ -14,6 +16,14 @@ class SectionController extends Controller
         $sections = Section::latest()->get();
         if (auth()->user()->isStudent()) {
             $sections = auth()->user()->sections()->latest()->get();
+        } else if (auth()->user()->isFaculty() && ! auth()->user()->isCoordinator()) {
+            $groupIds = Panellist::whereFacultyId(auth()->id())->get()->pluck('group_id')->toArray();
+            $groups = Group::whereIn('id', $groupIds)->get();
+            $sectionIds = [];
+            foreach ($groups as $group) {
+                array_push($sectionIds, $group->title->section_id);
+            }
+            $sections = Section::whereIn('id', $sectionIds)->latest()->get();
         }
         return view('sections.index', compact('sections'));
     }
@@ -28,6 +38,7 @@ class SectionController extends Controller
             'course_id' => ['required'],
             'ic_type' => ['required'],
             'thesis_phase' => ['required'],
+            'group_code' => ['required'],
         ]);
 
         $data['pass_code'] = 'test';

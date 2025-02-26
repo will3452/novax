@@ -26,7 +26,7 @@ class TitleObserver
             'approved_status' => "FOR DEAN APPROVAL",
         ]);
 
-        $courseCode = $title->section->course->code;
+        $courseCode = $title->section->group_code;
         $seq = 1;
         $sections = Section::whereSchoolYear(nova_get_setting('school_year'))->get();
         foreach ($sections as $section) {
