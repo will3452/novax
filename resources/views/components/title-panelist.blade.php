@@ -30,10 +30,10 @@
                             <td>{{$item->status}}</td>
                             <td class="text-center">
                                 @if ($item->type == "Adviser" || $item->status == 'APPROVED')
-                                    <button onclick="javascript:alert('unauthorized action');" disabled class="btn btn-secondary" >
+                                    {{-- <button onclick="javascript:alert('unauthorized action');" disabled class="btn btn-secondary" >
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="m12 13.4l-4.9 4.9q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l4.9-4.9l-4.9-4.9q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.9 4.9l4.9-4.9q.275-.275.7-.275t.7.275t.275.7t-.275.7L13.4 12l4.9 4.9q.275.275.275.7t-.275.7t-.7.275t-.7-.275z"/></svg>
                                         Remove
-                                    </button>
+                                    </button> --}}
                                 @else
                                     <form action="{{route('titles.remove.panelist', $title->id)}}" method="POST">
                                         @csrf

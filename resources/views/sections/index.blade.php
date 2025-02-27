@@ -12,7 +12,6 @@
                                 @else
                                     <a href="?filter=my"  class="btn btn-secondary">My Sections</a>
                                 @endif
-
                             </div>
                         </div>
                     </div>
