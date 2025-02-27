@@ -18,6 +18,7 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TitleController;
 use App\Models\Comment;
+use App\Models\Revision;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -79,6 +80,7 @@ Route::middleware('auth')->prefix('calendars')->name('calendars.')->group(functi
 
 Route::middleware('auth')->prefix('revisions')->name('revisions.')->group(function () {
     Route::post('/', [RevisionController::class, 'store'])->name('store');
+    Route::post('/{revision}', [RevisionController::class, 'destroy'])->name('remove');
 });
 
 

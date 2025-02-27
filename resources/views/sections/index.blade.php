@@ -3,8 +3,18 @@
         <div class="row justify-content-center">
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        Sections
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div>Sections</div>
+                            <div>
+                                @if (request()->filter == 'my')
+                                    <a href="?filter=all" class="btn btn-secondary">All Sections</a>
+                                @else
+                                    <a href="?filter=my"  class="btn btn-secondary">My Sections</a>
+                                @endif
+
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <table id="dt" class="table table-striped table-bordered my-4" >

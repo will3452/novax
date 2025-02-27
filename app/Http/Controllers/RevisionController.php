@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class RevisionController extends Controller
 {
+    public function destroy(Request $request, Revision $revision) {
+        $revision->delete();
+        return back()->withSuccess('Revision removed!');
+    }
+
     public function store (Request $request) {
         $data = $request->validate([
             'revision' => ['required'],

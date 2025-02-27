@@ -16,7 +16,7 @@ class SectionController extends Controller
         $sections = Section::latest()->get();
         if (auth()->user()->isStudent()) {
             $sections = auth()->user()->sections()->latest()->get();
-        } else if (auth()->user()->isFaculty() && ! auth()->user()->isCoordinator()) {
+        } else if (auth()->user()->isFaculty() && ! auth()->user()->isCoordinator() && request()->filter == 'my') {
             $groupIds = Panellist::whereFacultyId(auth()->id())->get()->pluck('group_id')->toArray();
             $groups = Group::whereIn('id', $groupIds)->get();
             $sectionIds = [];
