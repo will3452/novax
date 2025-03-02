@@ -1,0 +1,21 @@
+:root {
+    --primary: rgb(255, 102, 0); /* Orange from the top */
+    --primary-dark: rgb(204, 81, 0);
+    --primary-70: rgba(255, 102, 0, 0.7);
+    --primary-50: rgba(255, 102, 0, 0.5);
+    --primary-30: rgba(255, 102, 0, 0.3);
+    --primary-10: rgba(255, 102, 0, 0.1);
+    --secondary: rgb(255, 204, 0); /* Yellow from the middle */
+    --secondary-dark: rgb(204, 163, 0);
+    --black: #222222; /* Dark color for bottom */
+    --logo: #000000; /* Black for text */
+    --sidebar-icon: #ffcc00; /* Yellow from the logo */
+  }
+
+  .bg-grad-sidebar {
+    background-image: linear-gradient(
+      0deg,
+      rgb(0, 0, 0), /* Black from the bottom */
+      rgb(255, 102, 0) /* Orange transition */
+    );
+  }
