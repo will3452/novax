@@ -11,7 +11,7 @@ use Laravel\Nova\Fields\Stack;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Invoice extends Resource
+class Invoice extends BranchResourceFilter
 {
     public static $group = '3. transaction';
     public static function authorizedToCreate(Request $request)

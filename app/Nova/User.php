@@ -11,7 +11,7 @@ use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class User extends AdministratorResourceFilter
 {
     public static $group = '4. Security';
     /**

@@ -12,6 +12,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function branches () {
+        return $this->belongsToMany(Branch::class, 'branch_assignments', 'user_id', 'branch_id');
+    }
+
     /**
      * The attributes that are mass assignable.
      *

@@ -2,19 +2,19 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\ApprovePurchaseOrder;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Badge;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Actions\ApprovePurchaseOrder;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel\Current;
 
-class PurchaseOrder extends Resource
+class PurchaseOrder extends BranchResourceFilter
 {
 
     public static $group = '3. transaction';

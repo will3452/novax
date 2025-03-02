@@ -16,7 +16,7 @@ use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Sale extends Resource
+class Sale extends BranchResourceFilter
 {
 
     public static $group = '3. transaction';

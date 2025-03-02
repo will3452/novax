@@ -4,22 +4,19 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Inventory extends  BranchResourceFilter
+class BranchAssignment extends AdministratorResourceFilter
 {
-
-    public static $group = '2. inventory';
+    public static $group = '1. manage';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Inventory::class;
+    public static $model = \App\Models\BranchAssignment::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -46,12 +43,11 @@ class Inventory extends  BranchResourceFilter
     public function fields(Request $request)
     {
         return [
+            Date::make('Date', 'created_at')
+                ->sortable()
+                ->exceptOnForms(),
+            BelongsTo::make('User', 'user', User::class),
             BelongsTo::make('Branch', 'branch', Branch::class),
-            BelongsTo::make('Size', 'product', Product::class),
-            Currency::make('Sales Price', fn () => $this->product ? $this->product->price : 0),
-            Currency::make('Cost', fn () => $this->product ? $this->product->cost: 0),
-            Number::make('Quantity On Hand', 'qty')->sortable(),
-            Number::make('Reorder Point'),
         ];
     }
 

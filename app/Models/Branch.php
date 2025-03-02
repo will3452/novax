@@ -15,4 +15,8 @@ class Branch extends Model
         'address',
         'phone',
     ];
+
+    public function users () {
+        return $this->belongsToMany(User::class, 'branch_assignments', 'branch_id', 'user_id');
+    }
 }
