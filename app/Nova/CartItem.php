@@ -2,26 +2,31 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\AddToCart;
-use App\Nova\Filters\ProductFilter;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Inventory extends  BranchResourceFilter
+class CartItem extends BranchResourceFilter
 {
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
 
-    public static $group = '2. inventory';
+    public static function availableForNavigation(Request $request)
+    {
+        // return true;
+        return false;
+    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Inventory::class;
+    public static $model = \App\Models\CartItem::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -49,11 +54,9 @@ class Inventory extends  BranchResourceFilter
     {
         return [
             BelongsTo::make('Branch', 'branch', Branch::class),
-            BelongsTo::make('Size', 'product', Product::class),
-            Currency::make('Sales Price', fn () => $this->product ? $this->product->price : 0),
-            Currency::make('Cost', fn () => $this->product ? $this->product->cost: 0),
-            Number::make('Quantity On Hand', 'qty')->sortable(),
-            Number::make('Reorder Point'),
+            BelongsTo::make('Product', 'product', Product::class),
+            Number::make('Quantity', 'qty'),
+            Currency::make('Sub Total', fn () => $this->product->price * $this->qty),
         ];
     }
 
@@ -76,9 +79,7 @@ class Inventory extends  BranchResourceFilter
      */
     public function filters(Request $request)
     {
-        return [
-            ProductFilter::make(),
-        ];
+        return [];
     }
 
     /**
@@ -100,8 +101,6 @@ class Inventory extends  BranchResourceFilter
      */
     public function actions(Request $request)
     {
-        return [
-            AddToCart::make()->showOnTableRow(),
-        ];
+        return [];
     }
 }

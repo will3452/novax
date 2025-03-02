@@ -12,6 +12,7 @@ use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
 use App\Nova\Metrics\OutOfStocksPerBranch;
+use App\Nova\Metrics\Suppliers;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -81,6 +82,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return config('novax.time_enabled');
             }),
             OutOfStocksPerBranch::make(),
+            Suppliers::make(),
         ];
     }
 
