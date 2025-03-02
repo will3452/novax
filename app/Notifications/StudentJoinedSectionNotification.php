@@ -62,7 +62,7 @@ class StudentJoinedSectionNotification extends Notification
         $sectionId = $this->section->id;
         $sectionName = $this->section->section;
         return [
-            'message' => "We’re pleased to inform you that you have been successfully added to the $courseName – Section $sectionName by your course coordinator." ,
+            'message' => "We’re pleased to inform you that you have been successfully joined to the $courseName – Section $sectionName by your course coordinator." ,
             'actions' => [
                 [
                     "label" => "View Sections",

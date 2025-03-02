@@ -118,7 +118,7 @@ class TaskController extends Controller
             if ($task->approved_status == "FOR DEAN APPROVAL") {
                 $task->task->task()->create([
                     'user_id' => User::whereType('Dean')->first()->id ?? 1,
-                    'description' => "[Dean] New Title \"$title->title\" has been created.",
+                    'description' => "The group \"$title->title\" requests for approval.",
                     'approved_status' => "APPROVED",
                 ]);
             }

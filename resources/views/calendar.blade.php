@@ -21,7 +21,7 @@
                             <thead>
                                 <tr>
                                     <th>Description</th>
-                                    <th>Date</th>
+                                    <th>Presentation Date</th>
                                 </tr>
                             </thead>
                             <tbody>

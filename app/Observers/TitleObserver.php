@@ -22,7 +22,7 @@ class TitleObserver
     {
         $title->task()->create([
             'user_id' => nova_get_setting('coordinator_id', 1),
-            'description' => "[Coordinator] New Title \"$title->title\" has been created.",
+            'description' => "The group \"$title->title\" requests for approval.",
             'approved_status' => "FOR DEAN APPROVAL",
         ]);
 

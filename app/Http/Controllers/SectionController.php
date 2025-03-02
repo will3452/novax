@@ -81,7 +81,7 @@ class SectionController extends Controller
 
             User::find($value)->notify(new StudentJoinedSectionNotification($section->course, $section));
         }
-        alert()->success('Success', 'Student has been added');
+        alert()->success('Success', 'Student has joined.');
 
 
         return back();
