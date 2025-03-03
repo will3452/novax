@@ -54,7 +54,7 @@
     <tr>
         <th>Signature</th>
         <td>
-            <img src="/storage/{{$user->signature  }}" alt=""  style="width:60px;" />
+            <img src="/storage/{{$user->signature  }}" alt="" class="img hide"  id="sig"/> <span class="" id="ph">-</span> <button id="toggle" class="btn btn-sm btn-success">Show</button>
         </td>
     </tr>
     @endif
@@ -67,3 +67,15 @@
     </tr>
     @endif
 </table>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script>
+    let toggled = true;
+    $(document).ready(function () {
+        $('#toggle').click(function() {
+            $('#sig').toggleClass('hide');
+            $('#ph').toggleClass('hide');
+            $(this).text(toggled ? 'HIDE': 'SHOW');
+            toggled = ! toggled;
+        });
+    })
+</script>

@@ -18,6 +18,15 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+        .img {
+            width: 100px !important;
+        }
+        .hide {
+            display: none;
+        }
+    </style>
 </head>
 <body style="background:#ddd">
     <div id="app">

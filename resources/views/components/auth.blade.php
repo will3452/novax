@@ -28,6 +28,9 @@
         .bordered{
             border: 1px solid #ddd;
         }
+        .img {
+            width: 100px !important;
+        }
     </style>
 </head>
 <body style="background:#efefef">
