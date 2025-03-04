@@ -59,6 +59,9 @@
                                         Status
                                     </th>
                                     <th>
+                                        Verdict
+                                    </th>
+                                    <th>
                                         Action
                                     </th>
                                 </tr>
@@ -83,6 +86,9 @@
                                         </td>
                                         <td>
                                             {{$item->status}}
+                                        </td>
+                                        <td>
+                                            {{$item->group->verdict ?? '---'}}
                                         </td>
                                         <td class="d-flex justify-content-center align-items-center gap-2">
                                             @if (\App\Models\TitleApplication::whereStudentId(auth()->id())->whereTitleId($item->id)->whereStatus('APPROVED')->exists() || ! auth()->user()->isStudent())
