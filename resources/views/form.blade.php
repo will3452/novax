@@ -60,7 +60,7 @@
                   const eSig1 = await pdfDoc.embedPng(sig1);
                   form.getTextField('Text25').setImage(eSig1);
               } catch(error) {
-
+                form.getTextField('Text25').setImage('');
               }
 
               @if (array_key_exists(1, $progress->group->groupMembers->toArray()))
