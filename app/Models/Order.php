@@ -5,30 +5,37 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CartItem extends Model
+class Order extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'item_id',
-        'item_type',
-        'qty',
-        'price',
-        'remarks',
-        'discount',
         'branch_id',
+        'date',
         'cashier_id',
+        'total_amount',
+        'customer_id',
+        'payment_method',
+        'status',
+    ];
+
+    protected $casts = [
+        'date' => 'date',
     ];
 
     public function branch () {
         return $this->belongsTo(Branch::class);
     }
 
-    public function item () {
-        return $this->morphTo('item', 'item_type', 'item_id');
-    }
-
     public function cashier () {
         return $this->belongsTo(User::class, 'cashier_id');
+    }
+
+    public function customer () {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function items () {
+        return $this->hasMany(OrderItem::class, 'order_id');
     }
 }

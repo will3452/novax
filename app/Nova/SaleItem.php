@@ -54,6 +54,7 @@ class SaleItem extends Resource
             MorphTo::make('Type', 'salable')
                 ->types([
                     Product::class,
+                    Service::class,
                 ])->searchable(),
             Number::make('Quantity', 'qty'),
             Currency::make('Price/Rate', 'price')->sortable(),

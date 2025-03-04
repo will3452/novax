@@ -2,33 +2,42 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\AddToCart;
-use App\Nova\Filters\ProductFilter;
+use App\Nova\Actions\ConfirmTransaction;
+use App\Nova\Actions\GenerateInvoice;
+use Illuminate\Support\Str;
+use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
-use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Hidden;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Inventory extends  BranchResourceFilter
+class PendingSale extends BranchResourceFilter
 {
 
-    public static $group = '2. Catalog';
+    public static $group = '3. transaction';
+    public static function label () {
+        return "Orders";
+    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Inventory::class;
+    public static $model = \App\Models\Sale::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public function title () {
+        return "S" . Str::padLeft($this->id, 6, '0');
+    }
 
     /**
      * The columns that should be searched.
@@ -48,12 +57,25 @@ class Inventory extends  BranchResourceFilter
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('Branch', 'branch', Branch::class),
-            BelongsTo::make('Size', 'product', Product::class),
-            Currency::make('Sales Price', fn () => $this->product ? $this->product->price : 0),
-            Currency::make('Cost', fn () => $this->product ? $this->product->cost: 0),
-            Number::make('Quantity On Hand', 'qty')->sortable(),
-            Number::make('Reorder Point'),
+            Badge::make('Status')
+                ->map([
+                    'PENDING' => 'info',
+                    // 'REJECTED' => 'warning',
+                    'CONFIRMED' => 'success',
+                ]),
+            BelongsTo::make('Branch'),
+            Hidden::make('cashier_id')
+                ->default(fn () => auth()->id()),
+            Date::make('Date')
+                ->sortable()
+                ->rules(['required']),
+            Currency::make('Total Amount')
+                ->exceptOnForms(),
+            BelongsTo::make('Customer')
+                ->showCreateRelationButton(),
+            Select::make('Payment Method')
+                ->options(\App\Models\PaymentMethod::get()->pluck('name', 'name')),
+            HasMany::make('Items', 'items', SaleItem::class),
         ];
     }
 
@@ -76,9 +98,7 @@ class Inventory extends  BranchResourceFilter
      */
     public function filters(Request $request)
     {
-        return [
-            ProductFilter::make(),
-        ];
+        return [];
     }
 
     /**
@@ -100,16 +120,9 @@ class Inventory extends  BranchResourceFilter
      */
     public function actions(Request $request)
     {
-        $price = 0;
-        $qty = 0;
-        if ($this->id) {
-            $p = \App\Models\Product::find($this->product_id);
-            $price = $p->price;
-            $qty = $this->qty;
-        }
         return [
-            AddToCart::make(\App\Models\Product::class, $price, $qty)
-                ->showOnTableRow(),
+            ConfirmTransaction::make()->showOnTableRow(),
+            // GenerateInvoice::make()->showOnTableRow(),
         ];
     }
 }

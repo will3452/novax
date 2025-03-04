@@ -2,10 +2,12 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\ProceedToOrder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -20,6 +22,11 @@ class CartItem extends BranchResourceFilter
     {
         // return true;
         return false;
+    }
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        $parentIndex = parent::indexQuery($request, $query);
+        return $parentIndex->whereCashierId(auth()->id());
     }
     /**
      * The model the resource corresponds to.
@@ -54,9 +61,13 @@ class CartItem extends BranchResourceFilter
     {
         return [
             BelongsTo::make('Branch', 'branch', Branch::class),
-            BelongsTo::make('Product', 'product', Product::class),
+            MorphTo::make('Item', 'item')
+                ->types([
+                    Product::class,
+                    Service::class,
+                ])->searchable(),
             Number::make('Quantity', 'qty'),
-            Currency::make('Sub Total', fn () => $this->product->price * $this->qty),
+            Currency::make('Amount/Rate', 'price'),
         ];
     }
 
@@ -101,6 +112,8 @@ class CartItem extends BranchResourceFilter
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            ProceedToOrder::make()->standalone(),
+        ];
     }
 }

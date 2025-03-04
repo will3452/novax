@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCartItemsTable extends Migration
+class CreateServiceOfferingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateCartItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('cart_items', function (Blueprint $table) {
+        Schema::create('service_offerings', function (Blueprint $table) {
             $table->id();
-            $table->integer('item_id');
-            $table->string('item_type');
-            $table->string('price')->nullable();
-            $table->string('discount')->nullable();
-            $table->text('remarks')->nullable();
-            $table->integer('qty')->default(1);
+            $table->integer('service_id');
             $table->integer('branch_id');
             $table->timestamps();
         });
@@ -33,6 +28,6 @@ class CreateCartItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cart_items');
+        Schema::dropIfExists('service_offerings');
     }
 }

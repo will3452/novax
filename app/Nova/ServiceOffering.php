@@ -3,25 +3,22 @@
 namespace App\Nova;
 
 use App\Nova\Actions\AddToCart;
-use App\Nova\Filters\ProductFilter;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Inventory extends  BranchResourceFilter
+class ServiceOffering extends Resource
 {
-
     public static $group = '2. Catalog';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Inventory::class;
+    public static $model = \App\Models\ServiceOffering::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -49,11 +46,9 @@ class Inventory extends  BranchResourceFilter
     {
         return [
             BelongsTo::make('Branch', 'branch', Branch::class),
-            BelongsTo::make('Size', 'product', Product::class),
-            Currency::make('Sales Price', fn () => $this->product ? $this->product->price : 0),
-            Currency::make('Cost', fn () => $this->product ? $this->product->cost: 0),
-            Number::make('Quantity On Hand', 'qty')->sortable(),
-            Number::make('Reorder Point'),
+            BelongsTo::make('Service', 'service', Service::class),
+            Currency::make('Rate', fn () => $this->service->price),
+            Currency::make('Commission', fn () => $this->service->price * ($this->service->commission / 100)),
         ];
     }
 
@@ -76,9 +71,7 @@ class Inventory extends  BranchResourceFilter
      */
     public function filters(Request $request)
     {
-        return [
-            ProductFilter::make(),
-        ];
+        return [];
     }
 
     /**
@@ -101,14 +94,12 @@ class Inventory extends  BranchResourceFilter
     public function actions(Request $request)
     {
         $price = 0;
-        $qty = 0;
         if ($this->id) {
-            $p = \App\Models\Product::find($this->product_id);
+            $p = \App\Models\Service::find($this->service_id);
             $price = $p->price;
-            $qty = $this->qty;
         }
         return [
-            AddToCart::make(\App\Models\Product::class, $price, $qty)
+            AddToCart::make(\App\Models\Service::class, $price, 1)
                 ->showOnTableRow(),
         ];
     }

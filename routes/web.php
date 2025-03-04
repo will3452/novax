@@ -18,4 +18,5 @@ Route::get('/artisan', function () {
 
 Route::middleware(['auth'])->prefix('print')->name('print.')->group(function () {
     Route::get('/invoice/{invoice}', [PrintController::class, 'invoice'])->name('invoice');
+    Route::get('/order-slip/{sale}', [PrintController::class, 'orderSlip'])->name('order-slip');
 });

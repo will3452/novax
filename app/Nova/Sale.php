@@ -20,6 +20,12 @@ class Sale extends BranchResourceFilter
 {
 
     public static $group = '3. transaction';
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        $parentQuery = parent::indexQuery($request, $query);
+        return $parentQuery->whereStatus('CONFIRMED');
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -54,16 +60,11 @@ class Sale extends BranchResourceFilter
     public function fields(Request $request)
     {
         return [
-            Badge::make('Status')
-                ->map([
-                    'PENDING' => 'info',
-                    // 'REJECTED' => 'warning',
-                    'CONFIRMED' => 'success',
-                ]),
             BelongsTo::make('Branch'),
             Hidden::make('cashier_id')
                 ->default(fn () => auth()->id()),
             Date::make('Date')
+                ->sortable()
                 ->rules(['required']),
             Currency::make('Total Amount')
                 ->exceptOnForms(),
@@ -117,7 +118,6 @@ class Sale extends BranchResourceFilter
     public function actions(Request $request)
     {
         return [
-            ConfirmTransaction::make()->showOnTableRow(),
             GenerateInvoice::make()->showOnTableRow(),
         ];
     }

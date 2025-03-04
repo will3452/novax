@@ -3,32 +3,32 @@
 namespace App\Nova;
 
 use App\Nova\Actions\AddToCart;
-use App\Nova\Filters\ProductFilter;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Number;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Inventory extends  BranchResourceFilter
+class Service extends Resource
 {
-
-    public static $group = '2. Catalog';
+    public static $group = '1. manage';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Inventory::class;
+    public static $model = \App\Models\Service::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -37,6 +37,8 @@ class Inventory extends  BranchResourceFilter
      */
     public static $search = [
         'id',
+        'name',
+        'description',
     ];
 
     /**
@@ -48,12 +50,16 @@ class Inventory extends  BranchResourceFilter
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('Branch', 'branch', Branch::class),
-            BelongsTo::make('Size', 'product', Product::class),
-            Currency::make('Sales Price', fn () => $this->product ? $this->product->price : 0),
-            Currency::make('Cost', fn () => $this->product ? $this->product->cost: 0),
-            Number::make('Quantity On Hand', 'qty')->sortable(),
-            Number::make('Reorder Point'),
+            Image::make('Image'),
+            Text::make('Name')
+                ->sortable(),
+            Textarea::make('Description'),
+            Currency::make('Rate', 'price')
+                ->sortable(),
+            Number::make('Commission')
+                ->sortable()
+                ->help('in %'),
+            Boolean::make('Has report'),
         ];
     }
 
@@ -76,9 +82,7 @@ class Inventory extends  BranchResourceFilter
      */
     public function filters(Request $request)
     {
-        return [
-            ProductFilter::make(),
-        ];
+        return [];
     }
 
     /**
@@ -100,16 +104,7 @@ class Inventory extends  BranchResourceFilter
      */
     public function actions(Request $request)
     {
-        $price = 0;
-        $qty = 0;
-        if ($this->id) {
-            $p = \App\Models\Product::find($this->product_id);
-            $price = $p->price;
-            $qty = $this->qty;
-        }
         return [
-            AddToCart::make(\App\Models\Product::class, $price, $qty)
-                ->showOnTableRow(),
         ];
     }
 }

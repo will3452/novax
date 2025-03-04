@@ -14,7 +14,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class Product extends Resource
 {
 
-    public static $group = '2. inventory';
+    public static $group = '1. manage';
     /**
      * The model the resource corresponds to.
      *
