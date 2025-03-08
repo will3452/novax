@@ -2,6 +2,8 @@
 
 namespace App\Nova\Actions;
 
+use App\Models\DelayPayment;
+use App\Models\Loan;
 use App\Models\Payment;
 use App\Models\Revenue;
 use Illuminate\Bus\Queueable;
@@ -33,6 +35,15 @@ class PayNow extends Action
                 'penalty' => 0,
             ]);
 
+            if (now() > $model->due_date) {
+                $loan = Loan::find($model->loan_id);
+                DelayPayment::create([
+                    'loan_id' => $model->loan_id,
+                    'amount' => $model->amount,
+                    'due_date' => $model->due_date,
+                    'type' => $loan->type,
+                ]);
+            }
             $model->update(['status' => 'PAID']);
             Revenue::create(['amount' => $model->revenue]);
         }

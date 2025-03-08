@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\DelayPayment;
 use App\Models\Loan;
 use Laravel\Nova\Nova;
 use App\Models\Payment;
 use App\Models\Interest;
+use App\Models\MissedPayment;
 use App\Models\Penalty;
 use Eminiarts\Tabs\Tabs;
 use Laravel\Nova\Cards\Help;
@@ -100,6 +102,36 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         return [
+
+            (new LineChart())
+                ->title('Missed Payment')
+                ->animations([
+                    'enabled' => true,
+                    'easing' => 'easeinout',
+                ])->model(MissedPayment::class)
+                ->width('1/2'),
+            (new LineChart())
+                ->title('Late Payment')
+                ->animations([
+                    'enabled' => true,
+                    'easing' => 'easeinout',
+                ])->model(DelayPayment::class)
+                ->series([
+                    [
+                        'label' => 'Group',
+                        'filter' => [
+                            'key' => 'type',
+                            'value' => 'GROUP'
+                        ],
+                    ],
+                    [
+                        'label' => 'Individual',
+                        'filter' => [
+                            'key' => 'type',
+                            'value' => 'INDIVIDUAL'
+                        ],
+                    ],
+                ])->width('1/2'),
             (new LineChart())
                 ->title('Loan')
                 ->animations([
