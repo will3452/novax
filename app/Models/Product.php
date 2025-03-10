@@ -17,6 +17,7 @@ class Product extends Model
         'price',
         'description',
         'cost',
+        'category',
     ];
 
     public function searchableAs()

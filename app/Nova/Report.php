@@ -4,22 +4,37 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use App\Nova\Actions\AddToCart;
-use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Currency;
-use App\Nova\BranchResourceFilter;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use App\Nova\Actions\GenerateDailySalesReport;
 
-class ServiceOffering extends BranchResourceFilter
+class Report extends Resource
 {
-    public static $group = '2. Catalog';
+    public static $group = '4. reports';
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+    public function authorizedToDelete(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        if ($request->has('action')) return true;
+        return false;
+    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\ServiceOffering::class;
+    public static $model = \App\Models\Report::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -35,6 +50,7 @@ class ServiceOffering extends BranchResourceFilter
      */
     public static $search = [
         'id',
+        'created_at',
     ];
 
     /**
@@ -46,10 +62,14 @@ class ServiceOffering extends BranchResourceFilter
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('Branch', 'branch', Branch::class),
-            BelongsTo::make('Service', 'service', Service::class),
-            Currency::make('Rate', fn () => $this->service->price),
-            Currency::make('Commission', fn () => $this->service->price * ($this->service->commission / 100)),
+            Date::make('Date', 'created_at')
+                ->sortable()
+                ->exceptOnForms(),
+            Text::make('Type')
+                ->sortable(),
+            Textarea::make('Reason')
+                ->showOnIndex(),
+            BelongsTo::make('User', 'user', User::class),
         ];
     }
 
@@ -94,14 +114,9 @@ class ServiceOffering extends BranchResourceFilter
      */
     public function actions(Request $request)
     {
-        $price = 0;
-        if ($this->id) {
-            $p = \App\Models\Service::find($this->service_id);
-            $price = $p->price;
-        }
         return [
-            AddToCart::make(\App\Models\Service::class, $price, 1)
-                ->showOnTableRow(),
+            GenerateDailySalesReport::make()
+                ->standalone(),
         ];
     }
 }

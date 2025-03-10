@@ -11,10 +11,11 @@ use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Currency;
+use App\Nova\BranchResourceFilter;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Order extends Resource
+class Order extends BranchResourceFilter
 {
     public static function availableForNavigation(Request $request)
     {

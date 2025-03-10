@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Invoice;
+use App\Models\Branch;
 use App\Models\Sale;
+use App\Models\Invoice;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 
 class PrintController extends Controller
@@ -15,5 +17,24 @@ class PrintController extends Controller
     public function orderSlip(Request $request, Sale $sale) {
         $sale->load('items');
         return view('print.order-slip', compact('sale'));
+    }
+
+    function generateDateSeries($startDate, $endDate) {
+        $period = CarbonPeriod::create($startDate, $endDate);
+
+        $dates = [];
+        foreach ($period as $date) {
+            $dates[] = $date->toDateString();
+        }
+
+        return $dates;
+    }
+
+    public function dailySales(Request $request) {
+        $from = $request->from;
+        $to = $request->to;
+        $dates = $this->generateDateSeries($from, $to);
+        $branch = Branch::findOrFail($request->branch_id);
+        return view('print.daily-sales', compact('dates', 'branch'));
     }
 }

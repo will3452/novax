@@ -42,6 +42,7 @@ class AddToCart extends Action
         if ($existingCartItem && $existingCartItem->branch_id != $models[0]->branch_id) {
             CartItem::whereCashierId(auth()->id())->delete();
         }
+
         foreach ($models as $model) {
             $itemId = $this->type == Product::class ? $model->product_id : $model->service_id;
             CartItem::create([

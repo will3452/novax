@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\User;
+use App\Nova\Metrics\Expenses;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -82,7 +83,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return config('novax.time_enabled');
             }),
             OutOfStocksPerBranch::make(),
-            Suppliers::make(),
+            Expenses::make(),
         ];
     }
 

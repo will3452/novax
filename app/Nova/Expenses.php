@@ -4,22 +4,23 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use App\Nova\Actions\AddToCart;
-use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Textarea;
 use App\Nova\BranchResourceFilter;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class ServiceOffering extends BranchResourceFilter
+class Expenses extends BranchResourceFilter
 {
-    public static $group = '2. Catalog';
+
+    public static $group = '3. transaction';
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\ServiceOffering::class;
+    public static $model = \App\Models\Expenses::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -35,6 +36,8 @@ class ServiceOffering extends BranchResourceFilter
      */
     public static $search = [
         'id',
+        'created_at',
+        'description',
     ];
 
     /**
@@ -46,10 +49,15 @@ class ServiceOffering extends BranchResourceFilter
     public function fields(Request $request)
     {
         return [
+            Date::make('Date', 'created_at')
+                ->sortable()
+                ->exceptOnForms(),
+            Textarea::make('Description')
+                ->alwaysShow()
+                ->sortable(),
+            Currency::make('Amount')
+                ->sortable(),
             BelongsTo::make('Branch', 'branch', Branch::class),
-            BelongsTo::make('Service', 'service', Service::class),
-            Currency::make('Rate', fn () => $this->service->price),
-            Currency::make('Commission', fn () => $this->service->price * ($this->service->commission / 100)),
         ];
     }
 
@@ -94,14 +102,6 @@ class ServiceOffering extends BranchResourceFilter
      */
     public function actions(Request $request)
     {
-        $price = 0;
-        if ($this->id) {
-            $p = \App\Models\Service::find($this->service_id);
-            $price = $p->price;
-        }
-        return [
-            AddToCart::make(\App\Models\Service::class, $price, 1)
-                ->showOnTableRow(),
-        ];
+        return [];
     }
 }

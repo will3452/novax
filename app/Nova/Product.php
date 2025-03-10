@@ -7,6 +7,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -51,8 +52,14 @@ class Product extends Resource
     public function fields(Request $request)
     {
         return [
+            Select::make('Category')
+                ->options([
+                    'TIRE' => 'TIRE',
+                    'LUBES' => 'LUBES',
+                    'OTHERS' => 'OTHERS',
+                ]),
             Image::make('Image'),
-            Text::make('Size', 'name')->sortable(),
+            Text::make('Size/Name', 'name')->sortable(),
             Textarea::make('Description')
                 ->alwaysShow()
                 ->showOnIndex(),
