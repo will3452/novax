@@ -1,6 +1,5 @@
 <x-form>
     <iframe id="pdf" style="width: 100%; height: 85vh;"></iframe>
-
 <script>
     async function getSignature(url) {
         return await fetch(url).then(res => res.arrayBuffer());
@@ -48,7 +47,10 @@
               form.getTextField('Text4').setText(`{{ $progress->section->school_year }} {{ $progress->section->term }}`);
               form.getTextField('Text5').setText(`{{ $progress->group->title->title }}`);
               form.getTextField('Text8').setText(`{{ $progress->group->code }}`);
-              form.getTextField('Text30').setText(`{{ $progress->description }}`);
+              let actualProgressDescription = `{{ $progress->description }}`;
+              let testData = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu nisl pulvinar, egestas elit in, tincidunt leo. Nulla convallis cursus diam, vel pulvinar nunc posuere sed. Praesent vitae erat id quam mattis pharetra. Suspendisse potenti. Pellentesque neque nisi, maximus nec pulvinar ut, iaculis eu tellus. Nulla consequat hendrerit laoreet. In eu dignissim tortor. Donec at dolor vehicula, tincidunt tortor vitae, maximus orci. Quisque volutpat at justo sit amet posuere. Vestibulum dignissim magna vitae fringilla dictum. Vivamus non ante tincidunt, rhoncus enim vel, iaculis lorem. Vestibulum venenatis lectus a rutrum semper. Nullam venenatis lorem at nulla rhoncus varius. Etiam non euismod urna. Morbi suscipit libero a neque porttitor, id efficitur quam commodo.`.length;
+              form.getTextField('Text30').setText(`{{ $progress->description }}${'  '.repeat(testData > actualProgressDescription.length ? testData : 0 )}`)
+            //   form.getTextField('Text30').setText(`{{ $progress->description }}`)
               form.getTextField('Text10').setText(`{{ $progress->group->defense_schedule }}`);
               form.getTextField('Text28').setText(`{{ $progress->week }}`);
               form.getTextField('Text16').setText(`{{ $progress->group->groupMembers[0]->student->name }}`)
@@ -132,8 +134,29 @@
 
 
               form.getTextField('Text9').setText(``); // endorse by
-              form.getTextField('Text12').setText(``); // coordinator
-              form.getTextField('Text11').setText(``); // adviser
+              @if($progress->status == 'Approved')
+                let t12 = form.getTextField('Text12') // coordinator
+                t12.setAlignment(1)
+                t12.setText(`{{\App\Models\User::find(nova_get_setting('coordinator_id', 1))->name}}`);
+                const t11 = form.getTextField('Text11')
+                t11.setText(`{{$progress->group->panellists()->whereType('Adviser')->first()->faculty->name}}`); // adviser
+                t11.setAlignment(1)
+              @elseif ($progress->status == "For Coordinator Approval")
+              let t12 = form.getTextField('Text12') // coordinator
+                t12.setAlignment(1)
+                t12.setText(``);
+                const t11 = form.getTextField('Text11')
+                t11.setText(`{{$progress->group->panellists()->whereType('Adviser')->first()->faculty->name}}`); // adviser
+                t11.setAlignment(1)
+              @else
+              let t12 = form.getTextField('Text12') // coordinator
+                t12.setAlignment(1)
+                t12.setText(``);
+                const t11 = form.getTextField('Text11')
+                t11.setText(``); // adviser
+                t11.setAlignment(1)
+              @endif
+
               form.getTextField('Text29').setText(
                   `{{ $progress->from_date->format('m-d') }} - {{ $progress->to_date->format('m-d, y') }}`);
               //   form.getTextField('Text4').setText(`{{ $progress->section->school_year }}`);
@@ -590,7 +613,7 @@
               form.getTextField('TIME').setText("{{$group->oralDefenseRequests()->latest()->first()->time}}")
               form.getTextField('VENUE').setText("{{$group->oralDefenseRequests()->latest()->first()->venue}}")
               const reF = form.getTextField('undefined_2')
-              reF.setFontSize(12)
+              reF.setFontSize(16)
               reF.setText("{{implode('\n', $group->revisions->map(fn ($e) => '- '.$e->revision)->take(8)->toArray())}}")
               // $group->oralDefenseRequests()->latest()->first()
               // // form.getTextField('Text16').setText('{{$group->time}}')

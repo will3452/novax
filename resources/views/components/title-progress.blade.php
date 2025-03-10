@@ -29,7 +29,7 @@
                             {{$item->to_date->format('m/d/Y')}}
                         </td>
                         <td>
-                            {{$item->description}}
+                            {{\Str::limit($item->description, 100)}}
                         </td>
                         <td>
                             <a class="btn btn-success btn-sm align-items-center gap-2" href="{{route('form', ['form' => 'progress', 'model' => $item])}}">
