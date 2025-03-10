@@ -38,7 +38,7 @@ class LoanObserver
 
         $interest = ((intval($loan->interest??'0') / 100 ) * $loan->amount * $times);
         $finalAmount = ($loan->amount + $interest) / $times;
-        for ($i = 0; $i <= $times; $i++) {
+        for ($i = 1; $i <= $times; $i++) {
             $due = now()->addDay($i);
             if ($schedule == "WEEKLY") {
                 $due = now()->addWeek($i);
