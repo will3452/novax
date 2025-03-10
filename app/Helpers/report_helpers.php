@@ -9,6 +9,12 @@ if (! function_exists('isProduct')) {
     }
 }
 
+if (! function_exists('isService')) {
+    function isService($item) {
+        return $item->salable_type == "App\Models\Service";
+    }
+}
+
 if (! function_exists('isTire')) {
     function isTire($item) {
         if (! isProduct($item)) return false;
@@ -45,5 +51,32 @@ if (! function_exists('getDailyExpensesOfBranch')) {
 if (! function_exists('money')) {
     function money($amount, $point = 2, $sign = "₱") {
         return  $sign . number_format($amount, $point );
+    }
+}
+
+if (! function_exists('getTotalSalesCostOfBranch')) {
+    function getTotalSalesCostOfBranch(int $branchId, string $date) {
+        $sales = \App\Models\Sale::whereBranchId($branchId)
+            ->whereDate('date', $date)
+            ->whereStatus('CONFIRMED')
+            ->get();
+        $cost = 0;
+        foreach ($sales as $s) {
+            foreach ($s->items as $item) {
+                if (isTire($item))  $cost += $item->salable->price * $item->qty;
+            }
+        }
+        return $cost;
+    }
+}
+
+if (! function_exists('getSalesWithLessExpensesOfBranch')) {
+    function getSalesWithLessExpensesOfBranch(int $branchId, string $date) {
+        $expenses = getDailyExpensesOfBranch($branchId, $date);
+        $totalSales = \App\Models\Sale::whereBranchId($branchId)
+            ->whereDate('date', $date)
+            ->whereStatus('CONFIRMED')
+            ->sum('total_amount');
+        return $totalSales - $expenses;
     }
 }

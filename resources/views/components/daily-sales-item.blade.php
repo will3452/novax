@@ -78,11 +78,16 @@
                     ->whereStatus('CONFIRMED')->get();
                 $row = 0;
                 $iteration = 0;
-                $totalCost = 0;
+                $totalCost = getTotalSalesCostOfBranch($branch->id, $date);
                 $totalSales = 0;
                 $totalNetTireIncome = 0;
                 $totalLubes = 0;
                 $totalLubes = 0;
+                $totalOthers = 0;
+                $totalFinalSales = 0;
+                $totalExpenses = getDailyExpensesOfBranch($branch->id, $date);
+                $totalServiceCommission = [];
+                $salesWithLessExpenses = getSalesWithLessExpensesOfBranch($branch->id, $date);
                 foreach ($records as $record) {
                     $row += count($record->items);
                 }
@@ -107,14 +112,14 @@
                         </td>
                         <td class="border text-center">
                             {{isTire($i) ? money($i->salable->cost * $i->qty): ''}}
-                            @php
-                                isTire($i) ? $totalCost += $i->salable->cost * $i->qty: null;
-                            @endphp
                         </td>
                         <td class="border text-center">
                             {{isTire($i) ? money($i->price  * $i->qty): ''}}
                             @php
-                                isTire($i) ? $totalSales += $i->price  * $i->qty: null;
+                                if (isTire($i)) {
+                                    $totalSales += $i->price  * $i->qty;
+                                    $totalFinalSales += $i->price  * $i->qty;
+                                }
                             @endphp
                         </td>
                         <td class="border text-center">
@@ -126,18 +131,41 @@
                         <td class="border text-center">
                             {{ isLubes($i) ? money(($i->price  * $i->qty)): ''}}
                             @php
-                                if (isLubes($i)) $totalLubes += ($i->price  * $i->qty);
+                                if (isLubes($i)){
+                                    $totalLubes += ($i->price  * $i->qty);
+                                    $totalFinalSales += ($i->price  * $i->qty);
+                                }
                             @endphp
                         </td>
                         <td class="border text-center">
                             {{ isOthers($i) ? money(($i->price  * $i->qty)): ''}}
+                            @php
+                                if (isOthers($i)) {
+                                    $totalFinalSales += ($i->price  * $i->qty);
+                                    $totalOthers += ($i->price  * $i->qty);
+                                }
+                            @endphp
                         </td>
                         @foreach (\App\Models\Service::get() as $service)
-                            <td class="border text-center"></td>
+                            <td class="border text-center">
+                                {{isService($i) && $service->id == $i->salable_id ? money((($i->price * $i->qty))) : ''}}
+                                @php
+                                    if (isService($i)) {
+                                        if (! array_key_exists($service->id, $totalServiceCommission)) {
+                                            $totalServiceCommission[$service->id] = 0;
+                                        }
+                                        if ($service->id == $i->salable_id ) {
+                                            $totalServiceCommission[$service->id] += (($i->price * $i->qty) );
+                                            $totalFinalSales += ($i->price * $i->qty);
+                                        }
+                                    }
+
+                                @endphp
+                            </td>
                         @endforeach
-                        <td class="border-r text-center">{{intval($row / 2) == $id ? money(getDailyExpensesOfBranch($branch->id, $date)): ''}}</td>
-                        <td class="border-r text-center">{{intval($row / 2) == $id ? 0: ''}}</td>
-                        <td class="border-r text-center">{{intval($row / 2) == $id ? 0: ''}}</td>
+                        <td class="border-r text-center">{{intval($row / 2) == $id ? money($totalExpenses): ''}}</td>
+                        <td class="border-r text-center">{{intval($row / 2) == $id ? money($salesWithLessExpenses): ''}}</td>
+                        <td class="border-r text-center">{{intval($row / 2) == $id ? money($salesWithLessExpenses - $totalCost): ''}}</td>
                     </tr>
                     @php
                         $id++;
@@ -145,23 +173,31 @@
                 @endforeach
             @endforeach
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="border text-center border-l-0">
+                <td class="bg-[#c55a11]"></td>
+                <td class="bg-[#c55a11]"></td>
+                <td class="bg-[#c55a11]"></td>
+                <td class="bg-[#c55a11]"></td>
+                <td class="bg-[#c55a11]"></td>
+                <td class="border text-center border-l-0 bg-[#c55a11]">
                     {{money($totalCost)}}
                 </td>
-                <td class="border text-center">
+                <td class="border text-center  bg-[#ffd965]">
                     {{money($totalSales)}}
                 </td>
                 <td  class="border text-center">
                     {{money($totalNetTireIncome)}}
                 </td>
-                <td  class="border text-center">
+                <td  class="border text-center bg-[#ffd965]">
                     {{money($totalLubes)}}
                 </td>
+                <td class="border text-center bg-[#ffd965]">
+                    {{money($totalOthers)}}
+                </td>
+                @foreach (\App\Models\Service::get() as $service)
+                        <td class="border text-center bg-[#ffd965]">
+                            {{money($totalServiceCommission[$service->id])}}
+                        </td>
+                @endforeach
             </tr>
         </tbody>
     </table>
