@@ -5,9 +5,11 @@ namespace App\Providers;
 use App\Models\OrderItem;
 use App\Models\PurchaseOrderItem;
 use App\Models\SaleItem;
+use App\Models\SupplierPayment;
 use App\Observers\OrderItemObserver;
 use App\Observers\PurchaseOrderItemObserver;
 use App\Observers\SaleItemObserver;
+use App\Observers\SupplierPaymentObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -36,5 +38,6 @@ class EventServiceProvider extends ServiceProvider
         PurchaseOrderItem::observe(PurchaseOrderItemObserver::class);
         SaleItem::observe(SaleItemObserver::class);
         OrderItem::observe(OrderItemObserver::class);
+        SupplierPayment::observe(SupplierPaymentObserver::class);
     }
 }
