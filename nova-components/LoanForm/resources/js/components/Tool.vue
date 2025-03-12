@@ -81,6 +81,12 @@
                 <input accept="image/*" type="file" @change="changeAgreementImage" class="daisy-file-input w-full max-w-xs" />
             </div>
         </div>
+        <div v-if="showDate">
+            <label for="" class="daisy-label">Start Date</label>
+            <div>
+                <input type="date" v-model="payload.start_date" class="daisy-input-bordered daisy-input w-full"/>
+            </div>
+        </div>
         <div class="text-right">
             <button @click.prevent="submit" class="daisy-btn daisy-btn-secondary daisy-btn-lg text-white">Submit</button>
         </div>
@@ -125,6 +131,11 @@ export default {
             this.agreement = file;
             console.log(file);
         },
+        async loadDateField() {
+            let { data } = await axios.get('/api/show-date')
+            console.log('data -> ', data)
+            this.showDate = data;
+        },
         async loadIndividuals () {
             try {
                 let { data } = await axios.get('/nova-vendor/loan-form/boot')
@@ -140,6 +151,7 @@ export default {
     },
     data () {
         return {
+            showDate: false,
             individual: [],
             groups: [],
             interests: [],
@@ -152,6 +164,7 @@ export default {
     },
     mounted() {
         this.loadIndividuals()
+        this.loadDateField()
     },
 }
 </script>

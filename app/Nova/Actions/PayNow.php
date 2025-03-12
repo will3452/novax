@@ -41,6 +41,7 @@ class PayNow extends Action
                     'loan_id' => $model->loan_id,
                     'amount' => $model->amount,
                     'due_date' => $model->due_date,
+                    'created_at' => $model->due_date,
                     'type' => $loan->type,
                 ]);
             }

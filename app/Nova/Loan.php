@@ -81,7 +81,7 @@ class Loan extends Resource
                             'INDIVIDUAL' => 'INDIVIDUAL',
                             'GROUP' => 'GROUP',
                         ]),
-                    Date::make('Start Date', 'created_at'),
+                    Date::make('Start Date', 'start_date'),
                     Date::make('End Date')->rules(['required']),
                     Text::make('Duration', function() {
                         $duration = $this->start_date->diffInDays($this->end_date);

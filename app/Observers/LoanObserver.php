@@ -39,17 +39,19 @@ class LoanObserver
         $interest = ((intval($loan->interest??'0') / 100 ) * $loan->amount * $times);
         $finalAmount = ($loan->amount + $interest) / $times;
         for ($i = 1; $i <= $times; $i++) {
-            $due = now()->addDay($i);
+            $startDate = nova_get_setting('show_date_field', false) ? $loan->start_date : now();
+            $due = $startDate->addDay($i);
             if ($schedule == "WEEKLY") {
-                $due = now()->addWeek($i);
+                $due = $startDate->addWeek($i);
             } else if ($schedule == "MONTHLY") {
-                $due = now()->addMonth($i);
+                $due = $startDate->addMonth($i);
             }
 
             PaymentSchedule::create([
             'loan_id' => $loan->id,
                 'amount' => $finalAmount,
                 'due_date' => $due,
+                'created_at' => $due,
                 'revenue' => $interest,
             ]);
         }

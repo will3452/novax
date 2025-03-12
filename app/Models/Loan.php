@@ -25,6 +25,7 @@ class Loan extends Model
         'status',
         'agreement_image',
         'number_of_installment',
+        'created_at',
     ];
 
     public function getTotalPayableAttribute() {

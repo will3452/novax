@@ -13,6 +13,7 @@ class DelayPayment extends Model
         'amount',
         'due_date',
         'type',
+        'created_at',
     ];
     protected $casts = [
         'due_date' => 'date',

@@ -62,6 +62,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     // Text::make('Semaphore API Key', 'sms_key'),
                     Boolean::make('Remind borrowers for their upcoming due?', 'reminder'),
                     Textarea::make('Reminder Template Message', 'sms_template')->rules(['max:160'])->help('max characters length is 160 only.'),
+                ],
+                'System' => [
+                    Boolean::make('Date field', 'show_date_field')
+                        ->help('Enable inputting of date upon creation of loan.'),
                 ]
             ]),
         ]);

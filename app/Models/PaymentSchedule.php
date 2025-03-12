@@ -16,6 +16,7 @@ class PaymentSchedule extends Model
         'due_date',
         'status',
         'revenue',
+        'created_at',
     ];
 
     public function loan () {

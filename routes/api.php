@@ -45,6 +45,10 @@ Route::get('/public-test', function () {
 Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
+Route::get('/show-date', function () {
+    return nova_get_setting('show_date_field', false);
+});
+
 Route::any('/cron', function (Request $request) {
     CronJob::create([]);
     $result = [];
@@ -103,66 +107,90 @@ Route::any('/v1/{params}', function (Request $request, $params) {
 });
 
 Route::post('/loan', function (Request $request) {
-    $data = json_decode($request->data);
-    $data->type = strtoupper($data->type);
-    $data->reference = "L" . Str::random(8);
+    try {
+        $data = json_decode($request->data);
+        $data->type = strtoupper($data->type);
+        $data->reference = "L" . Str::random(8);
 
 
-    $capital = Capital::sum('amount') - Loan::whereStatus('PENDING')->sum('amount');
+        $capital = Capital::sum('amount') - Loan::whereStatus('PENDING')->sum('amount');
+        if ($data->collateral == null) {
+            return response(['error' => 'Collateral is required.']);
+        }
 
-    // validation
-    if (($data->amount >= $capital)) {
-        return response(['error' => 'Your available capital is insufficient to proceed with this operation.'], 401);
-    }
-    if ($data->amount < nova_get_setting('minimum_loan')) {
-        return response(['error' => 'The loan amount does not meet the minimum required threshold.'], 401);
-    }
+        if ($data->payment_schedule == null) {
+            return response(['error' => 'Payment schedule is required.']);
+        }
 
-    if ($data->amount > nova_get_setting('max_loan')) {
-        return response(['error' => 'The loan amount exceeds the maximum permitted threshold.'], 401);
-    }
+        if ($data->interest == null) {
+            return response(['error' => 'Interest is required.']);
+        }
 
-    $data->start_date = now()->addDay(1);
+        // validation
+        if (($data->amount >= $capital)) {
+            return response(['error' => 'Your available capital is insufficient to proceed with this operation.'], 401);
+        }
+        if ($data->amount < nova_get_setting('minimum_loan')) {
+            return response(['error' => 'The loan amount does not meet the minimum required threshold.'], 401);
+        }
 
-    $data->end_date = now()->addDay($data->number_of_installment);
+        if ($data->amount > nova_get_setting('max_loan')) {
+            return response(['error' => 'The loan amount exceeds the maximum permitted threshold.'], 401);
+        }
 
-    if ($data->payment_schedule == "WEEKLY") {
-        $data->start_date = now()->addWeek(1);
-        $data->end_date = now()->addWeek($data->number_of_installment);
-    }
+        if ($data->payment_schedule == "DAILY") {
+            $data->start_date = nova_get_setting('show_date_field', false) ? Carbon::parse($data->start_date)->addDay() : now()->addDay();
+            $data->end_date = nova_get_setting('show_date_field', false) ? Carbon::parse($data->start_date)->addDay($data->number_of_installment) : now()->addDay($data->number_of_installment);
+        }
 
-
-    if ($data->payment_schedule == "MONTHLY") {
-        $data->start_date = now()->addMonth(1);
-        $data->end_date = now()->addMonth($data->number_of_installment);
-    }
-
-
-    $collateral = $request->collateral->store('public');
-    $cr = explode('/', $collateral);
-    $data->collateral_image = end($cr);
-    $agreement = $request->agreement->store('public');
-    $ar = explode('/', $agreement);
-    $data->agreement_image = end($ar);
-    $loan = Loan::create(get_object_vars($data));
+        if ($data->payment_schedule == "WEEKLY") {
+            $data->start_date = nova_get_setting('show_date_field', false) ? Carbon::parse($data->start_date)->addWeek() : now()->addWeek();
+            $data->end_date = nova_get_setting('show_date_field', false) ? Carbon::parse($data->start_date)->addWeek($data->number_of_installment) : now()->addWeek($data->number_of_installment);
+        }
 
 
-    if ($data->type == 'INDIVIDUAL') {
-        UserLoan::create([
-            'loan_id' => $loan->id,
-            'user_id' => $data->user_id,
-        ]);
-    } else {
-        $group = Group::find($data->group_id);
-        // dd($group->groupMembers);
-        foreach ($group->groupMembers as $m) {
+        if ($data->payment_schedule == "MONTHLY") {
+            $data->start_date = nova_get_setting('show_date_field', false) ? Carbon::parse($data->start_date)->addMonth() : now()->addMonth();
+            $data->end_date = nova_get_setting('show_date_field', false) ? Carbon::parse($data->start_date)->addMonth($data->number_of_installment) : now()->addMonth($data->number_of_installment);
+        }
 
+
+        if($request->collateral == "null") {
+            return response(['error' => 'Collateral image is required.'], 401);
+        }
+
+        $collateral = $request->collateral->store('public');
+        $cr = explode('/', $collateral);
+        $data->collateral_image = end($cr);
+        if($request->agreement == "null") {
+            return response(['error' => 'Agreement image is required.'], 401);
+        }
+        $agreement = $request->agreement->store('public');
+        $ar = explode('/', $agreement);
+        $data->agreement_image = end($ar);
+        $data->created_at = nova_get_setting('show_date_field', false) ? $data->start_date : now();
+        $loan = Loan::create(get_object_vars($data));
+
+
+        if ($data->type == 'INDIVIDUAL') {
             UserLoan::create([
                 'loan_id' => $loan->id,
-                'user_id' => $m->id,
-                'group_id' => $group->id,
+                'user_id' => $data->user_id,
             ]);
+        } else {
+            $group = Group::find($data->group_id);
+            // dd($group->groupMembers);
+            foreach ($group->groupMembers as $m) {
+
+                UserLoan::create([
+                    'loan_id' => $loan->id,
+                    'user_id' => $m->id,
+                    'group_id' => $group->id,
+                ]);
+            }
         }
+        return $loan;
+    } catch (Exception $error) {
+        return response(['error' => 'All fields are required.'], 401);
     }
-    return $loan;
 });
