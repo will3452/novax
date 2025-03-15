@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -48,9 +49,14 @@ class Supplier extends Resource
             Text::make('Phone'),
             Text::make('Address')
                 ->sortable(),
-            Text::make('Email')
-                ->sortable()
-                ->rules(['email']),
+            Text::make('Term')
+                ->sortable(),
+            Hidden::make('email')
+                ->default(fn () => now()->timestamp . "@yopmail.com" )
+            // Text::make('Email')
+            //     ->sortable()
+            //     ->rules(['email']),
+
         ];
     }
 
