@@ -8,7 +8,7 @@
                     </div>
                     <div class="card-body">
                        <div class="d-flex justify-content-between align-items-center">
-                        <h4>{{$title->group->code}} </h4>
+                        <h4>{{$title->status == 'APPROVED' ? $title->group->code : '-'}} </h4>
                         <span class="badge bg-primary">{{$title->status}}</span>
                        </div>
                         <div>
