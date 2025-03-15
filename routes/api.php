@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Collection;
 use App\Http\Controllers\ApiAuthenticationController;
 use App\Models\Capital;
+use App\Models\MissedPayment;
 use Laravel\Nova\Actions\Action;
 
 /*
@@ -193,4 +194,11 @@ Route::post('/loan', function (Request $request) {
     } catch (Exception $error) {
         return response(['error' => 'All fields are required.'], 401);
     }
+});
+
+Route::get('test', function () {
+    return MissedPayment::selectRaw('DATE_FORMAT(due_date, "%Y-%m") as period, COUNT(*) as total')
+        ->groupBy('period')
+        ->orderBy('period', 'asc')
+        ->get();
 });

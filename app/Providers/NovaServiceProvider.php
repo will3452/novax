@@ -105,36 +105,74 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
-        return [
+        $missed =  MissedPayment::selectRaw('DATE_FORMAT(due_date, "%Y-%m") as period, COUNT(*) as total')
+         ->groupBy('period')
+         ->orderBy('period', 'asc')
+         ->get();
 
+         $delayGroup =  DelayPayment::whereType('GROUP')->selectRaw('DATE_FORMAT(due_date, "%Y-%m") as period, COUNT(*) as total')
+         ->groupBy('period')
+         ->orderBy('period', 'asc')
+         ->get();
+
+         $delayIndividual =  DelayPayment::whereType('INDIVIDUAL')->selectRaw('DATE_FORMAT(due_date, "%Y-%m") as period, COUNT(*) as total')
+         ->groupBy('period')
+         ->orderBy('period', 'asc')
+         ->get();
+
+         $delay = DelayPayment::selectRaw('DATE_FORMAT(due_date, "%Y-%m") as period, COUNT(*) as total')
+         ->groupBy('period')
+         ->orderBy('period', 'asc')
+         ->get();
+
+         $groupData = [];
+         $indData = [];
+         foreach ($delay as $key => $value) {
+            $groupData[$key] = $delayGroup->first(fn ($item) => $item->period == $value->period)->total ?? 0;
+            $indData[$key] =  $delayIndividual->first(fn ($item) => $item->period == $value->period)->total ?? 0;
+         }
+        return [
             (new LineChart())
                 ->title('Missed Payment')
                 ->animations([
                     'enabled' => true,
                     'easing' => 'easeinout',
-                ])->model(MissedPayment::class)
-                ->width('1/2'),
+                ])->series(array([
+                    'label' => 'Missed Payment',
+                    'borderColor' => '#f7a35c',
+                    'data' => $missed->map(function ($e) {
+                        return $e->total;
+                    }),
+                ]))->options([
+                    'xaxis' => [
+                        'categories' =>  $missed->map(function ($e) {
+                            return $e->period;
+                        }),
+                    ]
+                ])->width('1/2'),
             (new LineChart())
                 ->title('Late Payment')
                 ->animations([
                     'enabled' => true,
                     'easing' => 'easeinout',
-                ])->model(DelayPayment::class)
+                ])
                 ->series([
                     [
                         'label' => 'Group',
-                        'filter' => [
-                            'key' => 'type',
-                            'value' => 'GROUP'
-                        ],
+                        'data' => $groupData,
+                        'borderColor' => '#dd47',
                     ],
                     [
                         'label' => 'Individual',
-                        'filter' => [
-                            'key' => 'type',
-                            'value' => 'INDIVIDUAL'
-                        ],
+                        'data' => $indData,
+                        'borderColor' => '#747',
                     ],
+                ])->options([
+                    'xaxis' => [
+                        'categories' =>  $delay->map(function ($e) {
+                            return $e->period;
+                        }),
+                    ]
                 ])->width('1/2'),
             (new LineChart())
                 ->title('Loan')
