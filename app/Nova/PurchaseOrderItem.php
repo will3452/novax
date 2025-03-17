@@ -2,15 +2,11 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel\Current;
-
+use Laravel\Nova\Fields\Select;
 class PurchaseOrderItem extends Resource
 {
     public static function availableForNavigation(Request $request)
@@ -50,7 +46,19 @@ class PurchaseOrderItem extends Resource
     {
         return [
             BelongsTo::make('PO', 'purchaseOrder', PurchaseOrder::class),
-            BelongsTo::make('Product', 'product', Product::class)
+            BelongsTo::make('Product', 'product', Product::class)->exceptOnForms(),
+            Select::make('Product', 'product_id')
+                ->options(function () {
+                    $options = [];
+                    $ps = \App\Models\Product::with(['brand'])->get();
+                    foreach ($ps as $e) {
+                        $brand = $e->brand ? $e->brand->name: 'N/a';
+                        $product = $e->name;
+                        $options[$e->id] = "$brand - $product";
+                    }
+                    return $options;
+                })
+                ->onlyOnForms()
                 ->searchable(),
             Number::make('Quantity', 'qty')
                 ->sortable(),

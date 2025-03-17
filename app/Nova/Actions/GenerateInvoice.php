@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Select;
 
 class GenerateInvoice extends Action
 {
@@ -61,6 +62,7 @@ class GenerateInvoice extends Action
                 'sale_id' => $model->id,
                 'branch_id' => $branch->id,
                 'cashier' => $cashier->name,
+                'type' => $fields->type,
             ]);
         }
     }
@@ -75,6 +77,11 @@ class GenerateInvoice extends Action
         return [
             Boolean::make('Cash Sales', 'is_cash_sales'),
             Boolean::make('Charge Sales', 'is_charge_sales'),
+            Select::make('Type')
+                ->options([
+                    'Service' => 'Service',
+                    'Sales' => 'Sales',
+                ])
         ];
     }
 }

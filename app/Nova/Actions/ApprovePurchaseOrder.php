@@ -25,7 +25,12 @@ class ApprovePurchaseOrder extends Action
     {
         foreach ($models as $model) {
             if ($model->status == 'APPROVED') continue;
+
             $model->update(['status' => 'APPROVED']);
+
+
+            // create supplier billing
+
 
             $items = $model->items;
             foreach ($items as $item) {

@@ -2,14 +2,15 @@
 
 namespace App\Nova;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Badge;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Hidden;
 
 class SupplierBill extends Resource
 {
@@ -51,10 +52,28 @@ class SupplierBill extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make('Supplier', 'supplier', Supplier::class),
+            BelongsTo::make('Purchase Order', 'purchaseOrder', PurchaseOrder::class)
+                ->exceptOnForms(),
+            Hidden::make('supplier_id')
+                ->default(fn () => 1),
+            Select::make('Purchase Order', 'po_id')
+            ->options(function () {
+                $options = [];
+                $pos = \App\Models\PurchaseOrder::whereStatus('APPROVED')->get();
+                foreach ($pos as $po) {
+                    $total = money($po->total_cost);
+                    $supplier = $po->supplier->name;
+                    $pox = "P" . Str::padLeft($po->id, 6, '0') . " - Total Cost: $total - $supplier";
+                    $options[$po->id] = $pox;
+                }
+                return $options;
+            })
+            ->onlyOnForms()
+            ->searchable(),
+            BelongsTo::make('Supplier', 'supplier', Supplier::class)->exceptOnForms(),
             Text::make('Invoice No'),
-            Text::make('PO No'),
-            Currency::make('Amount Due'),
+            // Text::make('PO No'),
+            Currency::make('Amount Due')->hideWhenCreating(),
             Date::make('Due Date'),
             Badge::make('Status')
                 ->map([

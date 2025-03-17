@@ -31,7 +31,7 @@ class PurchaseOrder extends BranchResourceFilter
      * @var string
      */
     public function title () {
-        return "PO" . Str::padLeft($this->id, 6, '0');
+        return "P" . Str::padLeft($this->id, 6, '0') . " ($this->status)";
     }
 
     /**

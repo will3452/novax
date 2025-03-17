@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Nova\Actions\PrintInvoice;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Avatar;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Stack;
@@ -35,7 +36,7 @@ class Invoice extends BranchResourceFilter
     }
 
     public static function label () {
-        return "Sales Invoice";
+        return "Invoice";
     }
     /**
      * The model the resource corresponds to.
@@ -69,7 +70,11 @@ class Invoice extends BranchResourceFilter
     public function fields(Request $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
+            Badge::make('Type', fn () => $this->type ?? 'Sales')
+                ->map([
+                    'Sales' => 'success',
+                    'Service' => 'info',
+                ]),
             Stack::make('Branch', 'branch_name', [
                 // Avatar::make('Logo', fn () => $this->branch->image),
                 Text::make('Branch Name'),

@@ -3,17 +3,19 @@
 namespace App\Providers;
 
 use App\Models\User;
-use App\Nova\Metrics\Expenses;
+use App\Models\Branch;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
+use App\Nova\Metrics\Expenses;
 use Laravel\Nova\Fields\Image;
+use App\Nova\Metrics\Suppliers;
 use App\Nova\Metrics\OutOfStocks;
 use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
+use App\Nova\Metrics\BranchDailySales;
 use App\Nova\Metrics\OutOfStocksPerBranch;
-use App\Nova\Metrics\Suppliers;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -70,7 +72,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
-        return [
+        $branches = auth()->user()->role == \App\Models\User::ROLE_ADMIN ? Branch::get() : auth()->user()->branches;
+        $cards = [
             (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
                 'Africa/Nairobi',
                 'America/Mexico_City',
@@ -85,6 +88,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             OutOfStocksPerBranch::make(),
             Expenses::make(),
         ];
+        foreach ($branches as $b) {
+            array_push($cards, new BranchDailySales($b->id));
+        }
+        return $cards;
     }
 
     /**

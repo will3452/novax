@@ -8,7 +8,7 @@
                 <div>{{$invoice->branch_address ?? '---'}}</div>
             </div>
             <div class="font-bold text-lg">
-                <div class="text-center ">SALES</div>
+                <div class="text-center uppercase">{{$invoice->type ?? 'Sales'}}</div>
                 <div class="text-center ">INVOICE</div>
                 <div class="text-red text-red-600">
                     NO.

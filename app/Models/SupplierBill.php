@@ -16,6 +16,7 @@ class SupplierBill extends Model
         'amount_due',
         'due_date',
         'status',
+        'po_id',
     ];
 
     protected $casts = [
@@ -28,5 +29,9 @@ class SupplierBill extends Model
 
     public function payments () {
         return $this->hasMany(SupplierPayment::class, 'supplier_bill_id');
+    }
+
+    public function purchaseOrder () {
+        return $this->belongsTo(PurchaseOrder::class, 'po_id');
     }
 }

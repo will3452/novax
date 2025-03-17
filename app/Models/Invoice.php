@@ -23,6 +23,7 @@ class Invoice extends Model
         'branch_id',
         'items',
         'cashier',
+        'type',// Sales or Service
     ];
 
     public function sale () {
