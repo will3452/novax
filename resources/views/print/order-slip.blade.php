@@ -20,7 +20,7 @@
                 @foreach ($sale->items as $item)
                 <tr>
                     <td class="text-center border">
-                        {{$item->salable->name}}
+                        {{isTire($item) ?  $item->salable->brand->name . " - " . $item->salable->name : $item->salable->name}}
                     </td>
                     <td class="text-center border">
                         {{$item->salable_type == \App\Models\Product::class ?  $item->qty : ''}}
