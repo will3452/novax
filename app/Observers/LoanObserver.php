@@ -40,8 +40,9 @@ class LoanObserver
         $finalAmount = ($loan->amount + $interest) / $times;
         for ($i = 1; $i <= $times; $i++) {
             $startDate = nova_get_setting('show_date_field', false) ? $loan->start_date : now();
-            $due = $startDate->addDay($i);
-            if ($schedule == "WEEKLY") {
+            if ($schedule == "DAILY") {
+                $due = $startDate->addDay($i);
+            } else if ($schedule == "WEEKLY") {
                 $due = $startDate->addWeek($i);
             } else if ($schedule == "MONTHLY") {
                 $due = $startDate->addMonth($i);

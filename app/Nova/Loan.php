@@ -2,21 +2,15 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\AddBorrower;
-use App\Nova\Actions\AddGroup;
 use App\Nova\Actions\CreateLoan;
 use App\Nova\Metrics\LoanAmount;
-use App\Nova\Metrics\TotalBalance;
 use App\Nova\Metrics\TotalPenalties;
-use Eminiarts\Tabs\Tab;
 use Eminiarts\Tabs\Tabs;
 use Str;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Badge;
-use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\Number;
@@ -24,7 +18,6 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Loan extends Resource
 {
