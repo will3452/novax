@@ -213,6 +213,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ])
                 ->model(Payment::class)
                 ->width('1/3'),
+            LoanTrend::make(),
+            LoanDistribution::make(),
             CapitalAmount::make(),
             AmountDisbursed::make(),
             RemainingCapital::make(),
@@ -220,8 +222,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             TotalRevenue::make(),
             TotalCash::make(),
             // PaymentTrend::make(),
-            LoanTrend::make(),
-            LoanDistribution::make(),
             // SmsCredit::make(),
         ];
     }
