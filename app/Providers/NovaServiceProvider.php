@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Models\User;
 use App\Models\Branch;
+use App\Nova\Dashboards\BranchDashboard;
+use App\Nova\Metrics\BranchDailyExpenses;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Fields\Text;
@@ -86,10 +88,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return config('novax.time_enabled');
             }),
             OutOfStocksPerBranch::make(),
-            Expenses::make(),
+            // Expenses::make(),
         ];
         foreach ($branches as $b) {
             array_push($cards, new BranchDailySales($b->id));
+            array_push($cards, new BranchDailyExpenses($b->id));
         }
         return $cards;
     }
@@ -101,7 +104,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function dashboards()
     {
-        return [];
+        $dashboards = [];
+        return $dashboards;
     }
 
     /**
