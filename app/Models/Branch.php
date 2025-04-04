@@ -14,6 +14,8 @@ class Branch extends Model
         'image',
         'address',
         'phone',
+        'sales_current_invoice_number',
+        'service_current_invoice_number',
     ];
 
     public function users () {

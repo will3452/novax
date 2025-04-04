@@ -2,10 +2,11 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Image;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Branch extends Resource
@@ -49,6 +50,8 @@ class Branch extends Resource
             Text::make('Name')->sortable(),
             Text::make('Address')->sortable(),
             Text::make('Phone'),
+            Number::make('Current Sales Invoice Number', 'sales_current_invoice_number'),
+            Number::make('Current Service Invoice Number', 'service_current_invoice_number'),
         ];
     }
 

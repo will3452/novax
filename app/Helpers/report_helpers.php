@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Expenses;
+use App\Models\SaleItem;
 use Carbon\Carbon;
 
 if (! function_exists('isProduct')) {
@@ -16,7 +17,7 @@ if (! function_exists('isService')) {
 }
 
 if (! function_exists('isTire')) {
-    function isTire($item) {
+    function isTire(SaleItem $item) {
         if (! isProduct($item)) return false;
         return $item->salable->category == 'TIRE';
     }
@@ -32,7 +33,7 @@ if (! function_exists('isLubes')) {
 if (! function_exists('isOthers')) {
     function isOthers($item) {
         if (! isProduct($item)) return false;
-        return $item->salable->category == 'OTHERS';
+        return ! in_array($item->salable->category, ['LUBES', 'TIRE']);
     }
 }
 

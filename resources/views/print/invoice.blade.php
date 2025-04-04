@@ -1,17 +1,17 @@
 <x-print-layout>
     <div class="w-[210mm] border print:border-none p-4 print:p-4 space-y-4 bg-white">
     {{-- <div class="w-[210mm] h-[297mm] border p-2 space-y-4"> --}}
-        <div class="grid grid-cols-[1fr_3fr_2fr]">
-            <img src="/storage/{{$invoice->branch->image}}" class="w-[75px] h-[75px] rounded-full" alt="" />
+        <div class="flex items-center justify-between">
+            {{-- <img src="/storage/{{$invoice->branch->image}}" class="w-[75px] h-[75px] rounded-full" alt="" /> --}}
             <div>
                 <div class="text-lg font-bold">{{$invoice->branch_name}}</div>
                 <div>{{$invoice->branch_address ?? '---'}}</div>
             </div>
-            <div class="font-bold text-lg">
+            <div class="font-bold text-lg ">
                 <div class="text-center uppercase">{{$invoice->type ?? 'Sales'}}</div>
                 <div class="text-center ">INVOICE</div>
-                <div class="text-red text-red-600">
-                    NO.
+                <div class="text-red text-red-600 text-2xl text-center">
+                    NO. {{$invoice->invoice_number}}
                 </div>
             </div>
         </div>

@@ -70,6 +70,9 @@ class Invoice extends BranchResourceFilter
     public function fields(Request $request)
     {
         return [
+            Text::make('Invoice Number')
+                ->exceptOnForms()
+                ->sortable(),
             Badge::make('Type', fn () => $this->type ?? 'Sales')
                 ->map([
                     'Sales' => 'success',

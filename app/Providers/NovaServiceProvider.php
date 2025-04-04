@@ -4,7 +4,11 @@ namespace App\Providers;
 
 use App\Models\User;
 use App\Models\Branch;
+use App\Models\PaymentMethod;
 use App\Nova\Dashboards\BranchDashboard;
+use App\Nova\Dashboards\CostDashboard;
+use App\Nova\Dashboards\PaymentDashboard;
+use App\Nova\Dashboards\SalesDashboard;
 use App\Nova\Metrics\BranchDailyExpenses;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Cards\Help;
@@ -17,7 +21,9 @@ use Spatie\BackupTool\BackupTool;
 use Illuminate\Support\Facades\Gate;
 use Runline\ProfileTool\ProfileTool;
 use App\Nova\Metrics\BranchDailySales;
+use App\Nova\Metrics\DailyBranchCost;
 use App\Nova\Metrics\OutOfStocksPerBranch;
+use App\Nova\Metrics\PaymentPerPaymentMethod;
 use OptimistDigital\NovaSettings\NovaSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -90,10 +96,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             OutOfStocksPerBranch::make(),
             // Expenses::make(),
         ];
-        foreach ($branches as $b) {
-            array_push($cards, new BranchDailySales($b->id));
-            array_push($cards, new BranchDailyExpenses($b->id));
-        }
+
         return $cards;
     }
 
@@ -104,8 +107,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function dashboards()
     {
-        $dashboards = [];
-        return $dashboards;
+        return [
+            new CostDashboard(),
+            new SalesDashboard(),
+            new PaymentDashboard(),
+        ];
     }
 
     /**

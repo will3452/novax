@@ -17,15 +17,19 @@ class SaleItemObserver
     {
         $s = Sale::find($saleItem->sale_id);
         $total_amount = 0;
+        $total_cost = 0;
         $si = SaleItem::where([
             'sale_id' => $saleItem->sale_id,
         ])->get();
 
         foreach ($si as $i) {
             $total_amount += ($i->price * $i->qty);
+            if (isProduct($saleItem)) {
+                $total_cost += ($i->salable->cost * $i->qty);
+            }
         }
 
-        $s->update(['total_amount' => $total_amount]);
+        $s->update(['total_amount' => $total_amount, 'total_cost' => $total_cost]);
     }
 
     /**

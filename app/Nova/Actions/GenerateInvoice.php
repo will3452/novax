@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions;
 
+use App\Models\Branch;
 use App\Models\Invoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -48,6 +49,18 @@ class GenerateInvoice extends Action
             $customer = $model->customer;
             $items = $this->getItems($model->items);
 
+            $invoice_number = 0;
+
+            // get the current invoice of the branch
+            // todo check if branch has invoice number
+            if ($fields->type === 'Sales') {
+                $invoice_number = $branch->sales_current_invoice_number ?? 0;
+                $branch->update(['sales_current_invoice_number' => $invoice_number + 1]);
+            } else {
+                $invoice_number = $branch->sales_current_invoice_number ?? 0;
+                $branch->update(['service_current_invoice_number' => $invoice_number + 1]);
+            }
+
             Invoice::create([
                 'items' => $items,
                 'branch_name' => $branch->name,
@@ -63,6 +76,7 @@ class GenerateInvoice extends Action
                 'branch_id' => $branch->id,
                 'cashier' => $cashier->name,
                 'type' => $fields->type,
+                'invoice_number' => $invoice_number,
             ]);
         }
     }
