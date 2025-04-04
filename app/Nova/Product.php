@@ -57,6 +57,8 @@ class Product extends Resource
                     'TIRE' => 'TIRE',
                     'LUBES' => 'LUBES',
                     'OTHERS' => 'OTHERS',
+                    'MAGS' => 'MAGS',
+                    'FILTER' => 'FILTER',
                 ]),
             Image::make('Image'),
             Text::make('Size/Name', 'name')->sortable(),

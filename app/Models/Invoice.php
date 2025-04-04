@@ -27,6 +27,12 @@ class Invoice extends Model
         'type',// Sales or Service
     ];
 
+    public function getSignatureAttribute() {
+        $user = User::whereName($this->cashier)->first();
+        if (! $user) return '';
+        return $user->signature;
+    }
+
     public function sale () {
         return $this->belongsTo(Sale::class, 'sale_id');
     }

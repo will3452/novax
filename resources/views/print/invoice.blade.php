@@ -146,7 +146,10 @@
             </div>
             <div>
                 <div class="border-b-2">
-                    {{$invoice->cashier}}
+                    <div class="flex flex-col items-center relative">
+                        <img src="/storage/{{$invoice->signature}}" class="w-[100px] relative top-5" alt="-">
+                        {{$invoice->cashier}}
+                    </div>
                 </div>
                 <div>Cashier / Authorized Representative</div>
             </div>

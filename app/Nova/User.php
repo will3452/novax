@@ -6,6 +6,7 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Fields\Select;
@@ -66,6 +67,8 @@ class User extends AdministratorResourceFilter
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
+
+            Image::make('Signature'),
         ];
     }
 
