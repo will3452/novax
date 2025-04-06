@@ -97,6 +97,7 @@ class Loan extends Resource
                         ])->rules(['required']),
                     Textarea::make('Collateral'),
                     Image::make('Collateral Image'),
+                    Image::make('Agreement', 'agreement_image'),
                         ],
 
                 'Borrower(s)' => [

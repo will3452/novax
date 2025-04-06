@@ -13,10 +13,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Penalty extends Resource
 {
-    public static function createButtonLabel()
-    {
-        return "Pay Penalty";
-    }
+    // public static function createButtonLabel()
+    // {
+    //     return "Pay Penalty";
+    // }
 
     public static $group = "1_Services";
     /**

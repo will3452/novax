@@ -131,6 +131,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             $groupData[$key] = $delayGroup->first(fn ($item) => $item->period == $value->period)->total ?? 0;
             $indData[$key] =  $delayIndividual->first(fn ($item) => $item->period == $value->period)->total ?? 0;
          }
+
+         $loanGroupData = [];
+         $loanIndData = [];
+         $loans = Loan::get();
         return [
             (new LineChart())
                 ->title('Missed Payment')
