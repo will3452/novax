@@ -74,6 +74,10 @@ class Loan extends Resource
                             'INDIVIDUAL' => 'INDIVIDUAL',
                             'GROUP' => 'GROUP',
                         ]),
+                    Text::make('Group Name', function () {
+                        if ($this->type != 'GROUP') return null;
+                        return $this->userLoans[0]->group->name ?? '-';
+                    })->onlyOnDetail()->canSee(fn () => $this->type == 'GROUP'),
                     Date::make('Start Date', 'start_date'),
                     Date::make('End Date')->rules(['required']),
                     Text::make('Duration', function() {

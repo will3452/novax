@@ -21,7 +21,7 @@ class TotalCash extends Value
         $revenue = Payment::sum('amount') - Loan::sum('amount');
         $totCash = Capital::sum('amount') + $revenue;
         return $this->result("$totCash")
-            ->currency('₱ ')->suffix(null)->format('0,0');
+            ->currency('₱ ')->suffix(null)->format('0,0.00');
     }
 
 

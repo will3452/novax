@@ -22,7 +22,7 @@ class TotalRevenue extends Value
         return $this->sum($request, Revenue::class, 'amount')
             ->prefix('₱')
             ->suffix(null)
-            ->format('0,0');
+            ->format('0,0.00');
     }
 
     /**

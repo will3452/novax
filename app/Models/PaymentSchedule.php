@@ -19,8 +19,20 @@ class PaymentSchedule extends Model
         'created_at',
     ];
 
+    public function penalties () {
+        return $this->hasMany(Penalty::class, 'payment_schedule_id');
+    }
+
     public function loan () {
         return $this->belongsTo(Loan::class, 'loan_id');
+    }
+
+    public function getTotalPenaltiesAttribute() {
+        $total = 0;
+        foreach($this->penalties()->get() as $p) {
+            $total += $p->amount;
+        }
+        return $total;
     }
     protected $casts = [
         'due_date' => 'date',

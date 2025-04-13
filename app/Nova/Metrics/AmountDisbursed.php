@@ -16,7 +16,7 @@ class AmountDisbursed extends Value
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->result(Loan::sum('amount'))->prefix('₱ ')->suffix(null)->format('0,0');
+        return $this->result(Loan::sum('amount'))->prefix('₱ ')->suffix(null)->format('0,0.00');
     }
     /**
      * Determine for how many minutes the metric should be cached.

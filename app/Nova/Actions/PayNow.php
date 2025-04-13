@@ -31,8 +31,8 @@ class PayNow extends Action
                 'loan_id' => $model->loan_id,
                 'user_id' => auth()->id(),
                 'due_date' => $model->due_date,
-                'amount' => $model->amount,
-                'penalty' => 0,
+                'amount' => $model->amount + $model->total_penalties,
+                'penalty' => $model->total_penalties ?? 0,
             ]);
 
             if (now() > $model->due_date) {

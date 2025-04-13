@@ -17,7 +17,7 @@ class RemainingCapital extends Value
      */
     public function calculate(NovaRequest $request)
     {
-        return $this->result(Capital::sum('amount') - Loan::sum('amount'))->prefix('₱ ')->suffix(null)->format('0,0');
+        return $this->result(Capital::sum('amount') - Loan::sum('amount'))->prefix('₱ ')->suffix(null)->format('0,0.00');
     }
 
     /**

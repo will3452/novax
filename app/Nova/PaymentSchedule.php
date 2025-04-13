@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\AddPenalty;
 use App\Nova\Actions\PayNow;
 use App\Nova\Actions\SendDueTodayReminder;
 use App\Nova\Filters\FilterByDate;
@@ -51,7 +52,7 @@ class PaymentSchedule extends Resource
     public function fields(Request $request)
     {
         return [
-            Date::make('Due Date'),
+            Date::make('Due Date')->sortable(),
             Currency::make('Amount')->onlyOnForms(),
             BelongsTo::make('Loan', 'loan', Loan::class),
             Currency::make('Principal', function () {
@@ -71,8 +72,11 @@ class PaymentSchedule extends Resource
                     return 0;
                 }
             }),
+            Currency::make('Penalty', function () {
+                return round(floatval($this->total_penalties), 2);
+            }),
             Currency::make('Total Amount', function () {
-                return round(floatval($this->amount), 2);
+                return round(floatval($this->amount + $this->total_penalties), 2);
             })->exceptOnForms(),
             Badge::make('Status')
                 ->map([
@@ -134,11 +138,13 @@ class PaymentSchedule extends Resource
             return [
                 PayNow::make()->showOnTableRow(),
                 SendDueTodayReminder::make()->standalone(),
+                AddPenalty::make(),
             ];
         }
         return [
             PayNow::make()->showOnTableRow()->canSee(fn () => $this->status == 'PENDING'),
             SendDueTodayReminder::make()->standalone(),
+            AddPenalty::make()->showOnTableRow()->canSee(fn () => $this->status == 'PENDING'),
         ];
     }
 }

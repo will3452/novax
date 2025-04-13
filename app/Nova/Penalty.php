@@ -18,6 +18,11 @@ class Penalty extends Resource
     //     return "Pay Penalty";
     // }
 
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+
     public static $group = "1_Services";
     /**
      * The model the resource corresponds to.
