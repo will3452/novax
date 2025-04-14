@@ -134,7 +134,25 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
          $loanGroupData = [];
          $loanIndData = [];
-         $loans = Loan::get();
+         $loans = Loan::selectRaw('DATE_FORMAT(start_date, "%Y-%m") as period, COUNT(*) as total')
+         ->groupBy('period')
+         ->orderBy('period', 'asc')
+         ->get();
+
+         $loanGroup =  Loan::whereType('GROUP')->selectRaw('DATE_FORMAT(start_date, "%Y-%m") as period, COUNT(*) as total')
+         ->groupBy('period')
+         ->orderBy('period', 'asc')
+         ->get();
+
+         $loanInd =  Loan::whereType('INDIVIDUAL')->selectRaw('DATE_FORMAT(start_date, "%Y-%m") as period, COUNT(*) as total')
+         ->groupBy('period')
+         ->orderBy('period', 'asc')
+         ->get();
+
+         foreach ($loans as $key => $value) {
+            $loanGroupData[$key] = $loanGroup->first(fn ($item) => $item->period == $value->period)->total ?? 0;
+            $loanIndData[$key] =  $loanInd->first(fn ($item) => $item->period == $value->period)->total ?? 0;
+         }
         return [
             (new LineChart())
                 ->title('Missed Payment')
@@ -179,28 +197,30 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     ]
                 ])->width('1/2'),
             (new LineChart())
-                ->title('Loan')
+                ->title('Loans')
                 ->animations([
                     'enabled' => true,
                     'easing' => 'easeinout',
                 ])
-                ->model(Loan::class)
                 ->series([
                     [
                         'label' => 'Group',
-                        'filter' => [
-                            'key' => 'type',
-                            'value' => 'GROUP'
-                        ],
+                        'data' => $loanGroupData,
+                        'borderColor' => '#dd47',
                     ],
                     [
                         'label' => 'Individual',
-                        'filter' => [
-                            'key' => 'type',
-                            'value' => 'INDIVIDUAL'
-                        ],
+                        'data' => $loanIndData,
+                        'borderColor' => '#747',
                     ],
+                ])->options([
+                    'xaxis' => [
+                        'categories' =>  $loans->map(function ($e) {
+                            return $e->period;
+                        }),
+                    ]
                 ])->width('1/2'),
+
             (new BarChart())
                 ->title('Penalties')
                 ->animations([

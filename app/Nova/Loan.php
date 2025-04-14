@@ -6,6 +6,7 @@ use App\Nova\Actions\CreateLoan;
 use App\Nova\Metrics\LoanAmount;
 use App\Nova\Metrics\TotalPenalties;
 use Eminiarts\Tabs\Tabs;
+use Exception;
 use Str;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
@@ -74,10 +75,16 @@ class Loan extends Resource
                             'INDIVIDUAL' => 'INDIVIDUAL',
                             'GROUP' => 'GROUP',
                         ]),
-                    Text::make('Group Name', function () {
-                        if ($this->type != 'GROUP') return null;
-                        return $this->userLoans[0]->group->name ?? '-';
-                    })->onlyOnDetail()->canSee(fn () => $this->type == 'GROUP'),
+                    Text::make('Group/Borrower', function () {
+                        try {
+                            if ($this->type != 'GROUP') {
+                                return $this->userLoans[0]->user->name;
+                            }
+                            return $this->userLoans[0]->group->name ?? '-';
+                        } catch(Exception $e) {
+                            return "-";
+                        }
+                    }),
                     Date::make('Start Date', 'start_date'),
                     Date::make('End Date')->rules(['required']),
                     Text::make('Duration', function() {
