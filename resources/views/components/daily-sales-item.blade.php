@@ -1,8 +1,8 @@
 @props(['branch', 'date'])
-<div class="w-[14in] bg-white border-2">
+<div class=" bg-white border-2">
     <div class="font-serif grid grid-cols-[1fr_3fr_1fr] bg-[#a8d0a8] py-4">
         <div>
-            <img src="" alt="">
+            <img class="w-[100px] h-[100px] ml-4 " src="/storage/{{$branch->image}}" alt="">
         </div>
         <div class="text-center font-bold">
             <div>
@@ -195,7 +195,7 @@
                 </td>
                 @foreach (\App\Models\Service::get() as $service)
                         <td class="border text-center bg-[#ffd965]">
-                            {{money($totalServiceCommission[$service->id])}}
+                            {{count($totalServiceCommission) ? money($totalServiceCommission[$service->id]): '--'}}
                         </td>
                 @endforeach
             </tr>

@@ -55,6 +55,7 @@ if (! function_exists('money')) {
     }
 }
 
+
 if (! function_exists('getTotalSalesCostOfBranch')) {
     function getTotalSalesCostOfBranch(int $branchId, string $date) {
         $sales = \App\Models\Sale::whereBranchId($branchId)
