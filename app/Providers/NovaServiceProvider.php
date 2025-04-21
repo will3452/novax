@@ -59,7 +59,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     Currency::make('Minimum Loan'),
                 ],
                 'Notification' => [
-                    // Text::make('Semaphore API Key', 'sms_key'),
+                    Text::make('Semaphore API Key', 'sms_key'),
                     Boolean::make('Remind borrowers for their upcoming due?', 'reminder'),
                     Textarea::make('Reminder Template Message', 'sms_template')->rules(['max:160'])->help('max characters length is 160 only.'),
                 ],
