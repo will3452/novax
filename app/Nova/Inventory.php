@@ -50,7 +50,8 @@ class Inventory extends  BranchResourceFilter
     {
         return [
             BelongsTo::make('Branch', 'branch', Branch::class),
-            BelongsTo::make('Size', 'product', Product::class)->rules([
+            BelongsTo::make('Size', 'product', Product::class)
+            ->creationRules([
                 new NoDuplicateProduct(),
             ]),
             Currency::make('Sales Price', fn () => $this->product ? $this->product->price : 0),
