@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\Inventory;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,17 @@ Route::any('/v1/{params}', function (Request $request, $params) {
         'params' => $endpoint,
         'method' => Str::lower($request->getMethod()),
     ];
+});
+
+Route::get('update-inventory', function (Request $request) {
+    $inventories = Inventory::with('product')->get();
+    $total = 0;
+    foreach ($inventories as $i) {
+        $total ++;
+        if (! ($i->product && $i->product->name)) continue;
+        $i->update(['product_name' => $i->product->name]);
+    }
+    return $total;
 });
 
 Route::get('update-cost', function (Request $request) {

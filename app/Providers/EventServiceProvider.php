@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Inventory;
 use App\Models\OrderItem;
 use App\Models\PurchaseOrderItem;
 use App\Models\SaleItem;
 use App\Models\SupplierBill;
 use App\Models\SupplierPayment;
+use App\Observers\InventoryObserver;
 use App\Observers\OrderItemObserver;
 use App\Observers\PurchaseOrderItemObserver;
 use App\Observers\SaleItemObserver;
@@ -42,5 +44,6 @@ class EventServiceProvider extends ServiceProvider
         OrderItem::observe(OrderItemObserver::class);
         SupplierPayment::observe(SupplierPaymentObserver::class);
         SupplierBill::observe(SupplierBillObserver::class);
+        Inventory::observe(InventoryObserver::class);
     }
 }

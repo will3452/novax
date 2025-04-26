@@ -38,6 +38,7 @@ class Inventory extends  BranchResourceFilter
      */
     public static $search = [
         'id',
+        'product_name',
     ];
 
     /**
