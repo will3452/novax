@@ -18,6 +18,7 @@ class Sale extends Model
         'payment_method',
         'total_cost',
         'status',
+        'type',
     ];
     protected $casts = [
         'date' => 'date',

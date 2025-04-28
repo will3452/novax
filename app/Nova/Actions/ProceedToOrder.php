@@ -42,6 +42,7 @@ class ProceedToOrder extends Action
             'branch_id' => $items[0]->branch_id,
             'cashier_id' => auth()->id(),
             'date' => now(),
+            'type' => $items[0]->item_type == 'App\Models\Product' ? 'SALES': 'SERVICE',
         ]);
 
         foreach ($items as $item) {

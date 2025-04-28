@@ -14,6 +14,14 @@ class PrintController extends Controller
         return view('print.invoice', compact('invoice'));
     }
 
+    public function summaryReport(Request $request, ) {
+        $from = $request->from;
+        $to = $request->to;
+        $dates = $this->generateDateSeries($from, $to);
+        $branch = Branch::findOrFail($request->branch_id);
+        return view('print.summary-report', compact('dates', 'branch', 'from', 'to'));
+    }
+
     public function orderSlip(Request $request, Sale $sale) {
         $sale->load('items');
         return view('print.order-slip', compact('sale'));

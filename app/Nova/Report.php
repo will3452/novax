@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Nova\Actions\GenerateDailySalesReport;
+use App\Nova\Actions\GenerateSummaryReport;
 
 class Report extends Resource
 {
@@ -116,6 +117,8 @@ class Report extends Resource
     {
         return [
             GenerateDailySalesReport::make()
+                ->standalone(),
+            GenerateSummaryReport::make()
                 ->standalone(),
         ];
     }
