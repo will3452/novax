@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Nova\Actions\GenerateDailySalesReport;
 use App\Nova\Actions\GenerateSummaryReport;
+use App\Nova\Actions\PrintInventory;
 
 class Report extends Resource
 {
@@ -119,6 +120,8 @@ class Report extends Resource
             GenerateDailySalesReport::make()
                 ->standalone(),
             GenerateSummaryReport::make()
+                ->standalone(),
+            PrintInventory::make()
                 ->standalone(),
         ];
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
+use App\Models\Inventory;
 use App\Models\Sale;
 use App\Models\Invoice;
 use Carbon\CarbonPeriod;
@@ -12,6 +13,12 @@ class PrintController extends Controller
 {
     public function invoice (Request $request, Invoice $invoice) {
         return view('print.invoice', compact('invoice'));
+    }
+
+    public function inventory(Request $request) {
+        $branch = Branch::findOrFail($request->branch_id);
+        $items = Inventory::whereBranchId($branch->id)->get();
+        return view('print.inventories', compact('items', 'branch',));
     }
 
     public function summaryReport(Request $request, ) {

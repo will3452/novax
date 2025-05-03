@@ -24,4 +24,5 @@ Route::middleware(['auth'])->prefix('print')->name('print.')->group(function () 
     Route::get('/order-slip/{sale}', [PrintController::class, 'orderSlip'])->name('order-slip');
     Route::get('/daily-sales', [PrintController::class, 'dailySales'])->name('daily-sales');
     Route::get('/summary-report', [PrintController::class, 'summaryReport'])->name('summary-report');
+    Route::get('/inventory', [PrintController::class, 'inventory'])->name('inventory');
 });
