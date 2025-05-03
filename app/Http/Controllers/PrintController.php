@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
+use App\Models\Brand;
 use App\Models\Inventory;
 use App\Models\Sale;
 use App\Models\Invoice;
+use App\Models\Product;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 
@@ -17,7 +19,9 @@ class PrintController extends Controller
 
     public function inventory(Request $request) {
         $branch = Branch::findOrFail($request->branch_id);
-        $items = Inventory::whereBranchId($branch->id)->get();
+        $brand = Brand::findOrFail($request->brand_id);
+        $productIds = Product::whereBrandId($brand->id)->get()->pluck('id');
+        $items = Inventory::whereIn('product_id', $productIds->toArray())->whereBranchId($branch->id)->get();
         return view('print.inventories', compact('items', 'branch',));
     }
 

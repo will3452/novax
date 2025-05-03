@@ -3,6 +3,7 @@
 namespace App\Nova\Actions;
 
 use App\Models\Branch;
+use App\Models\Brand;
 use Illuminate\Bus\Queueable;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Actions\Action;
@@ -24,7 +25,7 @@ class PrintInventory extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        return Action::openInNewTab(route('print.inventory', ['branch_id' => $fields->branch_id]));
+        return Action::openInNewTab(route('print.inventory', ['branch_id' => $fields->branch_id, 'brand_id' => $fields->brand_id]));
     }
 
     /**
@@ -37,6 +38,8 @@ class PrintInventory extends Action
         return [
             Select::make('Branch', 'branch_id')
                 ->options(fn () => Branch::get()->pluck('name', 'id')),
+            Select::make('Brand', 'brand_id')
+                ->options(fn () => Brand::get()->pluck('name', 'id')),
             ];
     }
 }
