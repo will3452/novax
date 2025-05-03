@@ -27,7 +27,8 @@ class Invoice extends BranchResourceFilter
 
     public function authorizedToDelete(Request $request)
     {
-        return false;
+        // return false;
+        return true;
     }
 
     public function authorizedToView(Request $request)

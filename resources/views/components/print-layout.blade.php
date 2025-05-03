@@ -10,4 +10,7 @@
 <body class="bg-gray-400 print:bg-white">
     {{$slot}}
 </body>
+<script>
+    window.print()
+</script>
 </html>
