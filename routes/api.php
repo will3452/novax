@@ -7,7 +7,9 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiAuthenticationController;
+use App\Models\Branch;
 use App\Models\Inventory;
+use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +65,28 @@ Route::get('update-inventory', function (Request $request) {
         $i->update(['product_name' => $i->product->name]);
     }
     return $total;
+});
+
+Route::get('update-inventory', function () {
+    $products = Product::get();
+    $branches = Branch::get();
+    $count = 0;
+    foreach ($branches as $b) {
+        foreach ($products as $p) {
+            $exists = Inventory::whereBranchId($b->id)->whereProductId($p->id)->exists();
+            if (! $exists) {
+                Inventory::create([
+                    'branch_id' => $b->id,
+                    'product_id' => $p->id,
+                    'product_name' => $p->name,
+                    'qty' => 0,
+                    'reorder_point' => 0,
+                ]);
+                $count ++;
+            }
+        }
+    }
+    return $count;
 });
 
 Route::get('update-cost', function (Request $request) {
