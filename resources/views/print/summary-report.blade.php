@@ -124,7 +124,7 @@
                 ACTUAL MARK-UP
             </th>
             <td class="border text-right px-2">
-                {{number_format(($totalNet / $totalCost) * 100, 1)}}%
+                {{$totalNet > 0 ?  number_format(($totalNet / $totalCost) * 100, 1): '--'}}%
             </td>
 
         </tr>
