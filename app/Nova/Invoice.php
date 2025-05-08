@@ -21,8 +21,9 @@ class Invoice extends BranchResourceFilter
     }
     public function authorizedToUpdate(Request $request)
     {
-        if ($request->has('action')) return true;
-        return false;
+        return true;
+        // if ($request->has('action')) return true;
+        // return false;
     }
 
     public function authorizedToDelete(Request $request)
@@ -73,6 +74,7 @@ class Invoice extends BranchResourceFilter
         return [
             Text::make('Invoice Number')
                 ->exceptOnForms()
+                ->showOnUpdate()
                 ->sortable(),
             Badge::make('Type', fn () => $this->type ?? 'Sales')
                 ->map([
