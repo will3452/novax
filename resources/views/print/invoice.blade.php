@@ -27,7 +27,7 @@
                 </td>
                 <td></td>
                 <td class="border text-center ">Date: </td>
-                <td colspan="2" class="border text-center">{{$invoice->created_at->format('m/d/Y')}}</td>
+                <td colspan="2" class="border text-center">{{$invoice->sale->date->format('m/d/Y')}}</td>
             </tr>
             <tr>
                 <td colspan="6" class="border p-1">SOLD TO: </td>
