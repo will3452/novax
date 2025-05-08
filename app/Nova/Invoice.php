@@ -73,8 +73,7 @@ class Invoice extends BranchResourceFilter
     {
         return [
             Text::make('Invoice Number')
-                ->exceptOnForms()
-                ->showOnUpdate()
+                ->hideWhenCreating()
                 ->sortable(),
             Badge::make('Type', fn () => $this->type ?? 'Sales')
                 ->map([
