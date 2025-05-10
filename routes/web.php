@@ -26,4 +26,5 @@ Route::middleware(['auth'])->prefix('print')->name('print.')->group(function () 
     Route::get('/summary-report', [PrintController::class, 'summaryReport'])->name('summary-report');
     Route::get('/inventory', [PrintController::class, 'inventory'])->name('inventory');
     Route::get('/payment-summary', [PrintController::class, 'paymentSummary'])->name('payment-summary');
+    Route::get('/payment-detailed', [PrintController::class, 'paymentDetailed'])->name('payment-detailed');
 });

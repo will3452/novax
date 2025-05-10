@@ -19,6 +19,14 @@ class PrintController extends Controller
         return view('print.invoice', compact('invoice'));
     }
 
+    public function paymentDetailed(Request $request) {
+        $branch = Branch::findOrFail($request->branch_id);
+        $date = Carbon::parse($request->date);
+        $payment_method = $request->payment_method;
+        $transactions = Sale::whereDate('date', $date)->whereBranchId($branch->id)->wherePaymentMethod($payment_method)->get();
+        return view('print.payment-detailed', compact('branch', 'payment_method', 'date', 'transactions'));
+    }
+
     public function paymentSummary(Request $request) {
         $branch = Branch::findOrFail($request->branch_id);
         $paymentMethods = PaymentMethod::get();

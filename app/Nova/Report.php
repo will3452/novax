@@ -13,6 +13,7 @@ use App\Nova\Actions\GenerateDailySalesReport;
 use App\Nova\Actions\GenerateSummaryReport;
 use App\Nova\Actions\PaymentSummary;
 use App\Nova\Actions\PrintInventory;
+use App\Nova\Actions\PrintPaymentDetailed;
 
 class Report extends Resource
 {
@@ -125,6 +126,8 @@ class Report extends Resource
             PrintInventory::make()
                 ->standalone(),
             PaymentSummary::make()
+                ->standalone(),
+            PrintPaymentDetailed::make()
                 ->standalone(),
         ];
     }
