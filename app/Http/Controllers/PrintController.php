@@ -7,7 +7,9 @@ use App\Models\Brand;
 use App\Models\Inventory;
 use App\Models\Sale;
 use App\Models\Invoice;
+use App\Models\PaymentMethod;
 use App\Models\Product;
+use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 
@@ -15,6 +17,15 @@ class PrintController extends Controller
 {
     public function invoice (Request $request, Invoice $invoice) {
         return view('print.invoice', compact('invoice'));
+    }
+
+    public function paymentSummary(Request $request) {
+        $branch = Branch::findOrFail($request->branch_id);
+        $paymentMethods = PaymentMethod::get();
+        $from = Carbon::parse($request->from);
+        $to = Carbon::parse($request->to);
+        $period = CarbonPeriod::create($from, $to);
+        return view('print.payment-summary', compact('branch', 'paymentMethods', 'from', 'to', 'period'));
     }
 
     public function inventory(Request $request) {
