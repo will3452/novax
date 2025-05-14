@@ -13,6 +13,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 class Capital extends Resource
 {
     public static $group = '2_Manage';
+    public function authorizedToUpdate(Request $request)
+    {
+        return false;
+    }
     /**
      * The model the resource corresponds to.
      *
