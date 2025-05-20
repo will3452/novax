@@ -34,11 +34,11 @@
                     </td>
                     <td class="border text-right px-2">
                         @php
-                            $sales = \App\Models\Sale::whereBranchId($branch->id)->whereDate('created_at', $date)->whereType('SALES')->sum('total_amount');
+                            $sales = \App\Models\Sale::whereBranchId($branch->id)->whereDate('date', $date)->whereType('SALES')->sum('total_amount');
                             $totalSales += $sales;
-                            $labor = \App\Models\Sale::whereBranchId($branch->id)->whereDate('created_at', $date)->whereType('SERVICE')->sum('total_amount');
+                            $labor = \App\Models\Sale::whereBranchId($branch->id)->whereDate('date', $date)->whereType('SERVICE')->sum('total_amount');
                             if ($labor) $totalLabor += ($labor / 2);
-                            $costs = \App\Models\Sale::whereBranchId($branch->id)->whereDate('created_at', $date)->whereType('SALES')->sum('total_cost');
+                            $costs = \App\Models\Sale::whereBranchId($branch->id)->whereDate('date', $date)->whereType('SALES')->sum('total_cost');
                             $totalCost += $costs;
                             $expenses = \App\Models\Expenses::whereBranchId($branch->id)->whereDate('created_at', $date)->sum('amount');
                             $totalExpenses += $expenses;
