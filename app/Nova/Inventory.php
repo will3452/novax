@@ -51,7 +51,7 @@ class Inventory extends  BranchResourceFilter
     {
         return [
             BelongsTo::make('Branch', 'branch', Branch::class),
-            BelongsTo::make('Size', 'product', Product::class),
+            BelongsTo::make('Size', 'product', Product::class)->searchable(),
             Currency::make('Sales Price', fn () => $this->product ? $this->product->price : 0),
             Currency::make('Cost', fn () => $this->product ? $this->product->cost: 0),
             Number::make('Quantity On Hand', 'qty')->sortable(),
