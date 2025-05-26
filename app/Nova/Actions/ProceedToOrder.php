@@ -58,7 +58,7 @@ class ProceedToOrder extends Action
             $item->delete();
         }
 
-        return Action::openInNewTab(route('print.order-slip', $sale));
+        return Action::redirect(route('print.order-slip', $sale));
     }
 
     /**
@@ -80,9 +80,11 @@ class ProceedToOrder extends Action
                     return $total;
                 }),
             Select::make('Customer', 'customer_id')
+                ->required()
                 ->options(fn () => \App\Models\Customer::get()->pluck('name', 'id'))
                 ->searchable(),
             Select::make('Payment Method')
+                ->rules(['required'])
                 ->options(\App\Models\PaymentMethod::get()->pluck('name', 'name')),
         ];
     }

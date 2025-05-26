@@ -23,7 +23,7 @@ class PrintInvoice extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            return Action::openInNewTab(route('print.invoice', $model));
+            return Action::redirect(route('print.invoice', $model));
         }
     }
 

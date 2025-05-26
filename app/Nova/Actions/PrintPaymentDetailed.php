@@ -26,7 +26,7 @@ class PrintPaymentDetailed extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        return Action::openInNewTab(route('print.payment-detailed', ['date' => $fields->date, 'branch_id' => $fields->branch_id, 'payment_method' => $fields->payment_method]));
+        return Action::redirect(route('print.payment-detailed', ['date' => $fields->date, 'branch_id' => $fields->branch_id, 'payment_method' => $fields->payment_method]));
     }
 
     /**

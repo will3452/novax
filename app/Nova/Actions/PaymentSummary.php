@@ -26,7 +26,7 @@ class PaymentSummary extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        return Action::openInNewTab(route('print.payment-summary', ['from' => $fields->from, 'to' => $fields->to, 'branch_id' => $fields->branch_id]));
+        return Action::redirect(route('print.payment-summary', ['from' => $fields->from, 'to' => $fields->to, 'branch_id' => $fields->branch_id]));
     }
 
     /**

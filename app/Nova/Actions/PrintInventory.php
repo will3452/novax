@@ -25,7 +25,7 @@ class PrintInventory extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        return Action::openInNewTab(route('print.inventory', ['branch_id' => $fields->branch_id, 'brand_id' => $fields->brand_id]));
+        return Action::redirect(route('print.inventory', ['branch_id' => $fields->branch_id, 'brand_id' => $fields->brand_id]));
     }
 
     /**

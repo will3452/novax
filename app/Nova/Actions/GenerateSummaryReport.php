@@ -25,7 +25,7 @@ class GenerateSummaryReport extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        return Action::openInNewTab(route('print.summary-report', ['from' => $fields->from, 'to' => $fields->to, 'branch_id' => $fields->branch_id]));
+        return Action::redirect(route('print.summary-report', ['from' => $fields->from, 'to' => $fields->to, 'branch_id' => $fields->branch_id]));
     }
 
     /**
