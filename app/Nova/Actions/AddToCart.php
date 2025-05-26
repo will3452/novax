@@ -68,8 +68,8 @@ class AddToCart extends Action
         return [
             Help::warning('Warning', 'All your previous cart items from the other branch will be reset.'),
             Number::make('Quantity', 'qty')
-                ->max($this->maxQty)
-                ->help("Available: $this->maxQty"),
+                ->max($this->type == "App\Models\Product" ? $this->maxQty: null)
+                ->help($this->type == "App\Models\Product" ? "Available: $this->maxQty": ""),
             Currency::make('Price/Rate', 'price')
                 ->default(fn () => $this->price),
             Textarea::make('Discount'),
