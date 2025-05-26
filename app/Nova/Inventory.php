@@ -106,7 +106,7 @@ class Inventory extends  BranchResourceFilter
         $qty = 0;
         if ($this->id) {
             $p = \App\Models\Product::find($this->product_id);
-            $price = $p->price;
+            $price = $p ? $p->price: 0;
             $qty = $this->qty;
         }
         return [

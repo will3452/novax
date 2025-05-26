@@ -71,6 +71,6 @@ class PaymentPerPaymentMethod extends Value
      */
     public function uriKey()
     {
-        return 'payment-per-payment-method';
+        return 'payment-per-payment-method-' . $this->branchId . '-'. $this->method;
     }
 }
