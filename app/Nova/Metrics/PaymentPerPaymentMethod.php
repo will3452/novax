@@ -6,20 +6,40 @@ use App\Models\Sale;
 use App\Models\Branch;
 use Laravel\Nova\Metrics\Value;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Illuminate\Support\Str;
 
 class PaymentPerPaymentMethod extends Value
 {
     public $branchId;
     public $method;
-    public function name()
-    {
-        return Branch::find($this->branchId)->name . "'s " . $this->method;
-    }
+
+    /**
+     * Create a new metric instance.
+     *
+     * @param  int  $branchId
+     * @param  string  $method
+     */
     public function __construct(int $branchId, string $method)
     {
+
         $this->branchId = $branchId;
         $this->method = $method;
     }
+
+    /**
+     * Get the displayable name of the metric.
+     *
+     * @return string
+     */
+    public function name()
+    {
+        $branch = Branch::find($this->branchId);
+        $branchName = $branch ? $branch->name : 'Unknown Branch';
+        $methodName = Str::title(str_replace('_', ' ', $this->method)); // Format method name
+
+        return "{$branchName}'s {$methodName}";
+    }
+
     /**
      * Calculate the value of the metric.
      *
@@ -30,10 +50,12 @@ class PaymentPerPaymentMethod extends Value
     {
         return $this->sum(
             $request,
-            Sale::whereBranchId($this->branchId)->wherePaymentMethod($this->method)->whereStatus('CONFIRMED'),
+            Sale::where('branch_id', $this->branchId)
+                ->where('payment_method', $this->method)
+                ->where('status', 'CONFIRMED'),
             'total_amount',
-            'date',
-            )->currency('₱')->format('0.0');
+            'date' // Adjust to your actual date column
+        )->currency('₱')->format('0.00'); // Standard currency format
     }
 
     /**
@@ -57,11 +79,11 @@ class PaymentPerPaymentMethod extends Value
     /**
      * Determine for how many minutes the metric should be cached.
      *
-     * @return  \DateTimeInterface|\DateInterval|float|int
+     * @return \DateTimeInterface|\DateInterval|float|int|null
      */
     public function cacheFor()
     {
-        // return now()->addMinutes(5);
+        return now()->addMinutes(5); // Cache for 5 minutes
     }
 
     /**
@@ -71,6 +93,6 @@ class PaymentPerPaymentMethod extends Value
      */
     public function uriKey()
     {
-        return 'payment-per-payment-method-' . $this->branchId . '-'. $this->method;
+        return 'payment-per-payment-method-' . $this->branchId . '-' . Str::slug($this->method);
     }
 }
