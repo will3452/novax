@@ -70,8 +70,8 @@ class Sale extends BranchResourceFilter
                 ->exceptOnForms(),
             BelongsTo::make('Customer')
                 ->showCreateRelationButton(),
-            Select::make('Payment Method')
-                ->options(\App\Models\PaymentMethod::get()->pluck('name', 'name')),
+            // Select::make('Payment Method')
+            //     ->options(\App\Models\PaymentMethod::get()->pluck('name', 'name')),
             HasMany::make('Items', 'items', SaleItem::class),
         ];
     }

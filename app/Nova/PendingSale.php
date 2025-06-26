@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\ConfirmTransaction;
 use App\Nova\Actions\GenerateInvoice;
+use App\Nova\Actions\ProceedToPayment;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -71,10 +72,13 @@ class PendingSale extends BranchResourceFilter
                 ->rules(['required']),
             Currency::make('Total Amount')
                 ->exceptOnForms(),
+            Currency::make('Balance', function () {
+                return $this->balances ?? 0;
+            }),
             BelongsTo::make('Customer')
                 ->showCreateRelationButton(),
-            Select::make('Payment Method')
-                ->options(\App\Models\PaymentMethod::get()->pluck('name', 'name')),
+            // Select::make('Payment Method')
+            //     ->options(\App\Models\PaymentMethod::get()->pluck('name', 'name')),
             HasMany::make('Items', 'items', SaleItem::class),
         ];
     }
@@ -120,9 +124,14 @@ class PendingSale extends BranchResourceFilter
      */
     public function actions(Request $request)
     {
-        return [
-            ConfirmTransaction::make()->showOnTableRow(),
-            // GenerateInvoice::make()->showOnTableRow(),
-        ];
+        $actions = [];
+        if (! is_null($this) && $this->status == "PENDING") {
+            array_push($actions, (new ProceedToPayment(intval($this->id)))->showOnTableRow());
+        }
+
+        if ($request->has('viaResource')) {
+            array_push($actions, (new ProceedToPayment(intval($this->id)))->showOnTableRow());
+        }
+        return $actions;
     }
 }

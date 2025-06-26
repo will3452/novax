@@ -24,6 +24,16 @@ class Sale extends Model
         'date' => 'date',
     ];
 
+    public function payments () {
+        return $this->hasMany(SalesPayment::class, 'sales_id');
+    }
+
+    public function getBalancesAttribute() {
+        if ($this->status == 'CONFIRMED') return 0;
+        $payments = $this->payments()->sum('amount') ?? 0;
+        return $this->total_amount - $payments;
+    }
+
     public function branch () {
         return $this->belongsTo(Branch::class);
     }

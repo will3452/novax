@@ -26,23 +26,6 @@ class ConfirmTransaction extends Action
         foreach ($models as $model) {
             if ($model->status == 'CONFIRMED') continue;
             $model->update(['status' => 'CONFIRMED']);
-
-            $items = $model->items;
-            foreach ($items as $item) {
-                if ($item->salable_type != "App\Models\Product") continue;
-                $i = Inventory::whereProductId($item->salable_id)
-                    ->whereBranchId($model->branch_id)
-                    ->first();
-                if ($i) {
-                    $i->update(['qty' => $i->qty - $item->qty]);
-                } else {
-                    Inventory::create([
-                        'branch_id' => $model->branch_id,
-                        'product_id' => $item->salable_id,
-                        'qty' => - $item->qty,
-                    ]);
-                }
-            }
         }
     }
 

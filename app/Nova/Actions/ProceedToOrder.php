@@ -38,7 +38,7 @@ class ProceedToOrder extends Action
         $sale = Sale::create([
             'total_amount' => $fields->total_amount,
             'customer_id' => $fields->customer_id,
-            'payment_method' => $fields->payment_method,
+            'payment_method' => 'TBD', // to be determined
             'branch_id' => $items[0]->branch_id,
             'cashier_id' => auth()->id(),
             'date' => now(),
@@ -83,9 +83,9 @@ class ProceedToOrder extends Action
                 ->required()
                 ->options(fn () => \App\Models\Customer::get()->pluck('name', 'id'))
                 ->searchable(),
-            Select::make('Payment Method')
-                ->rules(['required'])
-                ->options(\App\Models\PaymentMethod::get()->pluck('name', 'name')),
+            // Select::make('Payment Method')
+            //     ->rules(['required'])
+            //     ->options(\App\Models\PaymentMethod::get()->pluck('name', 'name')),
         ];
     }
 }

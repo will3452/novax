@@ -110,7 +110,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             new CostDashboard(),
             new SalesDashboard(),
-            new PaymentDashboard(),
+            // new PaymentDashboard(),
         ];
     }
 
