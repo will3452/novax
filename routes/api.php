@@ -45,6 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('guides')->group(function () {
         Route::get('/', [\App\Http\Controllers\GuideController::class, 'index']);
         Route::post('/', [\App\Http\Controllers\GuideController::class, 'store']);
+        Route::post('/helpful/{slug}', [\App\Http\Controllers\GuideController::class, 'helpful']);
     });
 });
 
@@ -59,4 +60,10 @@ Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
 Route::any('/cron', function (Request $request) {
     CronJob::create([]);
+});
+
+Route::get('/organizations', function () {
+    return response()->json([
+        'organizations' => \App\Models\Organization::whereStatus('ACTIVE')->get()
+    ]);
 });

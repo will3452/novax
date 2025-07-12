@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HelpfulCount;
 use Illuminate\Http\Request;
+use Laravel\Nova\Cards\Help;
+use ParagonIE\ConstantTime\Hex;
 
 class GuideController extends Controller
 {
@@ -44,6 +47,34 @@ class GuideController extends Controller
             'message' => 'Guide created successfully',
             'guide' => $guide
         ], 201);
+    }
+
+    public function helpful(Request $request, $slug) {
+        $guide = \App\Models\Guide::where('slug', $slug)->firstOrFail();
+        $exists = HelpfulCount::where('guide_id', $guide->id)
+            ->where('user_id', $request->user()->id) // Assuming the user is authenticated
+            ->exists();
+
+        if ($exists) {
+            HelpfulCount::where('guide_id', $guide->id)
+                ->where('user_id', $request->user()->id) // Assuming the user is authenticated
+                ->delete();
+            $guide->decrement('helpful_count');
+            return response()->json([
+                'message' => 'You have unmarked this guide as helpful.',
+                'helpful_count' => $guide->helpful_count
+            ]);
+        }
+
+        $guide->increment('helpful_count');
+        HelpfulCount::create([
+            'guide_id' => $guide->id,
+            'user_id' => request()->user()->id // Assuming the user is authenticated
+        ]);
+        return response()->json([
+            'message' => 'Thank you for marking this guide as helpful!',
+            'helpful_count' => $guide->helpful_count
+        ]);
     }
 
 }
