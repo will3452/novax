@@ -18,13 +18,34 @@ use App\Models\Endpoint;
 |
 */
 
+Route::get('/', function () {
+    return response()->json([
+        'name' => config('app.name'),
+        'version' => config('app.version', '1.0.0'),
+        'environment' => config('app.env'),
+        'debug' => config('app.debug'),
+        'url' => config('app.url'),
+        'documentation_url' => config('app.documentation_url', 'https://docs.example.com')
+    ]);
+});
+
 
 //private access
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/auth-test', function () {
-        return 'authentication test';
+    Route::get('/auth-test', function (Request $request) {
+        return now();
+    });
+    Route::prefix('users')->group(function () {
+        Route::get('/me', function (Request $request) {
+            return $request->user();
+        });
     });
     Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
+
+    Route::prefix('guides')->group(function () {
+        Route::get('/', [\App\Http\Controllers\GuideController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\GuideController::class, 'store']);
+    });
 });
 
 Route::get('/public-test', function () {
@@ -37,17 +58,5 @@ Route::post('/register', [ApiAuthenticationController::class, 'register']);
 Route::post('/login', [ApiAuthenticationController::class, 'login']);
 
 Route::any('/cron', function (Request $request) {
-    CronJob::create([]); 
-}); 
-
-Route::any('/v1/{params}', function (Request $request, $params) {
-    $method = Str::lower($request->getMethod()); 
-    $path = $request->getPathInfo(); 
-    $arr_path = explode("/", $path); 
-    $name = end($arr_path); 
-    $endpoint = Endpoint::whereMethod($method)->wherePath($name)->first(); 
-    return [
-        'params' => $endpoint, 
-        'method' => Str::lower($request->getMethod()), 
-    ]; 
-}); 
+    CronJob::create([]);
+});

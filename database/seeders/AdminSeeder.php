@@ -19,6 +19,9 @@ class AdminSeeder extends Seeder
         $user = User::create([
             'name'=>'The Administrator',
             'email'=>'root@yopmail.com',
+            'username'=>'admin',
+            'organization_id' => null, // Assuming no organization for the admin
+            'role' => 'ADMIN', // Setting the role to ADMIN
             'password'=> bcrypt('password')
         ]);
     }

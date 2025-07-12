@@ -1,22 +1,21 @@
 <?php
 
 namespace App\Nova;
-use Laravel\Nova\Fields\ID;
+
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Endpoint extends Resource
+class Organization extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Endpoint::class;
+    public static $model = \App\Models\Organization::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -32,7 +31,6 @@ class Endpoint extends Resource
      */
     public static $search = [
         'id',
-        'method',
     ];
 
     /**
@@ -44,26 +42,18 @@ class Endpoint extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Path'), 
-            Select::make('Method')
+            ID::make()->sortable(),
+            Text::make('Name', 'name')
+                ->sortable()
+                ->rules('required', 'max:255'),
+            Text::make('Description', 'description')
+                ->sortable()
+                ->rules('nullable', 'max:500'),
+            Select::make('Status', 'status')
                 ->options([
-                    'post' => 'post',
-                    'get' => 'get',
-                    'put' => 'put', 
-                ]),
-            Select::make('Model')
-                ->options(function () {
-                    $modelPath = app_path('Models'); 
-                    $files = File::files($modelPath);
-
-                    $array = []; 
-
-                    foreach($files as $item) {
-                        $array[$item->getFilenameWithoutExtension()] = $item->getFilenameWithoutExtension(); 
-                    }
-                    return $array; 
-                }),
-
+                    'ACTIVE' => 'ACTIVE',
+                    'INACTIVE' => 'INACTIVE',
+                ])
         ];
     }
 
