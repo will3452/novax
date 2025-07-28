@@ -33,7 +33,7 @@
                             </td>
                             <td class="border text-right px-2">
                                 @php
-                                    $date_sale = \App\Models\Sale::wherePaymentMethod($paymentMethod->name)->whereBranchId($branch->id)->whereDate('date', $date)->sum('total_amount');
+                                    $date_sale = \App\Models\SalesPayment::whereMethod($paymentMethod->name)->whereBranchId($branch->id)->whereDate('created_at', $date)->sum('amount');
                                     $total += $date_sale;
                                 @endphp
                                 {{
