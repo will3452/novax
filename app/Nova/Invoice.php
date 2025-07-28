@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Stack;
 use Laravel\Nova\Fields\Text;
@@ -72,6 +73,8 @@ class Invoice extends BranchResourceFilter
     public function fields(Request $request)
     {
         return [
+            Date::make('Date', 'created_at')
+                ->sortable(),
             Text::make('Invoice Number')
                 ->hideWhenCreating()
                 ->sortable(),
