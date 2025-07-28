@@ -50,8 +50,7 @@ class Expenses extends BranchResourceFilter
     {
         return [
             Date::make('Date', 'created_at')
-                ->sortable()
-                ->exceptOnForms(),
+                ->sortable(),
             Textarea::make('Description')
                 ->alwaysShow()
                 ->sortable(),
