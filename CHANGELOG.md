@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.2](https://github.com/will3452/novax/compare/v0.0.1...v0.0.2) (2025-07-28)
+
+
+### Bug Fixes
+
+* **expenses:** fix editable date ([28608a3](https://github.com/will3452/novax/commit/28608a37a86b9cb4252375a013a397d5db8f4a99))
+* **invoice:** display date ([2c3391e](https://github.com/will3452/novax/commit/2c3391eb44834dc7cb9297f0974cf36f1f54991c))
+* **payment-summary:** update payment source ([bdc17a9](https://github.com/will3452/novax/commit/bdc17a9fe9b5bd80348cda40f24dec7e60d93125))
+
 ### [0.0.1](https://github.com/will3452/novax/compare/v0.0.1-beta.1...v0.0.1) (2025-07-28)
 
 
