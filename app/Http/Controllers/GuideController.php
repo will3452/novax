@@ -30,15 +30,17 @@ class GuideController extends Controller
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:guides,slug',
             'content' => 'required|string',
+            'status' => 'nullable',
             'category' => 'nullable|string|max:255',
             'cover_image' => 'nullable|image|max:2048', // Optional cover image
         ]);
+        // dd($data);
         $data['organization_id'] = $request->user()->organization_id; // Assuming the user is authenticated and belongs to an organization
         $data['author_user_id'] = $request->user()->id; // Assuming the user is authenticated
         $data['cover_image'] = $request->file('cover_image', 'public') ? $request->file('cover_image')->store('covers', 'public') : null;
         $data['version'] = '1.0'; // Default version
-        $data['status'] = 'DRAFT'; // Default status
-        $data['published_at'] = null; // Not published yet
+        $data['status'] = $data['status'] ? $data['status']: 'DRAFT'; // Default status
+        $data['published_at'] = $data['status'] === 'PUBLISHED' ? now() : null; // Not published yet
         $data['helpful_count'] = 0; // Default helpful count
 
         $guide = \App\Models\Guide::create($data);

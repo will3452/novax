@@ -25,7 +25,7 @@ class CreateGuidesTable extends Migration
             $table->timestamp('published_at')->nullable();
             $table->unsignedBigInteger('organization_id')->nullable();
             $table->unsignedInteger('helpful_count')->default(0);
-            $table->enum ('category', ['DEV', 'QA', 'ONBOARDING'])->default('DEV');
+            $table->enum('category', ['DEV', 'QA', 'ONBOARDING'])->default('DEV');
             // Foreign keys
             $table->foreign('author_user_id')->references('id')->on('users')->onDelete('set null');
             $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('set null');
