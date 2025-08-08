@@ -15,7 +15,8 @@ class UpdateCreatedAtOfInvoicesTable extends Migration
     {
         $records = \App\Models\Invoice::with('sale')->get();
         foreach ($records as $rec) {
-            $rec->update(['created_at' => $rec->sale->date]);
+            $date = $rec->sale ? $rec->sale->date : $rec->created_at;
+            $rec->update(['created_at' => $date]);
         }
     }
 
