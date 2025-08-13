@@ -121,24 +121,25 @@
                             Services
                         </router-link>
 
-                        <router-link class="text-primary-900" :to="{
+                        {{-- <router-link class="text-primary-900" :to="{
                             name: 'index',
                             params: {
                                 resourceName: 'payment-orders'
                             }
                         }" class="text-white text-justify no-underline dim" >
                             Payment Orders
-                        </router-link>
+                        </router-link> --}}
 
-                        @if (auth()->user()->type != 'Patient')
                         <router-link class="text-primary-900" :to="{
                             name: 'index',
                             params: {
                                 resourceName: 'billings'
                             }
                         }" class="text-white text-justify no-underline dim" >
-                            Billings
+                            Billing
                         </router-link>
+
+                        @if (auth()->user()->type != 'Patient')
                             <router-link class="text-primary-900" :to="{
                                 name: 'index',
                                 params: {

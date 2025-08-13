@@ -10,28 +10,44 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Textarea;
 use App\Models\User as ModelsUser;
+use App\Nova\Actions\PayNow;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Billing extends Resource
 {
 
-    public static function group () {
-        return auth()->user()->type == ModelsUser::TYPE_STAFF ? 'CASHIER' : 'PAYMENTS'; 
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if (auth()->user()->type == 'Patient') {
+            return $query->wherePayeeId(auth()->id());
+        }
+        return $query;
     }
 
+    public static function group () {
+        return auth()->user()->type == ModelsUser::TYPE_STAFF ? 'CASHIER' : 'PAYMENTS';
+    }
+
+    public function authorizedToView(Request $request)
+    {
+        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]);
+    }
     public static function authorizedToCreate(Request $request)
     {
-        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]); 
+        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]);
     }
     public function authorizedToDelete(Request $request)
     {
-        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]); 
+        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]);
     }
 
     public function authorizedToUpdate(Request $request)
     {
-        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]); 
+        if ($request->action == 'pay-now') {
+            return true;
+        }
+        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]);
     }
     /**
      * The model the resource corresponds to.
@@ -65,8 +81,7 @@ class Billing extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make(__('order #'), 'id')->sortable(),
-            Date::make('Date', 'created_at')->sortable(), 
+            Date::make('Date', 'created_at')->sortable(),
             Textarea::make('Particulars')
                 ->alwaysShow()
                 ->showOnIndex(),
@@ -75,17 +90,17 @@ class Billing extends Resource
             Currency::make('Balance', function (){
                 $total = 0;
                 foreach($this->payments as $payment) {
-                    $total += $payment->amount; 
+                    $total += $payment->amount;
                 }
-
-                return $this->amount - $total; 
-            }), 
+                $balance = $this->amount - $total;
+                return $balance <= 0 ? 0: $this->amount - $total;
+            }),
             BelongsTo::make('Payee', 'payee', User::class)
-                ->showCreateRelationButton(), 
+                ->showCreateRelationButton(),
             Select::make('Mode')
-                ->options(['Cash' => 'Cash', 'Check' => 'Check']), 
-            Text::make('Bank/Check #', 'bank'), 
-            HasMany::make('Payments', 'payments', Payment::class), 
+                ->options(['Cash' => 'Cash', 'Check' => 'Check']),
+            Text::make('Bank/Check #', 'bank'),
+            HasMany::make('Payments', 'payments', Payment::class),
         ];
     }
 
@@ -130,6 +145,16 @@ class Billing extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            PayNow::make()->canSee(function () {
+                if (auth()->user()->type != 'Patient') return false;
+                if ($this->id) {
+                    $billing = \App\Models\Billing::find($this->id);
+                    $paid = $billing->payments()->sum('amount');
+                    return $billing->amount > $paid;
+                }
+                return true;
+            }),
+        ];
     }
 }

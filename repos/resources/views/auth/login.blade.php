@@ -1,14 +1,14 @@
 @extends('nova::auth.layout')
 
 @section('content')
-<div class="grid grid-cols-1 md:grid-cols-5 h-screen items-center">
+<div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-5 h-screen items-center">
     <form
         class="col-span-2 w-full p-8 mx-auto flex flex-col justify-center space-y-4 "
         method="POST"
         action="{{ route('nova.login') }}"
         >
         {{ csrf_field() }}
-        <h1 class="text-4xl text-center  md:text-left md:text-6xl font-bold text-red-800 animate-pulse">ODECOR-B CLINIC</h1>
+        <a href="/"><h1 class="text-4xl text-center  md:text-left md:text-4xl font-bold text-red-800 animate-pulse">ODECOR-B CLINIC</h1></a>
         @if ($errors->any())
         <p class="text-center font-semibold text-danger my-3">
             @if ($errors->has('email'))

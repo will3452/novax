@@ -26,6 +26,7 @@ class User extends Authenticatable
         'address',
         'sex',
         'birthday',
+        'phone',
     ];
 
     const TYPE_ADMIN = 'Administrator';

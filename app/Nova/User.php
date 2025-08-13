@@ -97,6 +97,8 @@ class User extends Resource
                     ]),
                 Text::make('Address'),
                 Date::make('Birthday'),
+                Text::make('Phone')
+                    ->help('This is required to receive SMS Notification.'),
             ]),
             Panel::make('Account Credentials', [
                 Text::make('Email')

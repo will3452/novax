@@ -14,14 +14,15 @@ class Billing extends Model
         'amount',
         'payee_id',
         'mode', // cash, check
-        'bank', // 
-    ]; 
+        'bank', //
+        'token',
+    ];
 
     public function payee () {
-        return $this->belongsTo(User::class); 
+        return $this->belongsTo(User::class);
     }
 
     public function payments () {
-        return $this->hasMany(Payment::class); 
+        return $this->hasMany(Payment::class);
     }
 }
