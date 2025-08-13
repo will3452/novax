@@ -209,14 +209,14 @@
   <!-- Contact -->
   <section id="contact" class="py-16 lg:py-20 bg-white">
     <div class="max-w-6xl mx-auto px-4 grid lg:grid-cols-12 gap-10">
-      <div class="lg:col-span-5">
+      <div class="lg:col-span-12 text-center">
         <h2 class="text-3xl font-extrabold tracking-tight">Get in Touch</h2>
         <p class="mt-4 text-slate-600">Have questions or need to reschedule? We’re here to help.</p>
         <div class="mt-6 space-y-3 text-slate-700">
           <p><strong>Phone:</strong> <a class="text-brand-700 hover:underline" href="tel:+631234567890">+63 963 598 0829</a></p>
           <p><strong>FB Page:</strong> <a class="text-brand-700 hover:underline">Odecor-B Medical Clinic</a></p>
           <p><strong>Hours:</strong> Mon–Sat, 9:00 AM – 4:00 PM</p>
-          <p><strong>Address:</strong> Add your full clinic address here</p>
+          <p><strong>Address:</strong> #7 Batasan-San Mateo Road, Batasan Hills, , Quezon City, Philippines</p>
         </div>
       </div>
     </div>
