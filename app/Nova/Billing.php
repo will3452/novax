@@ -95,6 +95,14 @@ class Billing extends Resource
                 $balance = $this->amount - $total;
                 return $balance <= 0 ? 0: $this->amount - $total;
             }),
+            Text::make('Status', function () {
+                $total = 0;
+                foreach($this->payments as $payment) {
+                    $total += $payment->amount;
+                }
+                $balance = $this->amount - $total;
+                return $balance <= 0 ? "<span class='text-green-900 bg-green-200 p-2 rounded-2xl font-bold'>Paid</span>": "<span class='text-red-900 bg-red-200 p-2 rounded-2xl font-bold'>Awaiting Payment</span>";
+            })->asHtml(),
             BelongsTo::make('Payee', 'payee', User::class)
                 ->showCreateRelationButton(),
             Select::make('Mode')
