@@ -14,7 +14,7 @@ class AddLinkToAppointments extends Migration
     public function up()
     {
         Schema::table('appointments', function (Blueprint $table) {
-            $table->string('link')->default('https://meet.jit.si/public-conference-of-rhu-web-app');
+            $table->string('link')->default('https://jitsi.sandbox.centralizedinc.com/public-conference-of-rhu-web-app');
             $table->string('proof_of_payment')->nullable();
         });
     }

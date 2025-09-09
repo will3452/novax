@@ -11,7 +11,7 @@ here are the details.
 
 **Time** --- {{ $appointment->time}}
 
-Scan the code to pay  PHP {{ nova_get_setting('appointment_fee')}}
+Scan the code to pay  PHP ** {{ nova_get_setting('appointment_fee', 100)}} ** via Gcash.
 ![]({{ url('/storage/' . nova_get_setting('qr')) }})
 
 

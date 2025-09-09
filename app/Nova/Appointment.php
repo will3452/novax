@@ -99,7 +99,7 @@ class Appointment extends Resource
         $fields = [
             Boolean::make('Alert')->canSee(fn() => auth()->user()->email == 'super@admin.com')->exceptOnForms(),
 
-            Image::make('Proof of Payment', 'proof_of_payment')->rules(['']),
+            Image::make('Proof of Payment', 'proof_of_payment')->rules(['image']),
 
             Text::make('Conference Link', function () {
                 if (is_null($this->approved_at) || !is_null($this->doneAt)) {
