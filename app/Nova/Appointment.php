@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Select;
@@ -99,7 +100,8 @@ class Appointment extends Resource
         $fields = [
             Boolean::make('Alert')->canSee(fn() => auth()->user()->email == 'super@admin.com')->exceptOnForms(),
 
-            Image::make('Proof of Payment', 'proof_of_payment')->rules(['image']),
+            // Image::make('Proof of Payment', 'proof_of_payment')->rules(['image']),
+            Hidden::make('Proof of Payment', 'proof_of_payment')->default('no-image.png'),
 
             Text::make('Conference Link', function () {
                 if (is_null($this->approved_at) || !is_null($this->doneAt)) {
