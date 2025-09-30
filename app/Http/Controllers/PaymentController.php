@@ -16,7 +16,7 @@ class PaymentController extends Controller
             $billing = Billing::findOrFail($reference);
             return view('create-transaction', compact('billing'));
         }
-        return redirect()->to('/app/dashboards/');
+        return view('create-transaction');
     }
 
     public function processTransaction(Request $request) {
