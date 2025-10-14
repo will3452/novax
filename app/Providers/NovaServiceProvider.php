@@ -30,9 +30,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         parent::boot();
 
-        NovaSettings::addSettingsFields([
-            Image::make('Logo'),
-        ]);
+        NovaSettings::addSettingsFields([Image::make("Logo")]);
     }
 
     /**
@@ -43,9 +41,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function routes()
     {
         Nova::routes()
-                ->withAuthenticationRoutes()
-                ->withPasswordResetRoutes()
-                ->register();
+            ->withAuthenticationRoutes()
+            ->withPasswordResetRoutes()
+            ->register();
     }
 
     /**
@@ -57,8 +55,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function gate()
     {
-        Gate::define('viewNova', function ($user) {
-            return true; 
+        Gate::define("viewNova", function ($user) {
+            return true;
         });
     }
 
@@ -70,26 +68,26 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function cards()
     {
         $cards = [
-            (new \Richardkeep\NovaTimenow\NovaTimenow)->timezones([
-                'Asia/Manila',
-            ])->defaultTimezone('Africa/Manila'),
-            ]; 
+            (new \Richardkeep\NovaTimenow\NovaTimenow())
+                ->timezones(["Asia/Manila"])
+                ->defaultTimezone("Africa/Manila"),
+        ];
         if (auth()->user()->type == \App\Models\User::TYPE_PATIENT) {
             array_push($cards, Bookings::make());
             array_push($cards, BookingTrends::make());
             array_push($cards, BookingStatus::make());
 
-            return $cards; 
+            return $cards;
         }
 
         // if (auth()->user()->type == \App\Models\User::TYPE_STAFF) {
-            
+
         // }
 
         array_push($cards, ForApprovalBookings::make());
         array_push($cards, PatientBookingStatus::make());
-        array_push($cards, NewUsers::make()); 
-        array_push($cards, ScheduledBookingsToday::make()); 
+        array_push($cards, NewUsers::make());
+        array_push($cards, ScheduledBookingsToday::make());
         return $cards;
     }
 
@@ -111,16 +109,20 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            (new ProfileTool)->canSee(function () {
-                return config('novax.profile_enabled');
+            (new ProfileTool())->canSee(function () {
+                return config("novax.profile_enabled");
             }),
-            (new BackupTool)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
-                config('novax.back_up_enabled');
+            (new BackupTool())->canSee(function ($request) {
+                return $request
+                    ->user()
+                    ->hasRole(\App\Models\Role::SUPERADMIN) &&
+                    config("novax.back_up_enabled");
             }),
-            (new NovaSettings)->canSee(function ($request) {
-                return $request->user()->hasRole(\App\Models\Role::SUPERADMIN) &&
-                config('novax.setting_enabled');
+            (new NovaSettings())->canSee(function ($request) {
+                return $request
+                    ->user()
+                    ->hasRole(\App\Models\Role::SUPERADMIN) &&
+                    config("novax.setting_enabled");
             }),
         ];
     }
