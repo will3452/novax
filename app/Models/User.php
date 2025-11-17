@@ -21,7 +21,17 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'quota',
+        'verified_at',
     ];
+
+    const ROLE_ADMIN = 'Administrator';
+    const ROLE_EMPLOYEE = 'Employee';
+
+    public function orders () {
+        return $this->hasMany(Order::class, 'employee_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -40,5 +50,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'verified_at' => 'datetime',
     ];
 }

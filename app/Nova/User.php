@@ -4,14 +4,22 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\MorphToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        return auth()->user()->role === \App\Models\User::ROLE_ADMIN;
+    }
     /**
      * The model the resource corresponds to.
      *
@@ -35,6 +43,17 @@ class User extends Resource
         'id', 'name', 'email',
     ];
 
+    public function authorizedToDelete(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        if (auth()->user()->role === \App\Models\User::ROLE_ADMIN) return true;
+        return false;
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -44,8 +63,13 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
+            Select::make('Role')
+                ->options([
+                    \App\Models\User::ROLE_ADMIN => 'Administrator',
+                    \App\Models\User::ROLE_EMPLOYEE => 'Employee',
+                ])
+                ->rules('required')
+                ->sortable(),
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
@@ -60,6 +84,17 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
+
+            Number::make('Quota')
+                ->rules('required', 'integer', 'min:0')
+                ->sortable(),
+
+            Date::make('Verified At')
+                ->sortable()
+                ->nullable()
+                ->hideWhenCreating()
+                ->hideWhenUpdating(),
+            HasMany::make('Orders', 'orders', Order::class),
         ];
     }
 
