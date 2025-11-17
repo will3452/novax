@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\FilterByDate;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
@@ -71,7 +72,9 @@ class Tithes extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            FilterByDate::make('Filter by Date'),
+        ];
     }
 
     /**
