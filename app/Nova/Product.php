@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\AddToCart;
 use App\Nova\Actions\RemoveToCart;
+use App\Nova\Actions\RunInventoryForecast;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
@@ -11,6 +12,7 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Sparkline;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Product extends Resource
@@ -81,12 +83,6 @@ class Product extends Resource
             Currency::make('Price')
                 ->sortable()
                 ->rules('required', 'min:0'),
-            // Number::make('Default Stock', 'default_stock')
-            //     ->sortable()
-            //     ->rules('required', 'min:0'),
-            Number::make('Current Stock', 'current_stock')
-                ->sortable()
-                ->rules('required', 'min:0'),
         ];
     }
 
@@ -146,7 +142,8 @@ class Product extends Resource
 
 
         if ($this->current_stock == $EMPTY_STOCK) {
-            return [];
+            return [
+            ];
         }
 
         if ($INSIDE_CART) {
@@ -156,7 +153,7 @@ class Product extends Resource
         }
 
         return [
-            AddToCart::make()
+            AddToCart::make(),
         ];
     }
 }

@@ -1,7 +1,115 @@
 <?php
+
+use App\Models\OrderItem;
+use App\Models\Prediction;
+use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use Phpml\Regression\LeastSquares;
 
+Route::get('predict', function (Request $request) {
+    $period = $request->input('period', 'day');
+    $product_id = $request->input('product_id', 5);
+    $product = Product::find($product_id);
+    $predict_intervals = $request->input('predict_intervals', 1);
+
+    // group by product_id and period: day, week, month, year and include total qty sold
+    $sales = OrderItem::selectRaw("SUM(qty) as total_qty,
+        CASE
+            WHEN '$period' = 'day' THEN DATE(created_at)
+            WHEN '$period' = 'week' THEN YEARWEEK(created_at)
+            WHEN '$period' = 'month' THEN DATE_FORMAT(created_at, '%Y-%m')
+            WHEN '$period' = 'year' THEN YEAR(created_at)
+        END as period")
+        ->where('product_id', $product_id)
+        ->groupBy('period')
+        ->orderBy('period')
+        ->get();
+
+    $start = $sales->first()->period;
+    $end = $sales->last()->period;
+    $intervals = [];
+    if ($period == 'day') {
+        $current = \Carbon\Carbon::parse($start);
+        $endDate = \Carbon\Carbon::parse($end);
+        while ($current->lte($endDate)) {
+            $intervals[] = $current->toDateString();
+            $current->addDay();
+        }
+        // add interval after end date base on the predict_intervals
+        for ($i = 0; $i < $predict_intervals; $i++) {
+            $intervals[] = $current->toDateString();
+            $current->addDay();
+        }
+    } elseif ($period == 'week') {
+        $current = \Carbon\Carbon::now()->setISODate(substr($start, 0,4), substr($start, 4,2));
+        $endDate = \Carbon\Carbon::now()->setISODate(substr($end, 0,4), substr($end, 4,2));
+        while ($current->lte($endDate)) {
+            $intervals[] = $current->format('oW');
+            $current->addWeek();
+        }
+        // add interval after end date base on the predict_intervals
+        for ($i = 0; $i < $predict_intervals; $i++) {
+            $intervals[] = $current->format('oW');
+            $current->addWeek();
+        }
+    } elseif ($period == 'month') {
+        $current = \Carbon\Carbon::parse($start . '-01');
+        $endDate = \Carbon\Carbon::parse($end . '-01');
+        while ($current->lte($endDate)) {
+            $intervals[] = $current->format('Y-m');
+            $current->addMonth();
+        }
+        // add interval after end date base on the predict_intervals
+        for ($i = 0; $i < $predict_intervals; $i++) {
+            $intervals[] = $current->format('Y-m');
+            $current->addMonth();
+        }
+    } elseif ($period == 'year') {
+        $current = \Carbon\Carbon::createFromDate($start);
+        $endDate = \Carbon\Carbon::createFromDate($end);
+        while ($current->lte($endDate)) {
+            $intervals[] = $current->format('Y');
+            $current->addYear();
+        }
+        // add interval after end date base on the predict_intervals
+        for ($i = 0; $i < $predict_intervals; $i++) {
+            $intervals[] = $current->format('Y');
+            $current->addYear();
+        }
+    }
+
+    // Prepare data for training
+    $_period = [];
+    $_orders = [];
+    $index = 1;
+    for ($i = 0; $i < $sales->count(); $i++) {
+        $_period[] = $index++;
+        $_orders[] = $sales[$i]->total_qty ?? 0;
+    }
+
+    $samples = array_map(fn($d) => [$d], $_period);
+
+    $regression = new LeastSquares();
+    $regression->train($samples, $_orders);
+    $prediction = $regression->predict([$index]);
+
+    $results = \App\Models\Prediction::updateOrCreate(
+        [   'product_id' => $product_id,
+            'prediction_for' => $intervals[$sales->count()-1],
+            'interval' => $period],
+        [
+            'prediction_for' => $intervals[$sales->count()-1],
+            'interval' => $period,
+            'sales_quantity' => $prediction,
+            'stock_recommendation' => max(0, ($prediction - $product->default_stock)),
+            'product_id' => $product_id,
+        ]
+    );
+
+    return $results;
+});
 
 Route::get('/', function () {
     return redirect()->to(config('nova.path'));

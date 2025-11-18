@@ -24,4 +24,8 @@ class Product extends Model
     public function orderItems () {
         return $this->hasMany(OrderItem::class, 'product_id');
     }
+
+    public function predictions () {
+        return $this->hasMany(Prediction::class, 'product_id');
+    }
 }

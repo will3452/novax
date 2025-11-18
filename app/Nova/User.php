@@ -89,6 +89,12 @@ class User extends Resource
                 ->rules('required', 'integer', 'min:0')
                 ->sortable(),
 
+            Text::make('Daily Progress', function () {
+                $progress = $this->orders()->whereStatus(\App\Models\Order::STATUS_CONFIRMED)->whereDate('created_at', now())->count();
+                return "<progress  value='$progress' max='$this->quota' />";
+            })->asHtml(),
+
+
             Date::make('Verified At')
                 ->sortable()
                 ->nullable()

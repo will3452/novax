@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c5188e246ef0e934d8a6b4c88faaf987",
+    "content-hash": "834cdc1d6c602abff566cb8641a17acb",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1668,7 +1668,7 @@
             "dist": {
                 "type": "path",
                 "url": "./repos",
-                "reference": "d8047d4978d807a2b2a7d4ffcc87153def053bfa"
+                "reference": "60d1815bf82a9a508489b5f577227dc708a1a9df"
             },
             "require": {
                 "brick/money": "^0.5.0",
@@ -3160,6 +3160,59 @@
             "time": "2020-10-15T08:29:30+00:00"
         },
         {
+            "name": "php-ai/php-ml",
+            "version": "0.10.0",
+            "source": {
+                "type": "git",
+                "url": "git@gitlab.com:php-ai/php-ml.git",
+                "reference": "543f11158c57bf64ef8ddecd5bab51d396d39f50"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/php-ai%2Fphp-ml/repository/archive.zip?sha=543f11158c57bf64ef8ddecd5bab51d396d39f50",
+                "reference": "543f11158c57bf64ef8ddecd5bab51d396d39f50",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "phpbench/phpbench": "^1.2",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-phpunit": "^0.12",
+                "phpstan/phpstan-strict-rules": "^0.12",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phpml\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Arkadiusz Kondas",
+                    "email": "arkadiusz.kondas@gmail.com"
+                }
+            ],
+            "description": "PHP-ML - Machine Learning library for PHP",
+            "homepage": "https://gitlab.com/php-ai/php-ml",
+            "keywords": [
+                "Neural network",
+                "artificial intelligence",
+                "computational learning theory",
+                "data science",
+                "feature extraction",
+                "machine learning",
+                "pattern recognition"
+            ],
+            "time": "2022-11-09T09:25:29+00:00"
+        },
+        {
             "name": "phpoption/phpoption",
             "version": "1.9.3",
             "source": {
@@ -4233,6 +4286,61 @@
                 "source": "https://github.com/runlinenl/nova-profile-tool/tree/master"
             },
             "time": "2018-12-04T22:15:15+00:00"
+        },
+        {
+            "name": "signifly/nova-progressbar-card",
+            "version": "v0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/signifly/nova-progressbar-card.git",
+                "reference": "ec4a6ef79c4c0dcedad0240fd9f6a6481f8adb35"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/signifly/nova-progressbar-card/zipball/ec4a6ef79c4c0dcedad0240fd9f6a6481f8adb35",
+                "reference": "ec4a6ef79c4c0dcedad0240fd9f6a6481f8adb35",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Signifly\\Nova\\Cards\\ProgressBar\\CardServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Signifly\\Nova\\Cards\\ProgressBar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ro Kleine Sonne",
+                    "email": "ro@signifly.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel Nova card with a progress bar",
+            "keywords": [
+                "card",
+                "laravel",
+                "nova",
+                "progressbar"
+            ],
+            "support": {
+                "issues": "https://github.com/signifly/nova-progressbar-card/issues",
+                "source": "https://github.com/signifly/nova-progressbar-card/tree/v0.2.1"
+            },
+            "abandoned": true,
+            "time": "2019-09-30T08:57:33+00:00"
         },
         {
             "name": "spatie/db-dumper",
@@ -9474,12 +9582,12 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^7.3|^8.0"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
