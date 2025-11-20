@@ -19,6 +19,7 @@ class Product extends Model
         'image',
         'default_stock',
         'current_stock',
+        'remarks',
     ];
 
     public function orderItems () {

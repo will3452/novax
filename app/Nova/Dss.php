@@ -22,7 +22,7 @@ class Dss extends Resource
         return auth()->user()->role === \App\Models\User::ROLE_ADMIN;
     }
     public static function label () {
-        return "Decision Support";
+        return "Restocking Support";
     }
     public static function authorizedToCreate(Request $request)
     {
@@ -87,13 +87,14 @@ class Dss extends Resource
                     ->toArray();
                 return $results;
             }),
-            Select::make('Category')
+            Select::make('Type', 'category')
                 ->options([
                     \App\Models\Product::CATEGORY_SINGLE => 'Single',
                     \App\Models\Product::CATEGORY_BUNDLE => 'Bundle',
                 ])
                 ->rules('required')
                 ->sortable(),
+            Text::make('Category', 'remarks')->rules(['required'])->sortable(),
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),

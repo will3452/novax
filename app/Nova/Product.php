@@ -58,6 +58,7 @@ class Product extends Resource
     public static $search = [
         'name',
         'category',
+        'remarks',
     ];
 
     /**
@@ -69,18 +70,25 @@ class Product extends Resource
     public function fields(Request $request)
     {
         return [
-            Select::make('Category')
+            Select::make('Type', 'category')
                 ->options([
                     \App\Models\Product::CATEGORY_SINGLE => 'Single',
                     \App\Models\Product::CATEGORY_BUNDLE => 'Bundle',
                 ])
                 ->rules('required')
                 ->sortable(),
+            Text::make('Category', 'remarks')->rules(['required'])->sortable(),
             Image::make('Image'),
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
             Currency::make('Price')
+                ->sortable()
+                ->rules('required', 'min:0'),
+            Number::make('Default Stock', 'default_stock')
+                ->sortable()
+                ->rules('required', 'min:0'),
+            Number::make('Current Stock', 'current_stock')
                 ->sortable()
                 ->rules('required', 'min:0'),
         ];
