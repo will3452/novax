@@ -2,11 +2,17 @@
 
 namespace App\Nova;
 
+use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource as NovaResource;
 
 abstract class Resource extends NovaResource
 {
+    public static function availableForNavigation(Request $request)
+    {
+        if (auth()->user()->is_root) return true;
+        return in_array(static::$model, \App\Models\User::ACCESS_MENU_MAP[auth()->user()->role]);
+    }
     /**
      * Build an "index" query for the given resource.
      *

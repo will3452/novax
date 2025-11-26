@@ -1,29 +1,54 @@
 <?php
 
 namespace App\Nova;
+
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Select;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Endpoint extends Resource
+class Profile extends Resource
 {
+    public static function group () {
+        return 'Manage';
+    }
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Endpoint::class;
+    public static $model = \App\Models\Profile::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = '';
+
+    public function title () {
+        $name = '';
+        if ($this->first_name) {
+            $name .= $this->first_name;
+        }
+
+        if ($this->middle_name) {
+            $name .= " " .$this->middle_name[0] . ".";
+        }
+
+        if ($this->last_name) {
+            $name .= " " . $this->last_name;
+        }
+
+        if ($this->suffix) {
+            $name .= " $this->suffix";
+        }
+
+        return $name;
+    }
 
     /**
      * The columns that should be searched.
@@ -32,7 +57,9 @@ class Endpoint extends Resource
      */
     public static $search = [
         'id',
-        'method',
+        'first_name',
+        'last_name',
+        'middle_name',
     ];
 
     /**
@@ -44,26 +71,24 @@ class Endpoint extends Resource
     public function fields(Request $request)
     {
         return [
-            Text::make('Path'), 
-            Select::make('Method')
+            Text::make('First Name')
+                ->rules(['required']),
+            Text::make('Middle Name'),
+            Text::make('Last Name')
+                ->rules(['required']),
+            Select::make('Suffix')
+                ->options(array_combine(\App\Models\Profile::SUFFIX, \App\Models\Profile::SUFFIX)),
+            Date::make('Birth Date')
+                ->rules(['required']),
+            Select::make('Gender')
                 ->options([
-                    'post' => 'post',
-                    'get' => 'get',
-                    'put' => 'put', 
+                    \App\Models\Profile::GENDER_MALE => \App\Models\Profile::GENDER_MALE,
+                    \App\Models\Profile::GENDER_FEMALE =>
+                    \App\Models\Profile::GENDER_FEMALE,
                 ]),
-            Select::make('Model')
-                ->options(function () {
-                    $modelPath = app_path('Models'); 
-                    $files = File::files($modelPath);
-
-                    $array = []; 
-
-                    foreach($files as $item) {
-                        $array[$item->getFilenameWithoutExtension()] = $item->getFilenameWithoutExtension(); 
-                    }
-                    return $array; 
-                }),
-
+            Text::make('Address'),
+            BelongsTo::make('User', 'user')
+                ->help('Defines the system-level account associated with this profile, determining permissions, login credentials, and access rights.'),
         ];
     }
 

@@ -17,9 +17,11 @@ class AdminSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            'name'=>'The Administrator',
-            'email'=>'root@yopmail.com',
-            'password'=> bcrypt('password')
+            'name'=>'Willy A. Galas',
+            'email'=>'eugnay.root@yopmail.com',
+            'password'=> bcrypt('1'),
+            'is_root' => true,
+            'role' => User::ROLE_ADMINISTRATOR,
         ]);
     }
 }

@@ -1,0 +1,22 @@
+:root {
+  /* Primary = Neon Green from logo */
+  --primary: rgb(0,215,75);
+  --primary-dark: rgb(0, 255, 75);
+
+  /* Opacity variations */
+  --primary-70: rgba(0, 215,75, 0.7);
+  --primary-50: rgba(0, 215,75, 0.5);
+  --primary-30: rgba(0, 215,75, 0.3);
+  --primary-10: rgba(0, 215,75, 0.1);
+
+  /* Logo main blue */
+  --logo: rgb(0, 50, 160);
+
+  /* Sidebar icons use brighter green accent */
+  --sidebar-icon: rgb(160, 255, 0);
+}
+
+/* Sidebar gradient using green → blue (from your logo) */
+.bg-grad-sidebar {
+  background: rgb(0, 50, 160);
+}

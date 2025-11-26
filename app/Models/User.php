@@ -21,7 +21,38 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'is_root',
+        'reward_points',
     ];
+
+    const ROLE_RESIDENT = 'Resident';
+    const ROLE_ADMINISTRATOR = 'Administrator';
+    const ROLE_STAFF = 'Staff';
+
+    const ACCESS_MENU_MAP = [
+        User::ROLE_RESIDENT => [
+            // BarangayDocument::class,
+        ],
+        User::ROLE_STAFF => [
+            BarangayDocument::class,
+            BarangayDocument::class,
+            Profile::class,
+            Barangay::class,
+        ],
+        User::ROLE_ADMINISTRATOR => [
+            BarangayAccess::class,
+            BarangayDocument::class,
+            Profile::class,
+            Barangay::class,
+            Document::class,
+            User::class,
+        ],
+    ];
+
+    public function profile () {
+        return $this->hasOne(Profile::class, 'user_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

@@ -11,9 +11,9 @@
 >
     {{ csrf_field() }}
 
-    @component('nova::auth.partials.heading')
+    <h2 class="font-bold mb-4 text-center">
         {{ __('Welcome Back!') }}
-    @endcomponent
+    </h2>
 
     @if ($errors->any())
     <p class="text-center font-semibold text-danger my-3">
@@ -27,24 +27,24 @@
 
     <div class="mb-6 {{ $errors->has('email') ? ' has-error' : '' }}">
         <label class="block font-bold mb-2" for="email">{{ __('Email Address') }}</label>
-        <input class="form-control form-input form-input-bordered w-full" id="email" type="email" name="email" value="{{ old('email') }}" required autofocus>
+        <input placeholder="Enter your Email" class="form-control form-input form-input-bordered w-full" id="email" type="email" name="email" value="{{ old('email') }}" required autofocus>
     </div>
 
     <div class="mb-6 {{ $errors->has('password') ? ' has-error' : '' }}">
         <label class="block font-bold mb-2" for="password">{{ __('Password') }}</label>
-        <input class="form-control form-input form-input-bordered w-full" id="password" type="password" name="password" required>
+        <input class="form-control form-input form-input-bordered w-full" id="password" type="password" name="password" placeholder="Enter your password" required>
     </div>
 
-    <div class="flex mb-6">
-        <label class="flex items-center text-xl font-bold">
+    <div class="flex mb-6" style="justify-content: space-between">
+        <label class="flex items-center text-sm font-bold">
             <input class="" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
-            <span class="text-base ml-2">{{ __('Remember Me') }}</span>
+            <span class=" ml-2">{{ __('Remember Me') }}</span>
         </label>
 
 
         @if (\Laravel\Nova\Nova::resetsPasswords())
         <div class="ml-auto">
-            <a class="text-primary dim font-bold no-underline" href="{{ route('nova.password.request') }}">
+            <a class="text-sm text-primary dim font-bold no-underline" href="{{ route('nova.password.request') }}">
                 {{ __('Forgot Your Password?') }}
             </a>
         </div>
