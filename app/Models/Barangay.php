@@ -10,14 +10,14 @@ class Barangay extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'address_line',
-        'region',
-        'province',
-        'city',
+        "name",
+        "address_line",
+        "region",
+        "province",
+        "city",
         // preference
-        'logo',
-        'primary_color',
-        'secondary_color',
+        "logo",
+        "primary_color",
+        "secondary_color",
     ];
 }

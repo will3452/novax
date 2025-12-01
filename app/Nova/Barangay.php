@@ -2,7 +2,13 @@
 
 namespace App\Nova;
 
+use App\Models\City;
+use App\Models\Province;
+use App\Models\Region;
+use Epartment\NovaDependencyContainer\HasDependencies;
+use Epartment\NovaDependencyContainer\NovaDependencyContainer;
 use Laravel\Nova\Card;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -15,8 +21,10 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Barangay extends Resource
 {
-    public static function group () {
-        return 'Reference';
+    use HasDependencies;
+    public static function group()
+    {
+        return "Reference";
     }
     /**
      * The model the resource corresponds to.
@@ -30,18 +38,14 @@ class Barangay extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = "name";
 
     /**
      * The columns that should be searched.
      *
      * @var array
      */
-    public static $search = [
-        'id',
-        'name',
-        'address_line',
-    ];
+    public static $search = ["id", "name", "address_line"];
 
     /**
      * Get the fields displayed by the resource.
@@ -51,19 +55,37 @@ class Barangay extends Resource
      */
     public function fields(Request $request)
     {
+        $address = [];
+
+        foreach (Region::get() as $region) {
+            foreach (
+                Province::whereRegionCode($region->code)->get()
+                as $province
+            ) {
+                foreach (
+                    City::whereProvinceCode($province->code)->get()
+                    as $city
+                ) {
+                    $address[] = "$city->name, $province->name, $region->code";
+                }
+            }
+        }
+        $descriptions = [
+            Text::make("Name")->sortable(),
+            Select::make("City, Province, Region", "address_line")
+                ->options(fn() => array_combine($address, $address))
+                ->searchable()
+                ->onlyOnForms(),
+            Text::make("Region", "region")->sortable()->exceptOnForms(),
+            Text::make("Province", "province")->sortable()->exceptOnForms(),
+            Text::make("City", "city")->sortable()->exceptOnForms(),
+        ];
         return [
-            Panel::make('Description', [
-                Text::make('Name')
-                ->sortable(),
-                Textarea::make('Address Line'),
-                Text::make('Region'),
-                Text::make('Province'),
-                Text::make('City'),
-            ]),
-            Panel::make('Preference', [
-                Image::make('Logo')->hideFromIndex(),
-                Swatches::make('Primary Color')->hideFromIndex(),
-                Swatches::make('Secondary Color')->hideFromIndex(),
+            Panel::make("Description", $descriptions),
+            Panel::make("Preference", [
+                Image::make("Logo")->hideFromIndex(),
+                Swatches::make("Primary Color")->hideFromIndex(),
+                Swatches::make("Secondary Color")->hideFromIndex(),
             ]),
         ];
     }
