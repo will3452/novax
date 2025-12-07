@@ -18,17 +18,17 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role',
-        'is_root',
-        'reward_points',
+        "name",
+        "email",
+        "password",
+        "role",
+        "is_root",
+        "reward_points",
     ];
 
-    const ROLE_RESIDENT = 'Resident';
-    const ROLE_ADMINISTRATOR = 'Administrator';
-    const ROLE_STAFF = 'Staff';
+    const ROLE_RESIDENT = "Resident";
+    const ROLE_ADMINISTRATOR = "Administrator";
+    const ROLE_STAFF = "Staff";
 
     const ACCESS_MENU_MAP = [
         User::ROLE_RESIDENT => [
@@ -50,8 +50,9 @@ class User extends Authenticatable
         ],
     ];
 
-    public function profile () {
-        return $this->hasOne(Profile::class, 'user_id');
+    public function profile()
+    {
+        return $this->hasOne(Profile::class, "user_id");
     }
 
     /**
@@ -59,10 +60,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ["password", "remember_token"];
 
     /**
      * The attributes that should be cast.
@@ -70,6 +68,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        "email_verified_at" => "datetime",
     ];
 }

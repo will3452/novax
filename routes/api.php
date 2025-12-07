@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Barangay;
+use App\Models\Profile;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -53,4 +54,12 @@ Route::any("/v1/{params}", function (Request $request, $params) {
 
 Route::get("/barangays", function () {
     return Barangay::get();
+});
+
+Route::get("suffixes", function () {
+    return Profile::SUFFIX;
+});
+
+Route::get("/logo", function () {
+    return nova_get_setting("logo");
 });
