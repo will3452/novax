@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\Barangay;
+use App\Models\DocumentRequest;
 use App\Models\Profile;
+use App\Models\BarangayDocument;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +28,47 @@ Route::middleware("auth:sanctum")->group(function () {
         return "authentication test";
     });
     Route::post("/logout", [ApiAuthenticationController::class, "logout"]);
+
+    Route::get("/barangay-docs/{barangayId}", function ($barangayId) {
+        $bd = BarangayDocument::whereBarangayId($barangayId)->get();
+        $bd->load(["document", "barangay"]);
+        return $bd;
+    });
+
+    Route::get("/request-docs", function (Request $request) {
+        $user = auth()->user();
+        $dRequests = DocumentRequest::whereUserId($user->id)
+            ->orderBy("created_at", "desc")
+            ->get();
+        $dRequests->load(["document"]);
+        return $dRequests;
+    });
+
+    Route::post("/request-doc", function (Request $request) {
+        $user = auth()->user();
+        $ref = BarangayDocument::whereBarangayId($request->barangay_id)
+            ->whereDocumentId($request->document_id)
+            ->first();
+
+        $dRequest = DocumentRequest::create([
+            "reference_number" => Str::random(12),
+            "user_id" => $user->id,
+            "document_id" => $ref->document_id,
+            "status" => "pending",
+            "purpose" => $request->purpose ?? null,
+            "barangay_id" => $ref->barangay_id,
+            "fee" => $ref->fee,
+            "processing_period" => $ref->processing_period,
+        ]);
+
+        return response()->json(
+            [
+                "message" => "Document request received",
+                "data" => $dRequest,
+            ],
+            201,
+        );
+    });
 });
 
 Route::get("/public-test", function () {
