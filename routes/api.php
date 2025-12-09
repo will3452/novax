@@ -69,6 +69,26 @@ Route::middleware("auth:sanctum")->group(function () {
             201,
         );
     });
+
+    Route::get("/events", function (Request $request) {
+        $barangayId = $request->barangay;
+        $events = \App\Models\BarangayEvent::whereBarangayId($barangayId)
+            ->whereDate("date", ">", now())
+            ->get();
+
+        $ongoing = \App\Models\BarangayEvent::whereBarangayId($barangayId)
+            ->whereDate("date", now())
+            ->get();
+
+        return response()->json(
+            [
+                "message" => "Events retrieved",
+                "data" => $events,
+                "ongoing" => $ongoing,
+            ],
+            200,
+        );
+    });
 });
 
 Route::get("/public-test", function () {
