@@ -4,6 +4,7 @@ use App\Models\Barangay;
 use App\Models\DocumentRequest;
 use App\Models\Profile;
 use App\Models\BarangayDocument;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,7 +33,7 @@ Route::middleware("auth:sanctum")->group(function () {
     Route::get("/barangay-docs/{barangayId}", function ($barangayId) {
         $bd = BarangayDocument::whereBarangayId($barangayId)->get();
         $bd->load(["document", "barangay"]);
-        return $bd;
+        return response()->json($bd);
     });
 
     Route::get("/request-docs", function (Request $request) {
@@ -41,7 +42,13 @@ Route::middleware("auth:sanctum")->group(function () {
             ->orderBy("created_at", "desc")
             ->get();
         $dRequests->load(["document"]);
-        return $dRequests;
+        return Cache::remember(
+            "request-docs-$user->id",
+            now()->addMinutes(1),
+            function () use ($dRequests) {
+                return $dRequests;
+            },
+        );
     });
 
     Route::post("/request-doc", function (Request $request) {
@@ -72,13 +79,25 @@ Route::middleware("auth:sanctum")->group(function () {
 
     Route::get("/events", function (Request $request) {
         $barangayId = $request->barangay;
-        $events = \App\Models\BarangayEvent::whereBarangayId($barangayId)
-            ->whereDate("date", ">", now())
-            ->get();
+        $events = Cache::remember(
+            "events-$barangayId",
+            now()->addMinutes(2),
+            function () use ($barangayId) {
+                return \App\Models\BarangayEvent::whereBarangayId($barangayId)
+                    ->whereDate("date", ">", now())
+                    ->get();
+            },
+        );
 
-        $ongoing = \App\Models\BarangayEvent::whereBarangayId($barangayId)
-            ->whereDate("date", now())
-            ->get();
+        $ongoing = Cache::remember(
+            "ongoing-events-$barangayId",
+            now()->addMinutes(2),
+            function () use ($barangayId) {
+                return \App\Models\BarangayEvent::whereBarangayId($barangayId)
+                    ->whereDate("date", now())
+                    ->get();
+            },
+        );
 
         return response()->json(
             [
@@ -116,11 +135,15 @@ Route::any("/v1/{params}", function (Request $request, $params) {
 });
 
 Route::get("/barangays", function () {
-    return Barangay::get();
+    return Cache::remember("barangays", now()->addMinutes(5), function () {
+        return Barangay::get();
+    });
 });
 
 Route::get("suffixes", function () {
-    return Profile::SUFFIX;
+    return Cache::remember("suffixes", now()->addMinutes(5), function () {
+        return Profile::SUFFIX;
+    });
 });
 
 Route::get("/logo", function () {
