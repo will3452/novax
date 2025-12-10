@@ -120,6 +120,13 @@ class ApiAuthenticationController extends Controller
 
         $user = User::where("email", $email)->first();
 
+        activity()
+            ->withProperties([
+                "icon" => "lucide:shield-alert",
+            ])
+            ->causedBy($user)
+            ->log("You logged in");
+
         if (is_null($user)) {
             return ErrorHelper::sendError(404, "user not found!");
         }
@@ -141,6 +148,12 @@ class ApiAuthenticationController extends Controller
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
+        activity()
+            ->withProperties([
+                "icon" => "lucide:shield-alert",
+            ])
+            ->causedBy($request->user())
+            ->log("You logged out");
         return response(
             [
                 "message" => "LOGOUT SUCCESS!",

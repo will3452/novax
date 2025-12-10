@@ -24,6 +24,11 @@ class MarkAsComplete extends Action
     {
         foreach ($models as $model) {
             $model->update(["status" => "completed"]);
+            activity()
+                ->performedOn($model)
+                ->causedBy(auth()->user())
+                ->withProperties(["icon" => "lucide:check-check"])
+                ->log("Marked as complete");
         }
     }
 

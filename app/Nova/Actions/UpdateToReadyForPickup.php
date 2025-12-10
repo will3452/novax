@@ -24,6 +24,11 @@ class UpdateToReadyForPickup extends Action
     {
         foreach ($models as $model) {
             $model->update(["status" => "for_pickup"]);
+            activity()
+                ->performedOn($model)
+                ->causedBy(auth()->user())
+                ->withProperties(["icon" => "lucide:package"])
+                ->log("Marked as ready for pickup");
         }
     }
 

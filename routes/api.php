@@ -25,10 +25,18 @@ use App\Models\Endpoint;
 
 //private access
 Route::middleware("auth:sanctum")->group(function () {
-    Route::get("/auth-test", function () {
-        return "authentication test";
-    });
     Route::post("/logout", [ApiAuthenticationController::class, "logout"]);
+
+    Route::get("/activities", function () {
+        $limit = request()->query("limit", 5);
+        $response = \Spatie\Activitylog\Models\Activity::whereCauserId(
+            auth()->id(),
+        )
+            ->latest()
+            ->take($limit)
+            ->get();
+        return response()->json($response);
+    });
 
     Route::get("/barangay-docs/{barangayId}", function ($barangayId) {
         $bd = BarangayDocument::whereBarangayId($barangayId)->get();
@@ -38,14 +46,18 @@ Route::middleware("auth:sanctum")->group(function () {
 
     Route::get("/request-docs", function (Request $request) {
         $user = auth()->user();
-        $dRequests = DocumentRequest::whereUserId($user->id)
-            ->orderBy("created_at", "desc")
-            ->get();
-        $dRequests->load(["document"]);
+        $filter = $request->query("filter");
+        $limit = $request->query("limit", 5);
         return Cache::remember(
-            "request-docs-$user->id",
+            "request-docs-$user->id**$filter**$limit",
             now()->addMinutes(1),
-            function () use ($dRequests) {
+            function () use ($user, $filter, $limit) {
+                $dRequests = DocumentRequest::whereUserId($user->id)
+                    ->where("status", "LIKE", "%$filter%")
+                    ->orderBy("created_at", "desc")
+                    ->take($limit)
+                    ->get();
+                $dRequests->load(["document"]);
                 return $dRequests;
             },
         );
@@ -67,6 +79,12 @@ Route::middleware("auth:sanctum")->group(function () {
             "fee" => $ref->fee,
             "processing_period" => $ref->processing_period,
         ]);
+
+        activity()
+            ->performedOn($dRequest)
+            ->causedBy($user)
+            ->withProperties(["icon" => "lucide:send"])
+            ->log("You requested a document.");
 
         return response()->json(
             [

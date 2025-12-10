@@ -24,6 +24,11 @@ class UpdateToProcessing extends Action
     {
         foreach ($models as $model) {
             $model->update(["status" => "processing"]);
+            activity()
+                ->performedOn($model)
+                ->causedBy(auth()->user())
+                ->withProperties(["icon" => "lucide:loader"])
+                ->log("Marked as processing");
         }
     }
 
