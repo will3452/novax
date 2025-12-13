@@ -95,6 +95,25 @@ Route::middleware("auth:sanctum")->group(function () {
         );
     });
 
+    Route::post("/events/join", function (Request $request) {
+        $user = auth()->user();
+        $event = \App\Models\BarangayEvent::find($request->event_id);
+        $data = $user->events()->toggle($event->id);
+        $action = $data["attached"] ? "joined" : "unjoined";
+        activity()
+            ->performedOn($event)
+            ->causedBy($user)
+            ->withProperties(["icon" => "lucide:calendar-sync"])
+            ->log("You $action an event.");
+
+        return response()->json(
+            [
+                "message" => "Event joined",
+                "data" => $data,
+            ],
+            200,
+        );
+    });
     Route::get("/events", function (Request $request) {
         $barangayId = $request->barangay;
         $events = Cache::remember(
@@ -117,10 +136,21 @@ Route::middleware("auth:sanctum")->group(function () {
             },
         );
 
+        $all = Cache::remember(
+            "all-events-$barangayId",
+            now()->addMinutes(2),
+            function () use ($barangayId) {
+                return \App\Models\BarangayEvent::whereBarangayId(
+                    $barangayId,
+                )->get();
+            },
+        );
+
         return response()->json(
             [
                 "message" => "Events retrieved",
                 "data" => $events,
+                "all" => $all,
                 "ongoing" => $ongoing,
             ],
             200,

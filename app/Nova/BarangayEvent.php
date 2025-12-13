@@ -56,6 +56,9 @@ class BarangayEvent extends Resource
             Text::make("Location", "location")->sortable(),
             BelongsTo::make("Barangay", "barangay", Barangay::class),
             BelongsTo::make("Coordinator", "author", User::class),
+            Text::make("Number of Attendees", function () {
+                return $this->attendees()->count();
+            }),
         ];
     }
 

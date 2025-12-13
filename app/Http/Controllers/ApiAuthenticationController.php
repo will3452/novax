@@ -120,6 +120,8 @@ class ApiAuthenticationController extends Controller
 
         $user = User::where("email", $email)->first();
 
+        $user->load(["events"]);
+
         activity()
             ->withProperties([
                 "icon" => "lucide:shield-alert",

@@ -32,4 +32,14 @@ class BarangayEvent extends Model
     {
         return $this->belongsTo(User::class, "author_id");
     }
+
+    public function attendees()
+    {
+        return $this->belongsToMany(
+            User::class,
+            "user_events",
+            "event_id",
+            "user_id",
+        );
+    }
 }

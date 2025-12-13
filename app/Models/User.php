@@ -55,6 +55,16 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class, "user_id");
     }
 
+    public function events()
+    {
+        return $this->belongsToMany(
+            BarangayEvent::class,
+            "user_events",
+            "user_id",
+            "event_id",
+        );
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
