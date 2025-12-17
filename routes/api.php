@@ -29,12 +29,18 @@ Route::middleware("auth:sanctum")->group(function () {
 
     Route::get("/activities", function () {
         $limit = request()->query("limit", 5);
-        $response = \Spatie\Activitylog\Models\Activity::whereCauserId(
-            auth()->id(),
-        )
-            ->latest()
-            ->take($limit)
-            ->get();
+        $response = Cache::remember(
+            "activities-" . auth()->id() . "-" . $limit,
+            now()->addMinutes(1),
+            function () use ($limit) {
+                return \Spatie\Activitylog\Models\Activity::whereCauserId(
+                    auth()->id(),
+                )
+                    ->latest()
+                    ->take($limit)
+                    ->get();
+            },
+        );
         return response()->json($response);
     });
 
@@ -48,12 +54,15 @@ Route::middleware("auth:sanctum")->group(function () {
         $user = auth()->user();
         $filter = $request->query("filter");
         $limit = $request->query("limit", 5);
+        $barangayId = $request->query("barangay");
+
         return Cache::remember(
-            "request-docs-$user->id**$filter**$limit",
+            "request-docs-$user->id**$filter**$limit**$barangayId",
             now()->addMinutes(1),
-            function () use ($user, $filter, $limit) {
+            function () use ($user, $filter, $limit, $barangayId) {
                 $dRequests = DocumentRequest::whereUserId($user->id)
                     ->where("status", "LIKE", "%$filter%")
+                    ->whereBarangayId($barangayId)
                     ->orderBy("created_at", "desc")
                     ->take($limit)
                     ->get();
@@ -120,7 +129,8 @@ Route::middleware("auth:sanctum")->group(function () {
             "events-$barangayId",
             now()->addMinutes(2),
             function () use ($barangayId) {
-                return \App\Models\BarangayEvent::whereBarangayId($barangayId)
+                return \App\Models\BarangayEvent::with("attendees")
+                    ->whereBarangayId($barangayId)
                     ->whereDate("date", ">", now())
                     ->get();
             },
@@ -130,7 +140,8 @@ Route::middleware("auth:sanctum")->group(function () {
             "ongoing-events-$barangayId",
             now()->addMinutes(2),
             function () use ($barangayId) {
-                return \App\Models\BarangayEvent::whereBarangayId($barangayId)
+                return \App\Models\BarangayEvent::with("attendees")
+                    ->whereBarangayId($barangayId)
                     ->whereDate("date", now())
                     ->get();
             },
@@ -140,9 +151,9 @@ Route::middleware("auth:sanctum")->group(function () {
             "all-events-$barangayId",
             now()->addMinutes(2),
             function () use ($barangayId) {
-                return \App\Models\BarangayEvent::whereBarangayId(
-                    $barangayId,
-                )->get();
+                return \App\Models\BarangayEvent::with("attendees")
+                    ->whereBarangayId($barangayId)
+                    ->get();
             },
         );
 
