@@ -7,6 +7,7 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Field;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\HasMany;
@@ -18,34 +19,50 @@ use Laravel\Nova\Panel;
 
 class User extends Resource
 {
-    public static $group = 'Security';
+    public static $group = "Security";
 
     public static function availableForNavigation(Request $request)
     {
-        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]);
+        return in_array(auth()->user()->type, [
+            ModelsUser::TYPE_ADMIN,
+            ModelsUser::TYPE_STAFF,
+        ]);
     }
     public static function authorizedToCreate(Request $request)
     {
-        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]);
+        return in_array(auth()->user()->type, [
+            ModelsUser::TYPE_ADMIN,
+            ModelsUser::TYPE_STAFF,
+        ]);
     }
     public function authorizedToDelete(Request $request)
     {
-        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]);
+        return false;
+        return in_array(auth()->user()->type, [
+            ModelsUser::TYPE_ADMIN,
+            ModelsUser::TYPE_STAFF,
+        ]);
     }
 
     public function authorizedToView(Request $request)
     {
-        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]);
+        return in_array(auth()->user()->type, [
+            ModelsUser::TYPE_ADMIN,
+            ModelsUser::TYPE_STAFF,
+        ]);
     }
 
     public function authorizedToUpdate(Request $request)
     {
-        return in_array(auth()->user()->type, [ModelsUser::TYPE_ADMIN, ModelsUser::TYPE_STAFF]);
+        return in_array(auth()->user()->type, [
+            ModelsUser::TYPE_ADMIN,
+            ModelsUser::TYPE_STAFF,
+        ]);
     }
 
     public static function indexQuery(NovaRequest $request, $query)
     {
-        return $query->where('email', '!=', 'super@admin.com');
+        return $query->where("email", "!=", "super@admin.com");
     }
 
     /**
@@ -60,16 +77,14 @@ class User extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = "name";
 
     /**
      * The columns that should be searched.
      *
      * @var array
      */
-    public static $search = [
-        'id', 'name', 'email',
-    ];
+    public static $search = ["id", "name", "email"];
 
     /**
      * Get the fields displayed by the resource.
@@ -80,39 +95,42 @@ class User extends Resource
     public function fields(Request $request)
     {
         return [
-
-            Panel::make('Basic Information', [
-                Select::make('Type')
-                    ->options([
-                        ModelsUser::TYPE_PATIENT => ModelsUser::TYPE_PATIENT,
-                        ModelsUser::TYPE_STAFF => ModelsUser::TYPE_STAFF,
-                    ]),
-                Text::make('Name')
-                    ->sortable()
-                    ->rules('required', 'max:255'),
-                Select::make('Sex')
-                    ->options([
-                        'Male' => 'Male',
-                        'Female' => 'Female',
-                    ]),
-                Text::make('Address'),
-                Date::make('Birthday'),
-                Text::make('Phone')
-                    ->help('This is required to receive SMS Notification.'),
+            Panel::make("Basic Information", [
+                Boolean::make("Can Login", function () {
+                    return !($this->login_attempt >= 3);
+                }),
+                Select::make("Type")->options([
+                    ModelsUser::TYPE_PATIENT => ModelsUser::TYPE_PATIENT,
+                    ModelsUser::TYPE_STAFF => ModelsUser::TYPE_STAFF,
+                ]),
+                Text::make("Name")->sortable()->rules("required", "max:255"),
+                Select::make("Sex")->options([
+                    "Male" => "Male",
+                    "Female" => "Female",
+                ]),
+                Text::make("Address"),
+                Date::make("Birthday"),
+                Text::make("Phone")->help(
+                    "This is required to receive SMS Notification.",
+                ),
             ]),
-            Panel::make('Account Credentials', [
-                Text::make('Email')
+            Panel::make("Account Credentials", [
+                Text::make("Email")
                     ->sortable()
-                    ->rules('required', 'email', 'max:254')
-                    ->creationRules('unique:users,email')
-                    ->updateRules('unique:users,email,{{resourceId}}'),
+                    ->rules("required", "email", "max:254")
+                    ->creationRules("unique:users,email")
+                    ->updateRules("unique:users,email,{{resourceId}}"),
 
-                Password::make('Password')
+                Password::make("Password")
                     ->onlyOnForms()
-                    ->creationRules('required', 'string', 'min:8')
-                    ->updateRules('nullable', 'string', 'min:8'),
+                    ->creationRules("required", "string", "min:8")
+                    ->updateRules("nullable", "string", "min:8"),
             ]),
-            HasMany::make('Medical Records', 'medicalRecords', MedicalRecord::class),
+            HasMany::make(
+                "Medical Records",
+                "medicalRecords",
+                MedicalRecord::class,
+            ),
         ];
     }
 
@@ -157,6 +175,6 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [\App\Nova\Actions\AllowToLogin::make()];
     }
 }

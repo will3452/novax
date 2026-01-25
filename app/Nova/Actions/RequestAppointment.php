@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Nova\Actions;
 
 use App\Models\Booking;
@@ -25,11 +24,11 @@ class RequestAppointment extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         Booking::create([
-            'reference'   => Str::random(12),
-            'patient_id'  => auth()->id(),
-            'date'        => $fields['date'],
-            'time'        => $fields['time'],
-            'service_id'  => $fields['service_id'],
+            "reference" => Str::random(12),
+            "patient_id" => auth()->id(),
+            "date" => $fields["date"],
+            "time" => $fields["time"],
+            "service_id" => $fields["service_id"],
         ]);
     }
 
@@ -39,18 +38,34 @@ class RequestAppointment extends Action
     public function fields()
     {
         return [
-            Date::make('Date')
-                ->rules(['required', 'date', 'after_or_equal:today']),
+            Date::make("Date")->rules([
+                "required",
+                "date",
+                "after_or_equal:today",
+            ]),
 
-            Time::make('Time', 'time')
+            Time::make("Time", "time")
                 ->withSeconds(false)
                 ->withSteps(1)
                 ->rules([
-                    'required',
+                    "required",
                     function ($attribute, $value, $fail) {
                         try {
-                            $inputTime = Carbon::createFromFormat('H:i:s', $value);
+                            $inputTime = Carbon::createFromFormat(
+                                "H:i:s",
+                                $value,
+                            );
 
+                            // Restrict to operating hours (8 AM to 4 PM)
+                            if (
+                                $inputTime->hour < 8 ||
+                                $inputTime->hour >= 16
+                            ) {
+                                $fail(
+                                    "Bookings are only allowed during operating hours (8:00 AM to 4:00 PM).",
+                                );
+                                return;
+                            }
 
                             // Get selected date from the request (Nova action fields)
                             $selectedDate = request()->date;
@@ -58,34 +73,39 @@ class RequestAppointment extends Action
                             if ($selectedDate) {
                                 $selectedDate = Carbon::parse($selectedDate);
 
-
                                 // Only validate past times if the selected date is today
                                 if ($selectedDate->isToday()) {
                                     // Normalize current time without seconds
-                                    $currentTime = Carbon::now()->format('H:i:s');
+                                    $currentTime = Carbon::now()->format(
+                                        "H:i:s",
+                                    );
 
                                     // Ensure the $value has only HH:mm, strip seconds if present
                                     $cleanTime = substr($value, 0, 5);
 
                                     $cTime = explode(":", $currentTime);
                                     $vTime = explode(":", $value);
+
                                     $cTime = intval(implode("", $cTime));
                                     $vTime = intval(implode("", $vTime));
+
                                     // Compare if input time is earlier than now
                                     if ($cTime > $vTime) {
-                                        $fail('The time cannot be in the past.');
+                                        $fail(
+                                            "The time cannot be in the past.",
+                                        );
                                     }
                                 }
                             }
                         } catch (\Exception $e) {
-                            $fail('Invalid time format.');
+                            $fail("Invalid time format.");
                         }
                     },
                 ]),
 
-            Select::make('Service', 'service_id')
-                ->options(Service::get()->pluck('name', 'id'))
-                ->rules(['required']),
+            Select::make("Service", "service_id")
+                ->options(Service::get()->pluck("name", "id"))
+                ->rules(["required"]),
         ];
     }
 }

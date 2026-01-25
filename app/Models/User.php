@@ -19,32 +19,31 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'type',
-        'address',
-        'sex',
-        'birthday',
-        'phone',
+        "name",
+        "email",
+        "password",
+        "type",
+        "address",
+        "sex",
+        "birthday",
+        "phone",
+        "login_attempt",
     ];
 
-    const TYPE_ADMIN = 'Administrator';
-    const TYPE_STAFF = 'Staff';
-    const TYPE_PATIENT = 'Patient';
+    const TYPE_ADMIN = "Administrator";
+    const TYPE_STAFF = "Staff";
+    const TYPE_PATIENT = "Patient";
 
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ["password", "remember_token"];
 
-    public function paymentOrders () {
-        return $this->hasMany(PaymentOrder::class, 'user_id');
+    public function paymentOrders()
+    {
+        return $this->hasMany(PaymentOrder::class, "user_id");
     }
 
     /**
@@ -53,11 +52,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'birthday' => 'date',
+        "email_verified_at" => "datetime",
+        "birthday" => "date",
     ];
 
-    public function medicalRecords() {
-        return $this->belongsTo(MedicalRecord::class, 'user_id');
+    public function medicalRecords()
+    {
+        return $this->belongsTo(MedicalRecord::class, "user_id");
     }
 }
