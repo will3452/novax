@@ -18,36 +18,40 @@ use App\Models\Endpoint;
 |
 */
 
-
 //private access
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/auth-test', function () {
-        return 'authentication test';
+Route::middleware("auth:sanctum")->group(function () {
+    Route::get("/auth-test", function () {
+        return "authentication test";
     });
-    Route::post('/logout', [ApiAuthenticationController::class, 'logout']);
+    Route::post("/logout", [ApiAuthenticationController::class, "logout"]);
 });
 
-Route::get('/public-test', function () {
-    return 'public test';
+Route::get("/public-test", function () {
+    return "public test";
 });
-
 
 //user authentication
-Route::post('/register', [ApiAuthenticationController::class, 'register']);
-Route::post('/login', [ApiAuthenticationController::class, 'login']);
+Route::post("/register", [ApiAuthenticationController::class, "register"]);
+Route::post("/login", [ApiAuthenticationController::class, "login"]);
 
-Route::any('/cron', function (Request $request) {
-    CronJob::create([]); 
-}); 
+Route::any("/cron", function (Request $request) {
+    CronJob::create([]);
+});
 
-Route::any('/v1/{params}', function (Request $request, $params) {
-    $method = Str::lower($request->getMethod()); 
-    $path = $request->getPathInfo(); 
-    $arr_path = explode("/", $path); 
-    $name = end($arr_path); 
-    $endpoint = Endpoint::whereMethod($method)->wherePath($name)->first(); 
+Route::any("/v1/{params}", function (Request $request, $params) {
+    $method = Str::lower($request->getMethod());
+    $path = $request->getPathInfo();
+    $arr_path = explode("/", $path);
+    $name = end($arr_path);
+    $endpoint = Endpoint::whereMethod($method)->wherePath($name)->first();
     return [
-        'params' => $endpoint, 
-        'method' => Str::lower($request->getMethod()), 
-    ]; 
-}); 
+        "params" => $endpoint,
+        "method" => Str::lower($request->getMethod()),
+    ];
+});
+
+Route::get("/test", function () {
+    $rows = app(\App\Services\GoogleSheetService::class)->getRows("A2:K");
+
+    return $rows;
+});

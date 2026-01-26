@@ -17,6 +17,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "fruitcake/laravel-cors": "^2.0",
+        "google/apiclient": "^2.19",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.65",
         "laravel/nova": "*",
@@ -25,6 +26,7 @@
         "laravelwebdev/responsive": "^1.0",
         "optimistdigital/nova-settings": "^3.2",
         "php-ai/php-ml": "^0.10.0",
+        "revolution/laravel-google-sheets": "^6.0",
         "richardkeep/nova-timenow": "^1.0",
         "runlinenl/nova-profile-tool": "^1.1",
         "signifly/nova-progressbar-card": "^0.2.1",

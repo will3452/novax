@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Nova\Actions\AddToCart;
 use App\Nova\Actions\RemoveToCart;
 use App\Nova\Actions\RunInventoryForecast;
+use App\Nova\Actions\SyncDatabase;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
@@ -19,13 +20,19 @@ class Product extends Resource
 {
     public static function authorizedToCreate(Request $request)
     {
-        if (auth()->user()->role === \App\Models\User::ROLE_ADMIN) return true;
+        if (auth()->user()->role === \App\Models\User::ROLE_ADMIN) {
+            return true;
+        }
         return false;
     }
     public function authorizedToUpdate(Request $request)
     {
-        if (auth()->user()->role === \App\Models\User::ROLE_ADMIN) return true;
-        if ($request->has('action')) return true;
+        if (auth()->user()->role === \App\Models\User::ROLE_ADMIN) {
+            return true;
+        }
+        if ($request->has("action")) {
+            return true;
+        }
         return false;
     }
 
@@ -46,7 +53,8 @@ class Product extends Resource
      * @var string
      */
 
-    public function title() {
+    public function title()
+    {
         return "$this->name (Category: $this->category, Price: $this->price)";
     }
 
@@ -55,11 +63,7 @@ class Product extends Resource
      *
      * @var array
      */
-    public static $search = [
-        'name',
-        'category',
-        'remarks',
-    ];
+    public static $search = ["name", "category", "remarks", "search_keyword"];
 
     /**
      * Get the fields displayed by the resource.
@@ -70,27 +74,34 @@ class Product extends Resource
     public function fields(Request $request)
     {
         return [
-            Select::make('Type', 'category')
+            Select::make("Type", "category")
                 ->options([
-                    \App\Models\Product::CATEGORY_SINGLE => 'Single',
-                    \App\Models\Product::CATEGORY_BUNDLE => 'Bundle',
+                    \App\Models\Product::CATEGORY_SINGLE => "Single",
+                    \App\Models\Product::CATEGORY_BUNDLE => "Bundle",
                 ])
-                ->rules('required')
+                ->rules("required")
                 ->sortable(),
-            Text::make('Category', 'remarks')->rules(['required'])->sortable(),
-            Image::make('Image'),
-            Text::make('Name')
+            Text::make("Category", "card_set_category")
+                ->rules(["required"])
+                ->sortable(),
+            Text::make("Photo", function () {
+                $img = $this->image;
+                return $img ? '<img src="' . $img . '" width="80">' : "";
+            })->asHtml(),
+            Text::make("Image", "image")
+                ->rules(["required"])
+                ->onlyOnForms(),
+            Text::make("Name")->sortable()->rules("required", "max:255"),
+            Text::make("Search Keywords", "search_keyword")
+                ->rules(["required"])
+                ->sortable(),
+            Currency::make("Price")->sortable()->rules("required", "min:0"),
+            Number::make("Default Stock", "default_stock")
                 ->sortable()
-                ->rules('required', 'max:255'),
-            Currency::make('Price')
+                ->rules("required", "min:0"),
+            Number::make("Current Stock", "current_stock")
                 ->sortable()
-                ->rules('required', 'min:0'),
-            Number::make('Default Stock', 'default_stock')
-                ->sortable()
-                ->rules('required', 'min:0'),
-            Number::make('Current Stock', 'current_stock')
-                ->sortable()
-                ->rules('required', 'min:0'),
+                ->rules("required", "min:0"),
         ];
     }
 
@@ -113,7 +124,7 @@ class Product extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [\App\Nova\Filters\FilterByCategory::make()];
     }
 
     /**
@@ -135,33 +146,31 @@ class Product extends Resource
      */
     public function actions(Request $request)
     {
-        if ($request->has('action')) {
+        if ($request->has("action")) {
             return [
                 AddToCart::make(),
                 RemoveToCart::make(),
+                SyncDatabase::make()->standalone(),
             ];
         }
         $EMPTY_STOCK = 0;
 
-        $INSIDE_CART = $this->orderItems()->whereHas('order', function ($query) {
-            $query->where('employee_id', auth()->id())
-                  ->whereIn('status', [\App\Models\Order::STATUS_PENDING]);
-        })->exists();
-
+        $INSIDE_CART = $this->orderItems()
+            ->whereHas("order", function ($query) {
+                $query
+                    ->where("employee_id", auth()->id())
+                    ->whereIn("status", [\App\Models\Order::STATUS_PENDING]);
+            })
+            ->exists();
 
         if ($this->current_stock == $EMPTY_STOCK) {
-            return [
-            ];
+            return [SyncDatabase::make()->standalone()];
         }
 
         if ($INSIDE_CART) {
-            return [
-                RemoveToCart::make(),
-            ];
+            return [RemoveToCart::make(), SyncDatabase::make()->standalone()];
         }
 
-        return [
-            AddToCart::make(),
-        ];
+        return [AddToCart::make(), SyncDatabase::make()->standalone()];
     }
 }
