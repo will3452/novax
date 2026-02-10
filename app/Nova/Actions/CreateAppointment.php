@@ -43,7 +43,14 @@ class CreateAppointment extends Action
                 "date",
                 "after_or_equal:today",
             ]),
-
+            Select::make("Patient", "patient_id")
+                ->options(
+                    User::where("type", User::TYPE_PATIENT)->pluck(
+                        "name",
+                        "id",
+                    ),
+                )
+                ->required(),
             Time::make("Time", "time")
                 ->withSeconds(false)
                 ->withSteps(1)
