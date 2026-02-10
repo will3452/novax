@@ -45,10 +45,10 @@ class CreateAppointment extends Action
             ]),
             Select::make("Patient", "patient_id")
                 ->options(
-                    User::where("type", User::TYPE_PATIENT)->pluck(
-                        "name",
-                        "id",
-                    ),
+                    \App\Models\User::where(
+                        "type",
+                        \App\Models\User::TYPE_PATIENT,
+                    )->pluck("name", "id"),
                 )
                 ->required(),
             Time::make("Time", "time")
