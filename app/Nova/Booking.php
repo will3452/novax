@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Nova\Actions\MarkAsApproved;
 use App\Nova\Actions\MarkAsRejected;
 use App\Nova\Actions\RequestAppointment;
+use App\Nova\Actions\CreateAppointment;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
@@ -35,11 +36,12 @@ class Booking extends Resource
     }
     public static function authorizedToCreate(Request $request)
     {
-        if (auth()->user()->type == \App\Models\User::TYPE_PATIENT) {
-            return false;
-        }
+        return false;
+        // if (auth()->user()->type == \App\Models\User::TYPE_PATIENT) {
+        //     return false;
+        // }
 
-        return true;
+        // return true;
     }
 
     public function authorizedToDelete(Request $request)
@@ -105,6 +107,7 @@ class Booking extends Resource
                 ->exceptOnForms()
                 ->sortable(),
             Date::make("Date", "date")->sortable(),
+            Text::make("Time", "time"),
             Text::make("Reference"),
             BelongsTo::make("Patient", "patient", User::class),
             BelongsTo::make("Service", "service", Service::class),
@@ -169,6 +172,9 @@ class Booking extends Resource
         return [
             MarkAsApproved::make()->canSee(fn() => $status == "For Approval"),
             MarkAsRejected::make()->canSee(fn() => $status == "For Approval"),
+            CreateAppointment::make()->canSee(
+                fn() => auth()->user()->type != \App\Models\User::TYPE_PATIENT,
+            ),
         ];
     }
 }
