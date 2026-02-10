@@ -172,9 +172,12 @@ class Booking extends Resource
         return [
             MarkAsApproved::make()->canSee(fn() => $status == "For Approval"),
             MarkAsRejected::make()->canSee(fn() => $status == "For Approval"),
-            CreateAppointment::make()->canSee(
-                fn() => auth()->user()->type != \App\Models\User::TYPE_PATIENT,
-            ),
+            CreateAppointment::make()
+                ->standalone()
+                ->canSee(
+                    fn() => auth()->user()->type !=
+                        \App\Models\User::TYPE_PATIENT,
+                ),
         ];
     }
 }
