@@ -25,7 +25,7 @@ class CreateAppointment extends Action
     {
         Booking::create([
             "reference" => Str::random(12),
-            "patient_id" => $fieds["patient_id"],
+            "patient_id" => $fields["patient_id"],
             "date" => $fields["date"],
             "time" => $fields["time"],
             "service_id" => $fields["service_id"],
