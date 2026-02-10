@@ -29,8 +29,9 @@ class Booking extends Resource
      * @var int
      */
     public static $pollingInterval = 2;
-    public static function group () {
-        return 'MANAGE'; 
+    public static function group()
+    {
+        return "MANAGE";
     }
     public static function authorizedToCreate(Request $request)
     {
@@ -38,7 +39,7 @@ class Booking extends Resource
             return false;
         }
 
-        return true; 
+        return true;
     }
 
     public function authorizedToDelete(Request $request)
@@ -52,8 +53,8 @@ class Booking extends Resource
 
     public function authorizedToUpdate(Request $request)
     {
-        if ($request->has('action')) {
-            return true; 
+        if ($request->has("action")) {
+            return true;
         }
         if (auth()->user()->type == \App\Models\User::TYPE_PATIENT) {
             return false;
@@ -82,17 +83,14 @@ class Booking extends Resource
      *
      * @var string
      */
-    public static $title = 'reference';
+    public static $title = "reference";
 
     /**
      * The columns that should be searched.
      *
      * @var array
      */
-    public static $search = [
-        'id',
-        'reference', 
-    ];
+    public static $search = ["id", "reference"];
 
     /**
      * Get the fields displayed by the resource.
@@ -103,17 +101,19 @@ class Booking extends Resource
     public function fields(Request $request)
     {
         return [
-            Date::make('Date Requested', 'created_at')->sortable(),
-            Text::make('Reference'),
-            BelongsTo::make('Patient', 'patient', User::class), 
-            BelongsTo::make('Service', 'service', Service::class), 
-            Badge::make('Status')
-                ->map([
-                    'For Approval' => 'info',
-                    'Approved' => 'success', 
-                    'Rejected' => 'danger', 
-                ]), 
-            Textarea::make('Remarks')->alwaysShow(), 
+            Date::make("Date Requested", "created_at")
+                ->exceptOnForms()
+                ->sortable(),
+            Date::make("Date", "date")->sortable(),
+            Text::make("Reference"),
+            BelongsTo::make("Patient", "patient", User::class),
+            BelongsTo::make("Service", "service", Service::class),
+            Badge::make("Status")->map([
+                "For Approval" => "info",
+                "Approved" => "success",
+                "Rejected" => "danger",
+            ]),
+            Textarea::make("Remarks")->alwaysShow(),
         ];
     }
 
@@ -160,13 +160,15 @@ class Booking extends Resource
     {
         $actions = [];
         if (auth()->user()->type == \App\Models\User::TYPE_PATIENT) {
-            array_push($actions, RequestAppointment::make()->standalone()); 
-            return $actions; 
+            array_push($actions, RequestAppointment::make()->standalone());
+            return $actions;
         }
-        $status = $this->status ?? $this->resource->find($request->resources)?->status; 
+        $status =
+            $this->status ??
+            $this->resource->find($request->resources)?->status;
         return [
-            MarkAsApproved::make()->canSee(fn () => $status == 'For Approval'), 
-            MarkAsRejected::make()->canSee(fn () => $status == 'For Approval'), 
+            MarkAsApproved::make()->canSee(fn() => $status == "For Approval"),
+            MarkAsRejected::make()->canSee(fn() => $status == "For Approval"),
         ];
     }
 }
