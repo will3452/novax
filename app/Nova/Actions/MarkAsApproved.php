@@ -22,7 +22,8 @@ class MarkAsApproved extends Action
     }
 
     public function sendMessage($number, $reference) {
-            $ch = curl_init();
+            try {
+                $ch = curl_init();
             $parameters = array(
                 'apikey' => env('SMS_KEY'),
                 'number' => $number,
@@ -39,6 +40,9 @@ class MarkAsApproved extends Action
             curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
             $output = curl_exec( $ch );
             // curl_close ($ch);
+            } catch (\Exception $e) {
+                //
+            }
     }
     /**
      * Perform the action on the given models.
@@ -54,7 +58,9 @@ class MarkAsApproved extends Action
             if ($model->patient->phone) {
                 $this->sendMessage($model->patient->phone, $model->reference);
             }
-            Mail::to([$model->patient->email])->send(new BookingUpdate($model));
+            if ($model->patient->email) {
+                Mail::to([$model->patient->email])->send(new BookingUpdate($model));
+            }
         }
     }
 
