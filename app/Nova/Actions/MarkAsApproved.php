@@ -38,7 +38,7 @@ class MarkAsApproved extends Action
             // Receive response from server
             curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
             $output = curl_exec( $ch );
-            curl_close ($ch);
+            // curl_close ($ch);
     }
     /**
      * Perform the action on the given models.
