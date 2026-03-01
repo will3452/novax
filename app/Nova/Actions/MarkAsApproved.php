@@ -59,7 +59,7 @@ class MarkAsApproved extends Action
                 $this->sendMessage($model->patient->phone, $model->reference);
             }
             if ($model->patient->email) {
-                Mail::to([$model->patient->email])->send(new BookingUpdate($model));
+                // Mail::to([$model->patient->email])->send(new BookingUpdate($model));
             }
         }
     }
