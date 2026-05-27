@@ -1,0 +1,26 @@
+/* Target the action confirmation play button specifically */
+button[title="Run Action"], 
+button[aria-label="Run Action"],
+.w-action-trigger button {
+    width: auto !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Hide the default tiny SVG play icon */
+button[title="Run Action"] svg,
+button[aria-label="Run Action"] svg {
+    display: none !important;
+}
+
+/* Inject the text in its place */
+button[title="Run Action"]::after,
+button[aria-label="Run Action"]::after {
+    content: "Run Action";
+    font-weight: 600;
+    font-size: 0.875rem; /* text-sm equivalent */
+    color: #ffffff;
+}

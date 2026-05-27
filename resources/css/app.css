@@ -1,0 +1,39 @@
+/* Make Cancel Order button red */
+button[title="Cancel Order"],
+button:has(span:contains("Cancel Order")) {
+    background-color: #dc2626 !important;
+    border-color: #dc2626 !important;
+    color: white !important;
+}
+
+button[title="Cancel Order"]:hover {
+    background-color: #b91c1c !important;
+    border-color: #b91c1c !important;
+}
+
+button.danger {
+    background-color: #e3342f !important;
+    border-color: #e3342f !important;
+    color: white !important;
+}
+
+button.danger:hover {
+    background-color: #cc1f1a !important;
+}
+
+button:has(span:contains("Cancel Order")) {
+    background-color: #e3342f !important;
+}
+
+button[title="Cancel Order"] {
+    background-color: #e3342f !important;
+    border-color: #e3342f !important;
+    color: white !important;
+}
+
+button[title="Cancel Order"] {
+    background-color: #e3342f !important;
+    color: white !important;
+    border-radius: 6px !important;
+    padding: 6px 12px !important;
+}
