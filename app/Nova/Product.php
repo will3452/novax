@@ -16,6 +16,7 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Sparkline;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use App\Services\GoogleSheetService;
+use Laravel\Nova\Fields\Hidden;
 
 class Product extends Resource
 {
@@ -79,6 +80,7 @@ return true;
     return [
         Text::make("PID", "sheet_id")
             ->sortable(),
+        Hidden::make('card_name')->default('N/a'),
         Select::make("Type", "category")
             ->options([
                 \App\Models\Product::CATEGORY_SINGLE => "Single",
@@ -259,11 +261,11 @@ return true;
 
     // 3. Populate actions globally so Nova has access to them on the frontend.
     // We add 'onlyOnIndex' context checks or leverage default behaviors so Nova handles the visibility toggle natively.
-    $actions[] = SyncDatabase::make()->standalone(); 
+    $actions[] = SyncDatabase::make()->standalone();
     $actions[] = (new \App\Nova\Actions\SyncProducts)->onlyOnIndex();
     $actions[] = (new \App\Nova\Actions\ResetStockout)->onlyOnIndex();
 
-    return $actions;   
+    return $actions;
 }
 public static function indexQuery(NovaRequest $request, $query)
 {
