@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Artisan;
 use Phpml\Regression\LeastSquares;
 use App\Http\Controllers\ProductController;
 
+Route::get('test-2', function () {
+    $json = json_decode(file_get_contents(storage_path("app/google/service-account.json")), true);
+
+    dd(
+        openssl_pkey_get_private($json["private_key"])
+    );
+});
+
 Route::get('predict', function (Request $request) {
     $period = $request->input('period', 'day');
     $product_id = $request->input('product_id', 5);
