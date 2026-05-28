@@ -26,7 +26,7 @@ class UpdateNameFromInventoryAudits extends Migration
     public function down()
     {
         Schema::table('inventory_audits', function (Blueprint $table) {
-            $table->dropColumn('card_name')->nullable();
+            $table->string('card_name')->nullable();
         });
     }
 }
