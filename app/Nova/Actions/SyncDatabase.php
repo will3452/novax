@@ -67,7 +67,7 @@ class SyncDatabase extends Action
 
             $defaultStock = $product ? $product->default_stock : 100;
             $p = [
-                "name" => $row[$NAME],
+                "name" => $row[$NAME] ?? 'N/a',
                 "price" => $this->parseCurrency($row[$PRICE]),
                 "category" => $row[$CATEGORY],
                 "sheet_id" => $row[$SHEET_ID],
