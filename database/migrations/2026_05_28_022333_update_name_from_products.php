@@ -15,7 +15,7 @@ class UpdateNameFromProducts extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->dropColumn('name');
-            $table->string('name')->nullable();
+            // $table->string('name')->nullable();
         });
     }
 
